@@ -1,0 +1,13 @@
+{
+	"font_size": 16.0,
+	"draw_white_space": "all",
+	"highlight_line": true,
+	"word_wrap": true,
+	"scroll_past_end": true,
+	"draw_minimap_border": true,
+	"bold_folder_labels": true,
+	"ignored_packages":
+	[
+		"Vintage"
+	]
+}
