@@ -35,6 +35,21 @@
 "VI互換モードOFF
 set nocompatible
 
+"-----------------------------------------------------------------------------
+" vundle
+"
+filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+" original repos on github
+Bundle 'gmarik/vundle'
+Bundle 'tpope/vim-rails.git'
+Bundle 'fholgado/minibufexpl.vim'
+" vim-scripts repos
+Bundle 'wombat256.vim'
+Bundle 'molokai'
+filetype plugin indent on
+
 "{{{ Kaoriya設定
 "---------------------------------------------------------------------------
 " サイトローカルな設定($VIM/vimrc_local.vim)があれば読み込む。読み込んだ後に
@@ -211,7 +226,10 @@ set showcmd
 set title
 " 画面を黒地に白にする (次行の先頭の " を削除すれば有効になる)
 "colorscheme evening " (Windows用gvim使用時はgvimrcを編集すること)
-colorscheme wombat
+"set t_Co=256
+"colorscheme wombat256
+colorscheme molokai
+let g:molokai_original = 1
 " 常にステータス行を表示 (詳細は:he laststatus)
 set laststatus=2
 " ステータスラインに文字コードと改行文字とファイルタイプを表示する
@@ -383,16 +401,4 @@ au BufEnter * execute ":lcd " . expand("%:p:h")
 au BufRead *.rb nmap <buffer> <C-]> :Refe <cword><CR>
 let g:loaded_lookupfile = 0
 let g:RefeUseLookupFile = 0
-
-"-----------------------------------------------------------------------------
-" vundle
-"
-filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-Bundle 'gmarik/vundle'
-Bundle 'tpope/vim-rails.git'
-Bundle 'fholgado/minibufexpl.vim'
-Bundle 'wombat256'
-filetype plugin indent on
 
