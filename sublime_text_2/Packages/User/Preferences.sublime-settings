@@ -4,8 +4,10 @@
 	"highlight_line": true,
 	"word_wrap": true,
 	"scroll_past_end": true,
+	"move_to_limit_on_up_down": true,
 	"draw_minimap_border": true,
 	"bold_folder_labels": true,
+	"show_full_path": false,
 	"ignored_packages":
 	[
 		"Vintage"
