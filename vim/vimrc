@@ -43,11 +43,20 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 " original repos on github
 Bundle 'gmarik/vundle'
+Bundle 'Shougo/neocomplcache'
+Bundle 'thinca/vim-ref'
 Bundle 'tpope/vim-rails.git'
+Bundle 'tpope/vim-fugitive'
 Bundle 'fholgado/minibufexpl.vim'
+Bundle 'Lokaltog/vim-powerline'
 " vim-scripts repos
 Bundle 'wombat256.vim'
 Bundle 'molokai'
+Bundle 'ScrollColors'
+Bundle 'YankRing.vim'
+Bundle 'ZenCoding.vim'
+"Bundle 'AutoClose'
+Bundle 'The-NERD-Commenter'
 filetype plugin indent on
 
 "{{{ Kaoriya設定
@@ -133,6 +142,50 @@ if 1 && (!exists('g:no_vimrc_example') || g:no_vimrc_example == 0)
     source $VIMRUNTIME/vimrc_example.vim
   endif
 endif
+
+"---------------------------------------------------------------------------
+" ファイル名に大文字小文字の区別がないシステム用の設定:
+"   (例: DOS/Windows/MacOS)
+"
+if filereadable($VIM . '/vimrc') && filereadable($VIM . '/ViMrC')
+  " tagsファイルの重複防止
+  set tags=./tags,tags
+endif
+
+"---------------------------------------------------------------------------
+" コンソールでのカラー表示のための設定(暫定的にUNIX専用)
+if has('unix') && !has('gui_running')
+  let uname = system('uname')
+  if uname =~? "linux"
+    set term=builtin_linux
+  elseif uname =~? "freebsd"
+    set term=builtin_cons25
+  elseif uname =~? "Darwin"
+    set term=beos-ansi
+  else
+    set term=builtin_xterm
+  endif
+  unlet uname
+endif
+
+"---------------------------------------------------------------------------
+" コンソール版で環境変数$DISPLAYが設定されていると起動が遅くなる件へ対応
+if !has('gui_running') && has('xterm_clipboard')
+  set clipboard=exclude:cons\\\|linux\\\|cygwin\\\|rxvt\\\|screen
+endif
+
+"---------------------------------------------------------------------------
+" プラットホーム依存の特別な設定
+"
+" WinではPATHに$VIMが含まれていないときにexeを見つけ出せないので修正
+if has('win32') && $PATH !~? '\(^\|;\)' . escape($VIM, '\\') . '\(;\|$\)'
+  let $PATH = $VIM . ';' . $PATH
+endif
+" Macではデフォルトの'iskeyword'がcp932に対応しきれていないので修正
+if has('mac')
+  set iskeyword=@,48-57,_,128-167,224-235
+endif
+
 "}}}
 
 "---------------------------------------------------------------------------
@@ -184,7 +237,7 @@ au BufRead,BufNew,BufNewFile * set formatoptions-=o
 " 文字数による自動折り返しはしない
 au BufRead,BufNew * set textwidth=0
 " 区切り文字設定
-set iskeyword+=-,:
+"set iskeyword+=-\,:
 " 日本語整形スクリプト(by. 西岡拓洋さん)用の設定
 let format_allow_over_tw = 1	" ぶら下り可能幅
 " 編集後保存していなくても別のファイルを開く
@@ -243,49 +296,6 @@ set statusline=%<%t\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}
 set nobackup
 set nowritebackup
 
-"---------------------------------------------------------------------------
-" ファイル名に大文字小文字の区別がないシステム用の設定:
-"   (例: DOS/Windows/MacOS)
-"
-if filereadable($VIM . '/vimrc') && filereadable($VIM . '/ViMrC')
-  " tagsファイルの重複防止
-  set tags=./tags,tags
-endif
-
-"---------------------------------------------------------------------------
-" コンソールでのカラー表示のための設定(暫定的にUNIX専用)
-if has('unix') && !has('gui_running')
-  let uname = system('uname')
-  if uname =~? "linux"
-    set term=builtin_linux
-  elseif uname =~? "freebsd"
-    set term=builtin_cons25
-  elseif uname =~? "Darwin"
-    set term=beos-ansi
-  else
-    set term=builtin_xterm
-  endif
-  unlet uname
-endif
-
-"---------------------------------------------------------------------------
-" コンソール版で環境変数$DISPLAYが設定されていると起動が遅くなる件へ対応
-if !has('gui_running') && has('xterm_clipboard')
-  set clipboard=exclude:cons\\\|linux\\\|cygwin\\\|rxvt\\\|screen
-endif
-
-"---------------------------------------------------------------------------
-" プラットホーム依存の特別な設定
-"
-" WinではPATHに$VIMが含まれていないときにexeを見つけ出せないので修正
-if has('win32') && $PATH !~? '\(^\|;\)' . escape($VIM, '\\') . '\(;\|$\)'
-  let $PATH = $VIM . ';' . $PATH
-endif
-" Macではデフォルトの'iskeyword'がcp932に対応しきれていないので修正
-if has('mac')
-  set iskeyword=@,48-57,_,128-167,224-235
-endif
-
 "-----------------------------------------------------------------------------
 " FileType設定
 "
@@ -318,25 +328,25 @@ nnoremap k gk
 "-----------------------------------------------------------------------------
 " 補完機能
 "
-" <TAB>で補完
+" <Tab>で補完 (neocomplcacheで代用されてそうなのでコメントアウト）
 " {{{ Autocompletion using the TAB key
 " This function determines, wether we are on the start of the line text (then tab indents) or
 " if we want to try autocompletion
-function! InsertTabWrapper()
-  let col = col('.') - 1
-  if !col || getline('.')[col - 1] !~ '\k'
-    return "\<TAB>"
-  else
-    if pumvisible()
-      return "\<C-N>"
-    else
-      return "\<C-N>\<C-P>"
-    end
-  endif
-endfunction
-" Remap the tab key to select action with InsertTabWrapper
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-" }}} Autocompletion using the TAB key
+"function! InsertTabWrapper()
+  "let col = col('.') - 1
+  "if !col || getline('.')[col - 1] !~ '\k'
+    "return "\<TAB>"
+  "else
+    "if pumvisible()
+      "return "\<C-N>"
+    "else
+      "return "\<C-N>\<C-P>"
+    "end
+  "endif
+"endfunction
+""" Remap the tab key to select action with InsertTabWrapper
+"inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+""" }}} Autocompletion using the TAB key
 
 "-----------------------------------------------------------------------------
 " Plugin
@@ -347,6 +357,7 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 "
 " DESC: xmpfilterの呼び出し設定
 " <F1>でバッファ全体にxmpfilterを実行
+"{{{xmpfilter mapping
 nmap <silent> <F1> mzggVG!xmpfilter -a<cr>'z
 imap <silent> <F1> <ESC><F1>
 " <F2>で現在行/選択行にxmpfilterを実行
@@ -375,6 +386,7 @@ endfunction
 " JRuby用<F11>でバッファ全体にjxmpfilterを実行
 nmap <silent> <F11> mzggVG!jxmpfilter -a<cr>'z
 imap <silent> <F11> <ESC><F11>
+"}}}
 
 "-----------------------------------------------------------------------------
 " YankRing.vim
@@ -401,4 +413,138 @@ au BufEnter * execute ":lcd " . expand("%:p:h")
 au BufRead *.rb nmap <buffer> <C-]> :Refe <cword><CR>
 let g:loaded_lookupfile = 0
 let g:RefeUseLookupFile = 0
+
+"-----------------------------------------------------------------------------
+" powerline.vim
+"
+set guifont=Monaco\ for\ Powerline
+let g:Powerline_symbols = 'fancy'
+
+"-----------------------------------------------------------------------------
+" vundle.vim
+"
+" COMMAND
+"  :BundleInstall : Bundleされたプラグインをインストール
+"  :BundleSearch : vim-scriptにあるプラグインを検索
+
+"-----------------------------------------------------------------------------
+" NERD Commenter
+"
+" KEYMAP
+"  Ctrl-? : コメントアウト／イン（Ctrl-/ができなかったので代用）
+nmap <C-?> <Plug>NERDCommenterToggle
+vmap <C-?><CR> <Plug>NERDCommenterToggle
+vmap <C-?>s <Plug>NERDCommenterSexy
+
+"-----------------------------------------------------------------------------
+" ref.vim
+"
+" COMMAND
+"  :Ref refe Array
+" KEYMAP
+"  Shift-K : 単語を検索
+let g:ref_use_vimproc = 0
+let g:ref_refe_version = 2
+"nmap ,rr :<C-u>Ref refe<Space>
+
+"-----------------------------------------------------------------------------
+" neocomplecache.vim
+"
+" {{{ neocomplecache config
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+
+" Enable heavy features.
+" Use camel case completion.
+"let g:neocomplcache_enable_camel_case_completion = 1
+" Use underbar completion.
+"let g:neocomplcache_enable_underbar_completion = 1
+
+" Define dictionary.
+let g:neocomplcache_dictionary_filetype_lists = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr><C-l>     neocomplcache#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplcache#smart_close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+inoremap <expr><C-e>  neocomplcache#cancel_popup()
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
+
+" For cursor moving in insert mode(Not recommended)
+"inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
+"inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
+"inoremap <expr><Up>    neocomplcache#close_popup() . "\<Up>"
+"inoremap <expr><Down>  neocomplcache#close_popup() . "\<Down>"
+" Or set this.
+"let g:neocomplcache_enable_cursor_hold_i = 1
+" Or set this.
+"let g:neocomplcache_enable_insert_char_pre = 1
+
+" AutoComplPop like behavior.
+"let g:neocomplcache_enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplcache_enable_auto_select = 1
+"let g:neocomplcache_disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+if !exists('g:neocomplcache_force_omni_patterns')
+  let g:neocomplcache_force_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.php =
+\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+let g:neocomplcache_omni_patterns.c =
+\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
+let g:neocomplcache_omni_patterns.cpp =
+\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplcache_omni_patterns.perl =
+\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+"}}}
 
