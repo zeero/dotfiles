@@ -56,7 +56,6 @@ Packages/Default/Symbol List.tmPreferences
 Packages/Default/Symbol List.tmPreferences.cache
 Packages/Default/Syntax Summary.cache
 Packages/Default/Syntax.sublime-menu
-Packages/Default/Tab Context.sublime-menu
 Packages/Default/Widget Context.sublime-menu
 Packages/Default/Widget.sublime-settings
 Packages/Default/comment.py
@@ -154,7 +153,6 @@ Packages/Textile/
 Packages/Theme - Default/
 Packages/Theme - Phoenix/
 Packages/User/Default (Linux).sublime-keymap
-Packages/User/Default (Windows).sublime-keymap
 Packages/User/Package Control.last-run
 Packages/User/Package Control.sublime-settings
 Packages/User/Side Bar.sublime-settings
