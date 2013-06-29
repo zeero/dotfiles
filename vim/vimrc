@@ -44,8 +44,12 @@ call vundle#rc()
 " original repos on github
 Bundle 'gmarik/vundle'
 Bundle 'Shougo/neocomplcache'
+Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/vimproc'
 Bundle 'thinca/vim-ref'
+Bundle 'thinca/vim-quickrun'
 Bundle 'tpope/vim-rails.git'
+Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-fugitive'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'Lokaltog/vim-powerline'
@@ -53,7 +57,7 @@ Bundle 'Lokaltog/vim-powerline'
 Bundle 'wombat256.vim'
 Bundle 'molokai'
 Bundle 'ScrollColors'
-Bundle 'YankRing.vim'
+"Bundle 'YankRing.vim'
 Bundle 'ZenCoding.vim'
 "Bundle 'AutoClose'
 Bundle 'The-NERD-Commenter'
@@ -223,8 +227,6 @@ set autoindent
 set smartindent
 " バックスペースでインデントや改行を削除できるようにする
 set backspace=2
-" 検索時にファイルの最後まで行ったら最初に戻る (nowrapscan:戻らない)
-set wrapscan
 " 括弧入力時に対応する括弧を表示 (noshowmatch:表示しない)
 set showmatch
 " コマンドライン補完するときに強化されたものを使う(参照 :help wildmenu)
@@ -307,18 +309,18 @@ au FileType ruby set fenc=utf8 ff=unix
 "git commit -v で対応するためコメントアウト
 "au BufRead COMMIT_EDITMSG DiffGitCached
 " テンプレート設定
-augroup SkeletonAu
-  autocmd!
-  autocmd BufNewFile *.html 0r $HOME/.vim/skel/skel.html
-  autocmd BufNewFile *_spec.rb 0r $HOME/.vim/skel/skel_spec.rb
-augroup END
+"augroup SkeletonAu
+  "autocmd!
+  "autocmd BufNewFile *.html 0r $HOME/.vim/skel/skel.html
+  "autocmd BufNewFile *_spec.rb 0r $HOME/.vim/skel/skel_spec.rb
+"augroup END
 
 "-----------------------------------------------------------------------------
 " マップ定義
 "
 " バッファ移動用キーマップ
-" H: 前のバッファ
-" L: 次のバッファ
+"  H : 前のバッファ
+"  L : 次のバッファ
 map H <ESC>:bp<CR>
 map L <ESC>:bn<CR>
 " 表示行単位で行移動
@@ -329,7 +331,7 @@ nnoremap k gk
 " 補完機能
 "
 " <Tab>で補完 (neocomplcacheで代用されてそうなのでコメントアウト）
-" {{{ Autocompletion using the TAB key
+" {{{ Autocompletion using TAB key (disable)
 " This function determines, wether we are on the start of the line text (then tab indents) or
 " if we want to try autocompletion
 "function! InsertTabWrapper()
@@ -346,7 +348,7 @@ nnoremap k gk
 "endfunction
 """ Remap the tab key to select action with InsertTabWrapper
 "inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-""" }}} Autocompletion using the TAB key
+"}}}
 
 "-----------------------------------------------------------------------------
 " Plugin
@@ -357,49 +359,54 @@ nnoremap k gk
 "
 " DESC: xmpfilterの呼び出し設定
 " <F1>でバッファ全体にxmpfilterを実行
-"{{{xmpfilter mapping
-nmap <silent> <F1> mzggVG!xmpfilter -a<cr>'z
-imap <silent> <F1> <ESC><F1>
-" <F2>で現在行/選択行にxmpfilterを実行
-map <silent> <F2> !xmpfilter -a<cr>
-nmap <silent> <F2> V<F2>
-imap <silent> <F2> <ESC><F2>a
-" <F3>で現在行/選択行に「# =>」マークを追加
-vmap <silent> <F3> !xmpfilter -m<cr>
-nmap <silent> <F3> V<F3>
-imap <silent> <F3> <ESC><F3>a
-" <F4>で現在行/選択行の「# =>」マークを削除
-vmap <silent> <F4> ms:call RemoveRubyEval()<CR>
-nmap <silent> <F4> V<F4>
-imap <silent> <F4> <ESC><F4>a
-" RemoveRubyEval() の定義
-function! RemoveRubyEval() range
-  let begv = a:firstline
-  let endv = a:lastline
-  normal Hmt
-  set lz
-  execute ":" . begv . "," . endv . 's/\s*# \(=>\|!!\).*$//e'
-  normal 'tzt`s
-  set nolz
-  redraw
-endfunction
-" JRuby用<F11>でバッファ全体にjxmpfilterを実行
-nmap <silent> <F11> mzggVG!jxmpfilter -a<cr>'z
-imap <silent> <F11> <ESC><F11>
+"{{{ xmpfilter mapping (disable)
+"nmap <silent> <F1> mzggVG!xmpfilter -a<cr>'z
+"imap <silent> <F1> <ESC><F1>
+"" <F2>で現在行/選択行にxmpfilterを実行
+"map <silent> <F2> !xmpfilter -a<cr>
+"nmap <silent> <F2> V<F2>
+"imap <silent> <F2> <ESC><F2>a
+"" <F3>で現在行/選択行に「# =>」マークを追加
+"vmap <silent> <F3> !xmpfilter -m<cr>
+"nmap <silent> <F3> V<F3>
+"imap <silent> <F3> <ESC><F3>a
+"" <F4>で現在行/選択行の「# =>」マークを削除
+"vmap <silent> <F4> ms:call RemoveRubyEval()<CR>
+"nmap <silent> <F4> V<F4>
+"imap <silent> <F4> <ESC><F4>a
+"" RemoveRubyEval() の定義
+"function! RemoveRubyEval() range
+  "let begv = a:firstline
+  "let endv = a:lastline
+  "normal Hmt
+  "set lz
+  "execute ":" . begv . "," . endv . 's/\s*# \(=>\|!!\).*$//e'
+  "normal 'tzt`s
+  "set nolz
+  "redraw
+"endfunction
+"" JRuby用<F11>でバッファ全体にjxmpfilterを実行
+"nmap <silent> <F11> mzggVG!jxmpfilter -a<cr>'z
+"imap <silent> <F11> <ESC><F11>
 "}}}
 
 "-----------------------------------------------------------------------------
 " YankRing.vim
 "
 " ヒストリファイルの保存場所変更
-let g:yankring_history_dir = '$HOME/.vim'
+"let g:yankring_history_dir = '$HOME/.vim'
 " マップ定義
-nmap <C-Y> :YRShow<CR>
+"nmap <C-Y> :YRShow<CR>
 
 "-----------------------------------------------------------------------------
 " zencoding.vim
 "
-let g:user_zen_leader_key = '<C-m>'
+" KEYMAP:
+"  <Leader>, : 展開
+let g:user_zen_leader_key = '<Leader>'
+let s:zen_settings = {
+\  'indentication' : "  "
+\}
 
 "-----------------------------------------------------------------------------
 " CD.vim : ファイルを開くと、そのファイルと同じディレクトリに移動
@@ -423,14 +430,14 @@ let g:Powerline_symbols = 'fancy'
 "-----------------------------------------------------------------------------
 " vundle.vim
 "
-" COMMAND
+" COMMAND:
 "  :BundleInstall : Bundleされたプラグインをインストール
 "  :BundleSearch : vim-scriptにあるプラグインを検索
 
 "-----------------------------------------------------------------------------
 " NERD Commenter
 "
-" KEYMAP
+" KEYMAP:
 "  Ctrl-? : コメントアウト／イン（Ctrl-/ができなかったので代用）
 nmap <C-?> <Plug>NERDCommenterToggle
 vmap <C-?><CR> <Plug>NERDCommenterToggle
@@ -439,9 +446,9 @@ vmap <C-?>s <Plug>NERDCommenterSexy
 "-----------------------------------------------------------------------------
 " ref.vim
 "
-" COMMAND
+" COMMAND:
 "  :Ref refe Array
-" KEYMAP
+" KEYMAP:
 "  Shift-K : 単語を検索
 let g:ref_use_vimproc = 0
 let g:ref_refe_version = 2
@@ -469,14 +476,14 @@ let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
+\  'default' : '',
+\  'vimshell' : $HOME.'/.vimshell_hist',
+\  'scheme' : $HOME.'/.gosh_completions'
+\}
 
 " Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
+  let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
@@ -547,4 +554,40 @@ let g:neocomplcache_omni_patterns.cpp =
 let g:neocomplcache_omni_patterns.perl =
 \ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 "}}}
+
+"-----------------------------------------------------------------------------
+" quickrun.vim
+"
+" COMMAND:
+"  :QuickRun -args foo
+" KEYMAP:
+"  <Leader>r : バッファの内容を実行
+"{{{ quickrun config
+let g:quickrun_config = {}
+let g:quickrun_config = {
+\  "_" : {
+\    'runner' : 'vimproc',
+\    'outputter' : 'error',
+\    'outputter/error' : 'quickfix',
+\    'outputter/error/success' : 'buffer',
+\    'outputter/buffer/split' : ':aboveleft',
+\    'outpurter/buffer/close_on_empty' : 1
+\  },
+\}
+let g:quickrun_config['ruby.rspec'] = { 'command': 'rspec' }
+augroup RSpec
+  autocmd!
+  autocmd BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
+augroup END
+" <C-c> で実行を強制終了させる
+" quickrun.vim が実行していない場合には <C-c> を呼び出す
+nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+"}}}
+
+"-----------------------------------------------------------------------------
+" unite.vim
+"
+" COMMAND:
+"  :Unite source  : コマンド一覧を表示
+nmap <Leader>u :Unite<Space>source<CR>
 
