@@ -236,7 +236,7 @@ au BufRead,BufNew,BufNewFile * set formatoptions-=o
 " 文字数による自動折り返しはしない
 au BufRead,BufNew * set textwidth=0
 " 区切り文字設定
-"set iskeyword+=-\,:
+set iskeyword+=-
 " 日本語整形スクリプト(by. 西岡拓洋さん)用の設定
 let format_allow_over_tw = 1	" ぶら下り可能幅
 " 編集後保存していなくても別のファイルを開く
