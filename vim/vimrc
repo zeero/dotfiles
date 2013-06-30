@@ -57,10 +57,7 @@ Bundle 'Lokaltog/vim-powerline'
 Bundle 'wombat256.vim'
 Bundle 'molokai'
 Bundle 'ScrollColors'
-"Bundle 'YankRing.vim'
 Bundle 'ZenCoding.vim'
-"Bundle 'AutoClose'
-Bundle 'The-NERD-Commenter'
 filetype plugin indent on
 
 "{{{ Kaoriya設定
@@ -289,7 +286,7 @@ let g:molokai_original = 1
 set laststatus=2
 " ステータスラインに文字コードと改行文字とファイルタイプを表示する
 "set statusline=%<%f\%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c
-set statusline=%<%t\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}%=%l,%c%V%8P
+"set statusline=%<%t\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}%=%l,%c%V%8P
 
 "---------------------------------------------------------------------------
 " ファイル操作に関する設定:
@@ -402,8 +399,9 @@ nnoremap k gk
 " zencoding.vim
 "
 " KEYMAP:
-"  <Leader>, : 展開
-let g:user_zen_leader_key = '<Leader>'
+"  <C-e>, : 展開
+"  <C-e>/ : コメントアウト／イン
+let g:user_zen_leader_key = '<C-e>'
 let s:zen_settings = {
 \  'indentication' : "  "
 \}
@@ -417,9 +415,9 @@ au BufEnter * execute ":lcd " . expand("%:p:h")
 "-----------------------------------------------------------------------------
 " refe.vim
 "
-au BufRead *.rb nmap <buffer> <C-]> :Refe <cword><CR>
-let g:loaded_lookupfile = 0
-let g:RefeUseLookupFile = 0
+"au BufRead *.rb nmap <buffer> <C-]> :Refe <cword><CR>
+"let g:loaded_lookupfile = 0
+"let g:RefeUseLookupFile = 0
 
 "-----------------------------------------------------------------------------
 " powerline.vim
@@ -435,28 +433,21 @@ let g:Powerline_symbols = 'fancy'
 "  :BundleSearch : vim-scriptにあるプラグインを検索
 
 "-----------------------------------------------------------------------------
-" NERD Commenter
-"
-" KEYMAP:
-"  Ctrl-? : コメントアウト／イン（Ctrl-/ができなかったので代用）
-nmap <C-?> <Plug>NERDCommenterToggle
-vmap <C-?><CR> <Plug>NERDCommenterToggle
-vmap <C-?>s <Plug>NERDCommenterSexy
-
-"-----------------------------------------------------------------------------
 " ref.vim
 "
 " COMMAND:
 "  :Ref refe Array
 " KEYMAP:
 "  Shift-K : 単語を検索
-let g:ref_use_vimproc = 0
+let g:ref_use_vimproc = 1 " 0:disable / 1:enable
 let g:ref_refe_version = 2
 "nmap ,rr :<C-u>Ref refe<Space>
 
 "-----------------------------------------------------------------------------
 " neocomplecache.vim
 "
+" KEYMAP:
+"  <Tab> : 補完
 " {{{ neocomplecache config
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
@@ -467,30 +458,30 @@ let g:neocomplcache_enable_smart_case = 1
 " Set minimum syntax keyword length.
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
+"
 " Enable heavy features.
 " Use camel case completion.
 "let g:neocomplcache_enable_camel_case_completion = 1
 " Use underbar completion.
 "let g:neocomplcache_enable_underbar_completion = 1
-
+"
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
 \  'default' : '',
 \  'vimshell' : $HOME.'/.vimshell_hist',
 \  'scheme' : $HOME.'/.gosh_completions'
 \}
-
+"
 " Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
   let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
+"
 " Plugin key-mappings.
 inoremap <expr><C-g>     neocomplcache#undo_completion()
 inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
+"
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
@@ -505,10 +496,10 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
+"inoremap <expr><C-e>  neocomplcache#cancel_popup()
 " Close popup by <Space>.
 "inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
-
+"
 " For cursor moving in insert mode(Not recommended)
 "inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
 "inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
@@ -518,23 +509,23 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 "let g:neocomplcache_enable_cursor_hold_i = 1
 " Or set this.
 "let g:neocomplcache_enable_insert_char_pre = 1
-
+"
 " AutoComplPop like behavior.
 "let g:neocomplcache_enable_auto_select = 1
-
+"
 " Shell like behavior(not recommended).
 "set completeopt+=longest
 "let g:neocomplcache_enable_auto_select = 1
 "let g:neocomplcache_disable_auto_complete = 1
 "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
+"
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
+"
 " Enable heavy omni completion.
 if !exists('g:neocomplcache_omni_patterns')
   let g:neocomplcache_omni_patterns = {}
@@ -548,7 +539,7 @@ let g:neocomplcache_omni_patterns.c =
 \ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
 let g:neocomplcache_omni_patterns.cpp =
 \ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-
+"
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
 let g:neocomplcache_omni_patterns.perl =
@@ -590,4 +581,12 @@ nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() 
 " COMMAND:
 "  :Unite source  : コマンド一覧を表示
 nmap <Leader>u :Unite<Space>source<CR>
+
+"-----------------------------------------------------------------------------
+" fugitive.vim
+"
+" COMMAND:
+"  :Gstatus    : git status
+"  :Gwrite     : git add
+"  :Gcommit -v : git commit -v
 
