@@ -18,22 +18,23 @@ colorscheme ZeeroBlue
 " キー設定
 "
 
-" OSのキーバインドを再現
-noremap <C-a> <C-v><C-a>
-noremap <C-c> <C-v><C-c>
-
-inoremap <C-a> <C-v><C-a>
-inoremap <C-c> <C-v><C-c>
-inoremap <C-v> <C-v><C-v>
-inoremap <C-x> <C-v><C-x>
-inoremap <C-z> <C-v><C-z>
-inoremap <C-Space> <C-v><C-Space>
-
-cnoremap <C-a> <C-v><C-a>
-cnoremap <C-c> <C-v><C-c>
-cnoremap <C-v> <C-v><C-v>
-cnoremap <C-x> <C-v><C-x>
-cnoremap <C-z> <C-v><C-z>
+" OSのキーバインドを再現 
+"noremap <C-a> <C-v><C-a>
+"noremap <C-c> <C-v><C-c>
+"
+"inoremap <C-a> <C-v><C-a>
+"inoremap <C-c> <C-v><C-c>
+"inoremap <C-v> <C-v><C-v>
+"inoremap <C-x> <C-v><C-x>
+"inoremap <C-z> <C-v><C-z>
+"inoremap <C-Space> <C-v><C-Space>
+"
+"cnoremap <C-a> <C-v><C-a>
+"cnoremap <C-c> <C-v><C-c>
+"cnoremap <C-v> <C-v><C-v>
+"cnoremap <C-x> <C-v><C-x>
+"cnoremap <C-z> <C-v><C-z>
+noremap <C-p> :ha<CR>
 
 "h/lで戻る/進む
 noremap h <A-Left>
@@ -50,15 +51,23 @@ noremap <C-l> :tabm 100<CR>
 " プラグインの設定
 "
 
-"""""""""""""""""""""""""""""""""""""""
 " feedSomeKeys_2.js
-autocmd LocationChange .* fmapc
-autocmd LocationChange mail\.google\.com/mail fmap! c / j k n p o u e x s r a # [ ] z ? gi gs gt gd ga gc f l U I .
-autocmd LocationChange www\.google\.com/reader fmap! -vkey j k n p m s v A r S N P X O gh ga gs gt gu u / ? J K D T
-autocmd LocationChange code\.google\.com/p/ fmap! j k n p o x u r / c s ?
+"autocmd LocationChange .* fmapc
+"autocmd LocationChange mail\.google\.com/mail fmap! c / j k n p o u e x s r a # [ ] z ? gi gs gt gd ga gc f l U I .
+"autocmd LocationChange www\.google\.com/reader fmap! -vkey j k n p m s v A r S N P X O gh ga gs gt gu u / ? J K D T
+"autocmd LocationChange code\.google\.com/p/ fmap! j k n p o x u r / c s ?
 "autocmd LocationChange github\.com/zeero/xpash/issues fmap! j k o x u / c s ? e l i
 
-"""""""""""""""""""""""""""""""""""""""
+" feedSomeKeys_3.js
+:command! -nargs=+ lazy autocmd VimperatorEnter .* &lt;args>
+:lazy fmaps -u='mail\.google\.com/mail' c / j k n p o u e x s r a # [ ] ? gi gs gt gd ga gc
+:lazy fmaps -u='mail\.google\.com/mail/.*/[0-9a-f]+$' c / j,n k,p n,j p,k o u e x s r a # [ ] ? gi gs gt gd ga gc
+:lazy fmaps -u='www\.google\.co\.jp/reader' -events=vkeypress j k n p m s v A r S N P X O gh ga gs gt gu u / ? J K
+:lazy fmaps -u='(fastladder|livedoor)\.com/reader' j k s a p o v c i,p &lt;Space> &lt;S-Space> z b &lt; > q w e,g
+:lazy fmaps -u='https?://www\.rememberthemilk\.com/home/' j k m i c t ? d F,f G,g S,s L,l Y,y H,h M,m &lt;Del> &lt;C-S-Left> &lt;C-S-Right>
+:lazy fmaps -u='http://code.google.com/p/vimperator-labs/issues/list' o j k
+:lazy fmaps -u='http://code.google.com/p/vimperator-labs/issues/detail' u
+
 " copy.js
 javascript <<EOM
 liberator.globalVariables.copy_templates = [
