@@ -5,7 +5,7 @@
  * @version 0.6.4
  */
 
-let PLUGIN_INFO =
+let PLUGIN_INFO = xml`
 <VimperatorPlugin>
 <name>{NAME}</name>
 <description>convert bookmarklets to commands</description>
@@ -14,7 +14,7 @@ let PLUGIN_INFO =
 <version>0.6.6</version>
 <minVersion>2.0pre</minVersion>
 <maxVersion>2.1pre</maxVersion>
-<updateURL>http://svn.coderepos.org/share/lang/javascript/vimperator-plugins/trunk/commandBookmarklet.js</updateURL>
+<updateURL>https://github.com/vimpr/vimperator-plugins/raw/master/commandBookmarklet.js</updateURL>
 <detail><![CDATA[
 == SYNOPSIS ==
   This plugin automatically converts bookmarklets to valid commands for Vimperator.
@@ -60,7 +60,7 @@ let PLUGIN_INFO =
   この問題を避けるためにブックマークレットのタイトルを ASCII 文字のみに書き換えることをおすすめします。
 
 ]]></detail>
-</VimperatorPlugin>;
+</VimperatorPlugin>`;
 
 ( function () {
 
@@ -75,15 +75,16 @@ if (!items.length) {
 }
 
 items.forEach(function (item) {
-  if (typeof item.keyword != 'undefined') {
-    commands.addUserCommand(
-      [toValidCommandName(item.keyword)],
-      'bookmarklet : ' + item.title,
-      function () evalScript(item.url),
-      { shortHelp: 'Bookmarklet' },
-      false
-    );
-  }
+  let name = toValidCommandName(item.title);
+  if (commands.get(name))
+    return;
+  commands.addUserCommand(
+    [name],
+    'bookmarklet : ' + item.title,
+    function () evalScript(item.url),
+    { shortHelp: 'Bookmarklet' },
+    false
+  );
 });
 
 function toBoolean (value, def) {
