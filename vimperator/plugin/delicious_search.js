@@ -1,8 +1,9 @@
-let PLUGIN_INFO =
+let PLUGIN_INFO = xml`
 <VimperatorPlugin>
 <name>{NAME}</name>
 <description>search DeliciousBookmark and that completer</description>
 <require type="extension" id="{2fa4ed95-0317-4c6a-a74c-5f3e3912c1f9}">Delicious Bookmarks</require>
+<require type="extension" id="delicious@vjkarunapg.com">Delicious Extension</require>
 <author mail="teramako@gmail.com" homepage="http://vimperator.g.hatena.ne.jp/teramako/">teramako</author>
 <version>0.3</version>
 <minVersion>2.0pre</minVersion>
@@ -39,21 +40,16 @@ set go-=D
 ||<
 
 ]]></detail>
-</VimperatorPlugin>;
+</VimperatorPlugin>`;
 
 liberator.plugins.delicious = (function(){
 
-let uuid = PLUGIN_INFO.require[0].@id.toString();
+const YDELS_CLASS = "@yahoo.com/nsYDelLocalStore;1";
 let ydls = null;
-if ( typeof Application.extensions === "object" && Application.extensions.has(uuid) && Application.extensions.get(uuid).enabled ){
-  ydls = Cc["@yahoo.com/nsYDelLocalStore;1"].getService(Ci.nsIYDelLocalStore);
-}
-else if ( typeof Application.getExtensions === "function" ) {
-  Application.getExtensions(function(extensions) {
-    if ( extensions.has(uuid) && extensions.get(uuid).enabled ) {
-      ydls = Cc["@yahoo.com/nsYDelLocalStore;1"].getService(Ci.nsIYDelLocalStore);
-    }
-  });
+if (YDELS_CLASS in Cc) {
+  ydls = Cc[YDELS_CLASS].getService(Ci.nsIYDelLocalStore);
+} else {
+  return;
 }
 const ss = Cc["@mozilla.org/storage/service;1"].getService(Ci.mozIStorageService);
 
@@ -189,11 +185,11 @@ function templateDescription(item){
 }
 function templateTitleAndIcon(item){
   let simpleURL = item.text.replace(/^https?:\/\//, '');
-  return <>
-    <span highlight="CompIcon">{item.icon ? <img src={item.icon}/> : <></>}</span><span class="td-strut"/>{item.name}<a href={item.text} highlight="simpleURL">
+  return `
+    <span highlight="CompIcon">{item.icon ? <img src={item.icon}/> : ``}</span><span class="td-strut"/>{item.name}<a href={item.text} highlight="simpleURL">
       <span class="extra-info">{simpleURL}</span>
     </a>
-  </>;
+  `;
 }
 
 commands.addUserCommand(["delicious[search]","ds[earch]"], "Delicious Bookmark Search",
@@ -205,7 +201,7 @@ commands.addUserCommand(["delicious[search]","ds[earch]"], "Delicious Bookmark S
     let list = bookmarkSearch(args["-tags"], args["-query"]);
     let xml = template.tabular(["Title","Tags and Note"], [], list.map(function(item){
       return [
-        <><img src={item.icon}/><a highlight="URL" href={item.url}>{item.name}</a></>,
+        `<img src={item.icon}/><a highlight="URL" href={item.url}>{item.name}</a>`,
         "[" + item.tags.join(",") + "] " + item.note
       ];
     }));
@@ -284,7 +280,7 @@ let self = {
 };
 self.init();
 liberator.registerObserver("shutdown", self.close);
-config.guioptions['D'] = ['Delicious Toolbar',['ybToolbar']];
+config.toolbars.delicious = [['ybToolbar'], 'Delicious Toolbar'];
 completion.addUrlCompleter("D", "Delicious Bookmarks", self.urlCompleter);
 return self;
 })();
