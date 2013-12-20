@@ -39,8 +39,13 @@ set nocompatible
 " vundle
 "
 filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+if has("win32") || has("win64") 
+  set rtp+=~/vimfiles/bundle/vundle 
+  call vundle#rc('~/vimfiles/bundle') 
+else 
+  set rtp+=~/.vim/bundle/vundle 
+  call vundle#rc() 
+endif 
 " original repos on github
 Bundle 'gmarik/vundle'
 Bundle 'Shougo/neocomplcache'
