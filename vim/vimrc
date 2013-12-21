@@ -256,6 +256,8 @@ augroup vimrc-checktime
   autocmd!
   autocmd WinEnter * checktime
 augroup END
+" バッファがローカルバッファに表示されなくなった場合は削除する
+set bufhidden=wipe
 
 "---------------------------------------------------------------------------
 " GUI固有ではない画面表示の設定:
