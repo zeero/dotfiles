@@ -3,7 +3,7 @@
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim7用試作
 "
-" Last Change: 22-Jun-2013.
+" Last Change: 22-Dec-2013.
 " Maintainer:  MURAOKA Taro <koron@tka.att.ne.jp>
 "
 " 解説:
@@ -53,6 +53,7 @@ Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/vimproc'
 Bundle 'thinca/vim-ref'
 Bundle 'thinca/vim-quickrun'
+Bundle 'thinca/vim-singleton'
 Bundle 'tpope/vim-rails.git'
 Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-fugitive'
@@ -431,8 +432,10 @@ let g:RefeUseLookupFile = 0
 "-----------------------------------------------------------------------------
 " powerline.vim
 "
-set guifont=Monaco\ for\ Powerline
-let g:Powerline_symbols = 'fancy'
+if has('mac')
+  set guifont=Monaco\ for\ Powerline
+  let g:Powerline_symbols = 'fancy'
+endif
 
 "-----------------------------------------------------------------------------
 " vundle.vim
