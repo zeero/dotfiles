@@ -39,9 +39,14 @@ set nocompatible
 " vundle
 "
 filetype off
-set rtp&
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+if has("win32") || has("win64")
+  set rtp+=~/vimfiles/bundle/vundle
+  call vundle#rc('~/vimfiles/bundle')
+else
+  set rtp&
+  set rtp+=~/.vim/bundle/vundle 
+  call vundle#rc()
+endif
 " original repos on github
 Bundle 'gmarik/vundle'
 Bundle 'Shougo/neocomplcache'
@@ -50,6 +55,7 @@ Bundle 'Shougo/vimproc'
 Bundle 'thinca/vim-ref'
 Bundle 'thinca/vim-quickrun'
 Bundle 'tyru/open-browser.vim'
+Bundle 'thinca/vim-singleton'
 Bundle 'tpope/vim-rails.git'
 Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-fugitive'
@@ -263,6 +269,10 @@ augroup vimrc-checktime
   autocmd!
   autocmd WinEnter * checktime
 augroup END
+" バッファがローカルバッファに表示されなくなった場合は削除する
+if has('gui_running')
+  set bufhidden=wipe
+endif
 
 "---------------------------------------------------------------------------
 " GUI固有ではない画面表示の設定:
@@ -476,8 +486,10 @@ au BufEnter * execute ":lcd " . expand("%:p:h")
 "-----------------------------------------------------------------------------
 " powerline.vim
 "
-set guifont=Monaco\ for\ Powerline
-let g:Powerline_symbols = 'fancy'
+if has('mac')
+  set guifont=Monaco\ for\ Powerline
+  let g:Powerline_symbols = 'fancy'
+endif
 
 "-----------------------------------------------------------------------------
 " vundle.vim
