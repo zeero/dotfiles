@@ -63,9 +63,7 @@ Bundle 'thinca/vim-singleton'
 Bundle 'tpope/vim-rails.git'
 Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-fugitive'
-if has('mac') || has('gui_running')
-  Bundle 'Lokaltog/vim-powerline'
-endif
+Bundle 'itchyny/lightline.vim'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'mattn/benchvimrc-vim'
@@ -81,7 +79,9 @@ filetype plugin indent on
 "-----------------------------------------------------------------------------
 " singleton.vim
 "
-call singleton#enable()
+if has('gui_running')
+  call singleton#enable()
+endif
 
 "{{{ Kaoriya設定
 "---------------------------------------------------------------------------
@@ -507,14 +507,6 @@ au BufEnter * execute ":lcd " . expand("%:p:h")
 "let g:RefeUseLookupFile = 0
 
 "-----------------------------------------------------------------------------
-" powerline.vim
-"
-if has('mac')
-  set guifont=Monaco\ for\ Powerline
-  let g:Powerline_symbols = 'fancy'
-endif
-
-"-----------------------------------------------------------------------------
 " vundle.vim
 "
 " COMMAND:
@@ -703,4 +695,76 @@ nnoremap <Leader>u :Unite<Space>source<CR>
 " markdown.vim
 "
 "let g:quickrun_config['mkd'] { 'outputter' : 'browser' }
+
+"-----------------------------------------------------------------------------
+" lightline.vim
+"
+"{{{ lightline config
+let g:lightline = {
+\  'mode_map': {'c': 'NORMAL'},
+\  'active': {
+\    'left': [['mode', 'paste'], ['filename', 'fugitive']]
+\  },
+\  'inactive': {
+\    'right': []
+\  },
+\  'component_function': {
+\    'modified': 'MyModified',
+\    'readonly': 'MyReadonly',
+\    'fugitive': 'MyFugitive',
+\    'filename': 'MyFilename',
+\    'fileformat': 'MyFileformat',
+\    'filetype': 'MyFiletype',
+\    'fileencoding': 'MyFileencoding',
+\    'mode': 'MyMode'
+\  }
+\}
+
+function! MyModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '[RO]' : ''
+endfunction
+
+function! MyFilename()
+  return (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+\         &ft == 'unite' ? unite#get_status_string() :
+\         &ft == 'vimshell' ? vimshell#get_status_string() :
+\         '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+\        ('' != MyModified() ? ' ' . MyModified() : '') .
+\        ('' != MyReadonly() ? ' ' . MyReadonly() : '')
+endfunction
+
+function! MyFugitive()
+  try
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+      return fugitive#head()
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+  return &ft == 'help' ? 'Help' :
+\        &ft == 'unite' ? 'Unite' :
+\        &ft == 'vimfiler' ? 'VimFiler' :
+\        &ft == 'vimshell' ? 'VimShell' :
+\        winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+"}}}
 
