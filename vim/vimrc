@@ -3,7 +3,7 @@
 " An example for a Japanese version vimrc file.
 " 日本語版のデフォルト設定ファイル(vimrc) - Vim7用試作
 "
-" Last Change: 22-Jun-2013.
+" Last Change: 26-Dec-2013.
 " Maintainer:  MURAOKA Taro <koron@tka.att.ne.jp>
 "
 " 解説:
@@ -34,12 +34,15 @@
 "---------------------------------------------------------------------------
 "VI互換モードOFF
 set nocompatible
+"内部エンコーディングをutf-8に指定
+set encoding=utf-8
 
 "-----------------------------------------------------------------------------
 " vundle
 "
 filetype off
 if has("win32") || has("win64")
+  set rtp&
   set rtp+=~/vimfiles/bundle/vundle
   call vundle#rc('~/vimfiles/bundle')
 else
@@ -52,6 +55,8 @@ Bundle 'gmarik/vundle'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/vimproc'
+Bundle 'Shougo/vimshell'
+Bundle 'Shougo/vimfiler'
 Bundle 'thinca/vim-ref'
 Bundle 'thinca/vim-quickrun'
 Bundle 'tyru/open-browser.vim'
@@ -70,6 +75,11 @@ Bundle 'molokai'
 Bundle 'ScrollColors'
 Bundle 'ZenCoding.vim'
 filetype plugin indent on
+
+"-----------------------------------------------------------------------------
+" singleton.vim
+"
+call singleton#enable()
 
 "{{{ Kaoriya設定
 "---------------------------------------------------------------------------
@@ -312,6 +322,8 @@ set laststatus=2
 " ステータスラインに文字コードと改行文字とファイルタイプを表示する
 "set statusline=%<%f\%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c
 "set statusline=%<%t\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}%=%l,%c%V%8P
+" タブは非表示
+set showtabline=0
 
 "---------------------------------------------------------------------------
 " ファイル操作に関する設定:
@@ -433,7 +445,7 @@ let g:user_zen_togglecomment_key = '<C-_>'
 let s:zen_settings = {
 \  'indentication' : "  "
 \}
-"{{{ my snippets
+"{{{ my zencoding snippets
 let g:user_zen_settings = {
 \  'lang' : 'ja',
 \  'html' : {
@@ -469,6 +481,7 @@ let g:user_zen_settings = {
 \    'extends' : 'css',
 \  },
 \}
+"}}}
 
 "-----------------------------------------------------------------------------
 " CD.vim : ファイルを開くと、そのファイルと同じディレクトリに移動
@@ -499,9 +512,10 @@ endif
 "  :BundleSearch : vim-scriptにあるプラグインを検索
 
 "-----------------------------------------------------------------------------
-" minibufexpl.vim
+" MiniBufExplorer
 "
-let g:miniBufExplMinSize = 1
+" 自動起動
+let g:miniBufExplAutoStart = 1
 let g:miniBufExplBuffersNeeded = 1
 
 "-----------------------------------------------------------------------------
