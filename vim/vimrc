@@ -59,16 +59,18 @@ Bundle 'Shougo/vimshell'
 Bundle 'Shougo/vimfiler'
 Bundle 'thinca/vim-ref'
 Bundle 'thinca/vim-quickrun'
-Bundle 'tyru/open-browser.vim'
 Bundle 'thinca/vim-singleton'
 Bundle 'tpope/vim-rails.git'
 Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-fugitive'
-Bundle 'gregsexton/gitv'
+if has('mac') || has('gui_running')
+  Bundle 'Lokaltog/vim-powerline'
+endif
 Bundle 'fholgado/minibufexpl.vim'
-Bundle 'Lokaltog/vim-powerline'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'mattn/benchvimrc-vim'
+Bundle 'tyru/open-browser.vim'
+Bundle 'gregsexton/gitv'
 " vim-scripts repos
 Bundle 'wombat256.vim'
 Bundle 'molokai'
@@ -279,10 +281,6 @@ augroup vimrc-checktime
   autocmd!
   autocmd WinEnter * checktime
 augroup END
-" バッファがローカルバッファに表示されなくなった場合は削除する
-if has('gui_running')
-  set bufhidden=wipe
-endif
 
 "---------------------------------------------------------------------------
 " GUI固有ではない画面表示の設定:
@@ -320,15 +318,27 @@ let g:molokai_original = 1
 " 常にステータス行を表示 (詳細は:he laststatus)
 set laststatus=2
 " ステータスラインに文字コードと改行文字とファイルタイプを表示する
-"set statusline=%<%f\%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c
-"set statusline=%<%t\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}%=%l,%c%V%8P
+if !has('mac') && !has('gui_running')
+  "set statusline=%<%f\%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c
+  set statusline=%<%t\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}%=%l,%c%V%8P
+endif
 " タブは非表示
 set showtabline=0
 
 "---------------------------------------------------------------------------
+" GUI固有の画面表示の設定:
+"
+if has('gui_running')
+  " バッファがローカルバッファに表示されなくなった場合は削除する
+  set bufhidden=wipe
+  " ウィンドウサイズを最大化する
+  au GUIEnter * simalt ~x
+endif
+
+"---------------------------------------------------------------------------
 " ファイル操作に関する設定:
 "
-" バックアップファイルを作成しない (次行の先頭の " を削除すれば有効になる)
+" バックアップファイルを作成しない
 set nobackup
 set nowritebackup
 
