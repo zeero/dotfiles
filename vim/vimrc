@@ -31,14 +31,19 @@
 "   :version
 "}}}
 
+"{{{ 初期設定
 "---------------------------------------------------------------------------
 "VI互換モードOFF
 set nocompatible
 "内部エンコーディングをutf-8に指定
 set encoding=utf-8
 
-"-----------------------------------------------------------------------------
+"---------------------------------------------------------------------------
 " vundle
+"
+" COMMAND:
+"  :BundleInstall : Bundleされたプラグインをインストール
+"  :BundleSearch : vim-scriptにあるプラグインを検索
 "
 filetype off
 if has("win32") || has("win64")
@@ -76,12 +81,13 @@ Bundle 'ScrollColors'
 Bundle 'ZenCoding.vim'
 filetype plugin indent on
 
-"-----------------------------------------------------------------------------
+"---------------------------------------------------------------------------
 " singleton.vim
 "
 if has('gui_running')
   call singleton#enable()
 endif
+"}}}
 
 "{{{ Kaoriya設定
 "---------------------------------------------------------------------------
@@ -222,6 +228,7 @@ augroup END
 
 "}}}
 
+"{{{ 基本設定
 "---------------------------------------------------------------------------
 " 検索の挙動に関する設定:
 "
@@ -236,12 +243,12 @@ set wrapscan
 " 検索語が真ん中にくるようにする
 "  zz はカレント行を画面の中心にする。つまり n で検索語にカーソル移動したら
 "  勝手に zz でカレント行が画面の真ん中なるようにスクロールされるようになる。
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
-nnoremap g* g*zz
-nnoremap g# g#zz
+noremap n nzz
+noremap N Nzz
+noremap * *zz
+noremap # #zz
+noremap g* g*zz
+noremap g# g#zz
 
 "---------------------------------------------------------------------------
 " 編集に関する設定:
@@ -283,7 +290,7 @@ augroup vimrc-checktime
 augroup END
 
 "---------------------------------------------------------------------------
-" GUI固有ではない画面表示の設定:
+" 画面表示の設定:
 "
 " 行番号を非表示 (number:表示)
 set nonumber
@@ -341,6 +348,9 @@ endif
 " バックアップファイルを作成しない
 set nobackup
 set nowritebackup
+" ファイルを開くと、そのファイルと同じディレクトリに移動
+" 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
+au BufEnter * execute ":lcd " . expand("%:p:h")
 
 "-----------------------------------------------------------------------------
 " FileType設定
@@ -362,6 +372,15 @@ au FileType ruby set fenc=utf8 ff=unix
 "-----------------------------------------------------------------------------
 " マップ定義
 "
+" map系はリンク先のコマンドを再帰的に展開する。
+" noremap系はリンク先のコマンドを再帰的に展開しない。
+" 基本的にはnoremap系を使用する。
+"   カーソル移動 => noremap
+"   範囲選択     => vnoremap & onoremap
+"   テキスト入力補助 => inoremap
+"   機能呼び出し => nnoremap
+" <Nop>をリンク先に指定することでキーマップを無効にする。
+"
 " バッファ移動用キーマップ
 "  H : 前のバッファ
 "  L : 次のバッファ
@@ -370,6 +389,8 @@ nnoremap L <ESC>:bn<CR>
 " 表示行単位で行移動
 nnoremap j gj
 nnoremap k gk
+" Leaderキーを設定
+let mapleader=","
 
 "-----------------------------------------------------------------------------
 " 補完機能
@@ -394,149 +415,17 @@ nnoremap k gk
 "inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 "}}}
 
-"-----------------------------------------------------------------------------
-" Plugin
-"-----------------------------------------------------------------------------
-
-"-----------------------------------------------------------------------------
-" rcodetools.vim
-"
-" DESC: xmpfilterの呼び出し設定
-" <F1>でバッファ全体にxmpfilterを実行
-"{{{ xmpfilter mapping (disable)
-"nmap <silent> <F1> mzggVG!xmpfilter -a<cr>'z
-"imap <silent> <F1> <ESC><F1>
-"" <F2>で現在行/選択行にxmpfilterを実行
-"map <silent> <F2> !xmpfilter -a<cr>
-"nmap <silent> <F2> V<F2>
-"imap <silent> <F2> <ESC><F2>a
-"" <F3>で現在行/選択行に「# =>」マークを追加
-"vmap <silent> <F3> !xmpfilter -m<cr>
-"nmap <silent> <F3> V<F3>
-"imap <silent> <F3> <ESC><F3>a
-"" <F4>で現在行/選択行の「# =>」マークを削除
-"vmap <silent> <F4> ms:call RemoveRubyEval()<CR>
-"nmap <silent> <F4> V<F4>
-"imap <silent> <F4> <ESC><F4>a
-"" RemoveRubyEval() の定義
-"function! RemoveRubyEval() range
-  "let begv = a:firstline
-  "let endv = a:lastline
-  "normal Hmt
-  "set lz
-  "execute ":" . begv . "," . endv . 's/\s*# \(=>\|!!\).*$//e'
-  "normal 'tzt`s
-  "set nolz
-  "redraw
-"endfunction
-"" JRuby用<F11>でバッファ全体にjxmpfilterを実行
-"nmap <silent> <F11> mzggVG!jxmpfilter -a<cr>'z
-"imap <silent> <F11> <ESC><F11>
 "}}}
 
 "-----------------------------------------------------------------------------
-" YankRing.vim
-"
-" ヒストリファイルの保存場所変更
-"let g:yankring_history_dir = '$HOME/.vim'
-" マップ定義
-"nmap <C-Y> :YRShow<CR>
-
+" Plugin設定：
 "-----------------------------------------------------------------------------
-" zencoding.vim
-"
-" KEYMAP:
-"  <C-e> : 展開
-"  <C-_> : コメントアウト／イン
-"          （_と/が同じキーマップになってるのでCtrl+/でできる）
-"let g:user_zen_leader_key = '<C-y>'
-let g:user_zen_expandabbr_key = '<C-e>'
-let g:user_zen_togglecomment_key = '<C-_>'
-let s:zen_settings = {
-\  'indentication' : "  "
-\}
-"{{{ my zencoding snippets
-let g:user_zen_settings = {
-\  'lang' : 'ja',
-\  'html' : {
-\    'filters' : 'html',
-\    'snippets' : {
-\      'jq' : "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n<script>\n\\$(function() {\n\t|\n})()\n</script>",
-\      'cd' : "<![CDATA[|]]>",
-\      'meta:viewport' : "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">",
-\    },
-\  },
-\  'php' : {
-\    'extends' : 'html',
-\    'filters' : 'html,c',
-\  },
-\  'javascript' : {
-\    'snippets' : {
-\      'jq' : "\\$(function() {\n\t\\${cursor}\\${child}\n});",
-\      'jq:json' : "\\$.getJSON(\"${cursor}\", function(data) {\n\t\\${child}\n});",
-\      'jq:each' : "\\$.each(data, function(index, item) {\n\t\\${child}\n});",
-\      'fn' : "(function() {\n\t\\${cursor}\n})();",
-\      'tm' : "setTimeout(function() {\n\t\\${cursor}\n}, 100);",
-\    },
-\    'use_pipe_for_cursor' : 0,
-\  },
-\  'css' : {
-\    'filters' : 'fc',
-\    'snippets' : {
-\      'box-shadow' : "-webkit-box-shadow: 0 0 0 # 000;\n-moz-box-shadow: 0 0 0 0 # 000;\nbox-shadow: 0 0 0 # 000;",
-\    },
-\  },
-\  'less' : {
-\    'filters' : 'fc',
-\    'extends' : 'css',
-\  },
-\}
-"}}}
 
-"-----------------------------------------------------------------------------
-" CD.vim : ファイルを開くと、そのファイルと同じディレクトリに移動
-" 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
-"
-au BufEnter * execute ":lcd " . expand("%:p:h")
-
-"-----------------------------------------------------------------------------
-" refe.vim
-"
-"au BufRead *.rb nmap <buffer> <C-]> :Refe <cword><CR>
-"let g:loaded_lookupfile = 0
-"let g:RefeUseLookupFile = 0
-
-"-----------------------------------------------------------------------------
-" vundle.vim
-"
-" COMMAND:
-"  :BundleInstall : Bundleされたプラグインをインストール
-"  :BundleSearch : vim-scriptにあるプラグインを検索
-
-"-----------------------------------------------------------------------------
-" MiniBufExplorer
-"
-" 自動起動
-let g:miniBufExplAutoStart = 1
-let g:miniBufExplBuffersNeeded = 1
-
-"-----------------------------------------------------------------------------
-" ref.vim
-"
-" COMMAND:
-"  :Ref refe Array
-" KEYMAP:
-"  Shift-K : 単語を検索
-let g:ref_use_vimproc = 1 " 0:disable / 1:enable
-let g:ref_refe_version = 2
-"nmap ,rr :<C-u>Ref refe<Space>
-
-"-----------------------------------------------------------------------------
-" neocomplecache.vim
+"{{{ neocomplecache.vim
 "
 " KEYMAP:
 "  <Tab> : 補完
-" {{{ neocomplecache config
+"
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplcache.
@@ -635,6 +524,20 @@ let g:neocomplcache_omni_patterns.perl =
 "}}}
 
 "-----------------------------------------------------------------------------
+" unite.vim
+"
+" COMMAND:
+"  :Unite source  : コマンド一覧を表示
+nnoremap <Leader>uf :Unite<Space>file<CR>
+nnoremap <Leader>um :Unite<Space>file_mru<CR>
+nnoremap <Leader>ul :Unite<Space>source<CR>
+" 入力モードで開始
+let g:unite_enable_start_insert=1
+" ESCキーを2回押すと終了する
+au FileType unite nnoremap <ESC><ESC> <ESC>:q<CR>
+au FileType unite inoremap <ESC><ESC> <ESC>:q<CR>
+
+"-----------------------------------------------------------------------------
 " quickrun.vim
 "
 " COMMAND:
@@ -670,13 +573,6 @@ let g:quickrun_config['xhtml'] = { 'command' : 'open', 'exec' : '%c %s', 'output
 "}}}
 
 "-----------------------------------------------------------------------------
-" unite.vim
-"
-" COMMAND:
-"  :Unite source  : コマンド一覧を表示
-nnoremap <Leader>u :Unite<Space>source<CR>
-
-"-----------------------------------------------------------------------------
 " fugitive.vim
 "
 " COMMAND:
@@ -691,15 +587,52 @@ nnoremap <Leader>u :Unite<Space>source<CR>
 "  S' : ビジュアルモードで選択した範囲を'で囲む
 "  ds' : 'で囲まれた範囲を消す
 
-"-----------------------------------------------------------------------------
-" markdown.vim
+"{{{ rcodetools.vim
 "
-"let g:quickrun_config['mkd'] { 'outputter' : 'browser' }
+" DESC: xmpfilterの呼び出し設定
+" <F1>でバッファ全体にxmpfilterを実行
+"{{{ xmpfilter mapping (disable)
+"nmap <silent> <F1> mzggVG!xmpfilter -a<cr>'z
+"imap <silent> <F1> <ESC><F1>
+"" <F2>で現在行/選択行にxmpfilterを実行
+"map <silent> <F2> !xmpfilter -a<cr>
+"nmap <silent> <F2> V<F2>
+"imap <silent> <F2> <ESC><F2>a
+"" <F3>で現在行/選択行に「# =>」マークを追加
+"vmap <silent> <F3> !xmpfilter -m<cr>
+"nmap <silent> <F3> V<F3>
+"imap <silent> <F3> <ESC><F3>a
+"" <F4>で現在行/選択行の「# =>」マークを削除
+"vmap <silent> <F4> ms:call RemoveRubyEval()<CR>
+"nmap <silent> <F4> V<F4>
+"imap <silent> <F4> <ESC><F4>a
+"" RemoveRubyEval() の定義
+"function! RemoveRubyEval() range
+  "let begv = a:firstline
+  "let endv = a:lastline
+  "normal Hmt
+  "set lz
+  "execute ":" . begv . "," . endv . 's/\s*# \(=>\|!!\).*$//e'
+  "normal 'tzt`s
+  "set nolz
+  "redraw
+"endfunction
+"" JRuby用<F11>でバッファ全体にjxmpfilterを実行
+"nmap <silent> <F11> mzggVG!jxmpfilter -a<cr>'z
+"imap <silent> <F11> <ESC><F11>
+"}}}
+"}}}
 
-"-----------------------------------------------------------------------------
-" lightline.vim
+"{{{ MiniBufExplorer
 "
-"{{{ lightline config
+" 自動起動
+let g:miniBufExplAutoStart = 1
+let g:miniBufExplBuffersNeeded = 1
+"}}}
+
+"{{{ lightline.vim
+"
+" lightline config
 let g:lightline = {
 \  'mode_map': {'c': 'NORMAL'},
 \  'active': {
@@ -767,4 +700,80 @@ function! MyMode()
 \        winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 "}}}
+
+"-----------------------------------------------------------------------------
+" zencoding.vim
+"
+" KEYMAP:
+"  <C-e> : 展開
+"  <C-_> : コメントアウト／イン
+"          （_と/が同じキーマップになってるのでCtrl+/でできる）
+"
+" {{{ zencoding config
+"let g:user_zen_leader_key = '<C-y>'
+let g:user_zen_expandabbr_key = '<C-e>'
+let g:user_zen_togglecomment_key = '<C-_>'
+let s:zen_settings = {
+\  'indentication' : "  "
+\}
+" my zencoding snippets
+let g:user_zen_settings = {
+\  'lang' : 'ja',
+\  'html' : {
+\    'filters' : 'html',
+\    'snippets' : {
+\      'jq' : "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n<script>\n\\$(function() {\n\t|\n})()\n</script>",
+\      'cd' : "<![CDATA[|]]>",
+\      'meta:viewport' : "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">",
+\    },
+\  },
+\  'php' : {
+\    'extends' : 'html',
+\    'filters' : 'html,c',
+\  },
+\  'javascript' : {
+\    'snippets' : {
+\      'jq' : "\\$(function() {\n\t\\${cursor}\\${child}\n});",
+\      'jq:json' : "\\$.getJSON(\"${cursor}\", function(data) {\n\t\\${child}\n});",
+\      'jq:each' : "\\$.each(data, function(index, item) {\n\t\\${child}\n});",
+\      'fn' : "(function() {\n\t\\${cursor}\n})();",
+\      'tm' : "setTimeout(function() {\n\t\\${cursor}\n}, 100);",
+\    },
+\    'use_pipe_for_cursor' : 0,
+\  },
+\  'css' : {
+\    'filters' : 'fc',
+\    'snippets' : {
+\      'box-shadow' : "-webkit-box-shadow: 0 0 0 # 000;\n-moz-box-shadow: 0 0 0 0 # 000;\nbox-shadow: 0 0 0 # 000;",
+\    },
+\  },
+\  'less' : {
+\    'filters' : 'fc',
+\    'extends' : 'css',
+\  },
+\}
+"}}}
+
+"-----------------------------------------------------------------------------
+" ref.vim
+"
+" COMMAND:
+"  :Ref refe Array
+" KEYMAP:
+"  Shift-K : 単語を検索
+let g:ref_use_vimproc = 1 " 0:disable / 1:enable
+let g:ref_refe_version = 2
+"nmap ,rr :<C-u>Ref refe<Space>
+
+"-----------------------------------------------------------------------------
+" refe.vim
+"
+"au BufRead *.rb nmap <buffer> <C-]> :Refe <cword><CR>
+"let g:loaded_lookupfile = 0
+"let g:RefeUseLookupFile = 0
+
+"-----------------------------------------------------------------------------
+" markdown.vim
+"
+"let g:quickrun_config['mkd'] { 'outputter' : 'browser' }
 
