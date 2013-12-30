@@ -225,6 +225,8 @@ noremap * *zz
 noremap # #zz
 noremap g* g*zz
 noremap g# g#zz
+noremap { {zz
+noremap } }zz
 
 "---------------------------------------------------------------------------
 " 編集に関する設定:
@@ -277,8 +279,6 @@ augroup END
 if has('clipboard') && has('gui_running')
   set clipboard=unnamed
 endif
-" set paste/nopasteを切り替え
-set pastetoggle=<Leader>p
 
 "---------------------------------------------------------------------------
 " 画面表示の設定:
@@ -384,24 +384,50 @@ au myvimrc FileType ruby setlocal fenc=utf8 ff=unix
 " 基本的にはnoremap系を使用する。
 "   カーソル移動 => noremap
 "   範囲選択     => vnoremap & onoremap
+"     ビジュアルモードだけでセレクトモードを除くならxnoremp
 "   テキスト入力補助 => inoremap
-"   機能呼び出し => nnoremap
+"   機能呼び出し => cnoremap
 " <Nop>をリンク先に指定することでキーマップを無効にする。
 "
 " KEYMAP:
 " バッファ移動用キーマップ
-nnoremap H <ESC>:bp<CR>
-nnoremap L <ESC>:bn<CR>
+nnoremap H <Esc>:MBEbp<CR>
+nnoremap L <Esc>:MBEbn<CR>
 " 表示行単位で行移動
 nnoremap j gj
 nnoremap k gk
-" Leaderキーを設定
-let mapleader=","
-" コマンドモード時、現在のバッファのファイル名を出力
-cnoremap <C-f> <C-r>%
+xnoremap j gj
+xnoremap k gk
+" 行末までヤンク
+nnoremap Y y$
+" ウィンドウサイズ変更
+nnoremap + <C-w>+
+nnoremap - <C-w>-
+nnoremap _ <C-w>_
 " すべてのフォールディングの開け閉め
 nnoremap zO zR
 nnoremap zC zM
+
+" ジャンプ元に戻る
+nnoremap <Leader><C-]> <C-t>
+" コマンドモード時、現在のバッファのファイル名を出力
+cnoremap <C-f> <C-r>%
+" カーソルの下の単語でヘルプを引く
+nnoremap <C-h> :<C-u>help<Space><C-r><C-w><CR>
+
+" Leaderキーを設定（,のデフォルトの機能は\で使えるように退避）
+let mapleader=","
+noremap \ ,
+" set paste/nopasteを切り替え
+set pastetoggle=<Leader>p
+
+" 誤操作防止
+" 保存して閉じる
+nnoremap ZZ <Nop>
+" 保存せずに閉じる
+nnoremap ZQ <Nop>
+" EXモードに入る
+nnoremap Q <Nop>
 
 "-----------------------------------------------------------------------------
 " 補完機能
