@@ -1,38 +1,5 @@
-"{{{ はじめに
-" vim:set ts=2 sts=2 sw=2 tw=0: (この行に関しては:help modelineを参照)
-" An example for a Japanese version vimrc file.
-" 日本語版のデフォルト設定ファイル(vimrc) - Vim7用試作
-"
-" Last Change: 26-Dec-2013.
-" Maintainer:  MURAOKA Taro <koron@tka.att.ne.jp>
-"
-" 解説:
-" このファイルにはVimの起動時に必ず設定される、編集時の挙動に関する設定が書
-" かれています。GUIに関する設定はgvimrcに書かかれています。
-"
-" 個人用設定は_vimrcというファイルを作成しそこで行ないます。_vimrcはこのファ
-" イルの後に読込まれるため、ここに書かれた内容を上書きして設定することが出来
-" ます。_vimrcは$HOMEまたは$VIMに置いておく必要があります。$HOMEは$VIMよりも
-" 優先され、$HOMEでみつかった場合$VIMは読込まれません。
-"
-" 管理者向けに本設定ファイルを直接書き換えずに済ませることを目的として、サイ
-" トローカルな設定を別ファイルで行なえるように配慮してあります。Vim起動時に
-" サイトローカルな設定ファイル($VIM/vimrc_local.vim)が存在するならば、本設定
-" ファイルの主要部分が読み込まれる前に自動的に読み込みます。
-"
-" 読み込み後、変数g:vimrc_local_finishが非0の値に設定されていた場合には本設
-" 定ファイルに書かれた内容は一切実行されません。デフォルト動作を全て差し替え
-" たい場合に利用して下さい。
-"
-" 参考:
-"   :help vimrc
-"   :echo $HOME
-"   :echo $VIM
-"   :version
-"}}}
-
 "{{{ 初期設定
-"---------------------------------------------------------------------------
+" Last Change: 26-Dec-2013.
 " VI互換モードOFF
 set nocompatible
 " 内部エンコーディングをutf-8に指定
@@ -52,29 +19,37 @@ if has("win32") || has("win64")
   call vundle#rc('~/vimfiles/bundle')
 else
   set rtp&
-  set rtp+=~/.vim/bundle/vundle 
+  set rtp+=~/.vim/bundle/vundle
   call vundle#rc()
 endif
+
 " original repos on github
 Bundle 'gmarik/vundle'
 Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/vimproc'
 Bundle 'Shougo/vimshell'
+
+" Unite
+Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/vimfiler'
+
 Bundle 'thinca/vim-ref'
 Bundle 'thinca/vim-quickrun'
 Bundle 'thinca/vim-singleton'
 Bundle 'thinca/vim-guicolorscheme'
-Bundle 'tpope/vim-rails.git'
 Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-fugitive'
+
+" Ruby
+Bundle 'tpope/vim-rails.git'
+
 Bundle 'itchyny/lightline.vim'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'mattn/benchvimrc-vim'
 Bundle 'tyru/open-browser.vim'
 Bundle 'gregsexton/gitv'
+
 " vim-scripts repos
 Bundle 'wombat256.vim'
 Bundle 'molokai'
@@ -95,6 +70,7 @@ augroup END
 "}}}
 
 "{{{ Kaoriya設定
+let g:vimrc_local_finish = 1
 "---------------------------------------------------------------------------
 " サイトローカルな設定($VIM/vimrc_local.vim)があれば読み込む。読み込んだ後に
 " 変数g:vimrc_local_finishに非0な値が設定されていた場合には、それ以上の設定
@@ -284,8 +260,8 @@ augroup vimrc_checktime
   au!
   au WinEnter * checktime
 augroup END
-" yankでクリップボードを共有する
-if has('clipboard')
+" ヤンクでクリップボードを共有する
+if has('clipboard') && has('gui_running')
   set clipboard=unnamed
 endif
 " set paste/nopasteを切り替え
@@ -328,16 +304,14 @@ set t_Co=256
 " 常にステータス行を表示 (詳細は:he laststatus)
 set laststatus=2
 " ステータスラインに文字コードと改行文字とファイルタイプを表示する
-if !has('mac') && !has('gui_running')
-  "set statusline=%<%f\%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c
-  set statusline=%<%t\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}%=%l,%c%V%8P
-endif
+"set statusline=%<%f\%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c
+"set statusline=%<%t\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}%=%l,%c%V%8P
 " タブは非表示
 set showtabline=0
 " 前回終了したカーソル行に移動して真ん中にする（フォールディングがあれば開く）
 "au myvimrc BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 au myvimrc BufEnter * exe "normal zz"
-au myvimrc BufReadPost * if &foldenable > 0 && foldclosed("'\"") > 0 | exe "normal zo" | endif
+au myvimrc BufReadPost * if &foldenable > 0 && foldclosed("'\"") > 0 | exe "normal zA" | endif
 
 "---------------------------------------------------------------------------
 " GUI固有の画面表示の設定:
@@ -365,19 +339,18 @@ set directory+=,~/tmp,$TMP
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
 au myvimrc BufEnter * execute ":lcd " . expand("%:p:h")
+" vimrcの保存時に再読み込み
+augroup re_source_vimrc
+  au!
+  au BufWritePost *vimrc nested source $MYVIMRC
+  au BufWritePost *gvimrc if has('gui_running') source $MYGVIMRC
+augroup END
 
 "-----------------------------------------------------------------------------
 " FileType設定
 "
 " Ruby
 au myvimrc FileType ruby setlocal fenc=utf8 ff=unix
-" vimrc
-" 保存時に再読み込み
-augroup re_source_vimrc
-  au!
-  au BufWritePost *vimrc nested source $MYVIMRC
-  au BufWritePost *gvimrc if has('gui_running') source $MYGVIMRC
-augroup END
 " Git commit log
 "git-vimで対応するためコメントアウト
 "au BufRead COMMIT_EDITMSG set ft=diff fenc=utf8 ff=unix
@@ -564,222 +537,6 @@ let g:neocomplcache_omni_patterns.perl =
 "}}}
 
 "-----------------------------------------------------------------------------
-" unite.vim
-"
-" 入力モードで開始
-let g:unite_enable_start_insert=1
-" yank履歴を使用可能にする
-let g:unite_source_history_yank_enable=1
-let g:unite_source_file_mru_file=200
-" 大文字小文字を区別しない
-let g:unite_enable_ignore_case = 1
-let g:unite_enable_smart_case = 1
-" ESCキーを2回押すと終了する
-au myvimrc FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
-au myvimrc FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
-" unite grep に ag(The Silver Searcher) を使う
-if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-  let g:unite_source_grep_recursive_opt = ''
-endif
-" KEYMAP:
-" 初期化
-nnoremap [unite] <Nop>
-nmap <Leader>u [unite]
-" ファイラ
-nnoremap <silent> [unite]f :<C-u>Unite<Space>file<CR>
-" 最近使ったファイルの一覧
-nnoremap <silent> [unite]m :<C-u>Unite<Space>file_mru<CR>
-" コマンド一覧を表示
-nnoremap <silent> [unite]s :<C-u>Unite<Space>source<CR>
-nnoremap <silent> [unite]r :<C-u>Unite<Space>ref/refe<CR>
-" ファイル内をグレップ
-nnoremap <silent> [unite]g :<C-u>Unite<Space>grep:<C-R>%<Space>-buffer-name=grep<CR>
-" ディレクトリをグレップ
-nnoremap <silent> [unite]dg :<C-u>Unite<Space>grep:.<Space>-buffer-name=dir_grep<CR>
-" カーソル上の単語で現在のバッファをグレップ
-nnoremap <silent> [unite]wg :<C-u>Unite<Space>grep:<C-R>%<Space>-buffer-name=word_grep<CR><C-R><C-W><CR>
-" すべてのバッファをグレップ（agでは複数ファイルを選択できないためＣＯ）
-"nnoremap <silent> [unite]ag :<C-u>Unite<Space>grep:$buffers<CR>
-" ブックマーク（追加は:UniteBookmarkAdd）
-nnoremap <silent> [unite]b :<C-u>Unite<Space>bookmark<CR>
-nnoremap <silent> [unite]y :<C-u>Unite<Space>history/yank<CR>
-nnoremap <silent> [unite]. :<C-u>UniteResume<CR>
-nnoremap <silent> [unite]h :<C-u>Unite resume<CR>
-
-"-----------------------------------------------------------------------------
-" quickrun.vim
-"
-" COMMAND:
-"  :QuickRun -args foo
-" KEYMAP:
-"  <Leader>r : バッファの内容を実行
-"{{{ quickrun config
-" 実行にvimprocを使う
-" エラー時はquickfixに表示する
-let g:quickrun_config = {}
-let g:quickrun_config = {
-\  "_" : {
-\    'runner' : 'vimproc',
-\    'outputter' : 'error',
-\    'outputter/error' : 'quickfix',
-\    'outputter/error/success' : 'buffer',
-\    'outputter/buffer/split' : ':aboveleft',
-\    'outputter/buffer/close_on_empty' : 1
-\  },
-\}
-" <C-c> で実行を強制終了させる
-" quickrun.vim が実行していない場合には <C-c> を呼び出す
-nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
-" ruby.rspec
-let g:quickrun_config['ruby.rspec'] = { 'command': 'rspec' }
-augroup RSpec
-  au!
-  au BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
-augroup END
-" htmlをブラウザで開く（tyru/open-browser.vim プラグインが必要）
-let g:quickrun_config['html'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
-let g:quickrun_config['xhtml'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
-"}}}
-
-"-----------------------------------------------------------------------------
-" fugitive.vim
-"
-" DESC:
-"  VimにGitコマンドを追加。
-" COMMAND:
-"  :Gstatus    : git status
-"  :Gwrite     : git add
-"  :Gcommit -v : git commit -v
-
-"-----------------------------------------------------------------------------
-" surround.vim
-"
-" KEYMAP:
-"  S' : ビジュアルモードで選択した範囲を'で囲む
-"  ds' : 'で囲まれた範囲を消す
-
-"{{{ rcodetools.vim
-"
-" DESC: xmpfilterの呼び出し設定
-" <F1>でバッファ全体にxmpfilterを実行
-"{{{ xmpfilter mapping (disable)
-"nmap <silent> <F1> mzggVG!xmpfilter -a<cr>'z
-"imap <silent> <F1> <ESC><F1>
-"" <F2>で現在行/選択行にxmpfilterを実行
-"map <silent> <F2> !xmpfilter -a<cr>
-"nmap <silent> <F2> V<F2>
-"imap <silent> <F2> <ESC><F2>a
-"" <F3>で現在行/選択行に「# =>」マークを追加
-"vmap <silent> <F3> !xmpfilter -m<cr>
-"nmap <silent> <F3> V<F3>
-"imap <silent> <F3> <ESC><F3>a
-"" <F4>で現在行/選択行の「# =>」マークを削除
-"vmap <silent> <F4> ms:call RemoveRubyEval()<CR>
-"nmap <silent> <F4> V<F4>
-"imap <silent> <F4> <ESC><F4>a
-"" RemoveRubyEval() の定義
-"function! RemoveRubyEval() range
-  "let begv = a:firstline
-  "let endv = a:lastline
-  "normal Hmt
-  "set lz
-  "execute ":" . begv . "," . endv . 's/\s*# \(=>\|!!\).*$//e'
-  "normal 'tzt`s
-  "set nolz
-  "redraw
-"endfunction
-"" JRuby用<F11>でバッファ全体にjxmpfilterを実行
-"nmap <silent> <F11> mzggVG!jxmpfilter -a<cr>'z
-"imap <silent> <F11> <ESC><F11>
-"}}}
-"}}}
-
-"{{{ MiniBufExplorer
-"
-" 自動起動
-let g:miniBufExplAutoStart = 1
-let g:miniBufExplBuffersNeeded = 1
-"}}}
-
-"{{{ lightline.vim
-"
-" lightline config
-"\  'colorscheme': 'wombat',
-let g:lightline = {
-\  'mode_map': {'c': 'NORMAL'},
-\  'active': {
-\    'left': [['mode', 'paste'], ['filename', 'fugitive']]
-\  },
-\  'inactive': {
-\    'left': [],
-\    'right': [['mode'], ['filename']]
-\  },
-\  'component_function': {
-\    'modified': 'MyModified',
-\    'readonly': 'MyReadonly',
-\    'fugitive': 'MyFugitive',
-\    'filename': 'MyFilename',
-\    'fileformat': 'MyFileformat',
-\    'filetype': 'MyFiletype',
-\    'fileencoding': 'MyFileencoding',
-\    'mode': 'MyMode'
-\  }
-\}
-
-function! MyModified()
-  "return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : ''
-endfunction
-
-function! MyReadonly()
-  "return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '[RO]' : ''
-endfunction
-
-function! MyFilename()
-  return (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-\         &ft == 'unite' ? unite#get_status_string() :
-\         &ft == 'vimshell' ? vimshell#get_status_string() :
-\         '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-\        ('' != MyModified() ? ' ' . MyModified() : '') .
-\        ('' != MyReadonly() ? ' ' . MyReadonly() : '')
-endfunction
-
-function! MyFugitive()
-  try
-    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
-      return fugitive#head()
-    endif
-  catch
-  endtry
-  return ''
-endfunction
-
-function! MyFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
-endfunction
-
-function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-endfunction
-
-function! MyFileencoding()
-  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
-endfunction
-
-function! MyMode()
-  return &ft == 'help' ? 'Help' :
-\        &ft == 'minibufexpl' ? 'MBE' :
-\        &ft == 'unite' ? 'Unite' :
-\        &ft == 'vimfiler' ? 'VimFiler' :
-\        &ft == 'vimshell' ? 'VimShell' :
-\        winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-"}}}
-
-"-----------------------------------------------------------------------------
 " zencoding.vim
 "
 " KEYMAP:
@@ -830,6 +587,184 @@ let g:user_zen_settings = {
 \    'extends' : 'css',
 \  },
 \}
+"}}}
+
+"-----------------------------------------------------------------------------
+" quickrun.vim
+"
+" COMMAND:
+"  :QuickRun -args foo
+" KEYMAP:
+"  <Leader>r : バッファの内容を実行
+"{{{ quickrun config
+" 実行にvimprocを使う
+" エラー時はquickfixに表示する
+let g:quickrun_config = {}
+let g:quickrun_config = {
+\  "_" : {
+\    'runner' : 'vimproc',
+\    'outputter' : 'error',
+\    'outputter/error' : 'quickfix',
+\    'outputter/error/success' : 'buffer',
+\    'outputter/buffer/split' : ':aboveleft',
+\    'outputter/buffer/close_on_empty' : 1
+\  },
+\}
+" <C-c> で実行を強制終了させる
+" quickrun.vim が実行していない場合には <C-c> を呼び出す
+nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+" ruby.rspec
+let g:quickrun_config['ruby.rspec'] = { 'command': 'rspec' }
+augroup RSpec
+  au!
+  au BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
+augroup END
+" htmlをブラウザで開く（tyru/open-browser.vim プラグインが必要）
+let g:quickrun_config['html'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
+let g:quickrun_config['xhtml'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
+"}}}
+
+"-----------------------------------------------------------------------------
+" fugitive.vim
+"
+" DESC:
+"  VimにGitコマンドを追加。
+" COMMAND:
+"  :Gstatus    : git status
+"  :Gwrite     : git add
+"  :Gcommit -v : git commit -v
+
+"-----------------------------------------------------------------------------
+" surround.vim
+"
+" KEYMAP:
+"  i : inside
+"  a : all
+"  s : side
+"  S' : ビジュアルモードで選択した範囲を'で囲む
+"  ysiw' : カーソル下の単語を'で囲む
+"  cs'" : 'を"に変換する
+"  ds' : 'で囲まれた範囲を消す
+
+"{{{ rcodetools.vim
+"
+" DESC: xmpfilterの呼び出し設定
+" <F1>でバッファ全体にxmpfilterを実行
+"{{{ xmpfilter mapping (disable)
+"nmap <silent> <F1> mzggVG!xmpfilter -a<cr>'z
+"imap <silent> <F1> <Esc><F1>
+"" <F2>で現在行/選択行にxmpfilterを実行
+"map <silent> <F2> !xmpfilter -a<cr>
+"nmap <silent> <F2> V<F2>
+"imap <silent> <F2> <Esc><F2>a
+"" <F3>で現在行/選択行に「# =>」マークを追加
+"vmap <silent> <F3> !xmpfilter -m<cr>
+"nmap <silent> <F3> V<F3>
+"imap <silent> <F3> <Esc><F3>a
+"" <F4>で現在行/選択行の「# =>」マークを削除
+"vmap <silent> <F4> ms:call RemoveRubyEval()<CR>
+"nmap <silent> <F4> V<F4>
+"imap <silent> <F4> <Esc><F4>a
+"" RemoveRubyEval() の定義
+"function! RemoveRubyEval() range
+  "let begv = a:firstline
+  "let endv = a:lastline
+  "normal Hmt
+  "set lz
+  "execute ":" . begv . "," . endv . 's/\s*# \(=>\|!!\).*$//e'
+  "normal 'tzt`s
+  "set nolz
+  "redraw
+"endfunction
+"" JRuby用<F11>でバッファ全体にjxmpfilterを実行
+"nmap <silent> <F11> mzggVG!jxmpfilter -a<cr>'z
+"imap <silent> <F11> <Esc><F11>
+"}}}
+"}}}
+
+"{{{ MiniBufExplorer
+"
+" 自動起動
+let g:miniBufExplAutoStart = 1
+let g:miniBufExplBuffersNeeded = 1
+"let g:did_minibufexplorer_syntax_inits = 1
+"" MiniBufExpl Colors
+"hi MBENormal               guifg=#808080 guibg=fg
+"hi MBEChanged              guifg=#CD5907 guibg=fg
+"hi MBEVisibleNormal        guifg=#5DC2D6 guibg=fg
+"hi MBEVisibleChanged       guifg=#F1266F guibg=fg
+"hi MBEVisibleActiveNormal  guifg=#A6DB29 guibg=fg
+"hi MBEVisibleActiveChanged guifg=#F1266F guibg=fg
+"}}}
+
+"{{{ lightline.vim
+"
+" lightline config
+"\  'colorscheme': 'wombat',
+"\    'right': [['mode'], ['filename']]
+let g:lightline = {
+\  'mode_map': {'c': 'NORMAL'},
+\  'active': {
+\    'left': [['mode', 'paste'], ['filename', 'fugitive']]
+\  },
+\  'inactive': {
+\    'left': [],
+\    'right': [['filename']]
+\  },
+\  'component_function': {
+\    'modified': 'MyModified',
+\    'readonly': 'MyReadonly',
+\    'fugitive': 'MyFugitive',
+\    'filename': 'MyFilename',
+\    'fileformat': 'MyFileformat',
+\    'filetype': 'MyFiletype',
+\    'fileencoding': 'MyFileencoding',
+\    'mode': 'MyMode'
+\  }
+\}
+
+function! MyModified()
+  "return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : ''
+endfunction
+function! MyReadonly()
+  "return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '[RO]' : ''
+endfunction
+function! MyFilename()
+  return (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+\         &ft == 'unite' ? unite#get_status_string() :
+\         &ft == 'vimshell' ? vimshell#get_status_string() :
+\         '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+\        ('' != MyModified() ? ' ' . MyModified() : '') .
+\        ('' != MyReadonly() ? ' ' . MyReadonly() : '')
+endfunction
+function! MyFugitive()
+  try
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+      return fugitive#head()
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+function! MyFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+function! MyFileencoding()
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+function! MyMode()
+  return &ft == 'help' ? 'Help' :
+\        &ft == 'minibufexpl' ? 'MBE' :
+\        &ft == 'unite' ? 'Unite' :
+\        &ft == 'vimfiler' ? 'VimFiler' :
+\        &ft == 'vimshell' ? 'VimShell' :
+\        winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
 "}}}
 
 "-----------------------------------------------------------------------------
