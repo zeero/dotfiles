@@ -297,6 +297,8 @@ set listchars=tab:>-,extends:<,trail:-
 " 全角スペースも表示
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
 au myvimrc BufRead,BufNew * match JpSpace /　/
+" modelineを無視する
+set nomodeline
 " フォールディング方式の指定（マーカー使用）(=fdm)
 set foldmethod=marker
 " 長い行を折り返して表示 (nowrap:折り返さない)
@@ -365,6 +367,7 @@ augroup END
 " Ruby
 au myvimrc FileType ruby setlocal fenc=utf8 ff=unix
 " Git commit log
+au BufRead COMMIT_EDITMSG setlocal nofoldenable
 "git-vimで対応するためコメントアウト
 "au BufRead COMMIT_EDITMSG set ft=diff fenc=utf8 ff=unix
 "git commit -v で対応するためコメントアウト
@@ -468,7 +471,7 @@ command! Vimrc :e $MYVIMRC
 " Grep
 command! -complete=file -nargs=+ Grep :call GrepFunction(<f-args>)
 function! GrepFunction(keyword, target)
-  Unite grep<CR>a:target<CR>a:keyword<CR>
+  "Unite grep<CR>a:target<CR>a:keyword<CR>
   "<C-u>Unite<Space>grep: <Space>-buffer-name=grep<CR>
 endfunction
 " Help
