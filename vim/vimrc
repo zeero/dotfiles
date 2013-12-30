@@ -4,6 +4,9 @@
 set nocompatible
 " 内部エンコーディングをutf-8に指定
 set encoding=utf-8
+" キー入力をタイムアウトさせない
+set notimeout
+set nottimeout
 
 "---------------------------------------------------------------------------
 " vundle
@@ -801,4 +804,135 @@ let g:ref_refe_version = 2
 " markdown.vim
 "
 "let g:quickrun_config['mkd'] { 'outputter' : 'browser' }
+
+"-----------------------------------------------------------------------------
+" VimFiler
+"
+"デフォルトでIDE風のFilerを開く
+"au myvimrc VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
+"let g:vimfiler_as_default_explorer=1
+"let g:vimfiler_safe_mode_by_default=0
+"let g:netrw_liststyle=3
+" Uniteブックマークがディレクトリの場合はVimFilerで開く
+"call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
+call unite#custom_default_action('directory' , 'vimfiler')
+
+"-----------------------------------------------------------------------------
+" unite.vim
+"
+" COMMAND:
+"  :Unite ${source} [${option}]
+"  :Unite output:{コマンド名}
+" KEYMAP:
+"  <Tab> : Actionを開く
+"  <Space> : 候補を選択する
+"  * : 候補を全選択する
+"  a : 候補でActionを開く
+"  ? : Uniteのキーマップを表示
+"
+" {{{基本設定
+" 入力モードで開始
+"let g:unite_enable_start_insert=1
+" ヤンク履歴を使用可能にする
+let g:unite_source_history_yank_enable=1
+let g:unite_source_file_mru_file=200
+" 大文字小文字を区別しない
+let g:unite_enable_ignore_case = 1
+let g:unite_enable_smart_case = 1
+" ステータスラインを上書きしない（lightline向け）
+let g:unite_force_overwrite_statusline = 0
+" ESCキーを2回押すと終了する
+au myvimrc FileType unite nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
+au myvimrc FileType unite inoremap <silent> <buffer> <Esc><Esc> <Esc>:q<CR>
+" unite grep に ag(The Silver Searcher) を使う
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
+"}}}
+"{{{ カスタマイズ設定
+" デフォルトアクションの変更
+" ref/refe
+call unite#custom_default_action('source/ref/refe/*' , 'above')
+" アクションの追加
+"{{{ source:mappingにaction:verboseを追加する
+let s:action = {
+\ 'description' : 'verbose',
+\ 'is_selectable' : 1,
+\}
+function! s:action.func(candidates)
+  for candidate in a:candidates
+    execute "verbose map" substitute(candidate.action__mapping, '\\\(<.*>\)', '\1', "g")
+  endfor
+endfunction
+" kind ではなくて source の mapping に対して action を設定する
+call unite#custom#action('source/mapping/*', 'verbose', s:action)
+" preview（pキー）で action を実行したい場合は
+" call unite#custom#action('source/mapping/*', 'preview', s:action)
+unlet s:action
+"}}}
+"}}}
+"{{{ キーマップ設定
+" KEYMAP:
+nnoremap [unite] <Nop>
+nmap <Leader>u [unite]
+
+" ファイラ
+"nnoremap <silent> [unite]f<CR> :<C-u>Unite<Space>file
+"\<Space>-no-empty<Space>-silent<Space>-buffer-name=file<CR>
+" 最近使ったファイルの一覧
+nnoremap <silent> [unite]f<CR> :<C-u>Unite<Space>file_mru
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=file_mru<CR>
+" コマンド一覧を表示
+nnoremap <silent> [unite]s<CR> :<C-u>Unite<Space>source
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=source<CR>
+
+" リファレンス参照
+nnoremap <silent> [unite]rr<CR> :<C-u>Unite<Space>ref/refe
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe<CR>
+
+" 現在のバッファ内をグレップ
+nnoremap <silent> [unite]g<CR> :<C-u>Unite<Space>grep:<C-R>%
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep<CR>
+nnoremap <silent> [unite]gb<CR> :<C-u>Unite<Space>grep:<C-R>%
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep<CR>
+" ディレクトリをグレップ
+nnoremap <silent> [unite]gd<CR> :<C-u>Unite<Space>grep
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-dir<CR>
+" カーソル上の単語で現在のバッファをグレップ
+nnoremap <silent> [unite]gw<CR> :<C-u>Unite<Space>grep:<C-R>%
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-word<CR><C-R><C-W><CR>
+" すべてのバッファをグレップ（agでは複数ファイルを選択できないためＣＯ）
+"nnoremap <silent> [unite]ag<CR> :<C-u>Unite<Space>grep:$buffers<CR>
+
+" ブックマーク（追加は:UniteBookmarkAdd）
+nnoremap <silent> [unite]b<CR> :<C-u>Unite<Space>bookmark
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmark<CR>
+" メニュー
+nnoremap <silent> [unite]m<CR> :<C-u>Unite<Space>menu:shortcut
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=menu:shortcut<CR>
+"{{{ メニュー設定
+let g:unite_source_menu_menus = {
+\ "shortcut" : {
+\   "description" : "command shortcuts.",
+\   "command_candidates" : [
+\     ["unite-colorscheme", "Unite colorscheme -auto-preview"],
+\     ["unite-output:message", "Unite output:message"],
+\     ["unite-mapping(all)", "Unite output:map|map!|lmap"],
+\   ],
+\ },
+\}
+"}}}
+" ヤンクヒストリ
+nnoremap <silent> [unite]y<CR> :<C-u>Unite<Space>history/yank
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=history/yank<CR>
+" 直前のUniteコマンドを再実行
+nnoremap <silent> [unite].<CR> :<C-u>UniteResume
+\<Space>-no-empty<Space>-silent<CR>
+" Uniteコマンドの履歴表示
+nnoremap <silent> [unite]h :<C-u>Unite<CR> resume
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=resume<CR>
+
+"}}}
 
