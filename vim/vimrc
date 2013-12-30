@@ -196,11 +196,6 @@ endif
 if has('win32') && $PATH !~? '\(^\|;\)' . escape($VIM, '\\') . '\(;\|$\)'
   let $PATH = $VIM . ';' . $PATH
 endif
-" Macではデフォルトの'iskeyword'がcp932に対応しきれていないので修正
-if has('mac')
-  set iskeyword=@,48-57,_,128-167,224-235
-endif
-
 "}}}
 
 "{{{ 基本設定
@@ -246,13 +241,21 @@ set showmatch
 set wildmenu
 " テキスト挿入中の自動折り返しを日本語に対応させる
 set formatoptions+=mM
-" コメント行で'o'で改行したらコメントをつけない。
-" ftpluginで上書きされてしまうためauでなんとかする。
+" コメント行で'o'で改行したらコメントをつけない
+" ftpluginで上書きされてしまうためauでなんとかする
 au myvimrc BufRead,BufNew,BufNewFile * set formatoptions-=o
 " 文字数による自動折り返しはしない
 set textwidth=0
-" 区切り文字設定
-set iskeyword-=_
+" 区切り文字設定（単語の一部とする文字の設定）
+"   Macではデフォルトの'iskeyword'がcp932に対応しきれていないので修正
+"     @ : アルファベット
+"     48-57 : 数字
+"     128-167,224-235,192-255 : Extended ASCII characters（日本語には関係ない）
+if has('mac')
+  set iskeyword=@,48-57,_,128-167,224-235
+endif
+" '-'も単語の一部と認識させる
+set iskeyword+=-
 " 日本語整形スクリプト(by. 西岡拓洋さん)用の設定
 let format_allow_over_tw = 1	" ぶら下り可能幅
 " 編集後保存していなくても別のファイルを開く
