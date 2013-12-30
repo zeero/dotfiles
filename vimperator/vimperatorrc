@@ -8,11 +8,10 @@ set hlsearch
 set newtab=all
 " ページロード時にテキストボックスにフォーカスするのを防ぐ
 set focuscontent
-" :[tab]open の補完対象と順番
-set complete=slS
+" :[tab]open時の補完設定(s=検索エンジン+キーワードURL,S=サジェストエンジン,l=ロケーションバーの補完機能を利用,b=ブックマーク)
+set complete=Sls
 " カラースキーム導入
 colorscheme ZeeroBlue
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " キー設定
