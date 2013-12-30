@@ -53,6 +53,7 @@ Bundle 'plasticboy/vim-markdown'
 Bundle 'mattn/benchvimrc-vim'
 Bundle 'tyru/open-browser.vim'
 Bundle 'gregsexton/gitv'
+Bundle 'vim-jp/vimdoc-ja'
 
 " vim-scripts repos
 Bundle 'wombat256.vim'
@@ -210,6 +211,8 @@ set smartcase
 set hlsearch
 " 検索時にファイルの最後まで行ったら最初に戻る (nowrapscan:戻らない)
 set wrapscan
+" タグ検索に二分検索をオフにする（vimdoc-jaフリーズ対策）
+set notagbsearch
 " 検索語が真ん中にくるようにする
 "  zz はカレント行を画面の中心にする。つまり n で検索語にカーソル移動したら
 "  勝手に zz でカレント行が画面の真ん中なるようにスクロールされるようになる。
@@ -439,6 +442,8 @@ function! GrepFunction(keyword, target)
   Unite grep<CR>a:target<CR>a:keyword<CR>
   "<C-u>Unite<Space>grep: <Space>-buffer-name=grep<CR>
 endfunction
+" Help
+command! Help :OpenBrowser http://vim-jp.org/vimdoc-ja/
 "}}}
 
 "{{{ neocomplecache.vim
