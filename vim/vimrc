@@ -32,16 +32,20 @@ Bundle 'Shougo/vimshell'
 " Unite
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/vimfiler'
+Bundle 'Shougo/unite-outline'
+Bundle 'ujihisa/unite-colorscheme'
 
 Bundle 'thinca/vim-ref'
 Bundle 'thinca/vim-quickrun'
 Bundle 'thinca/vim-singleton'
 Bundle 'thinca/vim-guicolorscheme'
+Bundle 'thinca/vim-qfreplace'
 Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-fugitive'
 
 " Ruby
 Bundle 'tpope/vim-rails.git'
+Bundle 'taka84u9/vim-ref-ri'
 
 Bundle 'itchyny/lightline.vim'
 Bundle 'fholgado/minibufexpl.vim'
