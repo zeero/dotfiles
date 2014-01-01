@@ -42,6 +42,8 @@ Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/vimfiler'
 Bundle 'Shougo/unite-outline'
 Bundle 'ujihisa/unite-colorscheme'
+Bundle 'ujihisa/unite-rake'
+Bundle 'ujihisa/unite-gem'
 
 Bundle 'thinca/vim-ref'
 Bundle 'thinca/vim-quickrun'
@@ -57,17 +59,19 @@ Bundle 'taka84u9/vim-ref-ri'
 
 Bundle 'itchyny/lightline.vim'
 Bundle 'fholgado/minibufexpl.vim'
-Bundle 'plasticboy/vim-markdown'
-Bundle 'mattn/benchvimrc-vim'
-Bundle 'tyru/open-browser.vim'
-Bundle 'gregsexton/gitv'
 Bundle 'vim-jp/vimdoc-ja'
+Bundle 'plasticboy/vim-markdown'
+Bundle 'tyru/open-browser.vim'
+Bundle 'kana/vim-smartchr'
+Bundle 'tyru/caw.vim'
+Bundle 'mattn/emmet-vim'
+Bundle 'mattn/benchvimrc-vim'
+Bundle 'gregsexton/gitv'
 
 " vim-scripts repos
 Bundle 'wombat256.vim'
 Bundle 'molokai'
 Bundle 'ScrollColors'
-Bundle 'ZenCoding.vim'
 filetype plugin indent on
 
 " singleton.vim
@@ -430,6 +434,9 @@ cnoremap <C-f> <C-r>%
 nnoremap <C-h> :<C-u>help<Space><C-r><C-w><CR>
 
 " Leaderキーを設定（,のデフォルトの機能は\で使えるように退避）
+"  u: Unite, b: Vundle
+"  p: PasteToggle, r: Quickrun, f: VimFiler, s: VimShell, /: CommentToggle
+"  <C-]>: TagJumpBack
 let mapleader=","
 noremap \ ,
 " set paste/nopasteを切り替え
@@ -591,24 +598,20 @@ let g:neocomplcache_omni_patterns.perl =
 \ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 "}}}
 
-"-----------------------------------------------------------------------------
-" zencoding.vim
+"{{{ emmet.vim
 "
 " KEYMAP:
 "  <C-e> : 展開
 "  <C-_> : コメントアウト／イン
 "          （_と/が同じキーマップになってるのでCtrl+/でできる）
-"
-" {{{ zencoding config
-"let g:user_zen_leader_key = '<C-y>'
-let g:user_zen_expandabbr_key = '<C-e>'
-let g:user_zen_togglecomment_key = '<C-_>'
-let s:zen_settings = {
-\  'indentication' : "  "
-\}
-" my zencoding snippets
-let g:user_zen_settings = {
+"let g:user_emmet_leader_key = '<C-e>'
+let g:user_emmet_expandabbr_key = '<C-e>'
+let g:user_emmet_togglecomment_key = '<C-_>'
+" タグのコンプリート
+"let g:use_emmet_complete_tag = 1
+let g:user_emmet_settings = {
 \  'lang' : 'ja',
+\  'indentation' : "  ",
 \  'html' : {
 \    'filters' : 'html',
 \    'snippets' : {
@@ -630,6 +633,12 @@ let g:user_zen_settings = {
 \      'tm' : "setTimeout(function() {\n\t\\${cursor}\n}, 100);",
 \    },
 \    'use_pipe_for_cursor' : 0,
+\  },
+\  'vim' : {
+\    'snippets' : {
+\      'nn' : 'nnoremap <silent> ${cursor} :<C-u>',
+\      'nnu' : 'nnoremap <silent> [unite]${cursor}<CR> :<C-u>Unite<Space>\n\\<Space>-no-empty<Space>-silent<Space>-buffer-name=<CR>',
+\    },
 \  },
 \  'css' : {
 \    'filters' : 'fc',
@@ -852,16 +861,47 @@ let g:ref_refe_version = 2
 "let g:quickrun_config['mkd'] { 'outputter' : 'browser' }
 
 "-----------------------------------------------------------------------------
-" VimFiler
+" caw.vim
 "
-"デフォルトでIDE風のFilerを開く
+" コメントアウトの切り替え
+nmap <Leader>/ <Plug>(caw:I:toggle)
+vmap <Leader>/ <Plug>(caw:I:toggle)
+
+"{{{ VimShell
+"
+" KEYMAP:
+" VimShellを起動
+nnoremap <Leader>s :<C-u>VimShellPop<CR>
+" irbを非同期で起動
+nnoremap <silent> <Leader>irb :<C-u>VimShellInteractive irb<CR>
+" 非同期で開いたインタプリタに現在の行を評価させる
+au FileType vimshell inoremap <buffer> <Leader>s :<C-u>VimShellSendString<CR>
+au FileType vimshell vmap <buffer> <Leader>s :<C-u>VimShellSendString<CR>
+"}}}
+
+"{{{ VimFiler
+"
+" KEYMAP:
+"  h : up dir, l : down dir, t : tree view (1 dir), T : tree view all
+"  e : edit, <Space> : mark, c : copy, m : move, d : delete, yy : yank path
+"  N : new file, K : new dir, * : mark all, U : mark off all, ? : keymap
+"  a : action, H : VimShell, ge : system filer, x : system app
+"
+" vimデフォルトのエクスプローラをvimfilerで置き換える
+let g:vimfiler_as_default_explorer = 1
+" セーフモードを無効にした状態で起動する
+let g:vimfiler_safe_mode_by_default = 0
+" デフォルトでIDE風のFilerを開く
 "au myvimrc VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
-"let g:vimfiler_as_default_explorer=1
-"let g:vimfiler_safe_mode_by_default=0
+" ステータスラインを上書きしない（lightline向け）
+let g:vimfiler_force_overwrite_statusline = 0
 "let g:netrw_liststyle=3
-" Uniteブックマークがディレクトリの場合はVimFilerで開く
-"call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
-call unite#custom_default_action('directory' , 'vimfiler')
+" KEYMAP:
+nnoremap <Leader>f :<C-u>VimFilerBufferDir
+\<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
+" Enterでツリー開閉、ファイル編集を可能に
+au FileType vimfiler nmap <buffer> <expr> <Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
+"}}}
 
 "-----------------------------------------------------------------------------
 " unite.vim
@@ -890,18 +930,16 @@ let g:unite_enable_smart_case = 1
 let g:unite_force_overwrite_statusline = 0
 " ESCキーを2回押すと終了する
 au myvimrc FileType unite nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
-au myvimrc FileType unite inoremap <silent> <buffer> <Esc><Esc> <Esc>:q<CR>
-" unite grep に ag(The Silver Searcher) を使う
-if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-  let g:unite_source_grep_recursive_opt = ''
-endif
+"au myvimrc FileType unite inoremap <silent> <buffer> <Esc><Esc> <Esc>:q<CR>
 "}}}
 "{{{ カスタマイズ設定
 " デフォルトアクションの変更
 " ref/refe
 call unite#custom_default_action('source/ref/refe/*' , 'above')
+" Uniteブックマークがディレクトリの場合はVimFilerで開く
+call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
+call unite#custom_default_action('directory' , 'vimfiler')
+
 " アクションの追加
 "{{{ source:mappingにaction:verboseを追加する
 let s:action = {
@@ -919,6 +957,14 @@ call unite#custom#action('source/mapping/*', 'verbose', s:action)
 " call unite#custom#action('source/mapping/*', 'preview', s:action)
 unlet s:action
 "}}}
+
+" unite grep に ag(The Silver Searcher) を使う
+" Todo: 結果にファイル名が先頭に入らないからジャンプできない
+"if executable('ag')
+"  let g:unite_source_grep_command = 'ag'
+"  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+"  let g:unite_source_grep_recursive_opt = ''
+"endif
 "}}}
 "{{{ キーマップ設定
 " KEYMAP:
