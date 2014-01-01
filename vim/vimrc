@@ -176,21 +176,21 @@ if filereadable($VIM . '/vimrc') && filereadable($VIM . '/ViMrC')
   set tags=./tags,tags
 endif
 
-"---------------------------------------------------------------------------
-" コンソールでのカラー表示のための設定(暫定的にUNIX専用)
-if has('unix') && !has('gui_running')
-  let uname = system('uname')
-  if uname =~? "linux"
-    set term=builtin_linux
-  elseif uname =~? "freebsd"
-    set term=builtin_cons25
-  elseif uname =~? "Darwin"
-    set term=beos-ansi
-  else
-    set term=builtin_xterm
-  endif
-  unlet uname
-endif
+" "---------------------------------------------------------------------------
+" " コンソールでのカラー表示のための設定(暫定的にUNIX専用)
+" if has('unix') && !has('gui_running')
+"   let uname = system('uname')
+"   if uname =~? "linux"
+"     set term=builtin_linux
+"   elseif uname =~? "freebsd"
+"     set term=builtin_cons25
+"   elseif uname =~? "Darwin"
+"     set term=beos-ansi
+"   else
+"     set term=builtin_xterm
+"   endif
+"   unlet uname
+" endif
 
 "---------------------------------------------------------------------------
 " コンソール版で環境変数$DISPLAYが設定されていると起動が遅くなる件へ対応
@@ -280,10 +280,6 @@ augroup vimrc_checktime
   au!
   au WinEnter * checktime
 augroup END
-" ヤンクでクリップボードを共有する
-if has('clipboard') && has('gui_running')
-  set clipboard=unnamed
-endif
 
 "---------------------------------------------------------------------------
 " 画面表示の設定:
@@ -299,11 +295,11 @@ set list
 set listchars=tab:>-,extends:<,trail:-
 " タブの左側にカーソル表示
 "set listchars=tab:\ \
-" 全角スペースも表示
+" 全角スペースも表示　
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
 au myvimrc BufRead,BufNew * match JpSpace /　/
 " modelineを無視する
-set nomodeline
+"set nomodeline
 " フォールディング方式の指定（マーカー使用）(=fdm)
 set foldmethod=marker
 " 長い行を折り返して表示 (nowrap:折り返さない)
@@ -314,13 +310,10 @@ set cmdheight=1
 set showcmd
 " タイトルを表示
 set title
-" 画面を黒地に白にする (次行の先頭の " を削除すれば有効になる)
-"colorscheme evening " (Windows用gvim使用時はgvimrcを編集すること)
-"colorscheme wombat256
+" カラースキーマ設定
+set t_Co=256
 colorscheme molokai
 let g:molokai_original = 1
-"au BufRead,BufNew,BufNewFile * set t_Co=256
-set t_Co=256
 " 常にステータス行を表示 (詳細は:he laststatus)
 set laststatus=2
 " ステータスラインに文字コードと改行文字とファイルタイプを表示する
@@ -329,16 +322,17 @@ set laststatus=2
 " タブは非表示
 set showtabline=0
 " 前回終了したカーソル行に移動して真ん中にする（フォールディングがあれば開く）
-"au myvimrc BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+"au myvimrc BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 au myvimrc BufEnter * exe "normal zz"
-au myvimrc BufReadPost * if &foldenable > 0 && foldclosed("'\"") > 0 | exe "normal zA" | endif
+au myvimrc BufRead * if &foldenable > 0 && foldclosed("'\"") > 0 | exe "normal zA" | endif
 
 "---------------------------------------------------------------------------
 " GUI固有の画面表示の設定:
 "
 if has('gui_running')
   " バッファがローカルバッファに表示されなくなった場合は削除する
-  set bufhidden=wipe
+  " （[No Name]バッファへの対策）
+  "set bufhidden=wipe
   " ウィンドウサイズを最大化する
   au GUIEnter * simalt ~x
   " フォントを指定
@@ -346,6 +340,10 @@ if has('gui_running')
   " ビジュアル選択を自動的にクリップボードへ
   " 　クリップボードを共有したためいったん停止
   "set guioptions+=a
+  " ヤンクでクリップボードを共有する
+  if has('clipboard')
+    set clipboard=unnamed
+  endif
 endif
 
 "---------------------------------------------------------------------------
@@ -377,6 +375,14 @@ au BufRead COMMIT_EDITMSG setlocal nofoldenable
 "au BufRead COMMIT_EDITMSG set ft=diff fenc=utf8 ff=unix
 "git commit -v で対応するためコメントアウト
 "au BufRead COMMIT_EDITMSG DiffGitCached
+" Vim
+if 'vim' == &ft
+  setlocal iskeyword+=:
+  setlocal iskeyword-=#
+else
+  au myvimrc FileType vim setlocal iskeyword+=:
+  au myvimrc FileType vim setlocal iskeyword-=#
+endif
 " テンプレート設定
 "augroup SkeletonAu
   "au!
@@ -434,8 +440,8 @@ set pastetoggle=<Leader>p
 nnoremap ZZ <Nop>
 " 保存せずに閉じる
 nnoremap ZQ <Nop>
-" EXモードに入る
-nnoremap Q <Nop>
+" EXモードに入る（example.vimでgqにマッピングされているのでＣＯ）
+"nnoremap Q <Nop>
 
 "-----------------------------------------------------------------------------
 " 補完機能
@@ -638,14 +644,13 @@ let g:user_zen_settings = {
 \}
 "}}}
 
-"-----------------------------------------------------------------------------
-" quickrun.vim
+"{{{ quickrun.vim
 "
 " COMMAND:
 "  :QuickRun -args foo
 " KEYMAP:
 "  <Leader>r : バッファの内容を実行
-"{{{ quickrun config
+"
 " 実行にvimprocを使う
 " エラー時はquickfixに表示する
 let g:quickrun_config = {}
@@ -673,18 +678,19 @@ let g:quickrun_config['html'] = { 'command' : 'open', 'exec' : '%c %s', 'outputt
 let g:quickrun_config['xhtml'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
 "}}}
 
-"-----------------------------------------------------------------------------
-" fugitive.vim
+"{{{ fugitive.vim
 "
 " DESC:
 "  VimにGitコマンドを追加。
 " COMMAND:
-"  :Gstatus    : git status
-"  :Gwrite     : git add
-"  :Gcommit -v : git commit -v
+"  :Gstatus      : git status
+"  :Gwrite/:Gadd : git add
+"  :Gdiff        : git diff
+"  :Gcommit -v   : git commit -v
+command! Gadd :Gwrite
+"}}}
 
-"-----------------------------------------------------------------------------
-" surround.vim
+"{{{ surround.vim
 "
 " KEYMAP:
 "  i : inside
@@ -694,6 +700,7 @@ let g:quickrun_config['xhtml'] = { 'command' : 'open', 'exec' : '%c %s', 'output
 "  ysiw' : カーソル下の単語を'で囲む
 "  cs'" : 'を"に変換する
 "  ds' : 'で囲まれた範囲を消す
+"}}}
 
 "{{{ rcodetools.vim
 "
@@ -869,6 +876,7 @@ call unite#custom_default_action('directory' , 'vimfiler')
 "let g:unite_enable_start_insert=1
 " ヤンク履歴を使用可能にする
 let g:unite_source_history_yank_enable = 1
+" 最近使ったファイルの履歴数
 let g:unite_source_file_mru_file = 200
 " 大文字小文字を区別しない
 let g:unite_enable_ignore_case = 1
@@ -922,10 +930,6 @@ nnoremap <silent> [unite]f<CR> :<C-u>Unite<Space>file_mru
 nnoremap <silent> [unite]s<CR> :<C-u>Unite<Space>source
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=source<CR>
 
-" リファレンス参照
-nnoremap <silent> [unite]rr<CR> :<C-u>Unite<Space>ref/refe
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe<CR>
-
 " 現在のバッファ内をグレップ
 nnoremap <silent> [unite]g<CR> :<C-u>Unite<Space>grep:<C-R>%
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep<CR>
@@ -938,17 +942,23 @@ nnoremap <silent> [unite]gd<CR> :<C-u>Unite<Space>grep
 nnoremap <silent> [unite]gw<CR> :<C-u>Unite<Space>grep:<C-R>%
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-word<CR><C-R><C-W><CR>
 " すべてのバッファをグレップ（agでは複数ファイルを選択できないためＣＯ）
-"nnoremap <silent> [unite]ag<CR> :<C-u>Unite<Space>grep:$buffers<CR>
+nnoremap <silent> [unite]ga<CR> :<C-u>Unite<Space>grep:$buffers
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-all-bufs<CR>
 
 " ブックマーク（追加は:UniteBookmarkAdd）
 nnoremap <silent> [unite]b<CR> :<C-u>Unite<Space>bookmark
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmark<CR>
+" Todo: 'Todo:'をつけた行をファイル保存時に自動でブックマークするau
+nnoremap <silent> [unite]bt<CR> :<C-u>Unite<Space>bookmark:todos
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmark:todos<CR>
+" ブックマーク手動編集
+nnoremap <silent> [unite]be<CR> :<C-u>edit $HOME/.unite/bookmark/default<CR>
 " メニュー
-nnoremap <silent> [unite]m<CR> :<C-u>Unite<Space>menu:shortcut
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=menu:shortcut<CR>
+nnoremap <silent> [unite]m<CR> :<C-u>Unite<Space>menu:shortcuts
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=menu:shortcuts<CR>
 "{{{ メニュー設定
 let g:unite_source_menu_menus = {
-\ "shortcut" : {
+\ "shortcuts" : {
 \   "description" : "command shortcuts.",
 \   "command_candidates" : [
 \     ["unite-colorscheme", "Unite colorscheme -auto-preview"],
@@ -958,6 +968,10 @@ let g:unite_source_menu_menus = {
 \ },
 \}
 "}}}
+
+" リファレンス参照
+nnoremap <silent> [unite]rr<CR> :<C-u>Unite<Space>ref/refe
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe<CR>
 " ヤンクヒストリ
 nnoremap <silent> [unite]y<CR> :<C-u>Unite<Space>history/yank
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=history/yank<CR>
@@ -967,6 +981,5 @@ nnoremap <silent> [unite].<CR> :<C-u>UniteResume
 " Uniteコマンドの履歴表示
 nnoremap <silent> [unite]h :<C-u>Unite<CR> resume
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=resume<CR>
-
 "}}}
 
