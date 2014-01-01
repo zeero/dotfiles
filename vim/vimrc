@@ -356,7 +356,7 @@ set nowritebackup
 set directory+=,~/tmp,$TMP
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
-au myvimrc BufEnter * execute ":lcd " . expand("%:p:h")
+au myvimrc BufEnter * if expand("%") == '' | execute ":lcd " . expand("%:p:h") | endif
 " vimrcの保存時に再読み込み
 augroup re_source_vimrc
   au!
