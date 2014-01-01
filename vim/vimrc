@@ -742,15 +742,20 @@ command! Gadd :Gwrite
 "
 " 自動起動
 let g:miniBufExplAutoStart = 1
-let g:miniBufExplBuffersNeeded = 1
-"let g:did_minibufexplorer_syntax_inits = 1
-"" MiniBufExpl Colors
-"hi MBENormal               guifg=#808080 guibg=fg
-"hi MBEChanged              guifg=#CD5907 guibg=fg
-"hi MBEVisibleNormal        guifg=#5DC2D6 guibg=fg
-"hi MBEVisibleChanged       guifg=#F1266F guibg=fg
-"hi MBEVisibleActiveNormal  guifg=#A6DB29 guibg=fg
-"hi MBEVisibleActiveChanged guifg=#F1266F guibg=fg
+" バッファが２つ以上で開く
+let g:miniBufExplBuffersNeeded = 2
+" Diffモードでは隠す
+let g:miniBufExplHideWhenDiff = 1
+" バッファリストのサイクル化
+let g:miniBufExplCycleArround = 1
+" カラーリング
+let g:did_minibufexplorer_syntax_inits = 1
+hi MBENormal               guifg=#808080 guibg=fg
+hi MBEChanged              guifg=#CD5907 guibg=fg
+hi MBEVisibleNormal        guifg=#5DC2D6 guibg=fg
+hi MBEVisibleChanged       guifg=#F1266F guibg=fg
+hi MBEVisibleActiveNormal  guifg=#A6DB29 guibg=fg
+hi MBEVisibleActiveChanged guifg=#F1266F guibg=fg
 "}}}
 
 "{{{ lightline.vim
