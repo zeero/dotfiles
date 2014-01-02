@@ -424,6 +424,8 @@ nnoremap _ <C-w>_
 " すべてのフォールディングの開け閉め
 nnoremap zO zR
 nnoremap zC zM
+" \で空白を入れない
+inoremap \ \
 
 " ジャンプ元に戻る
 nnoremap <Leader><C-]> <C-t>
@@ -706,6 +708,7 @@ nnoremap <silent> [git]s :<C-u>Gstatus<CR>
 nnoremap <silent> [git]a :<C-u>Gwrite<CR>
 nnoremap <silent> [git]d :<C-u>Gdiff<CR>
 nnoremap <silent> [git]c :<C-u>Gcommit -v<CR>
+nnoremap <silent> [git]l :<C-u>Glog<CR>
 "}}}
 
 "{{{ surround.vim
@@ -878,6 +881,9 @@ vmap <Leader>/ <Plug>(caw:I:toggle)
 
 "{{{ VimShell
 "
+" 動的プロンプト
+let g:vimshell_prompt_expr = 'getcwd()." > "'
+let g:vimshell_prompt_pattern = '^\f\+ > '
 " KEYMAP:
 " VimShellを起動
 nnoremap <Leader>s :<C-u>VimShellPop<CR>
@@ -912,8 +918,7 @@ nnoremap <Leader>f :<C-u>VimFilerBufferDir
 au FileType vimfiler nmap <buffer> <expr> <Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
 "}}}
 
-"-----------------------------------------------------------------------------
-" unite.vim
+"{{{ Unite
 "
 " COMMAND:
 "  :Unite ${source} [${option}]
@@ -925,7 +930,6 @@ au FileType vimfiler nmap <buffer> <expr> <Cr> vimfiler#smart_cursor_map("\<Plug
 "  a : 候補でActionを開く
 "  ? : Uniteのキーマップを表示
 "
-" {{{基本設定
 " 入力モードで開始
 "let g:unite_enable_start_insert=1
 " ヤンク履歴を使用可能にする
@@ -940,8 +944,15 @@ let g:unite_force_overwrite_statusline = 0
 " ESCキーを2回押すと終了する
 au myvimrc FileType unite nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
 "au myvimrc FileType unite inoremap <silent> <buffer> <Esc><Esc> <Esc>:q<CR>
-"}}}
-"{{{ カスタマイズ設定
+
+" unite grep に ag(The Silver Searcher) を使う
+" Todo: 結果にファイル名が先頭に入らないからジャンプできない
+"if executable('ag')
+"  let g:unite_source_grep_command = 'ag'
+"  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+"  let g:unite_source_grep_recursive_opt = ''
+"endif
+
 " デフォルトアクションの変更
 " ref/refe
 call unite#custom_default_action('source/ref/refe/*' , 'above')
@@ -965,15 +976,6 @@ call unite#custom#action('source/mapping/*', 'verbose', s:action)
 " preview（pキー）で action を実行したい場合は
 " call unite#custom#action('source/mapping/*', 'preview', s:action)
 unlet s:action
-"}}}
-
-" unite grep に ag(The Silver Searcher) を使う
-" Todo: 結果にファイル名が先頭に入らないからジャンプできない
-"if executable('ag')
-"  let g:unite_source_grep_command = 'ag'
-"  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-"  let g:unite_source_grep_recursive_opt = ''
-"endif
 "}}}
 "{{{ キーマップ設定
 " KEYMAP:
@@ -1042,4 +1044,24 @@ nnoremap <silent> [unite].<CR> :<C-u>UniteResume
 nnoremap <silent> [unite]h :<C-u>Unite<CR> resume
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=resume<CR>
 "}}}
+"}}}
+
+" Unite source サンプル
+let s:unite_source = {
+\   'name': 'lines',
+\ }
+function! s:unite_source.gather_candidates(args, context)
+  let path = expand('%:p')
+  let lines = getbufline('%', 1, '$')
+  let format = '%' . strlen(len(lines)) . 'd: %s'
+  return map(lines, '{
+  \   "word": printf(format, v:key + 1, v:val),
+  \   "source": "lines",
+  \   "kind": "jump_list",
+  \   "action__path": path,
+  \   "action__line": v:key + 1,
+  \ }')
+endfunction
+call unite#define_source(s:unite_source)
+unlet s:unite_source
 
