@@ -326,8 +326,7 @@ set laststatus=2
 " タブは非表示
 set showtabline=0
 " 前回終了したカーソル行に移動して真ん中にする（フォールディングがあれば開く）
-"au myvimrc BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
-au myvimrc BufEnter * exe "normal zz"
+au myvimrc BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"zz" | endif
 au myvimrc BufRead * if &foldenable > 0 && foldclosed("'\"") > 0 | exe "normal zA" | endif
 
 "---------------------------------------------------------------------------
