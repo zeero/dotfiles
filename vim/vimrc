@@ -72,6 +72,12 @@ Bundle 'gregsexton/gitv'
 Bundle 'wombat256.vim'
 Bundle 'molokai'
 Bundle 'ScrollColors'
+
+" local repos
+if isdirectory($HOME . '/dev/github/unite-tiddlywiki/')
+  Bundle 'file://' . $HOME . '/dev/github/unite-tiddlywiki/'
+endif
+
 filetype plugin indent on
 
 " singleton.vim
@@ -292,6 +298,8 @@ augroup END
 set nonumber
 " ルーラーを表示 (noruler:非表示)
 set ruler
+" ウィンドウタイトルを変更させない
+set notitle
 " タブや改行を表示 (nolist:非表示)
 set list
 " どの文字でタブや改行を表示するかを設定
@@ -849,8 +857,7 @@ function! MyMode()
 endfunction
 "}}}
 
-"-----------------------------------------------------------------------------
-" ref.vim
+"{{{ ref.vim
 "
 " COMMAND:
 "  :Ref refe Array
@@ -858,14 +865,7 @@ endfunction
 "  Shift-K : 単語を検索
 let g:ref_use_vimproc = 1 " 0:disable / 1:enable
 let g:ref_refe_version = 2
-"nmap ,rr :<C-u>Ref refe<Space>
-
-"-----------------------------------------------------------------------------
-" refe.vim
-"
-"au BufRead *.rb nmap <buffer> <C-]> :Refe <cword><CR>
-"let g:loaded_lookupfile = 0
-"let g:RefeUseLookupFile = 0
+"}}}
 
 "-----------------------------------------------------------------------------
 " markdown.vim
@@ -1032,8 +1032,17 @@ let g:unite_source_menu_menus = {
 "}}}
 
 " リファレンス参照
+" refe
 nnoremap <silent> [unite]rr<CR> :<C-u>Unite<Space>ref/refe
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe<CR>
+" カーソル下の単語でrefe
+nnoremap <silent> [unite]rrw<CR> :<C-u>Unite<Space>ref/refe
+\<Space>-input=<C-r><C-w>
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe<CR>
+" ri
+nnoremap <silent> [unite]rri<CR> :<C-u>Unite<Space>ref/ri
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/ri<CR>
+
 " ヤンクヒストリ
 nnoremap <silent> [unite]y<CR> :<C-u>Unite<Space>history/yank
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=history/yank<CR>
