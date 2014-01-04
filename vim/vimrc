@@ -160,6 +160,7 @@ endif
 "---------------------------------------------------------------------------
 " Bram氏の提供する設定例をインクルード (別ファイル:vimrc_example.vim)。これ
 " 以前にg:no_vimrc_exampleに非0な値を設定しておけばインクルードはしない。
+let g:no_vimrc_example = 1
 if 1 && (!exists('g:no_vimrc_example') || g:no_vimrc_example == 0)
   if &guioptions !~# "M"
     " vimrc_example.vimを読み込む時はguioptionsにMフラグをつけて、syntax on
@@ -173,6 +174,16 @@ if 1 && (!exists('g:no_vimrc_example') || g:no_vimrc_example == 0)
   else
     source $VIMRUNTIME/vimrc_example.vim
   endif
+endif
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+inoremap <C-U> <C-G>u<C-U>
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+		  \ | wincmd p | diffthis
 endif
 
 "---------------------------------------------------------------------------
@@ -220,6 +231,8 @@ endif
 set ignorecase
 " 大文字小文字の両方が含まれている場合は大文字小文字を区別
 set smartcase
+" インクリメンタルな検索
+set incsearch
 " 検索結果文字列のハイライトを有効にする
 set hlsearch
 " 検索時にファイルの最後まで行ったら最初に戻る (nowrapscan:戻らない)
@@ -276,6 +289,12 @@ set iskeyword+=-
 let format_allow_over_tw = 1	" ぶら下り可能幅
 " 編集後保存していなくても別のファイルを開く
 set hidden
+" コマンドライン履歴
+set history=50
+" マウスを有効にする
+if has('mouse')
+  set mouse=a
+endif
 " 外部のエディタで編集中のファイルが変更されたら自動で読み直す
 " （ウィンドウを移動する度に変更をチェックする）
 set autoread
@@ -396,7 +415,6 @@ endif
 "   テキスト入力補助 => inoremap
 "   機能呼び出し => cnoremap
 " <Nop>をリンク先に指定することでキーマップを無効にする。
-
 " KEYMAP:
 " バッファ移動用キーマップ
 nnoremap H <Esc>:MBEbp<CR>
@@ -439,8 +457,8 @@ set pastetoggle=<Leader>p
 nnoremap ZZ <Nop>
 " 保存せずに閉じる
 nnoremap ZQ <Nop>
-" EXモードに入る（example.vimでgqにマッピングされているのでＣＯ）
-"nnoremap Q <Nop>
+" EXモードに入る
+noremap Q <Nop>
 
 " 補完機能 {{{2
 " <Tab>で補完 (neocomplcacheで代用されてそうなのでコメントアウト）
