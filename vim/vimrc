@@ -365,6 +365,10 @@ if has('gui_running')
   if has('mouse')
     set mouse=a
   endif
+  " IME制御をオフにする
+  set iminsert=0
+  set imsearch=0
+  set noimcmdline
 endif
 
 " ファイル操作に関する設定 {{{2
@@ -402,6 +406,8 @@ else
 endif
 " JavaSciprt
 au myvimrc BufRead,BufNew,BufNewFile *.json setlocal filetype=javascript
+" Apache
+au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setlocal filetype=apache
 " テンプレート設定
 "augroup SkeletonAu
   "au!
