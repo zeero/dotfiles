@@ -14,7 +14,12 @@ set ttimeout
 " COMMAND:
 "  :BundleInstall : Bundleされたプラグインをインストール
 "  :BundleSearch : vim-scriptにあるプラグインを検索
-"
+" KEYMAP:
+nnoremap [bundle] <Nop>
+nmap <Leader>b [bundle]
+nnoremap <silent> [bundle]i<CR> :<C-u>BundleInstall<CR>
+nnoremap <silent> [bundle]u<CR> :<C-u>BundleUpdate<CR>
+
 filetype off
 if has("win32") || has("win64")
   set rtp&
@@ -25,11 +30,6 @@ else
   set rtp+=~/.vim/bundle/vundle
   call vundle#rc()
 endif
-" KEYMAP:
-nnoremap [bundle] <Nop>
-nmap <Leader>b [bundle]
-nnoremap <silent> [bundle]i<CR> :<C-u>BundleInstall<CR>
-nnoremap <silent> [bundle]u<CR> :<C-u>BundleUpdate<CR>
 
 " original repos on github
 Bundle 'gmarik/vundle'
