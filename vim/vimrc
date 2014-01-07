@@ -971,10 +971,10 @@ unlet s:action
 nnoremap [unite] <Nop>
 nmap <Leader>u [unite]
 " ファイラ
-"nnoremap <silent> [unite]f<CR> :<C-u>Unite<Space>file
-"\<Space>-no-empty<Space>-silent<Space>-buffer-name=file<CR>
+nnoremap <silent> [unite]f<CR> :<C-u>Unite<Space>file
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=file<CR>
 " 最近使ったファイルの一覧
-nnoremap <silent> [unite]f<CR> :<C-u>Unite<Space>file_mru
+nnoremap <silent> [unite]fm<CR> :<C-u>Unite<Space>file_mru
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=file_mru<CR>
 " コマンド一覧を表示
 nnoremap <silent> [unite]s<CR> :<C-u>Unite<Space>source
