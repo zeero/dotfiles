@@ -302,10 +302,16 @@ augroup END
 " 画面表示の設定 {{{2
 " シンタックスハイライト
 syntax on
+" カラースキーマ設定
+"set t_Co=256
+colorscheme molokai
+let g:molokai_original = 1
 " 行番号を非表示 (number:表示)
 set nonumber
 " ルーラーを表示 (noruler:非表示)
 set ruler
+" タイトルを表示
+set title
 " 終了後のウィンドウタイトル
 set titleold=vim
 " タブや改行を表示 (nolist:非表示)
@@ -316,8 +322,12 @@ set listchars=tab:>-,extends:<,trail:-
 " タブの左側にカーソル表示
 "set listchars=tab:\ \
 " 全角スペースも表示　
-highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
+highlight JpSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
 au myvimrc BufRead,BufNew * match JpSpace /　/
+" □や○の文字があってもカーソル位置をずらさせない
+set ambiwidth=double
+" 画面最後の行を出来る限り表示する
+set display+=lastline
 " modelineを無視する
 "set nomodeline
 " フォールディング方式の指定（マーカー使用）(=fdm)
@@ -328,12 +338,6 @@ set wrap
 set cmdheight=1
 " コマンドをステータス行に表示
 set showcmd
-" タイトルを表示
-set title
-" カラースキーマ設定
-set t_Co=256
-colorscheme molokai
-let g:molokai_original = 1
 " 常にステータス行を表示 (詳細は:he laststatus)
 set laststatus=2
 " ステータスラインに文字コードと改行文字とファイルタイプを表示する
@@ -775,14 +779,24 @@ let g:miniBufExplBuffersNeeded = 2
 let g:miniBufExplHideWhenDiff = 1
 " バッファリストのサイクル化
 let g:miniBufExplCycleArround = 1
+" 表示行数を制限
+let g:miniBufExplMaxSize = 1
 " カラーリング
 let g:did_minibufexplorer_syntax_inits = 1
-hi MBENormal               guifg=#808080 guibg=fg
-hi MBEChanged              guifg=#CD5907 guibg=fg
-hi MBEVisibleNormal        guifg=#5DC2D6 guibg=fg
-hi MBEVisibleChanged       guifg=#F1266F guibg=fg
-hi MBEVisibleActiveNormal  guifg=#A6DB29 guibg=fg
-hi MBEVisibleActiveChanged guifg=#F1266F guibg=fg
+" for buffers that have NOT CHANGED and are NOT VISIBLE.
+hi MBENormal ctermbg=LightGray ctermfg=DarkGray guibg=LightGray guifg=DarkGray
+" for buffers that HAVE CHANGED and are NOT VISIBLE
+hi MBEChanged ctermbg=Red ctermfg=DarkRed guibg=Red guifg=DarkRed
+" buffers that have NOT CHANGED and are VISIBLE
+hi MBEVisibleNormal term=bold cterm=bold ctermbg=Gray ctermfg=Black gui=bold guibg=Gray guifg=Black
+" buffers that have CHANGED and are VISIBLE
+hi MBEVisibleChanged term=bold cterm=bold ctermbg=DarkRed ctermfg=Black gui=bold guibg=DarkRed guifg=Black
+" hi MBENormal               ctermfg= ctermbg=fg guifg=#808080 guibg=fg
+" hi MBEChanged              ctermfg= ctermbg=fg guifg=#CD5907 guibg=fg
+" hi MBEVisibleNormal        ctermfg= ctermbg=fg guifg=#5DC2D6 guibg=fg
+" hi MBEVisibleChanged       ctermfg= ctermbg=fg guifg=#F1266F guibg=fg
+" hi MBEVisibleActiveNormal  ctermfg= ctermbg=fg guifg=#A6DB29 guibg=fg
+" hi MBEVisibleActiveChanged ctermfg= ctermbg=fg guifg=#F1266F guibg=fg
 
 " lightline.vim {{{2
 "
