@@ -39,6 +39,9 @@ nnoremap M :<C-u>set toolbars+=navigation<CR>
 " プラグインの設定
 "
 
+" My Commands
+command! reconfig source ~/.vimperatorrc
+
 " feedSomeKeys_3.js
 command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
 lazy fmaps -u='mail\.google\.com/mail' c / j k l n p o u e x s r a # [ ] ? gi gs gt gd ga gc
