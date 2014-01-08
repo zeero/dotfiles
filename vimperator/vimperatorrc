@@ -3,13 +3,13 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vimperator固有の設定
 "
-set toolbars=addons,nobookmarks,menu,navigation,tabs
+set toolbars=menu,tabs,navigation,nobookmarks,addons
 set hlsearch
 set newtab=all
 " ページロード時にテキストボックスにフォーカスするのを防ぐ
 set focuscontent
 " :[tab]open時の補完設定(s=検索エンジン+キーワードURL,S=サジェストエンジン,l=ロケーションバーの補完機能を利用,b=ブックマーク)
-set complete=Sls
+set complete=sSl
 " カラースキーム導入
 colorscheme ZeeroBlue
 
@@ -32,8 +32,8 @@ nnoremap L gt
 nnoremap <C-l> :tabm 100<CR>
 
 " ナビゲーションバーのトグル
-nnoremap m :<C-u>set toolbars-=navigation<CR>
-nnoremap M :<C-u>set toolbars+=navigation<CR>
+nnoremap m :set toolbars+=nonavigation<CR>
+nnoremap M :set toolbars+=navigation<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " プラグインの設定
