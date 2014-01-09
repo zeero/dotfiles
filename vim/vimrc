@@ -299,12 +299,13 @@ augroup END
 syntax on
 " カラースキーマ設定
 set t_Co=256
-colorscheme wombat256mod
-"colorscheme molokai
-"let g:molokai_original = 1
-"let g:rehash256 = 1
-" 背景色暗色（colorschemeの後に設定すること）
-set background=dark
+if has('gui_running')
+  colorscheme wombat256mod
+else
+  "let g:molokai_original = 1
+  let g:rehash256 = 1
+  colorscheme molokai
+endif
 " 行番号を非表示 (number:表示)
 set nonumber
 " ルーラーを表示 (noruler:非表示)
@@ -370,6 +371,8 @@ if has('gui_running')
   set guioptions-=L
   " フォントを指定
   set guifont=Ricty_Diminished:h12:cSHIFTJIS
+  " 背景色暗色（colorschemeの後に設定すること）
+  set background=dark
   " ウィンドウサイズを最大化する
   au GUIEnter * simalt ~x
   " ヤンクでクリップボードを共有する
@@ -404,11 +407,11 @@ set directory+=,~/tmp,$TMP
 au myvimrc BufEnter .* if expand("%:p:h") != '' | execute ":lcd \"" . expand("%:p:h") . "\"" | endif
 " vimrcの保存時に再読み込み
 if !has('gui_running') && !(has('win32') || has('win64'))
-    autocmd myvimrc BufWritePost $MYVIMRC nested source $MYVIMRC
+    au myvimrc BufWritePost *vimrc nested source $MYVIMRC
 else
-    autocmd myvimrc BufWritePost $MYVIMRC source $MYVIMRC |
+    au myvimrc BufWritePost *vimrc source $MYVIMRC |
       \ if has('gui_running') && filereadable($MYGVIMRC) | source $MYGVIMRC
-    autocmd myvimrc BufWritePost $MYGVIMRC if has('gui_running') | source $MYGVIMRC
+    au myvimrc BufWritePost *gvimrc if has('gui_running') | source $MYGVIMRC
 endif
 
 " FileType設定 {{{2
@@ -855,13 +858,13 @@ hi MBEVisibleActiveNormal ctermfg=black ctermbg=lightgray guifg=black guibg=ligh
 " for buffers that have CHANGED and are VISIBLE and is the active buffer
 hi MBEVisibleActiveChanged ctermfg=black ctermbg=lightred guifg=black guibg=lightred
 " buffers that have NOT CHANGED and are VISIBLE
-hi MBEVisibleNormal term=bold cterm=bold ctermfg=white ctermbg=black gui=bold guifg=white guibg=black
+hi MBEVisibleNormal cterm=bold ctermfg=white gui=bold guifg=white guibg=black
 " buffers that have CHANGED and are VISIBLE
-hi MBEVisibleChanged term=bold cterm=bold ctermfg=lightred ctermbg=black gui=bold guifg=lightred guibg=black
+hi MBEVisibleChanged cterm=bold ctermfg=lightred gui=bold guifg=lightred guibg=black
 " for buffers that have NOT CHANGED and are NOT VISIBLE.
-hi MBENormal ctermfg=darkgray ctermbg=black guifg=darkgray guibg=black
+hi MBENormal ctermfg=darkgray guifg=darkgray guibg=black
 " for buffers that HAVE CHANGED and are NOT VISIBLE
-hi MBEChanged ctermfg=red ctermbg=black guifg=red guibg=black
+hi MBEChanged ctermfg=red guifg=red guibg=black
 
 " lightline.vim {{{2
 "
