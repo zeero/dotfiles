@@ -271,6 +271,7 @@ set showmatch
 " コマンドライン補完するときに強化されたものを使う(参照 :help wildmenu)
 set wildmenu
 " テキスト挿入中の自動折り返しを日本語に対応させる
+set formatoptions&
 set formatoptions+=mM
 " コメント行で'o'で改行したらコメントをつけない
 " ftpluginで上書きされてしまうためauでなんとかする
@@ -284,9 +285,13 @@ set textwidth=0
 "     128-167,224-235,192-255 : Extended ASCII characters（日本語には関係ない）
 if has('mac')
   set iskeyword=@,48-57,_,128-167,224-235
+  " '-'も単語の一部と認識させる
+  set iskeyword+=-
+else
+  " '-'も単語の一部と認識させる
+  set iskeyword&
+  set iskeyword+=-
 endif
-" '-'も単語の一部と認識させる
-set iskeyword+=-
 " 日本語整形スクリプト(by. 西岡拓洋さん)用の設定
 let format_allow_over_tw = 1	" ぶら下り可能幅
 " 編集後保存していなくても別のファイルを開く
@@ -329,6 +334,7 @@ au myvimrc BufRead,BufNew * match JpSpace /　/
 " □や○の文字があってもカーソル位置をずらさせない
 set ambiwidth=double
 " 画面最後の行を出来る限り表示する
+set display&
 set display+=lastline
 " modelineを無視する
 "set nomodeline
@@ -382,16 +388,19 @@ endif
 set nobackup
 set nowritebackup
 " スワップファイルの作成ディレクトリにパスを追加
+set directory&
 set directory+=,~/tmp,$TMP
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
 au myvimrc BufEnter * if expand("%") == '' | execute ":lcd " . expand("%:p:h") | endif
 " vimrcの保存時に再読み込み
-augroup re_source_vimrc
-  au!
-  au BufWritePost *vimrc nested source $MYVIMRC
-  au BufWritePost *gvimrc if has('gui_running') source $MYGVIMRC
-augroup END
+if !has('gui_running') && !(has('win32') || has('win64'))
+    autocmd myvimrc BufWritePost $MYVIMRC nested source $MYVIMRC
+else
+    autocmd myvimrc BufWritePost $MYVIMRC source $MYVIMRC |
+      \ if has('gui_running') && filereadable($MYGVIMRC) | source $MYGVIMRC
+    autocmd myvimrc BufWritePost $MYGVIMRC if has('gui_running') | source $MYGVIMRC
+endif
 
 " FileType設定 {{{2
 " Ruby
