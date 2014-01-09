@@ -358,7 +358,7 @@ au myvimrc BufRead * if &foldenable > 0 && foldclosed("'\"") > 0 | exe "normal z
 set splitright
 " 画面サイズが広い場合はバッファを右に移動させる
 " Todo: Unite開くと低くなる
-au myvimrc BufRead,BufNew,BufNewFile * if winwidth(0) => 141 | wincmd L | wincmd _ | endif
+"au myvimrc BufRead,BufNew,BufNewFile * if winwidth(0) => 141 | wincmd L | wincmd _ | endif
 
 " GUI固有の画面表示の設定 {{{2
 if has('gui_running')
@@ -393,6 +393,9 @@ if has('gui_running')
   " バッファがローカルバッファに表示されなくなった場合は削除する
   " （[No Name]バッファへの対策）
   set bufhidden=wipe
+  " Todo: Alt+CとAlt+Pでコピペする
+  "noremap <M-c> :simalt ec
+  "noremap <M-p> :simalt ep
 endif
 
 " ファイル操作に関する設定 {{{2
@@ -404,7 +407,7 @@ set directory&
 set directory+=,~/tmp,$TMP
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
-au myvimrc BufEnter * if expand("%") == '' | execute ":lcd " . expand("%:p:h") | endif
+au myvimrc BufEnter .* if expand("%:p:h") != '' | execute ":lcd \"" . expand("%:p:h") . "\"" | endif
 " vimrcの保存時に再読み込み
 if !has('gui_running') && !(has('win32') || has('win64'))
     autocmd myvimrc BufWritePost $MYVIMRC nested source $MYVIMRC
@@ -1111,11 +1114,11 @@ nnoremap <silent> [unite]rri<CR> :<C-u>Unite<Space>ref/ri
 " ヤンクヒストリ
 nnoremap <silent> [unite]y<CR> :<C-u>Unite<Space>history/yank
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=history/yank<CR>
-" 直前のUniteコマンドを再実行
-nnoremap <silent> [unite].<CR> :<C-u>UniteResume
+" 直前のUniteコマンドの結果に戻る
+nnoremap <silent> [unite]r<CR> :<C-u>UniteResume
 \<Space>-no-empty<Space>-silent<CR>
 " Uniteコマンドの履歴表示
-nnoremap <silent> [unite]h :<C-u>Unite<CR> resume
+nnoremap <silent> [unite]rl :<C-u>Unite<CR> resume
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=resume<CR>
 
 " Unite source サンプル {{{3
