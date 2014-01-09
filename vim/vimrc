@@ -361,7 +361,7 @@ endfunction
 set splitright
 " 画面サイズが広い場合はバッファを右に移動させる
 " Todo: Unite開くと低くなる
-"au myvimrc BufRead,BufNew,BufNewFile * if winwidth(0) => 141 | wincmd L | wincmd _ | endif
+"au myvimrc BufRead,BufNew,BufNewFile * if winwidth(0) > 140 | wincmd L | wincmd _ | endif
 
 " GUI固有の画面表示の設定 {{{2
 if has('gui_running')
@@ -547,7 +547,7 @@ function! GrepFunction(keyword, target)
   "<C-u>Unite<Space>grep: <Space>-buffer-name=grep<CR>
 endfunction
 " H(elp)
-command! -nargs=* -complete=help H if winwidth(0) > 150 | vertical help <args> | else | help <args> | endif
+command! -nargs=* -complete=help H if winwidth(0) > 140 | vertical help <args> | vertical resize 78 | else | help <args> | endif
 " Vimdoc
 command! Vimdoc :OpenBrowser http://vim-jp.org/vimdoc-ja/
 " SyntaxInfo
@@ -1128,7 +1128,7 @@ nnoremap <silent> [unite]y<CR> :<C-u>Unite<Space>history/yank
 nnoremap <silent> [unite]r<CR> :<C-u>UniteResume
 \<Space>-no-empty<Space>-silent<CR>
 " Uniteコマンドの履歴表示
-nnoremap <silent> [unite]rl :<C-u>Unite<CR> resume
+nnoremap <silent> [unite]rl :<C-u>Unite<Space>resume
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=resume<CR>
 
 " Unite source サンプル {{{3
