@@ -305,8 +305,12 @@ augroup END
 syntax on
 " カラースキーマ設定
 set t_Co=256
-colorscheme molokai
-let g:molokai_original = 1
+colorscheme wombat256mod
+"colorscheme molokai
+"let g:molokai_original = 1
+"let g:rehash256 = 1
+" 背景色暗色（colorschemeの後に設定すること）
+set background=dark
 " 行番号を非表示 (number:表示)
 set nonumber
 " ルーラーを表示 (noruler:非表示)
@@ -529,8 +533,50 @@ function! GrepFunction(keyword, target)
   "Unite grep<CR>a:target<CR>a:keyword<CR>
   "<C-u>Unite<Space>grep: <Space>-buffer-name=grep<CR>
 endfunction
-" Help
-command! Help :OpenBrowser http://vim-jp.org/vimdoc-ja/
+" H(elp)
+command! -nargs=* -complete=help H if winwidth(0) > 150 | vertical help <args> | else | help <args> | endif
+" Vimdoc
+command! Vimdoc :OpenBrowser http://vim-jp.org/vimdoc-ja/
+" SyntaxInfo
+command! SyntaxInfo call s:get_syn_info()
+function! s:get_syn_id(transparent) "{{{
+  let synid = synID(line("."), col("."), 1)
+  if a:transparent
+    return synIDtrans(synid)
+  else
+    return synid
+  endif
+endfunction
+function! s:get_syn_attr(synid)
+  let name = synIDattr(a:synid, "name")
+  let ctermfg = synIDattr(a:synid, "fg", "cterm")
+  let ctermbg = synIDattr(a:synid, "bg", "cterm")
+  let guifg = synIDattr(a:synid, "fg", "gui")
+  let guibg = synIDattr(a:synid, "bg", "gui")
+  return {
+        \ "name": name,
+        \ "ctermfg": ctermfg,
+        \ "ctermbg": ctermbg,
+        \ "guifg": guifg,
+        \ "guibg": guibg}
+endfunction
+function! s:get_syn_info()
+  let baseSyn = s:get_syn_attr(s:get_syn_id(0))
+  echo "name: " . baseSyn.name .
+        \ " ctermfg: " . baseSyn.ctermfg .
+        \ " ctermbg: " . baseSyn.ctermbg .
+        \ " guifg: " . baseSyn.guifg .
+        \ " guibg: " . baseSyn.guibg
+  let linkedSyn = s:get_syn_attr(s:get_syn_id(1))
+  echo "link to"
+  echo "name: " . linkedSyn.name .
+        \ " ctermfg: " . linkedSyn.ctermfg .
+        \ " ctermbg: " . linkedSyn.ctermbg .
+        \ " guifg: " . linkedSyn.guifg .
+        \ " guibg: " . linkedSyn.guibg
+endfunction "}}}
+" Colortest
+command! Colortest belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source $VIMRUNTIME/syntax/colortest.vim
 
 " neocomplecache.vim {{{2
 "
@@ -803,17 +849,17 @@ let g:miniBufExplMaxSize = 1
 " カラーリング
 let g:did_minibufexplorer_syntax_inits = 1
 " for buffers that have NOT CHANGED and are VISIBLE and is the active buffer
-hi MBEVisibleActiveNormal ctermbg=LightGray ctermfg=DarkGray guibg=LightGray guifg=DarkGray
+hi MBEVisibleActiveNormal ctermfg=black ctermbg=lightgray guifg=black guibg=lightgray
 " for buffers that have CHANGED and are VISIBLE and is the active buffer
-hi MBEVisibleActiveChanged ctermbg=Red ctermfg=DarkRed guibg=Red guifg=DarkRed
-" for buffers that have NOT CHANGED and are NOT VISIBLE.
-hi MBENormal ctermbg=LightGray ctermfg=DarkGray guibg=LightGray guifg=DarkGray
-" for buffers that HAVE CHANGED and are NOT VISIBLE
-hi MBEChanged ctermbg=Red ctermfg=DarkRed guibg=Red guifg=DarkRed
+hi MBEVisibleActiveChanged ctermfg=black ctermbg=lightred guifg=black guibg=lightred
 " buffers that have NOT CHANGED and are VISIBLE
-"hi MBEVisibleNormal term=bold cterm=bold ctermbg=Gray ctermfg=Black gui=bold guibg=Gray guifg=Black
+hi MBEVisibleNormal term=bold cterm=bold ctermfg=white ctermbg=black gui=bold guifg=white guibg=black
 " buffers that have CHANGED and are VISIBLE
-"hi MBEVisibleChanged term=bold cterm=bold ctermbg=DarkRed ctermfg=Black gui=bold guibg=DarkRed guifg=Black
+hi MBEVisibleChanged term=bold cterm=bold ctermfg=lightred ctermbg=black gui=bold guifg=lightred guibg=black
+" for buffers that have NOT CHANGED and are NOT VISIBLE.
+hi MBENormal ctermfg=darkgray ctermbg=black guifg=darkgray guibg=black
+" for buffers that HAVE CHANGED and are NOT VISIBLE
+hi MBEChanged ctermfg=red ctermbg=black guifg=red guibg=black
 
 " lightline.vim {{{2
 "
