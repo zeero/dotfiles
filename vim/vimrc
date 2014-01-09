@@ -48,7 +48,7 @@ Bundle 'ujihisa/unite-gem'
 Bundle 'thinca/vim-ref'
 Bundle 'thinca/vim-quickrun'
 Bundle 'thinca/vim-singleton'
-Bundle 'thinca/vim-guicolorscheme'
+"Bundle 'thinca/vim-guicolorscheme'
 Bundle 'thinca/vim-qfreplace'
 Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-fugitive'
@@ -73,6 +73,7 @@ Bundle 'wombat256.vim'
 Bundle 'molokai'
 Bundle 'Zephyr-Color-Scheme'
 Bundle 'ScrollColors'
+Bundle 'CSApprox'
 
 " local repos
 if isdirectory($HOME . '/dev/github/unite-tiddlywiki/')
