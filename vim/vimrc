@@ -154,29 +154,23 @@ if !has('gui_running') && &encoding != 'cp932' && &term == 'win32'
 endif
 
 "---------------------------------------------------------------------------
-" メニューファイルが存在しない場合は予め'guioptions'を調整しておく
-if 1 && !filereadable($VIMRUNTIME . '/menu.vim') && has('gui_running')
-  set guioptions+=M
-endif
-
-"---------------------------------------------------------------------------
 " Bram氏の提供する設定例をインクルード (別ファイル:vimrc_example.vim)。これ
 " 以前にg:no_vimrc_exampleに非0な値を設定しておけばインクルードはしない。
-let g:no_vimrc_example = 1
-if 1 && (!exists('g:no_vimrc_example') || g:no_vimrc_example == 0)
-  if &guioptions !~# "M"
-    " vimrc_example.vimを読み込む時はguioptionsにMフラグをつけて、syntax on
-    " やfiletype plugin onが引き起こすmenu.vimの読み込みを避ける。こうしない
-    " とencに対応するメニューファイルが読み込まれてしまい、これの後で読み込
-    " まれる.vimrcでencが設定された場合にその設定が反映されずメニューが文字
-    " 化けてしまう。
-    set guioptions+=M
-    source $VIMRUNTIME/vimrc_example.vim
-    set guioptions-=M
-  else
-    source $VIMRUNTIME/vimrc_example.vim
-  endif
-endif
+" let g:no_vimrc_example = 1
+" if 1 && (!exists('g:no_vimrc_example') || g:no_vimrc_example == 0)
+"   if &guioptions !~# "M"
+"     " vimrc_example.vimを読み込む時はguioptionsにMフラグをつけて、syntax on
+"     " やfiletype plugin onが引き起こすmenu.vimの読み込みを避ける。こうしない
+"     " とencに対応するメニューファイルが読み込まれてしまい、これの後で読み込
+"     " まれる.vimrcでencが設定された場合にその設定が反映されずメニューが文字
+"     " 化けてしまう。
+"     set guioptions+=M
+"     source $VIMRUNTIME/vimrc_example.vim
+"     set guioptions-=M
+"   else
+"     source $VIMRUNTIME/vimrc_example.vim
+"   endif
+" endif
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
@@ -356,19 +350,30 @@ set showtabline=0
 " 前回終了したカーソル行に移動して真ん中にする（フォールディングがあれば開く）
 au myvimrc BufRead * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"zz" | endif
 au myvimrc BufRead * if &foldenable > 0 && foldclosed("'\"") > 0 | exe "normal zA" | endif
+" vsplitは右に開く
+set splitright
+" 画面サイズが広い場合はバッファを右に移動させる
+" Todo: Unite開くと低くなる
+au myvimrc BufRead,BufNew,BufNewFile * if winwidth(0) > 150 | wincmd L | wincmd _ | endif
 
 " GUI固有の画面表示の設定 {{{2
 if has('gui_running')
-  " バッファがローカルバッファに表示されなくなった場合は削除する
-  " （[No Name]バッファへの対策）
-  "set bufhidden=wipe
-  " ウィンドウサイズを最大化する
-  au GUIEnter * simalt ~x
+  set guioptions&
+  " メニューファイルが存在しない場合、menu.vimを読み込まない
+  if !filereadable($VIMRUNTIME . '/menu.vim')
+    set guioptions+=M
+  endif
+  " ビジュアル選択を自動的にクリップボードへ
+  "set guioptions+=a
+  " スクロールバーを非表示にする
+  set guioptions-=r
+  set guioptions-=R
+  set guioptions-=l
+  set guioptions-=L
   " フォントを指定
   set guifont=Ricty_Diminished:h12:cSHIFTJIS
-  " ビジュアル選択を自動的にクリップボードへ
-  " 　クリップボードを共有したためいったん停止
-  "set guioptions+=a
+  " ウィンドウサイズを最大化する
+  au GUIEnter * simalt ~x
   " ヤンクでクリップボードを共有する
   if has('clipboard')
     set clipboard=unnamed
@@ -381,6 +386,9 @@ if has('gui_running')
   set iminsert=0
   set imsearch=0
   set noimcmdline
+  " バッファがローカルバッファに表示されなくなった場合は削除する
+  " （[No Name]バッファへの対策）
+  set bufhidden=wipe
 endif
 
 " ファイル操作に関する設定 {{{2
