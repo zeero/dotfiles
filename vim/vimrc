@@ -358,7 +358,7 @@ au myvimrc BufRead * if &foldenable > 0 && foldclosed("'\"") > 0 | exe "normal z
 set splitright
 " 画面サイズが広い場合はバッファを右に移動させる
 " Todo: Unite開くと低くなる
-au myvimrc BufRead,BufNew,BufNewFile * if winwidth(0) > 150 | wincmd L | wincmd _ | endif
+au myvimrc BufRead,BufNew,BufNewFile * if winwidth(0) => 141 | wincmd L | wincmd _ | endif
 
 " GUI固有の画面表示の設定 {{{2
 if has('gui_running')
