@@ -14,12 +14,6 @@ set ttimeout
 " COMMAND:
 "  :BundleInstall : Bundleされたプラグインをインストール
 "  :BundleSearch : vim-scriptにあるプラグインを検索
-" KEYMAP:
-nnoremap [bundle] <Nop>
-nmap <Leader>b [bundle]
-nnoremap <silent> [bundle]i<CR> :<C-u>BundleInstall<CR>
-nnoremap <silent> [bundle]u<CR> :<C-u>BundleUpdate<CR>
-
 filetype off
 if has("win32") || has("win64")
   set rtp&
@@ -492,6 +486,11 @@ let mapleader=","
 noremap \ ,
 " set paste/nopasteを切り替え
 set pastetoggle=<Leader>p
+" Vundle
+nnoremap [bundle] <Nop>
+nmap <Leader>b [bundle]
+nnoremap <silent> [bundle]i<CR> :<C-u>BundleInstall<CR>
+nnoremap <silent> [bundle]u<CR> :<C-u>BundleUpdate<CR>
 
 " 誤操作防止
 " 保存して閉じる
