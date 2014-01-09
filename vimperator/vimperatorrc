@@ -32,15 +32,15 @@ nnoremap L gt
 nnoremap <C-l> :tabm 100<CR>
 
 " ナビゲーションバーのトグル
-nnoremap m :set toolbars+=nonavigation<CR>
-nnoremap M :set toolbars+=navigation<CR>
+nnoremap m :set toolbars+=nonavigation,noaddons<CR>
+nnoremap M :set toolbars+=navigation,addons<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " プラグインの設定
 "
 
 " My Commands
-command! reconfig source ~/.vimperatorrc
+command! reconfig source $MY_VIMPERATORRC
 
 " feedSomeKeys_3.js
 command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
