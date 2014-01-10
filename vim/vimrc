@@ -384,9 +384,9 @@ if has('gui_running')
   " ウィンドウサイズを最大化する
   au GUIEnter * simalt ~x
   " ヤンクでクリップボードを共有する
-  if has('clipboard')
-    set clipboard=unnamed
-  endif
+  "if has('clipboard')
+  "  set clipboard=unnamed
+  "endif
   " マウスを有効にする
   if has('mouse')
     set mouse=a
@@ -398,9 +398,10 @@ if has('gui_running')
   " バッファがローカルバッファに表示されなくなった場合は削除する
   " （[No Name]バッファへの対策）
   set bufhidden=wipe
-  " Todo: Alt+CとAlt+Pでコピペする
-  "noremap <M-c> :simalt ec
-  "noremap <M-p> :simalt ep
+  " Alt+CとAlt+Pでコピペする
+  vnoremap <M-c> "+y
+  imap <expr> <M-v> '<C-o>"+gP'
+  cnoremap <M-v> <C-r><C-o>*
 endif
 
 " ファイル操作に関する設定 {{{2
@@ -417,7 +418,7 @@ au myvimrc BufEnter .* if expand("%:p:h") != '' | execute ":lcd \"" . expand("%:
 if !has('gui_running') && !(has('win32') || has('win64'))
     au myvimrc BufWritePost *vimrc nested source $MYVIMRC
 else
-    au myvimrc BufWritePost *vimrc source $MYVIMRC |
+    au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
       \ if has('gui_running') && filereadable($MYGVIMRC) | source $MYGVIMRC
     au myvimrc BufWritePost *gvimrc if has('gui_running') | source $MYGVIMRC
 endif
@@ -486,7 +487,7 @@ nnoremap <Leader><C-]> <C-t>
 " コマンドモード時、現在のバッファのファイル名を出力
 cnoremap <C-f> <C-r>%
 " カーソルの下の単語でヘルプを引く
-au myvimrc FileType vim nnoremap <buffer> <C-h> :<C-u>help<Space><C-r><C-w><CR>
+au myvimrc FileType vim nnoremap <buffer> <C-h> :<C-u>H<Space><C-r><C-w><CR>
 au myvimrc FileType ruby nnoremap <buffer> <C-h> :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
 
 " Leaderキーを設定（,のデフォルトの機能は\で使えるように退避）
