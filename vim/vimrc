@@ -78,6 +78,7 @@ filetype plugin indent on
 
 " singleton.vim
 if has('gui_running')
+  let g:singleton#opener = 'edit'
   call singleton#enable()
 endif
 
@@ -345,7 +346,7 @@ set laststatus=2
 "set statusline=%<%f\%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c
 "set statusline=%<%t\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}%=%l,%c%V%8P
 " タブは非表示
-set showtabline=0
+"set showtabline=0
 " 前回終了したカーソル行に移動して真ん中にする（フォールディングがあれば開く）
 au myvimrc BufRead * call s:my_readpost_autocmd()
 function! s:my_readpost_autocmd()
@@ -395,13 +396,15 @@ if has('gui_running')
   set iminsert=0
   set imsearch=0
   set noimcmdline
-  " バッファがローカルバッファに表示されなくなった場合は削除する
-  " （[No Name]バッファへの対策）
-  set bufhidden=wipe
   " Alt+CとAlt+Pでコピペする
   vnoremap <M-c> "+y
   imap <expr> <M-v> '<C-o>"+gP'
   cnoremap <M-v> <C-r><C-o>*
+  " バッファがローカルバッファに表示されなくなった場合は削除する
+  " （[No Name]バッファへの対策）
+  set bufhidden=wipe
+  " タブのラベル
+  set guitablabel=%n:%t
 endif
 
 " ファイル操作に関する設定 {{{2
