@@ -1,3 +1,6 @@
+"-----------------------------------------------------------------------------
+" 初期設定
+"-----------------------------------------------------------------------------
 " 初期設定 {{{1
 " Last Change: 26-Dec-2013.
 " VI互換モードOFF
@@ -7,13 +10,18 @@ set encoding=utf-8
 " キー入力をタイムアウトさせない
 set notimeout
 set ttimeout
+" 自動コマンドの初期化
+augroup myvimrc
+  au!
+augroup END
 
-"-----------------------------------------------------------------------------
-" vundle
+" vundle {{{1
 "
 " COMMAND:
 "  :BundleInstall : Bundleされたプラグインをインストール
 "  :BundleSearch : vim-scriptにあるプラグインを検索
+"
+" vundle開始 {{{2
 filetype off
 if has("win32") || has("win64")
   set rtp&
@@ -25,13 +33,13 @@ else
   call vundle#rc()
 endif
 
-" original repos on github
+" 基本 {{{2
 Bundle 'gmarik/vundle'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/vimproc'
 Bundle 'Shougo/vimshell'
 
-" Unite
+" Unite {{{2
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/vimfiler'
 Bundle 'Shougo/unite-outline'
@@ -39,59 +47,57 @@ Bundle 'ujihisa/unite-colorscheme'
 Bundle 'ujihisa/unite-rake'
 Bundle 'ujihisa/unite-gem'
 
+" コマンド {{{2
 Bundle 'thinca/vim-ref'
 Bundle 'thinca/vim-quickrun'
 Bundle 'thinca/vim-singleton'
-"Bundle 'thinca/vim-guicolorscheme'
 Bundle 'thinca/vim-qfreplace'
 Bundle 'tpope/vim-surround.git'
 Bundle 'tpope/vim-fugitive'
+Bundle 'gregsexton/gitv'
+Bundle 'mattn/emmet-vim'
 
-" Ruby
+" Ruby {{{2
 Bundle 'tpope/vim-rails.git'
 Bundle 'taka84u9/vim-ref-ri'
 
+" 表示 {{{2
 Bundle 'itchyny/lightline.vim'
 Bundle 'fholgado/minibufexpl.vim'
-Bundle 'vim-jp/vimdoc-ja'
-Bundle 'plasticboy/vim-markdown'
-Bundle 'tyru/open-browser.vim'
-Bundle 'kana/vim-smartchr'
-Bundle 'tyru/caw.vim'
-Bundle 'mattn/emmet-vim'
-Bundle 'mattn/benchvimrc-vim'
-Bundle 'gregsexton/gitv'
-
-" vim-scripts repos
 Bundle 'wombat256.vim'
 Bundle 'molokai'
 Bundle 'Zephyr-Color-Scheme'
 Bundle 'ScrollColors'
 Bundle 'CSApprox'
 
-" local repos
+" 補助 {{{2
+Bundle 'vim-jp/vimdoc-ja'
+Bundle 'plasticboy/vim-markdown'
+Bundle 'tyru/open-browser.vim'
+Bundle 'kana/vim-smartchr'
+Bundle 'tyru/caw.vim'
+Bundle 'mattn/benchvimrc-vim'
+
+" ローカルレポジトリ {{{2
 if isdirectory($HOME . '/dev/github/unite-tiddlywiki/')
   Bundle 'file://' . $HOME . '/dev/github/unite-tiddlywiki/'
 endif
 
+" vundle終了 {{{2
 filetype plugin indent on
 
-" singleton.vim
+" singleton.vim {{{1
 if has('gui_running')
   call singleton#enable()
 endif
 
-" 自動コマンドの初期化
-augroup myvimrc
-  au!
-augroup END
-
 " Kaoriya設定 {{{1
-let g:vimrc_local_finish = 1
-"-----------------------------------------------------------------------------
+" サイトローカルな設定 {{{2
+"
 " サイトローカルな設定($VIM/vimrc_local.vim)があれば読み込む。読み込んだ後に
 " 変数g:vimrc_local_finishに非0な値が設定されていた場合には、それ以上の設定
 " ファイルの読込を中止する。
+let g:vimrc_local_finish = 1
 if 1 && filereadable($VIM . '/vimrc_local.vim')
   unlet! g:vimrc_local_finish
   source $VIM/vimrc_local.vim
@@ -100,7 +106,8 @@ if 1 && filereadable($VIM . '/vimrc_local.vim')
   endif
 endif
 
-"-----------------------------------------------------------------------------
+" ユーザ優先設定 {{{2
+"
 " ユーザ優先設定($HOME/.vimrc_first.vim)があれば読み込む。読み込んだ後に変数
 " g:vimrc_first_finishに非0な値が設定されていた場合には、それ以上の設定ファ
 " イルの読込を中止する。
@@ -112,8 +119,7 @@ if 0 && exists('$HOME') && filereadable($HOME . '/.vimrc_first.vim')
   endif
 endif
 
-"-----------------------------------------------------------------------------
-" 日本語対応のための設定:
+" 日本語対応のための設定 {{{2
 "
 " ファイルを読込む時にトライする文字エンコードの順序を確定する。漢字コード自
 " 動判別機能を利用する場合には別途iconv.dllが必要。iconv.dllについては
@@ -147,7 +153,8 @@ if !has('gui_running') && &encoding != 'cp932' && &term == 'win32'
   set termencoding=cp932
 endif
 
-"-----------------------------------------------------------------------------
+" vimrc_example.vim {{{2
+"
 " Bram氏の提供する設定例をインクルード (別ファイル:vimrc_example.vim)。これ
 " 以前にg:no_vimrc_exampleに非0な値を設定しておけばインクルードはしない。
 " let g:no_vimrc_example = 1
@@ -176,8 +183,7 @@ if !exists(":DiffOrig")
 		  \ | wincmd p | diffthis
 endif
 
-"-----------------------------------------------------------------------------
-" ファイル名に大文字小文字の区別がないシステム用の設定:
+" ファイル名に大文字小文字の区別がないシステム用の設定 {{{2
 "   (例: DOS/Windows/MacOS)
 "
 if filereadable($VIM . '/vimrc') && filereadable($VIM . '/ViMrC')
@@ -185,8 +191,7 @@ if filereadable($VIM . '/vimrc') && filereadable($VIM . '/ViMrC')
   set tags=./tags,tags
 endif
 
-"-----------------------------------------------------------------------------
-" " コンソールでのカラー表示のための設定(暫定的にUNIX専用)
+" コンソールでのカラー表示のための設定(暫定的にUNIX専用) {{{2
 " if has('unix') && !has('gui_running')
 "   let uname = system('uname')
 "   if uname =~? "linux"
@@ -201,22 +206,24 @@ endif
 "   unlet uname
 " endif
 
-"-----------------------------------------------------------------------------
-" コンソール版で環境変数$DISPLAYが設定されていると起動が遅くなる件へ対応
+" コンソール版で環境変数$DISPLAYが設定されていると起動が遅くなる件へ対応 {{{2
 if !has('gui_running') && has('xterm_clipboard')
   set clipboard=exclude:cons\\\|linux\\\|cygwin\\\|rxvt\\\|screen
 endif
 
-"-----------------------------------------------------------------------------
-" プラットホーム依存の特別な設定
+" プラットホーム依存の特別な設定 {{{2
 "
 " WinではPATHに$VIMが含まれていないときにexeを見つけ出せないので修正
 if has('win32') && $PATH !~? '\(^\|;\)' . escape($VIM, '\\') . '\(;\|$\)'
   let $PATH = $VIM . ';' . $PATH
 endif
 
-" 基本設定 {{{1
-" 検索に関する設定 {{{2
+"}}}1-------------------------------------------------------------------------
+
+"-----------------------------------------------------------------------------
+" 基本設定
+"-----------------------------------------------------------------------------
+" 検索に関する設定 {{{1
 " 検索時に大文字小文字を無視 (noignorecase:無視しない)
 set ignorecase
 " 大文字小文字の両方が含まれている場合は大文字小文字を区別
@@ -241,7 +248,7 @@ noremap g# g#zz
 noremap { {zz
 noremap } }zz
 
-" 編集に関する設定 {{{2
+" 編集に関する設定 {{{1
 " タブの画面上での幅
 set tabstop=2
 set shiftwidth=2
@@ -296,7 +303,7 @@ augroup END
 autocmd myvimrc QuickFixCmdPost [^l]* nested cwindow
 autocmd myvimrc QuickFixCmdPost    l* nested lwindow
 
-" 画面表示の設定 {{{2
+" 画面表示の設定 {{{1
 " シンタックスハイライト
 syntax on
 " カラースキーマ設定
@@ -365,7 +372,7 @@ set splitright
 " Todo: Unite開くと低くなる
 "au myvimrc BufRead,BufNew,BufNewFile * if winwidth(0) > 140 | wincmd L | wincmd _ | endif
 
-" GUI固有の画面表示の設定 {{{2
+" GUI固有の画面表示の設定 {{{1
 if has('gui_running')
   set guioptions&
   " メニューファイルが存在しない場合、menu.vimを読み込まない
@@ -405,7 +412,7 @@ if has('gui_running')
   "noremap <M-p> :simalt ep
 endif
 
-" ファイル操作に関する設定 {{{2
+" ファイル操作に関する設定 {{{1
 " バックアップファイルを作成しない
 set nobackup
 set nowritebackup
@@ -424,7 +431,7 @@ else
     au myvimrc BufWritePost *gvimrc if has('gui_running') | source $MYGVIMRC
 endif
 
-" FileType設定 {{{2
+" ファイルタイプ別の設定 {{{1
 " Ruby
 au myvimrc FileType ruby setlocal fenc=utf8 ff=unix
 " Git commit log
@@ -452,7 +459,64 @@ au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setlocal filetype=apache
   "au BufNewFile *_spec.rb 0r $HOME/.vim/skel/skel_spec.rb
 "augroup END
 
-" マップ定義 {{{2
+" コマンド定義 {{{1
+"
+" COMMAND:
+" VimDiff
+command! -complete=file -nargs=1 VimDiff :vertical diffsplit <args>
+" Vimrc
+command! Vimrc :e $MYVIMRC
+" Grep
+command! -complete=file -nargs=+ Grep :call GrepFunction(<f-args>)
+function! GrepFunction(keyword, target)
+  "Unite grep<CR>a:target<CR>a:keyword<CR>
+  "<C-u>Unite<Space>grep: <Space>-buffer-name=grep<CR>
+endfunction
+" H(elp)
+command! -nargs=* -complete=help H if winwidth(0) > 140 | :vertical help <args> | :vertical resize 78 | else | :help <args> | endif
+" Vimdoc
+command! Vimdoc :OpenBrowser http://vim-jp.org/vimdoc-ja/
+" SyntaxInfo
+command! SyntaxInfo :call s:get_syn_info()
+function! s:get_syn_id(transparent) "{{{
+  let synid = synID(line("."), col("."), 1)
+  if a:transparent
+    return synIDtrans(synid)
+  else
+    return synid
+  endif
+endfunction
+function! s:get_syn_attr(synid)
+  let name = synIDattr(a:synid, "name")
+  let ctermfg = synIDattr(a:synid, "fg", "cterm")
+  let ctermbg = synIDattr(a:synid, "bg", "cterm")
+  let guifg = synIDattr(a:synid, "fg", "gui")
+  let guibg = synIDattr(a:synid, "bg", "gui")
+  return {
+        \ "name": name,
+        \ "ctermfg": ctermfg,
+        \ "ctermbg": ctermbg,
+        \ "guifg": guifg,
+        \ "guibg": guibg}
+endfunction
+function! s:get_syn_info()
+  let baseSyn = s:get_syn_attr(s:get_syn_id(0))
+  echo "name: " . baseSyn.name .
+        \ " ctermfg: " . baseSyn.ctermfg .
+        \ " ctermbg: " . baseSyn.ctermbg .
+        \ " guifg: " . baseSyn.guifg .
+        \ " guibg: " . baseSyn.guibg
+  let linkedSyn = s:get_syn_attr(s:get_syn_id(1))
+  echo "link to"
+  echo "name: " . linkedSyn.name .
+        \ " ctermfg: " . linkedSyn.ctermfg .
+        \ " ctermbg: " . linkedSyn.ctermbg .
+        \ " guifg: " . linkedSyn.guifg .
+        \ " guibg: " . linkedSyn.guibg
+endfunction "}}}
+" Colortest
+command! Colortest :belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source $VIMRUNTIME/syntax/colortest.vim
+" キーマップ定義 {{{1
 " map系はリンク先のコマンドを再帰的に展開する。
 " noremap系はリンク先のコマンドを再帰的に展開しない。
 " 基本的にはnoremap系を使用する。
@@ -513,87 +577,12 @@ nnoremap ZQ <Nop>
 " EXモードに入る
 noremap Q <Nop>
 
-" 補完機能 {{{2
-" <Tab>で補完 (neocomplcacheで代用されてそうなのでコメントアウト）
-" {{{ Autocompletion using TAB key (disable)
-" This function determines, wether we are on the start of the line text (then tab indents) or
-" if we want to try autocompletion
-"function! InsertTabWrapper()
-  "let col = col('.') - 1
-  "if !col || getline('.')[col - 1] !~ '\k'
-    "return "\<TAB>"
-  "else
-    "if pumvisible()
-      "return "\<C-N>"
-    "else
-      "return "\<C-N>\<C-P>"
-    "end
-  "endif
-"endfunction
-""" Remap the tab key to select action with InsertTabWrapper
-"inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-"}}}
+"}}}1-------------------------------------------------------------------------
 
-" Plugin設定 {{{1
-" My Commands {{{2
-"
-" COMMAND:
-" VimDiff
-command! -complete=file -nargs=1 VimDiff :vertical diffsplit <args>
-" Vimrc
-command! Vimrc :e $MYVIMRC
-" Grep
-command! -complete=file -nargs=+ Grep :call GrepFunction(<f-args>)
-function! GrepFunction(keyword, target)
-  "Unite grep<CR>a:target<CR>a:keyword<CR>
-  "<C-u>Unite<Space>grep: <Space>-buffer-name=grep<CR>
-endfunction
-" H(elp)
-command! -nargs=* -complete=help H if winwidth(0) > 140 | vertical help <args> | vertical resize 78 | else | help <args> | endif
-" Vimdoc
-command! Vimdoc :OpenBrowser http://vim-jp.org/vimdoc-ja/
-" SyntaxInfo
-command! SyntaxInfo call s:get_syn_info()
-function! s:get_syn_id(transparent) "{{{
-  let synid = synID(line("."), col("."), 1)
-  if a:transparent
-    return synIDtrans(synid)
-  else
-    return synid
-  endif
-endfunction
-function! s:get_syn_attr(synid)
-  let name = synIDattr(a:synid, "name")
-  let ctermfg = synIDattr(a:synid, "fg", "cterm")
-  let ctermbg = synIDattr(a:synid, "bg", "cterm")
-  let guifg = synIDattr(a:synid, "fg", "gui")
-  let guibg = synIDattr(a:synid, "bg", "gui")
-  return {
-        \ "name": name,
-        \ "ctermfg": ctermfg,
-        \ "ctermbg": ctermbg,
-        \ "guifg": guifg,
-        \ "guibg": guibg}
-endfunction
-function! s:get_syn_info()
-  let baseSyn = s:get_syn_attr(s:get_syn_id(0))
-  echo "name: " . baseSyn.name .
-        \ " ctermfg: " . baseSyn.ctermfg .
-        \ " ctermbg: " . baseSyn.ctermbg .
-        \ " guifg: " . baseSyn.guifg .
-        \ " guibg: " . baseSyn.guibg
-  let linkedSyn = s:get_syn_attr(s:get_syn_id(1))
-  echo "link to"
-  echo "name: " . linkedSyn.name .
-        \ " ctermfg: " . linkedSyn.ctermfg .
-        \ " ctermbg: " . linkedSyn.ctermbg .
-        \ " guifg: " . linkedSyn.guifg .
-        \ " guibg: " . linkedSyn.guibg
-endfunction "}}}
-" Colortest
-command! Colortest belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source $VIMRUNTIME/syntax/colortest.vim
-
-" neocomplecache.vim {{{2
+"-----------------------------------------------------------------------------
+" Plugin設定
+"-----------------------------------------------------------------------------
+" neocomplecache.vim {{{1
 "
 " KEYMAP:
 "  <Tab> : 補完
@@ -694,7 +683,7 @@ let g:neocomplcache_omni_patterns.cpp =
 let g:neocomplcache_omni_patterns.perl =
 \ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 
-" emmet.vim {{{2
+" emmet.vim {{{1
 "
 " KEYMAP:
 "  <C-e> : 展開
@@ -748,7 +737,7 @@ let g:user_emmet_settings = {
 \  },
 \}
 
-" quickrun.vim {{{2
+" quickrun.vim {{{1
 "
 " COMMAND:
 "  :QuickRun -args foo
@@ -781,7 +770,7 @@ augroup END
 let g:quickrun_config['html'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
 let g:quickrun_config['xhtml'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
 
-" fugitive.vim {{{2
+" fugitive.vim {{{1
 "
 " DESC:
 "  VimにGitコマンドを追加。
@@ -803,7 +792,7 @@ nnoremap <silent> [git]d :<C-u>Gdiff<CR>
 nnoremap <silent> [git]c :<C-u>Gcommit -v<CR>
 nnoremap <silent> [git]l :<C-u>Glog<CR>
 
-" surround.vim {{{2
+" surround.vim {{{1
 "
 " KEYMAP:
 "  i : inside
@@ -814,7 +803,7 @@ nnoremap <silent> [git]l :<C-u>Glog<CR>
 "  cs'" : 'を"に変換する
 "  ds' : 'で囲まれた範囲を消す
 
-" rcodetools.vim {{{2
+" rcodetools.vim {{{1
 "
 " DESC: xmpfilterの呼び出し設定
 " <F1>でバッファ全体にxmpfilterを実行
@@ -849,7 +838,7 @@ nnoremap <silent> [git]l :<C-u>Glog<CR>
 "imap <silent> <F11> <Esc><F11>
 "}}}
 
-" MiniBufExplorer {{{2
+" MiniBufExplorer {{{1
 "
 " 自動起動
 let g:miniBufExplAutoStart = 1
@@ -876,7 +865,7 @@ hi MBENormal ctermfg=darkgray guifg=darkgray guibg=black
 " for buffers that HAVE CHANGED and are NOT VISIBLE
 hi MBEChanged ctermfg=red guifg=red guibg=black
 
-" lightline.vim {{{2
+" lightline.vim {{{1
 "
 " lightline config
 "\  'colorscheme': 'wombat',
@@ -947,7 +936,7 @@ function! MyMode()
 \        winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-" ref.vim {{{2
+" ref.vim {{{1
 "
 " COMMAND:
 "  :Ref refe Array
@@ -956,13 +945,13 @@ endfunction
 let g:ref_use_vimproc = 1 " 0:disable / 1:enable
 let g:ref_refe_version = 2
 
-" caw.vim {{{2
+" caw.vim {{{1
 "
 " コメントアウトの切り替え
 nmap <Leader>/ <Plug>(caw:I:toggle)
 vmap <Leader>/ <Plug>(caw:I:toggle)
 
-" VimShell {{{2
+" VimShell {{{1
 "
 " 動的プロンプト
 let g:vimshell_prompt_expr = 'getcwd()." > "'
@@ -976,7 +965,7 @@ nnoremap <silent> <Leader>irb :<C-u>VimShellInteractive irb<CR>
 au FileType vimshell inoremap <buffer> <Leader>s :<C-u>VimShellSendString<CR>
 au FileType vimshell vmap <buffer> <Leader>s :<C-u>VimShellSendString<CR>
 
-" VimFiler {{{2
+" VimFiler {{{1
 "
 " KEYMAP:
 "  h : up dir, l : down dir, t : tree view (1 dir), T : tree view all
@@ -999,7 +988,7 @@ nnoremap <Leader>f :<C-u>VimFilerBufferDir
 " Enterでツリー開閉、ファイル編集を可能に
 au FileType vimfiler nmap <buffer> <expr> <Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
 
-" Unite {{{2
+" Unite {{{1
 "
 " COMMAND:
 "  :Unite ${source} [${option}]
@@ -1152,6 +1141,8 @@ endfunction
 call unite#define_source(s:unite_source)
 unlet s:unite_source
 
-" markdown.vim {{{2
+" markdown.vim {{{1
 "let g:quickrun_config['mkd'] { 'outputter' : 'browser' }
+
+"}}}1-------------------------------------------------------------------------
 
