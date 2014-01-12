@@ -38,6 +38,8 @@ endif
 " 基本 {{{2
 Bundle 'gmarik/vundle'
 Bundle 'Shougo/neocomplcache'
+Bundle 'Shougo/neosnippet'
+Bundle 'Shougo/neosnippet-snippets'
 Bundle 'Shougo/vimproc'
 Bundle 'Shougo/vimshell'
 
@@ -707,21 +709,21 @@ let g:neocomplcache_omni_patterns.perl =
 let g:user_emmet_expandabbr_key = '<C-e>'
 let g:user_emmet_togglecomment_key = '<C-_>'
 " タグのコンプリート
-"let g:use_emmet_complete_tag = 1
+let g:use_emmet_complete_tag = 1
+
+" カスタマイズ設定
 let g:user_emmet_settings = {
 \  'lang' : 'ja',
 \  'indentation' : "  ",
 \  'html' : {
 \    'filters' : 'html',
 \    'snippets' : {
-\      'jq' : "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n<script>\n\\$(function() {\n\t|\n})()\n</script>",
-\      'cd' : "<![CDATA[|]]>",
 \      'meta:viewport' : "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">",
+\      'css:bs' : "<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">",
+\      'cd' : "<![CDATA[|]]>",
+\      'js:jq' : "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n<script>\n\\$(function() {\n\t|\n})()\n</script>",
+\      'js:bs' : "<script src=\"https://code.jquery.com/jquery.js\"></script>\n<script src=\"js/bootstrap.min.js\"></script>",
 \    },
-\  },
-\  'php' : {
-\    'extends' : 'html',
-\    'filters' : 'html,c',
 \  },
 \  'javascript' : {
 \    'snippets' : {
@@ -733,21 +735,35 @@ let g:user_emmet_settings = {
 \    },
 \    'use_pipe_for_cursor' : 0,
 \  },
-\  'vim' : {
-\    'snippets' : {
-\      'nn' : 'nnoremap <silent> ${cursor} :<C-u>',
-\      'nnu' : 'nnoremap <silent> [unite]${cursor}<CR> :<C-u>Unite<Space>\n\\<Space>-no-empty<Space>-silent<Space>-buffer-name=<CR>',
-\    },
-\  },
 \  'css' : {
 \    'filters' : 'fc',
 \    'snippets' : {
 \      'box-shadow' : "-webkit-box-shadow: 0 0 0 # 000;\n-moz-box-shadow: 0 0 0 0 # 000;\nbox-shadow: 0 0 0 # 000;",
 \    },
 \  },
+\  'vim' : {
+\    'snippets' : {
+\      'nn' : 'nnoremap <silent> ${cursor} :<C-u>',
+\      'nnu' : 'nnoremap <silent> [unite]${cursor}<CR> :<C-u>Unite<Space>\n\\<Space>-no-empty<Space>-silent<Space>-buffer-name=<CR>',
+\    },
+\  },
+\  'java' : {
+\    'snippets' : {
+\     'main': "public static void main(String[] args) {\n\t|\n}",
+\     'println': "System.out.println(\"|\");",
+\     'class': "public class | {\n}\n",
+\    },
+\  },
+\  'php' : {
+\    'extends' : 'html',
+\    'filters' : 'html,c',
+\  },
 \  'less' : {
 \    'filters' : 'fc',
 \    'extends' : 'css',
+\  },
+\  'lorem_lipsum_ja' : {
+\    '^\%(lorem\|lipsum\)\(\d*\)$' : function('emmet#lorem#ja#expand'),
 \  },
 \}
 
@@ -1230,6 +1246,16 @@ unlet s:unite_source
 
 " markdown.vim {{{1
 "let g:quickrun_config['mkd'] { 'outputter' : 'browser' }
+
+" neosnippet.vim {{{1
+" KEYMAP:
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
+" スニペットの保存場所を変更
+let g:neosnippet#snippets_directory = '~/.vim/neosnippets'
+" COMMAND:
+cab esnip NeoSnippetEdit
 
 "}}}1-------------------------------------------------------------------------
 
