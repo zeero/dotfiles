@@ -86,6 +86,18 @@ endif
 " vundle終了 {{{2
 filetype plugin indent on
 
+" キーマップ定義 {{{2
+nnoremap [bundle] <Nop>
+nmap <Leader>b [bundle]
+nnoremap <silent> [bundle]i<CR> :<C-u>BundleInstall<CR>
+nnoremap <silent> [bundle]u<CR> :<C-u>BundleUpdate<CR>
+nnoremap <silent> [bundle]s<CR> :<C-u>BundleSearch<CR>
+
+" コマンド定義 {{{2
+command! Bi :BundleInstall
+command! Bu :BundleUpdate
+command! -nargs=? Bs :BundleSearch <args>
+
 " singleton.vim {{{1
 if has('gui_running')
   call singleton#enable()
@@ -516,6 +528,7 @@ function! s:get_syn_info()
 endfunction "}}}
 " Colortest
 command! Colortest :belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source $VIMRUNTIME/syntax/colortest.vim
+
 " キーマップ定義 {{{1
 " map系はリンク先のコマンドを再帰的に展開する。
 " noremap系はリンク先のコマンドを再帰的に展開しない。
@@ -563,11 +576,6 @@ let mapleader=","
 noremap \ ,
 " set paste/nopasteを切り替え
 set pastetoggle=<Leader>p
-" Vundle
-nnoremap [bundle] <Nop>
-nmap <Leader>b [bundle]
-nnoremap <silent> [bundle]i<CR> :<C-u>BundleInstall<CR>
-nnoremap <silent> [bundle]u<CR> :<C-u>BundleUpdate<CR>
 
 " 誤操作防止
 " 保存して閉じる
@@ -791,6 +799,14 @@ nnoremap <silent> [git]a :<C-u>Gwrite<CR>
 nnoremap <silent> [git]d :<C-u>Gdiff<CR>
 nnoremap <silent> [git]c :<C-u>Gcommit -v<CR>
 nnoremap <silent> [git]l :<C-u>Glog<CR>
+" COMMAND:
+command! Gs :Gstatus
+command! Ga :Gwrite
+command! Gw :Gwrite
+command! Gd :Gdiff
+command! Gc :Gcommit -v
+command! Gl :Glog
+command! Gb :Gblame
 
 " surround.vim {{{1
 "
@@ -1000,7 +1016,7 @@ au FileType vimfiler nmap <buffer> <expr> <Cr> vimfiler#smart_cursor_map("\<Plug
 "  a : 候補でActionを開く
 "  ? : Uniteのキーマップを表示
 "
-" 基本設定 {{{3
+" 基本設定 {{{2
 " 入力モードで開始
 "let g:unite_enable_start_insert=1
 " ヤンク履歴を使用可能にする
@@ -1023,14 +1039,14 @@ au myvimrc FileType unite nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
 "  let g:unite_source_grep_recursive_opt = ''
 "endif
 
-" デフォルトアクションの変更 {{{3
+" デフォルトアクションの変更 {{{2
 " ref/refe
 call unite#custom_default_action('source/ref/refe/*' , 'above')
 " Uniteブックマークがディレクトリの場合はVimFilerで開く
 call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
 call unite#custom_default_action('directory' , 'vimfiler')
 
-" アクションの追加 {{{3
+" アクションの追加 {{{2
 " source:mappingにaction:verboseを追加する
 let s:action = {
 \ 'description' : 'verbose',
@@ -1047,7 +1063,19 @@ call unite#custom#action('source/mapping/*', 'verbose', s:action)
 " call unite#custom#action('source/mapping/*', 'preview', s:action)
 unlet s:action
 
-" キーマップ設定 {{{3
+" メニュー設定 {{{2
+let g:unite_source_menu_menus = {
+\ "shortcuts" : {
+\   "description" : "command shortcuts.",
+\   "command_candidates" : [
+\     ["unite-colorscheme", "Unite colorscheme -auto-preview"],
+\     ["unite-output:message", "Unite output:message"],
+\     ["unite-mapping(all)", "Unite output:map|map!|lmap"],
+\   ],
+\ },
+\}
+
+" キーマップ定義 {{{2
 " KEYMAP:
 nnoremap [unite] <Nop>
 nmap <Leader>u [unite]
@@ -1087,18 +1115,6 @@ nnoremap <silent> [unite]be<CR> :<C-u>edit $HOME/.unite/bookmark/default<CR>
 " メニュー
 nnoremap <silent> [unite]m<CR> :<C-u>Unite<Space>menu:shortcuts
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=menu:shortcuts<CR>
-"{{{ メニュー設定
-let g:unite_source_menu_menus = {
-\ "shortcuts" : {
-\   "description" : "command shortcuts.",
-\   "command_candidates" : [
-\     ["unite-colorscheme", "Unite colorscheme -auto-preview"],
-\     ["unite-output:message", "Unite output:message"],
-\     ["unite-mapping(all)", "Unite output:map|map!|lmap"],
-\   ],
-\ },
-\}
-"}}}
 
 " リファレンス参照
 " refe
@@ -1122,7 +1138,67 @@ nnoremap <silent> [unite]r<CR> :<C-u>UniteResume
 nnoremap <silent> [unite]rl :<C-u>Unite<Space>resume
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=resume<CR>
 
-" Unite source サンプル {{{3
+" コマンド定義 {{{2
+" ファイラ
+command! Uf :Unite<Space>file
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=file
+" 最近使ったファイルの一覧
+command! Ufm :Unite<Space>file_mru
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=file_mru
+" コマンド一覧を表示
+command! Us :Unite<Space>source
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=source
+
+" 現在のバッファ内をグレップ
+command! Ug :Unite<Space>grep:<C-R>%
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep
+command! Ugb :Unite<Space>grep:<C-R>%
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep
+" ディレクトリをグレップ
+command! Ugd :Unite<Space>grep
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-dir
+" カーソル上の単語で現在のバッファをグレップ
+command! Ugw :Unite<Space>grep:<C-R>%
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-word<C-R><C-W><CR>
+" すべてのバッファをグレップ（agでは複数ファイルを選択できないためＣＯ）
+command! Uga :Unite<Space>grep:$buffers
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-all-bufs
+
+" ブックマーク（追加はUniteBookmarkAdd）
+command! Ub :Unite<Space>bookmark
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmark
+" Todo 'Todo:'をつけた行をファイル保存時に自動でブックマークするau
+command! Ubt :Unite<Space>bookmark:todos
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmarktodos
+" ブックマーク手動編集
+command! Ube :edit $HOME/.unite/bookmark/default<CR>
+" メニュー
+command! Um :Unite<Space>menu:shortcuts
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=menushortcuts
+
+" リファレンス参照
+" refe
+command! Urr :Unite<Space>ref/refe
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe
+" カーソル下の単語でrefe
+command! Urrw :Unite<Space>ref/refe
+\<Space>-input=<C-r><C-w>
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe
+" ri
+command! Urri :Unite<Space>ref/ri
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/ri
+
+" ヤンクヒストリ
+command! Uy :Unite<Space>history/yank
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=history/yank
+" 直前のUniteコマンドの結果に戻る
+command! Ur :UniteResume
+\<Space>-no-empty<Space>-silent
+" Uniteコマンドの履歴表示
+command! Url :Unite<Space>resume
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=resume
+
+" Unite source サンプル {{{2
 let s:unite_source = {
 \   'name': 'lines',
 \ }
