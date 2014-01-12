@@ -98,9 +98,9 @@ nnoremap <silent> [bundle]u<CR> :<C-u>BundleUpdate<CR>
 nnoremap <silent> [bundle]s<CR> :<C-u>BundleSearch<CR>
 
 " コマンド定義 {{{2
-cab bi BundleInstall
-cab bu BundleUpdate
-cab bs BundleSearch
+command! Bi :BundleInstall
+command! Bu :BundleUpdate
+command! -nargs=? Bs :BundleSearch <args>
 
 " singleton.vim {{{1
 if has('gui_running')
@@ -482,10 +482,9 @@ au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setlocal filetype=apache
 " COMMAND:
 " VimDiff
 command! -complete=file -nargs=1 VimDiff :vertical diffsplit <args>
-" Vimrc
-command! Vimrc :e $MYVIMRC
-cab erc edit $MYVIMRC
-cab sorc source $MYVIMRC
+" Erc、Sorc
+command! Erc :e $MYVIMRC
+command! Sorc :source $MYVIMRC
 " Grep
 command! -complete=file -nargs=+ Grep :call GrepFunction(<f-args>)
 function! GrepFunction(keyword, target)
@@ -822,16 +821,16 @@ nnoremap <silent> [git]d :<C-u>Gdiff<CR>
 nnoremap <silent> [git]c :<C-u>Gcommit -v<CR>
 nnoremap <silent> [git]l :<C-u>Glog<CR>
 " COMMAND:
-cab gs Gstatus
-cab ga Gwrite
-cab gw Gwrite
-cab gd Gdiff
-cab gc Gcommit -v
-cab gca Gcommit -va
-cab gl Glog
-cab gb Gblame
-cab gpush Git push
-cab gpull Git pull
+command! Gs :Gstatus
+command! Ga :Gwrite
+command! Gw :Gwrite
+command! Gd :Gdiff
+command! Gc :Gcommit -v
+command! Gca :Gcommit -va
+command! Gl :Glog
+command! Gb :Gblame
+command! Gpush :Git push
+command! Gpull :Git pull
 
 " surround.vim {{{1
 "
@@ -1165,64 +1164,64 @@ nnoremap <silent> [unite]rl :<C-u>Unite<Space>resume
 
 " Uniteコマンド定義 {{{2
 " ファイラ
-cab uf Unite<Space>file
+cab Uf Unite<Space>file
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=file
 " 最近使ったファイルの一覧
-cab ufm Unite<Space>file_mru
+cab Ufm Unite<Space>file_mru
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=file_mru
 " コマンド一覧を表示
-cab us Unite<Space>source
+cab Us Unite<Space>source
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=source
 
 " 現在のバッファ内をグレップ
-cab ug Unite<Space>grep:<C-R>%
+cab Ug Unite<Space>grep:<C-R>%
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep
-cab ug Unite<Space>grep:<C-R>%
+cab Ug Unite<Space>grep:<C-R>%
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep
-cab ugb Unite<Space>grep:<C-R>%
+cab Ugb Unite<Space>grep:<C-R>%
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep
 " ディレクトリをグレップ
-cab ugd Unite<Space>grep
+cab Ugd Unite<Space>grep
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-dir
 " カーソル上の単語で現在のバッファをグレップ
-cab ugw Unite<Space>grep:<C-R>%
+cab Ugw Unite<Space>grep:<C-R>%
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-word<C-R><C-W><CR>
 " すべてのバッファをグレップ（agでは複数ファイルを選択できないためＣＯ）
-cab uga Unite<Space>grep:$buffers
+cab Uga Unite<Space>grep:$buffers
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-all-bufs
 
 " ブックマーク（追加はUniteBookmarkAdd）
-cab ub Unite<Space>bookmark
+cab Ub Unite<Space>bookmark
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmark
 " Todo 'Todo:'をつけた行をファイル保存時に自動でブックマークするau
-cab ubt Unite<Space>bookmark:todos
+cab Ubt Unite<Space>bookmark:todos
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmarktodos
 " ブックマーク手動編集
-cab ube :edit $HOME/.unite/bookmark/default<CR>
+cab Ube :edit $HOME/.unite/bookmark/default<CR>
 " メニュー
-cab um Unite<Space>menu:shortcuts
+cab Um Unite<Space>menu:shortcuts
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=menushortcuts
 
 " リファレンス参照
 " refe
-cab urr Unite<Space>ref/refe
+cab Urr Unite<Space>ref/refe
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe
 " カーソル下の単語でrefe
-cab urrw Unite<Space>ref/refe
+cab Urrw Unite<Space>ref/refe
 \<Space>-input=<C-r><C-w>
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe
 " ri
-cab urri Unite<Space>ref/ri
+cab Urri Unite<Space>ref/ri
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/ri
 
 " ヤンクヒストリ
-cab uy Unite<Space>history/yank
+cab Uy Unite<Space>history/yank
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=history/yank
 " 直前のUniteコマンドの結果に戻る
-cab ur UniteResume
+cab Ur UniteResume
 \<Space>-no-empty<Space>-silent
 " Uniteコマンドの履歴表示
-cab url Unite<Space>resume
+cab Url Unite<Space>resume
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=resume
 
 " Unite source サンプル {{{2
@@ -1255,7 +1254,7 @@ xmap <C-k> <Plug>(neosnippet_expand_target)
 " スニペットの保存場所を変更
 let g:neosnippet#snippets_directory = '~/.vim/neosnippets'
 " COMMAND:
-cab esnip NeoSnippetEdit
+command! Esnip :NeoSnippetEdit
 
 "}}}1-------------------------------------------------------------------------
 
