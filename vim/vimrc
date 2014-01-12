@@ -94,9 +94,9 @@ nnoremap <silent> [bundle]u<CR> :<C-u>BundleUpdate<CR>
 nnoremap <silent> [bundle]s<CR> :<C-u>BundleSearch<CR>
 
 " コマンド定義 {{{2
-command! Bi :BundleInstall
-command! Bu :BundleUpdate
-command! -nargs=? Bs :BundleSearch <args>
+cab bi BundleInstall
+cab bu BundleUpdate
+cab bs BundleSearch
 
 " singleton.vim {{{1
 if has('gui_running')
@@ -800,13 +800,13 @@ nnoremap <silent> [git]d :<C-u>Gdiff<CR>
 nnoremap <silent> [git]c :<C-u>Gcommit -v<CR>
 nnoremap <silent> [git]l :<C-u>Glog<CR>
 " COMMAND:
-command! Gs :Gstatus
-command! Ga :Gwrite
-command! Gw :Gwrite
-command! Gd :Gdiff
-command! Gc :Gcommit -v
-command! Gl :Glog
-command! Gb :Gblame
+cab gs Gstatus
+cab ga Gwrite
+cab gw Gwrite
+cab gd Gdiff
+cab gc Gcommit -v
+cab gl Glog
+cab gb Gblame
 
 " surround.vim {{{1
 "
@@ -1005,7 +1005,7 @@ nnoremap <Leader>f :<C-u>VimFilerBufferDir
 au FileType vimfiler nmap <buffer> <expr> <Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
 
 " Unite {{{1
-"
+" 説明 {{{2
 " COMMAND:
 "  :Unite ${source} [${option}]
 "  :Unite output:{コマンド名}
@@ -1075,7 +1075,7 @@ let g:unite_source_menu_menus = {
 \ },
 \}
 
-" キーマップ定義 {{{2
+" Uniteキーマップ定義 {{{2
 " KEYMAP:
 nnoremap [unite] <Nop>
 nmap <Leader>u [unite]
@@ -1138,64 +1138,66 @@ nnoremap <silent> [unite]r<CR> :<C-u>UniteResume
 nnoremap <silent> [unite]rl :<C-u>Unite<Space>resume
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=resume<CR>
 
-" コマンド定義 {{{2
+" Uniteコマンド定義 {{{2
 " ファイラ
-command! Uf :Unite<Space>file
+cab uf Unite<Space>file
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=file
 " 最近使ったファイルの一覧
-command! Ufm :Unite<Space>file_mru
+cab ufm Unite<Space>file_mru
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=file_mru
 " コマンド一覧を表示
-command! Us :Unite<Space>source
+cab us Unite<Space>source
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=source
 
 " 現在のバッファ内をグレップ
-command! Ug :Unite<Space>grep:<C-R>%
+cab ug Unite<Space>grep:<C-R>%
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep
-command! Ugb :Unite<Space>grep:<C-R>%
+cab ug Unite<Space>grep:<C-R>%
+\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep
+cab ugb Unite<Space>grep:<C-R>%
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep
 " ディレクトリをグレップ
-command! Ugd :Unite<Space>grep
+cab ugd Unite<Space>grep
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-dir
 " カーソル上の単語で現在のバッファをグレップ
-command! Ugw :Unite<Space>grep:<C-R>%
+cab ugw Unite<Space>grep:<C-R>%
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-word<C-R><C-W><CR>
 " すべてのバッファをグレップ（agでは複数ファイルを選択できないためＣＯ）
-command! Uga :Unite<Space>grep:$buffers
+cab uga Unite<Space>grep:$buffers
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-all-bufs
 
 " ブックマーク（追加はUniteBookmarkAdd）
-command! Ub :Unite<Space>bookmark
+cab ub Unite<Space>bookmark
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmark
 " Todo 'Todo:'をつけた行をファイル保存時に自動でブックマークするau
-command! Ubt :Unite<Space>bookmark:todos
+cab ubt Unite<Space>bookmark:todos
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmarktodos
 " ブックマーク手動編集
-command! Ube :edit $HOME/.unite/bookmark/default<CR>
+cab ube :edit $HOME/.unite/bookmark/default<CR>
 " メニュー
-command! Um :Unite<Space>menu:shortcuts
+cab um Unite<Space>menu:shortcuts
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=menushortcuts
 
 " リファレンス参照
 " refe
-command! Urr :Unite<Space>ref/refe
+cab urr Unite<Space>ref/refe
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe
 " カーソル下の単語でrefe
-command! Urrw :Unite<Space>ref/refe
+cab urrw Unite<Space>ref/refe
 \<Space>-input=<C-r><C-w>
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe
 " ri
-command! Urri :Unite<Space>ref/ri
+cab urri Unite<Space>ref/ri
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/ri
 
 " ヤンクヒストリ
-command! Uy :Unite<Space>history/yank
+cab uy Unite<Space>history/yank
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=history/yank
 " 直前のUniteコマンドの結果に戻る
-command! Ur :UniteResume
+cab ur UniteResume
 \<Space>-no-empty<Space>-silent
 " Uniteコマンドの履歴表示
-command! Url :Unite<Space>resume
+cab url Unite<Space>resume
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=resume
 
 " Unite source サンプル {{{2
