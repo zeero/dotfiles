@@ -571,8 +571,11 @@ inoremap \ \
 nnoremap <Leader><C-]> <C-t>
 " コマンドモード時、現在のバッファのファイル名を出力
 cnoremap <C-f> <C-r>%
+" コマンドモード時、コマンド行頭に移動
+cnoremap <C-a> <C-b>
 " カーソルの下の単語でヘルプを引く
-au myvimrc FileType vim nnoremap <buffer> <C-h> :<C-u>help<Space><C-r><C-w><CR>
+au myvimrc FileType vim nnoremap <buffer> <C-h> :<C-u>H<Space><C-r><C-w><CR>
+au myvimrc FileType vim vnoremap <buffer> <C-h> y:<C-u>H<Space><C-r>"<CR>
 au myvimrc FileType ruby nnoremap <buffer> <C-h> :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
 
 " Leaderキーを設定（,のデフォルトの機能は\で使えるように退避）
