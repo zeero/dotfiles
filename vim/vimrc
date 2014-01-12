@@ -436,8 +436,8 @@ set directory&
 set directory+=,~/tmp,$TMP
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
-"au myvimrc BufEnter .* if expand("%:p:h") != '' | execute ":lcd \"" . expand("%:p:h") . "\"" | endif
-set autochdir
+au myvimrc BufEnter .* if expand("%:p:h") != '' | execute ":lcd \"" . expand("%:p:h") . "\"" | endif
+"set autochdir （設定するとVimShellが動かなくなる）
 " vimrcの保存時に再読み込み
 if !has('gui_running') && !(has('win32') || has('win64'))
     au myvimrc BufWritePost *vimrc nested source $MYVIMRC
@@ -492,7 +492,7 @@ function! GrepFunction(keyword, target)
   "<C-u>Unite<Space>grep: <Space>-buffer-name=grep<CR>
 endfunction
 " H(elp)
-command! -nargs=* -complete=help H if winwidth(0) > 140 | :vertical help <args> | :vertical resize 78 | else | :help <args> | endif
+command! -nargs=* -complete=help H if winwidth(0) > 140 | :vertical help <args> | :vertical resize 79 | else | :help <args> | endif
 " Vimdoc
 command! Vimdoc :OpenBrowser http://vim-jp.org/vimdoc-ja/
 " SyntaxInfo
@@ -1059,12 +1059,13 @@ let g:unite_force_overwrite_statusline = 0
 au myvimrc FileType unite nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
 "au myvimrc FileType unite inoremap <silent> <buffer> <Esc><Esc> <Esc>:q<CR>
 " unite grep に ag(The Silver Searcher) を使う
-" Todo: 結果にファイル名が先頭に入らないからジャンプできない
-"if executable('ag')
-"  let g:unite_source_grep_command = 'ag'
-"  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-"  let g:unite_source_grep_recursive_opt = ''
-"endif
+if executable('ag')
+ let g:unite_source_grep_command = 'ag'
+ let g:unite_source_grep_default_opts =
+ \ '--line-numbers --nocolor --nogroup --hidden --ignore ' .
+ \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+ let g:unite_source_grep_recursive_opt = ''
+endif
 
 " デフォルトアクションの変更 {{{2
 " ref/refe
@@ -1127,7 +1128,7 @@ nnoremap <silent> [unite]gd<CR> :<C-u>Unite<Space>grep
 " カーソル上の単語で現在のバッファをグレップ
 nnoremap <silent> [unite]gw<CR> :<C-u>Unite<Space>grep:<C-R>%
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-word<CR><C-R><C-W><CR>
-" すべてのバッファをグレップ（agでは複数ファイルを選択できないためＣＯ）
+" すべてのバッファをグレップ
 nnoremap <silent> [unite]ga<CR> :<C-u>Unite<Space>grep:$buffers
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-all-bufs<CR>
 
@@ -1167,65 +1168,62 @@ nnoremap <silent> [unite]rl :<C-u>Unite<Space>resume
 
 " Uniteコマンド定義 {{{2
 " ファイラ
-cab Uf Unite<Space>file
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=file
+command! Uf :Unite file
+\ -no-empty -silent -buffer-name=file
 " 最近使ったファイルの一覧
-cab Ufm Unite<Space>file_mru
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=file_mru
+command! Ufm :Unite file_mru
+\ -no-empty -silent -buffer-name=file_mru
 " コマンド一覧を表示
-cab Us Unite<Space>source
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=source
+command! Us :Unite source
+\ -no-empty -silent -buffer-name=source
 
 " 現在のバッファ内をグレップ
-cab Ug Unite<Space>grep:<C-R>%
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep
-cab Ug Unite<Space>grep:<C-R>%
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep
-cab Ugb Unite<Space>grep:<C-R>%
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep
+command! Ug :Unite grep:%
+\ -no-empty -silent -buffer-name=grep
+command! Ugb :Unite grep:%
+\ -no-empty -silent -buffer-name=grep
 " ディレクトリをグレップ
-cab Ugd Unite<Space>grep
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-dir
+command! Ugd :Unite grep
+\ -no-empty -silent -buffer-name=grep-dir
 " カーソル上の単語で現在のバッファをグレップ
-cab Ugw Unite<Space>grep:<C-R>%
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-word<C-R><C-W><CR>
-" すべてのバッファをグレップ（agでは複数ファイルを選択できないためＣＯ）
-cab Uga Unite<Space>grep:$buffers
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-all-bufs
+command! Ugw :Unite grep:%
+\ -no-empty -silent -buffer-name=grep-word -input=<C-r><C-w>
+" すべてのバッファをグレップ
+command! Uga :Unite grep:$buffers
+\ -no-empty -silent -buffer-name=grep-all-bufs
 
 " ブックマーク（追加はUniteBookmarkAdd）
-cab Ub Unite<Space>bookmark
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmark
+command! Ub :Unite bookmark
+\ -no-empty -silent -buffer-name=bookmark
 " Todo 'Todo:'をつけた行をファイル保存時に自動でブックマークするau
-cab Ubt Unite<Space>bookmark:todos
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmarktodos
+command! Ubt :Unite bookmark:todos
+\ -no-empty -silent -buffer-name=bookmarktodos
 " ブックマーク手動編集
-cab Ube :edit $HOME/.unite/bookmark/default<CR>
+command! Ube :edit $HOME/.unite/bookmark/default
 " メニュー
-cab Um Unite<Space>menu:shortcuts
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=menushortcuts
+command! Um :Unite menu:shortcuts
+\ -no-empty -silent -buffer-name=menushortcuts
 
 " リファレンス参照
 " refe
-cab Urr Unite<Space>ref/refe
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe
+command! Urr :Unite ref/refe
+\ -no-empty -silent -buffer-name=ref/refe
 " カーソル下の単語でrefe
-cab Urrw Unite<Space>ref/refe
-\<Space>-input=<C-r><C-w>
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe
+command! Urrw :Unite ref/refe
+\ -no-empty -silent -buffer-name=ref/refe -input=<C-r><C-w>
 " ri
-cab Urri Unite<Space>ref/ri
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/ri
+command! Urri :Unite ref/ri
+\ -no-empty -silent -buffer-name=ref/ri
 
 " ヤンクヒストリ
-cab Uy Unite<Space>history/yank
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=history/yank
+command! Uy :Unite history/yank
+\ -no-empty -silent -buffer-name=history/yank
 " 直前のUniteコマンドの結果に戻る
-cab Ur UniteResume
-\<Space>-no-empty<Space>-silent
+command! Ur :UniteResume
+\ -no-empty -silent
 " Uniteコマンドの履歴表示
-cab Url Unite<Space>resume
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=resume
+command! Url :Unite resume
+\ -no-empty -silent -buffer-name=resume
 
 " Unite source サンプル {{{2
 let s:unite_source = {
