@@ -824,6 +824,7 @@ let g:quickrun_config['xhtml'] = { 'command' : 'open', 'exec' : '%c %s', 'output
 "      - : add/reset
 "      D : diff
 "      C : commit
+"      cvc : commit -v
 "  :Gwrite/:Gadd : git add
 "  :Gdiff        : git diff
 "  :Gcommit -v   : git commit -v
