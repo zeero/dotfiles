@@ -10,13 +10,15 @@ set encoding=utf-8
 " キー入力をタイムアウトさせない
 set notimeout
 set ttimeout
+" 高速ターミナル接続を行う
+set ttyfast
 " 自動コマンドの初期化
 augroup myvimrc
   au!
 augroup END
 
 " vundle {{{1
-"
+" 説明 {{{2
 " COMMAND:
 "  :BundleInstall : Bundleされたプラグインをインストール
 "  :BundleSearch : vim-scriptにあるプラグインを検索
@@ -308,10 +310,7 @@ set history=50
 " 外部のエディタで編集中のファイルが変更されたら自動で読み直す
 " （ウィンドウを移動する度に変更をチェックする）
 set autoread
-augroup vimrc_checktime
-  au!
-  au WinEnter * checktime
-augroup END
+au myvimrc WinEnter * checktime
 autocmd myvimrc QuickFixCmdPost [^l]* nested cwindow
 autocmd myvimrc QuickFixCmdPost    l* nested lwindow
 
@@ -327,6 +326,8 @@ else
   let g:rehash256 = 1
   colorscheme molokai
 endif
+" 遅延描画
+set lazyredraw
 " 行番号を非表示 (number:表示)
 set nonumber
 " ルーラーを表示 (noruler:非表示)
@@ -433,7 +434,8 @@ set directory&
 set directory+=,~/tmp,$TMP
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
-au myvimrc BufEnter .* if expand("%:p:h") != '' | execute ":lcd \"" . expand("%:p:h") . "\"" | endif
+"au myvimrc BufEnter .* if expand("%:p:h") != '' | execute ":lcd \"" . expand("%:p:h") . "\"" | endif
+set autochdir
 " vimrcの保存時に再読み込み
 if !has('gui_running') && !(has('win32') || has('win64'))
     au myvimrc BufWritePost *vimrc nested source $MYVIMRC
@@ -464,6 +466,8 @@ endif
 au myvimrc BufRead,BufNew,BufNewFile *.json setlocal filetype=javascript
 " Apache
 au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setlocal filetype=apache
+" Todo: vimdiff
+"au myvimrc BufRead,BufNew,BufNewFile * if 1 == &diff | nnoremap <buffer> dk [c | nnoremap <buffer> dj ]c | endif
 " テンプレート設定
 "augroup SkeletonAu
   "au!
@@ -478,6 +482,8 @@ au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setlocal filetype=apache
 command! -complete=file -nargs=1 VimDiff :vertical diffsplit <args>
 " Vimrc
 command! Vimrc :e $MYVIMRC
+cab erc edit $MYVIMRC
+cab sorc source $MYVIMRC
 " Grep
 command! -complete=file -nargs=+ Grep :call GrepFunction(<f-args>)
 function! GrepFunction(keyword, target)
