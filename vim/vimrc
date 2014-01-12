@@ -805,8 +805,11 @@ cab ga Gwrite
 cab gw Gwrite
 cab gd Gdiff
 cab gc Gcommit -v
+cab gca Gcommit -va
 cab gl Glog
 cab gb Gblame
+cab gpush Git push
+cab gpull Git pull
 
 " surround.vim {{{1
 "
