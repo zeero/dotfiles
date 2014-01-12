@@ -701,6 +701,18 @@ let g:neocomplcache_omni_patterns.cpp =
 let g:neocomplcache_omni_patterns.perl =
 \ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 
+" neosnippet.vim {{{1
+" KEYMAP:
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
+" スニペットの保存場所を変更
+let g:neosnippet#snippets_directory = '~/.vim/neosnippets'
+" スニペットファイルの保存時に再読み込み
+au myvimrc BufWritePost *.snip NeoSnippetSource %:p
+" COMMAND:
+command! -nargs=* Esnip :NeoSnippetEdit <args>
+
 " emmet.vim {{{1
 "
 " KEYMAP:
@@ -1246,16 +1258,6 @@ unlet s:unite_source
 
 " markdown.vim {{{1
 "let g:quickrun_config['mkd'] { 'outputter' : 'browser' }
-
-" neosnippet.vim {{{1
-" KEYMAP:
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_target)
-" スニペットの保存場所を変更
-let g:neosnippet#snippets_directory = '~/.vim/neosnippets'
-" COMMAND:
-command! Esnip :NeoSnippetEdit
 
 "}}}1-------------------------------------------------------------------------
 
