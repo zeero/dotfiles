@@ -314,6 +314,7 @@ set history=50
 " （ウィンドウを移動する度に変更をチェックする）
 set autoread
 au myvimrc WinEnter * checktime
+" クイックフィックスは常にcwindowで表示する
 autocmd myvimrc QuickFixCmdPost [^l]* nested cwindow
 autocmd myvimrc QuickFixCmdPost    l* nested lwindow
 
@@ -489,12 +490,6 @@ command! -complete=file -nargs=1 VimDiff :vertical diffsplit <args>
 " Erc、Sorc
 command! Erc :e $MYVIMRC
 command! Sorc :source $MYVIMRC
-" Grep
-command! -complete=file -nargs=+ Grep :call GrepFunction(<f-args>)
-function! GrepFunction(keyword, target)
-  "Unite grep<CR>a:target<CR>a:keyword<CR>
-  "<C-u>Unite<Space>grep: <Space>-buffer-name=grep<CR>
-endfunction
 " H(elp)
 command! -nargs=* -complete=help H if winwidth(0) > 140 | :vertical help <args> | :vertical resize 79 | else | :help <args> | endif
 " Vimdoc
@@ -711,7 +706,11 @@ imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 " スニペットの保存場所を変更
-let g:neosnippet#snippets_directory = '~/.vim/neosnippets'
+if has("win32") || has("win64")
+  let g:neosnippet#snippets_directory = '~/vimfiles/neosnippets'
+else
+  let g:neosnippet#snippets_directory = '~/.vim/neosnippets'
+endif
 " スニペットファイルの保存時に再読み込み
 au myvimrc BufWritePost *.snip NeoSnippetSource %:p
 " COMMAND:
@@ -845,8 +844,8 @@ command! Gs :Gstatus
 command! Ga :Gwrite
 command! Gw :Gwrite
 command! Gd :Gdiff
-command! Gc :Gcommit -v
-command! Gca :Gcommit -va
+command! Gcvc :Gcommit -v
+command! Gcvca :Gcommit -va
 command! Gl :Glog
 command! Gb :Gblame
 command! Gpush :Git push
@@ -1190,9 +1189,6 @@ command! Uf :Unite file
 " 最近使ったファイルの一覧
 command! Ufm :Unite file_mru
 \ -no-empty -silent -buffer-name=file_mru
-" コマンド一覧を表示
-command! Us :Unite source
-\ -no-empty -silent -buffer-name=source
 
 " 現在のバッファ内をグレップ
 command! Ug :Unite grep:%
@@ -1232,6 +1228,12 @@ command! Urrw :Unite ref/refe
 command! Urri :Unite ref/ri
 \ -no-empty -silent -buffer-name=ref/ri
 
+" コマンド一覧を表示
+command! Uso :Unite source
+\ -no-empty -silent -buffer-name=source
+" スニペット候補の表示
+command! Usn :Unite neosnippets
+\ -no-empty -silent -buffer-name=neosnippets
 " ヤンクヒストリ
 command! Uy :Unite history/yank
 \ -no-empty -silent -buffer-name=history/yank
@@ -1239,7 +1241,7 @@ command! Uy :Unite history/yank
 command! Ur :UniteResume
 \ -no-empty -silent
 " Uniteコマンドの履歴表示
-command! Url :Unite resume
+command! Urh :Unite resume
 \ -no-empty -silent -buffer-name=resume
 
 " Unite source サンプル {{{2
