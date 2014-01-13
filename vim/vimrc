@@ -529,6 +529,18 @@ function! s:get_syn_info()
 endfunction "}}}
 " Colortest
 command! Colortest :belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source $VIMRUNTIME/syntax/colortest.vim
+" Bdo
+command! Bdo call s:my_bd_other()
+function! s:my_bd_other() "{{{
+  let i = 1
+  let cur = bufnr("%")
+  while i <= bufnr("$")
+    if bufloaded(i) && i != cur
+      exe "bdelete" i
+    endif
+    let i = i + 1
+  endwhile
+endfunction "}}}
 
 " キーマップ定義 {{{1
 " 説明 {{{2
