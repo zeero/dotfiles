@@ -280,8 +280,9 @@ set smartindent
 set backspace=2
 " 括弧入力時に対応する括弧を表示 (noshowmatch:表示しない)
 set showmatch
-" コマンドライン補完するときに強化されたものを使う(参照 :help wildmenu)
+" コマンドライン補完するときに強化されたものを使う
 set wildmenu
+set wildmode=list:longest,full
 " テキスト挿入中の自動折り返しを日本語に対応させる
 set formatoptions&
 set formatoptions+=mM
@@ -818,7 +819,7 @@ let g:quickrun_config['html'] = { 'command' : 'open', 'exec' : '%c %s', 'outputt
 let g:quickrun_config['xhtml'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
 
 " fugitive.vim {{{1
-"
+" 説明 {{{2
 " DESC:
 "  VimにGitコマンドを追加。
 " COMMAND:
@@ -831,7 +832,7 @@ let g:quickrun_config['xhtml'] = { 'command' : 'open', 'exec' : '%c %s', 'output
 "  :Gwrite/:Gadd : git add
 "  :Gdiff        : git diff
 "  :Gcommit -v   : git commit -v
-" KEYMAP:
+" KEYMAP: {{{2
 nnoremap [git] <Nop>
 nmap <Leader>g [git]
 nnoremap <silent> [git]s :<C-u>Gstatus<CR>
@@ -839,13 +840,13 @@ nnoremap <silent> [git]a :<C-u>Gwrite<CR>
 nnoremap <silent> [git]d :<C-u>Gdiff<CR>
 nnoremap <silent> [git]c :<C-u>Gcommit -v<CR>
 nnoremap <silent> [git]l :<C-u>Glog<CR>
-" COMMAND:
+" COMMAND: {{{2
 command! Gs :Gstatus
 command! Ga :Gwrite
 command! Gw :Gwrite
 command! Gd :Gdiff
-command! Gcvc :Gcommit -v
-command! Gcvca :Gcommit -va
+command! Gc :Gcommit -v
+command! Gca :Gcommit -va
 command! Gl :Glog
 command! Gb :Gblame
 command! Gpush :Git push
