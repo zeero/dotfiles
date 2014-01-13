@@ -470,6 +470,8 @@ else
   au myvimrc FileType vim setlocal iskeyword+=:
   au myvimrc FileType vim setlocal iskeyword-=#
 endif
+" バックスラッシュのインデントを無くす
+let g:vim_indent_cont = 0
 " JavaSciprt
 au myvimrc BufRead,BufNew,BufNewFile *.json setlocal filetype=javascript
 " Apache
