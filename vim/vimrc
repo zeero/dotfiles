@@ -1212,9 +1212,10 @@ command! Ugb :Unite grep:%
 " ディレクトリをグレップ
 command! Ugd :Unite grep
 \ -no-empty -silent -buffer-name=grep-dir
-" カーソル上の単語で現在のバッファをグレップ
-command! Ugw :Unite grep:%
-\ -no-empty -silent -buffer-name=grep-word -input=<C-r><C-w>
+" カーソル下の単語で現在のバッファをグレップ
+command! Ugw exe 'Unite grep:% ' .
+\ '-no-empty -silent -buffer-name=grep-word -input=' .
+\ escape(expand("<cword>"), '- \\')
 " すべてのバッファをグレップ
 command! Uga :Unite grep:$buffers
 \ -no-empty -silent -buffer-name=grep-all-bufs
@@ -1236,8 +1237,9 @@ command! Um :Unite menu:shortcuts
 command! Urr :Unite ref/refe
 \ -no-empty -silent -buffer-name=ref/refe
 " カーソル下の単語でrefe
-command! Urrw :Unite ref/refe
-\ -no-empty -silent -buffer-name=ref/refe -input=<C-r><C-w>
+command! Urrw exe 'Unite ref/refe ' .
+\ '-no-empty -silent -buffer-name=ref/refe -input=' .
+\ escape(expand("<cword>"), '- \\')
 " ri
 command! Urri :Unite ref/ri
 \ -no-empty -silent -buffer-name=ref/ri
