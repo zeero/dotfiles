@@ -1232,7 +1232,7 @@ command! Urri :Unite ref/ri
 command! Uso :Unite source
 \ -no-empty -silent -buffer-name=source
 " スニペット候補の表示
-command! Usn :Unite neosnippets
+command! Usnip :Unite neosnippets
 \ -no-empty -silent -buffer-name=neosnippets
 " ヤンクヒストリ
 command! Uy :Unite history/yank
@@ -1241,8 +1241,11 @@ command! Uy :Unite history/yank
 command! Ur :UniteResume
 \ -no-empty -silent
 " Uniteコマンドの履歴表示
-command! Urh :Unite resume
+command! Url :Unite resume
 \ -no-empty -silent -buffer-name=resume
+" レジスタ
+command! Ureg :Unite register
+\ -no-empty -silent -buffer-name=register
 
 " Unite source サンプル {{{2
 let s:unite_source = {
