@@ -474,14 +474,6 @@ endif
 au myvimrc BufRead,BufNew,BufNewFile *.json setlocal filetype=javascript
 " Apache
 au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setlocal filetype=apache
-" Todo: vimdiff
-"au myvimrc BufRead,BufNew,BufNewFile * if 1 == &diff | nnoremap <buffer> dk [c | nnoremap <buffer> dj ]c | endif
-" テンプレート設定
-"augroup SkeletonAu
-  "au!
-  "au BufNewFile *.html 0r $HOME/.vim/skel/skel.html
-  "au BufNewFile *_spec.rb 0r $HOME/.vim/skel/skel_spec.rb
-"augroup END
 
 " コマンド定義 {{{1
 "
@@ -568,6 +560,9 @@ nnoremap zO zR
 nnoremap zC zM
 " \で空白を入れない
 inoremap \ \
+" diffハンクへのジャンプ
+nnoremap ]G ]c
+nnoremap [G [c
 
 " CTRLキー {{{2
 " ジャンプ元に戻る
@@ -590,6 +585,9 @@ let mapleader=","
 noremap \ ,
 " set paste/nopasteを切り替え
 set pastetoggle=<Leader>p
+" タグジャンプ
+nnoremap <Leader>] <C-]>
+nnoremap <Leader>[ <C-t>
 
 " 無効化 {{{2
 " 保存して閉じる
