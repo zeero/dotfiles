@@ -1,0 +1,5 @@
+snippet cmd:u
+abbr    add Unite command
+  command! ${1:cmd_name} :Unite ${2:unite_source}
+  \ -no-empty -silent -buffer-name=$2${0}
+
