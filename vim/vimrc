@@ -458,7 +458,7 @@ endif
 au myvimrc FileType ruby setlocal fenc=utf8 ff=unix
 " Git commit log
 " Todo: @@でマーカーつけて、ジャンプ
-au myvimrc BufRead COMMIT_EDITMSG
+au myvimrc FileType gitcommit
 \ setlocal nofoldenable |
 \ wincmd L |
 \ let @/ = "^@@"
