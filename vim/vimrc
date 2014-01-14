@@ -442,7 +442,7 @@ set directory&
 set directory+=,~/tmp,$TMP
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
-au myvimrc BufEnter .* if expand("%:p:h") != '' | execute ":lcd \"" . expand("%:p:h") . "\"" | endif
+au myvimrc BufEnter .* if expand("%:p:h") != '' | execute ":lcd \"" . shellescape(expand("%:p:h")) . "\"" | endif
 "set autochdir （設定するとVimShellが動かなくなる）
 " vimrcの保存時に再読み込み
 if !has('gui_running') && !(has('win32') || has('win64'))
@@ -1197,6 +1197,10 @@ nnoremap <silent> [unite]rl :<C-u>Unite<Space>resume
 \<Space>-no-empty<Space>-silent<Space>-buffer-name=resume<CR>
 
 " Uniteコマンド定義 {{{2
+" 汎用
+" command! -nargs=+ -complete U :Unite args
+" \ -no-empty -silent -buffer-name=args
+
 " ファイラ
 command! Uf :Unite file
 \ -no-empty -silent -buffer-name=file
@@ -1207,15 +1211,15 @@ command! Ufm :Unite file_mru
 " 現在のバッファ内をグレップ
 command! Ug :Unite grep:%
 \ -no-empty -silent -buffer-name=grep
-command! Ugb :Unite grep:%
+command! Ugb :Unite grep:' . shellescape(expand("%"))
 \ -no-empty -silent -buffer-name=grep
 " ディレクトリをグレップ
 command! Ugd :Unite grep
 \ -no-empty -silent -buffer-name=grep-dir
 " カーソル下の単語で現在のバッファをグレップ
-command! Ugw exe 'Unite grep:% ' .
-\ '-no-empty -silent -buffer-name=grep-word -input=' .
-\ escape(expand("<cword>"), '- \\')
+command! Ugw exe 'Unite grep:' . shellescape(expand("%"))
+\ '-no-empty -silent -buffer-name=grep-word'
+\ '-input=' . escape(expand("<cword>"), '- \\')
 " すべてのバッファをグレップ
 command! Uga :Unite grep:$buffers
 \ -no-empty -silent -buffer-name=grep-all-bufs
