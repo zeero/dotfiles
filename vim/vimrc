@@ -37,33 +37,57 @@ endif
 
 " 基本 {{{2
 NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/vimproc'
-NeoBundle 'Shougo/vimshell'
+\, {'build': {
+\    'windows': 'make -f make_mingw32.mak',
+\    'cygwin': 'make -f make_cygwin.mak',
+\    'mac': 'make -f make_mac.mak',
+\    'unix': 'make -f make_unix.mak',
+\  }}
+NeoBundleLazy 'Shougo/vimshell'
+\, {'autoload': {'commands': ['VimShell', 'VimShellPop']}}
+NeoBundleLazy 'Shougo/neocomplcache'
+\, {'autoload': {'insert': 1}}
+NeoBundleLazy 'Shougo/neosnippet'
+\, {'autoload': {'insert': 1}}
+NeoBundleLazy 'Shougo/neosnippet-snippets'
+\, {'autoload': {'insert': 1}}
 
 " Unite {{{2
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler'
-NeoBundle 'Shougo/unite-outline'
-NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'ujihisa/unite-rake'
-NeoBundle 'ujihisa/unite-gem'
+NeoBundleLazy 'Shougo/unite.vim'
+\, {'autoload': {'commands': ['Unite', 'UniteWithBufferDir']}}
+NeoBundleLazy 'Shougo/vimfiler'
+\, {'depends': ['Shougo/unite.vim'],
+\   'autoload': {'commands': ['VimFiler', 'VimFilerBufferDir']}}
+NeoBundleLazy 'Shougo/unite-outline'
+\, {'autoload': {'unite_sources': ['outline']}}
+NeoBundleLazy 'ujihisa/unite-colorscheme'
+\, {'autoload': {'unite_sources': ['colorscheme']}}
+NeoBundleLazy 'ujihisa/unite-rake'
+\, {'autoload': {'unite_sources': ['rake']}}
+NeoBundleLazy 'ujihisa/unite-gem'
+\, {'autoload': {'unite_sources': ['gem']}}
 
 " コマンド {{{2
-NeoBundle 'thinca/vim-ref'
-NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'thinca/vim-singleton'
 NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'tpope/vim-surround.git'
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'gregsexton/gitv'
-NeoBundle 'mattn/emmet-vim'
+NeoBundleLazy 'thinca/vim-ref'
+\, {'autoload': {'commands': ['Ref']}}
+NeoBundleLazy 'thinca/vim-quickrun'
+\, {'autoload': {'commands': ['QuickRun']}}
+NeoBundleLazy 'gregsexton/gitv'
+\, {'depends': ['tpope/vim-fugitive'],
+\   'autoload': {'commands': ['Gitv']}}
+NeoBundleLazy 'mattn/emmet-vim'
+\, {'autoload': {'filetypes': ['html']}}
 
 " Ruby {{{2
-NeoBundle 'tpope/vim-rails.git'
-NeoBundle 'taka84u9/vim-ref-ri'
+NeoBundleLazy 'tpope/vim-rails.git'
+\, {'autoload': {'filetypes': ['ruby']}}
+NeoBundleLazy 'taka84u9/vim-ref-ri'
+\, {'autoload': {'filetypes': ['ruby']}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -71,16 +95,22 @@ NeoBundle 'fholgado/minibufexpl.vim'
 NeoBundle 'wombat256.vim'
 NeoBundle 'molokai'
 NeoBundle 'Zephyr-Color-Scheme'
-NeoBundle 'ScrollColors'
 NeoBundle 'CSApprox'
+NeoBundleLazy 'ScrollColors'
+\, {'autoload': {'commands': ['SCROLLCOLOR']}}
 
 " 補助 {{{2
-NeoBundle 'vim-jp/vimdoc-ja'
-NeoBundle 'plasticboy/vim-markdown'
-NeoBundle 'tyru/open-browser.vim'
-NeoBundle 'kana/vim-smartchr'
 NeoBundle 'tyru/caw.vim'
-NeoBundle 'mattn/benchvimrc-vim'
+NeoBundleLazy 'vim-jp/vimdoc-ja'
+\, {'autoload': {'commands': ['help']}}
+NeoBundleLazy 'plasticboy/vim-markdown'
+\, {'autoload': {'filetypes': ['mkd']}}
+NeoBundleLazy 'tyru/open-browser.vim'
+\, {'autoload': {'filetypes': ['html', 'mkd']}}
+NeoBundleLazy 'kana/vim-smartchr'
+\, {'autoload': {'insert': 1}}
+NeoBundleLazy 'mattn/benchvimrc-vim'
+\, {'autoload': {'commands': ['BenchVimrc']}}
 
 " ローカルレポジトリ {{{2
 if isdirectory($HOME . '/dev/github/unite-tiddlywiki/')
@@ -99,7 +129,7 @@ nnoremap <silent> [bundle]i<CR> :<C-u>NeoBundleInstall<CR>
 nnoremap <silent> [bundle]u<CR> :<C-u>NeoBundleUpdate<CR>
 nnoremap <silent> [bundle]s<CR> :<C-u>NeoBundleSearch<CR>
 
-" コマンド定義 {{{2
+" NeoBundleコマンド定義 {{{2
 command! Bi :NeoBundleInstall
 command! Bu :NeoBundleUpdate
 command! -nargs=? Bs :NeoBundleSearch <args>
@@ -349,7 +379,7 @@ else
   colorscheme molokai
 endif
 " 遅延描画
-set lazyredraw
+" set lazyredraw
 " 行番号を表示 (nonumber:表示)
 set number
 " ルーラーを表示 (noruler:非表示)
@@ -589,7 +619,7 @@ nnoremap zC zM
 nnoremap ]G ]c
 nnoremap [G [c
 " QuickFixおよびHelpでは q でバッファを閉じる
-au myvimrc FileType help,qf nnoremap <buffer> q <C-w>c
+au myvimrc FileType help,qf,gitcommit nnoremap <buffer> q <C-w>c
 
 " CTRLキー、Shiftキー {{{2
 " ウィンドウ間を移動
@@ -1077,7 +1107,7 @@ let g:vimfiler_as_default_explorer = 1
 " セーフモードを無効にした状態で起動する
 let g:vimfiler_safe_mode_by_default = 0
 " デフォルトでIDE風のFilerを開く
-"au myvimrc VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
+" au myvimrc VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
 " ステータスラインを上書きしない（lightline向け）
 let g:vimfiler_force_overwrite_statusline = 0
 "let g:netrw_liststyle=3
@@ -1085,7 +1115,7 @@ let g:vimfiler_force_overwrite_statusline = 0
 nnoremap <Leader>f :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
 " Enterでツリー開閉、ファイル編集を可能に
-au myvimrc FileType vimfiler nmap <buffer> <expr> <Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
+au myvimrc FileType vimfiler nmap <buffer> <expr> <CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
 
 " Unite {{{1
 " 説明 {{{2
