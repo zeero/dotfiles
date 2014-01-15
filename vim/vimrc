@@ -122,17 +122,12 @@ filetype plugin indent on
 " インストールチェック
 NeoBundleCheck
 
-" NeoBundleキーマップ定義 {{{2
-nnoremap [bundle] <Nop>
-nmap <Leader>b [bundle]
-nnoremap <silent> [bundle]i<CR> :<C-u>NeoBundleInstall<CR>
-nnoremap <silent> [bundle]u<CR> :<C-u>NeoBundleUpdate<CR>
-nnoremap <silent> [bundle]s<CR> :<C-u>NeoBundleSearch<CR>
-
 " NeoBundleコマンド定義 {{{2
 command! Bi :NeoBundleInstall
 command! Bu :NeoBundleUpdate
 command! -nargs=? Bs :NeoBundleSearch <args>
+command! Bc :NeoBundleClean
+command! Bl :NeoBundleList
 
 " singleton.vim {{{1
 if has('gui_running')
@@ -640,7 +635,6 @@ cnoremap <C-a> <C-b>
 
 " Leaderキー {{{2
 " Leaderキーを設定（,のデフォルトの機能は\で使えるように退避）
-"  u: Unite, b: NeoBundle, g: Fugitive
 "  p: PasteToggle, r: Quickrun, f: VimFiler, s: VimShell
 "  /: CommentToggle, [,]: TagJump, m:MBEToggle
 let mapleader=","
@@ -902,14 +896,6 @@ let g:quickrun_config['xhtml'] = { 'command' : 'open', 'exec' : '%c %s', 'output
 "  :Gwrite/:Gadd : git add
 "  :Gdiff        : git diff
 "  :Gcommit -v   : git commit -v
-" KEYMAP: {{{2
-nnoremap [git] <Nop>
-nmap <Leader>g [git]
-nnoremap <silent> [git]s :<C-u>Gstatus<CR>
-nnoremap <silent> [git]a :<C-u>Gwrite<CR>
-nnoremap <silent> [git]d :<C-u>Gdiff<CR>
-nnoremap <silent> [git]c :<C-u>Gcommit -v<CR>
-nnoremap <silent> [git]l :<C-u>Glog<CR>
 " COMMAND: {{{2
 command! Gs :Gstatus
 command! Ga :Gwrite
@@ -1189,69 +1175,6 @@ let g:unite_source_menu_menus = {
 \   ],
 \ },
 \}
-
-" Uniteキーマップ定義 {{{2
-" KEYMAP:
-nnoremap [unite] <Nop>
-nmap <Leader>u [unite]
-" ファイラ
-nnoremap <silent> [unite]f<CR> :<C-u>Unite<Space>file
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=file<CR>
-" 最近使ったファイルの一覧
-nnoremap <silent> [unite]fm<CR> :<C-u>Unite<Space>file_mru
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=file_mru<CR>
-" コマンド一覧を表示
-nnoremap <silent> [unite]s<CR> :<C-u>Unite<Space>source
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=source<CR>
-
-" 現在のバッファ内をグレップ
-nnoremap <silent> [unite]g<CR> :<C-u>Unite<Space>grep:<C-R>%
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep<CR>
-nnoremap <silent> [unite]gb<CR> :<C-u>Unite<Space>grep:<C-R>%
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep<CR>
-" ディレクトリをグレップ
-nnoremap <silent> [unite]gd<CR> :<C-u>Unite<Space>grep
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-dir<CR>
-" カーソル上の単語で現在のバッファをグレップ
-nnoremap <silent> [unite]gw<CR> :<C-u>Unite<Space>grep:<C-R>%
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-word<CR><C-R><C-W><CR>
-" すべてのバッファをグレップ
-nnoremap <silent> [unite]ga<CR> :<C-u>Unite<Space>grep:$buffers
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-all-bufs<CR>
-
-" ブックマーク（追加は:UniteBookmarkAdd）
-nnoremap <silent> [unite]b<CR> :<C-u>Unite<Space>bookmark
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmark<CR>
-" Todo: 'Todo:'をつけた行をファイル保存時に自動でブックマークするau
-nnoremap <silent> [unite]bt<CR> :<C-u>Unite<Space>bookmark:todos
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmark:todos<CR>
-" ブックマーク手動編集
-nnoremap <silent> [unite]be<CR> :<C-u>edit $HOME/.unite/bookmark/default<CR>
-" メニュー
-nnoremap <silent> [unite]m<CR> :<C-u>Unite<Space>menu:shortcuts
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=menu:shortcuts<CR>
-
-" リファレンス参照
-" refe
-nnoremap <silent> [unite]rr<CR> :<C-u>Unite<Space>ref/refe
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe<CR>
-" カーソル下の単語でrefe
-nnoremap <silent> [unite]rrw<CR> :<C-u>Unite<Space>ref/refe
-\<Space>-input=<C-r><C-w>
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe<CR>
-" ri
-nnoremap <silent> [unite]rri<CR> :<C-u>Unite<Space>ref/ri
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/ri<CR>
-
-" ヤンクヒストリ
-nnoremap <silent> [unite]y<CR> :<C-u>Unite<Space>history/yank
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=history/yank<CR>
-" 直前のUniteコマンドの結果に戻る
-nnoremap <silent> [unite]r<CR> :<C-u>UniteResume
-\<Space>-no-empty<Space>-silent<CR>
-" Uniteコマンドの履歴表示
-nnoremap <silent> [unite]rl :<C-u>Unite<Space>resume
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=resume<CR>
 
 " Uniteコマンド定義 {{{2
 " ファイラ
