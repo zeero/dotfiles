@@ -318,7 +318,7 @@ set matchtime=3
 set matchpairs& matchpairs+=<:>
 " コマンドライン補完するときに強化されたものを使う
 set wildmenu
-set wildmode=list:full,full
+set wildmode=list:longest,full
 " テキスト挿入中の自動折り返しを日本語に対応させる
 set formatoptions&
 set formatoptions+=mM
@@ -528,9 +528,9 @@ command! -complete=file -nargs=1 VimDiff :vertical diffsplit <args>
 command! Erc :e $MYVIMRC
 command! Sorc :source $MYVIMRC
 " H(elp)
-command! -nargs=* -complete=help H if winwidth(0) > 140 | :vertical help <args> | :vertical resize 79 | else | :help <args> | endif
+command! -nargs=? -complete=help H if winwidth(0) > 140 | :vertical help <args> | :vertical resize 79 | else | :help <args> | endif
 " Vimdoc
-command! Vimdoc :OpenBrowser http://vim-jp.org/vimdoc-ja/
+command! VimDoc :OpenBrowser http://vim-jp.org/vimdoc-ja/
 " SyntaxInfo
 command! SyntaxInfo :call s:get_syn_info()
 function! s:get_syn_id(transparent) "{{{
@@ -583,6 +583,8 @@ function! s:my_bd_other() "{{{
     let i = i + 1
   endwhile
 endfunction "}}}
+" Esnip
+command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete Esnip :NeoSnippetEdit <args>
 
 " キーマップ定義 {{{1
 " 説明 {{{2
@@ -780,8 +782,6 @@ else
 endif
 " スニペットファイルの保存時に再読み込み
 au myvimrc BufWritePost *.snip NeoSnippetSource %:p
-" COMMAND:
-command! -nargs=* Esnip :NeoSnippetEdit <args>
 
 " emmet.vim {{{1
 "
