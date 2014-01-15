@@ -73,8 +73,7 @@ NeoBundle 'thinca/vim-singleton'
 NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'tpope/vim-surround.git'
 NeoBundle 'tpope/vim-fugitive'
-NeoBundleLazy 'thinca/vim-ref'
-\, {'autoload': {'commands': ['Ref']}}
+NeoBundle 'thinca/vim-ref'
 NeoBundleLazy 'thinca/vim-quickrun'
 \, {'autoload': {'commands': ['QuickRun']}}
 NeoBundleLazy 'gregsexton/gitv'
@@ -910,6 +909,7 @@ command! Gb :Gblame
 command! Gpush :call s:my_git_vimproc('push')
 command! Gpull :call s:my_git_vimproc('pull')
 " Gpush/Gpullのためのvimproc
+" Todo: messageで出すように変えたい、非同期になってない、、
 function! s:my_git_vimproc(gitcommand) "{{{
   let sub = vimproc#popen2('git ' . a:gitcommand)
   let res = ''
@@ -1210,9 +1210,9 @@ command! Ugb :Unite grep:%
 command! Ugd :Unite grep
 \ -no-empty -silent -buffer-name=grep-dir
 " カーソル下の単語で現在のバッファをグレップ
-command! Ugw exe 'Unite grep:% ' .
-\ '-no-empty -silent -buffer-name=grep-word -input=' .
-\ escape(expand("<cword>"), '- \\')
+command! Ugw exe 'Unite grep:%::' .
+\ escape(expand("<cword>"), '- \\') .
+\ ' -no-empty -silent -buffer-name=grep-word'
 " すべてのバッファをグレップ
 command! Uga :Unite grep:$buffers
 \ -no-empty -silent -buffer-name=grep-all-bufs
