@@ -253,6 +253,9 @@ set hlsearch
 set wrapscan
 " タグ検索に二分検索をオフにする（vimdoc-jaフリーズ対策）
 set notagbsearch
+" バックスラッシュやクエスチョンを状況に合わせ自動的にエスケープ
+cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
+cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 " 検索語が真ん中にくるようにする
 "  zz はカレント行を画面の中心にする。つまり n で検索語にカーソル移動したら
 "  勝手に zz でカレント行が画面の真ん中なるようにスクロールされるようになる。
@@ -276,13 +279,19 @@ set expandtab
 set autoindent
 " 高度なオートインデント
 set smartindent
+" '<'や'>'でインデントする際に'shiftwidth'の倍数に丸める
+set shiftround
 " バックスペースでインデントや改行を削除できるようにする
 set backspace=2
 " 括弧入力時に対応する括弧を表示 (noshowmatch:表示しない)
 set showmatch
+" 対応括弧のハイライト表示の秒数
+set matchtime=3
+" 対応括弧に'<'と'>'のペアを追加
+set matchpairs& matchpairs+=<:>
 " コマンドライン補完するときに強化されたものを使う
 set wildmenu
-set wildmode=list:longest,full
+set wildmode=list:full,full
 " テキスト挿入中の自動折り返しを日本語に対応させる
 set formatoptions&
 set formatoptions+=mM
@@ -309,6 +318,8 @@ endif
 let format_allow_over_tw = 1	" ぶら下り可能幅
 " 編集後保存していなくても別のファイルを開く
 set hidden
+" 新しく開く代わりにすでに開いてあるバッファを開く
+set switchbuf=useopen
 " コマンドライン履歴
 set history=50
 " 外部のエディタで編集中のファイルが変更されたら自動で読み直す
@@ -318,6 +329,10 @@ au myvimrc WinEnter * checktime
 " クイックフィックスは常にcwindowで表示する
 autocmd myvimrc QuickFixCmdPost [^l]* nested cwindow
 autocmd myvimrc QuickFixCmdPost    l* nested lwindow
+" 補完時に大文字小文字を区別しない
+set infercase
+" カーソルを文字が存在しない部分でも動けるようにする
+" set virtualedit=all
 
 " 画面表示の設定 {{{1
 " シンタックスハイライト
@@ -333,8 +348,8 @@ else
 endif
 " 遅延描画
 set lazyredraw
-" 行番号を非表示 (number:表示)
-set nonumber
+" 行番号を表示 (nonumber:表示)
+set number
 " ルーラーを表示 (noruler:非表示)
 set ruler
 " タイトルを表示
@@ -344,8 +359,7 @@ set titleold=vim
 " タブや改行を表示 (nolist:非表示)
 set list
 " どの文字でタブや改行を表示するかを設定
-"set listchars=tab:>-,extends:<,trail:-,eol:<
-set listchars=tab:>-,extends:<,trail:-
+set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
 " タブの左側にカーソル表示
 "set listchars=tab:\ \
 " 全角スペースも表示　
@@ -434,9 +448,10 @@ if has('gui_running')
 endif
 
 " ファイル操作に関する設定 {{{1
-" バックアップファイルを作成しない
+" バックアップファイル、swapファイルを作成しない
 set nobackup
 set nowritebackup
+set noswapfile
 " スワップファイルの作成ディレクトリにパスを追加
 set directory&
 set directory+=,~/tmp,$TMP
@@ -565,43 +580,52 @@ xnoremap j gj
 xnoremap k gk
 " 行末までヤンク
 nnoremap Y y$
-" ウィンドウサイズ変更
-nnoremap + <C-w>+
-nnoremap - <C-w>-
-nnoremap _ <C-w>_
 " すべてのフォールディングの開け閉め
 nnoremap zO zR
 nnoremap zC zM
-" \で空白を入れない
-inoremap \ \
 " diffハンクへのジャンプ
 nnoremap ]G ]c
 nnoremap [G [c
+" QuickFixおよびHelpでは q でバッファを閉じる
+au myvimrc FileType help,qf nnoremap <buffer> q <C-w>c
 
-" CTRLキー {{{2
-" ジャンプ元に戻る
-nnoremap <Leader><C-]> <C-t>
+" CTRLキー、Shiftキー {{{2
+" ウィンドウ間を移動
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+" ウィンドウサイズ変更
+nnoremap <S-Up> <C-w>+
+nnoremap <S-Down> <C-w>-
+nnoremap <S-Left> <C-w><
+nnoremap <S-Right> <C-w>>
+nnoremap _ <C-w>_
 " コマンドモード時、現在のバッファのファイル名を出力
 cnoremap <C-f> <C-r>%
 " コマンドモード時、コマンド行頭に移動
 cnoremap <C-a> <C-b>
-" カーソルの下の単語でヘルプを引く
-au myvimrc FileType vim nnoremap <buffer> <C-h> :<C-u>H<Space><C-r><C-w><CR>
-au myvimrc FileType vim vnoremap <buffer> <C-h> y:<C-u>H<Space><C-r>"<CR>
-au myvimrc FileType ruby nnoremap <buffer> <C-h> :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
 
 " Leaderキー {{{2
 " Leaderキーを設定（,のデフォルトの機能は\で使えるように退避）
 "  u: Unite, b: Vundle, g: Fugitive
 "  p: PasteToggle, r: Quickrun, f: VimFiler, s: VimShell
-"  /: CommentToggle, [,]: TagJump
+"  /: CommentToggle, [,]: TagJump, m:MBEToggle
 let mapleader=","
 noremap \ ,
 " set paste/nopasteを切り替え
 set pastetoggle=<Leader>p
+" MBEToggle
+nnoremap <Leader>m :MBEToggle<CR>
 " タグジャンプ
 nnoremap <Leader>] <C-]>
 nnoremap <Leader>[ <C-t>
+nnoremap <Tab> <C-]>
+nnoremap <S-Tab> <C-t>
+" カーソルの下の単語でヘルプを引く
+au myvimrc FileType vim nnoremap <buffer> <Leader>h :<C-u>H<Space><C-r><C-w><CR>
+au myvimrc FileType vim vnoremap <buffer> <Leader>h y:<C-u>H<Space><C-r>"<CR>
+au myvimrc FileType ruby nnoremap <buffer> <Leader>h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
 
 " 無効化 {{{2
 " 保存して閉じる
