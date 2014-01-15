@@ -17,90 +17,92 @@ augroup myvimrc
   au!
 augroup END
 
-" vundle {{{1
+" NeoBundle {{{1
 " 説明 {{{2
 " COMMAND:
-"  :BundleInstall : Bundleされたプラグインをインストール
-"  :BundleSearch : vim-scriptにあるプラグインを検索
+"  :NeoBundleInstall : Bundleされたプラグインをインストール
+"  :NeoBundleSearch : vim-scriptにあるプラグインを検索
 "
-" vundle開始 {{{2
+" NeoBundle開始 {{{2
 filetype off
 if has("win32") || has("win64")
   set rtp&
-  set rtp+=~/vimfiles/bundle/vundle
-  call vundle#rc('~/vimfiles/bundle')
+  set rtp+=~/vimfiles/bundle/neobundle.vim
+  call neobundle#rc(expand('~/vimfiles/bundle'))
 else
   set rtp&
-  set rtp+=~/.vim/bundle/vundle
-  call vundle#rc()
+  set rtp+=~/.vim/bundle/neobundle.vim
+  call neobundle#rc(expand('~/.vim/bundle'))
 endif
 
 " 基本 {{{2
-Bundle 'gmarik/vundle'
-Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/neosnippet'
-Bundle 'Shougo/neosnippet-snippets'
-Bundle 'Shougo/vimproc'
-Bundle 'Shougo/vimshell'
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimshell'
 
 " Unite {{{2
-Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/vimfiler'
-Bundle 'Shougo/unite-outline'
-Bundle 'ujihisa/unite-colorscheme'
-Bundle 'ujihisa/unite-rake'
-Bundle 'ujihisa/unite-gem'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vimfiler'
+NeoBundle 'Shougo/unite-outline'
+NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'ujihisa/unite-rake'
+NeoBundle 'ujihisa/unite-gem'
 
 " コマンド {{{2
-Bundle 'thinca/vim-ref'
-Bundle 'thinca/vim-quickrun'
-Bundle 'thinca/vim-singleton'
-Bundle 'thinca/vim-qfreplace'
-Bundle 'tpope/vim-surround.git'
-Bundle 'tpope/vim-fugitive'
-Bundle 'gregsexton/gitv'
-Bundle 'mattn/emmet-vim'
+NeoBundle 'thinca/vim-ref'
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'thinca/vim-singleton'
+NeoBundle 'thinca/vim-qfreplace'
+NeoBundle 'tpope/vim-surround.git'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'gregsexton/gitv'
+NeoBundle 'mattn/emmet-vim'
 
 " Ruby {{{2
-Bundle 'tpope/vim-rails.git'
-Bundle 'taka84u9/vim-ref-ri'
+NeoBundle 'tpope/vim-rails.git'
+NeoBundle 'taka84u9/vim-ref-ri'
 
 " 表示 {{{2
-Bundle 'itchyny/lightline.vim'
-Bundle 'fholgado/minibufexpl.vim'
-Bundle 'wombat256.vim'
-Bundle 'molokai'
-Bundle 'Zephyr-Color-Scheme'
-Bundle 'ScrollColors'
-Bundle 'CSApprox'
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'fholgado/minibufexpl.vim'
+NeoBundle 'wombat256.vim'
+NeoBundle 'molokai'
+NeoBundle 'Zephyr-Color-Scheme'
+NeoBundle 'ScrollColors'
+NeoBundle 'CSApprox'
 
 " 補助 {{{2
-Bundle 'vim-jp/vimdoc-ja'
-Bundle 'plasticboy/vim-markdown'
-Bundle 'tyru/open-browser.vim'
-Bundle 'kana/vim-smartchr'
-Bundle 'tyru/caw.vim'
-Bundle 'mattn/benchvimrc-vim'
+NeoBundle 'vim-jp/vimdoc-ja'
+NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'tyru/open-browser.vim'
+NeoBundle 'kana/vim-smartchr'
+NeoBundle 'tyru/caw.vim'
+NeoBundle 'mattn/benchvimrc-vim'
 
 " ローカルレポジトリ {{{2
 if isdirectory($HOME . '/dev/github/unite-tiddlywiki/')
-  Bundle 'file://' . $HOME . '/dev/github/unite-tiddlywiki/'
+  NeoBundleLocal $HOME . '/dev/github/unite-tiddlywiki/'
 endif
 
-" vundle終了 {{{2
+" NeoBundle終了 {{{2
 filetype plugin indent on
+" インストールチェック
+NeoBundleCheck
 
-" Vundleキーマップ定義 {{{2
+" NeoBundleキーマップ定義 {{{2
 nnoremap [bundle] <Nop>
 nmap <Leader>b [bundle]
-nnoremap <silent> [bundle]i<CR> :<C-u>BundleInstall<CR>
-nnoremap <silent> [bundle]u<CR> :<C-u>BundleUpdate<CR>
-nnoremap <silent> [bundle]s<CR> :<C-u>BundleSearch<CR>
+nnoremap <silent> [bundle]i<CR> :<C-u>NeoBundleInstall<CR>
+nnoremap <silent> [bundle]u<CR> :<C-u>NeoBundleUpdate<CR>
+nnoremap <silent> [bundle]s<CR> :<C-u>NeoBundleSearch<CR>
 
 " コマンド定義 {{{2
-command! Bi :BundleInstall
-command! Bu :BundleUpdate
-command! -nargs=? Bs :BundleSearch <args>
+command! Bi :NeoBundleInstall
+command! Bu :NeoBundleUpdate
+command! -nargs=? Bs :NeoBundleSearch <args>
 
 " singleton.vim {{{1
 if has('gui_running')
@@ -608,7 +610,7 @@ cnoremap <C-a> <C-b>
 
 " Leaderキー {{{2
 " Leaderキーを設定（,のデフォルトの機能は\で使えるように退避）
-"  u: Unite, b: Vundle, g: Fugitive
+"  u: Unite, b: NeoBundle, g: Fugitive
 "  p: PasteToggle, r: Quickrun, f: VimFiler, s: VimShell
 "  /: CommentToggle, [,]: TagJump, m:MBEToggle
 let mapleader=","
