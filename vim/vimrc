@@ -82,6 +82,8 @@ NeoBundleLazy 'gregsexton/gitv'
 \   'autoload': {'commands': ['Gitv']}}
 NeoBundleLazy 'mattn/emmet-vim'
 \, {'autoload': {'filetypes': ['html']}}
+NeoBundle 'mattn/webapi-vim'
+NeoBundle 'mattn/gist-vim'
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails.git'
