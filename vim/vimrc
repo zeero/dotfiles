@@ -616,8 +616,8 @@ nnoremap Y y$
 nnoremap zO zR
 nnoremap zC zM
 " diffハンクへのジャンプ
-nnoremap ]] ]czz
-nnoremap [[ [czz
+au myvimrc BufRead * nnoremap <buffer> [[ [czz
+au myvimrc BUfRead * nnoremap <buffer> ]] ]czz
 " Help、QuickFix、Fugitiveでは q でバッファを閉じる
 au myvimrc FileType help,qf,gitcommit nnoremap <buffer> q <C-w>c
 
