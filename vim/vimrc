@@ -57,16 +57,29 @@ NeoBundleLazy 'Shougo/neosnippet-snippets'
 NeoBundleLazy 'Shougo/unite.vim'
 \, {'autoload': {'commands': ['Unite', 'UniteWithBufferDir']}}
 NeoBundleLazy 'Shougo/vimfiler'
-\, {'depends': ['Shougo/unite.vim'],
-\   'autoload': {'commands': ['VimFiler', 'VimFilerBufferDir']}}
+\, {'autoload': {'commands': ['VimFiler', 'VimFilerBufferDir']},
+\   'depends': ['Shougo/unite.vim']}
 NeoBundleLazy 'Shougo/unite-outline'
 \, {'autoload': {'unite_sources': ['outline']}}
-NeoBundleLazy 'ujihisa/unite-colorscheme'
-\, {'autoload': {'unite_sources': ['colorscheme']}}
+NeoBundleLazy 'tsukkee/unite-help'
+\, {'autoload': {'unite_sources': ['help']}}
+NeoBundleLazy 'tsukkee/unite-tag'
+\, {'autoload': {'unite_sources': ['tag']}}
+NeoBundleLazy 'basyura/unite-rails'
+\, {'autoload': {'unite_sources': ['rails']}}
 NeoBundleLazy 'ujihisa/unite-rake'
 \, {'autoload': {'unite_sources': ['rake']}}
 NeoBundleLazy 'ujihisa/unite-gem'
 \, {'autoload': {'unite_sources': ['gem']}}
+NeoBundleLazy 'ujihisa/unite-locate'
+\, {'autoload': {'unite_sources': ['locate']}}
+NeoBundleLazy 'ujihisa/unite-colorscheme'
+\, {'autoload': {'unite_sources': ['colorscheme']}}
+NeoBundleLazy 'mattn/unite-gist'
+\, {'autoload': {'unite_sources': ['gist']},
+\   'depends': ['mattn/gist-vim']}
+NeoBundleLazy 'tacroe/unite-alias'
+\, {'autoload': {'unite_sources': ['alias']}}
 
 " コマンド {{{2
 NeoBundle 'thinca/vim-singleton'
@@ -77,8 +90,8 @@ NeoBundle 'thinca/vim-ref'
 NeoBundleLazy 'thinca/vim-quickrun'
 \, {'autoload': {'commands': ['QuickRun']}}
 NeoBundleLazy 'gregsexton/gitv'
-\, {'depends': ['tpope/vim-fugitive'],
-\   'autoload': {'commands': ['Gitv']}}
+\, {'autoload': {'commands': ['Gitv']},
+\   'depends': ['tpope/vim-fugitive']}
 NeoBundleLazy 'mattn/emmet-vim'
 \, {'autoload': {'filetypes': ['html']}}
 NeoBundle 'mattn/webapi-vim'
