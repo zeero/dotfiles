@@ -434,9 +434,9 @@ function! s:my_readpost_autocmd()
   if line("'\"") > 0 && line("'\"") <= line("$")
     exe "normal! g`\"zz"
   endif
-  if &foldenable > 0 && foldclosed("'\"") > 0
-    exe "normal! zA"
-  endif
+  while &foldenable > 0 && foldclosed("'\"") > 0
+    exe "normal! zo"
+  endwhile
   exe "normal! zz"
 endfunction
 " vsplitは右に開く
