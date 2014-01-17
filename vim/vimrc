@@ -1212,7 +1212,7 @@ let g:unite_source_menu_menus = {
 " Uniteコマンド定義 {{{2
 " 汎用
 command! -nargs=+ -complete=customlist,unite#complete#source U :Unite <args>
-\ -no-empty -silent -buffer-name=u
+\ -no-empty -silent -buffer-name=<args>
 " ファイラ
 command! Uf :Unite file
 \ -no-empty -silent -buffer-name=file
