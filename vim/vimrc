@@ -100,8 +100,8 @@ NeoBundle 'mattn/gist-vim'
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails.git'
 \, {'autoload': {'filetypes': ['ruby']}}
-NeoBundleLazy 'taka84u9/vim-ref-ri'
-\, {'autoload': {'filetypes': ['ruby']}}
+NeoBundle 'taka84u9/vim-ref-ri'
+"\, {'autoload': {'filetypes': ['ruby']}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -634,6 +634,8 @@ au myvimrc FileType help,qf,gitcommit nnoremap <buffer> q <C-w>c
 " タブページ操作
 nnoremap <Tab> :<C-u>tabn<CR>
 nnoremap <S-Tab> :<C-u>tabp<CR>
+" ESCを二回でハイライトを消す
+nnoremap <silent> <Esc><Esc> :noh<CR>
 
 " CTRLキー、Shiftキー {{{2
 " ウィンドウ間を移動
@@ -1175,7 +1177,7 @@ endif
 
 " デフォルトアクションの変更 {{{2
 " ref/refe
-call unite#custom_default_action('source/ref/refe/*' , 'above')
+call unite#custom_default_action('source/ref/refe/*' , 'vsplit')
 " Uniteブックマークがディレクトリの場合はVimFilerで開く
 call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
 call unite#custom_default_action('directory' , 'vimfiler')
