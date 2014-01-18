@@ -57,8 +57,8 @@ NeoBundleLazy 'Shougo/neosnippet-snippets'
 NeoBundleLazy 'Shougo/unite.vim'
 \, {'autoload': {'commands': ['Unite', 'UniteWithBufferDir']}}
 NeoBundleLazy 'Shougo/vimfiler'
-\, {'autoload': {'commands': ['VimFiler', 'VimFilerBufferDir']},
-\   'depends': ['Shougo/unite.vim']}
+\, {'autoload': {'commands': ['VimFiler', 'VimFilerBufferDir']}
+\,  'depends': ['Shougo/unite.vim']}
 NeoBundleLazy 'Shougo/unite-outline'
 \, {'autoload': {'unite_sources': ['outline']}}
 NeoBundleLazy 'tsukkee/unite-help'
@@ -75,33 +75,39 @@ NeoBundleLazy 'ujihisa/unite-locate'
 \, {'autoload': {'unite_sources': ['locate']}}
 NeoBundleLazy 'ujihisa/unite-colorscheme'
 \, {'autoload': {'unite_sources': ['colorscheme']}}
-NeoBundleLazy 'mattn/unite-gist'
-\, {'autoload': {'unite_sources': ['gist']},
-\   'depends': ['mattn/gist-vim']}
 NeoBundleLazy 'tacroe/unite-alias'
 \, {'autoload': {'unite_sources': ['alias']}}
 
-" コマンド {{{2
-NeoBundle 'thinca/vim-singleton'
+" 入力補助
 NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'tpope/vim-surround.git'
+NeoBundle 'tyru/caw.vim'
+NeoBundleLazy 'kana/vim-smartchr'
+\, {'autoload': {'insert': 1}}
+NeoBundleLazy 'mattn/emmet-vim'
+\, {'autoload': {'filetypes': ['html']}}
+
+" コマンド {{{2
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'mattn/webapi-vim'
+NeoBundle 'mattn/gist-vim'
+NeoBundleLazy 'gregsexton/gitv'
+\, {'autoload': {'commands': ['Gitv']}
+\,  'depends': ['tpope/vim-fugitive']}
 NeoBundle 'thinca/vim-ref'
 NeoBundleLazy 'thinca/vim-quickrun'
 \, {'autoload': {'commands': ['QuickRun']}}
-NeoBundleLazy 'gregsexton/gitv'
-\, {'autoload': {'commands': ['Gitv']},
-\   'depends': ['tpope/vim-fugitive']}
-NeoBundleLazy 'mattn/emmet-vim'
-\, {'autoload': {'filetypes': ['html']}}
-NeoBundle 'mattn/webapi-vim'
-NeoBundle 'mattn/gist-vim'
+NeoBundleLazy 'alpaca-tc/alpaca_tags'
+\, {'autoload' : {'commands': ['Tags', 'TagsUpdate', 'TagsSet', 'TagsBundle']}
+\,  'depends': 'Shougo/vimproc'}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails.git'
 \, {'autoload': {'filetypes': ['ruby']}}
-NeoBundle 'taka84u9/vim-ref-ri'
-"\, {'autoload': {'filetypes': ['ruby']}}
+NeoBundleLazy 'taka84u9/vim-ref-ri'
+\, {'autoload': {'filetypes': ['ruby']
+\,               'unite_sources': ['refe/ri']}
+\,  'depends': 'thinca/vim-ref'}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -114,15 +120,13 @@ NeoBundleLazy 'ScrollColors'
 \, {'autoload': {'commands': ['SCROLLCOLOR']}}
 
 " 補助 {{{2
-NeoBundle 'tyru/caw.vim'
+NeoBundle 'thinca/vim-singleton'
 NeoBundleLazy 'vim-jp/vimdoc-ja'
 \, {'autoload': {'commands': ['help']}}
 NeoBundleLazy 'plasticboy/vim-markdown'
 \, {'autoload': {'filetypes': ['mkd']}}
 NeoBundleLazy 'tyru/open-browser.vim'
 \, {'autoload': {'filetypes': ['html', 'mkd']}}
-NeoBundleLazy 'kana/vim-smartchr'
-\, {'autoload': {'insert': 1}}
 NeoBundleLazy 'mattn/benchvimrc-vim'
 \, {'autoload': {'commands': ['BenchVimrc']}}
 
@@ -690,455 +694,6 @@ nnoremap q: <Nop>
 "-----------------------------------------------------------------------------
 " Plugin設定
 "-----------------------------------------------------------------------------
-" neocomplecache.vim {{{1
-"
-" KEYMAP:
-"  <Tab> : 補完
-"
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1
-" Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-"
-" Enable heavy features.
-" Use camel case completion.
-"let g:neocomplcache_enable_camel_case_completion = 1
-" Use underbar completion.
-"let g:neocomplcache_enable_underbar_completion = 1
-"
-" Define dictionary.
-let g:neocomplcache_dictionary_filetype_lists = {
-\  'default' : '',
-\  'vimshell' : $HOME.'/.vimshell_hist',
-\  'scheme' : $HOME.'/.gosh_completions'
-\}
-"
-" Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-  let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-"
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
-"
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplcache#smart_close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-"inoremap <expr><C-e>  neocomplcache#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
-"
-" For cursor moving in insert mode(Not recommended)
-"inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
-"inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
-"inoremap <expr><Up>    neocomplcache#close_popup() . "\<Up>"
-"inoremap <expr><Down>  neocomplcache#close_popup() . "\<Down>"
-" Or set this.
-"let g:neocomplcache_enable_cursor_hold_i = 1
-" Or set this.
-"let g:neocomplcache_enable_insert_char_pre = 1
-"
-" AutoComplPop like behavior.
-"let g:neocomplcache_enable_auto_select = 1
-"
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplcache_enable_auto_select = 1
-"let g:neocomplcache_disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-"
-" Enable omni completion.
-au myvimrc FileType css setlocal omnifunc=csscomplete#CompleteCSS
-au myvimrc FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-au myvimrc FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-au myvimrc FileType python setlocal omnifunc=pythoncomplete#Complete
-au myvimrc FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-"
-" Enable heavy omni completion.
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
-endif
-if !exists('g:neocomplcache_force_omni_patterns')
-  let g:neocomplcache_force_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.php =
-\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-let g:neocomplcache_omni_patterns.c =
-\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
-let g:neocomplcache_omni_patterns.cpp =
-\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-"
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplcache_omni_patterns.perl =
-\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-
-" neosnippet.vim {{{1
-" KEYMAP:
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_target)
-" スニペットの保存場所を変更
-if has("win32") || has("win64")
-  let g:neosnippet#snippets_directory = '~/vimfiles/neosnippets'
-else
-  let g:neosnippet#snippets_directory = '~/.vim/neosnippets'
-endif
-" スニペットファイルの保存時に再読み込み
-au myvimrc BufWritePost *.snip NeoSnippetSource %:p
-
-" emmet.vim {{{1
-"
-" KEYMAP:
-"  <C-e> : 展開
-"  <C-_> : コメントアウト／イン
-"          （_と/が同じキーマップになってるのでCtrl+/でできる）
-"let g:user_emmet_leader_key = '<C-e>'
-let g:user_emmet_expandabbr_key = '<C-e>'
-let g:user_emmet_togglecomment_key = '<C-_>'
-" タグのコンプリート
-let g:use_emmet_complete_tag = 1
-
-" カスタマイズ設定
-let g:user_emmet_settings = {
-\  'lang' : 'ja',
-\  'indentation' : "  ",
-\  'html' : {
-\    'filters' : 'html',
-\    'snippets' : {
-\      'meta:viewport' : "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">",
-\      'css:bs' : "<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">",
-\      'cd' : "<![CDATA[|]]>",
-\      'js:jq' : "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n<script>\n\\$(function() {\n\t|\n})()\n</script>",
-\      'js:bs' : "<script src=\"https://code.jquery.com/jquery.js\"></script>\n<script src=\"js/bootstrap.min.js\"></script>",
-\    },
-\  },
-\  'javascript' : {
-\    'snippets' : {
-\      'jq' : "\\$(function() {\n\t\\${cursor}\\${child}\n});",
-\      'jq:json' : "\\$.getJSON(\"${cursor}\", function(data) {\n\t\\${child}\n});",
-\      'jq:each' : "\\$.each(data, function(index, item) {\n\t\\${child}\n});",
-\      'fn' : "(function() {\n\t\\${cursor}\n})();",
-\      'tm' : "setTimeout(function() {\n\t\\${cursor}\n}, 100);",
-\    },
-\    'use_pipe_for_cursor' : 0,
-\  },
-\  'css' : {
-\    'filters' : 'fc',
-\    'snippets' : {
-\      'box-shadow' : "-webkit-box-shadow: 0 0 0 # 000;\n-moz-box-shadow: 0 0 0 0 # 000;\nbox-shadow: 0 0 0 # 000;",
-\    },
-\  },
-\  'vim' : {
-\    'snippets' : {
-\      'nn' : 'nnoremap <silent> ${cursor} :<C-u>',
-\      'nnu' : 'nnoremap <silent> [unite]${cursor}<CR> :<C-u>Unite<Space>\n\\<Space>-no-empty<Space>-silent<Space>-buffer-name=<CR>',
-\    },
-\  },
-\  'java' : {
-\    'snippets' : {
-\     'main': "public static void main(String[] args) {\n\t|\n}",
-\     'println': "System.out.println(\"|\");",
-\     'class': "public class | {\n}\n",
-\    },
-\  },
-\  'php' : {
-\    'extends' : 'html',
-\    'filters' : 'html,c',
-\  },
-\  'less' : {
-\    'filters' : 'fc',
-\    'extends' : 'css',
-\  },
-\  'lorem_lipsum_ja' : {
-\    '^\%(lorem\|lipsum\)\(\d*\)$' : function('emmet#lorem#ja#expand'),
-\  },
-\}
-
-" quickrun.vim {{{1
-"
-" COMMAND:
-"  :QuickRun -args foo
-" KEYMAP:
-"  <Leader>r : バッファの内容を実行
-"
-" 実行にvimprocを使う
-" エラー時はquickfixに表示する
-let g:quickrun_config = {}
-let g:quickrun_config = {
-\  "_" : {
-\    'runner' : 'vimproc',
-\    'runner/vimproc/updatetime' : 100,
-\    'outputter' : 'error',
-\    'outputter/error' : 'quickfix',
-\    'outputter/error/success' : 'buffer',
-\    'outputter/buffer/split' : ':belowright 5',
-\    'outputter/buffer/close_on_empty' : 1
-\  },
-\}
-" <C-c> で実行を強制終了させる
-" quickrun.vim が実行していない場合には <C-c> を呼び出す
-nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
-" ruby.rspec
-let g:quickrun_config['ruby.rspec'] = { 'command': 'rspec' }
-au myvimrc BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
-" htmlをブラウザで開く（tyru/open-browser.vim プラグインが必要）
-let g:quickrun_config['html'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
-let g:quickrun_config['xhtml'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
-
-" fugitive.vim {{{1
-" 説明 {{{2
-" DESC:
-"  VimにGitコマンドを追加。
-" COMMAND:
-"  :Gstatus      : git status
-"    Gstatusのバッファ上で
-"      - : add/reset
-"      D : diff
-"      C : commit
-"      cvc : commit -v
-"  :Gwrite/:Gadd : git add
-"  :Gdiff        : git diff
-"  :Gcommit -v   : git commit -v
-" COMMAND: {{{2
-command! Gs :Gstatus
-command! Ga :Gwrite
-command! Gw :Gwrite
-command! Gd :Gdiff
-command! Gc :Gcommit -v
-command! Gca :Gcommit -va
-command! Gl :Glog
-command! Gb :Gblame
-command! Gpush :call s:my_git_vimproc('push')
-command! Gpull :call s:my_git_vimproc('pull')
-" Gpush/Gpullのためのvimproc
-" Todo: messageで出すように変えたい、非同期になってない、、
-function! s:my_git_vimproc(gitcommand) "{{{
-  let sub = vimproc#popen2('git ' . a:gitcommand)
-  let res = ''
-  while !sub.stdout.eof
-    let res .= sub.stdout.read()
-    let res .= sub.stderr.read()
-  endwhile
-  let [cond, status] = sub.waitpid()
-  new
-  call append(0, split(res, '\r\n\|\r\|\n') + [string([cond, status])])
-endfunction "}}}
-
-" surround.vim {{{1
-"
-" KEYMAP:
-"  i : inside
-"  a : all
-"  s : side
-"  S' : ビジュアルモードで選択した範囲を'で囲む
-"  ysiw' : カーソル下の単語を'で囲む
-"  cs'" : 'を"に変換する
-"  ds' : 'で囲まれた範囲を消す
-
-" rcodetools.vim {{{1
-"
-" DESC: xmpfilterの呼び出し設定
-" <F1>でバッファ全体にxmpfilterを実行
-"{{{ xmpfilter mapping (disable)
-"nmap <silent> <F1> mzggVG!xmpfilter -a<cr>'z
-"imap <silent> <F1> <Esc><F1>
-"" <F2>で現在行/選択行にxmpfilterを実行
-"map <silent> <F2> !xmpfilter -a<cr>
-"nmap <silent> <F2> V<F2>
-"imap <silent> <F2> <Esc><F2>a
-"" <F3>で現在行/選択行に「# =>」マークを追加
-"vmap <silent> <F3> !xmpfilter -m<cr>
-"nmap <silent> <F3> V<F3>
-"imap <silent> <F3> <Esc><F3>a
-"" <F4>で現在行/選択行の「# =>」マークを削除
-"vmap <silent> <F4> ms:call RemoveRubyEval()<CR>
-"nmap <silent> <F4> V<F4>
-"imap <silent> <F4> <Esc><F4>a
-"" RemoveRubyEval() の定義
-"function! RemoveRubyEval() range
-  "let begv = a:firstline
-  "let endv = a:lastline
-  "normal Hmt
-  "set lz
-  "execute ":" . begv . "," . endv . 's/\s*# \(=>\|!!\).*$//e'
-  "normal 'tzt`s
-  "set nolz
-  "redraw
-"endfunction
-"" JRuby用<F11>でバッファ全体にjxmpfilterを実行
-"nmap <silent> <F11> mzggVG!jxmpfilter -a<cr>'z
-"imap <silent> <F11> <Esc><F11>
-"}}}
-
-" MiniBufExplorer {{{1
-"
-" 自動起動
-let g:miniBufExplAutoStart = 1
-" バッファが２つ以上で開く
-let g:miniBufExplBuffersNeeded = 2
-" Diffモードでは隠す
-let g:miniBufExplHideWhenDiff = 1
-" バッファリストのサイクル化
-let g:miniBufExplCycleArround = 1
-" 表示行数を制限
-let g:miniBufExplMaxSize = 1
-" カラーリング
-let g:did_minibufexplorer_syntax_inits = 1
-" for buffers that have NOT CHANGED and are VISIBLE and is the active buffer
-hi MBEVisibleActiveNormal ctermfg=black ctermbg=lightgray guifg=black guibg=lightgray
-" for buffers that have CHANGED and are VISIBLE and is the active buffer
-hi MBEVisibleActiveChanged ctermfg=black ctermbg=lightred guifg=black guibg=lightred
-" buffers that have NOT CHANGED and are VISIBLE
-hi MBEVisibleNormal cterm=bold ctermfg=white gui=bold guifg=white guibg=black
-" buffers that have CHANGED and are VISIBLE
-hi MBEVisibleChanged cterm=bold ctermfg=lightred gui=bold guifg=lightred guibg=black
-" for buffers that have NOT CHANGED and are NOT VISIBLE.
-hi MBENormal ctermfg=darkgray guifg=darkgray guibg=black
-" for buffers that HAVE CHANGED and are NOT VISIBLE
-hi MBEChanged ctermfg=red guifg=red guibg=black
-
-" lightline.vim {{{1
-"
-" lightline config
-"\  'colorscheme': 'wombat',
-"\    'right': [['mode'], ['filename']]
-let g:lightline = {
-\  'mode_map': {'c': 'NORMAL'},
-\  'active': {
-\    'left': [['mode', 'paste'], ['filename', 'fugitive']]
-\  },
-\  'inactive': {
-\    'left': [],
-\    'right': [['filename']]
-\  },
-\  'component_function': {
-\    'modified': 'MyModified',
-\    'readonly': 'MyReadonly',
-\    'fugitive': 'MyFugitive',
-\    'filename': 'MyFilename',
-\    'fileformat': 'MyFileformat',
-\    'filetype': 'MyFiletype',
-\    'fileencoding': 'MyFileencoding',
-\    'mode': 'MyMode'
-\  }
-\}
-
-function! MyModified()
-  "return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : ''
-endfunction
-function! MyReadonly()
-  "return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '[RO]' : ''
-endfunction
-function! MyFilename()
-  return (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-\         &ft == 'unite' ? unite#get_status_string() :
-\         &ft == 'vimshell' ? vimshell#get_status_string() :
-\         '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-\        ('' != MyModified() ? ' ' . MyModified() : '') .
-\        ('' != MyReadonly() ? ' ' . MyReadonly() : '')
-endfunction
-function! MyFugitive()
-  try
-    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
-      return fugitive#head()
-    endif
-  catch
-  endtry
-  return ''
-endfunction
-function! MyFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
-endfunction
-function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-endfunction
-function! MyFileencoding()
-  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
-endfunction
-function! MyMode()
-  return &ft == 'help' ? 'Help' :
-\        &ft == 'minibufexpl' ? 'MBE' :
-\        &ft == 'quickrun' ? 'QuickRun' :
-\        &ft == 'qf' ? 'QuickFix' :
-\        &ft == 'unite' ? 'Unite' :
-\        &ft == 'vimfiler' ? 'VimFiler' :
-\        &ft == 'vimshell' ? 'VimShell' :
-\        winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-" ref.vim {{{1
-"
-" COMMAND:
-"  :Ref refe Array
-" KEYMAP:
-"  Shift-K : 単語を検索
-let g:ref_use_vimproc = 1 " 0:disable / 1:enable
-let g:ref_refe_version = 2
-
-" caw.vim {{{1
-"
-" コメントアウトの切り替え
-nmap <Leader>/ <Plug>(caw:I:toggle)
-vmap <Leader>/ <Plug>(caw:I:toggle)
-
-" VimShell {{{1
-"
-" 動的プロンプト
-let g:vimshell_prompt_expr = 'getcwd()." > "'
-let g:vimshell_prompt_pattern = '^\f\+ > '
-" KEYMAP:
-" VimShellを起動
-nnoremap <Leader>s :<C-u>VimShellPop<CR>
-" irbを非同期で起動
-command! Irb :VimShellInteractive irb
-" 非同期で開いたインタプリタに現在の行を評価させる
-au myvimrc FileType vimshell inoremap <buffer> <Leader>s :<C-u>VimShellSendString<CR>
-au myvimrc FileType vimshell vmap <buffer> <Leader>s :<C-u>VimShellSendString<CR>
-
-" VimFiler {{{1
-"
-" KEYMAP:
-"  h : up dir, l : down dir, t : tree view (1 dir), T : tree view all
-"  e : edit, <Space> : mark, c : copy, m : move, d : delete, yy : yank path
-"  N : new file, K : new dir, * : mark all, U : mark off all, ? : keymap
-"  a : action, H : VimShell, ge : system filer, x : system app
-"
-" vimデフォルトのエクスプローラをvimfilerで置き換える
-let g:vimfiler_as_default_explorer = 1
-" セーフモードを無効にした状態で起動する
-let g:vimfiler_safe_mode_by_default = 0
-" デフォルトでIDE風のFilerを開く
-" au myvimrc VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
-" ステータスラインを上書きしない（lightline向け）
-let g:vimfiler_force_overwrite_statusline = 0
-"let g:netrw_liststyle=3
-" KEYMAP:
-nnoremap <Leader>f :<C-u>VimFilerBufferDir
-\<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
-" Enterでツリー開閉、ファイル編集を可能に
-au myvimrc FileType vimfiler nmap <buffer> <expr> <CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
-
 " Unite {{{1
 " 説明 {{{2
 " COMMAND:
@@ -1300,8 +855,469 @@ endfunction
 call unite#define_source(s:unite_source)
 unlet s:unite_source
 
+" VimFiler {{{1
+"
+" KEYMAP:
+"  h : up dir, l : down dir, t : tree view (1 dir), T : tree view all
+"  e : edit, <Space> : mark, c : copy, m : move, d : delete, yy : yank path
+"  N : new file, K : new dir, * : mark all, U : mark off all, ? : keymap
+"  a : action, H : VimShell, ge : system filer, x : system app
+"
+" vimデフォルトのエクスプローラをvimfilerで置き換える
+let g:vimfiler_as_default_explorer = 1
+" セーフモードを無効にした状態で起動する
+let g:vimfiler_safe_mode_by_default = 0
+" デフォルトでIDE風のFilerを開く
+" au myvimrc VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
+" ステータスラインを上書きしない（lightline向け）
+let g:vimfiler_force_overwrite_statusline = 0
+"let g:netrw_liststyle=3
+" KEYMAP:
+nnoremap <Leader>f :<C-u>VimFilerBufferDir
+\<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
+" Enterでツリー開閉、ファイル編集を可能に
+au myvimrc FileType vimfiler nmap <buffer> <expr> <CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
+
+" VimShell {{{1
+"
+" 動的プロンプト
+let g:vimshell_prompt_expr = 'getcwd()." > "'
+let g:vimshell_prompt_pattern = '^\f\+ > '
+" KEYMAP:
+" VimShellを起動
+nnoremap <Leader>s :<C-u>VimShellPop<CR>
+" irbを非同期で起動
+command! Irb :VimShellInteractive irb
+" 非同期で開いたインタプリタに現在の行を評価させる
+au myvimrc FileType vimshell inoremap <buffer> <Leader>s :<C-u>VimShellSendString<CR>
+au myvimrc FileType vimshell vmap <buffer> <Leader>s :<C-u>VimShellSendString<CR>
+
+" neocomplecache.vim {{{1
+"
+" KEYMAP:
+"  <Tab> : 補完
+"
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+"
+" Enable heavy features.
+" Use camel case completion.
+"let g:neocomplcache_enable_camel_case_completion = 1
+" Use underbar completion.
+"let g:neocomplcache_enable_underbar_completion = 1
+"
+" Define dictionary.
+let g:neocomplcache_dictionary_filetype_lists = {
+\  'default' : '',
+\  'vimshell' : $HOME.'/.vimshell_hist',
+\  'scheme' : $HOME.'/.gosh_completions'
+\}
+"
+" Define keyword.
+if !exists('g:neocomplcache_keyword_patterns')
+  let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+"
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr><C-l>     neocomplcache#complete_common_string()
+"
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplcache#smart_close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplcache#close_popup()
+"inoremap <expr><C-e>  neocomplcache#cancel_popup()
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
+"
+" For cursor moving in insert mode(Not recommended)
+"inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
+"inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
+"inoremap <expr><Up>    neocomplcache#close_popup() . "\<Up>"
+"inoremap <expr><Down>  neocomplcache#close_popup() . "\<Down>"
+" Or set this.
+"let g:neocomplcache_enable_cursor_hold_i = 1
+" Or set this.
+"let g:neocomplcache_enable_insert_char_pre = 1
+"
+" AutoComplPop like behavior.
+"let g:neocomplcache_enable_auto_select = 1
+"
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplcache_enable_auto_select = 1
+"let g:neocomplcache_disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+"
+" Enable omni completion.
+au myvimrc FileType css setlocal omnifunc=csscomplete#CompleteCSS
+au myvimrc FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+au myvimrc FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+au myvimrc FileType python setlocal omnifunc=pythoncomplete#Complete
+au myvimrc FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+"
+" Enable heavy omni completion.
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+if !exists('g:neocomplcache_force_omni_patterns')
+  let g:neocomplcache_force_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.php =
+\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+let g:neocomplcache_omni_patterns.c =
+\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
+let g:neocomplcache_omni_patterns.cpp =
+\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+"
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplcache_omni_patterns.perl =
+\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+
+" neosnippet.vim {{{1
+" KEYMAP:
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
+" スニペットの保存場所を変更
+if has("win32") || has("win64")
+  let g:neosnippet#snippets_directory = '~/vimfiles/neosnippets'
+else
+  let g:neosnippet#snippets_directory = '~/.vim/neosnippets'
+endif
+" スニペットファイルの保存時に再読み込み
+au myvimrc BufWritePost *.snip NeoSnippetSource %:p
+
+" fugitive.vim {{{1
+" 説明 {{{2
+" DESC:
+"  VimにGitコマンドを追加。
+" COMMAND:
+"  :Gstatus      : git status
+"    Gstatusのバッファ上で
+"      - : add/reset
+"      D : diff
+"      C : commit
+"      cvc : commit -v
+"  :Gwrite/:Gadd : git add
+"  :Gdiff        : git diff
+"  :Gcommit -v   : git commit -v
+" COMMAND: {{{2
+command! Gs :Gstatus
+command! Ga :Gwrite
+command! Gw :Gwrite
+command! Gd :Gdiff
+command! Gc :Gcommit -v
+command! Gca :Gcommit -va
+command! Gl :Glog
+command! Gb :Gblame
+command! Gpush :call s:my_git_vimproc('push')
+command! Gpull :call s:my_git_vimproc('pull')
+" Gpush/Gpullのためのvimproc
+" Todo: messageで出すように変えたい、非同期になってない、、
+function! s:my_git_vimproc(gitcommand) "{{{
+  let sub = vimproc#popen2('git ' . a:gitcommand)
+  let res = ''
+  while !sub.stdout.eof
+    let res .= sub.stdout.read()
+    let res .= sub.stderr.read()
+  endwhile
+  let [cond, status] = sub.waitpid()
+  new
+  call append(0, split(res, '\r\n\|\r\|\n') + [string([cond, status])])
+endfunction "}}}
+
+" quickrun.vim {{{1
+"
+" COMMAND:
+"  :QuickRun -args foo
+" KEYMAP:
+"  <Leader>r : バッファの内容を実行
+"
+" 実行にvimprocを使う
+" エラー時はquickfixに表示する
+let g:quickrun_config = {}
+let g:quickrun_config = {
+\  "_" : {
+\    'runner' : 'vimproc',
+\    'runner/vimproc/updatetime' : 100,
+\    'outputter' : 'error',
+\    'outputter/error' : 'quickfix',
+\    'outputter/error/success' : 'buffer',
+\    'outputter/buffer/split' : ':belowright 5',
+\    'outputter/buffer/close_on_empty' : 1
+\  },
+\}
+" <C-c> で実行を強制終了させる
+" quickrun.vim が実行していない場合には <C-c> を呼び出す
+nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+" ruby.rspec
+let g:quickrun_config['ruby.rspec'] = { 'command': 'rspec' }
+au myvimrc BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
+" htmlをブラウザで開く（tyru/open-browser.vim プラグインが必要）
+let g:quickrun_config['html'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
+let g:quickrun_config['xhtml'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
+
+" ref.vim {{{1
+"
+" COMMAND:
+"  :Ref refe Array
+" KEYMAP:
+"  Shift-K : 単語を検索
+let g:ref_use_vimproc = 1 " 0:disable / 1:enable
+let g:ref_refe_version = 2
+
+" surround.vim {{{1
+"
+" KEYMAP:
+"  i : inside
+"  a : all
+"  s : side
+"  S' : ビジュアルモードで選択した範囲を'で囲む
+"  ysiw' : カーソル下の単語を'で囲む
+"  cs'" : 'を"に変換する
+"  ds' : 'で囲まれた範囲を消す
+
+" caw.vim {{{1
+"
+" コメントアウトの切り替え
+nmap <Leader>/ <Plug>(caw:I:toggle)
+vmap <Leader>/ <Plug>(caw:I:toggle)
+
+" emmet.vim {{{1
+"
+" KEYMAP:
+"  <C-e> : 展開
+"  <C-_> : コメントアウト／イン
+"          （_と/が同じキーマップになってるのでCtrl+/でできる）
+"let g:user_emmet_leader_key = '<C-e>'
+let g:user_emmet_expandabbr_key = '<C-e>'
+let g:user_emmet_togglecomment_key = '<C-_>'
+" タグのコンプリート
+let g:use_emmet_complete_tag = 1
+
+" カスタマイズ設定
+let g:user_emmet_settings = {
+\  'lang' : 'ja',
+\  'indentation' : "  ",
+\  'html' : {
+\    'filters' : 'html',
+\    'snippets' : {
+\      'meta:viewport' : "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">",
+\      'css:bs' : "<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">",
+\      'cd' : "<![CDATA[|]]>",
+\      'js:jq' : "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n<script>\n\\$(function() {\n\t|\n})()\n</script>",
+\      'js:bs' : "<script src=\"https://code.jquery.com/jquery.js\"></script>\n<script src=\"js/bootstrap.min.js\"></script>",
+\    },
+\  },
+\  'javascript' : {
+\    'snippets' : {
+\      'jq' : "\\$(function() {\n\t\\${cursor}\\${child}\n});",
+\      'jq:json' : "\\$.getJSON(\"${cursor}\", function(data) {\n\t\\${child}\n});",
+\      'jq:each' : "\\$.each(data, function(index, item) {\n\t\\${child}\n});",
+\      'fn' : "(function() {\n\t\\${cursor}\n})();",
+\      'tm' : "setTimeout(function() {\n\t\\${cursor}\n}, 100);",
+\    },
+\    'use_pipe_for_cursor' : 0,
+\  },
+\  'css' : {
+\    'filters' : 'fc',
+\    'snippets' : {
+\      'box-shadow' : "-webkit-box-shadow: 0 0 0 # 000;\n-moz-box-shadow: 0 0 0 0 # 000;\nbox-shadow: 0 0 0 # 000;",
+\    },
+\  },
+\  'vim' : {
+\    'snippets' : {
+\      'nn' : 'nnoremap <silent> ${cursor} :<C-u>',
+\      'nnu' : 'nnoremap <silent> [unite]${cursor}<CR> :<C-u>Unite<Space>\n\\<Space>-no-empty<Space>-silent<Space>-buffer-name=<CR>',
+\    },
+\  },
+\  'java' : {
+\    'snippets' : {
+\     'main': "public static void main(String[] args) {\n\t|\n}",
+\     'println': "System.out.println(\"|\");",
+\     'class': "public class | {\n}\n",
+\    },
+\  },
+\  'php' : {
+\    'extends' : 'html',
+\    'filters' : 'html,c',
+\  },
+\  'less' : {
+\    'filters' : 'fc',
+\    'extends' : 'css',
+\  },
+\  'lorem_lipsum_ja' : {
+\    '^\%(lorem\|lipsum\)\(\d*\)$' : function('emmet#lorem#ja#expand'),
+\  },
+\}
+
+" rcodetools.vim {{{1
+"
+" DESC: xmpfilterの呼び出し設定
+" <F1>でバッファ全体にxmpfilterを実行
+"{{{ xmpfilter mapping (disable)
+"nmap <silent> <F1> mzggVG!xmpfilter -a<cr>'z
+"imap <silent> <F1> <Esc><F1>
+"" <F2>で現在行/選択行にxmpfilterを実行
+"map <silent> <F2> !xmpfilter -a<cr>
+"nmap <silent> <F2> V<F2>
+"imap <silent> <F2> <Esc><F2>a
+"" <F3>で現在行/選択行に「# =>」マークを追加
+"vmap <silent> <F3> !xmpfilter -m<cr>
+"nmap <silent> <F3> V<F3>
+"imap <silent> <F3> <Esc><F3>a
+"" <F4>で現在行/選択行の「# =>」マークを削除
+"vmap <silent> <F4> ms:call RemoveRubyEval()<CR>
+"nmap <silent> <F4> V<F4>
+"imap <silent> <F4> <Esc><F4>a
+"" RemoveRubyEval() の定義
+"function! RemoveRubyEval() range
+  "let begv = a:firstline
+  "let endv = a:lastline
+  "normal Hmt
+  "set lz
+  "execute ":" . begv . "," . endv . 's/\s*# \(=>\|!!\).*$//e'
+  "normal 'tzt`s
+  "set nolz
+  "redraw
+"endfunction
+"" JRuby用<F11>でバッファ全体にjxmpfilterを実行
+"nmap <silent> <F11> mzggVG!jxmpfilter -a<cr>'z
+"imap <silent> <F11> <Esc><F11>
+"}}}
+
+" MiniBufExplorer {{{1
+"
+" 自動起動
+let g:miniBufExplAutoStart = 1
+" バッファが２つ以上で開く
+let g:miniBufExplBuffersNeeded = 2
+" Diffモードでは隠す
+let g:miniBufExplHideWhenDiff = 1
+" バッファリストのサイクル化
+let g:miniBufExplCycleArround = 1
+" 表示行数を制限
+let g:miniBufExplMaxSize = 1
+" カラーリング
+let g:did_minibufexplorer_syntax_inits = 1
+" for buffers that have NOT CHANGED and are VISIBLE and is the active buffer
+hi MBEVisibleActiveNormal ctermfg=black ctermbg=lightgray guifg=black guibg=lightgray
+" for buffers that have CHANGED and are VISIBLE and is the active buffer
+hi MBEVisibleActiveChanged ctermfg=black ctermbg=lightred guifg=black guibg=lightred
+" buffers that have NOT CHANGED and are VISIBLE
+hi MBEVisibleNormal cterm=bold ctermfg=white gui=bold guifg=white guibg=black
+" buffers that have CHANGED and are VISIBLE
+hi MBEVisibleChanged cterm=bold ctermfg=lightred gui=bold guifg=lightred guibg=black
+" for buffers that have NOT CHANGED and are NOT VISIBLE.
+hi MBENormal ctermfg=darkgray guifg=darkgray guibg=black
+" for buffers that HAVE CHANGED and are NOT VISIBLE
+hi MBEChanged ctermfg=red guifg=red guibg=black
+
+" lightline.vim {{{1
+"
+" lightline config
+"\  'colorscheme': 'wombat',
+"\    'right': [['mode'], ['filename']]
+let g:lightline = {
+\  'mode_map': {'c': 'NORMAL'},
+\  'active': {
+\    'left': [['mode', 'paste'], ['filename', 'fugitive']]
+\  },
+\  'inactive': {
+\    'left': [],
+\    'right': [['filename']]
+\  },
+\  'component_function': {
+\    'modified': 'MyModified',
+\    'readonly': 'MyReadonly',
+\    'fugitive': 'MyFugitive',
+\    'filename': 'MyFilename',
+\    'fileformat': 'MyFileformat',
+\    'filetype': 'MyFiletype',
+\    'fileencoding': 'MyFileencoding',
+\    'mode': 'MyMode'
+\  }
+\}
+
+function! MyModified()
+  "return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : ''
+endfunction
+function! MyReadonly()
+  "return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '[RO]' : ''
+endfunction
+function! MyFilename()
+  return (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+\         &ft == 'unite' ? unite#get_status_string() :
+\         &ft == 'vimshell' ? vimshell#get_status_string() :
+\         '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+\        ('' != MyModified() ? ' ' . MyModified() : '') .
+\        ('' != MyReadonly() ? ' ' . MyReadonly() : '')
+endfunction
+function! MyFugitive()
+  try
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+      return fugitive#head()
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+function! MyFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+function! MyFileencoding()
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+function! MyMode()
+  return &ft == 'help' ? 'Help' :
+\        &ft == 'minibufexpl' ? 'MBE' :
+\        &ft == 'quickrun' ? 'QuickRun' :
+\        &ft == 'qf' ? 'QuickFix' :
+\        &ft == 'unite' ? 'Unite' :
+\        &ft == 'vimfiler' ? 'VimFiler' :
+\        &ft == 'vimshell' ? 'VimShell' :
+\        winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
 " markdown.vim {{{1
 "let g:quickrun_config['mkd'] { 'outputter' : 'browser' }
+
+" alpaca_tags {{{1
+let g:alpaca_update_tags_config = {
+\ '_': '-R --sort=yes',
+\ 'default': '--languages=-css,scss,html'
+\}
+" タグの自動更新
+if exists(':Tags')
+  au myvimrc BufEnter * TagsSet
+  au myvimrc BufWritePost * TagsUpdate
+  au myvimrc BufWritePost Gemfile TagsBundle
+endif
 
 "}}}1-------------------------------------------------------------------------
 
