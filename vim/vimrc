@@ -78,11 +78,13 @@ NeoBundleLazy 'ujihisa/unite-colorscheme'
 NeoBundleLazy 'tacroe/unite-alias'
 \, {'autoload': {'unite_sources': ['alias']}}
 
-" 入力補助
+" 入力補助 {{{2
 NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'tpope/vim-surround.git'
 NeoBundle 'tyru/caw.vim'
 NeoBundleLazy 'kana/vim-smartchr'
+\, {'autoload': {'insert': 1}}
+NeoBundleLazy 'alpaca-tc/vim-endwise'
 \, {'autoload': {'insert': 1}}
 NeoBundleLazy 'mattn/emmet-vim'
 \, {'autoload': {'filetypes': ['html']}}
@@ -95,8 +97,7 @@ NeoBundleLazy 'gregsexton/gitv'
 \, {'autoload': {'commands': ['Gitv']}
 \,  'depends': ['tpope/vim-fugitive']}
 NeoBundle 'thinca/vim-ref'
-NeoBundleLazy 'thinca/vim-quickrun'
-\, {'autoload': {'commands': ['QuickRun']}}
+NeoBundle 'thinca/vim-quickrun'
 NeoBundleLazy 'alpaca-tc/alpaca_tags'
 \, {'autoload' : {'commands': ['Tags', 'TagsUpdate', 'TagsSet', 'TagsBundle']}
 \,  'depends': 'Shougo/vimproc'}
@@ -108,6 +109,9 @@ NeoBundleLazy 'taka84u9/vim-ref-ri'
 \, {'autoload': {'filetypes': ['ruby']
 \,               'unite_sources': ['refe/ri']}
 \,  'depends': 'thinca/vim-ref'}
+NeoBundleLazy 'edsono/vim-matchit'
+\, {'autoload': {'filetypes': ['ruby']}
+\,  'mapping': {'nx': '%'}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -732,10 +736,10 @@ endif
 
 " デフォルトアクションの変更 {{{2
 " ref/refe
-call unite#custom_default_action('source/ref/refe/*' , 'vsplit')
+call unite#custom_default_action('source/ref/refe/*', 'vsplit')
 " Uniteブックマークがディレクトリの場合はVimFilerで開く
-call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
-call unite#custom_default_action('directory' , 'vimfiler')
+call unite#custom_default_action('source/bookmark/directory', 'vimfiler')
+call unite#custom_default_action('directory', 'vimfiler')
 
 " アクションの追加 {{{2
 " source:mappingにaction:verboseを追加する
