@@ -99,7 +99,7 @@ NeoBundleLazy 'gregsexton/gitv'
 NeoBundle 'thinca/vim-ref'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundleLazy 'alpaca-tc/alpaca_tags'
-\, {'autoload' : {'commands': ['Tags', 'TagsUpdate', 'TagsSet', 'TagsBundle']}
+\, {'autoload': {'commands': ['Tags', 'TagsUpdate', 'TagsSet', 'TagsBundle']}
 \,  'depends': 'Shougo/vimproc'}
 
 " Ruby {{{2
@@ -744,8 +744,8 @@ call unite#custom_default_action('directory', 'vimfiler')
 " アクションの追加 {{{2
 " source:mappingにaction:verboseを追加する
 let s:action = {
-\ 'description' : 'verbose',
-\ 'is_selectable' : 1,
+\ 'description': 'verbose',
+\ 'is_selectable': 1,
 \}
 function! s:action.func(candidates)
   for candidate in a:candidates
@@ -760,9 +760,9 @@ unlet s:action
 
 " メニュー設定 {{{2
 let g:unite_source_menu_menus = {
-\ "shortcuts" : {
-\   "description" : "command shortcuts.",
-\   "command_candidates" : [
+\ "shortcuts": {
+\   "description": "command shortcuts.",
+\   "command_candidates": [
 \     ["unite-colorscheme", "Unite colorscheme -auto-preview"],
 \     ["unite-output:message", "Unite output:message"],
 \     ["unite-mapping(all)", "Unite output:map|map!|lmap"],
@@ -919,9 +919,9 @@ let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 "
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
-\  'default' : '',
-\  'vimshell' : $HOME.'/.vimshell_hist',
-\  'scheme' : $HOME.'/.gosh_completions'
+\  'default': '',
+\  'vimshell': $HOME.'/.vimshell_hist',
+\  'scheme': $HOME.'/.gosh_completions'
 \}
 "
 " Define keyword.
@@ -1122,57 +1122,57 @@ let g:use_emmet_complete_tag = 1
 
 " カスタマイズ設定
 let g:user_emmet_settings = {
-\  'lang' : 'ja',
-\  'indentation' : "  ",
-\  'html' : {
-\    'filters' : 'html',
-\    'snippets' : {
-\      'meta:viewport' : "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">",
-\      'css:bs' : "<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">",
-\      'cd' : "<![CDATA[|]]>",
-\      'js:jq' : "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n<script>\n\\$(function() {\n\t|\n})()\n</script>",
-\      'js:bs' : "<script src=\"https://code.jquery.com/jquery.js\"></script>\n<script src=\"js/bootstrap.min.js\"></script>",
+\  'lang': 'ja',
+\  'indentation': "  ",
+\  'html': {
+\    'filters': 'html',
+\    'snippets': {
+\      'meta:viewport': "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">",
+\      'css:bs': "<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">",
+\      'cd': "<![CDATA[|]]>",
+\      'js:jq': "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n<script>\n\\$(function() {\n\t|\n})()\n</script>",
+\      'js:bs': "<script src=\"https://code.jquery.com/jquery.js\"></script>\n<script src=\"js/bootstrap.min.js\"></script>",
 \    },
 \  },
-\  'javascript' : {
-\    'snippets' : {
-\      'jq' : "\\$(function() {\n\t\\${cursor}\\${child}\n});",
-\      'jq:json' : "\\$.getJSON(\"${cursor}\", function(data) {\n\t\\${child}\n});",
-\      'jq:each' : "\\$.each(data, function(index, item) {\n\t\\${child}\n});",
-\      'fn' : "(function() {\n\t\\${cursor}\n})();",
-\      'tm' : "setTimeout(function() {\n\t\\${cursor}\n}, 100);",
+\  'javascript': {
+\    'snippets': {
+\      'jq': "\\$(function() {\n\t\\${cursor}\\${child}\n});",
+\      'jq:json': "\\$.getJSON(\"${cursor}\", function(data) {\n\t\\${child}\n});",
+\      'jq:each': "\\$.each(data, function(index, item) {\n\t\\${child}\n});",
+\      'fn': "(function() {\n\t\\${cursor}\n})();",
+\      'tm': "setTimeout(function() {\n\t\\${cursor}\n}, 100);",
 \    },
-\    'use_pipe_for_cursor' : 0,
+\    'use_pipe_for_cursor': 0,
 \  },
-\  'css' : {
-\    'filters' : 'fc',
-\    'snippets' : {
-\      'box-shadow' : "-webkit-box-shadow: 0 0 0 # 000;\n-moz-box-shadow: 0 0 0 0 # 000;\nbox-shadow: 0 0 0 # 000;",
-\    },
-\  },
-\  'vim' : {
-\    'snippets' : {
-\      'nn' : 'nnoremap <silent> ${cursor} :<C-u>',
-\      'nnu' : 'nnoremap <silent> [unite]${cursor}<CR> :<C-u>Unite<Space>\n\\<Space>-no-empty<Space>-silent<Space>-buffer-name=<CR>',
+\  'css': {
+\    'filters': 'fc',
+\    'snippets': {
+\      'box-shadow': "-webkit-box-shadow: 0 0 0 # 000;\n-moz-box-shadow: 0 0 0 0 # 000;\nbox-shadow: 0 0 0 # 000;",
 \    },
 \  },
-\  'java' : {
-\    'snippets' : {
+\  'vim': {
+\    'snippets': {
+\      'nn': 'nnoremap <silent> ${cursor} :<C-u>',
+\      'nnu': 'nnoremap <silent> [unite]${cursor}<CR> :<C-u>Unite<Space>\n\\<Space>-no-empty<Space>-silent<Space>-buffer-name=<CR>',
+\    },
+\  },
+\  'java': {
+\    'snippets': {
 \     'main': "public static void main(String[] args) {\n\t|\n}",
 \     'println': "System.out.println(\"|\");",
 \     'class': "public class | {\n}\n",
 \    },
 \  },
-\  'php' : {
-\    'extends' : 'html',
-\    'filters' : 'html,c',
+\  'php': {
+\    'extends': 'html',
+\    'filters': 'html,c',
 \  },
-\  'less' : {
-\    'filters' : 'fc',
-\    'extends' : 'css',
+\  'less': {
+\    'filters': 'fc',
+\    'extends': 'css',
 \  },
-\  'lorem_lipsum_ja' : {
-\    '^\%(lorem\|lipsum\)\(\d*\)$' : function('emmet#lorem#ja#expand'),
+\  'lorem_lipsum_ja': {
+\    '^\%(lorem\|lipsum\)\(\d*\)$': function('emmet#lorem#ja#expand'),
 \  },
 \}
 
