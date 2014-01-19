@@ -50,7 +50,8 @@ NeoBundleLazy 'Shougo/vimshell'
 NeoBundleLazy 'Shougo/neocomplcache'
 \, {'autoload': {'insert': 1}}
 NeoBundleLazy 'Shougo/neosnippet'
-\, {'autoload': {'insert': 1}}
+\, {'autoload': {'insert': 1
+\,               'commands': ['NeoSnippetEdit']}}
 NeoBundleLazy 'Shougo/neosnippet-snippets'
 \, {'autoload': {'insert': 1}}
 
@@ -101,9 +102,9 @@ NeoBundleLazy 'gregsexton/gitv'
 \,  'depends': ['tpope/vim-fugitive']}
 NeoBundle 'thinca/vim-ref'
 NeoBundle 'thinca/vim-quickrun'
-NeoBundleLazy 'alpaca-tc/alpaca_tags'
-\, {'autoload': {'commands': ['Tags', 'TagsUpdate', 'TagsSet', 'TagsBundle']}
-\,  'depends': 'Shougo/vimproc'}
+" NeoBundleLazy 'alpaca-tc/alpaca_tags'
+" \, {'autoload': {'commands': ['Tags', 'TagsUpdate', 'TagsSet', 'TagsBundle']}
+" \,  'depends': 'Shougo/vimproc'}
 NeoBundleLazy 'taglist.vim'
 \, {'autoload': {'commands': ['TlistToggle']}}
 NeoBundleLazy 'wesleyche/SrcExpl'
@@ -1313,16 +1314,16 @@ endfunction
 " alpaca_tags {{{1
 " DESC:
 "  gitレポジトリ内のファイルのtagsを自動生成
-let g:alpaca_update_tags_config = {
-\ '_': '-R --sort=yes',
-\ 'default': '--languages=-css,scss,html'
-\}
-" タグの自動更新
-if exists(':Tags')
-  au myvimrc BufEnter * TagsSet
-  au myvimrc BufWritePost * TagsUpdate
-  au myvimrc BufWritePost Gemfile TagsBundle
-endif
+" let g:alpaca_update_tags_config = {
+" \ '_': '-R --sort=yes',
+" \ 'default': '--languages=-css,scss,html'
+" \}
+" " タグの自動更新
+" if exists(':Tags')
+"   au myvimrc BufEnter * TagsSet
+"   au myvimrc BufWritePost * TagsUpdate
+"   au myvimrc BufWritePost Gemfile TagsBundle
+" endif
 
 " matchit {{{1
 " if ... end など対になるキーワードに%で移動
