@@ -45,7 +45,8 @@ NeoBundle 'Shougo/vimproc'
 \    'unix': 'make -f make_unix.mak',
 \  }}
 NeoBundleLazy 'Shougo/vimshell'
-\, {'autoload': {'commands': ['VimShell', 'VimShellPop']}}
+\, {'autoload': {'commands': ['VimShell', 'VimShellPop']}
+\,  'depends': 'Shougo/vimproc'}
 NeoBundleLazy 'Shougo/neocomplcache'
 \, {'autoload': {'insert': 1}}
 NeoBundleLazy 'Shougo/neosnippet'
@@ -92,6 +93,7 @@ NeoBundleLazy 'mattn/emmet-vim'
 
 " コマンド {{{2
 NeoBundle 'tpope/vim-fugitive'
+\, {'augroup': 'fugitive'}
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'mattn/gist-vim'
 NeoBundleLazy 'gregsexton/gitv'
@@ -102,7 +104,10 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundleLazy 'alpaca-tc/alpaca_tags'
 \, {'autoload': {'commands': ['Tags', 'TagsUpdate', 'TagsSet', 'TagsBundle']}
 \,  'depends': 'Shougo/vimproc'}
-NeoBundle 'taglist.vim'
+NeoBundleLazy 'taglist.vim'
+\, {'autoload': {'commands': ['TlistToggle']}}
+NeoBundleLazy 'wesleyche/SrcExpl'
+\, {'autoload': {'commands': ['SrcExplToggle']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails.git'
@@ -667,34 +672,36 @@ cnoremap <C-a> <C-b>
 
 " Leaderキー {{{2
 " Leaderキーを設定（,のデフォルトの機能は\で使えるように退避）
-"  p: PasteToggle, r: Quickrun, e: VimFiler, s: VimShell
-"  /: CommentToggle, [,]: TagJump, m:MBEToggle, h: H(elp)
+"  h: H(elp), [,]: TagJump, p: PasteToggle, /: CommentToggle, r: Quickrun
+"  e: VimFiler, s: VimShell, m:MBEToggle, l: TaglistToggle, ,: SrcExplToggle
 let mapleader=","
 noremap \ ,
-" set paste/nopasteを切り替え
-set pastetoggle=<Leader>p
 " カーソルの下の単語でヘルプを引く
 au myvimrc FileType vim nnoremap <buffer> <Leader>h :<C-u>H<Space><C-r><C-w><CR>
 au myvimrc FileType vim vnoremap <buffer> <Leader>h y:<C-u>H<Space><C-r>"<CR>
 au myvimrc FileType ruby nnoremap <buffer> <Leader>h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
-" VimFiler
-nnoremap <Leader>e :<C-u>VimFilerBufferDir
-\<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
-" VimShell
-nnoremap <Leader>s :<C-u>VimShellPop<CR>
-" コメントアウトの切り替え（caw.vim）
-nmap <Leader>/ <Plug>(caw:I:toggle)
-vmap <Leader>/ <Plug>(caw:I:toggle)
-" MBEToggle
-nnoremap <Leader>m :MBEToggle<CR>
-" TaglistToggle
-nnoremap <silent> <Leader>l :TlistToggle<CR>
 " タグジャンプ
 nnoremap <C-]> g<C-]>
 nnoremap <Leader>] g<C-]>
 nnoremap <Leader>[ <C-t>
 nnoremap <Down> g<C-]>
 nnoremap <Up> <C-t>
+" PASTEモードの切り替え
+set pastetoggle=<Leader>p
+" コメントアウトの切り替え（caw.vim）
+nmap <Leader>/ <Plug>(caw:I:toggle)
+vmap <Leader>/ <Plug>(caw:I:toggle)
+" VimFiler
+nnoremap <Leader>e :<C-u>VimFilerBufferDir
+\<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
+" VimShell
+nnoremap <Leader>s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<CR>
+" MBEToggle
+nnoremap <Leader>m :<C-u>MBEToggle<CR>
+" TaglistToggle
+nnoremap <Leader>l :<C-u>TlistToggle<CR>
+" SrcExplToggle
+nnoremap <Leader>, :<C-u>SrcExplToggle<CR>
 
 " 無効化 {{{2
 " 保存して閉じる
@@ -1325,6 +1332,14 @@ let Tlist_Show_One_File = 1
 let Tlist_Use_Right_Window = 1
 " taglistのウインドウだけならVimを閉じる
 let Tlist_Exit_OnlyWindow = 1
+
+" SrcExpl {{{1
+" プレビューウィンドウの更新間隔（msec）
+let g:SrcExpl_refreshTime = 1000
+" 競合を避けるバッファ
+let g:SrcExpl_pluginList = ['*unite*', 'VimShell', 'VimFiler']
+" タグの自動生成（他でやってるのでいったんオフ）
+let g:SrcExpl_isUpdateTags = 0
 
 "}}}1-------------------------------------------------------------------------
 
