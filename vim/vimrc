@@ -17,90 +17,148 @@ augroup myvimrc
   au!
 augroup END
 
-" vundle {{{1
+" NeoBundle {{{1
 " 説明 {{{2
 " COMMAND:
-"  :BundleInstall : Bundleされたプラグインをインストール
-"  :BundleSearch : vim-scriptにあるプラグインを検索
+"  :NeoBundleInstall : Bundleされたプラグインをインストール
+"  :NeoBundleSearch : vim-scriptにあるプラグインを検索
 "
-" vundle開始 {{{2
+" NeoBundle開始 {{{2
 filetype off
 if has("win32") || has("win64")
   set rtp&
-  set rtp+=~/vimfiles/bundle/vundle
-  call vundle#rc('~/vimfiles/bundle')
+  set rtp+=~/vimfiles/bundle/neobundle.vim
+  call neobundle#rc(expand('~/vimfiles/bundle'))
 else
   set rtp&
-  set rtp+=~/.vim/bundle/vundle
-  call vundle#rc()
+  set rtp+=~/.vim/bundle/neobundle.vim
+  call neobundle#rc(expand('~/.vim/bundle'))
 endif
 
 " 基本 {{{2
-Bundle 'gmarik/vundle'
-Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/neosnippet'
-Bundle 'Shougo/neosnippet-snippets'
-Bundle 'Shougo/vimproc'
-Bundle 'Shougo/vimshell'
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'Shougo/vimproc'
+\, {'build': {
+\    'windows': 'make -f make_mingw32.mak',
+\    'cygwin': 'make -f make_cygwin.mak',
+\    'mac': 'make -f make_mac.mak',
+\    'unix': 'make -f make_unix.mak',
+\  }}
+NeoBundleLazy 'Shougo/vimshell'
+\, {'autoload': {'commands': ['VimShell', 'VimShellPop']}
+\,  'depends': 'Shougo/vimproc'}
+NeoBundleLazy 'Shougo/neocomplcache'
+\, {'autoload': {'insert': 1}}
+NeoBundleLazy 'Shougo/neosnippet'
+\, {'autoload': {'insert': 1}}
+NeoBundleLazy 'Shougo/neosnippet-snippets'
+\, {'autoload': {'insert': 1}}
 
 " Unite {{{2
-Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/vimfiler'
-Bundle 'Shougo/unite-outline'
-Bundle 'ujihisa/unite-colorscheme'
-Bundle 'ujihisa/unite-rake'
-Bundle 'ujihisa/unite-gem'
+NeoBundleLazy 'Shougo/unite.vim'
+\, {'autoload': {'commands': ['Unite', 'UniteWithBufferDir']}}
+NeoBundleLazy 'Shougo/vimfiler'
+\, {'autoload': {'commands': ['VimFiler', 'VimFilerBufferDir']}
+\,  'depends': ['Shougo/unite.vim']}
+NeoBundleLazy 'Shougo/unite-outline'
+\, {'autoload': {'unite_sources': ['outline']}}
+NeoBundleLazy 'tsukkee/unite-help'
+\, {'autoload': {'unite_sources': ['help']}}
+NeoBundleLazy 'tsukkee/unite-tag'
+\, {'autoload': {'unite_sources': ['tag']}}
+NeoBundleLazy 'basyura/unite-rails'
+\, {'autoload': {'unite_sources': ['rails']}}
+NeoBundleLazy 'ujihisa/unite-rake'
+\, {'autoload': {'unite_sources': ['rake']}}
+NeoBundleLazy 'ujihisa/unite-gem'
+\, {'autoload': {'unite_sources': ['gem']}}
+NeoBundleLazy 'ujihisa/unite-locate'
+\, {'autoload': {'unite_sources': ['locate']}}
+NeoBundleLazy 'ujihisa/unite-colorscheme'
+\, {'autoload': {'unite_sources': ['colorscheme']}}
+NeoBundleLazy 'tacroe/unite-alias'
+\, {'autoload': {'unite_sources': ['alias']}}
+NeoBundleLazy 'mattn/unite-gist'
+\, {'autoload': {'unite_sources': ['gist']}
+\,  'depends': ['mattn/webapi-vim', 'mattn/gist-vim']}
+
+" 入力補助 {{{2
+NeoBundle 'thinca/vim-qfreplace'
+NeoBundle 'tpope/vim-surround.git'
+NeoBundle 'tyru/caw.vim'
+NeoBundleLazy 'kana/vim-smartchr'
+\, {'autoload': {'insert': 1}}
+NeoBundleLazy 'mattn/emmet-vim'
+\, {'autoload': {'filetypes': ['html']}}
 
 " コマンド {{{2
-Bundle 'thinca/vim-ref'
-Bundle 'thinca/vim-quickrun'
-Bundle 'thinca/vim-singleton'
-Bundle 'thinca/vim-qfreplace'
-Bundle 'tpope/vim-surround.git'
-Bundle 'tpope/vim-fugitive'
-Bundle 'gregsexton/gitv'
-Bundle 'mattn/emmet-vim'
+NeoBundle 'tpope/vim-fugitive'
+\, {'augroup': 'fugitive'}
+NeoBundle 'mattn/webapi-vim'
+NeoBundle 'mattn/gist-vim'
+NeoBundleLazy 'gregsexton/gitv'
+\, {'autoload': {'commands': ['Gitv']}
+\,  'depends': ['tpope/vim-fugitive']}
+NeoBundle 'thinca/vim-ref'
+NeoBundle 'thinca/vim-quickrun'
+NeoBundleLazy 'alpaca-tc/alpaca_tags'
+\, {'autoload': {'commands': ['Tags', 'TagsUpdate', 'TagsSet', 'TagsBundle']}
+\,  'depends': 'Shougo/vimproc'}
+NeoBundleLazy 'taglist.vim'
+\, {'autoload': {'commands': ['TlistToggle']}}
+NeoBundleLazy 'wesleyche/SrcExpl'
+\, {'autoload': {'commands': ['SrcExplToggle']}}
 
 " Ruby {{{2
-Bundle 'tpope/vim-rails.git'
-Bundle 'taka84u9/vim-ref-ri'
+NeoBundleLazy 'tpope/vim-rails.git'
+\, {'autoload': {'filetypes': ['ruby']}}
+NeoBundleLazy 'taka84u9/vim-ref-ri'
+\, {'autoload': {'filetypes': ['ruby']
+\,               'unite_sources': ['refe/ri']}
+\,  'depends': 'thinca/vim-ref'}
+NeoBundle 'edsono/vim-matchit'
+NeoBundleLazy 'ruby-matchit'
+\, {'autoload': {'filetypes': ['ruby']}
+\,  'depends': ['edsono/vim-matchit']}
 
 " 表示 {{{2
-Bundle 'itchyny/lightline.vim'
-Bundle 'fholgado/minibufexpl.vim'
-Bundle 'wombat256.vim'
-Bundle 'molokai'
-Bundle 'Zephyr-Color-Scheme'
-Bundle 'ScrollColors'
-Bundle 'CSApprox'
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'fholgado/minibufexpl.vim'
+\, {'augroup': 'MiniBufExpl'}
+NeoBundle 'wombat256.vim'
+NeoBundle 'molokai'
+NeoBundle 'Zephyr-Color-Scheme'
+NeoBundle 'CSApprox'
+NeoBundleLazy 'ScrollColors'
+\, {'autoload': {'commands': ['SCROLLCOLOR']}}
 
 " 補助 {{{2
-Bundle 'vim-jp/vimdoc-ja'
-Bundle 'plasticboy/vim-markdown'
-Bundle 'tyru/open-browser.vim'
-Bundle 'kana/vim-smartchr'
-Bundle 'tyru/caw.vim'
-Bundle 'mattn/benchvimrc-vim'
+NeoBundle 'thinca/vim-singleton'
+NeoBundleLazy 'vim-jp/vimdoc-ja'
+\, {'autoload': {'commands': ['help']}}
+NeoBundleLazy 'plasticboy/vim-markdown'
+\, {'autoload': {'filetypes': ['mkd']}}
+NeoBundleLazy 'tyru/open-browser.vim'
+\, {'autoload': {'filetypes': ['html', 'mkd']}}
+NeoBundleLazy 'mattn/benchvimrc-vim'
+\, {'autoload': {'commands': ['BenchVimrc']}}
 
 " ローカルレポジトリ {{{2
 if isdirectory($HOME . '/dev/github/unite-tiddlywiki/')
-  Bundle 'file://' . $HOME . '/dev/github/unite-tiddlywiki/'
+  NeoBundleLocal $HOME . '/dev/github/unite-tiddlywiki/'
 endif
 
-" vundle終了 {{{2
+" NeoBundle終了 {{{2
 filetype plugin indent on
+" インストールチェック
+NeoBundleCheck
 
-" Vundleキーマップ定義 {{{2
-nnoremap [bundle] <Nop>
-nmap <Leader>b [bundle]
-nnoremap <silent> [bundle]i<CR> :<C-u>BundleInstall<CR>
-nnoremap <silent> [bundle]u<CR> :<C-u>BundleUpdate<CR>
-nnoremap <silent> [bundle]s<CR> :<C-u>BundleSearch<CR>
-
-" コマンド定義 {{{2
-command! Bi :BundleInstall
-command! Bu :BundleUpdate
-command! -nargs=? Bs :BundleSearch <args>
+" NeoBundleコマンド定義 {{{2
+command! Bi :NeoBundleInstall
+command! Bu :NeoBundleUpdate
+command! -nargs=? Bs :NeoBundleSearch <args>
+command! Bc :NeoBundleClean
+command! Bl :NeoBundleList
 
 " singleton.vim {{{1
 if has('gui_running')
@@ -253,6 +311,9 @@ set hlsearch
 set wrapscan
 " タグ検索に二分検索をオフにする（vimdoc-jaフリーズ対策）
 set notagbsearch
+" バックスラッシュやクエスチョンを状況に合わせ自動的にエスケープ
+cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
+cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 " 検索語が真ん中にくるようにする
 "  zz はカレント行を画面の中心にする。つまり n で検索語にカーソル移動したら
 "  勝手に zz でカレント行が画面の真ん中なるようにスクロールされるようになる。
@@ -276,10 +337,16 @@ set expandtab
 set autoindent
 " 高度なオートインデント
 set smartindent
+" '<'や'>'でインデントする際に'shiftwidth'の倍数に丸める
+set shiftround
 " バックスペースでインデントや改行を削除できるようにする
 set backspace=2
 " 括弧入力時に対応する括弧を表示 (noshowmatch:表示しない)
 set showmatch
+" 対応括弧のハイライト表示の秒数
+set matchtime=3
+" 対応括弧に'<'と'>'のペアを追加
+set matchpairs& matchpairs+=<:>
 " コマンドライン補完するときに強化されたものを使う
 set wildmenu
 set wildmode=list:longest,full
@@ -309,6 +376,8 @@ endif
 let format_allow_over_tw = 1	" ぶら下り可能幅
 " 編集後保存していなくても別のファイルを開く
 set hidden
+" 新しく開く代わりにすでに開いてあるバッファを開く
+set switchbuf=useopen
 " コマンドライン履歴
 set history=50
 " 外部のエディタで編集中のファイルが変更されたら自動で読み直す
@@ -318,6 +387,10 @@ au myvimrc WinEnter * checktime
 " クイックフィックスは常にcwindowで表示する
 autocmd myvimrc QuickFixCmdPost [^l]* nested cwindow
 autocmd myvimrc QuickFixCmdPost    l* nested lwindow
+" 補完時に大文字小文字を区別しない
+set infercase
+" カーソルを文字が存在しない部分でも動けるようにする
+" set virtualedit=all
 
 " 画面表示の設定 {{{1
 " シンタックスハイライト
@@ -332,9 +405,9 @@ else
   colorscheme molokai
 endif
 " 遅延描画
-set lazyredraw
-" 行番号を非表示 (number:表示)
-set nonumber
+" set lazyredraw
+" 行番号を表示 (nonumber:表示)
+set number
 " ルーラーを表示 (noruler:非表示)
 set ruler
 " タイトルを表示
@@ -344,8 +417,7 @@ set titleold=vim
 " タブや改行を表示 (nolist:非表示)
 set list
 " どの文字でタブや改行を表示するかを設定
-"set listchars=tab:>-,extends:<,trail:-,eol:<
-set listchars=tab:>-,extends:<,trail:-
+set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
 " タブの左側にカーソル表示
 "set listchars=tab:\ \
 " 全角スペースも表示　
@@ -379,9 +451,9 @@ function! s:my_readpost_autocmd()
   if line("'\"") > 0 && line("'\"") <= line("$")
     exe "normal! g`\"zz"
   endif
-  if &foldenable > 0 && foldclosed("'\"") > 0
-    exe "normal! zA"
-  endif
+  while &foldenable > 0 && foldclosed("'\"") > 0
+    exe "normal! zo"
+  endwhile
   exe "normal! zz"
 endfunction
 " vsplitは右に開く
@@ -434,9 +506,10 @@ if has('gui_running')
 endif
 
 " ファイル操作に関する設定 {{{1
-" バックアップファイルを作成しない
+" バックアップファイル、swapファイルを作成しない
 set nobackup
 set nowritebackup
+set noswapfile
 " スワップファイルの作成ディレクトリにパスを追加
 set directory&
 set directory+=,~/tmp,$TMP
@@ -486,9 +559,9 @@ command! -complete=file -nargs=1 VimDiff :vertical diffsplit <args>
 command! Erc :e $MYVIMRC
 command! Sorc :source $MYVIMRC
 " H(elp)
-command! -nargs=* -complete=help H if winwidth(0) > 140 | :vertical help <args> | :vertical resize 79 | else | :help <args> | endif
+command! -nargs=? -complete=help H if winwidth(0) > 140 | :vertical help <args> | :vertical resize 79 | else | :help <args> | endif
 " Vimdoc
-command! Vimdoc :OpenBrowser http://vim-jp.org/vimdoc-ja/
+command! VimDoc :OpenBrowser http://vim-jp.org/vimdoc-ja/
 " SyntaxInfo
 command! SyntaxInfo :call s:get_syn_info()
 function! s:get_syn_id(transparent) "{{{
@@ -541,6 +614,8 @@ function! s:my_bd_other() "{{{
     let i = i + 1
   endwhile
 endfunction "}}}
+" Esnip
+command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete Esnip :NeoSnippetEdit <args>
 
 " キーマップ定義 {{{1
 " 説明 {{{2
@@ -565,43 +640,69 @@ xnoremap j gj
 xnoremap k gk
 " 行末までヤンク
 nnoremap Y y$
-" ウィンドウサイズ変更
-nnoremap + <C-w>+
-nnoremap - <C-w>-
-nnoremap _ <C-w>_
 " すべてのフォールディングの開け閉め
 nnoremap zO zR
 nnoremap zC zM
-" \で空白を入れない
-inoremap \ \
 " diffハンクへのジャンプ
-nnoremap ]G ]c
-nnoremap [G [c
+au myvimrc BufRead * nnoremap <buffer> [[ [czz
+au myvimrc BUfRead * nnoremap <buffer> ]] ]czz
+" Help、QuickFix、Fugitiveでは q でバッファを閉じる
+au myvimrc FileType help,qf,gitcommit nnoremap <buffer> q <C-w>c
+" タブページ操作
+nnoremap <Tab> :<C-u>tabn<CR>
+nnoremap <S-Tab> :<C-u>tabp<CR>
+" ESCを二回でハイライトを消す
+nnoremap <silent> <Esc><Esc> :noh<CR>
 
-" CTRLキー {{{2
-" ジャンプ元に戻る
-nnoremap <Leader><C-]> <C-t>
+" CTRLキー、Shiftキー {{{2
+" ウィンドウ間を移動
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+" ウィンドウサイズ変更
+nnoremap <S-Up> <C-w>+
+nnoremap <S-Down> <C-w>-
+nnoremap <S-Left> <C-w><
+nnoremap <S-Right> <C-w>>
+nnoremap _ <C-w>_
 " コマンドモード時、現在のバッファのファイル名を出力
 cnoremap <C-f> <C-r>%
 " コマンドモード時、コマンド行頭に移動
 cnoremap <C-a> <C-b>
-" カーソルの下の単語でヘルプを引く
-au myvimrc FileType vim nnoremap <buffer> <C-h> :<C-u>H<Space><C-r><C-w><CR>
-au myvimrc FileType vim vnoremap <buffer> <C-h> y:<C-u>H<Space><C-r>"<CR>
-au myvimrc FileType ruby nnoremap <buffer> <C-h> :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
 
 " Leaderキー {{{2
 " Leaderキーを設定（,のデフォルトの機能は\で使えるように退避）
-"  u: Unite, b: Vundle, g: Fugitive
-"  p: PasteToggle, r: Quickrun, f: VimFiler, s: VimShell
-"  /: CommentToggle, [,]: TagJump
+"  h: H(elp), [,]: TagJump, p: PasteToggle, /: CommentToggle, r: Quickrun
+"  e: VimFiler, s: VimShell, m:MBEToggle, l: TaglistToggle, ,: SrcExplToggle
 let mapleader=","
 noremap \ ,
-" set paste/nopasteを切り替え
-set pastetoggle=<Leader>p
+" カーソルの下の単語でヘルプを引く
+au myvimrc FileType vim nnoremap <buffer> <Leader>h :<C-u>H<Space><C-r><C-w><CR>
+au myvimrc FileType vim vnoremap <buffer> <Leader>h y:<C-u>H<Space><C-r>"<CR>
+au myvimrc FileType ruby nnoremap <buffer> <Leader>h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
 " タグジャンプ
-nnoremap <Leader>] <C-]>
+nnoremap <C-]> g<C-]>
+nnoremap <Leader>] g<C-]>
 nnoremap <Leader>[ <C-t>
+nnoremap <Down> g<C-]>
+nnoremap <Up> <C-t>
+" PASTEモードの切り替え
+set pastetoggle=<Leader>p
+" コメントアウトの切り替え（caw.vim）
+nmap <Leader>/ <Plug>(caw:I:toggle)
+vmap <Leader>/ <Plug>(caw:I:toggle)
+" VimFiler
+nnoremap <Leader>e :<C-u>VimFilerBufferDir
+\<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
+" VimShell
+nnoremap <Leader>s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<CR>
+" MBEToggle
+nnoremap <Leader>m :<C-u>MBEToggle<CR>
+" TaglistToggle
+nnoremap <Leader>l :<C-u>TlistToggle<CR>
+" SrcExplToggle
+nnoremap <Leader>, :<C-u>SrcExplToggle<CR>
 
 " 無効化 {{{2
 " 保存して閉じる
@@ -609,13 +710,198 @@ nnoremap ZZ <Nop>
 " 保存せずに閉じる
 nnoremap ZQ <Nop>
 " EXモードに入る
-noremap Q <Nop>
+nnoremap Q <Nop>
+" コマンドライン履歴に入る
+nnoremap q: <Nop>
 
 "}}}1-------------------------------------------------------------------------
 
 "-----------------------------------------------------------------------------
 " Plugin設定
 "-----------------------------------------------------------------------------
+" Unite {{{1
+" 説明 {{{2
+" COMMAND:
+"  :Unite ${source} [${option}]
+"  :Unite output:{コマンド名}
+" KEYMAP:
+"  <Tab> : Actionを開く
+"  <Space> : 候補を選択する
+"  * : 候補を全選択する
+"  a : 候補でActionを開く
+"  ? : Uniteのキーマップを表示
+"
+" 基本設定 {{{2
+" 入力モードで開始
+"let g:unite_enable_start_insert=1
+" ヤンク履歴を使用可能にする
+let g:unite_source_history_yank_enable = 1
+" 最近使ったファイルの履歴数
+let g:unite_source_file_mru_file = 200
+" 大文字小文字を区別しない
+let g:unite_enable_ignore_case = 1
+let g:unite_enable_smart_case = 1
+" ステータスラインを上書きしない（lightline向け）
+let g:unite_force_overwrite_statusline = 0
+" ESCキーを2回押すと終了する
+au myvimrc FileType unite nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
+"au myvimrc FileType unite inoremap <silent> <buffer> <Esc><Esc> <Esc>:q<CR>
+" unite grep に ag(The Silver Searcher) を使う
+if executable('ag')
+ let g:unite_source_grep_command = 'ag'
+ let g:unite_source_grep_default_opts =
+ \ '--line-numbers --nocolor --nogroup --hidden --ignore ' .
+ \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+ let g:unite_source_grep_recursive_opt = ''
+endif
+
+" デフォルトアクションの変更 {{{2
+" ref/refe
+call unite#custom_default_action('source/ref/refe/*', 'vsplit')
+" Uniteブックマークがディレクトリの場合はVimFilerで開く
+call unite#custom_default_action('source/bookmark/directory', 'vimfiler')
+call unite#custom_default_action('directory', 'vimfiler')
+
+" アクションの追加 {{{2
+" source:mappingにaction:verboseを追加する
+let s:action = {
+\ 'description': 'verbose',
+\ 'is_selectable': 1,
+\}
+function! s:action.func(candidates)
+  for candidate in a:candidates
+    execute "verbose map" substitute(candidate.action__mapping, '\\\(<.*>\)', '\1', "g")
+  endfor
+endfunction
+" kind ではなくて source の mapping に対して action を設定する
+call unite#custom#action('source/mapping/*', 'verbose', s:action)
+" preview（pキー）で action を実行したい場合は
+" call unite#custom#action('source/mapping/*', 'preview', s:action)
+unlet s:action
+
+" メニュー設定 {{{2
+let g:unite_source_menu_menus = {
+\ "shortcuts": {
+\   "description": "command shortcuts.",
+\   "command_candidates": [
+\     ["unite-colorscheme", "Unite colorscheme -auto-preview"],
+\     ["unite-output:message", "Unite output:message"],
+\     ["unite-mapping(all)", "Unite output:map|map!|lmap"],
+\   ],
+\ },
+\}
+
+" Uniteコマンド定義 {{{2
+" 汎用
+command! -nargs=+ -complete=customlist,unite#complete#source U :Unite <args>
+\ -no-empty -silent -buffer-name=<args>
+" ファイラ
+command! Uf :Unite file
+\ -no-empty -silent -buffer-name=file
+" 最近使ったファイルの一覧
+command! Ufm :Unite file_mru
+\ -no-empty -silent -buffer-name=file_mru
+
+" 現在のバッファ内をグレップ
+command! Ug :Unite grep:%
+\ -no-empty -silent -buffer-name=grep
+" ディレクトリをグレップ
+command! Ugd :Unite grep
+\ -no-empty -silent -buffer-name=grep-dir
+" カーソル下の単語で現在のバッファをグレップ
+command! Ugw exe 'Unite grep:%::' .
+\ escape(expand("<cword>"), '- \\') .
+\ ' -no-empty -silent -buffer-name=grep-word'
+" すべてのバッファをグレップ
+command! Uga :Unite grep:$buffers
+\ -no-empty -silent -buffer-name=grep-all-bufs
+
+" ブックマーク（追加はUniteBookmarkAdd）
+command! Ub :Unite bookmark
+\ -no-empty -silent -buffer-name=bookmark
+" Todo 'Todo:'をつけた行をファイル保存時に自動でブックマークするau
+command! Ubt :Unite bookmark:todos
+\ -no-empty -silent -buffer-name=bookmarktodos
+" ブックマーク追加
+command! Uba :UniteBookmarkAdd
+" ブックマーク手動編集
+command! Ube :edit $HOME/.unite/bookmark/default
+" メニュー
+command! Um :Unite menu:shortcuts
+\ -no-empty -silent -buffer-name=menushortcuts
+
+" リファレンス参照
+" refe
+command! Urr :Unite ref/refe
+\ -no-empty -silent -buffer-name=ref/refe
+" カーソル下の単語でrefe
+command! Urrw exe 'Unite ref/refe ' .
+\ '-no-empty -silent -buffer-name=ref/refe -input=' .
+\ escape(expand("<cword>"), '- \\')
+" ri
+command! Urri :Unite ref/ri
+\ -no-empty -silent -buffer-name=ref/ri
+
+" スニペット候補の表示
+command! Usnip :Unite neosnippets
+\ -no-empty -silent -buffer-name=neosnippets
+" ヤンクヒストリ
+command! Uy :Unite history/yank
+\ -no-empty -silent -buffer-name=history/yank
+" 直前のUniteコマンドの結果に戻る
+command! Ur :UniteResume
+\ -no-empty -silent
+
+" Unite source サンプル {{{2
+let s:unite_source = {
+\   'name': 'lines',
+\ }
+function! s:unite_source.gather_candidates(args, context)
+  let path = expand('%:p')
+  let lines = getbufline('%', 1, '$')
+  let format = '%' . strlen(len(lines)) . 'd: %s'
+  return map(lines, '{
+  \   "word": printf(format, v:key + 1, v:val),
+  \   "source": "lines",
+  \   "kind": "jump_list",
+  \   "action__path": path,
+  \   "action__line": v:key + 1,
+  \ }')
+endfunction
+call unite#define_source(s:unite_source)
+unlet s:unite_source
+
+" VimFiler {{{1
+"
+" KEYMAP:
+"  h : up dir, l : down dir, t : tree view (1 dir), T : tree view all
+"  e : edit, <Space> : mark, c : copy, m : move, d : delete, yy : yank path
+"  N : new file, K : new dir, * : mark all, U : mark off all, ? : keymap
+"  a : action, H : VimShell, ge : system filer, x : system app
+"
+" vimデフォルトのエクスプローラをvimfilerで置き換える
+let g:vimfiler_as_default_explorer = 1
+" セーフモードを無効にした状態で起動する
+let g:vimfiler_safe_mode_by_default = 0
+" デフォルトでIDE風のFilerを開く
+" au myvimrc VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
+" ステータスラインを上書きしない（lightline向け）
+let g:vimfiler_force_overwrite_statusline = 0
+"let g:netrw_liststyle=3
+" Enterでツリー開閉、ファイル編集を可能に
+au myvimrc FileType vimfiler nmap <buffer> <expr> <CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
+
+" VimShell {{{1
+"
+" 動的プロンプト
+let g:vimshell_prompt_expr = 'getcwd()." > "'
+let g:vimshell_prompt_pattern = '^\f\+ > '
+" irbを非同期で起動
+command! Irb :VimShellInteractive irb
+" 非同期で開いたインタプリタに現在の行を評価させる
+au myvimrc FileType vimshell inoremap <buffer> <Leader>s :<C-u>VimShellSendString<CR>
+au myvimrc FileType vimshell vmap <buffer> <Leader>s :<C-u>VimShellSendString<CR>
+
 " neocomplecache.vim {{{1
 "
 " KEYMAP:
@@ -639,9 +925,9 @@ let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 "
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
-\  'default' : '',
-\  'vimshell' : $HOME.'/.vimshell_hist',
-\  'scheme' : $HOME.'/.gosh_completions'
+\  'default': '',
+\  'vimshell': $HOME.'/.vimshell_hist',
+\  'scheme': $HOME.'/.gosh_completions'
 \}
 "
 " Define keyword.
@@ -693,7 +979,7 @@ inoremap <expr><C-y>  neocomplcache#close_popup()
 "
 " Enable omni completion.
 au myvimrc FileType css setlocal omnifunc=csscomplete#CompleteCSS
-au myvimrc FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+au myvimrc FileType html,mkd setlocal omnifunc=htmlcomplete#CompleteTags
 au myvimrc FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 au myvimrc FileType python setlocal omnifunc=pythoncomplete#Complete
 au myvimrc FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
@@ -730,106 +1016,6 @@ else
 endif
 " スニペットファイルの保存時に再読み込み
 au myvimrc BufWritePost *.snip NeoSnippetSource %:p
-" COMMAND:
-command! -nargs=* Esnip :NeoSnippetEdit <args>
-
-" emmet.vim {{{1
-"
-" KEYMAP:
-"  <C-e> : 展開
-"  <C-_> : コメントアウト／イン
-"          （_と/が同じキーマップになってるのでCtrl+/でできる）
-"let g:user_emmet_leader_key = '<C-e>'
-let g:user_emmet_expandabbr_key = '<C-e>'
-let g:user_emmet_togglecomment_key = '<C-_>'
-" タグのコンプリート
-let g:use_emmet_complete_tag = 1
-
-" カスタマイズ設定
-let g:user_emmet_settings = {
-\  'lang' : 'ja',
-\  'indentation' : "  ",
-\  'html' : {
-\    'filters' : 'html',
-\    'snippets' : {
-\      'meta:viewport' : "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">",
-\      'css:bs' : "<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">",
-\      'cd' : "<![CDATA[|]]>",
-\      'js:jq' : "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n<script>\n\\$(function() {\n\t|\n})()\n</script>",
-\      'js:bs' : "<script src=\"https://code.jquery.com/jquery.js\"></script>\n<script src=\"js/bootstrap.min.js\"></script>",
-\    },
-\  },
-\  'javascript' : {
-\    'snippets' : {
-\      'jq' : "\\$(function() {\n\t\\${cursor}\\${child}\n});",
-\      'jq:json' : "\\$.getJSON(\"${cursor}\", function(data) {\n\t\\${child}\n});",
-\      'jq:each' : "\\$.each(data, function(index, item) {\n\t\\${child}\n});",
-\      'fn' : "(function() {\n\t\\${cursor}\n})();",
-\      'tm' : "setTimeout(function() {\n\t\\${cursor}\n}, 100);",
-\    },
-\    'use_pipe_for_cursor' : 0,
-\  },
-\  'css' : {
-\    'filters' : 'fc',
-\    'snippets' : {
-\      'box-shadow' : "-webkit-box-shadow: 0 0 0 # 000;\n-moz-box-shadow: 0 0 0 0 # 000;\nbox-shadow: 0 0 0 # 000;",
-\    },
-\  },
-\  'vim' : {
-\    'snippets' : {
-\      'nn' : 'nnoremap <silent> ${cursor} :<C-u>',
-\      'nnu' : 'nnoremap <silent> [unite]${cursor}<CR> :<C-u>Unite<Space>\n\\<Space>-no-empty<Space>-silent<Space>-buffer-name=<CR>',
-\    },
-\  },
-\  'java' : {
-\    'snippets' : {
-\     'main': "public static void main(String[] args) {\n\t|\n}",
-\     'println': "System.out.println(\"|\");",
-\     'class': "public class | {\n}\n",
-\    },
-\  },
-\  'php' : {
-\    'extends' : 'html',
-\    'filters' : 'html,c',
-\  },
-\  'less' : {
-\    'filters' : 'fc',
-\    'extends' : 'css',
-\  },
-\  'lorem_lipsum_ja' : {
-\    '^\%(lorem\|lipsum\)\(\d*\)$' : function('emmet#lorem#ja#expand'),
-\  },
-\}
-
-" quickrun.vim {{{1
-"
-" COMMAND:
-"  :QuickRun -args foo
-" KEYMAP:
-"  <Leader>r : バッファの内容を実行
-"
-" 実行にvimprocを使う
-" エラー時はquickfixに表示する
-let g:quickrun_config = {}
-let g:quickrun_config = {
-\  "_" : {
-\    'runner' : 'vimproc',
-\    'outputter' : 'error',
-\    'outputter/error' : 'quickfix',
-\    'outputter/error/success' : 'buffer',
-\    'outputter/buffer/split' : ':belowright 5',
-\    'outputter/buffer/close_on_empty' : 1
-\  },
-\}
-" <C-c> で実行を強制終了させる
-" quickrun.vim が実行していない場合には <C-c> を呼び出す
-nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
-" ruby.rspec
-let g:quickrun_config['ruby.rspec'] = { 'command': 'rspec' }
-au myvimrc BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
-" htmlをブラウザで開く（tyru/open-browser.vim プラグインが必要）
-let g:quickrun_config['html'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
-let g:quickrun_config['xhtml'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
 
 " fugitive.vim {{{1
 " 説明 {{{2
@@ -845,14 +1031,6 @@ let g:quickrun_config['xhtml'] = { 'command' : 'open', 'exec' : '%c %s', 'output
 "  :Gwrite/:Gadd : git add
 "  :Gdiff        : git diff
 "  :Gcommit -v   : git commit -v
-" KEYMAP: {{{2
-nnoremap [git] <Nop>
-nmap <Leader>g [git]
-nnoremap <silent> [git]s :<C-u>Gstatus<CR>
-nnoremap <silent> [git]a :<C-u>Gwrite<CR>
-nnoremap <silent> [git]d :<C-u>Gdiff<CR>
-nnoremap <silent> [git]c :<C-u>Gcommit -v<CR>
-nnoremap <silent> [git]l :<C-u>Glog<CR>
 " COMMAND: {{{2
 command! Gs :Gstatus
 command! Ga :Gwrite
@@ -862,8 +1040,62 @@ command! Gc :Gcommit -v
 command! Gca :Gcommit -va
 command! Gl :Glog
 command! Gb :Gblame
-command! Gpush :Git push
-command! Gpull :Git pull
+command! Gpush :call s:my_git_vimproc('push')
+command! Gpull :call s:my_git_vimproc('pull')
+" Gpush/Gpullのためのvimproc
+" Todo: messageで出すように変えたい、非同期になってない、、
+function! s:my_git_vimproc(gitcommand) "{{{
+  let sub = vimproc#popen2('git ' . a:gitcommand)
+  let res = ''
+  while !sub.stdout.eof
+    let res .= sub.stdout.read()
+    let res .= sub.stderr.read()
+  endwhile
+  let [cond, status] = sub.waitpid()
+  new
+  call append(0, split(res, '\r\n\|\r\|\n') + [string([cond, status])])
+endfunction "}}}
+
+" quickrun.vim {{{1
+"
+" COMMAND:
+"  :QuickRun -args foo
+" KEYMAP:
+"  <Leader>r : バッファの内容を実行
+"
+" 実行にvimprocを使う
+" エラー時はquickfixに表示する
+let g:quickrun_config = {}
+let g:quickrun_config = {
+\  "_": {
+\    'runner': 'vimproc',
+\    'runner/vimproc/updatetime': 100,
+\    'outputter': 'error',
+\    'outputter/error': 'quickfix',
+\    'outputter/error/success': 'buffer',
+\    'outputter/buffer/split': ':belowright 5',
+\    'outputter/buffer/close_on_empty': 1
+\  },
+\}
+" <C-c> で実行を強制終了させる
+" quickrun.vim が実行していない場合には <C-c> を呼び出す
+nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+" ruby.rspec
+let g:quickrun_config['ruby.rspec'] = { 'command': 'rspec' }
+au myvimrc BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
+" htmlをブラウザで開く（tyru/open-browser.vim プラグインが必要）
+let g:quickrun_config['html'] = { 'command': 'open', 'exec': '%c %s', 'outputter': 'browser' }
+let g:quickrun_config['xhtml'] = { 'command': 'open', 'exec': '%c %s', 'outputter': 'browser' }
+let g:quickrun_config['mkd'] = { 'command': 'kramdown', 'outputter': 'browser'}
+
+" ref.vim {{{1
+"
+" COMMAND:
+"  :Ref refe Array
+" KEYMAP:
+"  Shift-K : 単語を検索
+let g:ref_use_vimproc = 1 " 0:disable / 1:enable
+let g:ref_refe_version = 2
 
 " surround.vim {{{1
 "
@@ -875,6 +1107,74 @@ command! Gpull :Git pull
 "  ysiw' : カーソル下の単語を'で囲む
 "  cs'" : 'を"に変換する
 "  ds' : 'で囲まれた範囲を消す
+
+" emmet.vim {{{1
+"
+" KEYMAP:
+"  <C-e> : 展開
+"  <C-_> : コメントアウト／イン
+"          （_と/が同じキーマップになってるのでCtrl+/でできる）
+"let g:user_emmet_leader_key = '<C-e>'
+let g:user_emmet_expandabbr_key = '<C-e>'
+let g:user_emmet_togglecomment_key = '<C-_>'
+" タグのコンプリート
+let g:use_emmet_complete_tag = 1
+
+" カスタマイズ設定
+let g:user_emmet_settings = {
+\  'lang': 'ja',
+\  'indentation': "  ",
+\  'html': {
+\    'filters': 'html',
+\    'snippets': {
+\      'meta:viewport': "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">",
+\      'css:bs': "<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">",
+\      'cd': "<![CDATA[|]]>",
+\      'js:jq': "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n<script>\n\\$(function() {\n\t|\n})()\n</script>",
+\      'js:bs': "<script src=\"https://code.jquery.com/jquery.js\"></script>\n<script src=\"js/bootstrap.min.js\"></script>",
+\    },
+\  },
+\  'javascript': {
+\    'snippets': {
+\      'jq': "\\$(function() {\n\t\\${cursor}\\${child}\n});",
+\      'jq:json': "\\$.getJSON(\"${cursor}\", function(data) {\n\t\\${child}\n});",
+\      'jq:each': "\\$.each(data, function(index, item) {\n\t\\${child}\n});",
+\      'fn': "(function() {\n\t\\${cursor}\n})();",
+\      'tm': "setTimeout(function() {\n\t\\${cursor}\n}, 100);",
+\    },
+\    'use_pipe_for_cursor': 0,
+\  },
+\  'css': {
+\    'filters': 'fc',
+\    'snippets': {
+\      'box-shadow': "-webkit-box-shadow: 0 0 0 # 000;\n-moz-box-shadow: 0 0 0 0 # 000;\nbox-shadow: 0 0 0 # 000;",
+\    },
+\  },
+\  'vim': {
+\    'snippets': {
+\      'nn': 'nnoremap <silent> ${cursor} :<C-u>',
+\      'nnu': 'nnoremap <silent> [unite]${cursor}<CR> :<C-u>Unite<Space>\n\\<Space>-no-empty<Space>-silent<Space>-buffer-name=<CR>',
+\    },
+\  },
+\  'java': {
+\    'snippets': {
+\     'main': "public static void main(String[] args) {\n\t|\n}",
+\     'println': "System.out.println(\"|\");",
+\     'class': "public class | {\n}\n",
+\    },
+\  },
+\  'php': {
+\    'extends': 'html',
+\    'filters': 'html,c',
+\  },
+\  'less': {
+\    'filters': 'fc',
+\    'extends': 'css',
+\  },
+\  'lorem_lipsum_ja': {
+\    '^\%(lorem\|lipsum\)\(\d*\)$': function('emmet#lorem#ja#expand'),
+\  },
+\}
 
 " rcodetools.vim {{{1
 "
@@ -1009,285 +1309,35 @@ function! MyMode()
 \        winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-" ref.vim {{{1
-"
-" COMMAND:
-"  :Ref refe Array
-" KEYMAP:
-"  Shift-K : 単語を検索
-let g:ref_use_vimproc = 1 " 0:disable / 1:enable
-let g:ref_refe_version = 2
-
-" caw.vim {{{1
-"
-" コメントアウトの切り替え
-nmap <Leader>/ <Plug>(caw:I:toggle)
-vmap <Leader>/ <Plug>(caw:I:toggle)
-
-" VimShell {{{1
-"
-" 動的プロンプト
-let g:vimshell_prompt_expr = 'getcwd()." > "'
-let g:vimshell_prompt_pattern = '^\f\+ > '
-" KEYMAP:
-" VimShellを起動
-nnoremap <Leader>s :<C-u>VimShellPop<CR>
-" irbを非同期で起動
-command! Irb :VimShellInteractive irb
-" 非同期で開いたインタプリタに現在の行を評価させる
-au myvimrc FileType vimshell inoremap <buffer> <Leader>s :<C-u>VimShellSendString<CR>
-au myvimrc FileType vimshell vmap <buffer> <Leader>s :<C-u>VimShellSendString<CR>
-
-" VimFiler {{{1
-"
-" KEYMAP:
-"  h : up dir, l : down dir, t : tree view (1 dir), T : tree view all
-"  e : edit, <Space> : mark, c : copy, m : move, d : delete, yy : yank path
-"  N : new file, K : new dir, * : mark all, U : mark off all, ? : keymap
-"  a : action, H : VimShell, ge : system filer, x : system app
-"
-" vimデフォルトのエクスプローラをvimfilerで置き換える
-let g:vimfiler_as_default_explorer = 1
-" セーフモードを無効にした状態で起動する
-let g:vimfiler_safe_mode_by_default = 0
-" デフォルトでIDE風のFilerを開く
-"au myvimrc VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
-" ステータスラインを上書きしない（lightline向け）
-let g:vimfiler_force_overwrite_statusline = 0
-"let g:netrw_liststyle=3
-" KEYMAP:
-nnoremap <Leader>f :<C-u>VimFilerBufferDir
-\<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
-" Enterでツリー開閉、ファイル編集を可能に
-au myvimrc FileType vimfiler nmap <buffer> <expr> <Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
-
-" Unite {{{1
-" 説明 {{{2
-" COMMAND:
-"  :Unite ${source} [${option}]
-"  :Unite output:{コマンド名}
-" KEYMAP:
-"  <Tab> : Actionを開く
-"  <Space> : 候補を選択する
-"  * : 候補を全選択する
-"  a : 候補でActionを開く
-"  ? : Uniteのキーマップを表示
-"
-" 基本設定 {{{2
-" 入力モードで開始
-"let g:unite_enable_start_insert=1
-" ヤンク履歴を使用可能にする
-let g:unite_source_history_yank_enable = 1
-" 最近使ったファイルの履歴数
-let g:unite_source_file_mru_file = 200
-" 大文字小文字を区別しない
-let g:unite_enable_ignore_case = 1
-let g:unite_enable_smart_case = 1
-" ステータスラインを上書きしない（lightline向け）
-let g:unite_force_overwrite_statusline = 0
-" ESCキーを2回押すと終了する
-au myvimrc FileType unite nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
-"au myvimrc FileType unite inoremap <silent> <buffer> <Esc><Esc> <Esc>:q<CR>
-" unite grep に ag(The Silver Searcher) を使う
-if executable('ag')
- let g:unite_source_grep_command = 'ag'
- let g:unite_source_grep_default_opts =
- \ '--line-numbers --nocolor --nogroup --hidden --ignore ' .
- \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
- let g:unite_source_grep_recursive_opt = ''
+" alpaca_tags {{{1
+" DESC:
+"  gitレポジトリ内のファイルのtagsを自動生成
+let g:alpaca_update_tags_config = {
+\ '_': '-R --sort=yes',
+\ 'default': '--languages=-css,scss,html'
+\}
+" タグの自動更新
+if exists(':Tags')
+  au myvimrc BufEnter * TagsSet
+  au myvimrc BufWritePost * TagsUpdate
+  au myvimrc BufWritePost Gemfile TagsBundle
 endif
 
-" デフォルトアクションの変更 {{{2
-" ref/refe
-call unite#custom_default_action('source/ref/refe/*' , 'above')
-" Uniteブックマークがディレクトリの場合はVimFilerで開く
-call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
-call unite#custom_default_action('directory' , 'vimfiler')
+" matchit {{{1
+" if ... end など対になるキーワードに%で移動
 
-" アクションの追加 {{{2
-" source:mappingにaction:verboseを追加する
-let s:action = {
-\ 'description' : 'verbose',
-\ 'is_selectable' : 1,
-\}
-function! s:action.func(candidates)
-  for candidate in a:candidates
-    execute "verbose map" substitute(candidate.action__mapping, '\\\(<.*>\)', '\1', "g")
-  endfor
-endfunction
-" kind ではなくて source の mapping に対して action を設定する
-call unite#custom#action('source/mapping/*', 'verbose', s:action)
-" preview（pキー）で action を実行したい場合は
-" call unite#custom#action('source/mapping/*', 'preview', s:action)
-unlet s:action
+" taglist {{{1
+" 現在表示中のファイルのみのタグしか表示しない
+let Tlist_Show_One_File = 1
+" 右側にtag listのウインドうを表示する
+let Tlist_Use_Right_Window = 1
+" taglistのウインドウだけならVimを閉じる
+let Tlist_Exit_OnlyWindow = 1
 
-" メニュー設定 {{{2
-let g:unite_source_menu_menus = {
-\ "shortcuts" : {
-\   "description" : "command shortcuts.",
-\   "command_candidates" : [
-\     ["unite-colorscheme", "Unite colorscheme -auto-preview"],
-\     ["unite-output:message", "Unite output:message"],
-\     ["unite-mapping(all)", "Unite output:map|map!|lmap"],
-\   ],
-\ },
-\}
-
-" Uniteキーマップ定義 {{{2
-" KEYMAP:
-nnoremap [unite] <Nop>
-nmap <Leader>u [unite]
-" ファイラ
-nnoremap <silent> [unite]f<CR> :<C-u>Unite<Space>file
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=file<CR>
-" 最近使ったファイルの一覧
-nnoremap <silent> [unite]fm<CR> :<C-u>Unite<Space>file_mru
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=file_mru<CR>
-" コマンド一覧を表示
-nnoremap <silent> [unite]s<CR> :<C-u>Unite<Space>source
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=source<CR>
-
-" 現在のバッファ内をグレップ
-nnoremap <silent> [unite]g<CR> :<C-u>Unite<Space>grep:<C-R>%
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep<CR>
-nnoremap <silent> [unite]gb<CR> :<C-u>Unite<Space>grep:<C-R>%
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep<CR>
-" ディレクトリをグレップ
-nnoremap <silent> [unite]gd<CR> :<C-u>Unite<Space>grep
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-dir<CR>
-" カーソル上の単語で現在のバッファをグレップ
-nnoremap <silent> [unite]gw<CR> :<C-u>Unite<Space>grep:<C-R>%
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-word<CR><C-R><C-W><CR>
-" すべてのバッファをグレップ
-nnoremap <silent> [unite]ga<CR> :<C-u>Unite<Space>grep:$buffers
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=grep-all-bufs<CR>
-
-" ブックマーク（追加は:UniteBookmarkAdd）
-nnoremap <silent> [unite]b<CR> :<C-u>Unite<Space>bookmark
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmark<CR>
-" Todo: 'Todo:'をつけた行をファイル保存時に自動でブックマークするau
-nnoremap <silent> [unite]bt<CR> :<C-u>Unite<Space>bookmark:todos
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=bookmark:todos<CR>
-" ブックマーク手動編集
-nnoremap <silent> [unite]be<CR> :<C-u>edit $HOME/.unite/bookmark/default<CR>
-" メニュー
-nnoremap <silent> [unite]m<CR> :<C-u>Unite<Space>menu:shortcuts
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=menu:shortcuts<CR>
-
-" リファレンス参照
-" refe
-nnoremap <silent> [unite]rr<CR> :<C-u>Unite<Space>ref/refe
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe<CR>
-" カーソル下の単語でrefe
-nnoremap <silent> [unite]rrw<CR> :<C-u>Unite<Space>ref/refe
-\<Space>-input=<C-r><C-w>
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/refe<CR>
-" ri
-nnoremap <silent> [unite]rri<CR> :<C-u>Unite<Space>ref/ri
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=ref/ri<CR>
-
-" ヤンクヒストリ
-nnoremap <silent> [unite]y<CR> :<C-u>Unite<Space>history/yank
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=history/yank<CR>
-" 直前のUniteコマンドの結果に戻る
-nnoremap <silent> [unite]r<CR> :<C-u>UniteResume
-\<Space>-no-empty<Space>-silent<CR>
-" Uniteコマンドの履歴表示
-nnoremap <silent> [unite]rl :<C-u>Unite<Space>resume
-\<Space>-no-empty<Space>-silent<Space>-buffer-name=resume<CR>
-
-" Uniteコマンド定義 {{{2
-" 汎用
-" command! -nargs=+ -complete U :Unite args
-" \ -no-empty -silent -buffer-name=args
-
-" ファイラ
-command! Uf :Unite file
-\ -no-empty -silent -buffer-name=file
-" 最近使ったファイルの一覧
-command! Ufm :Unite file_mru
-\ -no-empty -silent -buffer-name=file_mru
-
-" 現在のバッファ内をグレップ
-command! Ug :Unite grep:%
-\ -no-empty -silent -buffer-name=grep
-command! Ugb :Unite grep:' . shellescape(expand("%"))
-\ -no-empty -silent -buffer-name=grep
-" ディレクトリをグレップ
-command! Ugd :Unite grep
-\ -no-empty -silent -buffer-name=grep-dir
-" カーソル下の単語で現在のバッファをグレップ
-command! Ugw exe 'Unite grep:' . shellescape(expand("%"))
-\ '-no-empty -silent -buffer-name=grep-word'
-\ '-input=' . escape(expand("<cword>"), '- \\')
-" すべてのバッファをグレップ
-command! Uga :Unite grep:$buffers
-\ -no-empty -silent -buffer-name=grep-all-bufs
-
-" ブックマーク（追加はUniteBookmarkAdd）
-command! Ub :Unite bookmark
-\ -no-empty -silent -buffer-name=bookmark
-" Todo 'Todo:'をつけた行をファイル保存時に自動でブックマークするau
-command! Ubt :Unite bookmark:todos
-\ -no-empty -silent -buffer-name=bookmarktodos
-" ブックマーク手動編集
-command! Ube :edit $HOME/.unite/bookmark/default
-" メニュー
-command! Um :Unite menu:shortcuts
-\ -no-empty -silent -buffer-name=menushortcuts
-
-" リファレンス参照
-" refe
-command! Urr :Unite ref/refe
-\ -no-empty -silent -buffer-name=ref/refe
-" カーソル下の単語でrefe
-command! Urrw exe 'Unite ref/refe ' .
-\ '-no-empty -silent -buffer-name=ref/refe -input=' .
-\ escape(expand("<cword>"), '- \\')
-" ri
-command! Urri :Unite ref/ri
-\ -no-empty -silent -buffer-name=ref/ri
-
-" コマンド一覧を表示
-command! Uso :Unite source
-\ -no-empty -silent -buffer-name=source
-" スニペット候補の表示
-command! Usnip :Unite neosnippets
-\ -no-empty -silent -buffer-name=neosnippets
-" ヤンクヒストリ
-command! Uy :Unite history/yank
-\ -no-empty -silent -buffer-name=history/yank
-" 直前のUniteコマンドの結果に戻る
-command! Ur :UniteResume
-\ -no-empty -silent
-" Uniteコマンドの履歴表示
-command! Url :Unite resume
-\ -no-empty -silent -buffer-name=resume
-" レジスタ
-command! Ureg :Unite register
-\ -no-empty -silent -buffer-name=register
-
-" Unite source サンプル {{{2
-let s:unite_source = {
-\   'name': 'lines',
-\ }
-function! s:unite_source.gather_candidates(args, context)
-  let path = expand('%:p')
-  let lines = getbufline('%', 1, '$')
-  let format = '%' . strlen(len(lines)) . 'd: %s'
-  return map(lines, '{
-  \   "word": printf(format, v:key + 1, v:val),
-  \   "source": "lines",
-  \   "kind": "jump_list",
-  \   "action__path": path,
-  \   "action__line": v:key + 1,
-  \ }')
-endfunction
-call unite#define_source(s:unite_source)
-unlet s:unite_source
-
-" markdown.vim {{{1
-"let g:quickrun_config['mkd'] { 'outputter' : 'browser' }
-
-"}}}1-------------------------------------------------------------------------
-
+" SrcExpl {{{1
+" プレビューウィンドウの更新間隔（msec）
+let g:SrcExpl_refreshTime = 1000
+" 競合を避けるバッファ
+let g:SrcExpl_pluginList = ['*unite*', 'VimShell', 'VimFiler']
+" タグの自動生成（他でやってるのでいったんオフ）
+let g:SrcExpl_isUpdateTags = 0

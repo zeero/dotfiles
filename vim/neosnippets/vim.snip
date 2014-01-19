@@ -1,5 +1,17 @@
-snippet cmd:u
+snippet command:unite
 abbr    add Unite command
   command! ${1:cmd_name} :Unite ${2:unite_source}
   \ -no-empty -silent -buffer-name=$2${0}
+
+snippet NeoBundleLazy:insert
+  NeoBundleLazy '${1:bundle}'
+  \, {'autoload': {'insert': 1}}${0}
+
+snippet NeoBundleLazy:commands
+  NeoBundleLazy '${1:bundle}'
+  \, {'autoload': {'commands': ['${2:Command}']}${0}}
+
+snippet NeoBundleLazy:ft
+  NeoBundleLazy '${1:bundle}'
+  \, {'autoload': {'filetypes': ['${2:filetype}']}${0}}
 
