@@ -77,14 +77,15 @@ NeoBundleLazy 'ujihisa/unite-colorscheme'
 \, {'autoload': {'unite_sources': ['colorscheme']}}
 NeoBundleLazy 'tacroe/unite-alias'
 \, {'autoload': {'unite_sources': ['alias']}}
+NeoBundleLazy 'mattn/unite-gist'
+\, {'autoload': {'unite_sources': ['gist']}
+\,  'depends': ['mattn/webapi-vim', 'mattn/gist-vim']}
 
 " 入力補助 {{{2
 NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'tpope/vim-surround.git'
 NeoBundle 'tyru/caw.vim'
 NeoBundleLazy 'kana/vim-smartchr'
-\, {'autoload': {'insert': 1}}
-NeoBundleLazy 'alpaca-tc/vim-endwise'
 \, {'autoload': {'insert': 1}}
 NeoBundleLazy 'mattn/emmet-vim'
 \, {'autoload': {'filetypes': ['html']}}
@@ -109,9 +110,10 @@ NeoBundleLazy 'taka84u9/vim-ref-ri'
 \, {'autoload': {'filetypes': ['ruby']
 \,               'unite_sources': ['refe/ri']}
 \,  'depends': 'thinca/vim-ref'}
-NeoBundleLazy 'edsono/vim-matchit'
+NeoBundle 'edsono/vim-matchit'
+NeoBundleLazy 'ruby-matchit'
 \, {'autoload': {'filetypes': ['ruby']}
-\,  'mapping': {'nx': '%'}}
+\,  'depends': ['edsono/vim-matchit']}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -1301,6 +1303,8 @@ function! MyMode()
 endfunction
 
 " alpaca_tags {{{1
+" DESC:
+"  gitレポジトリ内のファイルのtagsを自動生成
 let g:alpaca_update_tags_config = {
 \ '_': '-R --sort=yes',
 \ 'default': '--languages=-css,scss,html'
@@ -1311,6 +1315,9 @@ if exists(':Tags')
   au myvimrc BufWritePost * TagsUpdate
   au myvimrc BufWritePost Gemfile TagsBundle
 endif
+
+" matchit {{{1
+" if ... end など対になるキーワードに%で移動
 
 "}}}1-------------------------------------------------------------------------
 
