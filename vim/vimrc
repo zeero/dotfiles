@@ -784,8 +784,6 @@ command! Ufm :Unite file_mru
 " 現在のバッファ内をグレップ
 command! Ug :Unite grep:%
 \ -no-empty -silent -buffer-name=grep
-command! Ugb :Unite grep:%
-\ -no-empty -silent -buffer-name=grep
 " ディレクトリをグレップ
 command! Ugd :Unite grep
 \ -no-empty -silent -buffer-name=grep-dir
@@ -803,6 +801,8 @@ command! Ub :Unite bookmark
 " Todo 'Todo:'をつけた行をファイル保存時に自動でブックマークするau
 command! Ubt :Unite bookmark:todos
 \ -no-empty -silent -buffer-name=bookmarktodos
+" ブックマーク追加
+command! Uba :UniteBookmarkAdd
 " ブックマーク手動編集
 command! Ube :edit $HOME/.unite/bookmark/default
 " メニュー
@@ -821,9 +821,6 @@ command! Urrw exe 'Unite ref/refe ' .
 command! Urri :Unite ref/ri
 \ -no-empty -silent -buffer-name=ref/ri
 
-" コマンド一覧を表示
-command! Uso :Unite source
-\ -no-empty -silent -buffer-name=source
 " スニペット候補の表示
 command! Usnip :Unite neosnippets
 \ -no-empty -silent -buffer-name=neosnippets
@@ -833,12 +830,6 @@ command! Uy :Unite history/yank
 " 直前のUniteコマンドの結果に戻る
 command! Ur :UniteResume
 \ -no-empty -silent
-" Uniteコマンドの履歴表示
-command! Url :Unite resume
-\ -no-empty -silent -buffer-name=resume
-" レジスタ
-command! Ureg :Unite register
-\ -no-empty -silent -buffer-name=register
 
 " Unite source サンプル {{{2
 let s:unite_source = {
