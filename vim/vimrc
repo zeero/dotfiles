@@ -124,6 +124,7 @@ NeoBundleLazy 'ruby-matchit'
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'fholgado/minibufexpl.vim'
+\, {'augroup': 'MiniBufExpl'}
 NeoBundle 'wombat256.vim'
 NeoBundle 'molokai'
 NeoBundle 'Zephyr-Color-Scheme'
