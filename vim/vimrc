@@ -108,6 +108,7 @@ NeoBundleLazy 'taglist.vim'
 \, {'autoload': {'commands': ['TlistToggle']}}
 NeoBundleLazy 'wesleyche/SrcExpl'
 \, {'autoload': {'commands': ['SrcExplToggle']}}
+NeoBundle 'kien/ctrlp.vim'
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails.git'
@@ -674,7 +675,7 @@ cnoremap <C-a> <C-b>
 " Leaderキー {{{2
 " Leaderキーを設定（,のデフォルトの機能は\で使えるように退避）
 "  h: H(elp), [,]: TagJump, p: PasteToggle, /: CommentToggle, r: Quickrun
-"  e: VimFiler, s: VimShell, m:MBEToggle, l: TaglistToggle, ,: SrcExplToggle
+"  f: VimFiler, s: VimShell, m:MBEToggle, l: TaglistToggle, ,: SrcExplToggle
 let mapleader=","
 noremap \ ,
 " カーソルの下の単語でヘルプを引く
@@ -693,7 +694,7 @@ set pastetoggle=<Leader>p
 nmap <Leader>/ <Plug>(caw:I:toggle)
 vmap <Leader>/ <Plug>(caw:I:toggle)
 " VimFiler
-nnoremap <Leader>e :<C-u>VimFilerBufferDir
+nnoremap <Leader>f :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
 " VimShell
 nnoremap <Leader>s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<CR>
