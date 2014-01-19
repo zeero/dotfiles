@@ -666,7 +666,7 @@ cnoremap <C-a> <C-b>
 
 " Leaderキー {{{2
 " Leaderキーを設定（,のデフォルトの機能は\で使えるように退避）
-"  p: PasteToggle, r: Quickrun, f: VimFiler, s: VimShell
+"  p: PasteToggle, r: Quickrun, e: VimFiler, s: VimShell
 "  /: CommentToggle, [,]: TagJump, m:MBEToggle, h: H(elp)
 let mapleader=","
 noremap \ ,
@@ -676,6 +676,14 @@ set pastetoggle=<Leader>p
 au myvimrc FileType vim nnoremap <buffer> <Leader>h :<C-u>H<Space><C-r><C-w><CR>
 au myvimrc FileType vim vnoremap <buffer> <Leader>h y:<C-u>H<Space><C-r>"<CR>
 au myvimrc FileType ruby nnoremap <buffer> <Leader>h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
+" VimFiler
+nnoremap <Leader>e :<C-u>VimFilerBufferDir
+\<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
+" VimShell
+nnoremap <Leader>s :<C-u>VimShellPop<CR>
+" コメントアウトの切り替え（caw.vim）
+nmap <Leader>/ <Plug>(caw:I:toggle)
+vmap <Leader>/ <Plug>(caw:I:toggle)
 " MBEToggle
 nnoremap <Leader>m :MBEToggle<CR>
 " タグジャンプ
@@ -869,9 +877,6 @@ let g:vimfiler_safe_mode_by_default = 0
 " ステータスラインを上書きしない（lightline向け）
 let g:vimfiler_force_overwrite_statusline = 0
 "let g:netrw_liststyle=3
-" KEYMAP:
-nnoremap <Leader>f :<C-u>VimFilerBufferDir
-\<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
 " Enterでツリー開閉、ファイル編集を可能に
 au myvimrc FileType vimfiler nmap <buffer> <expr> <CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
 
@@ -880,9 +885,6 @@ au myvimrc FileType vimfiler nmap <buffer> <expr> <CR> vimfiler#smart_cursor_map
 " 動的プロンプト
 let g:vimshell_prompt_expr = 'getcwd()." > "'
 let g:vimshell_prompt_pattern = '^\f\+ > '
-" KEYMAP:
-" VimShellを起動
-nnoremap <Leader>s :<C-u>VimShellPop<CR>
 " irbを非同期で起動
 command! Irb :VimShellInteractive irb
 " 非同期で開いたインタプリタに現在の行を評価させる
@@ -1094,12 +1096,6 @@ let g:ref_refe_version = 2
 "  ysiw' : カーソル下の単語を'で囲む
 "  cs'" : 'を"に変換する
 "  ds' : 'で囲まれた範囲を消す
-
-" caw.vim {{{1
-"
-" コメントアウトの切り替え
-nmap <Leader>/ <Plug>(caw:I:toggle)
-vmap <Leader>/ <Plug>(caw:I:toggle)
 
 " emmet.vim {{{1
 "
