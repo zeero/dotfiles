@@ -16,6 +16,11 @@ set ttyfast
 augroup myvimrc
   au!
 augroup END
+" vimディレクトリ変数
+let $MYVIMDIR = '~/.vim'
+if !exists($MYVIMDIR) && exists('~/vimfiles')
+  let $MYVIMDIR = '~/vimfiles'
+endif
 
 " NeoBundle {{{1
 " 説明 {{{2
@@ -25,15 +30,8 @@ augroup END
 "
 " NeoBundle開始 {{{2
 filetype off
-if has("win32") || has("win64")
-  set rtp&
-  set rtp+=~/vimfiles/bundle/neobundle.vim
-  call neobundle#rc(expand('~/vimfiles/bundle'))
-else
-  set rtp&
-  set rtp+=~/.vim/bundle/neobundle.vim
-  call neobundle#rc(expand('~/.vim/bundle'))
-endif
+set rtp+=$MYVIMDIR/bundle/neobundle.vim
+call neobundle#rc(expand($MYVIMDIR . '/bundle'))
 
 " 基本 {{{2
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -536,14 +534,12 @@ au myvimrc FileType ruby setlocal fenc=utf8 ff=unix
 au myvimrc FileType gitcommit
 \ setlocal nofoldenable |
 \ wincmd L |
-\ let @/ = "^@@"
+\ let @/ = "^@@ .*"
 " Vim
 if 'vim' == &ft
   setlocal iskeyword+=:
-  setlocal iskeyword-=#
 else
   au myvimrc FileType vim setlocal iskeyword+=:
-  au myvimrc FileType vim setlocal iskeyword-=#
 endif
 " バックスラッシュのインデントを無くす
 let g:vim_indent_cont = 0
@@ -650,8 +646,8 @@ nnoremap zC zM
 " diffハンクへのジャンプ
 au myvimrc BufRead * nnoremap <buffer> [[ [czz
 au myvimrc BUfRead * nnoremap <buffer> ]] ]czz
-" Help、QuickFix、Fugitiveでは q でバッファを閉じる
-au myvimrc FileType help,qf,gitcommit nnoremap <buffer> q <C-w>c
+" Help、QuickFix、Fugitiveでは<Esc><Esc>でバッファを閉じる
+au myvimrc FileType help,qf,gitcommit nnoremap <buffer> <Esc><Esc> <C-w>c
 " タブページ操作
 nnoremap <Tab> :<C-u>tabn<CR>
 nnoremap <S-Tab> :<C-u>tabp<CR>
@@ -1097,7 +1093,7 @@ let g:quickrun_config['html'] = { 'command': 'open', 'exec': '%c %s', 'outputter
 let g:quickrun_config['xhtml'] = { 'command': 'open', 'exec': '%c %s', 'outputter': 'browser' }
 let g:quickrun_config['mkd'] = { 'command': 'kramdown', 'outputter': 'browser'}
 
-" ref.vim {{{1
+" Ref {{{1
 "
 " COMMAND:
 "  :Ref refe Array
