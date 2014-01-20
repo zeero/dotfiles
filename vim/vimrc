@@ -101,10 +101,11 @@ NeoBundleLazy 'gregsexton/gitv'
 NeoBundle 'thinca/vim-ref'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'szw/vim-tags'
-NeoBundleLazy 'taglist.vim'
-\, {'autoload': {'commands': ['TlistToggle']}}
+NeoBundleLazy 'majutsushi/tagbar'
+\, {'autoload': {'commands': ['TagbarToggle']}}
 NeoBundleLazy 'wesleyche/SrcExpl'
 \, {'autoload': {'commands': ['SrcExplToggle']}}
+NeoBundle 'scrooloose/syntastic'
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails.git'
@@ -117,6 +118,17 @@ NeoBundle 'edsono/vim-matchit'
 NeoBundleLazy 'ruby-matchit'
 \, {'autoload': {'filetypes': ['ruby']}
 \,  'depends': ['edsono/vim-matchit']}
+
+" JavaScript {{{2
+NeoBundleLazy 'jiangmiao/simple-javascript-indenter'
+\, {'autoload': {'filetypes': ['javascript']}}
+NeoBundleLazy 'jelera/vim-javascript-syntax'
+\, {'autoload': {'filetypes': ['javascript']}}
+NeoBundleLazy 'jQuery'
+\, {'autoload': {'filetypes': ['javascript']}}
+NeoBundleLazy 'https://bitbucket.org/teramako/jscomplete-vim.git'
+\, {'autoload': {'filetypes': ['javascript']}
+\,  'type': 'git'}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -544,11 +556,12 @@ endif
 " バックスラッシュのインデントを無くす
 let g:vim_indent_cont = 0
 " JavaSciprt
-au myvimrc BufRead,BufNew,BufNewFile *.json setlocal filetype=javascript
+au myvimrc BufRead,BufNew,BufNewFile *.json setlocal ft=javascript
+au myvimrc BufRead,BufNew,BufNewFile jquery.*.js setlocal ft=javascript syntax=jquery
 " Apache
-au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setlocal filetype=apache
+au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setlocal ft=apache
 " ctags
-au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal filetype=tags
+au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
 
 " コマンド定義 {{{1
 "
@@ -675,7 +688,7 @@ cnoremap <C-a> <C-b>
 " Leaderキー {{{2
 " Leaderキーを設定（,のデフォルトの機能は\で使えるように退避）
 "  h: H(elp), [,]: TagJump, p: PasteToggle, /: CommentToggle, r: Quickrun
-"  f: VimFiler, s: VimShell, m:MBEToggle, l: TaglistToggle, ,: SrcExplToggle
+"  f: VimFiler, s: VimShell, m:MBEToggle, l: TagbarToggle, ,: SrcExplToggle
 let mapleader=","
 noremap \ ,
 " カーソルの下の単語でヘルプを引く
@@ -702,8 +715,8 @@ nnoremap <Leader>f :<C-u>VimFilerBufferDir
 nnoremap <Leader>s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<CR>
 " MBEToggle
 nnoremap <Leader>m :<C-u>MBEToggle<CR>
-" TaglistToggle
-nnoremap <Leader>l :<C-u>TlistToggle<CR>
+" TagbarToggle
+nnoremap <Leader>l :<C-u>TagbarToggle<CR>
 " SrcExplToggle
 nnoremap <Leader>, :<C-u>SrcExplToggle<CR>
 
@@ -1317,14 +1330,6 @@ endfunction
 " matchit {{{1
 " if ... end など対になるキーワードに%で移動
 
-" taglist {{{1
-" 現在表示中のファイルのみのタグしか表示しない
-let Tlist_Show_One_File = 1
-" 右側にtag listのウインドうを表示する
-let Tlist_Use_Right_Window = 1
-" taglistのウインドウだけならVimを閉じる
-let Tlist_Exit_OnlyWindow = 1
-
 " SrcExpl {{{1
 " プレビューウィンドウの更新間隔（msec）
 let g:SrcExpl_refreshTime = 1000
@@ -1332,6 +1337,10 @@ let g:SrcExpl_refreshTime = 1000
 let g:SrcExpl_pluginList = ['*unite*', 'VimShell', 'VimFiler']
 " タグの自動生成（他でやってるのでいったんオフ）
 let g:SrcExpl_isUpdateTags = 0
+
+" Simple-Javascript-Indenter {{{1
+" switchのインデントがいくらかマシに
+let g:SimpleJsIndenter_CaseIndentLevel = -1
 
 "}}}1-------------------------------------------------------------------------
 
