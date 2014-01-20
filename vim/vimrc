@@ -667,7 +667,7 @@ au myvimrc FileType help,qf,gitcommit nnoremap <buffer> <Esc><Esc> <C-w>c
 " タブページ操作
 nnoremap <Tab> <C-PageDown>
 nnoremap <S-Tab> <C-PageUp>
-nnoremap <Leader><Tab> :<C-u>tabnew<CR>
+nnoremap ,<Tab> :<C-u>tabnew<CR>
 " ESCを二回でハイライトを消す
 nnoremap <silent> <Esc><Esc> :noh<CR>
 
@@ -688,43 +688,43 @@ cnoremap <C-f> <C-r>%
 " コマンドモード時、コマンド行頭に移動
 cnoremap <C-a> <C-b>
 
-" Leaderキー {{{2
-" Leaderキーを設定（,のデフォルトの機能は\で使えるように退避）
+" リーダーキー {{{2
+" ,をリーダーキーにする（衝突を避けるためにmapleaderは設定しない）
 "  h: H(elp), [,]: TagJump, p: PasteToggle, /: CommentToggle, r: Quickrun
 "  f: VimFiler, s: VimShell, m:MBEToggle, l: TagbarToggle, ,: SrcExplToggle
-let mapleader=","
-noremap \ ,
 " カーソルの下の単語でヘルプを引く
-au myvimrc FileType vim nnoremap <buffer> <Leader>h :<C-u>H<Space><C-r><C-w><CR>
-au myvimrc FileType vim vnoremap <buffer> <Leader>h y:<C-u>H<Space><C-r>"<CR>
-au myvimrc FileType ruby nnoremap <buffer> <Leader>h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
+au myvimrc FileType vim nnoremap <buffer> ,h :<C-u>H<Space><C-r><C-w><CR>
+au myvimrc FileType vim vnoremap <buffer> ,h y:<C-u>H<Space><C-r>"<CR>
+au myvimrc FileType ruby nnoremap <buffer> ,h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
 " タグジャンプ
 nnoremap <C-]> g<C-]>
-nnoremap <Leader>] g<C-]>
-nnoremap <Leader>[ <C-t>
+nnoremap ,] g<C-]>
+nnoremap ,[ <C-t>
 nnoremap <Down> g<C-]>
 nnoremap <Up> <C-t>
 nnoremap <Left> <C-o>
 nnoremap <Right> <C-i>
 vnoremap <C-]> g<C-]>
-vnoremap <Leader>] g<C-]>
+vnoremap ,] g<C-]>
 vnoremap <Down> g<C-]>
 " PASTEモードの切り替え
-set pastetoggle=<Leader>p
+set pastetoggle=,p
 " コメントアウトの切り替え（caw.vim）
-nmap <Leader>/ <Plug>(caw:I:toggle)
-vmap <Leader>/ <Plug>(caw:I:toggle)
+nmap ,/ <Plug>(caw:I:toggle)
+vmap ,/ <Plug>(caw:I:toggle)
+" QuickRun
+nmap ,r <Plug>(quickrun)
 " VimFiler
-nnoremap <Leader>f :<C-u>VimFilerBufferDir
+nnoremap ,f :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
 " VimShell
-nnoremap <Leader>s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<CR>
+nnoremap ,s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<CR>
 " MBEToggle
-nnoremap <Leader>m :<C-u>MBEToggle<CR>
+nnoremap ,m :<C-u>MBEToggle<CR>
 " TagbarToggle
-nnoremap <Leader>l :<C-u>TagbarToggle<CR>
+nnoremap ,l :<C-u>TagbarToggle<CR>
 " SrcExplToggle
-nnoremap <Leader>, :<C-u>SrcExplToggle<CR>
+nnoremap ,, :<C-u>SrcExplToggle<CR>
 
 " 無効化 {{{2
 " 保存して閉じる
@@ -925,8 +925,8 @@ let g:vimshell_prompt_pattern = '^\f\+ > '
 " irbを非同期で起動
 command! Irb :VimShellInteractive irb
 " 非同期で開いたインタプリタに現在の行を評価させる
-au myvimrc FileType vimshell inoremap <buffer> <Leader>s :<C-u>VimShellSendString<CR>
-au myvimrc FileType vimshell vmap <buffer> <Leader>s :<C-u>VimShellSendString<CR>
+au myvimrc FileType vimshell inoremap <buffer> ,s :<C-u>VimShellSendString<CR>
+au myvimrc FileType vimshell vmap <buffer> ,s :<C-u>VimShellSendString<CR>
 
 " neocomplecache.vim {{{1
 "
@@ -1087,7 +1087,7 @@ endfunction "}}}
 " COMMAND:
 "  :QuickRun -args foo
 " KEYMAP:
-"  <Leader>r : バッファの内容を実行
+"  ,r : バッファの内容を実行
 "
 " 実行にvimprocを使う
 " エラー時はquickfixに表示する
