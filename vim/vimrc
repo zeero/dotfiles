@@ -178,7 +178,7 @@ command! Bl :NeoBundleList
 
 " singleton.vim {{{1
 if has('gui_running')
-  let g:singleton#opener = 'edit'
+  let g:singleton#opener = 'tab drop'
   call singleton#enable()
 endif
 
@@ -393,7 +393,7 @@ endif
 " 日本語整形スクリプト(by. 西岡拓洋さん)用の設定
 let format_allow_over_tw = 1	" ぶら下り可能幅
 " 編集後保存していなくても別のファイルを開く
-set hidden
+" set hidden
 " 新しく開く代わりにすでに開いてあるバッファを開く
 set switchbuf=useopen
 " コマンドライン履歴
@@ -911,6 +911,8 @@ unlet s:unite_source
 let g:vimfiler_as_default_explorer = 1
 " セーフモードを無効にした状態で起動する
 let g:vimfiler_safe_mode_by_default = 0
+" タブで開く
+let g:vimfiler_edit_action = 'tabopen'
 " デフォルトでIDE風のFilerを開く
 " au myvimrc VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
 " ステータスラインを上書きしない（lightline向け）
