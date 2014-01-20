@@ -133,6 +133,7 @@ NeoBundleLazy 'ScrollColors'
 
 " 補助 {{{2
 NeoBundle 'thinca/vim-singleton'
+NeoBundle 'thinca/vim-localrc'
 NeoBundleLazy 'vim-jp/vimdoc-ja'
 \, {'autoload': {'commands': ['help']}}
 NeoBundleLazy 'plasticboy/vim-markdown'
@@ -143,8 +144,8 @@ NeoBundleLazy 'mattn/benchvimrc-vim'
 \, {'autoload': {'commands': ['BenchVimrc']}}
 
 " ローカルレポジトリ {{{2
-if isdirectory($HOME . '/dev/github/unite-tiddlywiki/')
-  NeoBundleLocal $HOME . '/dev/github/unite-tiddlywiki/'
+if isdirectory('~/dev/github/unite-tiddlywiki/')
+  NeoBundleLocal '~/dev/github/unite-tiddlywiki/'
 endif
 
 " NeoBundle終了 {{{2
@@ -350,7 +351,7 @@ set matchtime=3
 set matchpairs& matchpairs+=<:>
 " コマンドライン補完するときに強化されたものを使う
 set wildmenu
-set wildmode=list:longest,full
+set wildmode=list:longest
 " テキスト挿入中の自動折り返しを日本語に対応させる
 set formatoptions&
 set formatoptions+=mM
