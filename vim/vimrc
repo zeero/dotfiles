@@ -105,6 +105,7 @@ NeoBundleLazy 'taglist.vim'
 \, {'autoload': {'commands': ['TlistToggle']}}
 NeoBundleLazy 'wesleyche/SrcExpl'
 \, {'autoload': {'commands': ['SrcExplToggle']}}
+NeoBundle 'kien/ctrlp.vim'
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails.git'
@@ -648,6 +649,7 @@ au myvimrc FileType help,qf,gitcommit nnoremap <buffer> q <C-w>c
 " タブページ操作
 nnoremap <Tab> :<C-u>tabn<CR>
 nnoremap <S-Tab> :<C-u>tabp<CR>
+nnoremap <Leader><Tab> :<C-u>tabnew<CR>
 " ESCを二回でハイライトを消す
 nnoremap <silent> <Esc><Esc> :noh<CR>
 
@@ -671,7 +673,7 @@ cnoremap <C-a> <C-b>
 " Leaderキー {{{2
 " Leaderキーを設定（,のデフォルトの機能は\で使えるように退避）
 "  h: H(elp), [,]: TagJump, p: PasteToggle, /: CommentToggle, r: Quickrun
-"  e: VimFiler, s: VimShell, m:MBEToggle, l: TaglistToggle, ,: SrcExplToggle
+"  f: VimFiler, s: VimShell, m:MBEToggle, l: TaglistToggle, ,: SrcExplToggle
 let mapleader=","
 noremap \ ,
 " カーソルの下の単語でヘルプを引く
@@ -690,7 +692,7 @@ set pastetoggle=<Leader>p
 nmap <Leader>/ <Plug>(caw:I:toggle)
 vmap <Leader>/ <Plug>(caw:I:toggle)
 " VimFiler
-nnoremap <Leader>e :<C-u>VimFilerBufferDir
+nnoremap <Leader>f :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
 " VimShell
 nnoremap <Leader>s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<CR>
@@ -887,6 +889,8 @@ let g:vimfiler_force_overwrite_statusline = 0
 "let g:netrw_liststyle=3
 " Enterでツリー開閉、ファイル編集を可能に
 au myvimrc FileType vimfiler nmap <buffer> <expr> <CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
+" ESCキーを2回押すと終了する
+au myvimrc FileType vimfiler nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
 
 " VimShell {{{1
 "
