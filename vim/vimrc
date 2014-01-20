@@ -131,6 +131,9 @@ NeoBundleLazy 'jQuery'
 NeoBundleLazy 'https://bitbucket.org/teramako/jscomplete-vim.git'
 \, {'autoload': {'filetypes': ['javascript']}
 \,  'type': 'git'}
+NeoBundle 'mojako/ref-sources.vim'
+\, {'autoload': {'filetypes': ['javascript']
+\,               'unite_sources': ['ref/javascript', 'ref/jquery']}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -779,12 +782,12 @@ endif
 
 " デフォルトアクションの変更 {{{2
 " file
-call unite#custom_default_action('source/file/*,source/file_mru/*', 'tabopen')
-" ref/refe
-call unite#custom_default_action('source/ref/refe/*', 'vsplit')
-" Uniteブックマークがディレクトリの場合はVimFilerで開く
-call unite#custom_default_action('source/bookmark/directory', 'vimfiler')
+call unite#custom_default_action('file', 'tabopen')
+" directory
 call unite#custom_default_action('directory', 'vimfiler')
+" ref
+call unite#custom_default_action(
+\ 'source/ref/refe/*,source/ref/javascript/*,source/ref/jquery/*', 'vsplit')
 
 " アクションの追加 {{{2
 " source:mappingにaction:verboseを追加する
@@ -1114,15 +1117,6 @@ let g:quickrun_config['html'] = { 'command': 'open', 'exec': '%c %s', 'outputter
 let g:quickrun_config['xhtml'] = { 'command': 'open', 'exec': '%c %s', 'outputter': 'browser' }
 let g:quickrun_config['mkd'] = { 'command': 'kramdown', 'outputter': 'browser'}
 
-" Ref {{{1
-"
-" COMMAND:
-"  :Ref refe Array
-let g:ref_use_vimproc = 1 " 0:disable / 1:enable
-let g:ref_open = 'vsplit'
-" ref/refe
-let g:ref_refe_version = 2
-
 " surround.vim {{{1
 "
 " KEYMAP:
@@ -1357,6 +1351,20 @@ let g:SrcExpl_isUpdateTags = 0
 " Simple-Javascript-Indenter {{{1
 " switchのインデントがいくらかマシに
 let g:SimpleJsIndenter_CaseIndentLevel = -1
+
+" Ref {{{1
+"
+" COMMAND:
+"  :Ref refe Array
+let g:ref_use_vimproc = 1 " 0:disable / 1:enable
+let g:ref_open = 'vsplit'
+" ref/refe
+let g:ref_refe_version = 2
+" ローカルファイルを参照するため、.local.vircに以下を宣言
+" ref/javascript
+" let g:ref_javascript_doc_path = $HOME . '/doc/jsref/htdocs'
+" ref/jquery
+" let g:ref_jquery_doc_path = $HOME . '/dev/doc/jqapi'
 
 "}}}1-------------------------------------------------------------------------
 
