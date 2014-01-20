@@ -89,6 +89,7 @@ NeoBundleLazy 'kana/vim-smartchr'
 \, {'autoload': {'insert': 1}}
 NeoBundleLazy 'mattn/emmet-vim'
 \, {'autoload': {'filetypes': ['html']}}
+NeoBundle 'haya14busa/vim-migemo'
 
 " コマンド {{{2
 NeoBundle 'tpope/vim-fugitive'
@@ -1351,6 +1352,18 @@ let g:SrcExpl_isUpdateTags = 0
 " Simple-Javascript-Indenter {{{1
 " switchのインデントがいくらかマシに
 let g:SimpleJsIndenter_CaseIndentLevel = -1
+
+" CtrlP {{{1
+"
+" KEYMAP:
+"  C-f: MRUモードのオン／オフ
+"  C-r: 正規表現モードのオン／オフ
+" タブで開く
+let g:ctrlp_open_new_file = 't'
+" migemoを使って日本語正規表現検索
+if executable('cmigemo')
+  let g:ctrlp_use_migemo = 1
+endif
 
 " Ref {{{1
 "
