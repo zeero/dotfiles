@@ -53,6 +53,7 @@ NeoBundleLazy 'Shougo/neosnippet'
 \, {'autoload': {'insert': 1}}
 NeoBundleLazy 'Shougo/neosnippet-snippets'
 \, {'autoload': {'insert': 1}}
+NeoBundle 'kien/ctrlp.vim'
 
 " Unite {{{2
 NeoBundleLazy 'Shougo/unite.vim'
@@ -101,11 +102,11 @@ NeoBundleLazy 'gregsexton/gitv'
 \,  'depends': ['tpope/vim-fugitive']}
 NeoBundle 'thinca/vim-ref'
 NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'szw/vim-tags'
 NeoBundleLazy 'taglist.vim'
 \, {'autoload': {'commands': ['TlistToggle']}}
 NeoBundleLazy 'wesleyche/SrcExpl'
 \, {'autoload': {'commands': ['SrcExplToggle']}}
-NeoBundle 'kien/ctrlp.vim'
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails.git'
@@ -307,6 +308,8 @@ set incsearch
 set hlsearch
 " 検索時にファイルの最後まで行ったら最初に戻る (nowrapscan:戻らない)
 set wrapscan
+" タグ検索パスの設定
+au myvimrc FileType * exe "setlocal tags+=~/.tags/" . &ft . ".tags"
 " タグ検索に二分検索をオフにする（vimdoc-jaフリーズ対策）
 set notagbsearch
 " バックスラッシュやクエスチョンを状況に合わせ自動的にエスケープ
@@ -547,6 +550,8 @@ let g:vim_indent_cont = 0
 au myvimrc BufRead,BufNew,BufNewFile *.json setlocal filetype=javascript
 " Apache
 au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setlocal filetype=apache
+" ctags
+au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal filetype=tags
 
 " コマンド定義 {{{1
 "
