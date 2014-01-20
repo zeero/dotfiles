@@ -686,6 +686,8 @@ nnoremap <Leader>] g<C-]>
 nnoremap <Leader>[ <C-t>
 nnoremap <Down> g<C-]>
 nnoremap <Up> <C-t>
+nnoremap <Left> <C-o>
+nnoremap <Right> <C-i>
 " PASTEモードの切り替え
 set pastetoggle=<Leader>p
 " コメントアウトの切り替え（caw.vim）
