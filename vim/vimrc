@@ -100,12 +100,14 @@ NeoBundleLazy 'gregsexton/gitv'
 \,  'depends': ['tpope/vim-fugitive']}
 NeoBundle 'thinca/vim-ref'
 NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'scrooloose/syntastic'
+NeoBundleLazy 'thinca/vim-prettyprint'
+\, {'autoload': {'commands': ['PP']}}
 NeoBundle 'szw/vim-tags'
 NeoBundleLazy 'majutsushi/tagbar'
 \, {'autoload': {'commands': ['TagbarToggle']}}
 NeoBundleLazy 'wesleyche/SrcExpl'
 \, {'autoload': {'commands': ['SrcExplToggle']}}
-NeoBundle 'scrooloose/syntastic'
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails.git'
@@ -527,7 +529,7 @@ set directory&
 set directory+=,~/tmp,$TMP
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
-au myvimrc BufEnter .* if expand("%:p:h") != '' | execute ":lcd \"" . shellescape(expand("%:p:h")) . "\"" | endif
+au myvimrc BufEnter .* if expand("%:p:h") != '' | exe ":lcd " . escape(expand("%:p:h"), " \\") | endif
 "set autochdir （設定するとVimShellが動かなくなる）
 " vimrcの保存時に再読み込み
 if !has('gui_running') && !(has('win32') || has('win64'))
@@ -548,13 +550,12 @@ au myvimrc FileType gitcommit
 \ wincmd L |
 \ let @/ = "^@@ .*"
 " Vim
-if 'vim' == &ft
-  setlocal iskeyword+=:
-else
-  au myvimrc FileType vim setlocal iskeyword+=:
-endif
 " バックスラッシュのインデントを無くす
 let g:vim_indent_cont = 0
+" vimrcでは:もiskに入れる
+if expand("%") =~ "vimrc"
+  setlocal iskeyword+=:
+endif
 " JavaSciprt
 au myvimrc BufRead,BufNew,BufNewFile *.json setlocal ft=javascript
 au myvimrc BufRead,BufNew,BufNewFile jquery.*.js setlocal ft=javascript syntax=jquery
@@ -629,6 +630,8 @@ function! s:my_bd_other() "{{{
 endfunction "}}}
 " Esnip
 command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete Esnip :NeoSnippetEdit <args>
+" Lcd
+command! Lcd :exe "lcd " . expand("%:p:h")
 
 " キーマップ定義 {{{1
 " 説明 {{{2
@@ -662,8 +665,8 @@ au myvimrc BUfRead * nnoremap <buffer> ]] ]czz
 " Help、QuickFix、Fugitiveでは<Esc><Esc>でバッファを閉じる
 au myvimrc FileType help,qf,gitcommit nnoremap <buffer> <Esc><Esc> <C-w>c
 " タブページ操作
-nnoremap <Tab> :<C-u>tabn<CR>
-nnoremap <S-Tab> :<C-u>tabp<CR>
+nnoremap <Tab> <C-PageDown>
+nnoremap <S-Tab> <C-PageUp>
 nnoremap <Leader><Tab> :<C-u>tabnew<CR>
 " ESCを二回でハイライトを消す
 nnoremap <silent> <Esc><Esc> :noh<CR>
@@ -703,6 +706,9 @@ nnoremap <Down> g<C-]>
 nnoremap <Up> <C-t>
 nnoremap <Left> <C-o>
 nnoremap <Right> <C-i>
+vnoremap <C-]> g<C-]>
+vnoremap <Leader>] g<C-]>
+vnoremap <Down> g<C-]>
 " PASTEモードの切り替え
 set pastetoggle=<Leader>p
 " コメントアウトの切り替え（caw.vim）
@@ -772,6 +778,8 @@ if executable('ag')
 endif
 
 " デフォルトアクションの変更 {{{2
+" file
+call unite#custom_default_action('source/file/*,source/file_mru/*', 'tabopen')
 " ref/refe
 call unite#custom_default_action('source/ref/refe/*', 'vsplit')
 " Uniteブックマークがディレクトリの場合はVimFilerで開く
@@ -1110,9 +1118,9 @@ let g:quickrun_config['mkd'] = { 'command': 'kramdown', 'outputter': 'browser'}
 "
 " COMMAND:
 "  :Ref refe Array
-" KEYMAP:
-"  Shift-K : 単語を検索
 let g:ref_use_vimproc = 1 " 0:disable / 1:enable
+let g:ref_open = 'vsplit'
+" ref/refe
 let g:ref_refe_version = 2
 
 " surround.vim {{{1
@@ -1232,9 +1240,9 @@ let g:user_emmet_settings = {
 " MiniBufExplorer {{{1
 "
 " 自動起動
-let g:miniBufExplAutoStart = 1
+let g:miniBufExplAutoStart = 0
 " バッファが２つ以上で開く
-let g:miniBufExplBuffersNeeded = 2
+" let g:miniBufExplBuffersNeeded = 2
 " Diffモードでは隠す
 let g:miniBufExplHideWhenDiff = 1
 " バッファリストのサイクル化
@@ -1264,7 +1272,8 @@ hi MBEChanged ctermfg=red guifg=red guibg=black
 let g:lightline = {
 \  'mode_map': {'c': 'NORMAL'},
 \  'active': {
-\    'left': [['mode', 'paste'], ['filename', 'fugitive']]
+\    'left': [['mode', 'paste'], ['filename', 'fugitive']],
+\    'right': [['lineinfo'], ['percent'], ['pwd', 'fileformat', 'fileencoding', 'filetype']]
 \  },
 \  'inactive': {
 \    'left': [],
@@ -1273,6 +1282,7 @@ let g:lightline = {
 \  'component_function': {
 \    'modified': 'MyModified',
 \    'readonly': 'MyReadonly',
+\    'pwd': 'MyPwd',
 \    'fugitive': 'MyFugitive',
 \    'filename': 'MyFilename',
 \    'fileformat': 'MyFileformat',
@@ -1297,6 +1307,9 @@ function! MyFilename()
 \         '' != expand('%:t') ? expand('%:t') : '[No Name]') .
 \        ('' != MyModified() ? ' ' . MyModified() : '') .
 \        ('' != MyReadonly() ? ' ' . MyReadonly() : '')
+endfunction
+function! MyPwd()
+  return winwidth(0) > 100 ? getcwd() : ''
 endfunction
 function! MyFugitive()
   try
@@ -1329,6 +1342,9 @@ endfunction
 
 " matchit {{{1
 " if ... end など対になるキーワードに%で移動
+
+" Tagbar {{{1
+let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 
 " SrcExpl {{{1
 " プレビューウィンドウの更新間隔（msec）
