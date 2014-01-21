@@ -5,6 +5,41 @@ abbr    Bootstrap Breadcrumb
     <li class="active">${3:Active}</li>
   </ol>
 
+snippet bs:btn:dropdown
+abbr    Single button dropdowns
+options indent
+  <!-- Single button -->
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      ${1:Action} <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#">${2:Action}</a></li>
+      <li><a href="#">${3:Another action}</a></li>
+      <li><a href="#">${4:Something else here}</a></li>
+      <li class="divider"></li>
+      <li><a href="#">${5:Separated link}</a></li>
+    </ul>
+  </div>
+
+snippet bs:btn:dropdown-split
+abbr    Split button dropdowns
+  <!-- Split button -->
+  <div class="btn-group">
+    <button type="button" class="btn btn-default">${1:Action}</button>
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      <span class="caret"></span>
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#">${2:Action}</a></li>
+      <li><a href="#">${3:Another action}</a></li>
+      <li><a href="#">${4:Something else here}</a></li>
+      <li class="divider"></li>
+      <li><a href="#">${5:Separated link}</a></li>
+    </ul>
+  </div>
+
 snippet meta:viewport
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
