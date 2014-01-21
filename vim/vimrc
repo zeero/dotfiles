@@ -48,7 +48,9 @@ NeoBundleLazy 'Shougo/vimshell'
 NeoBundleLazy 'Shougo/neocomplcache'
 \, {'autoload': {'insert': 1}}
 NeoBundleLazy 'Shougo/neosnippet'
-\, {'autoload': {'insert': 1}}
+\, {'autoload': {'insert': 1
+\,               'unite_source': ['neosnippet']
+\,               'filetypes': ['neosnippet']}}
 NeoBundleLazy 'Shougo/neosnippet-snippets'
 \, {'autoload': {'insert': 1}}
 NeoBundle 'kien/ctrlp.vim'
@@ -367,7 +369,7 @@ set matchtime=3
 set matchpairs& matchpairs+=<:>
 " コマンドライン補完するときに強化されたものを使う
 set wildmenu
-set wildmode=list:longest
+set wildmode=list:longest,full
 " テキスト挿入中の自動折り返しを日本語に対応させる
 set formatoptions&
 set formatoptions+=mM
