@@ -92,7 +92,6 @@ NeoBundleLazy 'kana/vim-smartchr'
 \, {'autoload': {'insert': 1}}
 NeoBundleLazy 'mattn/emmet-vim'
 \, {'autoload': {'filetypes': ['html']}}
-NeoBundle 'haya14busa/vim-migemo'
 
 " コマンド {{{2
 NeoBundle 'tpope/vim-fugitive'
@@ -161,6 +160,8 @@ NeoBundleLazy 'tyru/open-browser.vim'
 \, {'autoload': {'filetypes': ['html', 'mkd']}}
 NeoBundleLazy 'mattn/benchvimrc-vim'
 \, {'autoload': {'commands': ['BenchVimrc']}}
+NeoBundle 'haya14busa/vim-migemo'
+NeoBundle 'rhysd/migemo-search.vim'
 
 " ローカルレポジトリ {{{2
 if isdirectory($HOME . '/dev/github/unite-tiddlywiki/')
@@ -1087,7 +1088,7 @@ function! s:my_git_vimproc(gitcommand) "{{{
     let res .= sub.stderr.read()
   endwhile
   let [cond, status] = sub.waitpid()
-  new
+  tabnew
   call append(0, split(res, '\r\n\|\r\|\n') + [string([cond, status])])
 endfunction "}}}
 
@@ -1368,6 +1369,11 @@ let g:ctrlp_open_new_file = 't'
 " migemoを使って日本語正規表現検索
 if executable('cmigemo')
   let g:ctrlp_use_migemo = 1
+endif
+
+" migemo-search.vim {{{1
+if executable('cmigemo')
+  cnoremap <expr> <CR> migemosearch#replace_search_word()."\<CR>"
 endif
 
 " Ref {{{1
