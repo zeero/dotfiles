@@ -145,12 +145,17 @@ NeoBundle 'fholgado/minibufexpl.vim'
 NeoBundle 'wombat256.vim'
 NeoBundle 'molokai'
 NeoBundle 'Zephyr-Color-Scheme'
-NeoBundle 'CSApprox'
+NeoBundleLazy 'thinca/vim-guicolorscheme'
+\, {'terminal': 1
+\,  'autoload': {'commands': ['GuiColorScheme']}}
+NeoBundle 'godlygeek/csapprox'
+\, {'gui': 1}
 NeoBundleLazy 'ScrollColors'
 \, {'autoload': {'commands': ['SCROLLCOLOR']}}
 
 " 補助 {{{2
 NeoBundle 'thinca/vim-singleton'
+\, {'gui': 1}
 NeoBundle 'thinca/vim-localrc'
 NeoBundleLazy 'vim-jp/vimdoc-ja'
 \, {'autoload': {'commands': ['help']}}
@@ -788,13 +793,15 @@ if executable('ag')
 endif
 
 " デフォルトアクションの変更 {{{2
-" file
-call unite#custom_default_action('file', 'tabopen')
+" openable
+call unite#custom_default_action('openable', 'tabopen')
 " directory
 call unite#custom_default_action('directory', 'vimfiler')
 " ref
 call unite#custom_default_action(
 \ 'source/ref/refe/*,source/ref/javascript/*,source/ref/jquery/*', 'vsplit')
+" help
+call unite#custom_default_action('source/help/*', 'vsplit')
 
 " アクションの追加 {{{2
 " source:mappingにaction:verboseを追加する
@@ -1100,8 +1107,7 @@ command! Gs :Gstatus
 command! Ga :Gwrite
 command! Gw :Gwrite
 command! Gd :Gdiff
-command! Gc :Gcommit -v
-command! Gca :Gcommit -va
+command! Gc :Gcommit -va
 command! Gl :Glog
 command! Gb :Gblame
 command! Gpush :call s:my_git_vimproc('push')
