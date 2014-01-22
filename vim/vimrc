@@ -1055,6 +1055,32 @@ endif
 " スニペットファイルの保存時に再読み込み
 au myvimrc BufWritePost *.snip NeoSnippetSource %:p
 
+" CtrlP {{{1
+"
+" KEYMAP:
+"  C-f/C-b: モード切替（file<=>mru<=>buffer）
+"  C-r: 正規表現モードのオン／オフ
+" タブで開く
+let g:ctrlp_open_new_file = 't'
+" migemoを使って日本語正規表現検索
+if executable('cmigemo')
+  let g:ctrlp_use_migemo = 1
+endif
+
+" Ref {{{1
+"
+" COMMAND:
+"  :Ref refe Array
+let g:ref_use_vimproc = 1 " 0:disable / 1:enable
+let g:ref_open = 'vsplit'
+" ref/refe
+let g:ref_refe_version = 2
+" ローカルファイルを参照するため、.local.vircに以下を宣言
+" ref/javascript
+" let g:ref_javascript_doc_path = $HOME . '/doc/jsref/htdocs'
+" ref/jquery
+" let g:ref_jquery_doc_path = $HOME . '/dev/doc/jqapi'
+
 " fugitive.vim {{{1
 " 説明 {{{2
 " DESC:
@@ -1130,120 +1156,6 @@ au myvimrc BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
 let g:quickrun_config['html'] = { 'command': 'open', 'exec': '%c %s', 'outputter': 'browser' }
 let g:quickrun_config['xhtml'] = { 'command': 'open', 'exec': '%c %s', 'outputter': 'browser' }
 let g:quickrun_config['mkd'] = { 'command': 'kramdown', 'outputter': 'browser'}
-
-" surround.vim {{{1
-"
-" KEYMAP:
-"  i : inside
-"  a : all
-"  s : side
-"  S' : ビジュアルモードで選択した範囲を'で囲む
-"  ysiw' : カーソル下の単語を'で囲む
-"  cs'" : 'を"に変換する
-"  ds' : 'で囲まれた範囲を消す
-
-" emmet.vim {{{1
-"
-" KEYMAP:
-"  <C-e> : 展開
-"  <C-_> : コメントアウト／イン
-"          （_と/が同じキーマップになってるのでCtrl+/でできる）
-"let g:user_emmet_leader_key = '<C-e>'
-let g:user_emmet_expandabbr_key = '<C-e>'
-let g:user_emmet_togglecomment_key = '<C-_>'
-" タグのコンプリート
-let g:use_emmet_complete_tag = 1
-
-" カスタマイズ設定
-let g:user_emmet_settings = {
-\  'lang': 'ja',
-\  'indentation': "  ",
-\  'html': {
-\    'filters': 'html',
-\    'snippets': {
-\      'meta:viewport': "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">",
-\      'css:bs': "<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">",
-\      'cd': "<![CDATA[|]]>",
-\      'js:jq': "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n<script>\n\\$(function() {\n\t|\n})()\n</script>",
-\      'js:bs': "<script src=\"https://code.jquery.com/jquery.js\"></script>\n<script src=\"js/bootstrap.min.js\"></script>",
-\    },
-\  },
-\  'javascript': {
-\    'snippets': {
-\      'jq': "\\$(function() {\n\t\\${cursor}\\${child}\n});",
-\      'jq:json': "\\$.getJSON(\"${cursor}\", function(data) {\n\t\\${child}\n});",
-\      'jq:each': "\\$.each(data, function(index, item) {\n\t\\${child}\n});",
-\      'fn': "(function() {\n\t\\${cursor}\n})();",
-\      'tm': "setTimeout(function() {\n\t\\${cursor}\n}, 100);",
-\    },
-\    'use_pipe_for_cursor': 0,
-\  },
-\  'css': {
-\    'filters': 'fc',
-\    'snippets': {
-\      'box-shadow': "-webkit-box-shadow: 0 0 0 # 000;\n-moz-box-shadow: 0 0 0 0 # 000;\nbox-shadow: 0 0 0 # 000;",
-\    },
-\  },
-\  'vim': {
-\    'snippets': {
-\      'nn': 'nnoremap <silent> ${cursor} :<C-u>',
-\      'nnu': 'nnoremap <silent> [unite]${cursor}<CR> :<C-u>Unite<Space>\n\\<Space>-no-empty<Space>-silent<Space>-buffer-name=<CR>',
-\    },
-\  },
-\  'java': {
-\    'snippets': {
-\     'main': "public static void main(String[] args) {\n\t|\n}",
-\     'println': "System.out.println(\"|\");",
-\     'class': "public class | {\n}\n",
-\    },
-\  },
-\  'php': {
-\    'extends': 'html',
-\    'filters': 'html,c',
-\  },
-\  'less': {
-\    'filters': 'fc',
-\    'extends': 'css',
-\  },
-\  'lorem_lipsum_ja': {
-\    '^\%(lorem\|lipsum\)\(\d*\)$': function('emmet#lorem#ja#expand'),
-\  },
-\}
-
-" rcodetools.vim {{{1
-"
-" DESC: xmpfilterの呼び出し設定
-" <F1>でバッファ全体にxmpfilterを実行
-"{{{ xmpfilter mapping (disable)
-"nmap <silent> <F1> mzggVG!xmpfilter -a<cr>'z
-"imap <silent> <F1> <Esc><F1>
-"" <F2>で現在行/選択行にxmpfilterを実行
-"map <silent> <F2> !xmpfilter -a<cr>
-"nmap <silent> <F2> V<F2>
-"imap <silent> <F2> <Esc><F2>a
-"" <F3>で現在行/選択行に「# =>」マークを追加
-"vmap <silent> <F3> !xmpfilter -m<cr>
-"nmap <silent> <F3> V<F3>
-"imap <silent> <F3> <Esc><F3>a
-"" <F4>で現在行/選択行の「# =>」マークを削除
-"vmap <silent> <F4> ms:call RemoveRubyEval()<CR>
-"nmap <silent> <F4> V<F4>
-"imap <silent> <F4> <Esc><F4>a
-"" RemoveRubyEval() の定義
-"function! RemoveRubyEval() range
-  "let begv = a:firstline
-  "let endv = a:lastline
-  "normal Hmt
-  "set lz
-  "execute ":" . begv . "," . endv . 's/\s*# \(=>\|!!\).*$//e'
-  "normal 'tzt`s
-  "set nolz
-  "redraw
-"endfunction
-"" JRuby用<F11>でバッファ全体にjxmpfilterを実行
-"nmap <silent> <F11> mzggVG!jxmpfilter -a<cr>'z
-"imap <silent> <F11> <Esc><F11>
-"}}}
 
 " MiniBufExplorer {{{1
 "
@@ -1348,9 +1260,6 @@ function! MyMode()
 \        winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-" matchit {{{1
-" if ... end など対になるキーワードに%で移動
-
 " Tagbar {{{1
 let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 
@@ -1362,40 +1271,131 @@ let g:SrcExpl_pluginList = ['*unite*', 'VimShell', 'VimFiler']
 " タグの自動生成（他でやってるのでいったんオフ）
 let g:SrcExpl_isUpdateTags = 0
 
-" Simple-Javascript-Indenter {{{1
-" switchのインデントがいくらかマシに
-let g:SimpleJsIndenter_CaseIndentLevel = -1
-
-" CtrlP {{{1
+" surround.vim {{{1
 "
 " KEYMAP:
-"  C-f: MRUモードのオン／オフ
-"  C-r: 正規表現モードのオン／オフ
-" タブで開く
-let g:ctrlp_open_new_file = 't'
-" migemoを使って日本語正規表現検索
-if executable('cmigemo')
-  let g:ctrlp_use_migemo = 1
-endif
+"  i : inside
+"  a : all
+"  s : side
+"  S' : ビジュアルモードで選択した範囲を'で囲む
+"  ysiw' : カーソル下の単語を'で囲む
+"  cs'" : 'を"に変換する
+"  ds' : 'で囲まれた範囲を消す
+
+" matchit {{{1
+" if ... end など対になるキーワードに%で移動
 
 " migemo-search.vim {{{1
 if executable('cmigemo')
   cnoremap <expr> <CR> migemosearch#replace_search_word()."\<CR>"
 endif
 
-" Ref {{{1
+" emmet.vim {{{1
 "
-" COMMAND:
-"  :Ref refe Array
-let g:ref_use_vimproc = 1 " 0:disable / 1:enable
-let g:ref_open = 'vsplit'
-" ref/refe
-let g:ref_refe_version = 2
-" ローカルファイルを参照するため、.local.vircに以下を宣言
-" ref/javascript
-" let g:ref_javascript_doc_path = $HOME . '/doc/jsref/htdocs'
-" ref/jquery
-" let g:ref_jquery_doc_path = $HOME . '/dev/doc/jqapi'
+" KEYMAP:
+"  <C-e> : 展開
+"  <C-_> : コメントアウト／イン
+"          （_と/が同じキーマップになってるのでCtrl+/でできる）
+"let g:user_emmet_leader_key = '<C-e>'
+let g:user_emmet_expandabbr_key = '<C-e>'
+let g:user_emmet_togglecomment_key = '<C-_>'
+" タグのコンプリート
+let g:use_emmet_complete_tag = 1
+
+" カスタマイズ設定
+let g:user_emmet_settings = {
+\  'lang': 'ja',
+\  'indentation': "  ",
+\  'html': {
+\    'filters': 'html',
+\    'snippets': {
+\      'meta:viewport': "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">",
+\      'css:bs': "<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">",
+\      'cd': "<![CDATA[|]]>",
+\      'js:jq': "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n<script>\n\\$(function() {\n\t|\n})()\n</script>",
+\      'js:bs': "<script src=\"https://code.jquery.com/jquery.js\"></script>\n<script src=\"js/bootstrap.min.js\"></script>",
+\    },
+\  },
+\  'javascript': {
+\    'snippets': {
+\      'jq': "\\$(function() {\n\t\\${cursor}\\${child}\n});",
+\      'jq:json': "\\$.getJSON(\"${cursor}\", function(data) {\n\t\\${child}\n});",
+\      'jq:each': "\\$.each(data, function(index, item) {\n\t\\${child}\n});",
+\      'fn': "(function() {\n\t\\${cursor}\n})();",
+\      'tm': "setTimeout(function() {\n\t\\${cursor}\n}, 100);",
+\    },
+\    'use_pipe_for_cursor': 0,
+\  },
+\  'css': {
+\    'filters': 'fc',
+\    'snippets': {
+\      'box-shadow': "-webkit-box-shadow: 0 0 0 # 000;\n-moz-box-shadow: 0 0 0 0 # 000;\nbox-shadow: 0 0 0 # 000;",
+\    },
+\  },
+\  'vim': {
+\    'snippets': {
+\      'nn': 'nnoremap <silent> ${cursor} :<C-u>',
+\      'nnu': 'nnoremap <silent> [unite]${cursor}<CR> :<C-u>Unite<Space>\n\\<Space>-no-empty<Space>-silent<Space>-buffer-name=<CR>',
+\    },
+\  },
+\  'java': {
+\    'snippets': {
+\     'main': "public static void main(String[] args) {\n\t|\n}",
+\     'println': "System.out.println(\"|\");",
+\     'class': "public class | {\n}\n",
+\    },
+\  },
+\  'php': {
+\    'extends': 'html',
+\    'filters': 'html,c',
+\  },
+\  'less': {
+\    'filters': 'fc',
+\    'extends': 'css',
+\  },
+\  'lorem_lipsum_ja': {
+\    '^\%(lorem\|lipsum\)\(\d*\)$': function('emmet#lorem#ja#expand'),
+\  },
+\}
+
+" rcodetools.vim {{{1
+"
+" DESC: xmpfilterの呼び出し設定
+" <F1>でバッファ全体にxmpfilterを実行
+"{{{ xmpfilter mapping (disable)
+"nmap <silent> <F1> mzggVG!xmpfilter -a<cr>'z
+"imap <silent> <F1> <Esc><F1>
+"" <F2>で現在行/選択行にxmpfilterを実行
+"map <silent> <F2> !xmpfilter -a<cr>
+"nmap <silent> <F2> V<F2>
+"imap <silent> <F2> <Esc><F2>a
+"" <F3>で現在行/選択行に「# =>」マークを追加
+"vmap <silent> <F3> !xmpfilter -m<cr>
+"nmap <silent> <F3> V<F3>
+"imap <silent> <F3> <Esc><F3>a
+"" <F4>で現在行/選択行の「# =>」マークを削除
+"vmap <silent> <F4> ms:call RemoveRubyEval()<CR>
+"nmap <silent> <F4> V<F4>
+"imap <silent> <F4> <Esc><F4>a
+"" RemoveRubyEval() の定義
+"function! RemoveRubyEval() range
+  "let begv = a:firstline
+  "let endv = a:lastline
+  "normal Hmt
+  "set lz
+  "execute ":" . begv . "," . endv . 's/\s*# \(=>\|!!\).*$//e'
+  "normal 'tzt`s
+  "set nolz
+  "redraw
+"endfunction
+"" JRuby用<F11>でバッファ全体にjxmpfilterを実行
+"nmap <silent> <F11> mzggVG!jxmpfilter -a<cr>'z
+"imap <silent> <F11> <Esc><F11>
+"}}}
+
+" Simple-Javascript-Indenter {{{1
+" switchのインデントがいくらかマシに
+let g:SimpleJsIndenter_CaseIndentLevel = -1
 
 "}}}1-------------------------------------------------------------------------
 
