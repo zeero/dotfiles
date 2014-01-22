@@ -624,6 +624,8 @@ function! s:get_syn_info()
 endfunction "}}}
 " Colortest
 command! Colortest :belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source $VIMRUNTIME/syntax/colortest.vim
+" Hitest
+command! Hitest :belowright vsplit $VIMRUNTIME/syntax/hitest.vim | source $VIMRUNTIME/syntax/hitest.vim
 " Bdo
 command! Bdo call s:my_bd_other()
 function! s:my_bd_other() "{{{
@@ -1079,17 +1081,21 @@ command! Gb :Gblame
 command! Gpush :call s:my_git_vimproc('push')
 command! Gpull :call s:my_git_vimproc('pull')
 " Gpush/Gpullのためのvimproc
-" Todo: messageで出すように変えたい、非同期になってない、、
 function! s:my_git_vimproc(gitcommand) "{{{
-  let sub = vimproc#popen2('git ' . a:gitcommand)
+  let command = 'git ' . a:gitcommand
+  let sub = vimproc#popen2(command)
   let res = ''
   while !sub.stdout.eof
     let res .= sub.stdout.read()
     let res .= sub.stderr.read()
   endwhile
   let [cond, status] = sub.waitpid()
-  tabnew
-  call append(0, split(res, '\r\n\|\r\|\n') + [string([cond, status])])
+  let res = join(map(split(res, '\r\n\|\r\|\n'), '"[".command."] ".v:val'), "\n")
+  if 0 == status
+    echo res
+  else
+    echohl ErrorMsg | echo res | echohl None
+  endif
 endfunction "}}}
 
 " quickrun.vim {{{1
