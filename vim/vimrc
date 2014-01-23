@@ -584,8 +584,8 @@ au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
 " COMMAND:
 " VimDiff
 command! -complete=file -nargs=1 VimDiff :vertical diffsplit <args>
-" Erc、Sorc
-command! Erc :e $MYVIMRC
+" Vimrc、Sorc
+command! Vimrc :tabe $MYVIMRC
 command! Sorc :source $MYVIMRC
 " H(elp)
 command! -nargs=? -complete=help H if winwidth(0) > 140 | :vertical help <args> | :vertical resize 79 | else | :help <args> | endif
@@ -639,14 +639,14 @@ function! s:my_bd_other() "{{{
   let i = 1
   let cur = bufnr("%")
   while i <= bufnr("$")
-    if bufloaded(i) && i != cur
+    if buflisted(i) && i != cur
       exe "bdelete" i
     endif
     let i = i + 1
   endwhile
 endfunction "}}}
 " Esnip
-command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete Esnip :NeoSnippetEdit <args>
+command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete Esnip :NeoSnippetEdit -vertical -split <args>
 " Lcd
 command! Lcd :exe "lcd " . expand("%:p:h")
 
