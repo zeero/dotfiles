@@ -2,7 +2,7 @@
 " 初期設定
 "-----------------------------------------------------------------------------
 " 初期設定 {{{1
-" Last Change: 22-Jan-2014.
+" Last Change: 24-Jan-2014.
 " VI互換モードOFF
 set nocompatible
 " 内部エンコーディングをutf-8に指定
@@ -12,6 +12,8 @@ set notimeout
 set ttimeout
 " 高速ターミナル接続を行う
 set ttyfast
+" パス区切り文字を共通化する
+set shellslash
 " 自動コマンドの初期化
 augroup myvimrc
   au!
@@ -797,9 +799,9 @@ endif
 
 " デフォルトアクションの変更 {{{2
 " openable
-call unite#custom_default_action('openable', 'tabopen')
+call unite#custom_default_action('file,jump_list', 'tabopen')
 " directory
-call unite#custom_default_action('directory', 'vimfiler')
+call unite#custom_default_action('directory', 'lcd')
 " ref
 call unite#custom_default_action(
 \ 'source/ref/refe/*,source/ref/javascript/*,source/ref/jquery/*', 'vsplit')
