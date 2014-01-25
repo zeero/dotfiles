@@ -91,7 +91,7 @@ NeoBundleLazy 'mattn/unite-gist'
 
 " 入力補助 {{{2
 NeoBundle 'thinca/vim-qfreplace'
-NeoBundle 'tpope/vim-surround.git'
+NeoBundle 'tpope/vim-surround'
 NeoBundle 'tyru/caw.vim'
 NeoBundleLazy 'kana/vim-smartchr'
 \, {'autoload': {'insert': 1}}
@@ -118,16 +118,15 @@ NeoBundleLazy 'majutsushi/tagbar'
 " \, {'autoload': {'commands': ['SrcExplToggle']}}
 
 " Ruby {{{2
-NeoBundleLazy 'tpope/vim-rails.git'
+NeoBundleLazy 'tpope/vim-rails'
 \, {'autoload': {'filetypes': ['ruby']}}
 NeoBundleLazy 'taka84u9/vim-ref-ri'
 \, {'autoload': {'filetypes': ['ruby']
 \,               'unite_sources': ['refe/ri']}
 \,  'depends': 'thinca/vim-ref'}
 NeoBundle 'edsono/vim-matchit'
-NeoBundleLazy 'ruby-matchit'
-\, {'autoload': {'filetypes': ['ruby']}
-\,  'depends': ['edsono/vim-matchit']}
+NeoBundleLazy 'tpope/vim-bundler'
+\, {'autoload': {'filetypes': ['ruby']}}
 
 " JavaScript {{{2
 " NeoBundleLazy 'jiangmiao/simple-javascript-indenter'
@@ -136,7 +135,7 @@ NeoBundleLazy 'jelera/vim-javascript-syntax'
 \, {'autoload': {'filetypes': ['javascript']}}
 NeoBundleLazy 'jQuery'
 \, {'autoload': {'filetypes': ['javascript']}}
-NeoBundleLazy 'https://bitbucket.org/teramako/jscomplete-vim.git'
+NeoBundleLazy 'https://bitbucket.org/teramako/jscomplete-vim'
 \, {'autoload': {'filetypes': ['javascript']}
 \,  'type': 'git'}
 NeoBundle 'mojako/ref-sources.vim'
@@ -931,6 +930,8 @@ unlet s:unite_source
 let g:vimfiler_as_default_explorer = 1
 " セーフモードを無効にした状態で起動する
 let g:vimfiler_safe_mode_by_default = 0
+" ディレクトリ移動
+let g:vimfiler_enable_auto_cd = 1
 " タブで開く
 let g:vimfiler_edit_action = 'tabopen'
 " デフォルトでIDE風のFilerを開く
@@ -1291,14 +1292,6 @@ endfunction
 " Tagbar {{{1
 let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 
-" SrcExpl {{{1
-" プレビューウィンドウの更新間隔（msec）
-let g:SrcExpl_refreshTime = 1000
-" 競合を避けるバッファ
-let g:SrcExpl_pluginList = ['*unite*', 'VimShell', 'VimFiler']
-" タグの自動生成（他でやってるのでいったんオフ）
-let g:SrcExpl_isUpdateTags = 0
-
 " surround.vim {{{1
 "
 " KEYMAP:
@@ -1309,9 +1302,6 @@ let g:SrcExpl_isUpdateTags = 0
 "  ysiw' : カーソル下の単語を'で囲む
 "  cs'" : 'を"に変換する
 "  ds' : 'で囲まれた範囲を消す
-
-" matchit {{{1
-" if ... end など対になるキーワードに%で移動
 
 " migemo-search.vim {{{1
 if executable('cmigemo')
@@ -1420,10 +1410,6 @@ let g:user_emmet_settings = {
 "nmap <silent> <F11> mzggVG!jxmpfilter -a<cr>'z
 "imap <silent> <F11> <Esc><F11>
 "}}}
-
-" Simple-Javascript-Indenter {{{1
-" switchのインデントがいくらかマシに
-let g:SimpleJsIndenter_CaseIndentLevel = -1
 
 " vim-indent-guides {{{1
 " vim立ち上げたときに、自動的にvim-indent-guidesをオンにする
