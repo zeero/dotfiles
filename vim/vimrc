@@ -7,6 +7,9 @@
 set nocompatible
 " 内部エンコーディングをutf-8に指定
 set encoding=utf-8
+" ファイルエンコーディング設定
+set fencs=utf-8,cp932,euc-jp,iso-2022-jp
+set ffs=unix,dos,mac
 " キー入力をタイムアウトさせない
 set notimeout
 set ttimeout
