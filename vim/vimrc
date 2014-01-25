@@ -717,16 +717,16 @@ au myvimrc FileType vim vnoremap <buffer> ,h y:<C-u>H<Space><C-r>"<CR>
 au myvimrc FileType ruby nnoremap <buffer> ,h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
 au myvimrc FileType javascript nnoremap <buffer> ,h :<C-u>Ref<Space>javascript<Space><C-r><C-w><CR>
 " タグジャンプ
-nnoremap <C-]> g<C-]>
-nnoremap ,] g<C-]>
+nnoremap <C-]> :tab tj <C-R>=expand('<cword>')<CR><CR>
+nnoremap ,] :tab tj <C-R>=expand('<cword>')<CR><CR>
 nnoremap ,[ <C-t>
-nnoremap <Down> g<C-]>
+nnoremap <Down> :tab tj <C-R>=expand('<cword>')<CR><CR>
 nnoremap <Up> <C-t>
 nnoremap <Left> <C-o>
 nnoremap <Right> <C-i>
-vnoremap <C-]> g<C-]>
-vnoremap ,] g<C-]>
-vnoremap <Down> g<C-]>
+vnoremap <C-]> y:tab tj <C-R>"<CR>
+vnoremap ,] y:tab tj <C-R>"<CR>
+vnoremap <Down> y:tab tj <C-R>"<CR>
 " PASTEモードの切り替え
 set pastetoggle=,p
 " コメントアウトの切り替え（caw.vim）
