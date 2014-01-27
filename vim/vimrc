@@ -637,8 +637,8 @@ command! Colortest :belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source 
 " Hitest
 command! Hitest :belowright vsplit $VIMRUNTIME/syntax/hitest.vim | source $VIMRUNTIME/syntax/hitest.vim
 " Bdo
-command! Bdo call s:my_bd_other()
-function! s:my_bd_other() "{{{
+command! Bdo :call s:my_command_bd_other()
+function! s:my_command_bd_other() "{{{
   let i = 1
   let cur = bufnr("%")
   while i <= bufnr("$")
@@ -652,6 +652,8 @@ endfunction "}}}
 command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete Esnip :NeoSnippetEdit -vertical -split <args>
 " Lcd
 command! Lcd :exe "lcd " . expand("%:p:h")
+" Ls
+command! -nargs=* -complete=file Ls :echo system("ls <args>")
 
 " キーマップ定義 {{{1
 " 説明 {{{2
@@ -1305,7 +1307,7 @@ let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 
 " migemo-search.vim {{{1
 if executable('cmigemo')
-  cnoremap <expr> <CR> migemosearch#replace_search_word()."\<CR>"
+  cnoremap <expr> <silent> <CR> migemosearch#replace_search_word() . "\<CR>"
 endif
 
 " emmet.vim {{{1
