@@ -713,7 +713,7 @@ cnoremap <C-a> <C-b>
 " リーダーキー {{{2
 " ,をリーダーキーにする（衝突を避けるためにmapleaderは設定しない）
 "  h: H(elp), [,]: TagJump, p: PasteToggle, /: CommentToggle, r: Quickrun
-"  f: VimFiler, s: VimShell, m: MBEToggle, l: TagbarToggle, ,: SrcExplToggle
+"  f: VimFiler, s: VimShell, m: MBEToggle, l: TagbarToggle, ,: PreviewToggle
 " カーソルの下の単語でヘルプを引く
 au myvimrc FileType vim nnoremap <buffer> ,h :<C-u>H<Space><C-r><C-w><CR>
 au myvimrc FileType vim vnoremap <buffer> ,h y:<C-u>H<Space><C-r>"<CR>
@@ -729,7 +729,7 @@ nnoremap <Left> <C-o>
 nnoremap <Right> <C-i>
 vnoremap <C-]> g<C-]>
 vnoremap ,] g<C-]>
-vnoremap <Down> y:tab tj <C-R>"<CR>
+vnoremap <Down> y:tab tj <C-r>"<CR>
 " PASTEモードの切り替え
 set pastetoggle=,p
 " コメントアウトの切り替え（caw.vim）
@@ -746,8 +746,66 @@ nnoremap ,s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<CR>
 nnoremap ,m :<C-u>MBEToggle<CR>
 " TagbarToggle
 nnoremap ,l :<C-u>TagbarToggle<CR>
-" SrcExplToggle
-nnoremap ,, :<C-u>SrcExplToggle<CR>
+" PreviewToggle
+set previewheight=7
+nnoremap ,, :<C-u>PreviewToggle<CR>
+command! PreviewToggle :call s:my_preview_toggle()
+function! s:my_preview_toggle() "{{{
+  silent! wincmd P
+  if &previewwindow
+    "au! Cursorhold
+    pclose
+    return
+  endif
+  "au! CursorHold * nested call PreviewWord()
+  call PreviewWord()
+endfunction
+function! PreviewWord()
+  " 設定
+  let direction = "belowright"
+  let action = "ptjump"
+  "hi PreviewWord term=bold ctermbg=green guibg=green
+  hi link PreviewWord Search
+
+  if &previewwindow			" プレビューウィンドウ内では実行しない
+    return
+  endif
+  let w = expand("<cword>")		" カーソル下の単語を得る
+  "if w =~ '\a'			" その単語が文字を含んでいるなら
+  if w !~ '\s'			" その単語が文字を含んでいるなら
+
+    " 別のタグを表示させる前にすでに存在するハイライトを消去する
+    silent! wincmd P			" プレビューウィンドウにジャンプ
+    if &previewwindow			" すでにそこにいるなら
+      match none			" 存在するハイライトを消去する
+      wincmd p			" もとのウィンドウに戻る
+    endif
+
+    " カーソル下の単語にマッチするタグを表示してみる
+    try
+       exe direction action w
+    catch
+      echohl ErrorMsg
+      echo substitute(v:exception, '^Vim\%((\a\+)\)\=:', '', "")
+      echohl None
+      return
+    endtry
+
+    silent! wincmd P			" プレビューウィンドウにジャンプ
+    if &previewwindow		" すでにそこにいるなら
+      if has("folding")
+        silent! .foldopen		" 閉じた折り畳みを開く
+      endif
+      exe "normal zz"
+      call search("$", "b")		" 前の行の最後へ
+      let w = substitute(w, '\\', '\\\\', "")
+      call search('\<\V' . w . '\>')	" カーソルをマッチしたところへ
+      " ここで単語にハイライトをつける
+      exe 'match PreviewWord "\%' . line(".") . 'l\%' . col(".") . 'c\k*"'
+      wincmd p			" もとのウィンドウへ戻る
+    endif
+  endif
+endfunction "}}}
 
 " 無効化 {{{2
 " 保存して閉じる
@@ -756,8 +814,6 @@ nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 " EXモードに入る
 nnoremap Q <Nop>
-" コマンドライン履歴に入る
-nnoremap q: <Nop>
 
 "}}}1-------------------------------------------------------------------------
 
@@ -856,14 +912,16 @@ command! Ug :Unite grep:%
 \ -no-empty -silent -buffer-name=grep
 " ディレクトリをグレップ
 command! Ugd :Unite grep
-\ -no-empty -silent -buffer-name=grep-dir
+\ -silent -buffer-name=grep-dir
+\ -tab -no-split -auto-preview
 " カーソル下の単語で現在のバッファをグレップ
 command! Ugw exe 'Unite grep:%::' .
 \ escape(expand("<cword>"), '- \\') .
 \ ' -no-empty -silent -buffer-name=grep-word'
 " すべてのバッファをグレップ
-command! Uga :Unite grep:$buffers
-\ -no-empty -silent -buffer-name=grep-all-bufs
+command! Ugb :Unite grep:$buffers
+\ -silent -buffer-name=grep-all-bufs
+\ -tab -no-split -no-quit -auto-preview -direction=topleft
 
 " ブックマーク（追加はUniteBookmarkAdd）
 command! Ub :Unite bookmark
