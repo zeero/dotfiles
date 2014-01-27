@@ -749,18 +749,19 @@ nnoremap ,l :<C-u>TagbarToggle<CR>
 " PreviewToggle
 set previewheight=7
 nnoremap ,, :<C-u>PreviewToggle<CR>
+vnoremap ,, y:call PreviewWord('<C-r>"')<CR>
 command! PreviewToggle :call s:my_preview_toggle()
 function! s:my_preview_toggle() "{{{
   silent! wincmd P
   if &previewwindow
     "au! Cursorhold
     pclose
-    return
+  else
+    "au! CursorHold * nested call PreviewWord()
+    call PreviewWord()
   endif
-  "au! CursorHold * nested call PreviewWord()
-  call PreviewWord()
 endfunction
-function! PreviewWord()
+function! PreviewWord(...)
   " 設定
   let direction = "belowright"
   let action = "ptjump"
@@ -770,7 +771,7 @@ function! PreviewWord()
   if &previewwindow			" プレビューウィンドウ内では実行しない
     return
   endif
-  let w = expand("<cword>")		" カーソル下の単語を得る
+  let w = a:0 == 0 ? expand("<cword>") : a:1		" カーソル下の単語を得る
   "if w =~ '\a'			" その単語が文字を含んでいるなら
   if w !~ '\s'			" その単語が文字を含んでいるなら
 
