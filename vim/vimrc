@@ -719,18 +719,24 @@ nnoremap <C-o> :<C-u>CtrlPMRUFiles<CR>
 "  h: H(elp), [,]: TagJump, p: PasteToggle, /: CommentToggle, r: Quickrun
 "  f: VimFiler, s: VimShell, m: MBEToggle, l: TagbarToggle, ,: PreviewToggle
 " カーソルの下の単語でヘルプを引く
+nmap K ,h
+vmap K ,h
 au myvimrc FileType vim nnoremap <buffer> ,h :<C-u>H<Space><C-r><C-w><CR>
 au myvimrc FileType vim vnoremap <buffer> ,h y:<C-u>H<Space><C-r>"<CR>
 au myvimrc FileType ruby nnoremap <buffer> ,h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
+au myvimrc FileType ruby vnoremap <buffer> ,h y:<C-u>Ref<Space>refe<Space><C-r>"<CR>
 au myvimrc FileType javascript nnoremap <buffer> ,h :<C-u>Ref<Space>javascript<Space><C-r><C-w><CR>
+au myvimrc FileType javascript vnoremap <buffer> ,h y:<C-u>Ref<Space>javascript<Space><C-r>"<CR>
+au myvimrc FileType sh nnoremap <buffer> ,h :<C-u>Ref<Space>man<Space><C-r><C-w><CR>
+au myvimrc FileType sh vnoremap <buffer> ,h y:<C-u>Ref<Space>man<Space><C-r>"<CR>
 " タグジャンプ
 nnoremap <C-]> g<C-]>
 nnoremap ,] g<C-]>
-nnoremap ,[ <C-t>
+nnoremap ,[ <C-t>zz
 nnoremap <Down> :tab tj <C-R>=expand('<cword>')<CR><CR>
-nnoremap <Up> <C-t>
-nnoremap <Left> <C-o>
-nnoremap <Right> <C-i>
+nnoremap <Up> <C-t>zz
+nnoremap <Left> <C-o>zz
+nnoremap <Right> <C-i>zz
 vnoremap <C-]> g<C-]>
 vnoremap ,] g<C-]>
 vnoremap <Down> y:tab tj <C-r>"<CR>
@@ -865,7 +871,7 @@ endif
 " openable
 call unite#custom_default_action('file,jump_list', 'tabopen')
 " directory
-call unite#custom_default_action('directory', 'lcd')
+call unite#custom_default_action('directory', 'vimfiler')
 " ref
 call unite#custom_default_action(
 \ 'source/ref/refe/*,source/ref/javascript/*,source/ref/jquery/*', 'vsplit')
@@ -918,7 +924,7 @@ command! Ug :Unite grep:%
 " ディレクトリをグレップ
 command! Ugd :Unite grep
 \ -silent -buffer-name=grep-dir
-\ -tab -no-split -auto-preview
+\ -tab -no-split -no-quit -auto-preview
 " カーソル下の単語で現在のバッファをグレップ
 command! Ugw exe 'Unite grep:%::' .
 \ escape(expand("<cword>"), '- \\') .
