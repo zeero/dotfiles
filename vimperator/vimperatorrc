@@ -35,6 +35,9 @@ nnoremap <C-l> :tabm 100<CR>
 nnoremap m :set toolbars+=nonavigation,noaddons<CR>
 nnoremap M :set toolbars+=navigation,addons<CR>
 
+" 中止
+nnoremap <Esc> :st<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " プラグインの設定
 "
