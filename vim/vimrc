@@ -709,6 +709,10 @@ nnoremap _ <C-w>_
 cnoremap <C-f> <C-r>%
 " コマンドモード時、コマンド行頭に移動
 cnoremap <C-a> <C-b>
+" CtrlPTag
+nnoremap <C-@> :<C-u>CtrlPTag<CR>
+" CtrlPMRUFiles
+nnoremap <C-o> :<C-u>CtrlPMRUFiles<CR>
 
 " リーダーキー {{{2
 " ,をリーダーキーにする（衝突を避けるためにmapleaderは設定しない）
@@ -1134,7 +1138,24 @@ au myvimrc BufWritePost *.snip NeoSnippetSource %:p
 "  C-f/C-b: モード切替（file<=>mru<=>buffer）
 "  C-r: 正規表現モードのオン／オフ
 " タブで開く
+let g:ctrlp_prompt_mappings = {
+\ 'AcceptSelection("t")': ['<CR>'],
+\ 'AcceptSelection("e")': ['<C-@>'],
+\ 'ToggleByFname()':      ['<C-t>', '<C-d>'],
+\}
+" 新規ファイルをタブで開く
 let g:ctrlp_open_new_file = 't'
+" ウィンドウの設定
+let g:ctrlp_match_window = 'max:20'
+" キャッシュを使う
+let g:ctrlp_use_caching = 1
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+" キャッシュを終了後も残す
+let g:ctrlp_clear_cache_on_exit = 0
+" 拡張機能を有効にする
+let g:ctrlp_extensions = ['tag', 'dir', 'changes', 'bookmarkdir']
+" コマンドエイリアス
+command! -nargs=1 -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
 " migemoを使って日本語正規表現検索
 if executable('cmigemo')
   let g:ctrlp_use_migemo = 1
