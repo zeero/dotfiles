@@ -148,7 +148,22 @@ NeoBundle 'fholgado/minibufexpl.vim'
 \, {'augroup': 'MiniBufExpl'}
 NeoBundle 'wombat256.vim'
 NeoBundle 'molokai'
-NeoBundle 'Zephyr-Color-Scheme'
+NeoBundleLazy 'Zephyr-Color-Scheme'
+\, {'autoload': {'unite-source': ['colorscheme']}}
+NeoBundleLazy 'nanotech/jellybeans.vim'
+\, {'autoload': {'unite-source': ['colorscheme']}}
+NeoBundleLazy 'newspaper.vim'
+\, {'autoload': {'unite-source': ['colorscheme']}}
+NeoBundleLazy 'w0ng/vim-hybrid'
+\, {'autoload': {'unite-source': ['colorscheme']}}
+NeoBundleLazy 'jonathanfilip/vim-lucius'
+\, {'autoload': {'unite-source': ['colorscheme']}}
+NeoBundleLazy 'jpo/vim-railscasts-theme'
+\, {'autoload': {'unite-source': ['colorscheme']}}
+NeoBundleLazy 'http://blog.toddwerth.com/entry_files/8/ir_black.vim'
+\, {'name': 'ir_black.vim',
+\   'script_type': 'colors',
+\   'autoload': {'unite-source': ['colorscheme']}}
 NeoBundleLazy 'thinca/vim-guicolorscheme'
 \, {'terminal': 1
 \,  'autoload': {'commands': ['GuiColorScheme']}}
@@ -1161,7 +1176,7 @@ let g:ctrlp_clear_cache_on_exit = 0
 " 拡張機能を有効にする
 let g:ctrlp_extensions = ['tag', 'dir', 'changes', 'bookmarkdir']
 " コマンドエイリアス
-command! -nargs=1 -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
+command! -nargs=? -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
 " migemoを使って日本語正規表現検索
 if executable('cmigemo')
   let g:ctrlp_use_migemo = 1
