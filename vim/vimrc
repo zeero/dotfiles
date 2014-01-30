@@ -926,12 +926,6 @@ let g:unite_source_menu_menus = {
 " 汎用
 command! -nargs=+ -complete=customlist,unite#complete#source U :Unite <args>
 \ -no-empty -silent -buffer-name=<args>
-" ファイラ
-command! Uf :Unite file
-\ -no-empty -silent -buffer-name=file
-" 最近使ったファイルの一覧
-command! Ufm :Unite file_mru
-\ -no-empty -silent -buffer-name=file_mru
 
 " 現在のバッファ内をグレップ
 command! Ug :Unite grep:%
@@ -952,13 +946,13 @@ command! Ugb :Unite grep:$buffers
 " ブックマーク（追加はUniteBookmarkAdd）
 command! Ub :Unite bookmark
 \ -no-empty -silent -buffer-name=bookmark
-" Todo 'Todo:'をつけた行をファイル保存時に自動でブックマークするau
-command! Ubt :Unite bookmark:todos
-\ -no-empty -silent -buffer-name=bookmarktodos
 " ブックマーク追加
 command! Uba :UniteBookmarkAdd
 " ブックマーク手動編集
 command! Ube :edit $HOME/.unite/bookmark/default
+" Todo: 'Todo:'をつけた行をファイル保存時に自動でブックマークするau
+command! Ubt :Unite bookmark:todos
+\ -no-empty -silent -buffer-name=bookmarktodos
 " メニュー
 command! Um :Unite menu:shortcuts
 \ -no-empty -silent -buffer-name=menushortcuts
@@ -972,8 +966,8 @@ command! Urrw exe 'Unite ref/refe ' .
 \ '-no-empty -silent -buffer-name=ref/refe -input=' .
 \ escape(expand("<cword>"), '- \\')
 " ri
-command! Urri :Unite ref/ri
-\ -no-empty -silent -buffer-name=ref/ri
+command! Urri :Unite refe/ri
+\ -no-empty -silent -buffer-name=refe/ri
 
 " スニペット候補の表示
 command! Usnip :Unite neosnippets
