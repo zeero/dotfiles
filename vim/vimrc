@@ -454,6 +454,9 @@ else
 endif
 " 遅延描画
 " set lazyredraw
+" 行を強調表示
+set cursorline
+hi CursorLineNr ctermfg=white guifg=white
 " 行番号を表示 (nonumber:表示)
 set number
 " ルーラーを表示 (noruler:非表示)
@@ -696,9 +699,15 @@ nnoremap Y y$
 " すべてのフォールディングの開け閉め
 nnoremap zO zR
 nnoremap zC zM
+nnoremap zo zozz
+nnoremap zc zczz
 " diffハンクへのジャンプ
 au myvimrc BufRead * nnoremap <buffer> [[ [czz
-au myvimrc BUfRead * nnoremap <buffer> ]] ]czz
+au myvimrc BufRead * nnoremap <buffer> ]] ]czz
+nnoremap do do]czz
+nnoremap dp dp]czz
+" Todo: 自動で移動してくれない
+au myvimrc BufRead * if 1 == &diff | noh | exe 'normal ]c' | endif
 " Help、QuickFix、Fugitiveでは<Esc><Esc>でバッファを閉じる
 au myvimrc FileType help,qf,gitcommit nnoremap <buffer> <Esc><Esc> <C-w>c
 " タブページ操作
@@ -709,21 +718,24 @@ nnoremap ,<Tab> :<C-u>tabnew<CR>
 nnoremap <silent> <Esc><Esc> :noh<CR>
 
 " CTRLキー、Shiftキー {{{2
-" ウィンドウ間を移動
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
 " ウィンドウサイズ変更
 nnoremap <S-Up> <C-w>+
 nnoremap <S-Down> <C-w>-
 nnoremap <S-Left> <C-w><
 nnoremap <S-Right> <C-w>>
 nnoremap _ <C-w>_
+
 " コマンドモード時、現在のバッファのファイル名を出力
 cnoremap <C-f> <C-r>%
 " コマンドモード時、コマンド行頭に移動
-cnoremap <C-a> <C-b>
+cnoremap <C-a> <Home>
+" コマンドモード時、単語移動
+cnoremap <C-b> <S-Left>
+cnoremap <C-f> <S-Right>
+" コマンドモード時、履歴移動
+cnoremap <C-n> <Down>
+cnoremap <C-p> <Up>
+
 " CtrlPTag
 nnoremap <C-@> :<C-u>CtrlPTag<CR>
 " CtrlPMRUFiles
@@ -746,15 +758,20 @@ au myvimrc FileType sh nnoremap <buffer> ,h :<C-u>Ref<Space>man<Space><C-r><C-w>
 au myvimrc FileType sh vnoremap <buffer> ,h y:<C-u>Ref<Space>man<Space><C-r>"<CR>
 " タグジャンプ
 nnoremap <C-]> g<C-]>
-nnoremap ,] g<C-]>
-nnoremap ,[ <C-t>zz
-nnoremap <Down> :tab tj <C-R>=expand('<cword>')<CR><CR>
-nnoremap <Up> <C-t>zz
-nnoremap <Left> <C-o>zz
-nnoremap <Right> <C-i>zz
 vnoremap <C-]> g<C-]>
+nnoremap ,] g<C-]>
 vnoremap ,] g<C-]>
+nnoremap <C-j> :tab tj <C-R>=expand('<cword>')<CR><CR>
+vnoremap <C-j> y:tab tj <C-r>"<CR>
+nnoremap <Down> :tab tj <C-R>=expand('<cword>')<CR><CR>
 vnoremap <Down> y:tab tj <C-r>"<CR>
+nnoremap ,[ <C-t>
+nnoremap <C-k> <C-t>
+nnoremap <Up> <C-t>
+nnoremap <C-h> <C-o>
+nnoremap <Left> <C-o>
+nnoremap <C-l> <C-i>
+nnoremap <Right> <C-i>
 " PASTEモードの切り替え
 set pastetoggle=,p
 " コメントアウトの切り替え（caw.vim）
@@ -772,7 +789,6 @@ nnoremap ,m :<C-u>MBEToggle<CR>
 " TagbarToggle
 nnoremap ,l :<C-u>TagbarToggle<CR>
 " PreviewToggle
-set previewheight=7
 nnoremap ,, :<C-u>PreviewToggle<CR>
 vnoremap ,, y:call PreviewWord('<C-r>"')<CR>
 command! PreviewToggle :call s:my_preview_toggle()
@@ -789,9 +805,10 @@ endfunction
 function! PreviewWord(...)
   " 設定
   let direction = "belowright"
+  let height = 7
   let action = "ptjump"
-  "hi PreviewWord term=bold ctermbg=green guibg=green
-  hi link PreviewWord Search
+  hi PreviewWord term=bold ctermbg=lightyellow guibg=lightyellow
+  "hi link PreviewWord Search
 
   if &previewwindow			" プレビューウィンドウ内では実行しない
     return
@@ -822,6 +839,7 @@ function! PreviewWord(...)
       if has("folding")
         silent! .foldopen		" 閉じた折り畳みを開く
       endif
+      exe "resize" height
       exe "normal zz"
       call search("$", "b")		" 前の行の最後へ
       let w = substitute(w, '\\', '\\\\', "")
@@ -1191,7 +1209,7 @@ let g:ref_refe_version = 2
 " let g:ref_jquery_doc_path = $HOME . '/dev/doc/jqapi'
 
 " fugitive.vim {{{1
-" 説明 {{{2
+" 説明 {{{
 " DESC:
 "  VimにGitコマンドを追加。
 " COMMAND:
@@ -1204,12 +1222,13 @@ let g:ref_refe_version = 2
 "  :Gwrite/:Gadd : git add
 "  :Gdiff        : git diff
 "  :Gcommit -v   : git commit -v
-" COMMAND: {{{2
+" }}}
 command! Gs :Gstatus
 command! Ga :Gwrite
 command! Gw :Gwrite
 command! Gd :Gdiff
-command! Gc :Gcommit -va
+command! Gc :Gcommit -v
+command! Gca :Gcommit -va
 command! Gl :Glog
 command! Gb :Gblame
 command! Gpush :call s:my_git_vimproc('push')
@@ -1257,7 +1276,7 @@ let g:quickrun_config = {
 \    'outputter': 'error',
 \    'outputter/error': 'quickfix',
 \    'outputter/error/success': 'buffer',
-\    'outputter/buffer/split': ':belowright 5',
+\    'outputter/buffer/split': ':belowright 7',
 \    'outputter/buffer/close_on_empty': 1
 \  },
 \}
