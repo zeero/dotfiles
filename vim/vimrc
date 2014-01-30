@@ -2,14 +2,26 @@
 " 初期設定
 "-----------------------------------------------------------------------------
 " 初期設定 {{{1
-" Last Change: 29-Jan-2014.
+" Last Change: 31-Jan-2014.
 " VI互換モードOFF
 set nocompatible
 " 内部エンコーディングをutf-8に指定
 set encoding=utf-8
+" Winコマンドプロンプトではcp932
+if !has('gui_running') && &encoding != 'cp932' && &term == 'win32'
+  set termencoding=cp932
+endif
 " ファイルエンコーディング設定
 set fencs=utf-8,cp932,euc-jp,iso-2022-jp
 set ffs=unix,dos,mac
+" コンソール版で環境変数$DISPLAYが設定されていると起動が遅くなる件へ対応 {{{
+if !has('gui_running') && has('xterm_clipboard')
+  set clipboard=exclude:cons\\\|linux\\\|cygwin\\\|rxvt\\\|screen
+endif "}}}
+" WinではPATHに$VIMが含まれていないときにexeを見つけ出せないので修正 {{{
+if has('win32') && $PATH !~? '\(^\|;\)' . escape($VIM, '\\') . '\(;\|$\)'
+  let $PATH = $VIM . ';' . $PATH
+endif "}}}
 " キー入力をタイムアウトさせない
 set notimeout
 set ttimeout
@@ -148,22 +160,16 @@ NeoBundle 'fholgado/minibufexpl.vim'
 \, {'augroup': 'MiniBufExpl'}
 NeoBundle 'wombat256.vim'
 NeoBundle 'molokai'
+" 普段使わないカラースキームは:NeoBundleSourceで有効化させる
 NeoBundleLazy 'Zephyr-Color-Scheme'
-\, {'autoload': {'unite-source': ['colorscheme']}}
 NeoBundleLazy 'nanotech/jellybeans.vim'
-\, {'autoload': {'unite-source': ['colorscheme']}}
 NeoBundleLazy 'newspaper.vim'
-\, {'autoload': {'unite-source': ['colorscheme']}}
 NeoBundleLazy 'w0ng/vim-hybrid'
-\, {'autoload': {'unite-source': ['colorscheme']}}
 NeoBundleLazy 'jonathanfilip/vim-lucius'
-\, {'autoload': {'unite-source': ['colorscheme']}}
 NeoBundleLazy 'jpo/vim-railscasts-theme'
-\, {'autoload': {'unite-source': ['colorscheme']}}
 NeoBundleLazy 'http://blog.toddwerth.com/entry_files/8/ir_black.vim'
 \, {'name': 'ir_black.vim',
-\   'script_type': 'colors',
-\   'autoload': {'unite-source': ['colorscheme']}}
+\   'script_type': 'colors'}
 NeoBundleLazy 'thinca/vim-guicolorscheme'
 \, {'terminal': 1
 \,  'autoload': {'commands': ['GuiColorScheme']}}
@@ -213,131 +219,6 @@ if has('gui_running')
 endif
 
 " Kaoriya設定 {{{1
-" サイトローカルな設定 {{{2
-"
-" サイトローカルな設定($VIM/vimrc_local.vim)があれば読み込む。読み込んだ後に
-" 変数g:vimrc_local_finishに非0な値が設定されていた場合には、それ以上の設定
-" ファイルの読込を中止する。
-let g:vimrc_local_finish = 1
-if 1 && filereadable($VIM . '/vimrc_local.vim')
-  unlet! g:vimrc_local_finish
-  source $VIM/vimrc_local.vim
-  if exists('g:vimrc_local_finish') && g:vimrc_local_finish != 0
-    finish
-  endif
-endif
-
-" ユーザ優先設定 {{{2
-"
-" ユーザ優先設定($HOME/.vimrc_first.vim)があれば読み込む。読み込んだ後に変数
-" g:vimrc_first_finishに非0な値が設定されていた場合には、それ以上の設定ファ
-" イルの読込を中止する。
-if 0 && exists('$HOME') && filereadable($HOME . '/.vimrc_first.vim')
-  unlet! g:vimrc_first_finish
-  source $HOME/.vimrc_first.vim
-  if exists('g:vimrc_first_finish') && g:vimrc_first_finish != 0
-    finish
-  endif
-endif
-
-" 日本語対応のための設定 {{{2
-"
-" ファイルを読込む時にトライする文字エンコードの順序を確定する。漢字コード自
-" 動判別機能を利用する場合には別途iconv.dllが必要。iconv.dllについては
-" README_w32j.txtを参照。ユーティリティスクリプトを読み込むことで設定される。
-if filereadable($VIMRUNTIME . '/encode_japan.vim')
-  source $VIMRUNTIME/encode_japan.vim
-endif
-" メッセージを日本語にする (Windowsでは自動的に判断・設定されている)
-if !(has('win32') || has('mac')) && has('multi_lang')
-  if !exists('$LANG') || $LANG.'X' ==# 'X'
-    if !exists('$LC_CTYPE') || $LC_CTYPE.'X' ==# 'X'
-      language ctype ja_JP.eucJP
-    endif
-    if !exists('$LC_MESSAGES') || $LC_MESSAGES.'X' ==# 'X'
-      language messages ja_JP.eucJP
-    endif
-  endif
-endif
-" MacOS Xメニューの日本語化 (メニュー表示前に行なう必要がある)
-if has('mac')
-  set langmenu=japanese
-endif
-" 日本語入力用のkeymapの設定例 (コメントアウト)
-if has('keymap')
-  " ローマ字仮名のkeymap
-  "silent! set keymap=japanese
-  "set iminsert=0 imsearch=0
-endif
-" 非GUI日本語コンソールを使っている場合の設定
-if !has('gui_running') && &encoding != 'cp932' && &term == 'win32'
-  set termencoding=cp932
-endif
-
-" vimrc_example.vim {{{2
-"
-" Bram氏の提供する設定例をインクルード (別ファイル:vimrc_example.vim)。これ
-" 以前にg:no_vimrc_exampleに非0な値を設定しておけばインクルードはしない。
-" let g:no_vimrc_example = 1
-" if 1 && (!exists('g:no_vimrc_example') || g:no_vimrc_example == 0)
-"   if &guioptions !~# "M"
-"     " vimrc_example.vimを読み込む時はguioptionsにMフラグをつけて、syntax on
-"     " やfiletype plugin onが引き起こすmenu.vimの読み込みを避ける。こうしない
-"     " とencに対応するメニューファイルが読み込まれてしまい、これの後で読み込
-"     " まれる.vimrcでencが設定された場合にその設定が反映されずメニューが文字
-"     " 化けてしまう。
-"     set guioptions+=M
-"     source $VIMRUNTIME/vimrc_example.vim
-"     set guioptions-=M
-"   else
-"     source $VIMRUNTIME/vimrc_example.vim
-"   endif
-" endif
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
-inoremap <C-U> <C-G>u<C-U>
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-" Only define it when not defined already.
-if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-		  \ | wincmd p | diffthis
-endif
-
-" ファイル名に大文字小文字の区別がないシステム用の設定 {{{2
-"   (例: DOS/Windows/MacOS)
-"
-if filereadable($VIM . '/vimrc') && filereadable($VIM . '/ViMrC')
-  " tagsファイルの重複防止
-  set tags=./tags,tags
-endif
-
-" コンソールでのカラー表示のための設定(暫定的にUNIX専用) {{{2
-" if has('unix') && !has('gui_running')
-"   let uname = system('uname')
-"   if uname =~? "linux"
-"     set term=builtin_linux
-"   elseif uname =~? "freebsd"
-"     set term=builtin_cons25
-"   elseif uname =~? "Darwin"
-"     set term=beos-ansi
-"   else
-"     set term=builtin_xterm
-"   endif
-"   unlet uname
-" endif
-
-" コンソール版で環境変数$DISPLAYが設定されていると起動が遅くなる件へ対応 {{{2
-if !has('gui_running') && has('xterm_clipboard')
-  set clipboard=exclude:cons\\\|linux\\\|cygwin\\\|rxvt\\\|screen
-endif
-
-" プラットホーム依存の特別な設定 {{{2
-"
-" WinではPATHに$VIMが含まれていないときにexeを見つけ出せないので修正
-if has('win32') && $PATH !~? '\(^\|;\)' . escape($VIM, '\\') . '\(;\|$\)'
-  let $PATH = $VIM . ';' . $PATH
-endif
 
 "}}}1-------------------------------------------------------------------------
 
@@ -356,6 +237,7 @@ set hlsearch
 " 検索時にファイルの最後まで行ったら最初に戻る (nowrapscan:戻らない)
 set wrapscan
 " タグ検索パスの設定
+"set tags=./tags,tags
 au myvimrc FileType * exe "setlocal tags+=" . $HOME . "/.tags/" . &ft . ".tags"
 " タグ検索に二分検索をオフにする（vimdoc-jaフリーズ対策）
 set notagbsearch
@@ -456,7 +338,7 @@ endif
 " set lazyredraw
 " 行を強調表示
 set cursorline
-hi CursorLineNr ctermfg=white guifg=white
+hi default CursorLineNr ctermfg=white guifg=white
 " 行番号を表示 (nonumber:表示)
 set number
 " ルーラーを表示 (noruler:非表示)
@@ -605,6 +487,11 @@ au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
 " COMMAND:
 " VimDiff
 command! -complete=file -nargs=1 VimDiff :vertical diffsplit <args>
+" 編集前とdiff
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+  \ | wincmd p | diffthis
+endif
 " Vimrc、Sorc
 command! Vimrc :tabe $MYVIMRC
 command! Sorc :source $MYVIMRC
@@ -678,7 +565,7 @@ command! -nargs=* -complete=file Ls :echo system("ls <args>")
 " map系はリンク先のコマンドを再帰的に展開する。
 " noremap系はリンク先のコマンドを再帰的に展開しない。
 " 基本的にはnoremap系を使用する。
-"   カーソル移動 => noremap
+"   カーソル移動 => nnoremap
 "   範囲選択     => vnoremap & onoremap
 "     ビジュアルモードだけでセレクトモードを除くならxnoremp
 "   テキスト入力補助 => inoremap
@@ -696,19 +583,24 @@ xnoremap j gj
 xnoremap k gk
 " 行末までヤンク
 nnoremap Y y$
+" CTRL-Uのundo対策（from exaple.vim）
+inoremap <C-U> <C-G>u<C-U>
+
 " すべてのフォールディングの開け閉め
 nnoremap zO zR
 nnoremap zC zM
 nnoremap zo zozz
 nnoremap zc zczz
+
 " diffハンクへのジャンプ
 au myvimrc BufRead * nnoremap <buffer> [[ [czz
 au myvimrc BufRead * nnoremap <buffer> ]] ]czz
 nnoremap do do]czz
 nnoremap dp dp]czz
-" Todo: 自動で移動してくれない
+" Todo: normal ]cが効かない…
 au myvimrc BufRead * if 1 == &diff | noh | exe 'normal ]c' | endif
-" Help、QuickFix、Fugitiveでは<Esc><Esc>でバッファを閉じる
+
+" Help、QuickFix、fugitiveでは<Esc><Esc>でバッファを閉じる
 au myvimrc FileType help,qf,gitcommit nnoremap <buffer> <Esc><Esc> <C-w>c
 " タブページ操作
 nnoremap <Tab> <C-PageDown>
@@ -1184,7 +1076,7 @@ let g:ctrlp_match_window = 'max:20'
 " キャッシュを使う
 let g:ctrlp_use_caching = 1
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-" キャッシュを終了後も残す
+" キャッシュを終了後も残す（<F5>でキャッシュ更新）
 let g:ctrlp_clear_cache_on_exit = 0
 " 拡張機能を有効にする
 let g:ctrlp_extensions = ['tag', 'dir', 'changes', 'bookmarkdir']
