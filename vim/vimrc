@@ -99,6 +99,9 @@ NeoBundleLazy 'mattn/emmet-vim'
 \, {'autoload': {'filetypes': ['html']}}
 
 " コマンド {{{2
+NeoBundle 'thinca/vim-ref'
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tpope/vim-fugitive'
 \, {'augroup': 'fugitive'}
 NeoBundle 'mattn/webapi-vim'
@@ -106,9 +109,6 @@ NeoBundle 'mattn/gist-vim'
 NeoBundleLazy 'gregsexton/gitv'
 \, {'autoload': {'commands': ['Gitv']}
 \,  'depends': ['tpope/vim-fugitive']}
-NeoBundle 'thinca/vim-ref'
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'scrooloose/syntastic'
 NeoBundleLazy 'thinca/vim-prettyprint'
 \, {'autoload': {'commands': ['PP']}}
 NeoBundle 'szw/vim-tags'
@@ -120,10 +120,10 @@ NeoBundleLazy 'majutsushi/tagbar'
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
 \, {'autoload': {'filetypes': ['ruby']}}
-NeoBundleLazy 'taka84u9/vim-ref-ri'
-\, {'autoload': {'filetypes': ['ruby']
-\,               'unite_sources': ['refe/ri']}
-\,  'depends': 'thinca/vim-ref'}
+NeoBundle 'taka84u9/vim-ref-ri'
+" \, {'autoload': {'filetypes': ['ruby']
+" \,               'unite_sources': ['ref/ri']}
+" \,  'depends': 'thinca/vim-ref'}
 NeoBundle 'edsono/vim-matchit'
 NeoBundleLazy 'tpope/vim-bundler'
 \, {'autoload': {'filetypes': ['ruby']}}
@@ -984,8 +984,8 @@ command! Urrw exe 'Unite ref/refe ' .
 \ '-no-empty -silent -buffer-name=ref/refe -input=' .
 \ escape(expand("<cword>"), '- \\')
 " ri
-command! Urri :Unite refe/ri
-\ -no-empty -silent -buffer-name=refe/ri
+command! Urri :Unite ref/ri
+\ -no-empty -silent -buffer-name=ref/ri
 
 " 直前のUniteコマンドの結果に戻る
 command! Ur :UniteResume
