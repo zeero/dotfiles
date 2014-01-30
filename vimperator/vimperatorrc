@@ -8,6 +8,8 @@ set hlsearch
 set newtab=all
 " ページロード時にテキストボックスにフォーカスするのを防ぐ
 set focuscontent
+" ヒントキャラクタの指定
+set hintchars=gfdsavcxzrewq
 " :[tab]open時の補完設定(s=検索エンジン+キーワードURL,S=サジェストエンジン,l=ロケーションバーの補完機能を利用,b=ブックマーク)
 set complete=sSl
 " カラースキーム導入
