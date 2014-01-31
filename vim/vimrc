@@ -95,6 +95,8 @@ NeoBundleLazy 'ujihisa/unite-locate'
 \, {'autoload': {'unite_sources': ['locate']}}
 NeoBundleLazy 'ujihisa/unite-colorscheme'
 \, {'autoload': {'unite_sources': ['colorscheme']}}
+NeoBundleLazy 'osyo-manga/unite-highlight'
+\, {'autoload': {'unite_sources': ['highlight']}}
 NeoBundleLazy 'tacroe/unite-alias'
 \, {'autoload': {'unite_sources': ['alias']}}
 NeoBundleLazy 'mattn/unite-gist'
@@ -177,6 +179,8 @@ NeoBundle 'godlygeek/csapprox'
 \, {'gui': 1}
 NeoBundleLazy 'ScrollColors'
 \, {'autoload': {'commands': ['SCROLLCOLOR']}}
+NeoBundleLazy 'cocopon/colorswatch.vim'
+\, {'autoload': {'commands': ['ColorSwatchGenerate']}}
 
 " 補助 {{{2
 NeoBundle 'thinca/vim-singleton'
@@ -630,19 +634,9 @@ nnoremap <C-o> :<C-u>CtrlPMRUFiles<CR>
 
 " リーダーキー {{{2
 " ,をリーダーキーにする（衝突を避けるためにmapleaderは設定しない）
-"  h: H(elp), [,]: TagJump, p: PasteToggle, /: CommentToggle, r: Quickrun
-"  f: VimFiler, s: VimShell, m: MBEToggle, l: TagbarToggle, ,: PreviewToggle
-" カーソルの下の単語でヘルプを引く
-nmap K ,h
-vmap K ,h
-au myvimrc FileType vim nnoremap <buffer> ,h :<C-u>H<Space><C-r><C-w><CR>
-au myvimrc FileType vim vnoremap <buffer> ,h y:<C-u>H<Space><C-r>"<CR>
-au myvimrc FileType ruby nnoremap <buffer> ,h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
-au myvimrc FileType ruby vnoremap <buffer> ,h y:<C-u>Ref<Space>refe<Space><C-r>"<CR>
-au myvimrc FileType javascript nnoremap <buffer> ,h :<C-u>Ref<Space>javascript<Space><C-r><C-w><CR>
-au myvimrc FileType javascript vnoremap <buffer> ,h y:<C-u>Ref<Space>javascript<Space><C-r>"<CR>
-au myvimrc FileType sh nnoremap <buffer> ,h :<C-u>Ref<Space>man<Space><C-r><C-w><CR>
-au myvimrc FileType sh vnoremap <buffer> ,h y:<C-u>Ref<Space>man<Space><C-r>"<CR>
+"  []: TagJump, h: H(elp), r: Quickrun, f: VimFiler, s: VimShell
+"  p: PasteToggle, /: CommentToggle, m: MBEToggle, l: TagbarToggle, ,: PreviewToggle
+"  v: VisualMode
 " タグジャンプ
 nnoremap <C-]> g<C-]>
 vnoremap <C-]> g<C-]>
@@ -659,18 +653,55 @@ nnoremap <C-h> <C-o>
 nnoremap <Left> <C-o>
 nnoremap <C-l> <C-i>
 nnoremap <Right> <C-i>
-" PASTEモードの切り替え
-set pastetoggle=,p
-" コメントアウトの切り替え（caw.vim）
-nmap ,/ <Plug>(caw:I:toggle)
-vmap ,/ <Plug>(caw:I:toggle)
+
+" カーソルの下の単語でヘルプを引く
+nmap K ,h
+vmap K ,h
+au myvimrc FileType vim nnoremap <buffer> ,h :<C-u>H<Space><C-r><C-w><CR>
+au myvimrc FileType vim vnoremap <buffer> ,h y:<C-u>H<Space><C-r>"<CR>
+au myvimrc FileType ruby nnoremap <buffer> ,h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
+au myvimrc FileType ruby vnoremap <buffer> ,h y:<C-u>Ref<Space>refe<Space><C-r>"<CR>
+au myvimrc FileType javascript nnoremap <buffer> ,h :<C-u>Ref<Space>javascript<Space><C-r><C-w><CR>
+au myvimrc FileType javascript vnoremap <buffer> ,h y:<C-u>Ref<Space>javascript<Space><C-r>"<CR>
+au myvimrc FileType sh nnoremap <buffer> ,h :<C-u>Ref<Space>man<Space><C-r><C-w><CR>
+au myvimrc FileType sh vnoremap <buffer> ,h y:<C-u>Ref<Space>man<Space><C-r>"<CR>
+
 " QuickRun
 nmap ,r <Plug>(quickrun)
+vnoremap ,r y:QuickInspector<CR>
+command! QuickInspector :call s:my_quick_inspector()
+function! s:my_quick_inspector() "{{{
+  if !exists('*s:my_quick_inspector_'.&ft)
+    echoerr 'not implemented whis this filetype.'
+    return
+  endif
+  hi QuickInspector term=underline cterm=underline ctermfg=67
+  \ gui=underline guifg=67
+  let expr = substitute(getreg('"'), '\(\s\|\n\)\+$', '', '')
+  echohl QuickInspector
+  echo 'expr: '.expr
+  echohl None
+  exe 'echo s:my_quick_inspector_'.&ft.'(expr)'
+  echo ''
+endfunction "}}}
+function! s:my_quick_inspector_vim(expr) "{{{
+  return eval(a:expr)
+endfunction "}}}
+function! s:my_quick_inspector_ruby(expr) "{{{
+  return vimproc#system('ruby -e '.shellescape('p '.a:expr))
+endfunction "}}}
+
 " VimFiler
 nnoremap ,f :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
 " VimShell
 nnoremap ,s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<CR>
+
+" PASTEモードの切り替え
+set pastetoggle=,p
+" コメントアウトの切り替え（caw.vim）
+nmap ,/ <Plug>(caw:I:toggle)
+vmap ,/ <Plug>(caw:I:toggle)
 " MBEToggle
 nnoremap ,m :<C-u>MBEToggle<CR>
 " TagbarToggle
@@ -738,6 +769,9 @@ function! PreviewWord(...)
   endif
 endfunction "}}}
 
+" ビジュアルモードでカーソル位置から末尾まで選択
+nnoremap ,v v$
+
 " 無効化 {{{2
 " 保存して閉じる
 nnoremap ZZ <Nop>
@@ -794,7 +828,8 @@ call unite#custom_default_action('file', 'tabopen')
 call unite#custom_default_action('directory', 'vimfiler')
 " ref
 call unite#custom_default_action(
-\ 'source/ref/refe/*,source/ref/javascript/*,source/ref/jquery/*', 'vsplit')
+\ 'source/ref/refe/*,source/ref/ri/*,source/ref/javascript/*,source/ref/jquery/*,source/ref/man/*',
+\ 'vsplit')
 " help
 call unite#custom_default_action('source/help/*', 'vsplit')
 
