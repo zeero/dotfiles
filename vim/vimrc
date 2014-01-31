@@ -218,10 +218,6 @@ if has('gui_running')
   call singleton#enable()
 endif
 
-" Kaoriya設定 {{{1
-
-"}}}1-------------------------------------------------------------------------
-
 "-----------------------------------------------------------------------------
 " 基本設定
 "-----------------------------------------------------------------------------
@@ -338,7 +334,6 @@ endif
 " set lazyredraw
 " 行を強調表示
 set cursorline
-hi default CursorLineNr ctermfg=white guifg=white
 " 行番号を表示 (nonumber:表示)
 set number
 " ルーラーを表示 (noruler:非表示)
@@ -840,19 +835,20 @@ command! -nargs=+ -complete=customlist,unite#complete#source U :Unite <args>
 " 現在のバッファ内をグレップ
 command! Ug :Unite grep:%
 \ -no-empty -silent -buffer-name=grep
+" カーソル下の単語で現在のバッファをグレップ
+command! Ugw :exe 'Unite grep:%::' .
+\ escape(expand("<cword>"), '- \\') .
+\ ' -no-empty -silent -buffer-name=grep-word'
 " ディレクトリをグレップ
 command! Ugd :exe 'Unite grep' .
 \ ' -silent -buffer-name=grep-dir' .
 \ ' -tab -no-split -no-quit'
 \ | setlocal splitbelow | exe 'normal <Plug>(unite_toggle_auto_preview)'
-" カーソル下の単語で現在のバッファをグレップ
-command! Ugw :exe 'Unite grep:%::' .
-\ escape(expand("<cword>"), '- \\') .
-\ ' -no-empty -silent -buffer-name=grep-word'
 " すべてのバッファをグレップ
-command! Ugb :Unite grep:$buffers
-\ -silent -buffer-name=grep-all-bufs
-\ -tab -no-split -no-quit -auto-preview -direction=topleft
+command! Ugb :exe 'Unite grep:$buffers' .
+\ ' -silent -buffer-name=grep-all-bufs' .
+\ ' -tab -no-split -no-quit
+\ | setlocal splitbelow | exe 'normal <Plug>(unite_toggle_auto_preview)'
 
 " ブックマーク（追加はUniteBookmarkAdd）
 command! Ub :Unite bookmark
