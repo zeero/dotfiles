@@ -14,17 +14,13 @@ endif
 " ファイルエンコーディング設定
 set fencs=utf-8,cp932,euc-jp,iso-2022-jp
 set ffs=unix,dos,mac
-" コンソール版で環境変数$DISPLAYが設定されていると起動が遅くなる件へ対応 {{{
-if !has('gui_running') && has('xterm_clipboard')
-  set clipboard=exclude:cons\\\|linux\\\|cygwin\\\|rxvt\\\|screen
-endif "}}}
-" WinではPATHに$VIMが含まれていないときにexeを見つけ出せないので修正 {{{
-if has('win32') && $PATH !~? '\(^\|;\)' . escape($VIM, '\\') . '\(;\|$\)'
-  let $PATH = $VIM . ';' . $PATH
-endif "}}}
 " キー入力をタイムアウトさせない
 set notimeout
 set ttimeout
+" マウスを有効にする
+if has('mouse')
+  set mouse=a
+endif
 " 高速ターミナル接続を行う
 set ttyfast
 " パス区切り文字を共通化する
@@ -38,6 +34,14 @@ let $MYVIMDIR = '~/.vim'
 if !isdirectory($MYVIMDIR) && isdirectory($HOME . '/vimfiles')
   let $MYVIMDIR = '~/vimfiles'
 endif
+" コンソール版で環境変数$DISPLAYが設定されていると起動が遅くなる件へ対応 {{{
+if !has('gui_running') && has('xterm_clipboard')
+  set clipboard=exclude:cons\\\|linux\\\|cygwin\\\|rxvt\\\|screen
+endif "}}}
+" WinではPATHに$VIMが含まれていないときにexeを見つけ出せないので修正 {{{
+if has('win32') && $PATH !~? '\(^\|;\)' . escape($VIM, '\\') . '\(;\|$\)'
+  let $PATH = $VIM . ';' . $PATH
+endif "}}}
 
 " NeoBundle {{{1
 " 説明 {{{2
@@ -126,10 +130,9 @@ NeoBundleLazy 'gregsexton/gitv'
 NeoBundleLazy 'thinca/vim-prettyprint'
 \, {'autoload': {'commands': ['PP']}}
 NeoBundle 'szw/vim-tags'
+NeoBundle 'TagHighlight'
 NeoBundleLazy 'majutsushi/tagbar'
 \, {'autoload': {'commands': ['TagbarToggle']}}
-" NeoBundleLazy 'wesleyche/SrcExpl'
-" \, {'autoload': {'commands': ['SrcExplToggle']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -162,13 +165,14 @@ NeoBundle 'fholgado/minibufexpl.vim'
 \, {'augroup': 'MiniBufExpl'}
 NeoBundle 'wombat256.vim'
 NeoBundle 'molokai'
-" 普段使わないカラースキームは:NeoBundleSourceで有効化させる
-NeoBundleLazy 'Zephyr-Color-Scheme'
-NeoBundleLazy 'nanotech/jellybeans.vim'
-NeoBundleLazy 'newspaper.vim'
+" 普段使わないカラースキームは使用時に:NeoBundleSource
+NeoBundle 'altercation/vim-colors-solarized'
 NeoBundleLazy 'w0ng/vim-hybrid'
-NeoBundleLazy 'jonathanfilip/vim-lucius'
+NeoBundleLazy 'nanotech/jellybeans.vim'
 NeoBundleLazy 'jpo/vim-railscasts-theme'
+NeoBundleLazy 'jonathanfilip/vim-lucius'
+NeoBundleLazy 'Zephyr-Color-Scheme'
+NeoBundleLazy 'newspaper.vim'
 NeoBundleLazy 'http://blog.toddwerth.com/entry_files/8/ir_black.vim'
 \, {'name': 'ir_black.vim',
 \   'script_type': 'colors'}
@@ -215,12 +219,15 @@ command! Bu :NeoBundleUpdate
 command! -nargs=? Bs :NeoBundleSearch <args>
 command! Bc :NeoBundleClean
 command! Bl :NeoBundleList
+command! Bso :NeoBundleSource
 
 " singleton.vim {{{1
 if has('gui_running')
   let g:singleton#opener = 'tab drop'
   call singleton#enable()
 endif
+
+"}}}1-------------------------------------------------------------------------
 
 "-----------------------------------------------------------------------------
 " 基本設定
@@ -330,9 +337,17 @@ set t_Co=256
 if has('gui_running')
   colorscheme wombat256mod
 else
-  "let g:molokai_original = 1
+"   let g:molokai_original = 1
   let g:rehash256 = 1
   colorscheme molokai
+"   solarized {{{
+"   set background=dark
+"   let g:solarized_termcolors = 256
+"   let g:solarized_termtrans = 1
+"   let g:solarized_contrast = "high"
+"   let g:solarized_visibility = "high"
+"   colorscheme solarized
+"   }}}
 endif
 " 遅延描画
 " set lazyredraw
@@ -418,10 +433,6 @@ if has('gui_running')
   "if has('clipboard')
   "  set clipboard=unnamed
   "endif
-  " マウスを有効にする
-  if has('mouse')
-    set mouse=a
-  endif
   " IME制御をオフにする
   set iminsert=0
   set imsearch=0
@@ -486,7 +497,7 @@ au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
 " COMMAND:
 " VimDiff
 command! -complete=file -nargs=1 VimDiff :vertical diffsplit <args>
-" 編集前とdiff
+" DiffOrig（編集前とdiff）
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
   \ | wincmd p | diffthis
@@ -495,6 +506,7 @@ endif
 command! Vimrc :tabe $MYVIMRC
 command! Sorc :source $MYVIMRC
 " H(elp)
+" Todo: トグリたい
 command! -nargs=? -complete=help H if winwidth(0) > 140 | :vertical help <args> | :vertical resize 79 | else | :help <args> | endif
 " Vimdoc
 command! VimDoc :OpenBrowser http://vim-jp.org/vimdoc-ja/
@@ -582,14 +594,16 @@ xnoremap j gj
 xnoremap k gk
 " 行末までヤンク
 nnoremap Y y$
-" CTRL-Uのundo対策（from exaple.vim）
-inoremap <C-U> <C-G>u<C-U>
-
+" スペースでページ移動
+nnoremap <Space> <PageDown>
+nnoremap <S-Space> <PageUp>
 " すべてのフォールディングの開け閉め
 nnoremap zO zR
 nnoremap zC zM
 nnoremap zo zozz
 nnoremap zc zczz
+" gfはタブで開く
+nnoremap gf :tabe <cfile><CR>
 
 " diffハンクへのジャンプ
 au myvimrc BufRead * nnoremap <buffer> [[ [czz
@@ -607,6 +621,8 @@ nnoremap <S-Tab> <C-PageUp>
 nnoremap ,<Tab> :<C-u>tabnew<CR>
 " ESCを二回でハイライトを消す
 nnoremap <silent> <Esc><Esc> :noh<CR>
+" CTRL-Uのundo対策（from exaple.vim）
+inoremap <C-U> <C-G>u<C-U>
 
 " CTRLキー、Shiftキー {{{2
 " ウィンドウサイズ変更
@@ -635,7 +651,7 @@ nnoremap <C-o> :<C-u>CtrlPMRUFiles<CR>
 " リーダーキー {{{2
 " ,をリーダーキーにする（衝突を避けるためにmapleaderは設定しない）
 "  []: TagJump, h: H(elp), r: Quickrun, f: VimFiler, s: VimShell
-"  p: PasteToggle, /: CommentToggle, m: MBEToggle, l: TagbarToggle, ,: PreviewToggle
+"  p: PasteToggle, /: CommentToggle, m: MBEToggle, ;: TagbarToggle, ,: PreviewToggle
 "  v: VisualMode
 " タグジャンプ
 nnoremap <C-]> g<C-]>
@@ -693,7 +709,7 @@ endfunction "}}}
 
 " VimFiler
 nnoremap ,f :<C-u>VimFilerBufferDir
-\<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<CR>
+\<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<Space>-toggle<CR>
 " VimShell
 nnoremap ,s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<CR>
 
@@ -705,7 +721,7 @@ vmap ,/ <Plug>(caw:I:toggle)
 " MBEToggle
 nnoremap ,m :<C-u>MBEToggle<CR>
 " TagbarToggle
-nnoremap ,l :<C-u>TagbarToggle<CR>
+nnoremap ,; :<C-u>TagbarToggle<CR>
 " PreviewToggle
 nnoremap ,, :<C-u>PreviewToggle<CR>
 vnoremap ,, y:call PreviewWord('<C-r>"')<CR>
@@ -959,7 +975,7 @@ let g:vimfiler_edit_action = 'tabopen'
 " デフォルトでIDE風のFilerを開く
 " au myvimrc VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
 " ステータスラインを上書きしない（lightline向け）
-let g:vimfiler_force_overwrite_statusline = 0
+"let g:vimfiler_force_overwrite_statusline = 0
 "let g:netrw_liststyle=3
 " Enterでツリー開閉、ファイル編集を可能に
 au myvimrc FileType vimfiler nmap <buffer> <expr> <CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
@@ -977,7 +993,7 @@ command! Irb :VimShellInteractive irb
 au myvimrc FileType vimshell inoremap <buffer> ,s :<C-u>VimShellSendString<CR>
 au myvimrc FileType vimshell vmap <buffer> ,s :<C-u>VimShellSendString<CR>
 
-" neocomplecache.vim {{{1
+" NeoComplCache {{{1
 "
 " KEYMAP:
 "  <Tab> : 補完
@@ -1079,7 +1095,7 @@ let g:neocomplcache_omni_patterns.cpp =
 let g:neocomplcache_omni_patterns.perl =
 \ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
 
-" neosnippet.vim {{{1
+" NeoSnippet {{{1
 " KEYMAP:
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
@@ -1132,7 +1148,7 @@ let g:ref_refe_version = 2
 " ref/jquery
 " let g:ref_jquery_doc_path = $HOME . '/dev/doc/jqapi'
 
-" fugitive.vim {{{1
+" fugitive {{{1
 " 説明 {{{
 " DESC:
 "  VimにGitコマンドを追加。
@@ -1176,7 +1192,7 @@ function! s:my_git_vimproc(gitcommand) "{{{
   echohl None
 endfunction "}}}
 
-" quickrun.vim {{{1
+" QuickRun {{{1
 "
 " デフォルトの設定を見る場合、
 " let g:quickrun#default_configを使う。
@@ -1253,13 +1269,11 @@ hi MBENormal ctermfg=darkgray guifg=darkgray guibg=black
 " for buffers that HAVE CHANGED and are NOT VISIBLE
 hi MBEChanged ctermfg=red guifg=red guibg=black
 
-" lightline.vim {{{1
-"
-" lightline config
+" lightline {{{1
 "\  'colorscheme': 'wombat',
 "\    'right': [['mode'], ['filename']]
 let g:lightline = {
-\  'mode_map': {'c': 'NORMAL'},
+\  'mode_map': {'c': 'COMMAND'},
 \  'active': {
 \    'left': [['mode', 'paste'], ['filename', 'fugitive']],
 \    'right': [['lineinfo'], ['percent'], ['pwd', 'fileformat', 'fileencoding', 'filetype']]
@@ -1302,7 +1316,7 @@ function! MyPwd()
 endfunction
 function! MyFugitive()
   try
-    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+    if winwidth(0) > 80 && &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
       return fugitive#head()
     endif
   catch
@@ -1310,13 +1324,13 @@ function! MyFugitive()
   return ''
 endfunction
 function! MyFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
+  return winwidth(0) > 80 ? &fileformat : ''
 endfunction
 function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+  return winwidth(0) > 80 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
 function! MyFileencoding()
-  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+  return winwidth(0) > 80 ? (strlen(&fenc) ? &fenc : &enc) : ''
 endfunction
 function! MyMode()
   return &ft == 'help' ? 'Help' :
@@ -1324,7 +1338,6 @@ function! MyMode()
 \        &ft == 'quickrun' ? 'QuickRun' :
 \        &ft == 'qf' ? 'QuickFix' :
 \        &ft == 'unite' ? 'Unite' :
-\        &ft == 'vimfiler' ? 'VimFiler' :
 \        &ft == 'vimshell' ? 'VimShell' :
 \        winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
@@ -1332,7 +1345,7 @@ endfunction
 " Tagbar {{{1
 let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 
-" surround.vim {{{1
+" surround {{{1
 "
 " KEYMAP:
 "  i : inside
@@ -1343,12 +1356,12 @@ let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 "  cs'" : 'を"に変換する
 "  ds' : 'で囲まれた範囲を消す
 
-" migemo-search.vim {{{1
+" migemo-search {{{1
 if executable('cmigemo')
   cnoremap <expr> <silent> <CR> migemosearch#replace_search_word() . "\<CR>"
 endif
 
-" emmet.vim {{{1
+" Emmet {{{1
 "
 " KEYMAP:
 "  <C-e> : 展開
@@ -1416,7 +1429,7 @@ let g:user_emmet_settings = {
 \  },
 \}
 
-" rcodetools.vim {{{1
+" rcodetools {{{1
 "
 " DESC: xmpfilterの呼び出し設定
 " <F1>でバッファ全体にxmpfilterを実行
@@ -1451,8 +1464,8 @@ let g:user_emmet_settings = {
 "imap <silent> <F11> <Esc><F11>
 "}}}
 
-" vim-indent-guides {{{1
-" vim立ち上げたときに、自動的にvim-indent-guidesをオンにする
+" IndentGuides {{{1
+" vim立ち上げたときに、自動的にIndentGuidesをオンにする
 " let g:indent_guides_enable_on_vim_startup = 1
 " ガイドをスタートするインデントの量
 let g:indent_guides_start_level = 2
@@ -1467,7 +1480,7 @@ let g:indent_guides_color_change_percent = 30
 " ガイドの幅
 let g:indent_guides_guide_size = 1
 
-" syntastic {{{1
+" Syntastic {{{1
 let g:syntastic_mode_map = {
 \ 'mode': 'active',
 \ 'passive_filetypes': ['html']
