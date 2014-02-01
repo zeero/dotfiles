@@ -17,10 +17,6 @@ set ffs=unix,dos,mac
 " キー入力をタイムアウトさせない
 set notimeout
 set ttimeout
-" マウスを有効にする
-if has('mouse')
-  set mouse=a
-endif
 " 高速ターミナル接続を行う
 set ttyfast
 " パス区切り文字を共通化する
@@ -76,6 +72,7 @@ NeoBundleLazy 'Shougo/neosnippet'
 NeoBundleLazy 'Shougo/neosnippet-snippets'
 \, {'autoload': {'insert': 1}}
 NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'haya14busa/vim-easymotion'
 
 " Unite {{{2
 NeoBundleLazy 'Shougo/unite.vim'
@@ -205,11 +202,6 @@ NeoBundle 'rhysd/migemo-search.vim'
 NeoBundle 'sudo.vim'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
-" ローカルレポジトリ {{{2
-if isdirectory($HOME . '/dev/github/unite-tiddlywiki/')
-  NeoBundleLocal '~/dev/github/unite-tiddlywiki/'
-endif
-
 " NeoBundle終了 {{{2
 filetype plugin indent on
 " インストールチェック
@@ -337,6 +329,7 @@ syntax on
 " カラースキーマ設定
 set t_Co=256
 if has('gui_running')
+  set background=dark
   colorscheme wombat256mod
 else
 "   let g:molokai_original = 1
@@ -427,14 +420,16 @@ if has('gui_running')
   set guioptions-=L
   " フォントを指定
   set guifont=Ricty_Diminished:h12:cSHIFTJIS
-  " 背景色暗色（colorschemeの後に設定すること）
-  set background=dark
   " ウィンドウサイズを最大化する
   au myvimrc GUIEnter * simalt ~x
   " ヤンクでクリップボードを共有する
   "if has('clipboard')
   "  set clipboard=unnamed
   "endif
+  " マウスを有効にする
+  if has('mouse')
+    set mouse=a
+  endif
   " IME制御をオフにする
   set iminsert=0
   set imsearch=0
@@ -1517,9 +1512,9 @@ let g:indent_guides_start_level = 2
 " 自動カラーを無効にする
 let g:indent_guides_auto_colors = 0
 " 奇数インデントのカラー
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#262626 ctermbg=gray
+au myvimrc VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#262626 ctermbg=gray
 " 偶数インデントのカラー
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgray
+au myvimrc VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgray
 " ハイライト色の変化の幅
 let g:indent_guides_color_change_percent = 30
 " ガイドの幅
@@ -1530,6 +1525,25 @@ let g:syntastic_mode_map = {
 \ 'mode': 'active',
 \ 'passive_filetypes': ['html']
 \}
+
+" EasyMotion {{{1
+" 大文字小文字を無視しない
+let g:EasyMotion_smartcase = 1
+" migemo検索
+let g:EasyMotion_use_migemo = 1
+" 使用する文字
+let g:EasyMotion_keys = 'fdsajklghrewquiopvcxzmtybn/.;'
+" JKモーションでカラム位置キープ
+let g:EasyMotion_startofline = 0
+" KEYMAP:
+nmap f <Plug>(easymotion-S)
+vmap f <Plug>(easymotion-S)
+omap f <Plug>(easymotion-S)
+nmap F <Plug>(easymotion-s)
+vmap F <Plug>(easymotion-s)
+omap F <Plug>(easymotion-s)
+au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> f <Plug>(easymotion-j)
+au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> F <Plug>(easymotion-k)
 
 "}}}1-------------------------------------------------------------------------
 
