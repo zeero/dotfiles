@@ -1,0 +1,27 @@
+VimFiler Keymaps
+
+-- Directory --
+h: up dir
+l: down dir
+t: tree view
+T: tree view all
+yy: yank path
+
+-- File --
+e: edit
+<Space>: mark
+c: copy
+m: move
+d: delete
+N: new file
+K: new dir
+*: mark all
+U: mark off all
+
+-- Misc --
+?: keymap
+a: action
+H: VimShell
+ge: system filer
+x: system app
+

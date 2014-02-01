@@ -981,6 +981,33 @@ let g:vimfiler_edit_action = 'tabopen'
 au myvimrc FileType vimfiler nmap <buffer> <expr> <CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
 " ESCキーを2回押すと終了する
 au myvimrc FileType vimfiler nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
+" キーマップヘルプを表示
+au myvimrc FileType vimfiler nnoremap <buffer> ,, :MyVimFilerHelp<CR>
+command! MyVimFilerHelp :call s:my_vimfiler_help()
+function! s:my_vimfiler_help() "{{{
+  silent! wincmd P
+  if &previewwindow
+    pclose
+    return
+  endif
+
+  hi link MyVimFilerHelp Comment
+  hi link MyVimFilerHelpTitle PreProc
+  hi link MyVimFilerHelpKey Identifier
+  belowright pedit $MYVIMDIR/doc/vimfiler_help.txt
+  silent! wincmd P
+  if &previewwindow
+    match none
+    setlocal nonumber
+    resize 20
+    normal gg
+    nnoremap <buffer> ,, :MyVimFilerHelp<CR>
+    call matchadd('MyVimFilerHelp', '.', 0)
+    call matchadd('MyVimFilerHelpTitle', '--.*')
+    call matchadd('MyVimFilerHelpKey', '\(.\+\):')
+    wincmd p
+  endif
+endfunction "}}}
 
 " VimShell {{{1
 "
