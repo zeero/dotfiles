@@ -9,7 +9,7 @@ set newtab=all
 " ページロード時にテキストボックスにフォーカスするのを防ぐ
 set focuscontent
 " ヒントキャラクタの指定
-set hintchars=gfdsavcxzrewq
+set hintchars=gfdsavcxzrew
 " :[tab]open時の補完設定(s=検索エンジン+キーワードURL,S=サジェストエンジン,l=ロケーションバーの補完機能を利用,b=ブックマーク)
 set complete=sSl
 " カラースキーム導入
@@ -18,34 +18,29 @@ colorscheme ZeeroBlue
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " キー設定
 "
-
 " 印刷
 nnoremap <C-p> :ha<CR>
-
 " h/lで戻る/進む
 nnoremap h <A-Left>
 nnoremap l <A-Right>
-
 " H/Lでタブ移動
 nnoremap H gT
 nnoremap L gt
-
 " タブを一番右に移動
 nnoremap <C-l> :tabm 100<CR>
-
 " ナビゲーションバーのトグル
 nnoremap m :set toolbars+=nonavigation,noaddons<CR>
 nnoremap M :set toolbars+=navigation,addons<CR>
-
 " 中止
-nnoremap <Esc> :st<CR>
+nnoremap <Esc> :st<CR><Esc>
+" 最近閉じたタブの一覧（補完待ち状態にする）
+nnoremap U :undo<Space>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " プラグインの設定
 "
-
 " My Commands
-command! reconfig source $MY_VIMPERATORRC
+command! resource source $MY_VIMPERATORRC
 
 " feedSomeKeys_3.js
 command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
