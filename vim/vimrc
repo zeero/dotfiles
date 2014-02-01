@@ -495,21 +495,50 @@ au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
 " コマンド定義 {{{1
 "
 " COMMAND:
-" VimDiff
-command! -complete=file -nargs=1 VimDiff :vertical diffsplit <args>
-" DiffOrig（編集前とdiff）
-if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-  \ | wincmd p | diffthis
-endif
-" Vimrc、Sorc
-command! Vimrc :tabe $MYVIMRC
-command! Sorc :source $MYVIMRC
 " H(elp)
 " Todo: トグリたい
 command! -nargs=? -complete=help H if winwidth(0) > 140 | :vertical help <args> | :vertical resize 79 | else | :help <args> | endif
 " Vimdoc
 command! VimDoc :OpenBrowser http://vim-jp.org/vimdoc-ja/
+
+" Vimrc、Sorc
+command! Vimrc :tabe $MYVIMRC
+command! Sorc :source $MYVIMRC
+" Esnip
+command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete Esnip :NeoSnippetEdit -vertical -split <args>
+" Bdo
+command! Bdo :call s:my_command_bd_other()
+function! s:my_command_bd_other() "{{{
+  let i = 1
+  let cur = bufnr("%")
+  while i <= bufnr("$")
+    if buflisted(i) && i != cur
+      exe "bdelete" i
+    endif
+    let i = i + 1
+  endwhile
+endfunction "}}}
+" Lcd
+command! Lcd :exe "lcd " . expand("%:p:h")
+" Ls
+command! -nargs=* -complete=file Ls :echo vimproc#system("ls <args>")
+" Info
+nnoremap <C-g> :<C-u>Info<CR>
+command! Info call s:my_info()
+function! s:my_info() "{{{
+  echohl Identifier
+  echo expand("%:t")
+  echohl None
+  echo expand("%:p")
+  let old_status = v:statusmsg
+  exe "silent normal g\<C-g>"
+  let msg = split(v:statusmsg, "; ")
+  for line in msg
+    echo line
+  endfor
+  let v:statusmsg = old_status
+endfunction "}}}
+
 " SyntaxInfo
 command! SyntaxInfo :call s:get_syn_info()
 function! s:get_syn_id(transparent) "{{{
@@ -552,24 +581,11 @@ endfunction "}}}
 command! Colortest :belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source $VIMRUNTIME/syntax/colortest.vim
 " Hitest
 command! Hitest :belowright vsplit $VIMRUNTIME/syntax/hitest.vim | source $VIMRUNTIME/syntax/hitest.vim
-" Bdo
-command! Bdo :call s:my_command_bd_other()
-function! s:my_command_bd_other() "{{{
-  let i = 1
-  let cur = bufnr("%")
-  while i <= bufnr("$")
-    if buflisted(i) && i != cur
-      exe "bdelete" i
-    endif
-    let i = i + 1
-  endwhile
-endfunction "}}}
-" Esnip
-command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete Esnip :NeoSnippetEdit -vertical -split <args>
-" Lcd
-command! Lcd :exe "lcd " . expand("%:p:h")
-" Ls
-command! -nargs=* -complete=file Ls :echo system("ls <args>")
+
+" VimDiff
+command! -complete=file -nargs=1 VimDiff :vertical diffsplit <args>
+" DiffOrig（編集前とdiff）
+command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 
 " キーマップ定義 {{{1
 " 説明 {{{2
