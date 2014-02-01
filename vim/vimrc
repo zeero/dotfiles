@@ -113,6 +113,8 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'tyru/caw.vim'
 NeoBundleLazy 'kana/vim-smartchr'
 \, {'autoload': {'insert': 1}}
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'kana/vim-textobj-fold'
 NeoBundleLazy 'mattn/emmet-vim'
 \, {'autoload': {'filetypes': ['html']}}
 
@@ -497,17 +499,17 @@ au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
 " COMMAND:
 " H(elp)
 " Todo: トグリたい
-command! -nargs=? -complete=help H if winwidth(0) > 140 | :vertical help <args> | :vertical resize 79 | else | :help <args> | endif
+command! -nargs=? -complete=help H if winwidth(0) > 140 | vertical help <args> | vertical resize 79 | else | help <args> | endif
 " Vimdoc
-command! VimDoc :OpenBrowser http://vim-jp.org/vimdoc-ja/
+command! VimDoc OpenBrowser http://vim-jp.org/vimdoc-ja/
 
 " Vimrc、Sorc
-command! Vimrc :tabe $MYVIMRC
-command! Sorc :source $MYVIMRC
+command! Vimrc tabe $MYVIMRC
+command! Sorc source $MYVIMRC
 " Esnip
-command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete Esnip :NeoSnippetEdit -vertical -split <args>
+command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete Esnip NeoSnippetEdit -vertical -split <args>
 " Bdo
-command! Bdo :call s:my_command_bd_other()
+command! Bdo call s:my_command_bd_other()
 function! s:my_command_bd_other() "{{{
   let i = 1
   let cur = bufnr("%")
@@ -519,9 +521,9 @@ function! s:my_command_bd_other() "{{{
   endwhile
 endfunction "}}}
 " Lcd
-command! Lcd :exe "lcd " . expand("%:p:h")
+command! Lcd exe "lcd " . expand("%:p:h")
 " Ls
-command! -nargs=* -complete=file Ls :echo vimproc#system("ls <args>")
+command! -nargs=* -complete=file Ls echo vimproc#system("ls <args>")
 " Info
 nnoremap <C-g> :<C-u>Info<CR>
 command! Info call s:my_info()
@@ -540,7 +542,7 @@ function! s:my_info() "{{{
 endfunction "}}}
 
 " SyntaxInfo
-command! SyntaxInfo :call s:get_syn_info()
+command! SyntaxInfo call s:get_syn_info()
 function! s:get_syn_id(transparent) "{{{
   let synid = synID(line("."), col("."), 1)
   if a:transparent
@@ -578,12 +580,12 @@ function! s:get_syn_info()
         \ " guibg: " . linkedSyn.guibg
 endfunction "}}}
 " Colortest
-command! Colortest :belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source $VIMRUNTIME/syntax/colortest.vim
+command! Colortest belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source $VIMRUNTIME/syntax/colortest.vim
 " Hitest
-command! Hitest :belowright vsplit $VIMRUNTIME/syntax/hitest.vim | source $VIMRUNTIME/syntax/hitest.vim
+command! Hitest belowright vsplit $VIMRUNTIME/syntax/hitest.vim | source $VIMRUNTIME/syntax/hitest.vim
 
 " VimDiff
-command! -complete=file -nargs=1 VimDiff :vertical diffsplit <args>
+command! -complete=file -nargs=1 VimDiff vertical diffsplit <args>
 " DiffOrig（編集前とdiff）
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 
