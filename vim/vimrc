@@ -1,10 +1,15 @@
+" Last Change: 02-Feb-2014. {{{
+" vim: set fdm=marker sw=2 ts=2:
+scriptencoding utf-8
+" }}}
 "-----------------------------------------------------------------------------
 " 初期設定
 "-----------------------------------------------------------------------------
 " 初期設定 {{{1
-" Last Change: 31-Jan-2014.
 " VI互換モードOFF
-set nocompatible
+if has('vim_starting')
+  set nocompatible
+endif
 " 内部エンコーディングをutf-8に指定
 set encoding=utf-8
 " Winコマンドプロンプトではcp932
@@ -25,11 +30,13 @@ set shellslash
 augroup myvimrc
   au!
 augroup END
-" vimディレクトリ変数
-let $MYVIMDIR = '~/.vim'
+" 環境変数
+let $MYVIMRC = resolve(expand('~/.vimrc'))
+let $MYVIMDIR = resolve(expand('~/.vim'))
 if !isdirectory($MYVIMDIR) && isdirectory($HOME . '/vimfiles')
-  let $MYVIMDIR = '~/vimfiles'
+  let $MYVIMDIR = resolve(expand('~/vimfiles'))
 endif
+let $LANG = 'ja_JP.UTF-8'
 " コンソール版で環境変数$DISPLAYが設定されていると起動が遅くなる件へ対応 {{{
 if !has('gui_running') && has('xterm_clipboard')
   set clipboard=exclude:cons\\\|linux\\\|cygwin\\\|rxvt\\\|screen
@@ -82,6 +89,8 @@ NeoBundleLazy 'Shougo/vimfiler'
 \,  'depends': ['Shougo/unite.vim']}
 NeoBundleLazy 'Shougo/unite-outline'
 \, {'autoload': {'unite_sources': ['outline']}}
+NeoBundleLazy 'thinca/vim-unite-history'
+\, {'autoload': {'unite_sources': ['history']}}
 NeoBundleLazy 'tsukkee/unite-help'
 \, {'autoload': {'unite_sources': ['help']}}
 NeoBundleLazy 'tsukkee/unite-tag'
@@ -112,6 +121,7 @@ NeoBundleLazy 'kana/vim-smartchr'
 \, {'autoload': {'insert': 1}}
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-fold'
+NeoBundle 'kana/vim-textobj-function'
 NeoBundleLazy 'mattn/emmet-vim'
 \, {'autoload': {'filetypes': ['html']}}
 
@@ -201,6 +211,7 @@ NeoBundle 'haya14busa/vim-migemo'
 NeoBundle 'rhysd/migemo-search.vim'
 NeoBundle 'sudo.vim'
 NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'autodate.vim'
 
 " NeoBundle終了 {{{2
 filetype plugin indent on
@@ -208,12 +219,12 @@ filetype plugin indent on
 NeoBundleCheck
 
 " NeoBundleコマンド定義 {{{2
-command! Bi :NeoBundleInstall
-command! Bu :NeoBundleUpdate
-command! -nargs=? Bs :NeoBundleSearch <args>
-command! Bc :NeoBundleClean
-command! Bl :NeoBundleList
-command! Bso :NeoBundleSource
+command! Bi NeoBundleInstall
+command! Bu NeoBundleUpdate
+command! -nargs=? Bs NeoBundleSearch <args>
+command! Bc NeoBundleClean
+command! Bl NeoBundleList
+command! Bso NeoBundleSource
 
 " singleton.vim {{{1
 if has('gui_running')
@@ -246,14 +257,12 @@ set notagbsearch
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 " 検索語が真ん中にくるようにする
-"  zz はカレント行を画面の中心にする。つまり n で検索語にカーソル移動したら
-"  勝手に zz でカレント行が画面の真ん中なるようにスクロールされるようになる。
-noremap n nzz
-noremap N Nzz
-noremap * *zz
-noremap # #zz
-noremap g* g*zz
-noremap g# g#zz
+noremap n nzzzv
+noremap N Nzzzv
+noremap * *zzzv
+noremap # #zzzv
+noremap g* g*zzzv
+noremap g# g#zzzv
 noremap { {zz
 noremap } }zz
 
@@ -310,7 +319,7 @@ let format_allow_over_tw = 1	" ぶら下り可能幅
 " 新しく開く代わりにすでに開いてあるバッファを開く
 set switchbuf=useopen
 " コマンドライン履歴
-set history=50
+set history=1000
 " 外部のエディタで編集中のファイルが変更されたら自動で読み直す
 " （ウィンドウを移動する度に変更をチェックする）
 set autoread
@@ -322,10 +331,12 @@ autocmd myvimrc QuickFixCmdPost    l* nested lwindow
 set infercase
 " カーソルを文字が存在しない部分でも動けるようにする
 " set virtualedit=all
+" 行頭行末で前行次行に移動する
+set whichwrap=b,s,h,l,<,>,[,]
 
 " 画面表示の設定 {{{1
 " シンタックスハイライト
-syntax on
+syntax enable
 " カラースキーマ設定
 set t_Co=256
 if has('gui_running')
@@ -401,7 +412,7 @@ endfunction
 " vsplitは右に開く
 set splitright
 " 画面サイズが広い場合はバッファを右に移動させる
-" Todo: Unite開くと低くなる
+" TODO: Unite開くと低くなる
 "au myvimrc BufRead,BufNew,BufNewFile * if winwidth(0) > 140 | wincmd L | wincmd _ | endif
 
 " GUI固有の画面表示の設定 {{{1
@@ -453,6 +464,10 @@ set noswapfile
 " スワップファイルの作成ディレクトリにパスを追加
 " set directory&
 " set directory+=,~/tmp,$TMP
+" 永続undo
+if has('persistent_undo')
+  set undodir=$HOME/.vimundo
+endif
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
 au myvimrc BufRead .* if expand("%:p:h") != '' | exe ":lcd " . expand("%:p:h") | endif
@@ -477,10 +492,11 @@ au myvimrc FileType gitcommit
 " Vim
 " バックスラッシュのインデントを無くす
 let g:vim_indent_cont = 0
-" vimrcでは:もiskに入れる
+" vimrc、helpでは:もiskに入れる
 if expand("%") =~ "vimrc"
   setlocal iskeyword+=:
 endif
+au myvimrc FileType help setlocal iskeyword+=:
 " JavaSciprt
 au myvimrc BufRead,BufNew,BufNewFile *.json setlocal ft=javascript
 au myvimrc BufRead,BufNew,BufNewFile jquery.*.js setlocal ft=javascript syntax=jquery
@@ -493,10 +509,12 @@ au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
 "
 " COMMAND:
 " H(elp)
-" Todo: トグリたい
+" TODO: トグリたい
 command! -nargs=? -complete=help H if winwidth(0) > 140 | vertical help <args> | vertical resize 79 | else | help <args> | endif
 " Vimdoc
 command! VimDoc OpenBrowser http://vim-jp.org/vimdoc-ja/
+" K(otoba)
+command! -nargs=1 K Ref kotobankej <args>
 
 " Vimrc、Sorc
 command! Vimrc tabe $MYVIMRC
@@ -613,17 +631,22 @@ nnoremap <S-Space> <PageUp>
 " すべてのフォールディングの開け閉め
 nnoremap zO zR
 nnoremap zC zM
-nnoremap zo zozz
+nnoremap zo zvz<CR>
 nnoremap zc zczz
 " gfはタブで開く
 nnoremap gf :tabe <cfile><CR>
+" 0/^のトグル
+nnoremap <expr>0  col('.') == 1 ? '^' : '0'
+nnoremap <expr>^  col('.') == 1 ? '^' : '0'
+" ノーマルモードで一文字消す
+nnoremap <BS> X
 
 " diffハンクへのジャンプ
 au myvimrc BufRead * nnoremap <buffer> [[ [czz
 au myvimrc BufRead * nnoremap <buffer> ]] ]czz
 nnoremap do do]czz
 nnoremap dp dp]czz
-" Todo: normal ]cが効かない…
+" TODO: normal ]cが効かない…
 au myvimrc BufRead * if 1 == &diff | noh | exe 'normal ]c' | endif
 
 " Help、QuickFix、fugitiveでは<Esc><Esc>でバッファを閉じる
@@ -662,30 +685,26 @@ nnoremap <C-@> :<C-u>CtrlPTag<CR>
 nnoremap <C-o> :<C-u>CtrlPMRUFiles<CR>
 
 " リーダーキー {{{2
+" 説明 {{{3
 " ,をリーダーキーにする（衝突を避けるためにmapleaderは設定しない）
 "  []: TagJump, h: H(elp), r: Quickrun, f: VimFiler, s: VimShell
 "  p: PasteToggle, /: CommentToggle, m: MBEToggle, ;: TagbarToggle, ,: PreviewToggle
 "  v: VisualMode
-" タグジャンプ
+" タグジャンプ {{{3
 nnoremap <C-]> g<C-]>
 vnoremap <C-]> g<C-]>
 nnoremap ,] g<C-]>
 vnoremap ,] g<C-]>
 nnoremap <C-j> :tab tj <C-R>=expand('<cword>')<CR><CR>
 vnoremap <C-j> y:tab tj <C-r>"<CR>
-nnoremap <Down> :tab tj <C-R>=expand('<cword>')<CR><CR>
-vnoremap <Down> y:tab tj <C-r>"<CR>
 nnoremap ,[ <C-t>
 nnoremap <C-k> <C-t>
-nnoremap <Up> <C-t>
 nnoremap <C-h> <C-o>
-nnoremap <Left> <C-o>
 nnoremap <C-l> <C-i>
-nnoremap <Right> <C-i>
 
-" カーソルの下の単語でヘルプを引く
-nmap K ,h
-vmap K ,h
+" リファレンス {{{3
+nnoremap K :<C-u>Ref kotobankej <C-r><C-w><CR>
+vnoremap K y:<C-u>Ref kotobankej <C-r>"<CR>
 au myvimrc FileType vim nnoremap <buffer> ,h :<C-u>H<Space><C-r><C-w><CR>
 au myvimrc FileType vim vnoremap <buffer> ,h y:<C-u>H<Space><C-r>"<CR>
 au myvimrc FileType ruby nnoremap <buffer> ,h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
@@ -695,8 +714,9 @@ au myvimrc FileType javascript vnoremap <buffer> ,h y:<C-u>Ref<Space>javascript<
 au myvimrc FileType sh nnoremap <buffer> ,h :<C-u>Ref<Space>man<Space><C-r><C-w><CR>
 au myvimrc FileType sh vnoremap <buffer> ,h y:<C-u>Ref<Space>man<Space><C-r>"<CR>
 
-" QuickRun
+" QuickRun {{{3
 nmap ,r <Plug>(quickrun)
+vnoremap ,R y:QuickRun -src '<C-r>"'<CR>
 vnoremap ,r y:QuickInspector<CR>
 command! QuickInspector :call s:my_quick_inspector()
 function! s:my_quick_inspector() "{{{
@@ -720,17 +740,17 @@ function! s:my_quick_inspector_ruby(expr) "{{{
   return vimproc#system('ruby -e '.shellescape('p '.a:expr))
 endfunction "}}}
 
-" VimFiler
-nnoremap ,f :<C-u>VimFilerBufferDir
-\<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<Space>-toggle<CR>
-" VimShell
-nnoremap ,s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<CR>
-
+" トグル {{{3
 " PASTEモードの切り替え
 set pastetoggle=,p
 " コメントアウトの切り替え（caw.vim）
 nmap ,/ <Plug>(caw:I:toggle)
 vmap ,/ <Plug>(caw:I:toggle)
+" VimFiler
+nnoremap ,f :<C-u>VimFilerBufferDir
+\<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<Space>-toggle<CR>
+" VimShell
+nnoremap ,s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<Space>-toggle<CR>
 " MBEToggle
 nnoremap ,m :<C-u>MBEToggle<CR>
 " TagbarToggle
@@ -798,7 +818,8 @@ function! PreviewWord(...)
   endif
 endfunction "}}}
 
-" ビジュアルモードでカーソル位置から末尾まで選択
+" その他 {{{3
+" カーソル位置から末尾までビジュアル選択
 nnoremap ,v v$
 
 " 無効化 {{{2
@@ -838,6 +859,8 @@ let g:unite_enable_ignore_case = 1
 let g:unite_enable_smart_case = 1
 " ステータスラインを上書きしない（lightline向け）
 let g:unite_force_overwrite_statusline = 0
+" プロンプト文字
+let g:unite_prompt = '❯ '
 " ESCキーを2回押すと終了する
 au myvimrc FileType unite nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
 "au myvimrc FileType unite inoremap <silent> <buffer> <Esc><Esc> <Esc>:q<CR>
@@ -893,61 +916,61 @@ let g:unite_source_menu_menus = {
 
 " Uniteコマンド定義 {{{2
 " 汎用
-command! -nargs=+ -complete=customlist,unite#complete#source U :Unite <args>
+command! -nargs=+ -complete=customlist,unite#complete#source U Unite <args>
 \ -no-empty -silent -buffer-name=<args>
 
 " 現在のバッファ内をグレップ
-command! Ug :Unite grep:%
+command! Ug Unite grep:%
 \ -no-empty -silent -buffer-name=grep
 " カーソル下の単語で現在のバッファをグレップ
-command! Ugw :exe 'Unite grep:%::' .
+command! Ugw exe 'Unite grep:%::' .
 \ escape(expand("<cword>"), '- \\') .
 \ ' -no-empty -silent -buffer-name=grep-word'
 " ディレクトリをグレップ
-command! Ugd :exe 'Unite grep' .
+command! Ugd exe 'Unite grep' .
 \ ' -silent -buffer-name=grep-dir' .
 \ ' -tab -no-split -no-quit'
 \ | setlocal splitbelow | exe 'normal <Plug>(unite_toggle_auto_preview)'
 " すべてのバッファをグレップ
-command! Ugb :exe 'Unite grep:$buffers' .
+command! Ugb exe 'Unite grep:$buffers' .
 \ ' -silent -buffer-name=grep-all-bufs' .
 \ ' -tab -no-split -no-quit
 \ | setlocal splitbelow | exe 'normal <Plug>(unite_toggle_auto_preview)'
 
 " ブックマーク（追加はUniteBookmarkAdd）
-command! Ub :Unite bookmark
+command! Ub Unite bookmark
 \ -no-empty -silent -buffer-name=bookmark
 " ブックマーク追加
-command! Uba :UniteBookmarkAdd
+command! Uba UniteBookmarkAdd
 " ブックマーク手動編集
-command! Ube :edit $HOME/.unite/bookmark/default
-" Todo: 'Todo:'をつけた行をファイル保存時に自動でブックマークするau
-command! Ubt :Unite bookmark:todos
+command! Ube edit $HOME/.unite/bookmark/default
+" TODO: 'TODO:'をつけた行をファイル保存時に自動でブックマークするau
+command! Ubt Unite bookmark:todos
 \ -no-empty -silent -buffer-name=bookmarktodos
 " メニュー
-command! Um :Unite menu:shortcuts
+command! Um Unite menu:shortcuts
 \ -no-empty -silent -buffer-name=menushortcuts
 
 " リファレンス参照
 " refe
-command! Urr :Unite ref/refe
+command! Urr Unite ref/refe
 \ -no-empty -silent -buffer-name=ref/refe
 " カーソル下の単語でrefe
 command! Urrw exe 'Unite ref/refe ' .
 \ '-no-empty -silent -buffer-name=ref/refe -input=' .
 \ escape(expand("<cword>"), '- \\')
 " ri
-command! Urri :Unite ref/ri
+command! Urri Unite ref/ri
 \ -no-empty -silent -buffer-name=ref/ri
 
 " 直前のUniteコマンドの結果に戻る
-command! Ur :UniteResume
+command! Ur UniteResume
 \ -no-empty -silent
 " ヤンクヒストリ
-command! Uy :Unite history/yank
+command! Uy Unite history/yank
 \ -no-empty -silent -buffer-name=history/yank
 " スニペット候補の表示
-command! Usnip :Unite neosnippet
+command! Usnip Unite neosnippet
 \ -no-empty -silent -buffer-name=neosnippet
 
 " Unite source サンプル {{{2
@@ -1180,13 +1203,29 @@ endif
 "  :Ref refe Array
 let g:ref_use_vimproc = 1 " 0:disable / 1:enable
 let g:ref_open = 'vsplit'
+let g:ref_detect_filetype = {
+\ 'ruby': 'refe',
+\ 'ruby.rspec': 'refe',
+\}
+au myvimrc FileType ref call s:my_ref_mappings()
+function! s:my_ref_mappings() "{{{
+  nnoremap <buffer> ,] <Plug>(ref-keyword)
+  nnoremap <buffer> ,[ <Plug>(ref-back)
+  nnoremap <buffer> <C-h> <Plug>(ref-back)
+  nnoremap <buffer> <C-l> <Plug>(ref-forward)
+endfunction "}}}
 " ref/refe
 let g:ref_refe_version = 2
-" ローカルファイルを参照するため、.local.vircに以下を宣言
+" ref/webdict
+let g:ref_source_webdict_sites = {
+\ 'default': 'weblio',
+\ 'weblio': 'http://ejje.weblio.jp/content/%s',
+\}
+" ローカルファイルを参照するため、.local.vimrcに以下を宣言
 " ref/javascript
-" let g:ref_javascript_doc_path = $HOME . '/doc/jsref/htdocs'
+" let g:ref_javascript_doc_path = './jsref/htdocs'
 " ref/jquery
-" let g:ref_jquery_doc_path = $HOME . '/dev/doc/jqapi'
+" let g:ref_jquery_doc_path = './jqapi'
 
 " fugitive {{{1
 " 説明 {{{
@@ -1203,16 +1242,16 @@ let g:ref_refe_version = 2
 "  :Gdiff        : git diff
 "  :Gcommit -v   : git commit -v
 " }}}
-command! Gs :Gstatus
-command! Ga :Gwrite
-command! Gw :Gwrite
-command! Gd :Gdiff
-command! Gc :Gcommit -v
-command! Gca :Gcommit -va
-command! Gl :Glog
-command! Gb :Gblame
-command! Gpush :call s:my_git_vimproc('push')
-command! Gpull :call s:my_git_vimproc('pull')
+command! Gs noh | Gstatus
+command! Ga Gwrite
+command! Gw Gwrite
+command! Gd noh | Gdiff
+command! Gc noh | Gcommit -v
+command! Gca noh | Gcommit -va
+command! Gl Glog
+command! Gb Gblame
+command! Gpush call s:my_git_vimproc('push')
+command! Gpull call s:my_git_vimproc('pull')
 " Gpush/Gpullのためのvimproc
 function! s:my_git_vimproc(gitcommand) "{{{
   let command = 'git ' . a:gitcommand
@@ -1383,6 +1422,7 @@ function! MyMode()
 endfunction
 
 " Tagbar {{{1
+let g:tagbar_auto_focus = 1
 let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 
 " surround {{{1
@@ -1398,7 +1438,7 @@ let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 
 " migemo-search {{{1
 if executable('cmigemo')
-  cnoremap <expr> <silent> <CR> migemosearch#replace_search_word() . "\<CR>"
+  cnoremap <expr> <silent> <CR> getcmdtype() =~ '[/?]' ? migemosearch#replace_search_word() . "\<CR>zvzz" : "\<CR>"
 endif
 
 " Emmet {{{1
@@ -1535,6 +1575,8 @@ let g:EasyMotion_use_migemo = 1
 let g:EasyMotion_keys = 'fdsajklghrewquiopvcxzmtybn/.;'
 " JKモーションでカラム位置キープ
 let g:EasyMotion_startofline = 0
+" フォールディングを飛ばさない
+let g:EasyMotion_skipfoldedline = 0
 " KEYMAP:
 nmap f <Plug>(easymotion-S)
 vmap f <Plug>(easymotion-S)
