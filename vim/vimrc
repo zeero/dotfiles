@@ -1,5 +1,5 @@
-" Last Change: 02-Feb-2014. {{{
-" vim: set fdm=marker sw=2 ts=2:
+" Last Change: 03-Feb-2014. {{{
+" vim:ts=2:fdm=marker:
 scriptencoding utf-8
 " }}}
 "-----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ endif "}}}
 "
 " NeoBundle開始 {{{2
 filetype off
-set rtp+=$MYVIMDIR/bundle/neobundle.vim
+set rtp& rtp+=$MYVIMDIR/bundle/neobundle.vim
 call neobundle#rc(expand($MYVIMDIR . '/bundle'))
 
 " 基本 {{{2
@@ -112,22 +112,49 @@ NeoBundleLazy 'tacroe/unite-alias'
 NeoBundleLazy 'mattn/unite-gist'
 \, {'autoload': {'unite_sources': ['gist']}
 \,  'depends': ['mattn/webapi-vim', 'mattn/gist-vim']}
+NeoBundleLazy 'pasela/unite-webcolorname'
+\, {'autoload': {'unite_sources': ['webcolorname']}}
 
 " 入力補助 {{{2
-NeoBundle 'thinca/vim-qfreplace'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tyru/caw.vim'
+NeoBundleLazy 'tyru/caw.vim'
+\, {'autoload': {'mappings': '<Plug>(caw:'}}
+NeoBundleLazy 'thinca/vim-qfreplace'
+\, {'autoload': {'filetypes': ['unite', 'quickfix']}}
 NeoBundleLazy 'kana/vim-smartchr'
 \, {'autoload': {'insert': 1}}
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'kana/vim-textobj-fold'
-NeoBundle 'kana/vim-textobj-function'
-NeoBundle 'kana/vim-operator-user'
-NeoBundle 'tyru/operator-camelize.vim'
-NeoBundle 'tyru/operator-html-escape.vim'
-NeoBundle 'tyru/operator-reverse.vim'
-NeoBundleLazy 'mattn/emmet-vim'
-\, {'autoload': {'filetypes': ['html']}}
+NeoBundleLazy 'tpope/vim-surround'
+\, {'autoload': {'mappings':
+\   [['n', 'cs', '<Plug>Csurround']
+\,    ['x', 'gS', '<Plug>VgSurround']
+\,    ['n', 'ds', '<Plug>Dsurround']
+\,    ['n', 'ySS', '<Plug>YSsurround']
+\,    ['n', 'yss', '<Plug>Yssurround']
+\,    ['n', 'ySs', '<Plug>YSsurround']
+\,    ['n', 'yS', '<Plug>YSurround']
+\,    ['n', 'ys', '<Plug>Ysurround']
+\,    ['i', '<C-G>S', '<Plug>ISurround']
+\,    ['i', '<C-G>s', '<Plug>Isurround']
+\,    ['i', '<C-S>', '<Plug>Isurround']]}}
+NeoBundleLazy 'kana/vim-textobj-user'
+NeoBundleLazy 'kana/vim-textobj-fold'
+\, {'autoload': {'mappings': [['ox', 'iz', 'az', '<Plug>(textobj-fold-']]}
+\,  'depends': 'kana/vim-textobj-user'}
+NeoBundleLazy 'kana/vim-textobj-function'
+\, {'autoload': {'mappings': [['ox', 'if', 'af', '<Plug>(textobj-function-']]}
+\,  'depends': ['kana/vim-textobj-user']}
+NeoBundleLazy 'kana/vim-operator-user'
+NeoBundleLazy 'rhysd/vim-operator-surround'
+\, {'autoload': {'mappings': '<Plug>(operator-surround-'}
+\,  'depends': ['kana/vim-operator-user']}
+NeoBundleLazy 'tyru/operator-camelize.vim'
+\, {'autoload': {'mappings': '<Plug>(operator-camelize-'}
+\,  'depends': ['kana/vim-operator-user']}
+NeoBundleLazy 'tyru/operator-html-escape.vim'
+\, {'autoload': {'mappings': '<Plug>(operator-html-'}
+\,  'depends': ['kana/vim-operator-user']}
+NeoBundleLazy 'tyru/operator-reverse.vim'
+\, {'autoload': {'mappings': '<Plug>(operator-reverse-'}
+\,  'depends': ['kana/vim-operator-user']}
 
 " コマンド {{{2
 NeoBundle 'thinca/vim-ref'
@@ -158,7 +185,9 @@ NeoBundle 'edsono/vim-matchit'
 NeoBundleLazy 'tpope/vim-bundler'
 \, {'autoload': {'filetypes': ['ruby']}}
 
-" JavaScript {{{2
+" HTML/JavaScript {{{2
+NeoBundleLazy 'mattn/emmet-vim'
+\, {'autoload': {'filetypes': ['html']}}
 " NeoBundleLazy 'jiangmiao/simple-javascript-indenter'
 " \, {'autoload': {'filetypes': ['javascript']}}
 NeoBundleLazy 'jelera/vim-javascript-syntax'
@@ -288,7 +317,7 @@ set backspace=2
 " 括弧入力時に対応する括弧を表示 (noshowmatch:表示しない)
 set showmatch
 " 対応括弧のハイライト表示の秒数
-set matchtime=3
+set matchtime=1
 " 対応括弧に'<'と'>'のペアを追加
 set matchpairs& matchpairs+=<:>
 " コマンドライン補完するときに強化されたものを使う
@@ -402,17 +431,6 @@ set laststatus=2
 "set statusline=%<%t\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}%=%l,%c%V%8P
 " タブは非表示
 "set showtabline=0
-" 前回終了したカーソル行に移動して真ん中にする（フォールディングがあれば開く）
-au myvimrc BufRead * call s:my_readpost_autocmd()
-function! s:my_readpost_autocmd()
-  if line("'\"") > 0 && line("'\"") <= line("$")
-    exe "normal! g`\"zz"
-  endif
-  while &foldenable > 0 && foldclosed("'\"") > 0
-    exe "normal! zo"
-  endwhile
-  exe "normal! zz"
-endfunction
 " vsplitは右に開く
 set splitright
 " 画面サイズが広い場合はバッファを右に移動させる
@@ -472,18 +490,26 @@ set noswapfile
 if has('persistent_undo')
   set undodir=$HOME/.vimundo
 endif
+" vimrcの保存時に再読み込み
+if !has('gui_running')
+  au myvimrc BufWritePost *vimrc nested source $MYVIMRC
+else
+  au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
+     \ if has('gui_running') && filereadable($MYGVIMRC) | source $MYGVIMRC
+endif
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
 au myvimrc BufRead .* if expand("%:p:h") != '' | exe ":lcd " . expand("%:p:h") | endif
 "set autochdir （設定するとVimShellが動かなくなる）
-" vimrcの保存時に再読み込み
-if !has('gui_running') && !(has('win32') || has('win64'))
-    au myvimrc BufWritePost *vimrc nested source $MYVIMRC
-else
-    au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
-      \ if has('gui_running') && filereadable($MYGVIMRC) | source $MYGVIMRC
-    au myvimrc BufWritePost *gvimrc if has('gui_running') | source $MYGVIMRC
-endif
+" 前回終了したカーソル行に移動して真ん中にする（フォールドがあれば開く）
+" TODO: 真ん中にならない。。。フォールドは開くのに。。。
+au myvimrc BufRead * call s:my_readpost_move()
+function! s:my_readpost_move()
+  if line("'\"") > 0 && line("'\"") <= line("$")
+    normal g`"
+  endif
+  normal zvzz
+endfunction
 
 " ファイルタイプ別の設定 {{{1
 " Ruby
@@ -634,9 +660,12 @@ nnoremap ,<Tab> :<C-u>tabnew<CR>
 nnoremap H <Esc>:MBEbp<CR>
 nnoremap L <Esc>:MBEbn<CR>
 
+" surround
+map s <Plug>(operator-surround-append)
+map S <Plug>(operator-surround-delete)
+map <C-s> <Plug>(operator-surround-replace)
 " snake_case<=>CamelCase
-nmap _ <Plug>(operator-camelize-toggle)
-vmap _ <Plug>(operator-camelize-toggle)
+map _ <Plug>(operator-camelize-toggle)
 " HTMLエスケープ
 vmap ; <Plug>(operator-html-escape)
 " 反転
@@ -914,12 +943,15 @@ unlet s:action
 
 " メニュー設定 {{{2
 let g:unite_source_menu_menus = {
-\ "shortcuts": {
-\   "description": "command shortcuts.",
-\   "command_candidates": [
-\     ["unite-colorscheme", "Unite colorscheme -auto-preview"],
-\     ["unite-output:message", "Unite output:message"],
-\     ["unite-mapping(all)", "Unite output:map|map!|lmap"],
+\ 'shortcuts': {
+\   'description': 'command shortcuts.',
+\   'command_candidates': [
+\     ['help-neobundle-autoload', 'H neobundle-options-autoload'],
+\     ['help-registers', 'H registers'],
+\     ['help-map-overview', 'H map-overview'],
+\     ['unite-colorscheme', 'Unite colorscheme -auto-preview'],
+\     ['unite-output:message', 'Unite output:message'],
+\     ['unite-mapping(all)', 'Unite output:map|map!|lmap'],
 \   ],
 \ },
 \}
