@@ -122,6 +122,10 @@ NeoBundleLazy 'kana/vim-smartchr'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-fold'
 NeoBundle 'kana/vim-textobj-function'
+NeoBundle 'kana/vim-operator-user'
+NeoBundle 'tyru/operator-camelize.vim'
+NeoBundle 'tyru/operator-html-escape.vim'
+NeoBundle 'tyru/operator-reverse.vim'
 NeoBundleLazy 'mattn/emmet-vim'
 \, {'autoload': {'filetypes': ['html']}}
 
@@ -615,31 +619,33 @@ command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | d
 " <Nop>をリンク先に指定することでキーマップを無効にする。
 " KEYMAP:
 " 基本 {{{2
-" バッファ移動用キーマップ
-nnoremap H <Esc>:MBEbp<CR>
-nnoremap L <Esc>:MBEbn<CR>
-" 表示行単位で行移動
-nnoremap j gj
-nnoremap k gk
-xnoremap j gj
-xnoremap k gk
 " 行末までヤンク
 nnoremap Y y$
 " スペースでページ移動
 nnoremap <Space> <PageDown>
 nnoremap <S-Space> <PageUp>
-" すべてのフォールディングの開け閉め
-nnoremap zO zR
-nnoremap zC zM
-nnoremap zo zvz<CR>
-nnoremap zc zczz
 " gfはタブで開く
 nnoremap gf :tabe <cfile><CR>
-" 0/^のトグル
-nnoremap <expr>0  col('.') == 1 ? '^' : '0'
-nnoremap <expr>^  col('.') == 1 ? '^' : '0'
-" ノーマルモードで一文字消す
-nnoremap <BS> X
+" タブページ操作
+nnoremap <Tab> <C-PageDown>
+nnoremap <S-Tab> <C-PageUp>
+nnoremap ,<Tab> :<C-u>tabnew<CR>
+" バッファ移動用キーマップ
+nnoremap H <Esc>:MBEbp<CR>
+nnoremap L <Esc>:MBEbn<CR>
+
+" snake_case<=>CamelCase
+nmap _ <Plug>(operator-camelize-toggle)
+vmap _ <Plug>(operator-camelize-toggle)
+" HTMLエスケープ
+vmap ; <Plug>(operator-html-escape)
+" 反転
+vmap r <Plug>(operator-reverse-text)
+
+" Help、QuickFix、fugitiveでは<Esc><Esc>でバッファを閉じる
+au myvimrc FileType help,qf,gitcommit nnoremap <buffer> <Esc><Esc> <C-w>c
+" ESCを二回でハイライトを消す
+nnoremap <silent> <Esc><Esc> :noh<CR>
 
 " diffハンクへのジャンプ
 au myvimrc BufRead * nnoremap <buffer> [[ [czz
@@ -649,14 +655,19 @@ nnoremap dp dp]czz
 " TODO: normal ]cが効かない…
 au myvimrc BufRead * if 1 == &diff | noh | exe 'normal ]c' | endif
 
-" Help、QuickFix、fugitiveでは<Esc><Esc>でバッファを閉じる
-au myvimrc FileType help,qf,gitcommit nnoremap <buffer> <Esc><Esc> <C-w>c
-" タブページ操作
-nnoremap <Tab> <C-PageDown>
-nnoremap <S-Tab> <C-PageUp>
-nnoremap ,<Tab> :<C-u>tabnew<CR>
-" ESCを二回でハイライトを消す
-nnoremap <silent> <Esc><Esc> :noh<CR>
+" 表示行単位で行移動
+nnoremap j gj
+nnoremap k gk
+xnoremap j gj
+xnoremap k gk
+" すべてのフォールディングの開け閉め
+nnoremap zO zR
+nnoremap zC zM
+nnoremap zo zvz<CR>
+nnoremap zc zczz
+" 0/^のトグル
+nnoremap <expr>0  col('.') == 1 ? '^' : '0'
+nnoremap <expr>^  col('.') == 1 ? '^' : '0'
 " CTRL-Uのundo対策（from exaple.vim）
 inoremap <C-U> <C-G>u<C-U>
 
@@ -666,7 +677,6 @@ nnoremap <S-Up> <C-w>+
 nnoremap <S-Down> <C-w>-
 nnoremap <S-Left> <C-w><
 nnoremap <S-Right> <C-w>>
-nnoremap _ <C-w>_
 
 " コマンドモード時、現在のバッファのファイル名を出力
 cnoremap <C-f> <C-r>%
