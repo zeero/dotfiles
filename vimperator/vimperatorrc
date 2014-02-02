@@ -18,8 +18,6 @@ colorscheme ZeeroBlue
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " キー設定
 "
-" 印刷
-nnoremap <C-p> :ha<CR>
 " h/lで戻る/進む
 nnoremap h <A-Left>
 nnoremap l <A-Right>
@@ -31,10 +29,16 @@ nnoremap <C-l> :tabm 100<CR>
 " ナビゲーションバーのトグル
 nnoremap m :set toolbars+=nonavigation,noaddons<CR>
 nnoremap M :set toolbars+=navigation,addons<CR>
+" 印刷
+nnoremap <C-p> :ha<CR>
+nnoremap <C-n> <C-t>
 " 中止
 nnoremap <Esc> :st<CR><Esc>
 " 最近閉じたタブの一覧（補完待ち状態にする）
 nnoremap U :undo<Space>
+" コマンド履歴
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " プラグインの設定
