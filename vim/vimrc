@@ -62,9 +62,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc'
 \, {'build': {
 \    'windows': 'make -f make_mingw32.mak',
-\    'cygwin': 'make -f make_cygwin.mak',
-\    'mac': 'make -f make_mac.mak',
-\    'unix': 'make -f make_unix.mak',
+\    'cygwin':  'make -f make_cygwin.mak',
+\    'mac':     'make -f make_mac.mak',
+\    'unix':    'make -f make_unix.mak',
 \  }}
 NeoBundleLazy 'Shougo/vimshell'
 \, {'autoload': {'commands': ['VimShell', 'VimShellPop']}
@@ -79,7 +79,10 @@ NeoBundleLazy 'Shougo/neosnippet'
 NeoBundleLazy 'Shougo/neosnippet-snippets'
 \, {'autoload': {'insert': 1}}
 NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'haya14busa/vim-easymotion'
+NeoBundleLazy 'haya14busa/vim-easymotion'
+\, {'autoload': {'mappings':
+\    ['<Plug>(easymotion-S)', '<Plug>(easymotion-s)',
+\     '<Plug>(easymotion-j)', '<Plug>(easymotion-k)']}}
 
 " Unite {{{2
 NeoBundleLazy 'Shougo/unite.vim'
@@ -111,7 +114,7 @@ NeoBundleLazy 'tacroe/unite-alias'
 \, {'autoload': {'unite_sources': ['alias']}}
 NeoBundleLazy 'mattn/unite-gist'
 \, {'autoload': {'unite_sources': ['gist']}
-\,  'depends': ['mattn/webapi-vim', 'mattn/gist-vim']}
+\,  'depends': ['mattn/gist-vim']}
 NeoBundleLazy 'pasela/unite-webcolorname'
 \, {'autoload': {'unite_sources': ['webcolorname']}}
 
@@ -124,7 +127,7 @@ NeoBundleLazy 'kana/vim-smartchr'
 \, {'autoload': {'insert': 1}}
 NeoBundleLazy 'tpope/vim-surround'
 \, {'autoload': {'mappings':
-\   [['n', 'cs', '<Plug>Csurround']
+\    [['n', 'cs', '<Plug>Csurround']
 \,    ['x', 'gS', '<Plug>VgSurround']
 \,    ['n', 'ds', '<Plug>Dsurround']
 \,    ['n', 'ySS', '<Plug>YSsurround']
@@ -157,22 +160,29 @@ NeoBundleLazy 'tyru/operator-reverse.vim'
 \,  'depends': ['kana/vim-operator-user']}
 
 " コマンド {{{2
-NeoBundle 'thinca/vim-ref'
-NeoBundle 'thinca/vim-quickrun'
+NeoBundleLazy 'thinca/vim-ref'
+\, {'autoload': {'commands': ['Ref']
+\,               'unite-sources': ['ref']}
+\,  'depends': ['mattn/webapi-vim']}
+NeoBundle 'mojako/ref-sources.vim'
+NeoBundleLazy 'thinca/vim-quickrun'
+\, {'autoload': {'commands': ['QuickRun']
+\,               'mappings': ['<Plug>(quickrun)']}}
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tpope/vim-fugitive'
 \, {'augroup': 'fugitive'}
-NeoBundle 'mattn/webapi-vim'
-NeoBundle 'mattn/gist-vim'
+NeoBundleLazy 'mattn/gist-vim'
+\, {'autoload': {'commands': ['Gist']}
+\,  'depends': ['mattn/webapi-vim']}
 NeoBundleLazy 'gregsexton/gitv'
 \, {'autoload': {'commands': ['Gitv']}
 \,  'depends': ['tpope/vim-fugitive']}
 NeoBundleLazy 'thinca/vim-prettyprint'
 \, {'autoload': {'commands': ['PP']}}
-NeoBundle 'szw/vim-tags'
-NeoBundle 'TagHighlight'
+NeoBundleLazy 'szw/vim-tags'
+\, {'autoload': {'commands': ['TagsGenerate']}}
 NeoBundleLazy 'majutsushi/tagbar'
-\, {'autoload': {'commands': ['TagbarToggle']}}
+\, {'autoload': {'commands': ['TagbarToggle', 'TagbarOpen']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -197,18 +207,16 @@ NeoBundleLazy 'jQuery'
 NeoBundleLazy 'https://bitbucket.org/teramako/jscomplete-vim'
 \, {'autoload': {'filetypes': ['javascript']}
 \,  'type': 'git'}
-NeoBundle 'mojako/ref-sources.vim'
-\, {'autoload': {'filetypes': ['javascript']
-\,               'unite_sources': ['ref/javascript', 'ref/jquery']}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'fholgado/minibufexpl.vim'
 \, {'augroup': 'MiniBufExpl'}
-NeoBundle 'wombat256.vim'
+NeoBundle 'TagHighlight'
 NeoBundle 'molokai'
+NeoBundle 'wombat256.vim'
 " 普段使わないカラースキームは使用時に:NeoBundleSource
-NeoBundle 'altercation/vim-colors-solarized'
+NeoBundleLazy 'altercation/vim-colors-solarized'
 NeoBundleLazy 'w0ng/vim-hybrid'
 NeoBundleLazy 'nanotech/jellybeans.vim'
 NeoBundleLazy 'jpo/vim-railscasts-theme'
@@ -236,13 +244,15 @@ NeoBundleLazy 'vim-jp/vimdoc-ja'
 \, {'autoload': {'commands': ['help']}}
 NeoBundleLazy 'plasticboy/vim-markdown'
 \, {'autoload': {'filetypes': ['mkd']}}
+NeoBundleLazy 'mattn/webapi-vim'
 NeoBundleLazy 'tyru/open-browser.vim'
 \, {'autoload': {'filetypes': ['html', 'mkd']}}
 NeoBundleLazy 'mattn/benchvimrc-vim'
 \, {'autoload': {'commands': ['BenchVimrc']}}
 NeoBundle 'haya14busa/vim-migemo'
 NeoBundle 'rhysd/migemo-search.vim'
-NeoBundle 'sudo.vim'
+NeoBundleLazy 'sudo.vim'
+\, {'autoload': {'commands': ['SudoWrite', 'SudoRead']}}
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'autodate.vim'
 
@@ -690,8 +700,8 @@ nnoremap k gk
 xnoremap j gj
 xnoremap k gk
 " すべてのフォールディングの開け閉め
-nnoremap zO zR
-nnoremap zC zM
+nnoremap zO zRz<CR>
+nnoremap zC zMzz
 nnoremap zo zvz<CR>
 nnoremap zc zczz
 " 0/^のトグル
@@ -900,6 +910,8 @@ let g:unite_enable_smart_case = 1
 let g:unite_force_overwrite_statusline = 0
 " プロンプト文字
 let g:unite_prompt = '❯ '
+" カーソルラインの色
+let g:unite_cursor_line_highlight = 'Identifier'
 " ESCキーを2回押すと終了する
 au myvimrc FileType unite nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
 "au myvimrc FileType unite inoremap <silent> <buffer> <Esc><Esc> <Esc>:q<CR>
