@@ -497,8 +497,8 @@ set noswapfile
 " set directory+=,~/tmp,$TMP
 " 永続undo
 if has('persistent_undo')
-  set undofile
   set undodir=$HOME/.vimundo
+  set undofile
 endif
 " vimrcの保存時に再読み込み
 if !has('gui_running')
