@@ -23,6 +23,14 @@ snippet lazy:mappings
   NeoBundleLazy '${1:bundle}'
   \, {'autoload': {'mappings': ['${2:mapping}'${0}]}}
 
+snippet function
+abbr    my function (override default snippet)
+alias   func
+options head
+  function! ${1:#:func_name}(${2}) "{{{
+    ${0}
+  endfunction "}}}
+
 snippet <C-r><C-w>
   <C-r><C-w>
 

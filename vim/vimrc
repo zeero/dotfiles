@@ -1,5 +1,5 @@
-" Last Change: 03-Feb-2014. {{{
-" vim:ts=2:fdm=marker:
+" Last Change: 05-Feb-2014. {{{
+" vim: set ts=2 fdm=marker:
 " scriptencoding utf-8
 " }}}
 "-----------------------------------------------------------------------------
@@ -265,7 +265,8 @@ command! Bi NeoBundleInstall
 command! Bu NeoBundleUpdate
 command! -nargs=? Bs NeoBundleSearch <args>
 command! Bc NeoBundleClean
-command! Bl NeoBundleList
+command! Bls NeoBundleList
+command! Blog NeoBundleLog
 command! Bso NeoBundleSource
 
 " singleton.vim {{{1
@@ -374,7 +375,7 @@ set infercase
 " カーソルを文字が存在しない部分でも動けるようにする
 " set virtualedit=all
 " 行頭行末で前行次行に移動する
-set whichwrap=b,s,h,l,<,>,[,]
+" set whichwrap=b,s,h,l,<,>,[,]
 
 " 画面表示の設定 {{{1
 " シンタックスハイライト
@@ -505,30 +506,23 @@ if !has('gui_running')
   au myvimrc BufWritePost *vimrc nested source $MYVIMRC
 else
   au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
-     \ if has('gui_running') && filereadable($MYGVIMRC) | source $MYGVIMRC
+         \ if filereadable($MYGVIMRC) | source $MYGVIMRC | endif
 endif
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
 au myvimrc BufRead .* if expand("%:p:h") != '' | exe ":lcd " . expand("%:p:h") | endif
 "set autochdir （設定するとVimShellが動かなくなる）
 " 前回終了したカーソル行に移動して真ん中にする（フォールドがあれば開く）
-" TODO: 真ん中にならない。。。フォールドは開くのに。。。
+" TODO: 真ん中にならない。たぶんなんかのプラグインが悪さしてる。
 au myvimrc BufRead * call s:my_readpost_move()
 function! s:my_readpost_move()
   if line("'\"") > 0 && line("'\"") <= line("$")
-    normal g`"
+    exe "normal! g`\""
   endif
-  normal zvzz
+  exe "normal! zvzz"
 endfunction
 
 " ファイルタイプ別の設定 {{{1
-" Ruby
-au myvimrc FileType ruby setlocal fenc=utf8 ff=unix
-" Git commit log
-au myvimrc FileType gitcommit
-\ setlocal nofoldenable |
-\ wincmd L |
-\ let @/ = "^@@ .*"
 " Vim
 " バックスラッシュのインデントを無くす
 let g:vim_indent_cont = 0
@@ -537,6 +531,19 @@ if expand("%") =~ "vimrc"
   setlocal iskeyword+=:
 endif
 au myvimrc FileType help setlocal iskeyword+=:
+" NeoSnippet
+au myvimrc FileType neosnippet setlocal nofoldenable
+" fugitive
+au myvimrc FileType gitcommit
+\ setlocal nofoldenable |
+\ wincmd L |
+\ noh |
+\ let @/ = "^@@ .*"
+" diff
+" TODO: normal ]cが効かない…
+au myvimrc BufRead * if 1 == &diff | noh | exe "normal! ]c" | endif
+
+" ファイルタイプ指定
 " JavaSciprt
 au myvimrc BufRead,BufNew,BufNewFile *.json setlocal ft=javascript
 au myvimrc BufRead,BufNew,BufNewFile jquery.*.js setlocal ft=javascript syntax=jquery
@@ -586,7 +593,7 @@ function! s:my_info() "{{{
   echohl None
   echo expand("%:p")
   let old_status = v:statusmsg
-  exe "silent normal g\<C-g>"
+  exe "silent normal! g\<C-g>"
   let msg = split(v:statusmsg, "; ")
   for line in msg
     echo line
@@ -671,8 +678,6 @@ au myvimrc BufRead * nnoremap <buffer> [[ [czz
 au myvimrc BufRead * nnoremap <buffer> ]] ]czz
 nnoremap do do]czz
 nnoremap dp dp]czz
-" TODO: normal ]cが効かない…
-au myvimrc BufRead * if 1 == &diff | noh | exe 'normal ]c' | endif
 
 " ウィンドウ／タブ {{{2
 " バッファ移動用キーマップ
@@ -688,15 +693,21 @@ nnoremap gf :tabe <cfile><CR>
 " ノーマルモード操作 {{{2
 " 行末までヤンク
 nnoremap Y y$
+" 行末に移動
+nnoremap <C-e> $
+" ヤンクした文字列と単語を置き換え
+nnoremap <silent> cp ce<C-r>0<Esc>:let@/=@1<CR>:noh<CR>
+vnoremap <silent> cp c<C-r>0<Esc>:let@/=@1<CR>:noh<CR>
+nnoremap <silent> cip ciw<C-r>0<Esc>:let@/=@1<CR>:noh<CR>
 " すべてのフォールディングの開け閉め
 nnoremap zO zRz<CR>
 nnoremap zC zMzz
 nnoremap zo zvz<CR>
 nnoremap zc zczz
-" Help、QuickFix、fugitiveでは<Esc><Esc>でバッファを閉じる
-au myvimrc FileType help,qf,gitcommit nnoremap <buffer> <Esc><Esc> <C-w>c
 " ESCを二回でハイライトを消す
 nnoremap <silent> <Esc><Esc> :noh<CR>
+" QuickFix、fugitiveでは<Esc><Esc>でバッファを閉じる
+au myvimrc FileType qf,gitcommit nnoremap <buffer> <Esc><Esc> <C-w>c
 " ウィンドウサイズ変更
 nnoremap <S-Up> <C-w>+
 nnoremap <S-Down> <C-w>-
@@ -722,7 +733,7 @@ inoremap <C-e> <End>
 inoremap <C-w> <S-Left>
 inoremap <C-b> <S-Right>
 " CTRL-Uのundo対策（from exaple.vim）
-inoremap <C-U> <C-G>u<C-U>
+inoremap <C-u> <C-g>u<C-u>
 
 " コマンドモード {{{2
 " 現在のバッファのファイル名を出力
@@ -827,7 +838,7 @@ function! PreviewWord(...)
   let height = 7
   let action = "ptjump"
   "hi PreviewWord term=bold ctermfg=black ctermbg=lightgreen guifg=black guibg=lightgreen
-  au myvimrc ColorScheme * hi link PreviewWord Search
+  hi link PreviewWord Search
 
   if &previewwindow			" プレビューウィンドウ内では実行しない
     return
@@ -859,7 +870,7 @@ function! PreviewWord(...)
         silent! .foldopen		" 閉じた折り畳みを開く
       endif
       exe "resize" height
-      exe "normal zz"
+      exe "normal! zz"
       call search("$", "b")		" 前の行の最後へ
       let w = substitute(w, '\\', '\\\\', "")
       call search('\<\V' . w . '\>')	" カーソルをマッチしたところへ
@@ -874,13 +885,28 @@ endfunction "}}}
 " カーソル位置から末尾までビジュアル選択
 nnoremap ,v v$
 
-" 無効化 {{{2
+" 無効化、退避 {{{2
 " 保存して閉じる
 nnoremap ZZ <Nop>
 " 保存せずに閉じる
 nnoremap ZQ <Nop>
 " EXモードに入る
 nnoremap Q <Nop>
+" 退避
+nnoremap <F2><C-e> <C-e>
+nnoremap <F2>[[ [[
+nnoremap <F2>]] ]]
+inoremap <F2><C-a> <C-a>
+inoremap <F2><C-e> <C-e>
+inoremap <F2><C-w> <C-w>
+inoremap <F2><C-b> <C-b>
+inoremap <F2><C-u> <C-u>
+cnoremap <F2><C-f> <C-f>
+cnoremap <F2><C-a> <C-a>
+cnoremap <F2><C-w> <C-w>
+cnoremap <F2><C-b> <C-b>
+cnoremap <F2><C-n> <C-n>
+cnoremap <F2><C-p> <C-p>
 
 "}}}1-------------------------------------------------------------------------
 
@@ -1108,7 +1134,7 @@ function! s:my_vimfiler_help() "{{{
     match none
     setlocal nonumber
     resize 20
-    normal gg
+    exe "normal! gg"
     nnoremap <buffer> ,, :MyVimFilerHelp<CR>
     call matchadd('MyVimFilerHelp', '.', 0)
     call matchadd('MyVimFilerHelpTitle', '--.*')
@@ -1321,12 +1347,12 @@ let g:ref_source_webdict_sites = {
 "  :Gdiff        : git diff
 "  :Gcommit -v   : git commit -v
 " }}}
-command! Gs noh | Gstatus
+command! Gs Gstatus
 command! Ga Gwrite
 command! Gw Gwrite
-command! Gd noh | Gdiff
-command! Gc noh | Gcommit -v
-command! Gca noh | Gcommit -va
+command! Gd Gdiff
+command! Gc Gcommit -v
+command! Gca Gcommit -va
 command! Gl Glog
 command! Gb Gblame
 command! Gpush call s:my_git_vimproc('push')
