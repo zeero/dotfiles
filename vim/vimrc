@@ -913,10 +913,22 @@ let g:unite_enable_smart_case = 1
 let g:unite_force_overwrite_statusline = 0
 " プロンプト文字
 let g:unite_prompt = '❯ '
-" カーソルラインの色
-let g:unite_cursor_line_highlight = 'Identifier'
-" ESCキーを2回押すと終了する
-au myvimrc FileType unite nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
+" カーソルラインのハイライト
+let g:unite_cursor_line_highlight = 'MatchParen'
+au myvimrc FileType unite call s:my_unite_keymaps()
+function! s:my_unite_keymaps() "{{{
+  " <C-j>/<C-k>で移動
+  nmap <silent> <buffer> <C-j> <Plug>(unite_loop_cursor_down)
+  imap <silent> <buffer> <C-j> <Plug>(unite_select_next_line)
+  nmap <silent> <buffer> <C-k> <Plug>(unite_loop_cursor_up)
+  imap <silent> <buffer> <C-k> <Plug>(unite_select_previous_line)
+  " ESCキーを2回押すと終了する
+  nmap <silent> <buffer> <Esc><Esc> <Plug>(unite_all_exit)
+  " 入力文字が無い時に<BS>で前の画面に戻る
+  imap <expr> <silent> <buffer> <BS> unite#helper#get_input() == '' ? "\<Plug>(unite_exit)" : "\<BS>"
+  " キャッシュ更新
+  nmap <silent> <buffer> <F5> <Plug>(unite_redraw)
+endfunction "}}}
 "au myvimrc FileType unite inoremap <silent> <buffer> <Esc><Esc> <Esc>:q<CR>
 " unite grep に ag(The Silver Searcher) を使う
 if executable('ag')
@@ -1029,6 +1041,9 @@ command! Uy Unite history/yank
 " スニペット候補の表示
 command! Usnip Unite neosnippet
 \ -no-empty -silent -buffer-name=neosnippet
+" マッピング表示
+command! Umap :Unite output:map|map!|lmap
+\ -no-empty -silent -buffer-name=output:map
 
 " Unite source サンプル {{{2
 let s:unite_source = {
