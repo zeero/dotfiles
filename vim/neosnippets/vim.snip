@@ -5,19 +5,31 @@ abbr    add Unite command
 
 snippet lazy:insert
   NeoBundleLazy '${1:bundle}'
-  \, {'autoload': {'insert': 1}}${0}
+  \, {'autoload': {'insert': 1}}
 
 snippet lazy:commands
   NeoBundleLazy '${1:bundle}'
-  \, {'autoload': {'commands': ['${2:Command}']}${0}}
+  \, {'autoload': {'commands': ['${2:Command}'${0}]}}
 
-snippet lazy:ft
+snippet lazy:filetypes
   NeoBundleLazy '${1:bundle}'
-  \, {'autoload': {'filetypes': ['${2:filetype}']}${0}}
+  \, {'autoload': {'filetypes': ['${2:filetype}'${0}]}}
 
 snippet lazy:unite
   NeoBundleLazy '${1:bundle}'
-  \, {'autoload': {'unite_sources': ['${2:source}']}${0}}
+  \, {'autoload': {'unite_sources': ['${2:source}'${0}]}}
+
+snippet lazy:mappings
+  NeoBundleLazy '${1:bundle}'
+  \, {'autoload': {'mappings': ['${2:mapping}'${0}]}}
+
+snippet function
+abbr    my function (override default snippet)
+alias   func
+options head
+  function! ${1:#:func_name}(${2}) "{{{
+    ${0}
+  endfunction "}}}
 
 snippet <C-r><C-w>
   <C-r><C-w>
