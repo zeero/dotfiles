@@ -213,18 +213,19 @@ NeoBundle 'fholgado/minibufexpl.vim'
 \, {'augroup': 'MiniBufExpl'}
 NeoBundle 'TagHighlight'
 NeoBundle 'molokai'
-NeoBundle 'wombat256.vim'
+NeoBundle 'http://blog.toddwerth.com/entry_files/8/ir_black.vim'
+\, {'name': 'ir_black.vim',
+\   'script_type': 'colors'}
 " 普段使わないカラースキームは使用時に:NeoBundleSource
+NeoBundleLazy 'wombat256.vim'
 NeoBundleLazy 'altercation/vim-colors-solarized'
 NeoBundleLazy 'w0ng/vim-hybrid'
 NeoBundleLazy 'nanotech/jellybeans.vim'
 NeoBundleLazy 'jpo/vim-railscasts-theme'
 NeoBundleLazy 'jonathanfilip/vim-lucius'
 NeoBundleLazy 'Zephyr-Color-Scheme'
+NeoBundleLazy 'cocopon/iceberg.vim'
 NeoBundleLazy 'newspaper.vim'
-NeoBundleLazy 'http://blog.toddwerth.com/entry_files/8/ir_black.vim'
-\, {'name': 'ir_black.vim',
-\   'script_type': 'colors'}
 NeoBundleLazy 'thinca/vim-guicolorscheme'
 \, {'terminal': 1
 \,  'autoload': {'commands': ['GuiColorScheme']}}
@@ -384,7 +385,7 @@ syntax enable
 set t_Co=256
 if has('gui_running')
   set background=dark
-  colorscheme wombat256mod
+  colorscheme ir_black
 else
 "   let g:molokai_original = 1
   let g:rehash256 = 1
