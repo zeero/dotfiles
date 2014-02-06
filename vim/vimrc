@@ -1,4 +1,4 @@
-" Last Change: 06-Feb-2014. {{{
+" Last Change: 07-Feb-2014. {{{
 " vim: set ts=2 fdm=marker:
 " scriptencoding utf-8
 " }}}
@@ -255,6 +255,12 @@ NeoBundleLazy 'sudo.vim'
 \, {'autoload': {'commands': ['SudoWrite', 'SudoRead']}}
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'autodate.vim'
+NeoBundleLazy 'thinca/vim-splash'
+\, {'autoload': {'commands': ['Splash']}}
+NeoBundleLazy 'mklabs/vim-cowsay'
+\, {'autoload': {'commands': ['Cowsay']}}
+NeoBundle 'mhinz/vim-startify'
+\, {'augroup': 'startify'}
 
 " NeoBundle終了 {{{2
 filetype plugin indent on
@@ -1695,6 +1701,54 @@ vmap F <Plug>(easymotion-s)
 omap F <Plug>(easymotion-s)
 au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> f <Plug>(easymotion-j)
 au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> F <Plug>(easymotion-k)
+
+" vim-startify {{{1
+" ヘッダー {{{
+" let g:startify_custom_header = map(split(system('date'), '\n'), '"   ". v:val') + ['','']
+hi StartifyHeader ctermfg=darkgreen guifg=darkgreen
+let g:startify_custom_header = [
+\ '                                            ..',
+\ '                                          .::::.',
+\ '                             ___________ :;;;;:`____________',
+\ '                             \_       _/ ?????L \_        _/',
+\ '                               |.....| ????????> .:......"',
+\ '                               |:::::| $$$$$$"`.:::::::" ,',
+\ '                              ,|:::::| $$$$"`.:::::::" .OOS.',
+\ '                            ,7D|;;;;;| $$"`.;;;;;;;" .OOO888S.',
+\ '                          .GDDD|;;;;;| ?`.;;;;;;;" .OO8DDDDDNNS.',
+\ '                           "DDO|IIIII| .7IIIII7" .DDDDDDDDNNNF`',
+\ '                             "D|IIIIII7IIIII7" .DDDDDDDDNNNF`',
+\ '                               |EEEEEEEEEE7" .DDDDDDDNNNNF`',
+\ '                               |EEEEEEEEZ" .DDDDDDDDNNNF`',
+\ '                               |888888Z" .DDDDDDDDNNNF`',
+\ '                               |8888Z" ,DDDDDDDNNNNF`',
+\ '                               |88Z"    "DNNNNNNN"',
+\ '                               """        "MMMM"',
+\ '                                            ""',
+\ '',
+\ ]
+" }}}
+" メニュー
+let g:startify_list_order = [
+\ ['   Bookmarks:'],
+\  'bookmarks',
+\ ['   Sessions:'],
+\  'sessions',
+\ ['   MRU:'],
+\  'files',
+\ ]
+" MRUファイルの数
+let g:startify_files_number = 5
+" 無視するファイル
+let g:startify_skiplist = ['COMMITMSG', '.DS_STORE']
+" セッションファイルのディレクトリ
+let g:startify_session_dir = '~/.cache/startify'
+" 最近使ったファイルに使用する文字
+let g:startify_custom_indices = ['f', 'd', 's', 'a', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.']
+" ブックマーク
+let g:startify_bookmarks = [
+\ '~/.vimrc',
+\ ]
 
 "}}}1-------------------------------------------------------------------------
 
