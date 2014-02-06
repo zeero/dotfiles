@@ -1,4 +1,4 @@
-" Last Change: 05-Feb-2014. {{{
+" Last Change: 06-Feb-2014. {{{
 " vim: set ts=2 fdm=marker:
 " scriptencoding utf-8
 " }}}
@@ -941,6 +941,7 @@ let g:unite_force_overwrite_statusline = 0
 let g:unite_prompt = 'Unite>>> '
 " カーソルラインのハイライト
 let g:unite_cursor_line_highlight = 'MatchParen'
+" キーマップ定義
 au myvimrc FileType unite call s:my_unite_keymaps()
 function! s:my_unite_keymaps() "{{{
   " <C-j>/<C-k>で移動
@@ -952,6 +953,7 @@ function! s:my_unite_keymaps() "{{{
   nmap <silent> <buffer> <Esc><Esc> <Plug>(unite_all_exit)
   " 入力文字が無い時に<BS>で前の画面に戻る
   imap <expr> <silent> <buffer> <BS> unite#helper#get_input() == '' ? "\<Plug>(unite_exit)" : "\<BS>"
+  nmap <expr> <silent> <buffer> <BS> unite#helper#get_input() == '' ? "\<Plug>(unite_exit)" : "i\<BS>"
   " キャッシュ更新
   nmap <silent> <buffer> <F5> <Plug>(unite_redraw)
 endfunction "}}}
