@@ -307,12 +307,12 @@ set notagbsearch
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 " 検索語が真ん中にくるようにする
-noremap n nzzzv
-noremap N Nzzzv
-noremap * *zzzv
-noremap # #zzzv
-noremap g* g*zzzv
-noremap g# g#zzzv
+noremap n nzvzz
+noremap N Nzvzz
+noremap * *zvzz
+noremap # #zvzz
+noremap g* g*zvzz
+noremap g# g#zvzz
 noremap { {zz
 noremap } }zz
 
@@ -775,8 +775,8 @@ nnoremap <C-l> <C-i>
 " リファレンス {{{3
 nnoremap K :<C-u>Ref kotobankej <C-r><C-w><CR>
 vnoremap K y:<C-u>Ref kotobankej <C-r>"<CR>
-au myvimrc FileType vim nnoremap <buffer> ,h :<C-u>H<Space><C-r><C-w><CR>
-au myvimrc FileType vim vnoremap <buffer> ,h y:<C-u>H<Space><C-r>"<CR>
+au myvimrc FileType vim,help nnoremap <buffer> ,h :<C-u>H<Space><C-r><C-w><CR>
+au myvimrc FileType vim,help vnoremap <buffer> ,h y:<C-u>H<Space><C-r>"<CR>
 au myvimrc FileType ruby nnoremap <buffer> ,h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
 au myvimrc FileType ruby vnoremap <buffer> ,h y:<C-u>Ref<Space>refe<Space><C-r>"<CR>
 au myvimrc FileType javascript nnoremap <buffer> ,h :<C-u>Ref<Space>javascript<Space><C-r><C-w><CR>
