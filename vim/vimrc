@@ -1,6 +1,5 @@
 " Last Change: 09-Feb-2014. {{{
 " vim: set ts=2 fdm=marker:
-" scriptencoding utf-8
 " }}}
 "-----------------------------------------------------------------------------
 " 初期設定
@@ -12,6 +11,7 @@ if has('vim_starting')
 endif
 " 内部エンコーディングをutf-8に指定
 set encoding=utf-8
+scriptencoding utf-8
 " Winコマンドプロンプトではcp932
 if !has('gui_running') && &encoding != 'cp932' && &term == 'win32'
   set termencoding=cp932
@@ -316,16 +316,16 @@ set notagbsearch
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 " 検索語が真ん中にくるようにする
-nnoremap n nzvzz
-nnoremap N Nzvzz
-nnoremap * *zvzz
-nnoremap # #zvzz
-nnoremap g* g*zvzz
-nnoremap g# g#zvzz
-nnoremap { {zz
-nnoremap } }zz
-vnoremap { {zz
-vnoremap } }zz
+nnoremap n nzvz<CR>
+nnoremap N Nzvz<CR>
+nnoremap * *zvz<CR>
+nnoremap # #zvz<CR>
+nnoremap g* g*zvz<CR>
+nnoremap g# g#zvz<CR>
+nnoremap { {z<CR>
+nnoremap } }z<CR>
+vnoremap { {z<CR>
+vnoremap } }z<CR>
 
 " 編集に関する設定 {{{1
 " タブの画面上での幅
@@ -543,7 +543,7 @@ function! s:my_readpost_move()
   if line("'\"") > 0 && line("'\"") <= line("$")
     exe "normal! g`\""
   endif
-  exe "normal! zvzz"
+  exe "normal! zvz\<CR>"
 endfunction
 
 " ファイルタイプ別の設定 {{{1
@@ -725,9 +725,9 @@ vnoremap <silent> cp c<C-r>0<Esc>:let@/=@1<CR>:noh<CR>
 nnoremap <silent> cip ciw<C-r>0<Esc>:let@/=@1<CR>:noh<CR>
 " すべてのフォールディングの開け閉め
 nnoremap zO zRz<CR>
-nnoremap zC zMzz
+nnoremap zC zMz<CR>
 nnoremap zo zvz<CR>
-nnoremap zc zczz
+nnoremap zc zcz<CR>
 " ESCを二回でハイライトを消す
 nnoremap <silent> <Esc><Esc> :noh<CR>
 " QuickFix、fugitiveでは<Esc><Esc>でバッファを閉じる
@@ -739,6 +739,11 @@ nnoremap <S-Left> <C-w><
 nnoremap <S-Right> <C-w>>
 " 直前に変更またはヤンクした文字を選択
 nnoremap gc `[v`]
+" 水平スクロール
+nnoremap zh zH
+nnoremap zl zL
+nnoremap zH zh
+nnoremap zL zl
 
 " オペレータ {{{2
 " surround
@@ -786,10 +791,10 @@ nnoremap ,] g<C-]>
 vnoremap ,] g<C-]>
 nnoremap <C-j> :tab tj <C-R>=expand('<cword>')<CR><CR>
 vnoremap <C-j> y:tab tj <C-r>"<CR>
-nnoremap ,[ <C-t>
-nnoremap <C-k> <C-t>zz
-nnoremap <C-h> <C-o>zz
-nnoremap <C-l> <C-i>zz
+nnoremap ,[ <C-t>z<CR>
+nnoremap <C-k> <C-t>z<CR>
+nnoremap <C-h> <C-o>z<CR>
+nnoremap <C-l> <C-i>z<CR>
 
 " リファレンス {{{3
 nnoremap K :<C-u>Ref kotobankej <C-r><C-w><CR>
@@ -907,7 +912,7 @@ endfunction "}}}
 
 " その他 {{{3
 " PASTEモードでクリップボード貼り付け
-nnoremap ,p :<C-u>set paste!<CR>i<C-r>*<Esc>:<C-u>set paste!<CR>
+nnoremap ,p :<C-u>set paste<CR>i<C-r>*<Esc>:<C-u>set nopaste<CR>
 " カーソル位置から末尾までビジュアル選択
 nnoremap ,v v$
 
@@ -982,6 +987,8 @@ function! s:my_unite_keymaps() "{{{
   nmap <expr> <silent> <buffer> <BS> unite#helper#get_input() == '' ? "\<Plug>(unite_exit)" : "i\<BS>"
   " キャッシュ更新
   nmap <silent> <buffer> <F5> <Plug>(unite_redraw)
+  " pでオートプレビューのトグル
+  nmap <silent> <buffer> p <Plug>(unite_toggle_auto_preview))
 endfunction "}}}
 "au myvimrc FileType unite inoremap <silent> <buffer> <Esc><Esc> <Esc>:q<CR>
 " unite grep に ag(The Silver Searcher) を使う
@@ -1572,7 +1579,7 @@ let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 
 " migemo-search {{{1
 if executable('cmigemo')
-  cnoremap <expr> <silent> <CR> getcmdtype() =~ '[/?]' ? migemosearch#replace_search_word() . "\<CR>zvzz" : "\<CR>"
+  cnoremap <expr> <silent> <CR> getcmdtype() =~ '[/?]' ? migemosearch#replace_search_word() . "\<CR>zvz\<CR>" : "\<CR>"
 endif
 
 " Emmet {{{1
@@ -1724,7 +1731,7 @@ au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> F <Plug>(easymotion-k
 " Startify {{{1
 " ヘッダー {{{
 " let g:startify_custom_header = map(split(system('date'), '\n'), '"   ". v:val') + ['','']
-hi StartifyHeader ctermfg=darkgreen guifg=darkgreen
+hi StartifyHeader ctermfg=10 guifg=#A8FF60
 let g:startify_custom_header = [
 \ '                                            ..',
 \ '                                          .::::.',
