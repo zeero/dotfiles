@@ -1721,7 +1721,7 @@ omap F <Plug>(easymotion-s)
 au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> f <Plug>(easymotion-j)
 au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> F <Plug>(easymotion-k)
 
-" vim-startify {{{1
+" Startify {{{1
 " ヘッダー {{{
 " let g:startify_custom_header = map(split(system('date'), '\n'), '"   ". v:val') + ['','']
 hi StartifyHeader ctermfg=darkgreen guifg=darkgreen
@@ -1755,7 +1755,7 @@ let g:startify_custom_header = [
 " }}}
 " メニュー
 let g:startify_list_order = [
-\ ['   Bookmarks'],
+\ ['   Bookmarks:'],
 \  'bookmarks',
 \ ['   Sessions:'],
 \  'sessions',
@@ -1770,8 +1770,8 @@ let g:startify_files_number = 5
 let g:startify_skiplist = ['COMMIT_EDITMSG']
 " セッションファイルのディレクトリ
 let g:startify_session_dir = '~/.cache/startify'
-" 最近使ったファイルに使用する文字
-let g:startify_custom_indices = ['f', 'd', 's', 'a', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.']
+" メニューに使用する文字
+let g:startify_custom_indices = ['0', 'f', 'd', 's', 'a', 'v', 'c', 'x', 'z', 'b', 'n', 'm', ',', '.']
 " ブックマーク
 let g:startify_bookmarks = [
 \ resolve($MYVIMRC),
