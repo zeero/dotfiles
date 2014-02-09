@@ -1,4 +1,4 @@
-" Last Change: 07-Feb-2014. {{{
+" Last Change: 09-Feb-2014. {{{
 " vim: set ts=2 fdm=marker:
 " scriptencoding utf-8
 " }}}
@@ -182,6 +182,8 @@ NeoBundleLazy 'szw/vim-tags'
 \, {'autoload': {'commands': ['TagsGenerate']}}
 NeoBundleLazy 'majutsushi/tagbar'
 \, {'autoload': {'commands': ['TagbarToggle', 'TagbarOpen']}}
+NeoBundleLazy 'AndrewRadev/splitjoin.vim'
+\, {'autoload': {'commands': ['SplitjoinSplit', 'SplitjoinJoin']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -282,6 +284,13 @@ if has('gui_running')
   call singleton#enable()
 endif
 
+" プラグイン無効化 {{{1
+let g:loaded_gzip = 1
+let g:loaded_tar = 1
+let g:loaded_tarPlugin = 1
+let g:loaded_zip = 1
+let g:loaded_zipPlugin = 1
+
 "}}}1-------------------------------------------------------------------------
 
 "-----------------------------------------------------------------------------
@@ -307,14 +316,16 @@ set notagbsearch
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 " 検索語が真ん中にくるようにする
-noremap n nzvzz
-noremap N Nzvzz
-noremap * *zvzz
-noremap # #zvzz
-noremap g* g*zvzz
-noremap g# g#zvzz
-noremap { {zz
-noremap } }zz
+nnoremap n nzvzz
+nnoremap N Nzvzz
+nnoremap * *zvzz
+nnoremap # #zvzz
+nnoremap g* g*zvzz
+nnoremap g# g#zvzz
+nnoremap { {zz
+nnoremap } }zz
+vnoremap { {zz
+vnoremap } }zz
 
 " 編集に関する設定 {{{1
 " タブの画面上での幅
@@ -383,6 +394,8 @@ set infercase
 " set virtualedit=all
 " 行頭行末で前行次行に移動する
 " set whichwrap=b,s,h,l,<,>,[,]
+" <C-a>で8進数は除く
+set nrformats-=octal
 
 " 画面表示の設定 {{{1
 " シンタックスハイライト
@@ -453,6 +466,10 @@ set splitright
 " 画面サイズが広い場合はバッファを右に移動させる
 " TODO: Unite開くと低くなる
 "au myvimrc BufRead,BufNew,BufNewFile * if winwidth(0) > 140 | wincmd L | wincmd _ | endif
+" スクロールの設定
+set scrolloff=3
+set sidescroll=0
+set sidescrolloff=16
 
 " GUI固有の画面表示の設定 {{{1
 if has('gui_running')
@@ -720,6 +737,8 @@ nnoremap <S-Up> <C-w>+
 nnoremap <S-Down> <C-w>-
 nnoremap <S-Left> <C-w><
 nnoremap <S-Right> <C-w>>
+" 直前に変更またはヤンクした文字を選択
+nnoremap gc `[v`]
 
 " オペレータ {{{2
 " surround
@@ -758,8 +777,8 @@ cnoremap <C-p> <Up>
 " 説明 {{{3
 " ,をリーダーキーにする（衝突を避けるためにmapleaderは設定しない）
 "  []: TagJump, h: H(elp), r: Quickrun, f: VimFiler, s: VimShell
-"  p: PasteToggle, /: CommentToggle, m: MBEToggle, ;: TagbarToggle, ,: PreviewToggle
-"  v: VisualMode
+"  /: CommentToggle, m: MBEToggle, ;: TagbarToggle, ,: PreviewToggle
+"  p: Paste, v: VisualMode
 " タグジャンプ {{{3
 nnoremap <C-]> g<C-]>
 vnoremap <C-]> g<C-]>
@@ -768,9 +787,9 @@ vnoremap ,] g<C-]>
 nnoremap <C-j> :tab tj <C-R>=expand('<cword>')<CR><CR>
 vnoremap <C-j> y:tab tj <C-r>"<CR>
 nnoremap ,[ <C-t>
-nnoremap <C-k> <C-t>
-nnoremap <C-h> <C-o>
-nnoremap <C-l> <C-i>
+nnoremap <C-k> <C-t>zz
+nnoremap <C-h> <C-o>zz
+nnoremap <C-l> <C-i>zz
 
 " リファレンス {{{3
 nnoremap K :<C-u>Ref kotobankej <C-r><C-w><CR>
@@ -811,8 +830,6 @@ function! s:my_quick_inspector_ruby(expr) "{{{
 endfunction "}}}
 
 " トグル {{{3
-" PASTEモードの切り替え
-set pastetoggle=,p
 " コメントアウトの切り替え（caw.vim）
 nmap ,/ <Plug>(caw:I:toggle)
 vmap ,/ <Plug>(caw:I:toggle)
@@ -889,6 +906,8 @@ function! PreviewWord(...)
 endfunction "}}}
 
 " その他 {{{3
+" PASTEモードでクリップボード貼り付け
+nnoremap ,p :<C-u>set paste!<CR>i<C-r>*<Esc>:<C-u>set paste!<CR>
 " カーソル位置から末尾までビジュアル選択
 nnoremap ,v v$
 
@@ -1725,29 +1744,37 @@ let g:startify_custom_header = [
 \ '                               |88Z"    "DNNNNNNN"',
 \ '                               """        "MMMM"',
 \ '                                            ""',
+\ '     _    _ _                                           _   _      __     ___             ',
+\ '    / \  | | |  _   _  ___  _   _   _ __   ___  ___  __| | (_)___  \ \   / (_)_.__ ___    ',
+\ '   / _ \ | | | | | | |/ _ \| | | | |  _ \ / _ \/ _ \/ _` | | / __|  \ \ / /| |  _ ` _ \   ',
+\ '  / ___ \| | | | |_| | (_) | |_| | | | | |  __/  __/ (_| | | \__ \   \ V / | | | | | | |_ ',
+\ ' /_/   \_\_|_|  \__, |\___/ \__,_| |_| |_|\___|\___|\__,_| |_|___/    \_/  |_|_| |_| |_(_)',
+\ '                |___/                                                                     ',
 \ '',
 \ ]
 " }}}
 " メニュー
 let g:startify_list_order = [
-\ ['   Bookmarks:'],
+\ ['   Bookmarks'],
 \  'bookmarks',
 \ ['   Sessions:'],
 \  'sessions',
 \ ['   MRU:'],
 \  'files',
 \ ]
+" スペシャルメニューなし
+let g:startify_enable_special = 0
 " MRUファイルの数
 let g:startify_files_number = 5
 " 無視するファイル
-let g:startify_skiplist = ['COMMITMSG', '.DS_STORE']
+let g:startify_skiplist = ['COMMIT_EDITMSG']
 " セッションファイルのディレクトリ
 let g:startify_session_dir = '~/.cache/startify'
 " 最近使ったファイルに使用する文字
 let g:startify_custom_indices = ['f', 'd', 's', 'a', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.']
 " ブックマーク
 let g:startify_bookmarks = [
-\ '~/.vimrc',
+\ resolve($MYVIMRC),
 \ ]
 
 "}}}1-------------------------------------------------------------------------
