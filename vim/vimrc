@@ -1,4 +1,4 @@
-" Last Change: 09-Feb-2014. {{{
+" Last Change: 10-Feb-2014. {{{
 " vim: set ts=2 fdm=marker:
 " }}}
 "-----------------------------------------------------------------------------
@@ -145,6 +145,9 @@ NeoBundleLazy 'kana/vim-textobj-function'
 \, {'autoload': {'mappings': [['ox', 'if', 'af', '<Plug>(textobj-function-']]}
 \,  'depends': ['kana/vim-textobj-user']}
 NeoBundleLazy 'kana/vim-operator-user'
+NeoBundleLazy 'kana/vim-operator-replace.git'
+\, {'autoload': {'mappings': '<Plug>(operator-replace)'}
+\,  'depends': ['kana/vim-operator-user']}
 NeoBundleLazy 'rhysd/vim-operator-surround'
 \, {'autoload': {'mappings': '<Plug>(operator-surround-'}
 \,  'depends': ['kana/vim-operator-user']}
@@ -719,10 +722,6 @@ nnoremap gf :tabe <cfile><CR>
 nnoremap Y y$
 " 行末に移動
 nnoremap <C-e> $
-" ヤンクした文字列と単語を置き換え
-nnoremap <silent> cp ce<C-r>0<Esc>:let@/=@1<CR>:noh<CR>
-vnoremap <silent> cp c<C-r>0<Esc>:let@/=@1<CR>:noh<CR>
-nnoremap <silent> cip ciw<C-r>0<Esc>:let@/=@1<CR>:noh<CR>
 " すべてのフォールディングの開け閉め
 nnoremap zO zRz<CR>
 nnoremap zC zMz<CR>
@@ -746,6 +745,10 @@ nnoremap zH zh
 nnoremap zL zl
 
 " オペレータ {{{2
+" replace
+map c <Plug>(operator-replace)
+map cc 0<Plug>(operator-replace)$
+map C <Plug>(operator-replace)$
 " surround
 map s <Plug>(operator-surround-append)
 map S <Plug>(operator-surround-delete)
