@@ -1,4 +1,4 @@
-" Last Change: 10-Feb-2014. {{{
+" Last Change: 11-Feb-2014. {{{
 " vim: set ts=2 fdm=marker:
 " }}}
 "-----------------------------------------------------------------------------
@@ -320,16 +320,16 @@ set notagbsearch
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 " 検索語が真ん中にくるようにする
-nnoremap n nzvz<CR>
-nnoremap N Nzvz<CR>
-nnoremap * *zvz<CR>
-nnoremap # #zvz<CR>
-nnoremap g* g*zvz<CR>
-nnoremap g# g#zvz<CR>
-nnoremap { {z<CR>
-nnoremap } }z<CR>
-vnoremap { {z<CR>
-vnoremap } }z<CR>
+nnoremap n nzvzz
+nnoremap N Nzvzz
+nnoremap * *zvzz
+nnoremap # #zvzz
+nnoremap g* g*zvzz
+nnoremap g# g#zvzz
+nnoremap { {zz
+nnoremap } }zz
+vnoremap { {zz
+vnoremap } }zz
 
 " 編集に関する設定 {{{1
 " タブの画面上での幅
@@ -556,7 +556,7 @@ endfunction
 let g:vim_indent_cont = 0
 " vimrc、helpでは:もiskに入れる
 if expand("%") =~ "vimrc"
-  setlocal iskeyword+=:
+  setlocal iskeyword+=:,#
 endif
 au myvimrc FileType help setlocal iskeyword+=:
 " NeoSnippet
@@ -734,10 +734,10 @@ nnoremap ,] g<C-]>
 vnoremap ,] g<C-]>
 nnoremap <C-j> :tab tj <C-R>=expand('<cword>')<CR><CR>
 vnoremap <C-j> y:tab tj <C-r>"<CR>
-nnoremap ,[ <C-t>z<CR>
-nnoremap <C-k> <C-t>z<CR>
-nnoremap <C-h> <C-o>z<CR>
-nnoremap <C-l> <C-i>z<CR>
+nnoremap ,[ <C-t>
+nnoremap <C-k> <C-t>
+nnoremap <C-h> <C-o>
+nnoremap <C-l> <C-i>
 
 " ノーマルモード操作 {{{2
 " 行末までヤンク
@@ -1102,7 +1102,8 @@ command! Usnip Unite neosnippet
 command! Umap :Unite output:map|map!|lmap
 \ -no-empty -silent -buffer-name=output:map
 
-" Unite source サンプル {{{2
+" Uniteソース {{{2
+" サンプル {{{3
 let s:unite_source = {
 \   'name': 'lines',
 \ }
@@ -1198,7 +1199,7 @@ let g:vimshell_prompt_pattern = '^\f\+ > '
 " irbを非同期で起動
 command! Irb :VimShellInteractive irb
 " 非同期で開いたインタプリタに現在の行を評価させる
-au myvimrc FileType vimshell inoremap <buffer> ,s :<C-u>VimShellSendString<CR>
+au myvimrc FileType vimshell vnoremap <buffer> ,s :VimShellSendString<CR>
 au myvimrc FileType vimshell vmap <buffer> ,s :<C-u>VimShellSendString<CR>
 
 " NeoComplCache {{{1
@@ -1453,7 +1454,7 @@ let g:quickrun_config = {
 \}
 " ruby.rspec
 let g:quickrun_config['ruby.rspec'] = { 'command': 'rspec' }
-au myvimrc BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec
+au myvimrc BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec syntax=ruby
 " htmlをブラウザで開く（tyru/open-browser.vim プラグインが必要）
 let g:quickrun_config['html'] = {'command': 'open', 'exec': '%c %s', 'outputter': 'browser' }
 let g:quickrun_config['xhtml'] = {'command': 'open', 'exec': '%c %s', 'outputter': 'browser' }
@@ -1472,6 +1473,13 @@ let g:quickrun_config['jshint'] = {
 \ 'hook/u_nya_/enable': 0,
 \}
 au myvimrc BufWritePost *.js QuickRun jshint
+" database
+let g:quickrun_config['sql'] = {'type': 'sql/sqlite3'}
+let g:quickrun_config['sql/sqlite3'] = {
+\ 'command': 'sqlite3',
+\ 'exec': '%C %o %a < %S',
+\ 'cmdopt': '-header -column',
+\}
 
 " MiniBufExplorer {{{1
 "
@@ -1591,7 +1599,7 @@ let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 
 " migemo-search {{{1
 if executable('cmigemo')
-  cnoremap <expr> <silent> <CR> getcmdtype() =~ '[/?]' ? migemosearch#replace_search_word() . "\<CR>zvz\<CR>" : "\<CR>"
+  cnoremap <expr> <silent> <CR> getcmdtype() =~ '[/?]' ? migemosearch#replace_search_word() . "\<CR>zvzz" : "\<CR>"
 endif
 
 " Emmet {{{1
