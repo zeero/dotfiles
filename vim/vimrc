@@ -124,6 +124,12 @@ NeoBundleLazy 'thinca/vim-qfreplace'
 \, {'autoload': {'filetypes': ['unite', 'quickfix']}}
 NeoBundleLazy 'kana/vim-smartchr'
 \, {'autoload': {'insert': 1}}
+
+" テキストオブジェクト {{{2
+NeoBundleLazy 'kana/vim-textobj-user'
+NeoBundleLazy 'kana/vim-textobj-fold'
+\, {'autoload': {'mappings': [['ox', 'iz', 'az', '<Plug>(textobj-fold-']]}
+\,  'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'tpope/vim-surround'
 \, {'autoload': {'mappings':
 \    [['n', 'cs', '<Plug>Csurround']
@@ -137,13 +143,8 @@ NeoBundleLazy 'tpope/vim-surround'
 \,    ['i', '<C-G>S', '<Plug>ISurround']
 \,    ['i', '<C-G>s', '<Plug>Isurround']
 \,    ['i', '<C-S>', '<Plug>Isurround']]}}
-NeoBundleLazy 'kana/vim-textobj-user'
-NeoBundleLazy 'kana/vim-textobj-fold'
-\, {'autoload': {'mappings': [['ox', 'iz', 'az', '<Plug>(textobj-fold-']]}
-\,  'depends': 'kana/vim-textobj-user'}
-NeoBundleLazy 'kana/vim-textobj-function'
-\, {'autoload': {'mappings': [['ox', 'if', 'af', '<Plug>(textobj-function-']]}
-\,  'depends': ['kana/vim-textobj-user']}
+
+" オペレータ {{{2
 NeoBundleLazy 'kana/vim-operator-user'
 NeoBundleLazy 'kana/vim-operator-replace.git'
 \, {'autoload': {'mappings': '<Plug>(operator-replace)'}
@@ -697,12 +698,14 @@ xnoremap k gk
 " スペースでページ移動
 nnoremap <Space> <PageDown>
 nnoremap <S-Space> <PageUp>
+" 行末に移動
+nnoremap <C-e> $
 " 0/^のトグル
 nnoremap <expr>0  col('.') == 1 ? '^' : '0'
 nnoremap <expr>^  col('.') == 1 ? '^' : '0'
 " diffハンクへのジャンプ
-au myvimrc BufRead * nnoremap <buffer> [[ [czz
-au myvimrc BufRead * nnoremap <buffer> ]] ]czz
+nnoremap g[ [czz
+nnoremap g] ]czz
 nnoremap do do]czz
 nnoremap dp dp]czz
 
@@ -716,33 +719,47 @@ nnoremap <S-Tab> <C-PageUp>
 nnoremap ,<Tab> :<C-u>tabnew<CR>
 " gfはタブで開く
 nnoremap gf :tabe <cfile><CR>
-
-" ノーマルモード操作 {{{2
-" 行末までヤンク
-nnoremap Y y$
-" 行末に移動
-nnoremap <C-e> $
-" すべてのフォールディングの開け閉め
-nnoremap zO zRz<CR>
-nnoremap zC zMz<CR>
-nnoremap zo zvz<CR>
-nnoremap zc zcz<CR>
-" ESCを二回でハイライトを消す
-nnoremap <silent> <Esc><Esc> :noh<CR>
-" QuickFix、fugitiveでは<Esc><Esc>でバッファを閉じる
-au myvimrc FileType qf,gitcommit nnoremap <buffer> <Esc><Esc> <C-w>c
 " ウィンドウサイズ変更
 nnoremap <S-Up> <C-w>+
 nnoremap <S-Down> <C-w>-
 nnoremap <S-Left> <C-w><
 nnoremap <S-Right> <C-w>>
-" 直前に変更またはヤンクした文字を選択
-nnoremap gc `[v`]
+" QuickFix、fugitiveでは<Esc><Esc>でバッファを閉じる
+au myvimrc FileType qf,gitcommit nnoremap <buffer> <Esc><Esc> <C-w>c
+
+" タグジャンプ {{{2
+nnoremap <C-]> g<C-]>
+vnoremap <C-]> g<C-]>
+nnoremap ,] g<C-]>
+vnoremap ,] g<C-]>
+nnoremap <C-j> :tab tj <C-R>=expand('<cword>')<CR><CR>
+vnoremap <C-j> y:tab tj <C-r>"<CR>
+nnoremap ,[ <C-t>z<CR>
+nnoremap <C-k> <C-t>z<CR>
+nnoremap <C-h> <C-o>z<CR>
+nnoremap <C-l> <C-i>z<CR>
+
+" ノーマルモード操作 {{{2
+" 行末までヤンク
+nnoremap Y y$
+" すべてのフォールディングの開け閉め
+nnoremap zO zRz<CR>
+nnoremap zC zMz<CR>
+nnoremap zo zvz<CR>
+nnoremap zc zcz<CR>
 " 水平スクロール
 nnoremap zh zH
 nnoremap zl zL
 nnoremap zH zh
 nnoremap zL zl
+" ESCを二回でハイライトを消す
+nnoremap <silent> <Esc><Esc> :noh<CR>
+" 直前に変更またはヤンクした文字を選択
+nnoremap gc `[v`]
+" カーソル位置から末尾までビジュアル選択
+nnoremap ,v v$
+" PASTEモードでクリップボード貼り付け
+nnoremap ,p :<C-u>set paste<CR>i<C-r>*<Esc>:<C-u>set nopaste<CR>
 
 " オペレータ {{{2
 " replace
@@ -781,25 +798,8 @@ cnoremap <C-b> <S-Right>
 cnoremap <C-n> <Down>
 cnoremap <C-p> <Up>
 
-" リーダーキー {{{2
-" 説明 {{{3
-" ,をリーダーキーにする（衝突を避けるためにmapleaderは設定しない）
-"  []: TagJump, h: H(elp), r: Quickrun, f: VimFiler, s: VimShell
-"  /: CommentToggle, m: MBEToggle, ;: TagbarToggle, ,: PreviewToggle
-"  p: Paste, v: VisualMode
-" タグジャンプ {{{3
-nnoremap <C-]> g<C-]>
-vnoremap <C-]> g<C-]>
-nnoremap ,] g<C-]>
-vnoremap ,] g<C-]>
-nnoremap <C-j> :tab tj <C-R>=expand('<cword>')<CR><CR>
-vnoremap <C-j> y:tab tj <C-r>"<CR>
-nnoremap ,[ <C-t>z<CR>
-nnoremap <C-k> <C-t>z<CR>
-nnoremap <C-h> <C-o>z<CR>
-nnoremap <C-l> <C-i>z<CR>
-
-" リファレンス {{{3
+" コマンド実行 {{{2
+" リファレンス
 nnoremap K :<C-u>Ref kotobankej <C-r><C-w><CR>
 vnoremap K y:<C-u>Ref kotobankej <C-r>"<CR>
 au myvimrc FileType vim,help nnoremap <buffer> ,h :<C-u>H<Space><C-r><C-w><CR>
@@ -810,8 +810,7 @@ au myvimrc FileType javascript nnoremap <buffer> ,h :<C-u>Ref<Space>javascript<S
 au myvimrc FileType javascript vnoremap <buffer> ,h y:<C-u>Ref<Space>javascript<Space><C-r>"<CR>
 au myvimrc FileType sh nnoremap <buffer> ,h :<C-u>Ref<Space>man<Space><C-r><C-w><CR>
 au myvimrc FileType sh vnoremap <buffer> ,h y:<C-u>Ref<Space>man<Space><C-r>"<CR>
-
-" QuickRun {{{3
+" QuickRun
 nmap ,r <Plug>(quickrun)
 vnoremap ,R y:QuickRun -src '<C-r>"'<CR>
 vnoremap ,r y:QuickInspector<CR>
@@ -837,7 +836,7 @@ function! s:my_quick_inspector_ruby(expr) "{{{
   return vimproc#system('ruby -e '.shellescape('p '.a:expr))
 endfunction "}}}
 
-" トグル {{{3
+" トグル {{{2
 " コメントアウトの切り替え（caw.vim）
 nmap ,/ <Plug>(caw:I:toggle)
 vmap ,/ <Plug>(caw:I:toggle)
@@ -912,12 +911,6 @@ function! PreviewWord(...)
     endif
   endif
 endfunction "}}}
-
-" その他 {{{3
-" PASTEモードでクリップボード貼り付け
-nnoremap ,p :<C-u>set paste<CR>i<C-r>*<Esc>:<C-u>set nopaste<CR>
-" カーソル位置から末尾までビジュアル選択
-nnoremap ,v v$
 
 " 無効化、退避 {{{2
 " 保存して閉じる
