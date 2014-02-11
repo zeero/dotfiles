@@ -188,6 +188,8 @@ NeoBundleLazy 'majutsushi/tagbar'
 \, {'autoload': {'commands': ['TagbarToggle', 'TagbarOpen']}}
 NeoBundleLazy 'AndrewRadev/splitjoin.vim'
 \, {'autoload': {'commands': ['SplitjoinSplit', 'SplitjoinJoin']}}
+NeoBundleLazy 'tyru/restart.vim'
+\, {'autoload': {'commands': ['Restart']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -267,6 +269,10 @@ NeoBundleLazy 'mklabs/vim-cowsay'
 \, {'autoload': {'commands': ['Cowsay']}}
 NeoBundle 'mhinz/vim-startify'
 \, {'augroup': 'startify'}
+NeoBundleLazy 'taku-o/vim-zoom'
+\, {'autoload': {'commands': ['ZoomIn', 'ZoomOut', 'ZoomReset'],
+\                'mappings': [['n', '+'], ['n', '-']]}
+\,  'gui': 1}
 
 " NeoBundle終了 {{{2
 filetype plugin indent on
@@ -280,7 +286,7 @@ command! -nargs=? Bs NeoBundleSearch <args>
 command! Bc NeoBundleClean
 command! Bls NeoBundleList
 command! Blog NeoBundleLog
-command! Bso NeoBundleSource
+command! -nargs=? Bso NeoBundleSource <args>
 
 " singleton.vim {{{1
 if has('gui_running')
@@ -490,9 +496,17 @@ if has('gui_running')
   set guioptions-=l
   set guioptions-=L
   " フォントを指定
-  set guifont=Ricty_Diminished:h12:cSHIFTJIS
+  if has('win32') || has('win64')
+    set guifont=Ricty_Diminished:h12:cSHIFTJIS
+  else
+    set guifont=Ricty\ Diminished\ Regular:h18
+  endif
   " ウィンドウサイズを最大化する
-  au myvimrc GUIEnter * simalt ~x
+  if has('win32') || has('win64')
+    au myvimrc GUIEnter * simalt ~x
+  endif
+  " 透明度
+  set transparency=12
   " ヤンクでクリップボードを共有する
   "if has('clipboard')
   "  set clipboard=unnamed
@@ -509,6 +523,9 @@ if has('gui_running')
   vnoremap <M-c> "+y
   imap <expr> <M-v> '<C-o>"+gP'
   cnoremap <M-v> <C-r><C-o>*
+  " C-Scrollでフォントサイズ変更（要Zoom.vim）
+  nnoremap <C-ScrollWheelUp> :ZoomIn<CR>
+  nnoremap <C-ScrollWheelDown> :ZoomOut<CR>
   " バッファがローカルバッファに表示されなくなった場合は削除する
   " （[No Name]バッファへの対策）
   set bufhidden=wipe
@@ -698,6 +715,8 @@ xnoremap k gk
 " スペースでページ移動
 nnoremap <Space> <PageDown>
 nnoremap <S-Space> <PageUp>
+vnoremap <Space> <PageDown>
+vnoremap <S-Space> <PageUp>
 " 行末に移動
 nnoremap <C-e> $
 " 0/^のトグル
@@ -1130,7 +1149,7 @@ function! s:unite_source.gather_candidates(args, context)
   return map(candidates, '{
   \   "word": printf("%d: %s", v:key + 1, v:val),
   \   "source": "localrc",
-  \   "kind": "jump_list",
+  \   "kind": "file",
   \   "action__path": v:val,
   \   "action__line": v:key + 1,
   \ }')
@@ -1350,36 +1369,6 @@ if executable('cmigemo')
   let g:ctrlp_use_migemo = 1
 endif
 
-" Ref {{{1
-"
-" COMMAND:
-"  :Ref refe Array
-let g:ref_use_vimproc = 1 " 0:disable / 1:enable
-let g:ref_open = 'vsplit'
-let g:ref_detect_filetype = {
-\ 'ruby': 'refe',
-\ 'ruby.rspec': 'refe',
-\}
-au myvimrc FileType ref call s:my_ref_mappings()
-function! s:my_ref_mappings() "{{{
-  nnoremap <buffer> ,] <Plug>(ref-keyword)
-  nnoremap <buffer> ,[ <Plug>(ref-back)
-  nnoremap <buffer> <C-h> <Plug>(ref-back)
-  nnoremap <buffer> <C-l> <Plug>(ref-forward)
-endfunction "}}}
-" ref/refe
-let g:ref_refe_version = 2
-" ref/webdict
-let g:ref_source_webdict_sites = {
-\ 'default': 'weblio',
-\ 'weblio': 'http://ejje.weblio.jp/content/%s',
-\}
-" ローカルファイルを参照するため、.local.vimrcに以下を宣言
-" ref/javascript
-" let g:ref_javascript_doc_path = './jsref/htdocs'
-" ref/jquery
-" let g:ref_jquery_doc_path = './jqapi'
-
 " fugitive {{{1
 " 説明 {{{
 " DESC:
@@ -1423,6 +1412,36 @@ function! s:my_git_vimproc(gitcommand) "{{{
   endfor
   echohl None
 endfunction "}}}
+
+" Ref {{{1
+"
+" COMMAND:
+"  :Ref refe Array
+let g:ref_use_vimproc = 1 " 0:disable / 1:enable
+let g:ref_open = 'vsplit'
+let g:ref_detect_filetype = {
+\ 'ruby': 'refe',
+\ 'ruby.rspec': 'refe',
+\}
+au myvimrc FileType ref call s:my_ref_mappings()
+function! s:my_ref_mappings() "{{{
+  nnoremap <buffer> ,] <Plug>(ref-keyword)
+  nnoremap <buffer> ,[ <Plug>(ref-back)
+  nnoremap <buffer> <C-h> <Plug>(ref-back)
+  nnoremap <buffer> <C-l> <Plug>(ref-forward)
+endfunction "}}}
+" ref/refe
+let g:ref_refe_version = 2
+" ref/webdict
+let g:ref_source_webdict_sites = {
+\ 'default': 'weblio',
+\ 'weblio': 'http://ejje.weblio.jp/content/%s',
+\}
+" ローカルファイルを参照するため、.local.vimrcに以下を宣言
+" ref/javascript
+" let g:ref_javascript_doc_path = './jsref/htdocs'
+" ref/jquery
+" let g:ref_jquery_doc_path = './jqapi'
 
 " QuickRun {{{1
 "
