@@ -1,4 +1,4 @@
-" Last Change: 11-Feb-2014. {{{
+" Last Change: 12-Feb-2014. {{{
 " vim: set ts=2 fdm=marker:
 " }}}
 "-----------------------------------------------------------------------------
@@ -128,21 +128,40 @@ NeoBundleLazy 'kana/vim-smartchr'
 " テキストオブジェクト {{{2
 NeoBundleLazy 'kana/vim-textobj-user'
 NeoBundleLazy 'kana/vim-textobj-fold'
-\, {'autoload': {'mappings': [['ox', 'iz', 'az', '<Plug>(textobj-fold-']]}
+\, {'autoload': {'mappings': [['ov', 'iz', 'az']]}
+\,  'depends': 'kana/vim-textobj-user'}
+NeoBundleLazy 'kana/vim-textobj-entire'
+\, {'autoload': {'mappings': [['ov', 'ie', 'ae']]}
+\,  'depends': 'kana/vim-textobj-user'}
+NeoBundleLazy 'thinca/vim-textobj-between'
+\, {'autoload': {'mappings': '<Plug>(textobj-between-'}
+\,  'depends': 'kana/vim-textobj-user'}
+NeoBundleLazy 'osyo-manga/vim-textobj-multiblock'
+\, {'autoload': {'mappings': '<Plug>(textobj-multiblock-'}
+\,  'depends': 'kana/vim-textobj-user'}
+NeoBundleLazy 'osyo-manga/vim-textobj-multitextobj'
+\, {'autoload': {'mappings': '<Plug>(textobj-multitextobj-'}
+\,  'depends': 'kana/vim-textobj-user'}
+NeoBundleLazy 'sgur/vim-textobj-parameter'
+\, {'autoload': {'mappings': [['ov', 'i,', 'a,']]}
+\,  'depends': 'kana/vim-textobj-user'}
+NeoBundleLazy 'deris/vim-textobj-enclosedsyntax'
+\, {'autoload': {'mappings': [['ov', 'iq', 'aq']]
+\,               'filetypes': ['ruby', 'perl']}
 \,  'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'tpope/vim-surround'
 \, {'autoload': {'mappings':
-\    [['n', 'cs', '<Plug>Csurround']
-\,    ['x', 'gS', '<Plug>VgSurround']
-\,    ['n', 'ds', '<Plug>Dsurround']
-\,    ['n', 'ySS', '<Plug>YSsurround']
-\,    ['n', 'yss', '<Plug>Yssurround']
-\,    ['n', 'ySs', '<Plug>YSsurround']
-\,    ['n', 'yS', '<Plug>YSurround']
-\,    ['n', 'ys', '<Plug>Ysurround']
-\,    ['i', '<C-G>S', '<Plug>ISurround']
-\,    ['i', '<C-G>s', '<Plug>Isurround']
-\,    ['i', '<C-S>', '<Plug>Isurround']]}}
+\    [['n', 'cs']
+\,    ['x', 'gS']
+\,    ['n', 'ds']
+\,    ['n', 'ySS']
+\,    ['n', 'yss']
+\,    ['n', 'ySs']
+\,    ['n', 'yS']
+\,    ['n', 'ys']
+\,    ['i', '<C-G>S']
+\,    ['i', '<C-G>s']
+\,    ['i', '<C-S>']]}}
 
 " オペレータ {{{2
 NeoBundleLazy 'kana/vim-operator-user'
@@ -271,8 +290,8 @@ NeoBundleLazy 'mklabs/vim-cowsay'
 NeoBundle 'mhinz/vim-startify'
 \, {'augroup': 'startify'}
 NeoBundleLazy 'taku-o/vim-zoom'
-\, {'autoload': {'commands': ['ZoomIn', 'ZoomOut', 'ZoomReset'],
-\                'mappings': [['n', '+'], ['n', '-']]}
+\, {'autoload': {'commands': ['ZoomIn', 'ZoomOut', 'ZoomReset']
+\,               'mappings': [['n', '+'], ['n', '-']]}
 \,  'gui': 1}
 
 " NeoBundle終了 {{{2
@@ -802,6 +821,10 @@ map gx <Plug>(openbrowser-smart-search)
 map c <Plug>(operator-replace)
 map cc 0<Plug>(operator-replace)$
 map C <Plug>(operator-replace)$
+" カーソル下の文字列を置換
+nnoremap c: :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+" 選択した文字列を置換
+vnoremap c: "xy:%s/<C-r>=escape(@x, '\\/.*$^~[]')<CR>//gc<Left><Left><Left>
 " surround
 map s <Plug>(operator-surround-append)
 map S <Plug>(operator-surround-delete)
@@ -1868,6 +1891,29 @@ let g:startify_custom_indices = ['0', 'f', 'd', 's', 'a', 'v', 'c', 'x', 'z', 'b
 let g:startify_bookmarks = [
 \ resolve($MYVIMRC),
 \ ]
+
+" textobj-user {{{1
+" between
+let g:textobj_between_no_default_key_mappings = 1
+omap ab <Plug>(textobj-between-a)
+vmap ab <Plug>(textobj-between-a)
+omap ib <Plug>(textobj-between-i)
+vmap ib <Plug>(textobj-between-i)
+" multiblock
+let g:textobj_multiblock_blocks =
+\ [["'", "'"], ['"', '"'], ['<', '>'], ['[', ']'],
+\  ['{', '}']]
+omap am <Plug>(textobj-multiblock-a)
+vmap am <Plug>(textobj-multiblock-a)
+omap im <Plug>(textobj-multiblock-i)
+vmap im <Plug>(textobj-multiblock-i)
+" multitextojb
+let g:textobj_multitextobj_textobjects_i =
+\ ["i'", 'i"', 'i<', 'i(', 'i[', 'i]', 'i{', 'i}']
+omap aM <Plug>(textobj-multitextobj-a)
+vmap aM <Plug>(textobj-multitextobj-a)
+omap iM <Plug>(textobj-multitextobj-i)
+vmap iM <Plug>(textobj-multitextobj-i)
 
 "}}}1-------------------------------------------------------------------------
 
