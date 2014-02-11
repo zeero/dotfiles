@@ -603,7 +603,6 @@ au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
 "
 " COMMAND:
 " H(elp)
-" TODO: トグリたい
 command! -nargs=? -complete=help H if winwidth(0) > 140 | vertical help <args> | vertical resize 79 | else | help <args> | endif
 " Vimdoc
 command! VimDoc OpenBrowser http://vim-jp.org/vimdoc-ja/
@@ -695,6 +694,22 @@ command! Hitest belowright vsplit $VIMRUNTIME/syntax/hitest.vim | source $VIMRUN
 command! -complete=file -nargs=1 VimDiff vertical diffsplit <args>
 " DiffOrig（編集前とdiff）
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+" LoadYAML
+command! -nargs=1 LoadYAML echo s:my_load_yaml(<args>)
+function! s:my_load_yaml(file) "{{{
+  perl << EOF
+use YAML::Syck;
+use JSON::Syck qw(Dump);
+eval {
+  VIM::DoCommand("let ret = " . Dump(LoadFile("".VIM::Eval('a:file'))));
+};
+VIM::DoCommand("let v:errmsg = substitute('$@', \"\\n\", '', 'g')") if $@;
+EOF
+  if !exists('ret')
+    throw v:errmsg
+  endif
+  return ret
+endfunction "}}}
 
 " キーマップ定義 {{{1
 " 説明 {{{2
