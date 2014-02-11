@@ -254,7 +254,8 @@ NeoBundleLazy 'plasticboy/vim-markdown'
 \, {'autoload': {'filetypes': ['mkd']}}
 NeoBundleLazy 'mattn/webapi-vim'
 NeoBundleLazy 'tyru/open-browser.vim'
-\, {'autoload': {'filetypes': ['html', 'mkd']}}
+\, {'autoload': {'filetypes': ['html', 'mkd']
+\,               'mappings': '<Plug>(openbrowser-'}}
 NeoBundleLazy 'mattn/benchvimrc-vim'
 \, {'autoload': {'commands': ['BenchVimrc']}}
 NeoBundle 'haya14busa/vim-migemo'
@@ -794,6 +795,9 @@ nnoremap gp `[v`]
 nnoremap ,v v$
 " PASTEモードでクリップボード貼り付け
 nnoremap ,p :<C-u>set paste<CR>i<C-r>*<Esc>:<C-u>set nopaste<CR>
+" URLを開く
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+map gx <Plug>(openbrowser-smart-search)
 
 " オペレータ {{{2
 " replace
@@ -1207,12 +1211,18 @@ let g:vimfiler_edit_action = 'tabopen'
 " ステータスラインを上書きしない（lightline向け）
 "let g:vimfiler_force_overwrite_statusline = 0
 "let g:netrw_liststyle=3
-" Enterでツリー開閉、ファイル編集を可能に
-au myvimrc FileType vimfiler nmap <buffer> <expr> <CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
-" ESCキーを2回押すと終了する
-au myvimrc FileType vimfiler nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
-" キーマップヘルプを表示
-au myvimrc FileType vimfiler nnoremap <buffer> ,, :MyVimFilerHelp<CR>
+" キーマップ定義
+au myvimrc FileType vimfiler call s:my_vimfiler_keymaps()
+function! s:my_vimfiler_keymaps() "{{{
+  " Enterでツリー開閉、ファイル編集を可能に
+  nmap <buffer> <expr> <CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
+  " ESCキーを2回押すと終了する
+  nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
+  " キーマップヘルプを表示
+  nnoremap <buffer> ,, :MyVimFilerHelp<CR>
+  " gxでシステムハンドラで開く
+  nmap gx <Plug>(vimfiler_execute_system_associated)
+endfunction "}}}
 command! MyVimFilerHelp :call s:my_vimfiler_help()
 function! s:my_vimfiler_help() "{{{
   silent! wincmd P

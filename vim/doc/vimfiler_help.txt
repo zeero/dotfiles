@@ -23,5 +23,5 @@ U: mark off all
 a: action
 H: VimShell
 ge: system filer
-x: system app
+gx: system app
 
