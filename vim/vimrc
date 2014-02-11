@@ -903,13 +903,22 @@ endfunction "}}}
 function! s:my_quick_inspector_ruby(expr) "{{{
   return vimproc#system('ruby -e '.shellescape('p '.a:expr))
 endfunction "}}}
+" EasyMotion
+nmap ,f <Plug>(easymotion-S)
+vmap ,f <Plug>(easymotion-S)
+omap ,f <Plug>(easymotion-S)
+nmap ,F <Plug>(easymotion-s)
+vmap ,F <Plug>(easymotion-s)
+omap ,F <Plug>(easymotion-s)
+au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> ,f <Plug>(easymotion-j)
+au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> ,F <Plug>(easymotion-k)
 
 " トグル {{{2
 " コメントアウトの切り替え（caw.vim）
 nmap ,/ <Plug>(caw:I:toggle)
 vmap ,/ <Plug>(caw:I:toggle)
 " VimFiler
-nnoremap ,f :<C-u>VimFilerBufferDir
+nnoremap ,e :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<Space>-toggle<CR>
 " VimShell
 nnoremap ,s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<Space>-toggle<CR>
@@ -1826,15 +1835,6 @@ let g:EasyMotion_keys = 'fdsajklghrewquiopvcxzmtybn/.;'
 let g:EasyMotion_startofline = 0
 " フォールディングを飛ばさない
 let g:EasyMotion_skipfoldedline = 0
-" KEYMAP:
-nmap f <Plug>(easymotion-S)
-vmap f <Plug>(easymotion-S)
-omap f <Plug>(easymotion-S)
-nmap F <Plug>(easymotion-s)
-vmap F <Plug>(easymotion-s)
-omap F <Plug>(easymotion-s)
-au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> f <Plug>(easymotion-j)
-au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> F <Plug>(easymotion-k)
 
 " Startify {{{1
 " ヘッダー {{{
@@ -1895,10 +1895,10 @@ let g:startify_bookmarks = [
 " textobj-user {{{1
 " between
 let g:textobj_between_no_default_key_mappings = 1
-omap ab <Plug>(textobj-between-a)
-vmap ab <Plug>(textobj-between-a)
-omap ib <Plug>(textobj-between-i)
-vmap ib <Plug>(textobj-between-i)
+omap a= <Plug>(textobj-between-a)
+vmap a= <Plug>(textobj-between-a)
+omap i= <Plug>(textobj-between-i)
+vmap i= <Plug>(textobj-between-i)
 " multiblock
 let g:textobj_multiblock_blocks =
 \ [["'", "'"], ['"', '"'], ['<', '>'], ['[', ']'],
