@@ -1915,5 +1915,8 @@ vmap aM <Plug>(textobj-multitextobj-a)
 omap iM <Plug>(textobj-multitextobj-i)
 vmap iM <Plug>(textobj-multitextobj-i)
 
+" smartchr {{{1
+inoremap <expr> = smartchr#loop('=', '==', '<=', '>=')
+
 "}}}1-------------------------------------------------------------------------
 
