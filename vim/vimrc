@@ -407,6 +407,10 @@ set infercase
 " set whichwrap=b,s,h,l,<,>,[,]
 " <C-a>で8進数は除く
 set nrformats-=octal
+" スクロールの設定
+set scrolloff=3
+set sidescroll=0
+set sidescrolloff=16
 
 " 画面表示の設定 {{{1
 " シンタックスハイライト
@@ -477,10 +481,6 @@ set splitright
 " 画面サイズが広い場合はバッファを右に移動させる
 " TODO: Unite開くと低くなる
 "au myvimrc BufRead,BufNew,BufNewFile * if winwidth(0) > 140 | wincmd L | wincmd _ | endif
-" スクロールの設定
-set scrolloff=3
-set sidescroll=0
-set sidescrolloff=16
 
 " GUI固有の画面表示の設定 {{{1
 if has('gui_running')
@@ -731,10 +731,8 @@ nnoremap k gk
 xnoremap j gj
 xnoremap k gk
 " スペースでページ移動
-nnoremap <Space> <PageDown>
-nnoremap <S-Space> <PageUp>
-vnoremap <Space> <PageDown>
-vnoremap <S-Space> <PageUp>
+noremap <Space> <C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e>
+noremap <S-Space> <C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y>
 " 行末に移動
 nnoremap <C-e> $
 " 0/^のトグル
@@ -785,8 +783,8 @@ nnoremap zC zMz<CR>
 nnoremap zo zvz<CR>
 nnoremap zc zcz<CR>
 " 水平スクロール
-nnoremap zh zH
-nnoremap zl zL
+nnoremap zh 4zh4zh4zh4zh4zh4zh
+nnoremap zl 4zl4zl4zl4zl4zl4zl
 nnoremap zH zh
 nnoremap zL zl
 " 直前に変更またはヤンクした文字を選択
