@@ -1,4 +1,4 @@
-" Last Change: 12-Feb-2014. {{{
+" Last Change: 15-Feb-2014. {{{
 " vim: set ts=2 fdm=marker:
 " }}}
 "-----------------------------------------------------------------------------
@@ -123,6 +123,8 @@ NeoBundleLazy 'tyru/caw.vim'
 NeoBundleLazy 'thinca/vim-qfreplace'
 \, {'autoload': {'filetypes': ['unite', 'quickfix']}}
 NeoBundleLazy 'kana/vim-smartchr'
+\, {'autoload': {'insert': 1}}
+NeoBundleLazy 'autodate.vim'
 \, {'autoload': {'insert': 1}}
 
 " テキストオブジェクト {{{2
@@ -282,7 +284,6 @@ NeoBundle 'rhysd/migemo-search.vim'
 NeoBundleLazy 'sudo.vim'
 \, {'autoload': {'commands': ['SudoWrite', 'SudoRead']}}
 NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'autodate.vim'
 NeoBundleLazy 'thinca/vim-splash'
 \, {'autoload': {'commands': ['Splash']}}
 NeoBundleLazy 'mklabs/vim-cowsay'
@@ -609,6 +610,12 @@ au myvimrc FileType gitcommit
 " diff
 " TODO: normal ]cが効かない…
 au myvimrc BufRead * if 1 == &diff | noh | exe "normal! ]c" | endif
+" html
+" iabbr <expr> <buffer> > MyHtmlEndwise()
+function! MyHtmlEndwise() "{{{
+  let col = col(".")
+  let val = strridx("1234<6789<", "<")
+endfunction "}}}
 
 " ファイルタイプ指定
 " JavaSciprt
@@ -889,7 +896,7 @@ function! s:my_quick_inspector() "{{{
     return
   endif
   hi QuickInspector term=underline cterm=underline ctermfg=67
-  \ gui=underline guifg=67
+  \ gui=underline guifg=darkcyan
   let expr = substitute(getreg('"'), '\(\s\|\n\)\+$', '', '')
   echohl QuickInspector
   echo 'expr: '.expr
@@ -1028,99 +1035,6 @@ cnoremap <F2><C-p> <C-p>
 "  * : 候補を全選択する
 "  a : 候補でActionを開く
 "  ? : Uniteのキーマップを表示
-"
-" 基本設定 {{{2
-" 入力モードで開始
-"let g:unite_enable_start_insert=1
-" ヤンク履歴を使用可能にする
-let g:unite_source_history_yank_enable = 1
-" 最近使ったファイルの履歴数
-let g:unite_source_file_mru_file = 200
-" 大文字小文字を区別しない
-let g:unite_enable_ignore_case = 1
-let g:unite_enable_smart_case = 1
-" ステータスラインを上書きしない（lightline向け）
-let g:unite_force_overwrite_statusline = 0
-" プロンプト文字
-let g:unite_prompt = 'Unite>>> '
-" カーソルラインのハイライト
-let g:unite_cursor_line_highlight = 'MatchParen'
-" キーマップ定義
-au myvimrc FileType unite call s:my_unite_keymaps()
-function! s:my_unite_keymaps() "{{{
-  " <C-j>/<C-k>で移動
-  nmap <silent> <buffer> <C-j> <Plug>(unite_loop_cursor_down)
-  imap <silent> <buffer> <C-j> <Plug>(unite_select_next_line)
-  nmap <silent> <buffer> <C-k> <Plug>(unite_loop_cursor_up)
-  imap <silent> <buffer> <C-k> <Plug>(unite_select_previous_line)
-  " ESCキーを2回押すと終了する
-  nmap <silent> <buffer> <Esc><Esc> <Plug>(unite_all_exit)
-  " 入力文字が無い時に<BS>で前の画面に戻る
-  imap <expr> <silent> <buffer> <BS> unite#helper#get_input() == '' ? "\<Plug>(unite_exit)" : "\<BS>"
-  nmap <silent> <buffer> <BS> <Plug>(unite_exit)
-  " キャッシュ更新
-  nmap <silent> <buffer> <F5> <Plug>(unite_redraw)
-  " pでオートプレビューのトグル
-  nmap <silent> <buffer> p <Plug>(unite_toggle_auto_preview))
-endfunction "}}}
-"au myvimrc FileType unite inoremap <silent> <buffer> <Esc><Esc> <Esc>:q<CR>
-" unite grep に ag(The Silver Searcher) を使う
-if executable('ag')
- let g:unite_source_grep_command = 'ag'
- let g:unite_source_grep_default_opts =
- \ '--line-numbers --nocolor --nogroup --hidden --ignore ' .
- \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
- let g:unite_source_grep_recursive_opt = ''
-endif
-
-" デフォルトアクションの変更 {{{2
-" openable
-call unite#custom_default_action('file', 'tabopen')
-" directory
-call unite#custom_default_action('directory', 'vimfiler')
-" ref
-call unite#custom_default_action(
-\ 'source/ref/refe/*,source/ref/ri/*,source/ref/javascript/*,source/ref/jquery/*,source/ref/man/*',
-\ 'vsplit')
-" help
-call unite#custom_default_action('source/help/*', 'vsplit')
-
-" アクションの追加 {{{2
-" source:mappingにaction:verboseを追加する
-let s:action = {
-\ 'description': 'verbose',
-\ 'is_selectable': 1,
-\}
-function! s:action.func(candidates)
-  for candidate in a:candidates
-    execute "verbose map" substitute(candidate.action__mapping, '\\\(<.*>\)', '\1', "g")
-  endfor
-endfunction
-" kind ではなくて source の mapping に対して action を設定する
-call unite#custom#action('source/mapping/*', 'verbose', s:action)
-" preview（pキー）で action を実行したい場合は
-" call unite#custom#action('source/mapping/*', 'preview', s:action)
-unlet s:action
-
-" メニュー設定 {{{2
-let g:unite_source_menu_menus = {
-\ 'shortcuts': {
-\   'description': 'command shortcuts.',
-\   'command_candidates': [
-\     ['help-neobundle-autoload', 'H neobundle-options-autoload'],
-\     ['help-registers', 'H registers'],
-\     ['help-map-overview', 'H map-overview'],
-\     ['help-functions', 'H function-list'],
-\     ['help-vim-script', 'H usr_41.txt'],
-\     ['help-quickref-alpha', 'H index.txt'],
-\     ['help-quickref', 'H quickref.txt'],
-\     ['help-vim-goal', 'H design-goal'],
-\     ['unite-colorscheme', 'Unite colorscheme -auto-preview'],
-\     ['unite-output:message', 'Unite output:message'],
-\     ['unite-mapping(all)', 'Unite output:map|map!|lmap'],
-\   ],
-\ },
-\}
 
 " Uniteコマンド定義 {{{2
 " 汎用
@@ -1184,6 +1098,101 @@ command! Usnip Unite neosnippet
 command! Umap :Unite output:map|map!|lmap
 \ -no-empty -silent -buffer-name=output:map
 
+" 基本設定（以降はon_source） {{{2
+let s:bundle = neobundle#get('unite.vim')
+function! s:bundle.hooks.on_source(bundle)
+" 入力モードで開始
+"let g:unite_enable_start_insert=1
+" ヤンク履歴を使用可能にする
+let g:unite_source_history_yank_enable = 1
+" 最近使ったファイルの履歴数
+let g:unite_source_file_mru_file = 200
+" 大文字小文字を区別しない
+let g:unite_enable_ignore_case = 1
+let g:unite_enable_smart_case = 1
+" ステータスラインを上書きしない（lightline向け）
+let g:unite_force_overwrite_statusline = 0
+" プロンプト文字
+let g:unite_prompt = 'Unite>>> '
+" カーソルラインのハイライト
+let g:unite_cursor_line_highlight = 'MatchParen'
+" unite grep に ag(The Silver Searcher) を使う
+if executable('ag')
+ let g:unite_source_grep_command = 'ag'
+ let g:unite_source_grep_default_opts =
+ \ '--line-numbers --nocolor --nogroup --hidden --ignore ' .
+ \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+ let g:unite_source_grep_recursive_opt = ''
+endif
+
+" キーマップ定義 {{{2
+au myvimrc FileType unite call s:my_unite_keymaps()
+function! s:my_unite_keymaps() "{{{
+  " <C-j>/<C-k>で移動
+  nmap <silent> <buffer> <C-j> <Plug>(unite_loop_cursor_down)
+  imap <silent> <buffer> <C-j> <Plug>(unite_select_next_line)
+  nmap <silent> <buffer> <C-k> <Plug>(unite_loop_cursor_up)
+  imap <silent> <buffer> <C-k> <Plug>(unite_select_previous_line)
+  " ESCキーを2回押すと終了する
+  nmap <silent> <buffer> <Esc><Esc> <Plug>(unite_all_exit)
+  " 入力文字が無い時に<BS>で前の画面に戻る
+  imap <expr> <silent> <buffer> <BS> unite#helper#get_input() == '' ? "\<Plug>(unite_exit)" : "\<BS>"
+  nmap <silent> <buffer> <BS> <Plug>(unite_exit)
+  " キャッシュ更新
+  nmap <silent> <buffer> <F5> <Plug>(unite_redraw)
+  " pでオートプレビューのトグル
+  nmap <silent> <buffer> p <Plug>(unite_toggle_auto_preview))
+endfunction "}}}
+
+" メニュー設定 {{{2
+let g:unite_source_menu_menus = {
+\ 'shortcuts': {
+\   'description': 'command shortcuts.',
+\   'command_candidates': [
+\     ['help-neobundle-autoload', 'H neobundle-options-autoload'],
+\     ['help-registers', 'H registers'],
+\     ['help-map-overview', 'H map-overview'],
+\     ['help-functions', 'H function-list'],
+\     ['help-vim-script', 'H usr_41.txt'],
+\     ['help-quickref-alpha', 'H index.txt'],
+\     ['help-quickref', 'H quickref.txt'],
+\     ['help-vim-goal', 'H design-goal'],
+\     ['unite-colorscheme', 'Unite colorscheme -auto-preview'],
+\     ['unite-output:message', 'Unite output:message'],
+\     ['unite-mapping(all)', 'Unite output:map|map!|lmap'],
+\   ],
+\ },
+\}
+
+" デフォルトアクションの変更 {{{2
+" openable
+call unite#custom_default_action('file', 'tabopen')
+" directory
+call unite#custom_default_action('directory', 'vimfiler')
+" ref
+call unite#custom_default_action(
+\ 'source/ref/refe/*,source/ref/ri/*,source/ref/javascript/*,source/ref/jquery/*,source/ref/man/*',
+\ 'vsplit')
+" help
+call unite#custom_default_action('source/help/*', 'vsplit')
+
+" アクションの追加 {{{2
+" source:mappingにaction:verboseを追加する
+let s:action = {
+\ 'description': 'verbose',
+\ 'is_selectable': 1,
+\}
+function! s:action.func(candidates)
+  for candidate in a:candidates
+    execute "verbose map" substitute(candidate.action__mapping, '\\\(<.*>\)', '\1', "g")
+  endfor
+endfunction
+" kind ではなくて source の mapping に対して action を設定する
+call unite#custom#action('source/mapping/*', 'verbose', s:action)
+" preview（pキー）で action を実行したい場合は
+" call unite#custom#action('source/mapping/*', 'preview', s:action)
+unlet s:action
+
 " Uniteソース {{{2
 " サンプル {{{3
 let s:unite_source = {
@@ -1219,6 +1228,10 @@ function! s:unite_source.gather_candidates(args, context)
 endfunction
 call unite#define_source(s:unite_source)
 unlet s:unite_source
+
+" （on_source終わり） {{{2
+endfunction
+unlet s:bundle
 
 " VimFiler {{{1
 "
