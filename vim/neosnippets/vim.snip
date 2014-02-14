@@ -42,7 +42,6 @@ abbr    plugin template
   " vim-${1:plugin_name} - ${2:Description}
   " Version: 0.0.1
   " Author : zeero <zeero26@gmail.com>
-  " License: MIT License
 
   if exists('g:loaded_$1')
     finish
@@ -52,6 +51,9 @@ abbr    plugin template
   let s:save_cpo = &cpo
   set cpo&vim
 
+  " Keymaps
+  " Commands
+  " Variables
   ${0}
 
   let &cpo = s:save_cpo
