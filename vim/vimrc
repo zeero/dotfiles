@@ -210,6 +210,8 @@ NeoBundleLazy 'AndrewRadev/splitjoin.vim'
 \, {'autoload': {'commands': ['SplitjoinSplit', 'SplitjoinJoin']}}
 NeoBundleLazy 'tyru/restart.vim'
 \, {'autoload': {'commands': ['Restart']}}
+NeoBundleLazy 'sjl/gundo.vim'
+\, {'autoload': {'commands': ['GundoToggle']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -1014,6 +1016,8 @@ function! PreviewWord(...)
     endif
   endif
 endfunction "}}}
+" GundoToggle
+nnoremap ,u :<C-u>GundoToggle<CR>
 
 " 無効化、退避 {{{2
 " 保存して閉じる
