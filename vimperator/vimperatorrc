@@ -72,4 +72,9 @@ liberator.globalVariables.copy_templates = [
 ];
 EOM
 
-" vim: set ft=vim:
+" caret-hint
+let g:caret_hint_key = 'g'
+let g:caret_hint_tail_key = 'G'
+
+" vim:ft=vim
+
