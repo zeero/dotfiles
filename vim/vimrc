@@ -85,7 +85,7 @@ NeoBundleLazy 'haya14busa/vim-easymotion'
 
 " Unite {{{2
 NeoBundleLazy 'Shougo/unite.vim'
-\, {'autoload': {'commands': ['Unite', 'UniteWithBufferDir']}}
+\, {'autoload': {'commands': ['Unite', 'UniteWithBufferDir', 'UniteResume']}}
 NeoBundleLazy 'Shougo/vimfiler'
 \, {'autoload': {'commands': ['VimFiler', 'VimFilerBufferDir']}
 \,  'depends': ['Shougo/unite.vim']}
@@ -1149,8 +1149,8 @@ if executable('ag')
 endif
 
 " キーマップ定義 {{{2
-au myvimrc FileType unite call s:my_unite_keymaps()
-function! s:my_unite_keymaps() "{{{
+au myvimrc FileType unite call MyUniteKeymaps()
+function! MyUniteKeymaps() "{{{
   " <C-j>/<C-k>で移動
   nmap <silent> <buffer> <C-j> <Plug>(unite_loop_cursor_down)
   imap <silent> <buffer> <C-j> <Plug>(unite_select_next_line)
@@ -1278,8 +1278,8 @@ let g:vimfiler_edit_action = 'tabopen'
 "let g:vimfiler_force_overwrite_statusline = 0
 "let g:netrw_liststyle=3
 " キーマップ定義
-au myvimrc FileType vimfiler call s:my_vimfiler_keymaps()
-function! s:my_vimfiler_keymaps() "{{{
+au myvimrc FileType vimfiler call MyVimfilerKeymaps()
+function! MyVimfilerKeymaps() "{{{
   " Enterでツリー開閉、ファイル編集を可能に
   nmap <buffer> <expr> <CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
   " ESCキーを2回押すと終了する
@@ -1289,8 +1289,8 @@ function! s:my_vimfiler_keymaps() "{{{
   " gxでシステムハンドラで開く
   nmap gx <Plug>(vimfiler_execute_system_associated)
 endfunction "}}}
-command! MyVimFilerHelp :call s:my_vimfiler_help()
-function! s:my_vimfiler_help() "{{{
+command! MyVimFilerHelp :call MyVimfilerHelp()
+function! MyVimfilerHelp() "{{{
   silent! wincmd P
   if &previewwindow
     pclose
@@ -1528,8 +1528,8 @@ let g:ref_detect_filetype = {
 \ 'ruby': 'refe',
 \ 'ruby.rspec': 'refe',
 \}
-au myvimrc FileType ref call s:my_ref_mappings()
-function! s:my_ref_mappings() "{{{
+au myvimrc FileType ref call MyRefMappings()
+function! MyRefMappings() "{{{
   nnoremap <buffer> ,] <Plug>(ref-keyword)
   nnoremap <buffer> ,[ <Plug>(ref-back)
   nnoremap <buffer> <C-h> <Plug>(ref-back)
@@ -1544,9 +1544,9 @@ let g:ref_source_webdict_sites = {
 \}
 " ローカルファイルを参照するため、.local.vimrcに以下を宣言
 " ref/javascript
-" let g:ref_javascript_doc_path = './jsref/htdocs'
+" let g:ref_javascript_doc_path = 'jsref/htdocs'
 " ref/jquery
-" let g:ref_jquery_doc_path = './jqapi'
+" let g:ref_jquery_doc_path = 'jqapi'
 
 " QuickRun {{{1
 " 説明 {{{2
