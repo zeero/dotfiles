@@ -1,5 +1,5 @@
 " Last Change: 15-Feb-2014. {{{
-" vim: set ts=2 fdm=marker:
+" vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
 " 初期設定
@@ -192,7 +192,6 @@ NeoBundle 'mojako/ref-sources.vim'
 NeoBundleLazy 'thinca/vim-quickrun'
 \, {'autoload': {'commands': ['QuickRun']
 \,               'mappings': ['<Plug>(quickrun)']}}
-NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tpope/vim-fugitive'
 \, {'augroup': 'fugitive'}
 NeoBundleLazy 'mattn/gist-vim'
@@ -225,7 +224,8 @@ NeoBundleLazy 'tpope/vim-bundler'
 
 " HTML/JavaScript {{{2
 NeoBundleLazy 'mattn/emmet-vim'
-\, {'autoload': {'filetypes': ['html']}}
+\, {'autoload': {'filetypes': ['html']}
+\,               'insert': 1}
 " NeoBundleLazy 'jiangmiao/simple-javascript-indenter'
 " \, {'autoload': {'filetypes': ['javascript']}}
 NeoBundleLazy 'jelera/vim-javascript-syntax'
@@ -233,18 +233,23 @@ NeoBundleLazy 'jelera/vim-javascript-syntax'
 NeoBundleLazy 'jQuery'
 \, {'autoload': {'filetypes': ['javascript']}}
 NeoBundleLazy 'https://bitbucket.org/teramako/jscomplete-vim'
-\, {'autoload': {'filetypes': ['javascript']}
+\, {'autoload': {'filetypes': ['javascript']
+\,               'insert': 1}
 \,  'type': 'git'}
+NeoBundleLazy 'scrooloose/syntastic'
+\, {'autoload': {'insert': 1}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'fholgado/minibufexpl.vim'
-\, {'augroup': 'MiniBufExpl'}
-NeoBundle 'TagHighlight'
+NeoBundleLazy 'fholgado/minibufexpl.vim'
+\, {'autoload': {'commands': ['MBEbp', 'MBEbn', 'MBEToggle']}
+\,  'augroup': 'MiniBufExpl'}
 NeoBundle 'molokai'
+\, {'terminal': 1}
 NeoBundle 'http://blog.toddwerth.com/entry_files/8/ir_black.vim'
-\, {'name': 'ir_black.vim',
-\   'script_type': 'colors'}
+\, {'name': 'ir_black.vim'
+\,  'script_type': 'colors'
+\,  'gui': 1}
 " 普段使わないカラースキームは使用時に:NeoBundleSource
 NeoBundleLazy 'wombat256.vim'
 NeoBundleLazy 'altercation/vim-colors-solarized'
@@ -256,10 +261,11 @@ NeoBundleLazy 'Zephyr-Color-Scheme'
 NeoBundleLazy 'cocopon/iceberg.vim'
 NeoBundleLazy 'newspaper.vim'
 NeoBundleLazy 'thinca/vim-guicolorscheme'
-\, {'terminal': 1
-\,  'autoload': {'commands': ['GuiColorScheme']}}
-NeoBundle 'godlygeek/csapprox'
-\, {'gui': 1}
+\, {'autoload': {'commands': ['GuiColorScheme']}
+\,  'terminal': 1}
+NeoBundleLazy 'godlygeek/csapprox'
+\, {'autoload': {'commands': ['CSApproxSnapshot']}
+\,  'gui': 1}
 NeoBundleLazy 'ScrollColors'
 \, {'autoload': {'commands': ['SCROLLCOLOR']}}
 NeoBundleLazy 'cocopon/colorswatch.vim'
@@ -1817,7 +1823,7 @@ let g:user_emmet_settings = {
 
 " IndentGuides {{{1
 " vim立ち上げたときに、自動的にIndentGuidesをオンにする
-" let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_enable_on_vim_startup = 1
 " ガイドをスタートするインデントの量
 let g:indent_guides_start_level = 2
 " 自動カラーを無効にする
