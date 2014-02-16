@@ -1,4 +1,4 @@
-" Last Change: 15-Feb-2014. {{{
+" Last Change: 16-Feb-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -135,6 +135,9 @@ NeoBundleLazy 'kana/vim-textobj-fold'
 NeoBundleLazy 'kana/vim-textobj-entire'
 \, {'autoload': {'mappings': [['ov', 'ie', 'ae']]}
 \,  'depends': 'kana/vim-textobj-user'}
+NeoBundleLazy 'kana/vim-textobj-line'
+\, {'autoload': {'mappings': [['ov', 'il', 'al']]}
+\,  'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'thinca/vim-textobj-between'
 \, {'autoload': {'mappings': '<Plug>(textobj-between-'}
 \,  'depends': 'kana/vim-textobj-user'}
@@ -182,6 +185,8 @@ NeoBundleLazy 'tyru/operator-html-escape.vim'
 NeoBundleLazy 'tyru/operator-reverse.vim'
 \, {'autoload': {'mappings': '<Plug>(operator-reverse-'}
 \,  'depends': ['kana/vim-operator-user']}
+NeoBundleLazy 'terryma/vim-expand-region'
+\, {'autoload': {'mappings': '<Plug>(expand_region_'}}
 
 " コマンド {{{2
 NeoBundleLazy 'thinca/vim-ref'
@@ -191,7 +196,7 @@ NeoBundleLazy 'thinca/vim-ref'
 NeoBundle 'mojako/ref-sources.vim'
 NeoBundleLazy 'thinca/vim-quickrun'
 \, {'autoload': {'commands': ['QuickRun']
-\,               'mappings': ['<Plug>(quickrun)']}}
+\,               'mappings': '<Plug>(quickrun)'}}
 NeoBundle 'tpope/vim-fugitive'
 \, {'augroup': 'fugitive'}
 NeoBundleLazy 'mattn/gist-vim'
@@ -212,6 +217,8 @@ NeoBundleLazy 'tyru/restart.vim'
 \, {'autoload': {'commands': ['Restart']}}
 NeoBundleLazy 'sjl/gundo.vim'
 \, {'autoload': {'commands': ['GundoToggle']}}
+NeoBundleLazy 't9md/vim-quickhl'
+\, {'autoload': {'mappings': '<Plug>(quickhl-'}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -302,6 +309,8 @@ NeoBundleLazy 'taku-o/vim-zoom'
 \, {'autoload': {'commands': ['ZoomIn', 'ZoomOut', 'ZoomReset']
 \,               'mappings': [['n', '+'], ['n', '-']]}
 \,  'gui': 1}
+NeoBundleLazy 'yonchu/accelerated-smooth-scroll'
+\, {'autoload': {'mappings': '<Plug>(ac-smooth-scroll-'}}
 
 " NeoBundle終了 {{{2
 filetype plugin indent on
@@ -528,7 +537,7 @@ if has('gui_running')
   if has('win32') || has('win64')
     set guifont=Ricty_Diminished:h12:cSHIFTJIS
   else
-    set guifont=Ricty\ Diminished\ Regular:h18
+    set guifont=Ricty\ Diminished\ Regular:h20
   endif
   " ウィンドウサイズを最大化する
   if has('win32') || has('win64')
@@ -688,6 +697,8 @@ function! s:my_info() "{{{
   endfor
   let v:statusmsg = old_status
 endfunction "}}}
+" Noh
+command! Noh noh | QuickhlManualReset
 
 " SyntaxInfo
 command! SyntaxInfo call s:get_syn_info()
@@ -771,9 +782,6 @@ nnoremap j gj
 nnoremap k gk
 xnoremap j gj
 xnoremap k gk
-" スペースでページ移動
-noremap <Space> <C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e><C-e>
-noremap <S-Space> <C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y><C-y>
 " 行末に移動
 nnoremap <C-e> $
 " 0/^のトグル
@@ -841,7 +849,6 @@ map gx <Plug>(openbrowser-smart-search)
 " オペレータ {{{2
 " replace
 map c <Plug>(operator-replace)
-map cc 0<Plug>(operator-replace)$
 map C <Plug>(operator-replace)$
 " カーソル下の文字列を置換
 nnoremap c: :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
@@ -857,6 +864,9 @@ map _ <Plug>(operator-camelize-toggle)
 vmap ; <Plug>(operator-html-escape)
 " 反転
 vmap r <Plug>(operator-reverse-text)
+" エリア拡大
+vmap + <Plug>(expand_region_expand)
+vmap - <Plug>(expand_region_shrink)
 
 " インサートモード {{{2
 " 移動
@@ -879,7 +889,7 @@ inoremap ( ()<Left>
 inoremap [ []<Left>
 inoremap { {}<Left>
 inoremap ' ''<Left>
-inoremap " ""<Left>
+inoremap <expr> " col(".") == 1 ? '"' : '""<Left>'
 
 " コマンドモード {{{2
 " 移動
@@ -932,14 +942,14 @@ function! s:my_quick_inspector_ruby(expr) "{{{
   return vimproc#system('ruby -e '.shellescape('p '.a:expr))
 endfunction "}}}
 " EasyMotion
-nmap ,f <Plug>(easymotion-S)
+nmap f <Plug>(easymotion-S)
 vmap ,f <Plug>(easymotion-S)
 omap ,f <Plug>(easymotion-S)
-nmap ,F <Plug>(easymotion-s)
+nmap F <Plug>(easymotion-s)
 vmap ,F <Plug>(easymotion-s)
 omap ,F <Plug>(easymotion-s)
-au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> ,f <Plug>(easymotion-j)
-au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> ,F <Plug>(easymotion-k)
+au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> f <Plug>(easymotion-j)
+au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> F <Plug>(easymotion-k)
 
 " トグル {{{2
 " コメントアウトの切り替え（caw.vim）
@@ -1018,6 +1028,9 @@ function! PreviewWord(...)
 endfunction "}}}
 " GundoToggle
 nnoremap ,u :<C-u>GundoToggle<CR>
+" QuickhlToggle
+map ,<Space> <Plug>(quickhl-manual-this)
+map ,<S-Space> <Plug>(quickhl-manual-reset)
 
 " 無効化、退避 {{{2
 " 保存して閉じる
@@ -1286,7 +1299,7 @@ function! MyVimfilerKeymaps() "{{{
   nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
   " キーマップヘルプを表示
   nnoremap <buffer> ,, :MyVimFilerHelp<CR>
-  " gxでシステムハンドラで開く
+  " システムハンドラで開く
   nmap gx <Plug>(vimfiler_execute_system_associated)
 endfunction "}}}
 command! MyVimFilerHelp :call MyVimfilerHelp()
@@ -1853,6 +1866,8 @@ au myvimrc VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=dar
 let g:indent_guides_color_change_percent = 30
 " ガイドの幅
 let g:indent_guides_guide_size = 1
+" 無視するファイルタイプ
+let g:indent_guides_exclude_filetypes = ['help', 'unite', 'vimfiler', 'vimshell', 'startify']
 
 " Syntastic {{{1
 let g:syntastic_mode_map = {
@@ -1866,11 +1881,15 @@ let g:EasyMotion_smartcase = 1
 " migemo検索
 let g:EasyMotion_use_migemo = 1
 " 使用する文字
-let g:EasyMotion_keys = 'fdsajklghrewquiopvcxzmtybn/.;'
+let g:EasyMotion_keys = 'FDSAJKLGHREWQUIOPVCXZMTYBN/.;'
+" 大文字で表示する
+let g:EasyMotion_use_upper = 1
 " JKモーションでカラム位置キープ
 let g:EasyMotion_startofline = 0
 " フォールディングを飛ばさない
 let g:EasyMotion_skipfoldedline = 0
+" Enterで直近に飛ぶ
+let g:EasyMotion_enter_jump_first = 1
 
 " Startify {{{1
 " ヘッダー {{{
@@ -1935,24 +1954,30 @@ omap a= <Plug>(textobj-between-a)
 vmap a= <Plug>(textobj-between-a)
 omap i= <Plug>(textobj-between-i)
 vmap i= <Plug>(textobj-between-i)
-" multiblock
-let g:textobj_multiblock_blocks =
-\ [["'", "'"], ['"', '"'], ['<', '>'], ['[', ']'],
-\  ['{', '}']]
-omap am <Plug>(textobj-multiblock-a)
-vmap am <Plug>(textobj-multiblock-a)
-omap im <Plug>(textobj-multiblock-i)
-vmap im <Plug>(textobj-multiblock-i)
 " multitextojb
+let g:textobj_multitextobj_textobjects_a =
+\ ["a'", 'a"', 'a<', 'a(', 'a[', 'a]', 'a{', 'a}']
 let g:textobj_multitextobj_textobjects_i =
 \ ["i'", 'i"', 'i<', 'i(', 'i[', 'i]', 'i{', 'i}']
-omap aM <Plug>(textobj-multitextobj-a)
-vmap aM <Plug>(textobj-multitextobj-a)
-omap iM <Plug>(textobj-multitextobj-i)
-vmap iM <Plug>(textobj-multitextobj-i)
+omap am <Plug>(textobj-multitextobj-a)
+vmap am <Plug>(textobj-multitextobj-a)
+omap im <Plug>(textobj-multitextobj-i)
+vmap im <Plug>(textobj-multitextobj-i)
+" multiblock
+let g:textobj_multiblock_blocks =
+\ [["if", "endif"], ['if', 'fi'], ['if', 'end'],
+\  ["function", "endfunction"], ["def", "end"]]
+omap aM <Plug>(textobj-multiblock-a)
+vmap aM <Plug>(textobj-multiblock-a)
+omap iM <Plug>(textobj-multiblock-i)
+vmap iM <Plug>(textobj-multiblock-i)
 
 " smartchr {{{1
 inoremap <expr> = smartchr#loop('=', '==', '<=', '>=')
+
+" Acceralated Smooth Scroll {{{1
+map <silent> <Space> <Plug>(ac-smooth-scroll-c-d)
+map <silent> <S-Space> <Plug>(ac-smooth-scroll-c-u)
 
 "}}}1-------------------------------------------------------------------------
 
