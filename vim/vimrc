@@ -40,10 +40,6 @@ let $LANG = 'ja_JP.UTF-8'
 if !has('gui_running') && has('xterm_clipboard')
   set clipboard=exclude:cons\\\|linux\\\|cygwin\\\|rxvt\\\|screen
 endif "}}}
-" WinではPATHに$VIMが含まれていないときにexeを見つけ出せないので修正 {{{
-if has('win32') && $PATH !~? '\(^\|;\)' . escape($VIM, '\\') . '\(;\|$\)'
-  let $PATH = $VIM . ';' . $PATH
-endif "}}}
 
 " NeoBundle {{{1
 " 説明 {{{2
@@ -809,6 +805,9 @@ nnoremap <S-Left> <C-w><
 nnoremap <S-Right> <C-w>>
 " QuickFix、fugitiveでは<Esc><Esc>でバッファを閉じる
 au myvimrc FileType qf,gitcommit nnoremap <buffer> <Esc><Esc> <C-w>c
+" qでウィンドウを閉じる、マクロはQ（EXモードは使わない）
+nnoremap q :<C-u>q<CR>
+nnoremap Q q
 
 " タグジャンプ {{{2
 nnoremap <C-]> g<C-]>
@@ -886,7 +885,7 @@ inoremap <expr> ,dt strftime('%H:%M:%S')
 " エンドワイズ
 inoremap ( ()<Left>
 inoremap [ []<Left>
-inoremap { {}<Left>
+inoremap <expr> { synIDattr(synID(line("."), col(".") - 1, 1), "name") =~? 'comment' ? '{' : '{}<Left>'
 inoremap ' ''<Left>
 inoremap <expr> " col(".") == 1 ? '"' : '""<Left>'
 
@@ -1036,8 +1035,6 @@ map ,<S-Space> <Plug>(quickhl-manual-reset)
 nnoremap ZZ <Nop>
 " 保存せずに閉じる
 nnoremap ZQ <Nop>
-" EXモードに入る
-nnoremap Q <Nop>
 " 退避
 nnoremap <F2><C-e> <C-e>
 nnoremap <F2><C-g> <C-g>
@@ -1945,6 +1942,9 @@ let g:startify_custom_indices = ['0', 'f', 'd', 's', 'a', 'v', 'c', 'x', 'z', 'b
 let g:startify_bookmarks = [
 \ resolve($MYVIMRC),
 \ ]
+
+" Restart {{{1
+let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
 
 " textobj-user {{{1
 " between
