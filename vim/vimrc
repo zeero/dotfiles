@@ -1,4 +1,4 @@
-" Last Change: 16-Feb-2014. {{{
+" Last Change: 17-Feb-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -284,8 +284,7 @@ NeoBundleLazy 'cocopon/colorswatch.vim'
 NeoBundle 'thinca/vim-singleton'
 \, {'gui': 1}
 NeoBundle 'thinca/vim-localrc'
-NeoBundleLazy 'vim-jp/vimdoc-ja'
-\, {'autoload': {'commands': ['help']}}
+NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundleLazy 'plasticboy/vim-markdown'
 \, {'autoload': {'filetypes': ['mkd']}}
 NeoBundleLazy 'mattn/webapi-vim'
