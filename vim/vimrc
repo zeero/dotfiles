@@ -1,4 +1,4 @@
-" Last Change: 17-Feb-2014. {{{
+" Last Change: 18-Feb-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -957,7 +957,7 @@ vmap ,/ <Plug>(caw:I:toggle)
 nnoremap ,e :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<Space>-toggle<CR>
 " VimShell
-nnoremap ,s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<Space>-toggle<CR>
+nnoremap ,s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<Space>-toggle<Space>-buffer-name=vimshell<CR>
 " MBEToggle
 nnoremap ,m :<C-u>MBEToggle<CR>
 " TagbarToggle
@@ -1330,10 +1330,10 @@ endfunction "}}}
 let g:vimshell_prompt_expr = 'getcwd()." > "'
 let g:vimshell_prompt_pattern = '^\f\+ > '
 " irbを非同期で起動
-command! Irb :VimShellInteractive irb
+command! Irb VimShellInteractive irb
 " 非同期で開いたインタプリタに現在の行を評価させる
-au myvimrc FileType vimshell vnoremap <buffer> ,s :VimShellSendString<CR>
-au myvimrc FileType vimshell vmap <buffer> ,s :<C-u>VimShellSendString<CR>
+command! VSSend VimShellSendString
+command! VSAll %VimShellSendString
 
 " NeoComplCache {{{1
 "
