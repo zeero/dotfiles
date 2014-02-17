@@ -29,6 +29,10 @@ nnoremap <C-l> :tabm 100<CR>
 " ナビゲーションバーのトグル
 nnoremap m :set toolbars+=nonavigation,noaddons<CR>
 nnoremap M :set toolbars+=navigation,addons<CR>
+" ブックマークバーのトグル
+nnoremap b :set toolbars+=nobookmarks<CR>
+nnoremap B :set toolbars+=bookmarks<CR>
+nnoremap ,b :dialog places<CR>
 " 印刷
 nnoremap <C-p> :ha<CR>
 nnoremap <C-n> <C-t>
