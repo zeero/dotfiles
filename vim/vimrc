@@ -581,13 +581,6 @@ if has('persistent_undo')
   set undodir=$HOME/.vimundo
   set undofile
 endif
-" vimrcの保存時に再読み込み
-if !has('gui_running')
-  au myvimrc BufWritePost *vimrc nested source $MYVIMRC
-else
-  au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
-        \ if filereadable($MYGVIMRC) | source $MYGVIMRC | endif
-endif
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
 au myvimrc BufRead .* if expand("%:p:h") != '' | exe ":lcd " . expand("%:p:h") | endif
@@ -604,6 +597,13 @@ endfunction
 
 " ファイルタイプ別の設定 {{{1
 " Vim
+" vimrcの保存時に再読み込み
+if !has('gui_running')
+  au myvimrc BufWritePost *vimrc nested source $MYVIMRC
+else
+  au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
+        \ if filereadable($MYGVIMRC) | source $MYGVIMRC | endif
+endif
 " バックスラッシュのインデントを無くす
 let g:vim_indent_cont = 0
 " vimrc、helpでは:もiskに入れる
@@ -611,6 +611,16 @@ if expand("%") =~ "vimrc"
   setlocal iskeyword+=:,#
 endif
 au myvimrc FileType help setlocal iskeyword+=:
+" vimrcは起動時だったらgit pull
+au myvimrc VimEnter *vimrc call s:my_vimenter_vimrc()
+function! s:my_vimenter_vimrc() "{{{
+  exe ":lcd " . expand("%:p:h")
+  if exists('*fugitive#head')
+    call s:my_git_vimproc('pull')
+  endif
+  checktime
+endfunction "}}}
+
 " NeoSnippet
 au myvimrc FileType neosnippet setlocal nofoldenable
 " fugitive
