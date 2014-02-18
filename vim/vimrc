@@ -1,4 +1,4 @@
-" Last Change: 18-Feb-2014. {{{
+" Last Change: 19-Feb-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -306,6 +306,9 @@ NeoBundleLazy 'taku-o/vim-zoom'
 \,  'gui': 1}
 NeoBundleLazy 'yonchu/accelerated-smooth-scroll'
 \, {'autoload': {'mappings': '<Plug>(ac-smooth-scroll-'}}
+NeoBundleLazy 'ShowMarks'
+\, {'autoload': {'mappings': [['n', 'm'], '<Plug>Showmarks']
+\,               'commands': ['ShowMarksToggle']}}
 
 " NeoBundle終了 {{{2
 filetype plugin indent on
@@ -969,7 +972,7 @@ nnoremap ,e :<C-u>VimFilerBufferDir
 " VimShell
 nnoremap ,s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<Space>-toggle<Space>-buffer-name=vimshell<CR>
 " MBEToggle
-nnoremap ,m :<C-u>MBEToggle<CR>
+nnoremap ,b :<C-u>MBEToggle<CR>
 " TagbarToggle
 nnoremap ,; :<C-u>TagbarToggle<CR>
 " PreviewToggle
@@ -1039,6 +1042,8 @@ nnoremap ,u :<C-u>GundoToggle<CR>
 " QuickhlToggle
 map ,<Space> <Plug>(quickhl-manual-this)
 map ,<S-Space> <Plug>(quickhl-manual-reset)
+" ShowMarks
+nmap ,m :<C-u>ShowMarksToggle<CR>
 
 " 無効化、退避 {{{2
 " 保存して閉じる
@@ -1987,6 +1992,9 @@ inoremap <expr> = smartchr#loop('=', '==', '<=', '>=')
 " Acceralated Smooth Scroll {{{1
 map <silent> <Space> <Plug>(ac-smooth-scroll-c-d)
 map <silent> <S-Space> <Plug>(ac-smooth-scroll-c-u)
+
+" ShowMarks {{{1
+let g:showmarks_ignore_type = 'hqmp'
 
 "}}}1-------------------------------------------------------------------------
 
