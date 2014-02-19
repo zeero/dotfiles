@@ -447,7 +447,7 @@ set nrformats-=octal
 " スクロールの設定
 set scrolloff=3
 set sidescroll=0
-set sidescrolloff=16
+set sidescrolloff=9
 
 " 画面表示の設定 {{{1
 " シンタックスハイライト
