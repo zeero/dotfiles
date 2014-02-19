@@ -215,6 +215,8 @@ NeoBundleLazy 'sjl/gundo.vim'
 \, {'autoload': {'commands': ['GundoToggle']}}
 NeoBundleLazy 't9md/vim-quickhl'
 \, {'autoload': {'mappings': '<Plug>(quickhl-'}}
+NeoBundleLazy 'AndrewRadev/linediff.vim'
+\, {'autoload': {'commands': ['Linediff']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
