@@ -586,7 +586,7 @@ if has('persistent_undo')
 endif
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
-au myvimrc BufRead .* if expand("%:p:h") != '' | exe ":lcd " . expand("%:p:h") | endif
+au myvimrc BufRead * if expand("%:p:h") != '' | exe ":lcd " . expand("%:p:h") | endif
 "set autochdir （設定するとVimShellが動かなくなる）
 " 前回終了したカーソル行に移動して真ん中にする（フォールドがあれば開く）
 " TODO: 真ん中にならない。たぶんなんかのプラグインが悪さしてる。
@@ -811,6 +811,7 @@ nnoremap <S-Tab> <C-PageUp>
 nnoremap ,<Tab> :<C-u>tabnew<CR>
 " gfはタブで開く
 nnoremap gf :tabe <cfile><CR>
+vnoremap gf y:tabe <C-r>"<CR>
 " ウィンドウサイズ変更
 nnoremap <S-Up> <C-w>+
 nnoremap <S-Down> <C-w>-
