@@ -1,4 +1,4 @@
-" Last Change: 19-Feb-2014. {{{
+" Last Change: 20-Feb-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -803,7 +803,7 @@ noremap g# g#zvzz
 noremap { {zz
 noremap } }zz
 " #でも検索方向を揃える
-noremap # *Nzvzz
+noremap # *NNzvzz
 
 " ウィンドウ／タブ {{{2
 " バッファ移動用キーマップ
