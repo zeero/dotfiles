@@ -363,17 +363,6 @@ set notagbsearch
 " バックスラッシュやクエスチョンを状況に合わせ自動的にエスケープ
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
-" 検索語が真ん中にくるようにする
-nnoremap n nzvzz
-nnoremap N Nzvzz
-nnoremap * *zvzz
-nnoremap # #zvzz
-nnoremap g* g*zvzz
-nnoremap g# g#zvzz
-nnoremap { {zz
-nnoremap } }zz
-vnoremap { {zz
-vnoremap } }zz
 
 " 編集に関する設定 {{{1
 " タブの画面上での幅
@@ -802,6 +791,19 @@ nnoremap g[ [czz
 nnoremap g] ]czz
 nnoremap do do]czz
 nnoremap dp dp]czz
+
+" 検索 {{{2
+" 検索語が真ん中にくるようにする
+noremap n nzvzz
+noremap N Nzvzz
+noremap * *zvzz
+" nnoremap # #zvzz
+noremap g* g*zvzz
+noremap g# g#zvzz
+noremap { {zz
+noremap } }zz
+" #でも検索方向を揃える
+noremap # *Nzvzz
 
 " ウィンドウ／タブ {{{2
 " バッファ移動用キーマップ
