@@ -906,8 +906,8 @@ inoremap <expr> ,dt strftime('%H:%M:%S')
 inoremap ( ()<Left>
 inoremap [ []<Left>
 inoremap <expr> { synIDattr(synID(line("."), col(".") - 1, 1), "name") =~? 'comment' ? '{' : '{}<Left>'
-inoremap ' ''<Left>
-inoremap <expr> " col(".") == 1 ? '"' : '""<Left>'
+inoremap <expr> ' strlen(substitute(getline("."), "\[^\'\]", "", "g")) % 2 == 1 ? "\'" : "\'\'<Left>"
+inoremap <expr> " or(col(".") == 1, strlen(substitute(getline("."), '[^"]', "", "g")) % 2 == 1) ? '"' : '""<Left>'
 
 " コマンドモード {{{2
 " 移動
