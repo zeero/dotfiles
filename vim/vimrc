@@ -1,4 +1,4 @@
-" Last Change: 16-Feb-2014. {{{
+" Last Change: 22-Feb-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -39,10 +39,6 @@ let $LANG = 'ja_JP.UTF-8'
 " コンソール版で環境変数$DISPLAYが設定されていると起動が遅くなる件へ対応 {{{
 if !has('gui_running') && has('xterm_clipboard')
   set clipboard=exclude:cons\\\|linux\\\|cygwin\\\|rxvt\\\|screen
-endif "}}}
-" WinではPATHに$VIMが含まれていないときにexeを見つけ出せないので修正 {{{
-if has('win32') && $PATH !~? '\(^\|;\)' . escape($VIM, '\\') . '\(;\|$\)'
-  let $PATH = $VIM . ';' . $PATH
 endif "}}}
 
 " NeoBundle {{{1
@@ -221,6 +217,8 @@ NeoBundleLazy 'sjl/gundo.vim'
 \, {'autoload': {'commands': ['GundoToggle']}}
 NeoBundleLazy 't9md/vim-quickhl'
 \, {'autoload': {'mappings': '<Plug>(quickhl-'}}
+NeoBundleLazy 'AndrewRadev/linediff.vim'
+\, {'autoload': {'commands': ['Linediff']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -286,8 +284,7 @@ NeoBundleLazy 'cocopon/colorswatch.vim'
 NeoBundle 'thinca/vim-singleton'
 \, {'gui': 1}
 NeoBundle 'thinca/vim-localrc'
-NeoBundleLazy 'vim-jp/vimdoc-ja'
-\, {'autoload': {'commands': ['help']}}
+NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundleLazy 'plasticboy/vim-markdown'
 \, {'autoload': {'filetypes': ['mkd']}}
 NeoBundleLazy 'mattn/webapi-vim'
@@ -313,6 +310,9 @@ NeoBundleLazy 'taku-o/vim-zoom'
 \,  'gui': 1}
 NeoBundleLazy 'yonchu/accelerated-smooth-scroll'
 \, {'autoload': {'mappings': '<Plug>(ac-smooth-scroll-'}}
+NeoBundleLazy 'ShowMarks'
+\, {'autoload': {'mappings': [['n', 'm'], '<Plug>Showmarks']
+\,               'commands': ['ShowMarksToggle']}}
 
 " NeoBundle終了 {{{2
 filetype plugin indent on
@@ -365,17 +365,6 @@ set notagbsearch
 " バックスラッシュやクエスチョンを状況に合わせ自動的にエスケープ
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
-" 検索語が真ん中にくるようにする
-nnoremap n nzvzz
-nnoremap N Nzvzz
-nnoremap * *zvzz
-nnoremap # #zvzz
-nnoremap g* g*zvzz
-nnoremap g# g#zvzz
-nnoremap { {zz
-nnoremap } }zz
-vnoremap { {zz
-vnoremap } }zz
 
 " 編集に関する設定 {{{1
 " タブの画面上での幅
@@ -449,7 +438,7 @@ set nrformats-=octal
 " スクロールの設定
 set scrolloff=3
 set sidescroll=0
-set sidescrolloff=16
+set sidescrolloff=9
 
 " 画面表示の設定 {{{1
 " シンタックスハイライト
@@ -588,16 +577,9 @@ if has('persistent_undo')
   set undodir=$HOME/.vimundo
   set undofile
 endif
-" vimrcの保存時に再読み込み
-if !has('gui_running')
-  au myvimrc BufWritePost *vimrc nested source $MYVIMRC
-else
-  au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
-        \ if filereadable($MYGVIMRC) | source $MYGVIMRC | endif
-endif
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
-au myvimrc BufRead .* if expand("%:p:h") != '' | exe ":lcd " . expand("%:p:h") | endif
+au myvimrc BufRead * if isdirectory(expand("%:p:h")) | exe "lcd" expand("%:p:h") | endif
 "set autochdir （設定するとVimShellが動かなくなる）
 " 前回終了したカーソル行に移動して真ん中にする（フォールドがあれば開く）
 " TODO: 真ん中にならない。たぶんなんかのプラグインが悪さしてる。
@@ -611,6 +593,13 @@ endfunction
 
 " ファイルタイプ別の設定 {{{1
 " Vim
+" vimrcの保存時に再読み込み
+if !has('gui_running')
+  au myvimrc BufWritePost *vimrc nested source $MYVIMRC
+else
+  au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
+        \ if filereadable($MYGVIMRC) | source $MYGVIMRC | endif
+endif
 " バックスラッシュのインデントを無くす
 let g:vim_indent_cont = 0
 " vimrc、helpでは:もiskに入れる
@@ -618,6 +607,16 @@ if expand("%") =~ "vimrc"
   setlocal iskeyword+=:,#
 endif
 au myvimrc FileType help setlocal iskeyword+=:
+" vimrcは起動時だったらgit pull
+au myvimrc VimEnter *vimrc call s:my_vimenter_vimrc()
+function! s:my_vimenter_vimrc() "{{{
+  exe ":lcd " . expand("%:p:h")
+  if exists('*fugitive#head')
+    call s:my_git_vimproc('pull')
+  endif
+  checktime
+endfunction "}}}
+
 " NeoSnippet
 au myvimrc FileType neosnippet setlocal nofoldenable
 " fugitive
@@ -794,6 +793,21 @@ nnoremap g[ [czz
 nnoremap g] ]czz
 nnoremap do do]czz
 nnoremap dp dp]czz
+" markへのジャンプ
+nnoremap gm `
+
+" 検索 {{{2
+" 検索語が真ん中にくるようにする
+noremap n nzvzz
+noremap N Nzvzz
+noremap * *zvzz
+" nnoremap # #zvzz
+noremap g* g*zvzz
+noremap g# g#zvzz
+noremap { {zz
+noremap } }zz
+" #でも検索方向を揃える
+noremap # *NNzvzz
 
 " ウィンドウ／タブ {{{2
 " バッファ移動用キーマップ
@@ -805,6 +819,7 @@ nnoremap <S-Tab> <C-PageUp>
 nnoremap ,<Tab> :<C-u>tabnew<CR>
 " gfはタブで開く
 nnoremap gf :tabe <cfile><CR>
+vnoremap gf y:tabe <C-r>"<CR>
 " ウィンドウサイズ変更
 nnoremap <S-Up> <C-w>+
 nnoremap <S-Down> <C-w>-
@@ -812,6 +827,9 @@ nnoremap <S-Left> <C-w><
 nnoremap <S-Right> <C-w>>
 " QuickFix、fugitiveでは<Esc><Esc>でバッファを閉じる
 au myvimrc FileType qf,gitcommit nnoremap <buffer> <Esc><Esc> <C-w>c
+" qでウィンドウを閉じる、マクロはQ（EXモードは使わない）
+nnoremap q :<C-u>q<CR>
+nnoremap Q q
 
 " タグジャンプ {{{2
 nnoremap <C-]> g<C-]>
@@ -889,9 +907,9 @@ inoremap <expr> ,dt strftime('%H:%M:%S')
 " エンドワイズ
 inoremap ( ()<Left>
 inoremap [ []<Left>
-inoremap { {}<Left>
-inoremap ' ''<Left>
-inoremap <expr> " col(".") == 1 ? '"' : '""<Left>'
+inoremap <expr> { synIDattr(synID(line("."), col(".") - 1, 1), "name") =~? 'comment' ? '{' : '{}<Left>'
+inoremap <expr> ' strlen(substitute(getline("."), "\[^\'\]", "", "g")) % 2 == 1 ? "\'" : "\'\'<Left>"
+inoremap <expr> " or(col(".") == 1, strlen(substitute(getline("."), '[^"]', "", "g")) % 2 == 1) ? '"' : '""<Left>'
 
 " コマンドモード {{{2
 " 移動
@@ -961,9 +979,10 @@ vmap ,/ <Plug>(caw:I:toggle)
 nnoremap ,e :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<Space>-toggle<CR>
 " VimShell
-nnoremap ,s :<C-u>set noautochdir<CR>:<C-u>VimShellPop<Space>-toggle<CR>
+nnoremap ,s :<C-u>VimShellPop<Space>-toggle<Space>-buffer-name=vimshell<CR>
+nnoremap ,S :<C-u>VimShell<Space>-split-command=tabe<Space>-buffer-name=vimshell_tab<CR>
 " MBEToggle
-nnoremap ,m :<C-u>MBEToggle<CR>
+nnoremap ,b :<C-u>MBEToggle<CR>
 " TagbarToggle
 nnoremap ,; :<C-u>TagbarToggle<CR>
 " PreviewToggle
@@ -1033,14 +1052,14 @@ nnoremap ,u :<C-u>GundoToggle<CR>
 " QuickhlToggle
 map ,<Space> <Plug>(quickhl-manual-this)
 map ,<S-Space> <Plug>(quickhl-manual-reset)
+" ShowMarks
+nmap ,m :<C-u>ShowMarksToggle<CR>
 
 " 無効化、退避 {{{2
 " 保存して閉じる
 nnoremap ZZ <Nop>
 " 保存せずに閉じる
 nnoremap ZQ <Nop>
-" EXモードに入る
-nnoremap Q <Nop>
 " 退避
 nnoremap <F2><C-e> <C-e>
 nnoremap <F2><C-g> <C-g>
@@ -1336,10 +1355,10 @@ endfunction "}}}
 let g:vimshell_prompt_expr = 'getcwd()." > "'
 let g:vimshell_prompt_pattern = '^\f\+ > '
 " irbを非同期で起動
-command! Irb :VimShellInteractive irb
+command! Irb VimShellInteractive irb
 " 非同期で開いたインタプリタに現在の行を評価させる
-au myvimrc FileType vimshell vnoremap <buffer> ,s :VimShellSendString<CR>
-au myvimrc FileType vimshell vmap <buffer> ,s :<C-u>VimShellSendString<CR>
+command! VSSend VimShellSendString
+command! VSAll %VimShellSendString
 
 " NeoComplCache {{{1
 "
@@ -1949,6 +1968,9 @@ let g:startify_bookmarks = [
 \ resolve($MYVIMRC),
 \ ]
 
+" Restart {{{1
+let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
+
 " textobj-user {{{1
 " between
 let g:textobj_between_no_default_key_mappings = 1
@@ -1983,6 +2005,9 @@ map <silent> <S-Space> <Plug>(ac-smooth-scroll-c-u)
 
 " Switch {{{1
 nnoremap <expr> <C-a> strpart(getline("."), col(".") - 1, 1) =~ '\d' ? "\<C-a>" : ":\<C-u>Switch\<CR>"
+
+" ShowMarks {{{1
+let g:showmarks_ignore_type = 'hqmp'
 
 "}}}1-------------------------------------------------------------------------
 
