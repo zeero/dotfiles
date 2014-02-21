@@ -126,6 +126,8 @@ NeoBundleLazy 'kana/vim-smartchr'
 \, {'autoload': {'insert': 1}}
 NeoBundleLazy 'autodate.vim'
 \, {'autoload': {'insert': 1}}
+NeoBundleLazy 'AndrewRadev/switch.vim'
+\, {'autoload': {'commands': ['Switch']}}
 
 " テキストオブジェクト {{{2
 NeoBundleLazy 'kana/vim-textobj-user'
@@ -632,7 +634,7 @@ au myvimrc FileType html,xml inoremap <expr> <buffer> > MyHtmlEndwise()
 function! MyHtmlEndwise() "{{{
   let val = ">"
   let col = col(".")
-  let str = getline(line("."))
+  let str = getline(".")
   let idx = strridx(str, "<", col)
   if idx == -1
     return val
@@ -1978,6 +1980,9 @@ inoremap <expr> = smartchr#loop('=', '==', '<=', '>=')
 " Acceralated Smooth Scroll {{{1
 map <silent> <Space> <Plug>(ac-smooth-scroll-c-d)
 map <silent> <S-Space> <Plug>(ac-smooth-scroll-c-u)
+
+" Switch {{{1
+nnoremap <expr> <C-a> strpart(getline("."), col(".") - 1, 1) =~ '\d' ? "\<C-a>" : ":\<C-u>Switch\<CR>"
 
 "}}}1-------------------------------------------------------------------------
 
