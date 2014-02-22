@@ -203,14 +203,8 @@ NeoBundleLazy 'mattn/gist-vim'
 NeoBundleLazy 'gregsexton/gitv'
 \, {'autoload': {'commands': ['Gitv']}
 \,  'depends': ['tpope/vim-fugitive']}
-NeoBundleLazy 'thinca/vim-prettyprint'
-\, {'autoload': {'commands': ['PP']}}
-NeoBundleLazy 'szw/vim-tags'
-\, {'autoload': {'commands': ['TagsGenerate']}}
 NeoBundleLazy 'majutsushi/tagbar'
 \, {'autoload': {'commands': ['TagbarToggle', 'TagbarOpen']}}
-NeoBundleLazy 'AndrewRadev/splitjoin.vim'
-\, {'autoload': {'commands': ['SplitjoinSplit', 'SplitjoinJoin']}}
 NeoBundleLazy 'tyru/restart.vim'
 \, {'autoload': {'commands': ['Restart']}}
 NeoBundleLazy 'sjl/gundo.vim'
@@ -219,6 +213,14 @@ NeoBundleLazy 't9md/vim-quickhl'
 \, {'autoload': {'mappings': '<Plug>(quickhl-'}}
 NeoBundleLazy 'AndrewRadev/linediff.vim'
 \, {'autoload': {'commands': ['Linediff']}}
+NeoBundleLazy 'thinca/vim-prettyprint'
+\, {'autoload': {'commands': ['PP']}}
+NeoBundleLazy 'szw/vim-tags'
+\, {'autoload': {'commands': ['TagsGenerate']}}
+NeoBundleLazy 'AndrewRadev/splitjoin.vim'
+\, {'autoload': {'commands': ['SplitjoinSplit', 'SplitjoinJoin']}}
+NeoBundleLazy 'vcscommand.vim'
+\, {'autoload': {'commands': ['VCSUpdate']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -439,6 +441,8 @@ set nrformats-=octal
 set scrolloff=3
 set sidescroll=0
 set sidescrolloff=9
+" ビープ音を消す
+set visualbell t_vb=
 
 " 画面表示の設定 {{{1
 " シンタックスハイライト
@@ -2008,6 +2012,9 @@ nnoremap <expr> <C-a> strpart(getline("."), col(".") - 1, 1) =~ '\d' ? "\<C-a>" 
 
 " ShowMarks {{{1
 let g:showmarks_ignore_type = 'hqmp'
+
+" Gitv {{{1
+let g:Gitv_OpenHorizontal = 1
 
 "}}}1-------------------------------------------------------------------------
 
