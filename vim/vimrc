@@ -327,8 +327,7 @@ NeoBundleLazy 'taku-o/vim-zoom'
 NeoBundleLazy 'yonchu/accelerated-smooth-scroll'
 \, {'autoload': {'mappings': '<Plug>(ac-smooth-scroll-'}}
 NeoBundleLazy 'ShowMarks'
-\, {'autoload': {'mappings': [['n', 'm'], '<Plug>Showmarks']
-\,               'commands': ['ShowMarksToggle']}}
+\, {'autoload': {'commands': ['ShowMarksToggle']}}
 
 " NeoBundle終了 {{{2
 filetype plugin indent on
