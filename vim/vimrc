@@ -119,6 +119,8 @@ NeoBundleLazy 'mattn/unite-gist'
 \,  'depends': ['mattn/gist-vim']}
 NeoBundleLazy 'pasela/unite-webcolorname'
 \, {'autoload': {'unite_sources': ['webcolorname']}}
+NeoBundleLazy 'zeero/unite-localrc'
+\, {'autoload': {'unite_sources': ['localrc']}}
 
 " 入力補助 {{{2
 NeoBundleLazy 'tyru/caw.vim'
@@ -1281,22 +1283,6 @@ function! s:unite_source.gather_candidates(args, context)
   \   "source": "lines",
   \   "kind": "jump_list",
   \   "action__path": path,
-  \   "action__line": v:key + 1,
-  \ }')
-endfunction
-call unite#define_source(s:unite_source)
-unlet s:unite_source
-" localrc {{{3
-let s:unite_source = {
-\   'name': 'localrc',
-\ }
-function! s:unite_source.gather_candidates(args, context)
-  let candidates = localrc#search(get(g:, 'localrc_filename'))
-  return map(candidates, '{
-  \   "word": printf("%d: %s", v:key + 1, v:val),
-  \   "source": "localrc",
-  \   "kind": "file",
-  \   "action__path": v:val,
   \   "action__line": v:key + 1,
   \ }')
 endfunction
