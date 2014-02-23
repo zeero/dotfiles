@@ -1,4 +1,4 @@
-" Last Change: 22-Feb-2014. {{{
+" Last Change: 23-Feb-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -92,6 +92,8 @@ NeoBundleLazy 'Shougo/vimfiler'
 \,  'depends': ['Shougo/unite.vim']}
 NeoBundleLazy 'Shougo/unite-outline'
 \, {'autoload': {'unite_sources': ['outline']}}
+NeoBundleLazy 'osyo-manga/unite-fold'
+\, {'autoload': {'unite_sources': ['fold']}}
 NeoBundleLazy 'thinca/vim-unite-history'
 \, {'autoload': {'unite_sources': ['history']}}
 NeoBundleLazy 'tsukkee/unite-help'
@@ -211,7 +213,8 @@ NeoBundleLazy 'gregsexton/gitv'
 NeoBundleLazy 'majutsushi/tagbar'
 \, {'autoload': {'commands': ['TagbarToggle', 'TagbarOpen']}}
 NeoBundleLazy 'tyru/restart.vim'
-\, {'autoload': {'commands': ['Restart']}}
+\, {'autoload': {'commands': ['Restart']}
+\,  'gui': 1}
 NeoBundleLazy 'sjl/gundo.vim'
 \, {'autoload': {'commands': ['GundoToggle']}}
 NeoBundleLazy 't9md/vim-quickhl'
@@ -226,6 +229,10 @@ NeoBundleLazy 'AndrewRadev/splitjoin.vim'
 \, {'autoload': {'commands': ['SplitjoinSplit', 'SplitjoinJoin']}}
 NeoBundleLazy 'vcscommand.vim'
 \, {'autoload': {'commands': ['VCSUpdate']}}
+NeoBundleLazy 'thinca/vim-scall'
+\, {'autoload': {'commands': ['Scall']}}
+NeoBundleLazy 'osyo-manga/vim-over'
+\, {'autoload': {'commands': ['OverCommandLine']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -617,7 +624,7 @@ if expand("%") =~ "vimrc"
 endif
 au myvimrc FileType help setlocal iskeyword+=:
 " vimrcは起動時だったらgit pull
-au myvimrc VimEnter *vimrc call s:my_vimenter_vimrc()
+" au myvimrc VimEnter *vimrc call s:my_vimenter_vimrc()
 function! s:my_vimenter_vimrc() "{{{
   exe ":lcd " . expand("%:p:h")
   if exists('*fugitive#head')
@@ -890,7 +897,7 @@ map <C-s> <Plug>(operator-surround-replace)
 " snake_case<=>CamelCase
 map _ <Plug>(operator-camelize-toggle)
 " HTMLエスケープ
-vmap ; <Plug>(operator-html-escape)
+" vmap ; <Plug>(operator-html-escape)
 " 反転
 vmap r <Plug>(operator-reverse-text)
 " エリア拡大
@@ -1384,6 +1391,8 @@ let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+" Use fuzzy completion.
+let g:neocomplete#enable_fuzzy_completion = 1
 
 " Define dictionary. {{{2
 let g:neocomplete#sources#dictionary#dictionaries = {
@@ -1462,7 +1471,7 @@ endfunction
 unlet s:bundle
 
 " NeoComplCache {{{1
-" （on_source開始）
+" 基本設定（以降はon_source）
 let s:bundle = neobundle#get('neocomplcache')
 let s:bundle.hooks = get(s:bundle, "hooks", {})
 function! s:bundle.hooks.on_source(bundle)
@@ -1497,7 +1506,7 @@ endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 "
 " Plugin key-mappings.
-inoremap <expr><C-g>     neocomplcache#undo_completion()
+inoremap <expr> <C-d> pumvisible() ? neocomplcache#undo_completion() : "\<Del>"
 " inoremap <expr><C-l>     neocomplcache#complete_common_string()
 "
 " Recommended key-mappings.
@@ -1700,7 +1709,7 @@ let g:ref_source_webdict_sites = {
 
 " 設定 {{{2
 " quickrun.vim が実行していない場合には <C-c> を呼び出す
-nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+nnoremap <expr> <silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 
 " 共通設定 {{{2
 " 実行にvimprocを使う
