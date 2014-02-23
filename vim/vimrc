@@ -120,7 +120,8 @@ NeoBundleLazy 'mattn/unite-gist'
 NeoBundleLazy 'pasela/unite-webcolorname'
 \, {'autoload': {'unite_sources': ['webcolorname']}}
 NeoBundleLazy 'zeero/unite-localrc'
-\, {'autoload': {'unite_sources': ['localrc']}}
+\, {'autoload': {'unite_sources': ['localrc']}
+\,  'depends': ['thinca/vim-localrc']}
 
 " 入力補助 {{{2
 NeoBundleLazy 'tyru/caw.vim'
