@@ -1,4 +1,4 @@
-" Last Change: 23-Feb-2014. {{{
+" Last Change: 27-Feb-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -912,8 +912,8 @@ inoremap <C-a> <Home>
 inoremap <C-e> <End>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
-inoremap <C-w> <S-Left>
-inoremap <C-b> <S-Right>
+inoremap <C-b> <S-Left>
+inoremap <C-w> <S-Right>
 " 文字削除
 inoremap <C-d> <Del>
 " CTRL-Uのundo対策（from exaple.vim）
@@ -994,7 +994,7 @@ au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> F <Plug>(easymotion-k
 nmap ,/ <Plug>(caw:I:toggle)
 vmap ,/ <Plug>(caw:I:toggle)
 " VimFiler
-nnoremap ,e :<C-u>VimFilerBufferDir
+nnoremap ,f :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<Space>-toggle<CR>
 " VimShell
 nnoremap ,s :<C-u>VimShellPop<Space>-toggle<Space>-buffer-name=vimshell<CR>
@@ -1564,9 +1564,15 @@ unlet s:bundle
 
 " NeoSnippet {{{1
 " KEYMAP:
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_target)
+imap <expr> <C-e> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<End>"
+smap <C-e> <Plug>(neosnippet_expand_or_jump)
+xmap <C-e> <Plug>(neosnippet_expand_target)
+" imap <expr> <Tab> neosnippet#expandable_or_jumpable() ?
+" \ "\<Plug>(neosnippet_expand_or_jump)"
+" \ : pumvisible() ? "\<C-n>" : "\<Tab>"
+smap <expr> <Tab> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\ : "\<Tab>"
 " スニペットの保存場所を変更
 let g:neosnippet#snippets_directory = $MYVIMDIR . '/neosnippets'
 " スニペットファイルの保存時に再読み込み
@@ -1598,6 +1604,8 @@ let g:ctrlp_use_caching = 1
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 " キャッシュを終了後も残す（<F5>でキャッシュ更新）
 let g:ctrlp_clear_cache_on_exit = 0
+" MRUファイルの数
+let g:ctrlp_mruf_max = 1000
 " 拡張機能を有効にする
 let g:ctrlp_extensions = ['tag', 'dir', 'changes', 'bookmarkdir']
 " コマンドエイリアス
@@ -1875,7 +1883,7 @@ endif
 "  <C-_> : コメントアウト／イン
 "          （_と/が同じキーマップになってるのでCtrl+/でできる）
 "let g:user_emmet_leader_key = '<C-e>'
-let g:user_emmet_expandabbr_key = '<C-e>'
+let g:user_emmet_expandabbr_key = ',e'
 let g:user_emmet_togglecomment_key = '<C-_>'
 " タグのコンプリート
 let g:use_emmet_complete_tag = 1
