@@ -1,4 +1,4 @@
-" Last Change: 27-Feb-2014. {{{
+" Last Change: 01-Mar-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -329,6 +329,8 @@ NeoBundleLazy 'yonchu/accelerated-smooth-scroll'
 \, {'autoload': {'mappings': '<Plug>(ac-smooth-scroll-'}}
 NeoBundleLazy 'ShowMarks'
 \, {'autoload': {'commands': ['ShowMarksToggle']}}
+NeoBundleLazy 'vim-jp/vital.vim'
+\, {'autoload': {'commands': ['Vitalize']}}
 
 " NeoBundle終了 {{{2
 filetype plugin indent on
