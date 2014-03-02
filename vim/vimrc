@@ -1,4 +1,4 @@
-" Last Change: 01-Mar-2014. {{{
+" Last Change: 02-Mar-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -331,6 +331,11 @@ NeoBundleLazy 'ShowMarks'
 \, {'autoload': {'commands': ['ShowMarksToggle']}}
 NeoBundleLazy 'vim-jp/vital.vim'
 \, {'autoload': {'commands': ['Vitalize']}}
+
+" ローカル {{{2
+if isdirectory($MYVIMDIR . '/bundle/local')
+  NeoBundleLocal $MYVIMDIR/bundle/local
+endif
 
 " NeoBundle終了 {{{2
 filetype plugin indent on
@@ -1364,6 +1369,8 @@ command! Irb VimShellInteractive irb
 " 非同期で開いたインタプリタに現在の行を評価させる
 command! VSSend VimShellSendString
 command! VSAll %VimShellSendString
+" vimコマンドで開いた時の開き方
+let g:vimshell_split_command = 'tabe'
 
 " NeoComplete {{{1
 " 基本設定（以降はon_source）{{{2
