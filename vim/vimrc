@@ -1,4 +1,4 @@
-" Last Change: 02-Mar-2014. {{{
+" Last Change: 04-Mar-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -237,34 +237,6 @@ NeoBundleLazy 'thinca/vim-scall'
 NeoBundleLazy 'osyo-manga/vim-over'
 \, {'autoload': {'commands': ['OverCommandLine']}}
 
-" Ruby {{{2
-NeoBundleLazy 'tpope/vim-rails'
-\, {'autoload': {'filetypes': ['ruby']}}
-NeoBundle 'taka84u9/vim-ref-ri'
-" \, {'autoload': {'filetypes': ['ruby']
-" \,               'unite_sources': ['ref/ri']}
-" \,  'depends': 'thinca/vim-ref'}
-NeoBundle 'edsono/vim-matchit'
-NeoBundleLazy 'tpope/vim-bundler'
-\, {'autoload': {'filetypes': ['ruby']}}
-
-" HTML/JavaScript {{{2
-NeoBundleLazy 'mattn/emmet-vim'
-\, {'autoload': {'filetypes': ['html']}
-\,               'insert': 1}
-" NeoBundleLazy 'jiangmiao/simple-javascript-indenter'
-" \, {'autoload': {'filetypes': ['javascript']}}
-NeoBundleLazy 'jelera/vim-javascript-syntax'
-\, {'autoload': {'filetypes': ['javascript']}}
-NeoBundleLazy 'jQuery'
-\, {'autoload': {'filetypes': ['javascript']}}
-NeoBundleLazy 'https://bitbucket.org/teramako/jscomplete-vim'
-\, {'autoload': {'filetypes': ['javascript']
-\,               'insert': 1}
-\,  'type': 'git'}
-NeoBundleLazy 'scrooloose/syntastic'
-\, {'autoload': {'insert': 1}}
-
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
 NeoBundleLazy 'fholgado/minibufexpl.vim'
@@ -329,11 +301,41 @@ NeoBundleLazy 'yonchu/accelerated-smooth-scroll'
 \, {'autoload': {'mappings': '<Plug>(ac-smooth-scroll-'}}
 NeoBundleLazy 'ShowMarks'
 \, {'autoload': {'commands': ['ShowMarksToggle']}}
+
+" Ruby {{{2
+NeoBundleLazy 'tpope/vim-rails'
+\, {'autoload': {'filetypes': ['ruby']}}
+NeoBundle 'taka84u9/vim-ref-ri'
+" \, {'autoload': {'filetypes': ['ruby']
+" \,               'unite_sources': ['ref/ri']}
+" \,  'depends': 'thinca/vim-ref'}
+NeoBundle 'edsono/vim-matchit'
+NeoBundleLazy 'tpope/vim-bundler'
+\, {'autoload': {'filetypes': ['ruby']}}
+
+" HTML/JavaScript {{{2
+NeoBundleLazy 'mattn/emmet-vim'
+\, {'autoload': {'filetypes': ['html']}
+\,               'insert': 1}
+" NeoBundleLazy 'jiangmiao/simple-javascript-indenter'
+" \, {'autoload': {'filetypes': ['javascript']}}
+NeoBundleLazy 'jelera/vim-javascript-syntax'
+\, {'autoload': {'filetypes': ['javascript']}}
+NeoBundleLazy 'jQuery'
+\, {'autoload': {'filetypes': ['javascript']}}
+NeoBundleLazy 'https://bitbucket.org/teramako/jscomplete-vim'
+\, {'autoload': {'filetypes': ['javascript']
+\,               'insert': 1}
+\,  'type': 'git'}
+NeoBundleLazy 'scrooloose/syntastic'
+\, {'autoload': {'insert': 1}}
+
+" VimScript {{{2
 NeoBundleLazy 'vim-jp/vital.vim'
 \, {'autoload': {'commands': ['Vitalize']}}
 
 " ローカル {{{2
-if isdirectory($MYVIMDIR . '/bundle/local')
+if isdirectory(expand($MYVIMDIR) . '/bundle/local')
   NeoBundleLocal $MYVIMDIR/bundle/local
 endif
 
@@ -680,7 +682,7 @@ au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
 "
 " COMMAND:
 " H(elp)
-command! -nargs=? -complete=help H if winwidth(0) > 140 | vertical help <args> | vertical resize 79 | else | help <args> | endif
+command! -nargs=? -complete=help H if winwidth(0) > 140 | botright vertical help <args> | vertical resize 79 | else | help <args> | endif
 " Vimdoc
 command! VimDoc OpenBrowser http://vim-jp.org/vimdoc-ja/
 " K(otoba)
@@ -1360,7 +1362,8 @@ function! MyVimfilerHelp() "{{{
 endfunction "}}}
 
 " VimShell {{{1
-"
+" VimShellPopの開き方
+let g:vimshell_popup_command = 'topleft 10split'
 " 動的プロンプト
 let g:vimshell_prompt_expr = 'getcwd()." > "'
 let g:vimshell_prompt_pattern = '^\f\+ > '
