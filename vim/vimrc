@@ -1,4 +1,4 @@
-" Last Change: 04-Mar-2014. {{{
+" Last Change: 07-Mar-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -335,8 +335,8 @@ NeoBundleLazy 'vim-jp/vital.vim'
 \, {'autoload': {'commands': ['Vitalize']}}
 
 " ローカル {{{2
-if isdirectory(expand($MYVIMDIR) . '/bundle/local')
-  NeoBundleLocal $MYVIMDIR/bundle/local
+if isdirectory(expand($MYVIMDIR) . '/bundle.local')
+  NeoBundleLocal $MYVIMDIR/bundle.local
 endif
 
 " NeoBundle終了 {{{2
@@ -923,6 +923,9 @@ inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 inoremap <C-b> <S-Left>
 inoremap <C-w> <S-Right>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <S-CR> <C-o>O
 " 文字削除
 inoremap <C-d> <Del>
 " CTRL-Uのundo対策（from exaple.vim）
