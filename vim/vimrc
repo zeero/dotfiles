@@ -141,7 +141,7 @@ NeoBundleLazy 'kana/vim-textobj-fold'
 \, {'autoload': {'mappings': [['ov', 'iz', 'az']]}
 \,  'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'kana/vim-textobj-entire'
-\, {'autoload': {'mappings': [['ov', 'ia', 'aa']]}
+\, {'autoload': {'mappings': [['ov', 'ie', 'ae']]}
 \,  'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'kana/vim-textobj-line'
 \, {'autoload': {'mappings': [['ov', 'il', 'al']]}
@@ -2118,12 +2118,6 @@ let g:startify_bookmarks = [
 let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
 
 " textobj-user {{{1
-" entire
-let g:textobj_entire_no_default_key_mappings = 1
-omap aa <Plug>(textobj-entire-a)
-vmap aa <Plug>(textobj-entire-a)
-omap ia <Plug>(textobj-entire-i)
-vmap ia <Plug>(textobj-entire-i)
 " between
 let g:textobj_between_no_default_key_mappings = 1
 omap a= <Plug>(textobj-between-a)
