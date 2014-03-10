@@ -1,4 +1,4 @@
-" Last Change: 07-Mar-2014. {{{
+" Last Change: 10-Mar-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -709,14 +709,18 @@ endfunction "}}}
 command! Lcd exe "lcd " . expand("%:p:h")
 " Ls
 command! -nargs=* -complete=file Ls echo vimproc#system("ls <args>")
+" Noh
+command! Noh noh | QuickhlManualReset
 " Info
 nnoremap <C-g> :<C-u>Info<CR>
 command! Info call s:my_info()
 function! s:my_info() "{{{
+  " ファイル名、パス
   echohl Identifier
   echo expand("%:t")
   echohl None
   echo expand("%:p")
+  " 行数など
   let old_status = v:statusmsg
   exe "silent normal! g\<C-g>"
   let msg = split(v:statusmsg, "; ")
@@ -724,9 +728,25 @@ function! s:my_info() "{{{
     echo line
   endfor
   let v:statusmsg = old_status
+  " ステップカウンタ
+  let countEmpty = 0
+  let countComment = 0
+  let countSource = 0
+  let lnum = 1
+  while lnum <= line("$")
+    if getline(lnum) =~ '^\s*$'
+      let countEmpty = countEmpty + 1
+    elseif synIDattr(synIDtrans(synID(lnum, match(getline(lnum), '\S') + 1, 1)), "name") == 'Comment'
+      let countComment = countComment + 1
+    else
+      let countSource = countSource + 1
+    endif
+    let lnum = lnum + 1
+  endwhile
+  echo "空白行：" . countEmpty
+  echo "コメント行：" . countComment
+  echo "ソース行：" . countSource
 endfunction "}}}
-" Noh
-command! Noh noh | QuickhlManualReset
 
 " SyntaxInfo
 command! SyntaxInfo call s:get_syn_info()
@@ -936,8 +956,11 @@ inoremap <expr> ,dd strftime('%Y/%m/%d')
 inoremap <expr> ,dt strftime('%H:%M:%S')
 " エンドワイズ
 inoremap ( ()<Left>
+inoremap <expr> ) match(getline("."), '()', col(".") - 2) == col(".") - 2 ? '<Right>' : ')'
 inoremap [ []<Left>
+inoremap <expr> ] match(getline("."), '[]', col(".") - 2) == col(".") - 2 ? '<Right>' : ']'
 inoremap <expr> { synIDattr(synID(line("."), col(".") - 1, 1), "name") =~? 'comment' ? '{' : '{}<Left>'
+inoremap <expr> } match(getline("."), '{}', col(".") - 2) == col(".") - 2 ? '<Right>' : '}'
 inoremap <expr> ' strlen(substitute(getline("."), "\[^\'\]", "", "g")) % 2 == 1 ? "\'" : "\'\'<Left>"
 inoremap <expr> " or(col(".") == 1, strlen(substitute(getline("."), '[^"]', "", "g")) % 2 == 1) ? '"' : '""<Left>'
 
@@ -1091,6 +1114,7 @@ nnoremap ZZ <Nop>
 " 保存せずに閉じる
 nnoremap ZQ <Nop>
 " 退避
+nnoremap <F2><C-y> <C-y>
 nnoremap <F2><C-e> <C-e>
 nnoremap <F2><C-g> <C-g>
 nnoremap <F2>[[ [[
