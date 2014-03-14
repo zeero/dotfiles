@@ -1,4 +1,4 @@
-" Last Change: 10-Mar-2014. {{{
+" Last Change: 14-Mar-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -236,6 +236,8 @@ NeoBundleLazy 'thinca/vim-scall'
 \, {'autoload': {'commands': ['Scall']}}
 NeoBundleLazy 'osyo-manga/vim-over'
 \, {'autoload': {'commands': ['OverCommandLine']}}
+NeoBundleLazy 'http://conque.googlecode.com/svn/trunk/'
+\, {'autoload': {'commands': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermTab', 'ConqueTermVSplit']}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -333,6 +335,7 @@ NeoBundleLazy 'scrooloose/syntastic'
 " VimScript {{{2
 NeoBundleLazy 'vim-jp/vital.vim'
 \, {'autoload': {'commands': ['Vitalize']}}
+NeoBundle 'kana/vim-vspec'
 
 " ローカル {{{2
 if isdirectory(expand($MYVIMDIR) . '/bundle.local')
@@ -2157,6 +2160,12 @@ let g:showmarks_ignore_type = 'hqmp'
 
 " Gitv {{{1
 let g:Gitv_OpenHorizontal = 1
+
+" Conque {{{1
+" 終了時に閉じる
+let g:ConqueTerm_CloseOnEnd = 1
+" InsertモードでC-wを使用できるようにする
+let g:ConqueTerm_CWInsert = 1
 
 "}}}1-------------------------------------------------------------------------
 
