@@ -680,14 +680,14 @@ function! MyHtmlEndwise() "{{{
   let val .= substitute(strpart(str, idx, col - 1 - idx), '<\([^ ]\+\).*', '</\1>', '')
   return val . "\<Esc>" . col . "|a"
 endfunction "}}}
-" java
+" Java
 " ハイライト設定
 let java_highlight_all = 1
 let java_highlight_functions = "style"
 let java_highlight_debug = 1
 
 " ファイルタイプ指定
-" JavaSciprt
+" JavaScript
 au myvimrc BufRead,BufNew,BufNewFile *.json setlocal ft=javascript
 au myvimrc BufRead,BufNew,BufNewFile jquery.*.js setlocal ft=javascript syntax=jquery
 " Apache
