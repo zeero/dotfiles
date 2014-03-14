@@ -332,6 +332,13 @@ NeoBundleLazy 'https://bitbucket.org/teramako/jscomplete-vim'
 NeoBundleLazy 'scrooloose/syntastic'
 \, {'autoload': {'insert': 1}}
 
+" Java {{{2
+NeoBundleLazy 'http://www.fleiner.com/vim/syntax_60/javaid.vim'
+\, {'autoload': {'filetypes': ['java']}
+\,  'name': 'javaid.vim'
+\,  'type': 'raw'
+\,  'script_type': 'syntax'}
+
 " VimScript {{{2
 NeoBundleLazy 'vim-jp/vital.vim'
 \, {'autoload': {'commands': ['Vitalize']}}
@@ -658,7 +665,9 @@ au myvimrc FileType gitcommit
 " diff
 " TODO: normal ]cが効かない…
 au myvimrc BufRead * if 1 == &diff | noh | exe "normal! ]c" | endif
+
 " html
+" 閉じタグの自動入力設定
 au myvimrc FileType html,xml inoremap <expr> <buffer> > MyHtmlEndwise()
 function! MyHtmlEndwise() "{{{
   let val = ">"
@@ -671,6 +680,11 @@ function! MyHtmlEndwise() "{{{
   let val .= substitute(strpart(str, idx, col - 1 - idx), '<\([^ ]\+\).*', '</\1>', '')
   return val . "\<Esc>" . col . "|a"
 endfunction "}}}
+" java
+" ハイライト設定
+let java_highlight_all = 1
+let java_highlight_functions = "style"
+let java_highlight_debug = 1
 
 " ファイルタイプ指定
 " JavaSciprt
