@@ -1,4 +1,4 @@
-" Last Change: 15-Mar-2014. {{{
+" Last Change: 16-Mar-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -634,10 +634,12 @@ endfunction
 " Vim
 " vimrcの保存時に再読み込み
 if !has('gui_running')
-  au myvimrc BufWritePost *vimrc nested source $MYVIMRC
+  au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
+  \ call localrc#load(g:localrc_filename)
 else
   au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
-        \ if filereadable($MYGVIMRC) | source $MYGVIMRC | endif
+  \ if filereadable($MYGVIMRC) | source $MYGVIMRC | endif |
+  \ call localrc#load(g:localrc_filename)
 endif
 " バックスラッシュのインデントを無くす
 let g:vim_indent_cont = 0
