@@ -344,6 +344,7 @@ NeoBundleLazy 'http://www.fleiner.com/vim/syntax_60/javaid.vim'
 " VimScript {{{2
 NeoBundleLazy 'vim-jp/vital.vim'
 \, {'autoload': {'commands': ['Vitalize']}}
+NeoBundle 'kana/vim-vspec'
 NeoBundleLazy 'Shougo/vesting'
 \, {'autoload': {'unite_sources': ['vesting']}}
 
@@ -699,6 +700,8 @@ au myvimrc BufRead,BufNew,BufNewFile jquery.*.js setlocal ft=javascript syntax=j
 au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setlocal ft=apache
 " ctags
 au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
+" vspec
+au myvimrc BufRead,BufNew,BufNewFile *_spec.vim setlocal ft=vim.vspec
 
 " コマンド定義 {{{1
 "
@@ -777,6 +780,20 @@ function! s:my_cygwin() "{{{
   while my_conque_term.read() == ''
   endwhile
   call my_conque_term.writeln('cd /cygdrive/' . substitute(getcwd(), ':', '', ''))
+endfunction "}}}
+
+" Vspec
+command! Vspec call s:my_vspec()
+function! s:my_vspec() "{{{
+  if (has('win32') || has('win64')) && exists('$CYGWIN_HOME')
+    let cmd = $CYGWIN_HOME . '\bin\bash.exe --login -c "cd /cygdrive/' . substitute(getcwd(), ':', '', '') . '; rake test"'
+  elseif executable('bash')
+    let cmd = 'bash --login -c "cd ' . getcwd() . '; rake test"'
+  else
+    echoerr "Vspec needs 'bash' command."
+    return
+  endif
+  echo system(cmd)
 endfunction "}}}
 
 " SyntaxInfo
