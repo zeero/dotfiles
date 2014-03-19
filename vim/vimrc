@@ -706,16 +706,13 @@ au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
 " COMMAND:
 " H(elp)
 command! -nargs=? -complete=help H if winwidth(0) > 140 | botright vertical help <args> | vertical resize 79 | else | help <args> | endif
-" Vimdoc
-command! VimDoc OpenBrowser http://vim-jp.org/vimdoc-ja/
 " K(otoba)
 command! -nargs=1 K Ref kotobankej <args>
 
-" Vimrc、Sorc
+" Vimrc
 command! Vimrc tabe $MYVIMRC
-command! Sorc source $MYVIMRC
-" Esnip
-command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete Esnip NeoSnippetEdit -vertical -split <args>
+" So
+command! So source %
 " Bdo
 command! Bdo call s:my_command_bd_other()
 function! s:my_command_bd_other() "{{{
@@ -771,6 +768,10 @@ function! s:my_info() "{{{
   echo "ソース行：" . countSource
 endfunction "}}}
 
+" Esnip
+command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete Esnip NeoSnippetEdit -vertical -split <args>
+" Vimdoc
+command! Vimdoc OpenBrowser http://vim-jp.org/vimdoc-ja/
 " Cygwin
 command! Cygwin call s:my_cygwin()
 function! s:my_cygwin() "{{{
@@ -954,9 +955,9 @@ map gx <Plug>(openbrowser-smart-search)
 map c <Plug>(operator-replace)
 map C <Plug>(operator-replace)$
 " カーソル下の文字列を置換
-nnoremap c: :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
+nnoremap ,c :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 " 選択した文字列を置換
-vnoremap c: "xy:%s/<C-r>=escape(@x, '\\/.*$^~[]')<CR>//gc<Left><Left><Left>
+vnoremap ,c "xy:%s/<C-r>=escape(@x, '\\/.*$^~[]')<CR>//gc<Left><Left><Left>
 " surround
 map s <Plug>(operator-surround-append)
 map S <Plug>(operator-surround-delete)
@@ -990,15 +991,18 @@ inoremap <C-u> <C-g>u<C-u>
 inoremap <expr> ,df strftime('%Y/%m/%d %H:%M:%S')
 inoremap <expr> ,dd strftime('%Y/%m/%d')
 inoremap <expr> ,dt strftime('%H:%M:%S')
-" エンドワイズ
+
+" エンドワイズ {{{2
 inoremap ( ()<Left>
-inoremap <expr> ) match(getline("."), '()', col(".") - 2) == col(".") - 2 ? '<Right>' : ')'
+inoremap <expr> ) match(getline("."), '()', col(".") - 2) == abs(col(".") - 2) ? '<Right>' : ')'
 inoremap [ []<Left>
-inoremap <expr> ] match(getline("."), '[]', col(".") - 2) == col(".") - 2 ? '<Right>' : ']'
+inoremap <expr> ] match(getline("."), '[]', col(".") - 2) == abs(col(".") - 2) ? '<Right>' : ']'
 inoremap <expr> { synIDattr(synID(line("."), col(".") - 1, 1), "name") =~? 'comment' ? '{' : '{}<Left>'
-inoremap <expr> } match(getline("."), '{}', col(".") - 2) == col(".") - 2 ? '<Right>' : '}'
-inoremap <expr> ' strlen(substitute(getline("."), "\[^\'\]", "", "g")) % 2 == 1 ? "\'" : "\'\'<Left>"
-inoremap <expr> " or(col(".") == 1, strlen(substitute(getline("."), '[^"]', "", "g")) % 2 == 1) ? '"' : '""<Left>'
+inoremap <expr> } match(getline("."), '{}', col(".") - 2) == abs(col(".") - 2) ? '<Right>' : '}'
+inoremap <expr> ' match(getline("."), "\'\'", col(".") - 2) == abs(col(".") - 2) ? '<Right>' :
+\                 strlen(substitute(getline("."), "\[^\'\]", "", "g")) % 2 == 1 ? "\'" : "\'\'<Left>"
+inoremap <expr> " match(getline("."), '""', col(".") - 2) == abs(col(".") - 2) ? '<Right>' :
+\                 or(col(".") == 1, strlen(substitute(getline("."), '[^"]', "", "g")) % 2 == 1) ? '"' : '""<Left>'
 
 " コマンドモード {{{2
 " 移動
