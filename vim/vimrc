@@ -1,4 +1,4 @@
-" Last Change: 17-Mar-2014. {{{
+" Last Change: 19-Mar-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -700,8 +700,6 @@ au myvimrc BufRead,BufNew,BufNewFile jquery.*.js setlocal ft=javascript syntax=j
 au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setlocal ft=apache
 " ctags
 au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
-" vspec
-au myvimrc BufRead,BufNew,BufNewFile *_spec.vim setlocal ft=vim.vspec
 
 " コマンド定義 {{{1
 "
@@ -779,21 +777,10 @@ function! s:my_cygwin() "{{{
   let my_conque_term = conque_term#open($CYGWIN_HOME . '\Cygwin.bat', ['topleft split', 'resize 10'])
   while my_conque_term.read() == ''
   endwhile
-  call my_conque_term.writeln('cd /cygdrive/' . substitute(getcwd(), ':', '', ''))
+  call my_conque_term.writeln('cd ' . MyGetCygwinDir(getcwd()))
 endfunction "}}}
-
-" Vspec
-command! Vspec call s:my_vspec()
-function! s:my_vspec() "{{{
-  if (has('win32') || has('win64')) && exists('$CYGWIN_HOME')
-    let cmd = $CYGWIN_HOME . '\bin\bash.exe --login -c "cd /cygdrive/' . substitute(getcwd(), ':', '', '') . '; rake test"'
-  elseif executable('bash')
-    let cmd = 'bash --login -c "cd ' . getcwd() . '; rake test"'
-  else
-    echoerr "Vspec needs 'bash' command."
-    return
-  endif
-  echo system(cmd)
+function! MyGetCygwinDir(fullpath) "{{{
+  return "/cygdrive/" . substitute(a:fullpath, ':', '', '')
 endfunction "}}}
 
 " SyntaxInfo
@@ -1040,6 +1027,7 @@ au myvimrc FileType sh nnoremap <buffer> ,h :<C-u>Ref<Space>man<Space><C-r><C-w>
 au myvimrc FileType sh vnoremap <buffer> ,h y:<C-u>Ref<Space>man<Space><C-r>"<CR>
 " QuickRun
 nmap ,r <Plug>(quickrun)
+nnoremap ,R :<C-u>call<Space>quickrun#run([{'type': &filetype . '.alt'}])<CR>
 vnoremap ,R y:QuickRun -src '<C-r>"'<CR>
 vnoremap ,r y:QuickInspector<CR>
 command! QuickInspector :call s:my_quick_inspector()
@@ -1811,8 +1799,34 @@ let g:quickrun_config = {
 
 " ファイルタイプ別の設定 {{{2
 " ruby.rspec
-let g:quickrun_config['ruby.rspec'] = { 'command': 'rspec' }
 au myvimrc BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec syntax=ruby
+let g:quickrun_config['ruby.rspec'] = { 'command': 'rspec' }
+" vim.vspec
+au myvimrc BufRead,BufNew,BufNewFile *_spec.vim setlocal ft=vim.vspec
+if (has('win32') || has('win64')) && exists('$CYGWIN_HOME')
+  let g:quickrun_config['vim.vspec'] = {
+  \ 'exec': '%c --login -c ' .
+  \ '"cd %%{MyGetCygwinDir(%s:p:h)}/..; ' .
+  \ '%%{MyGetCygwinDir(expand($MYVIMDIR))}/bundle/vim-vspec/bin/vspec ' .
+  \ '%%{MyGetCygwinDir(expand($MYVIMDIR))}/bundle/vim-vspec . ' .
+  \ '%%{MyGetCygwinDir(%s:p)}"',
+  \ 'command': $CYGWIN_HOME . '\bin\bash.exe',
+  \}
+  let g:quickrun_config['vim.vspec.alt'] = {
+  \ 'exec': '%c --login -c ' .
+  \ '"cd %%{MyGetCygwinDir(%s:p:h)}/..; rake test"',
+  \ 'command': $CYGWIN_HOME . '\bin\bash.exe',
+  \}
+elseif executable('bash')
+  let g:quickrun_config['vim.vspec'] = {
+  \ 'exec': '%c %o %a %s',
+  \ 'command': $MYVIMDIR . '/bundle/vim-vspec/bin/vspec',
+  \ 'args': $MYVIMDIR . '/bundle/vim-vspec ..',
+  \}
+  let g:quickrun_config['vim.vspec.alt'] = {
+  \ 'exec': 'rake test',
+  \}
+endif
 " htmlをブラウザで開く（tyru/open-browser.vim プラグインが必要）
 let g:quickrun_config['html'] = {'command': 'open', 'exec': '%c %s', 'outputter': 'browser' }
 let g:quickrun_config['xhtml'] = {'command': 'open', 'exec': '%c %s', 'outputter': 'browser' }
@@ -1820,8 +1834,8 @@ let g:quickrun_config['mkd'] = {'command': 'kramdown', 'outputter': 'browser'}
 " javascript
 let g:quickrun_config['javascript'] = {'command': 'node'}
 let g:quickrun_config['jshint'] = {
-\ 'command': 'jshint',
 \ 'exec': '%c %s:p',
+\ 'command': 'jshint',
 \ 'outputter': 'quickfix',
 \ 'quickfix/errorformat': '%f: line %l\\,\ col %c\\, %m',
 \ 'vimproc/sleep': 0,
@@ -1832,15 +1846,15 @@ let g:quickrun_config['jshint'] = {
 \}
 au myvimrc BufWritePost *.js QuickRun jshint
 " database
-let g:quickrun_config['sql'] = {'type': executable('sqlite3') ? 'sql/sqlite3': ''}
+let g:quickrun_config['sql'] = {'type': executable('sqlite3') ? 'sql/sqlite3' : ''}
 let g:quickrun_config['sql/sqlite3'] = {
+\ 'exec': '%c %o %a < %S',
 \ 'command': 'sqlite3',
-\ 'exec': '%C %o %a < %S',
 \ 'cmdopt': '-header -column',
 \}
 let g:quickrun_config['sql/oracle'] = {
+\ 'exec': '%c %a @%S',
 \ 'command': 'sqlplus',
-\ 'exec': '%C %a @%S',
 \}
 
 " MiniBufExplorer {{{1
