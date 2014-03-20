@@ -18,12 +18,14 @@ colorscheme ZeeroBlue
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " キー設定
 "
-" h/lで戻る/進む
+" 戻る/進む
 nnoremap h <A-Left>
 nnoremap l <A-Right>
-" H/Lでタブ移動
+" タブ移動
 nnoremap H gT
 nnoremap L gt
+nnoremap <S-Tab> gT
+nnoremap <Tab> gt
 " タブを一番右に移動
 nnoremap ,l :tabm<CR>
 " ナビゲーションバーのトグル
