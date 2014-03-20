@@ -1037,7 +1037,7 @@ au myvimrc FileType sh nnoremap <buffer> ,h :<C-u>Ref<Space>man<Space><C-r><C-w>
 au myvimrc FileType sh vnoremap <buffer> ,h y:<C-u>Ref<Space>man<Space><C-r>"<CR>
 " QuickRun
 nmap ,r <Plug>(quickrun)
-nnoremap ,R :<C-u>silent<Space>call<Space>quickrun#run([{'type': &filetype . '.alt'}])<CR>
+nnoremap ,R :<C-u>call<Space>quickrun#run([{'type': &filetype . '.alt'}])<CR>
 vnoremap ,R y:QuickRun -src '<C-r>"'<CR>
 vnoremap ,r y:QuickInspector<CR>
 command! QuickInspector :call s:my_quick_inspector()
@@ -1856,15 +1856,18 @@ let g:quickrun_config['jshint'] = {
 \}
 au myvimrc BufWritePost *.js QuickRun jshint
 " database
-let g:quickrun_config['sql'] = {'type': executable('sqlite3') ? 'sql/sqlite3' : ''}
-let g:quickrun_config['sql/sqlite3'] = {
+let g:quickrun_config['sql'] = {'type': executable('sqlite3') ? 'sql.sqlite3' : ''}
+let g:quickrun_config['sql.alt'] = {'type': executable('sqlplus') ? 'sql.oracle' : ''}
+let g:quickrun_config['sql.sqlite3'] = {
 \ 'exec': '%c %o %a < %S',
 \ 'command': 'sqlite3',
 \ 'cmdopt': '-header -column',
 \}
-let g:quickrun_config['sql/oracle'] = {
-\ 'exec': '%c %a @%S',
+let g:quickrun_config['sql.oracle'] = {
+\ 'exec': '%c %o \@%s',
 \ 'command': 'sqlplus',
+\ 'cmdopt': '-S /nolog',
+\ 'hook/output_encode/encoding': 'sjis',
 \}
 
 " MiniBufExplorer {{{1
