@@ -1,4 +1,4 @@
-" Last Change: 19-Mar-2014. {{{
+" Last Change: 20-Mar-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -141,19 +141,19 @@ NeoBundleLazy 'kana/vim-textobj-fold'
 \, {'autoload': {'mappings': [['ov', 'iz', 'az']]}
 \,  'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'kana/vim-textobj-entire'
-\, {'autoload': {'mappings': [['ov', 'ie', 'ae']]}
+\, {'autoload': {'mappings': '<Plug>(textobj-entire-'}
 \,  'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'kana/vim-textobj-line'
 \, {'autoload': {'mappings': [['ov', 'il', 'al']]}
 \,  'depends': 'kana/vim-textobj-user'}
+NeoBundleLazy 'kana/vim-textobj-indent'
+\, {'autoload': {'mappings': [['ov', 'ii', 'ai']]}
+\,  'depends': 'kana/vim-textobj-user'}
+NeoBundleLazy 'kana/vim-textobj-lastpat'
+\, {'autoload': {'mappings': [['ov', 'i/', 'a/']]}
+\,  'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'thinca/vim-textobj-between'
 \, {'autoload': {'mappings': '<Plug>(textobj-between-'}
-\,  'depends': 'kana/vim-textobj-user'}
-NeoBundleLazy 'osyo-manga/vim-textobj-multiblock'
-\, {'autoload': {'mappings': '<Plug>(textobj-multiblock-'}
-\,  'depends': 'kana/vim-textobj-user'}
-NeoBundleLazy 'osyo-manga/vim-textobj-multitextobj'
-\, {'autoload': {'mappings': '<Plug>(textobj-multitextobj-'}
 \,  'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'sgur/vim-textobj-parameter'
 \, {'autoload': {'mappings': [['ov', 'i,', 'a,']]}
@@ -161,6 +161,12 @@ NeoBundleLazy 'sgur/vim-textobj-parameter'
 NeoBundleLazy 'deris/vim-textobj-enclosedsyntax'
 \, {'autoload': {'mappings': [['ov', 'iq', 'aq']]
 \,               'filetypes': ['ruby', 'perl']}
+\,  'depends': 'kana/vim-textobj-user'}
+NeoBundleLazy 'osyo-manga/vim-textobj-multiblock'
+\, {'autoload': {'mappings': '<Plug>(textobj-multiblock-'}
+\,  'depends': 'kana/vim-textobj-user'}
+NeoBundleLazy 'osyo-manga/vim-textobj-multitextobj'
+\, {'autoload': {'mappings': '<Plug>(textobj-multitextobj-'}
 \,  'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'tpope/vim-surround'
 \, {'autoload': {'mappings':
@@ -2185,6 +2191,12 @@ let g:startify_bookmarks = [
 let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
 
 " textobj-user {{{1
+" entire
+let g:textobj_entire_no_default_key_mappings = 1
+omap aa <Plug>(textobj-entire-a)
+vmap aa <Plug>(textobj-entire-a)
+omap ia <Plug>(textobj-entire-i)
+vmap ia <Plug>(textobj-entire-i)
 " between
 let g:textobj_between_no_default_key_mappings = 1
 omap a= <Plug>(textobj-between-a)
