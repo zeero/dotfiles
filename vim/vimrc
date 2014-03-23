@@ -1,4 +1,4 @@
-" Last Change: 20-Mar-2014. {{{
+" Last Change: 24-Mar-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -208,9 +208,9 @@ NeoBundleLazy 'thinca/vim-ref'
 \,               'unite-sources': ['ref']}
 \,  'depends': ['mattn/webapi-vim']}
 NeoBundle 'mojako/ref-sources.vim'
-NeoBundleLazy 'thinca/vim-quickrun'
-\, {'autoload': {'commands': ['QuickRun']
-\,               'mappings': '<Plug>(quickrun)'}}
+NeoBundle 'thinca/vim-quickrun'
+" \, {'autoload': {'commands': ['QuickRun']
+" \,               'mappings': '<Plug>(quickrun)'}}
 NeoBundle 'tpope/vim-fugitive'
 \, {'augroup': 'fugitive'}
 NeoBundleLazy 'mattn/gist-vim'
@@ -311,6 +311,8 @@ NeoBundleLazy 'yonchu/accelerated-smooth-scroll'
 \, {'autoload': {'mappings': '<Plug>(ac-smooth-scroll-'}}
 NeoBundleLazy 'ShowMarks'
 \, {'autoload': {'commands': ['ShowMarksToggle']}}
+NeoBundleLazy 'AnsiEsc.vim'
+\, {'autoload': {'commands': ['AnsiEsc']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -320,8 +322,8 @@ NeoBundle 'taka84u9/vim-ref-ri'
 " \,               'unite_sources': ['ref/ri']}
 " \,  'depends': 'thinca/vim-ref'}
 NeoBundle 'edsono/vim-matchit'
-NeoBundleLazy 'tpope/vim-bundler'
-\, {'autoload': {'filetypes': ['ruby']}}
+" NeoBundleLazy 'tpope/vim-bundler'
+" \, {'autoload': {'filetypes': ['ruby']}}
 
 " HTML/JavaScript {{{2
 NeoBundleLazy 'mattn/emmet-vim'
@@ -351,6 +353,7 @@ NeoBundleLazy 'http://www.fleiner.com/vim/syntax_60/javaid.vim'
 NeoBundleLazy 'vim-jp/vital.vim'
 \, {'autoload': {'commands': ['Vitalize']}}
 NeoBundle 'kana/vim-vspec'
+NeoBundle 'rhysd/vim-vspec-matchers'
 NeoBundleLazy 'Shougo/vesting'
 \, {'autoload': {'unite_sources': ['vesting']}}
 
@@ -1308,10 +1311,10 @@ let g:unite_source_menu_menus = {
 \ 'shortcuts': {
 \   'description': 'command shortcuts.',
 \   'command_candidates': [
+\     ['help-functions', 'H function-list'],
 \     ['help-neobundle-autoload', 'H neobundle-options-autoload'],
 \     ['help-registers', 'H registers'],
 \     ['help-map-overview', 'H map-overview'],
-\     ['help-functions', 'H function-list'],
 \     ['help-vim-script', 'H usr_41.txt'],
 \     ['help-quickref-alpha', 'H index.txt'],
 \     ['help-quickref', 'H quickref.txt'],
@@ -1779,21 +1782,30 @@ let g:ref_source_webdict_sites = {
 " 説明 {{{2
 " デフォルトの設定を見る場合、
 " let g:quickrun#default_configを使う。
-"
+" <C-c> で実行を強制終了させる
 " COMMAND:
 "  :QuickRun -args foo
 " KEYMAP:
 "  ,r : バッファの内容を実行
-"
-" <C-c> で実行を強制終了させる
 
-" 設定 {{{2
+" 基本設定 {{{2
 " quickrun.vim が実行していない場合には <C-c> を呼び出す
 nnoremap <expr> <silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+" カラー出力用outputter追加
+let s:ansi_buffer = quickrun#outputter#buffer#new()
+function! s:ansi_buffer.init(session)
+  call call(quickrun#outputter#buffer#new().init, [a:session], self)
+endfunction
+function! s:ansi_buffer.finish(session)
+  AnsiEsc
+  call call(quickrun#outputter#buffer#new().finish, [a:session], self)
+endfunction
+call quickrun#register_outputter("ansi_buffer", s:ansi_buffer)
+unlet s:ansi_buffer
 
 " 共通設定 {{{2
-" 実行にvimprocを使う
-" エラー時はquickfixに表示する
+"  実行にvimprocを使う
+"  エラー時はquickfixに表示する
 let g:quickrun_config = {}
 let g:quickrun_config = {
 \  "_": {
@@ -1807,11 +1819,15 @@ let g:quickrun_config = {
 \  },
 \}
 
-" ファイルタイプ別の設定 {{{2
-" ruby.rspec
+" ruby.rspec {{{2
 au myvimrc BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec syntax=ruby
-let g:quickrun_config['ruby.rspec'] = { 'command': 'rspec' }
-" vim.vspec
+let g:quickrun_config['ruby.rspec'] = {
+\ 'command': 'rspec',
+\ 'cmdopt': '--color',
+\ 'outputter': 'ansi_buffer',
+\}
+
+" vim.vspec {{{2
 au myvimrc BufRead,BufNew,BufNewFile *_spec.vim setlocal ft=vim.vspec
 if (has('win32') || has('win64')) && exists('$CYGWIN_HOME')
   let g:quickrun_config['vim.vspec'] = {
@@ -1837,11 +1853,14 @@ elseif executable('bash')
   \ 'exec': 'rake test',
   \}
 endif
-" htmlをブラウザで開く（tyru/open-browser.vim プラグインが必要）
+
+" html, mkd {{{2
+" （tyru/open-browser.vim プラグインが必要）
 let g:quickrun_config['html'] = {'command': 'open', 'exec': '%c %s', 'outputter': 'browser' }
 let g:quickrun_config['xhtml'] = {'command': 'open', 'exec': '%c %s', 'outputter': 'browser' }
 let g:quickrun_config['mkd'] = {'command': 'kramdown', 'outputter': 'browser'}
-" javascript
+
+" javascript {{{2
 let g:quickrun_config['javascript'] = {'command': 'node'}
 let g:quickrun_config['jshint'] = {
 \ 'exec': '%c %s:p',
@@ -1855,7 +1874,8 @@ let g:quickrun_config['jshint'] = {
 \ 'hook/u_nya_/enable': 0,
 \}
 au myvimrc BufWritePost *.js QuickRun jshint
-" database
+
+" database {{{2
 let g:quickrun_config['sql'] = {'type': executable('sqlite3') ? 'sql.sqlite3' : ''}
 let g:quickrun_config['sql.alt'] = {'type': executable('sqlplus') ? 'sql.oracle' : ''}
 let g:quickrun_config['sql.sqlite3'] = {
