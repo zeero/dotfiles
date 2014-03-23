@@ -65,16 +65,14 @@ lazy fmaps -u='http://code.google.com/p/vimperator-labs/issues/detail' u
 " copy.js
 javascript <<EOM
 liberator.globalVariables.copy_templates = [
-   { label: 'titleAndUrl',    value: '%TITLE% %URL%' },
-   { label: 'url',            value: '%URL%' },
-   { label: 'title',          value: '%TITLE%' },
-   { label: 'wiki',           value: '[[%TITLE%|%URL%]]' },
-   { label: 'hatena',         value: '[%URL%:title=%TITLE%]' },
-   { label: 'hatenacite',     value: '>%URL%:title=%TITLE%>\n%SEL%\n<<' },
-   { label: 'markdown',       value: '[%SEL%](%URL% "%TITLE%")' },
-   { label: 'htmlLink',       value: '<a href="%URL%">%TITLE%</a>' },
-   { label: 'htmlLinkSelect', value: '<a href="%URL%" title="%TITLE%">%SEL%</a>' },
-   { label: 'htmlBlockquote', value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' }
+   { label: 'plain:title+url', value: '%TITLE% %URL%' },
+   { label: 'plain:url',       value: '%URL%' },
+   { label: 'plain:title',     value: '%TITLE%' },
+   { label: 'wiki',            value: '[[%TITLE%|%URL%]]' },
+   { label: 'markdown',        value: '[%TITLE%](%URL%)' },
+   { label: 'html',            value: '<a href="%URL%">%TITLE%</a>' },
+   { label: 'html:select',     value: '<a href="%URL%" title="%TITLE%">%SEL%</a>' },
+   { label: 'html:blockquote', value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' }
 ];
 EOM
 
