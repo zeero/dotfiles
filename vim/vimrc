@@ -1,4 +1,4 @@
-" Last Change: 24-Mar-2014. {{{
+" Last Change: 27-Mar-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -187,7 +187,8 @@ NeoBundleLazy 'kana/vim-operator-user'
 NeoBundleLazy 'kana/vim-operator-replace.git'
 \, {'autoload': {'mappings': '<Plug>(operator-replace)'}
 \,  'depends': ['kana/vim-operator-user']}
-NeoBundleLazy 'rhysd/vim-operator-surround'
+" NeoBundleLazy 'rhysd/vim-operator-surround'
+NeoBundleLazy 'zeero/vim-operator-surround'
 \, {'autoload': {'mappings': '<Plug>(operator-surround-'}
 \,  'depends': ['kana/vim-operator-user']}
 NeoBundleLazy 'tyru/operator-camelize.vim'
@@ -211,6 +212,8 @@ NeoBundle 'mojako/ref-sources.vim'
 NeoBundle 'thinca/vim-quickrun'
 " \, {'autoload': {'commands': ['QuickRun']
 " \,               'mappings': '<Plug>(quickrun)'}}
+NeoBundle 'osyo-manga/shabadou.vim'
+\, {'depends': ['thinca/vim-quickrun']}
 NeoBundle 'tpope/vim-fugitive'
 \, {'augroup': 'fugitive'}
 NeoBundleLazy 'mattn/gist-vim'
@@ -517,6 +520,8 @@ endif
 set cursorline
 " 行番号を表示 (nonumber:表示)
 set number
+" 行番号の左に余白をとる
+" au myvimrc BufEnter,WinEnter,BufWinEnter * let &l:numberwidth = len(line("$")) + 2
 " ルーラーを表示 (noruler:非表示)
 set ruler
 " タイトルを表示
@@ -602,8 +607,8 @@ if has('gui_running')
   set noimcmdline
   " Alt+CとAlt+Pでコピペする
   vnoremap <M-c> "+y
-  imap <expr> <M-v> '<C-o>"+gP'
-  cnoremap <M-v> <C-r><C-o>*
+  inoremap <M-v> <C-r>+
+  cnoremap <M-v> <C-r><C-o>+
   " C-Scrollでフォントサイズ変更（要Zoom.vim）
   nnoremap <C-ScrollWheelUp> :ZoomIn<CR>
   nnoremap <C-ScrollWheelDown> :ZoomOut<CR>
@@ -933,8 +938,8 @@ nnoremap <C-j> :tab tj <C-R>=expand('<cword>')<CR><CR>
 vnoremap <C-j> y:tab tj <C-r>"<CR>
 nnoremap ,[ <C-t>
 nnoremap <C-k> <C-t>
-nnoremap <C-h> <C-o>
-nnoremap <C-l> <C-i>
+nnoremap <C-h> <C-o>z<CR>
+nnoremap <C-l> <C-i>z<CR>
 
 " ノーマルモード操作 {{{2
 " 行末までヤンク
@@ -954,7 +959,7 @@ nnoremap gp `[v`]
 " カーソル位置から末尾までビジュアル選択
 nnoremap ,v v$
 " PASTEモードでクリップボード貼り付け
-nnoremap ,p :<C-u>set paste<CR>i<C-r>*<Esc>:<C-u>set nopaste<CR>
+nnoremap ,p :<C-u>set paste<CR>i<C-r>+<Esc>:<C-u>set nopaste<CR>
 " URLを開く
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 map gx <Plug>(openbrowser-smart-search)
@@ -971,6 +976,7 @@ vnoremap ,c "xy:%s/<C-r>=escape(@x, '\\/.*$^~[]')<CR>//gc<Left><Left><Left>
 map s <Plug>(operator-surround-append)
 map S <Plug>(operator-surround-delete)
 map <C-s> <Plug>(operator-surround-replace)
+let g:operator#surround#uses_input_if_no_block = 0 " 定義済みブロック以外では囲まない
 " snake_case<=>CamelCase
 map _ <Plug>(operator-camelize-toggle)
 " HTMLエスケープ
@@ -1040,7 +1046,7 @@ au myvimrc FileType sh nnoremap <buffer> ,h :<C-u>Ref<Space>man<Space><C-r><C-w>
 au myvimrc FileType sh vnoremap <buffer> ,h y:<C-u>Ref<Space>man<Space><C-r>"<CR>
 " QuickRun
 nmap ,r <Plug>(quickrun)
-nnoremap ,R :<C-u>call<Space>quickrun#run([{'type': &filetype . '.alt'}])<CR>
+nnoremap <silent> ,R :<C-u>call<Space>quickrun#run([{'type': &filetype . '.alt'}])<CR>
 vnoremap ,R y:QuickRun -src '<C-r>"'<CR>
 vnoremap ,r y:QuickInspector<CR>
 command! QuickInspector :call s:my_quick_inspector()
@@ -1263,8 +1269,9 @@ command! Umap :Unite output:map|map!|lmap
 let s:bundle = neobundle#get('unite.vim')
 let s:bundle.hooks = get(s:bundle, "hooks", {})
 function! s:bundle.hooks.on_source(bundle)
-" 入力モードで開始
-"let g:unite_enable_start_insert=1
+" 入力モードで開始しない
+let g:unite_enable_start_insert = 0
+call unite#custom#profile('action', 'context', {'start_insert': 0})
 " ヤンク履歴を使用可能にする
 let g:unite_source_history_yank_enable = 1
 " 最近使ったファイルの履歴数
@@ -1815,9 +1822,17 @@ let g:quickrun_config = {
 \    'outputter/error': 'quickfix',
 \    'outputter/error/success': 'buffer',
 \    'outputter/buffer/split': ':belowright 7',
-\    'outputter/buffer/close_on_empty': 1
+\    'outputter/buffer/close_on_empty': 1,
+\    'hook/animation/enable': 1,
+\    'hook/animation/wait': 10,
 \  },
 \}
+" アニメーション
+call quickrun#module#register(shabadou#make_quickrun_hook_anim(
+\ "animation",
+\ ['QuickRun: ／', 'QuickRun: ―', 'QuickRun: ＼', 'QuickRun: ｜',],
+\ 12,
+\), 1)
 
 " ruby.rspec {{{2
 au myvimrc BufWinEnter,BufNewFile *_spec.rb set filetype=ruby.rspec syntax=ruby
