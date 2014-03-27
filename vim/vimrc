@@ -1,4 +1,4 @@
-" Last Change: 27-Mar-2014. {{{
+" Last Change: 28-Mar-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -1849,7 +1849,9 @@ if (has('win32') || has('win64')) && exists('$CYGWIN_HOME')
   \ 'exec': '%c --login -c ' .
   \         '"cd %%{MyGetCygwinDir(%s:p:h)}/..; ' .
   \         '%%{MyGetCygwinDir(expand($MYVIMDIR))}/bundle/vim-vspec/bin/vspec ' .
-  \         '%%{MyGetCygwinDir(expand($MYVIMDIR))}/bundle/vim-vspec . ' .
+  \         '%%{MyGetCygwinDir(expand($MYVIMDIR))}/bundle/vim-vspec ' .
+  \         '%%{MyGetCygwinDir(expand($MYVIMDIR))}/bundle/vim-vspec-matchers ' .
+  \         '. ' .
   \         '%%{MyGetCygwinDir(%s:p)}"',
   \ 'command': $CYGWIN_HOME . '\bin\bash.exe',
   \}
