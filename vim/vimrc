@@ -976,7 +976,7 @@ vnoremap ,c "xy:%s/<C-r>=escape(@x, '\\/.*$^~[]')<CR>//gc<Left><Left><Left>
 map s <Plug>(operator-surround-append)
 map S <Plug>(operator-surround-delete)
 map <C-s> <Plug>(operator-surround-replace)
-let g:operator#surround#uses_input_if_no_block = 0 " 定義済みブロック以外では囲まない
+let g:operator#surround#keeps_input_if_no_block = 1 " 定義済みブロックが現れるまでテキスト保持
 " snake_case<=>CamelCase
 map _ <Plug>(operator-camelize-toggle)
 " HTMLエスケープ
@@ -2012,16 +2012,17 @@ endfunction
 let g:tagbar_auto_focus = 1
 let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 
-" surround {{{1
-"
+" vim-surround {{{1
 " KEYMAP:
-"  i : inside
-"  a : all
 "  s : side
-"  S' : ビジュアルモードで選択した範囲を'で囲む
-"  ysiw' : カーソル下の単語を'で囲む
 "  cs'" : 'を"に変換する
 "  ds' : 'で囲まれた範囲を消す
+" 置換時の空白を入れない
+let g:surround_34 = "\"\r\""
+let g:surround_39 = "\'\r\'"
+let g:surround_40 = "(\r)"
+let g:surround_91 = "[\r]"
+let g:surround_123 = "{\r}"
 
 " migemo-search {{{1
 if executable('cmigemo')
