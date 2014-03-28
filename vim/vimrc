@@ -1,4 +1,4 @@
-" Last Change: 28-Mar-2014. {{{
+" Last Change: 29-Mar-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -1978,7 +1978,14 @@ function! MyFilename()
 \        ('' != MyReadonly() ? ' ' . MyReadonly() : '')
 endfunction
 function! MyPwd()
-  return winwidth(0) > 100 ? getcwd() : ''
+  let path = ''
+  if winwidth(0) > 100
+    let path = getcwd()
+    while len(path) >= 50 && stridx(path, '/') >= 0
+      let path = '...' . strpart(path, stridx(path, '/') + 1)
+    endwhile
+  endif
+  return path
 endfunction
 function! MyFugitive()
   try
