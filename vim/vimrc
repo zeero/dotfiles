@@ -152,6 +152,9 @@ NeoBundleLazy 'kana/vim-textobj-indent'
 NeoBundleLazy 'kana/vim-textobj-lastpat'
 \, {'autoload': {'mappings': [['ov', 'i/', 'a/']]}
 \,  'depends': 'kana/vim-textobj-user'}
+NeoBundleLazy 'syngan/vim-textobj-postexpr'
+\, {'autoload': {'mappings': '<Plug>(textobj-postexpr-'}
+\,  'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'thinca/vim-textobj-between'
 \, {'autoload': {'mappings': '<Plug>(textobj-between-'}
 \,  'depends': 'kana/vim-textobj-user'}
@@ -2019,7 +2022,7 @@ endfunction
 let g:tagbar_auto_focus = 1
 let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 
-" vim-surround {{{1
+" surround {{{1
 " KEYMAP:
 "  s : side
 "  cs'" : 'を"に変換する
@@ -2245,6 +2248,12 @@ omap aa <Plug>(textobj-entire-a)
 vmap aa <Plug>(textobj-entire-a)
 omap ia <Plug>(textobj-entire-i)
 vmap ia <Plug>(textobj-entire-i)
+" postexpr
+let g:textobj_postexpr_no_default_key_mappings = 1
+omap af <Plug>(textobj-postexpr-a)
+vmap af <Plug>(textobj-postexpr-a)
+omap if <Plug>(textobj-postexpr-i)
+vmap if <Plug>(textobj-postexpr-i)
 " between
 let g:textobj_between_no_default_key_mappings = 1
 omap a= <Plug>(textobj-between-a)
