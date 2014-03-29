@@ -672,7 +672,7 @@ au myvimrc FileType help setlocal iskeyword+=:
 " vimrcは起動時だったらgit pull
 " au myvimrc VimEnter *vimrc call s:my_vimenter_vimrc()
 function! s:my_vimenter_vimrc() "{{{
-  exe ":lcd " . expand("%:p:h")
+  exe "lcd " . expand("%:p:h")
   if exists('*fugitive#head')
     call s:my_git_vimproc('pull')
   endif
@@ -1022,7 +1022,8 @@ inoremap <expr> } match(getline("."), '{}', col(".") - 2) == abs(col(".") - 2) ?
 inoremap <expr> ' match(getline("."), "\'\'", col(".") - 2) == abs(col(".") - 2) ? '<Right>' :
 \                 strlen(substitute(getline("."), "\[^\'\]", "", "g")) % 2 == 1 ? "\'" : "\'\'<Left>"
 inoremap <expr> " match(getline("."), '""', col(".") - 2) == abs(col(".") - 2) ? '<Right>' :
-\                 or(col(".") == 1, strlen(substitute(getline("."), '[^"]', "", "g")) % 2 == 1) ? '"' : '""<Left>'
+\                 or(match(strpart(getline("."), 0, col(".")), '\S') == -1,
+\                    strlen(substitute(getline("."), '[^"]', "", "g")) % 2 == 1) ? '"' : '""<Left>'
 
 " コマンドモード {{{2
 " 移動
