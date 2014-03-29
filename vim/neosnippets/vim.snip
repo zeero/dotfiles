@@ -23,6 +23,16 @@ snippet lazy:mappings
   NeoBundleLazy '${1:bundle}'
   \, {'autoload': {'mappings': ['${2:mapping}'${0}]}}
 
+snippet on_source
+abbr    NeoBundle on_source start and end
+  let s:bundle = neobundle#get('${1:bundle}')
+  let s:bundle.hooks = get(s:bundle, "hooks", {})
+  function! s:bundle.hooks.on_source(bundle)
+  ${0}
+  " （on_source終わり） {{{2
+  endfunction
+  unlet s:bundle
+
 snippet function
 abbr    my function (override default snippet)
 alias   func
