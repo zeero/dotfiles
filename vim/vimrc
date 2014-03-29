@@ -319,6 +319,8 @@ NeoBundleLazy 'ShowMarks'
 \, {'autoload': {'commands': ['ShowMarksToggle']}}
 NeoBundleLazy 'AnsiEsc.vim'
 \, {'autoload': {'commands': ['AnsiEsc']}}
+NeoBundleLazy 'kana/vim-submode'
+\, {'autoload': {'mappings': [['n', 'x']]}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -2303,6 +2305,22 @@ let g:ConqueTerm_CWInsert = 1
 let g:ConqueTerm_Color = 1
 " trail非表示
 au myvimrc FileType conque_term setlocal nolist
+
+" submode {{{1
+let s:bundle = neobundle#get('vim-submode')
+let s:bundle.hooks = get(s:bundle, "hooks", {})
+function! s:bundle.hooks.on_source(bundle)
+" xで連続で消した履歴を一つにまとめる
+function! s:my_submode_x() "{{{
+  undojoin
+  normal! "_x
+endfunction "}}}
+nnoremap <silent> <Plug>(my-submode-x) :<C-u>call <SID>my_submode_x()<CR>
+call submode#enter_with('my-submode-x', 'n', '', 'x', '"_x')
+call submode#map('my-submode-x', 'n', 'r', 'x', '<Plug>(my-submode-x)')
+" （on_source終わり） {{{2
+endfunction
+unlet s:bundle
 
 "}}}1-------------------------------------------------------------------------
 
