@@ -284,6 +284,7 @@ NeoBundleLazy 'ScrollColors'
 \, {'autoload': {'commands': ['SCROLLCOLOR']}}
 NeoBundleLazy 'cocopon/colorswatch.vim'
 \, {'autoload': {'commands': ['ColorSwatchGenerate']}}
+NeoBundle 'osyo-manga/vim-anzu'
 
 " 補助 {{{2
 NeoBundle 'thinca/vim-singleton'
@@ -871,6 +872,20 @@ endfunction "}}}
 " 説明 {{{2
 " map系はリンク先のコマンドを再帰的に展開する。
 " noremap系はリンク先のコマンドを再帰的に展開しない。
+" -----------------------------------------------------------------------------------"
+"  コマンド        | n | i | c | v | s | o |
+" -----------------|---|---|---|---|---|---|
+"  map  / noremap  | @ | - | - | @ | @ | @ |
+"  nmap / nnoremap | @ | - | - | - | - | - |
+"  vmap / vnoremap | - | - | - | @ | @ | - |
+"  omap / onoremap | - | - | - | - | - | @ |
+"  xmap / xnoremap | - | - | - | @ | - | - |
+"  smap / snoremap | - | - | - | - | @ | - |
+"  map! / noremap! | - | @ | @ | - | - | - |
+"  imap / inoremap | - | @ | - | - | - | - |
+"  cmap / cnoremap | - | - | @ | - | - | - |
+"  コマンド | ノーマル | 挿入 | コマンドライン | ビジュアル | 選択 | 演算待ち |
+" -----------------------------------------------------------------------------------"
 " 基本的にはnoremap系を使用する。
 "   カーソル移動 => nnoremap
 "   範囲選択     => vnoremap & onoremap
@@ -900,8 +915,8 @@ nnoremap gm `
 
 " 検索 {{{2
 " 検索語が真ん中にくるようにする
-noremap n nzvzz
-noremap N Nzvzz
+" noremap n nzvzz
+" noremap N Nzvzz
 noremap * *zvzz
 " nnoremap # #zvzz
 noremap g* g*zvzz
@@ -1941,41 +1956,38 @@ hi MBENormal ctermfg=darkgray guifg=darkgray guibg=black
 hi MBEChanged ctermfg=red guifg=red guibg=black
 
 " lightline {{{1
+let g:lightline = {}
 " let g:lightline.colorscheme = 'wombat'
-"\  'colorscheme': 'wombat',
-"\    'right': [['mode'], ['filename']]
-let g:lightline = {
-\  'mode_map': {'c': 'COMMAND'},
-\  'active': {
-\    'left': [['mode', 'paste'], ['filename', 'fugitive']],
-\    'right': [['lineinfo'], ['percent'], ['pwd', 'fileformat', 'fileencoding', 'filetype']]
-\  },
-\  'inactive': {
-\    'left': [],
-\    'right': [['filename']]
-\  },
-\  'component_function': {
-\    'modified': 'MyModified',
-\    'readonly': 'MyReadonly',
-\    'pwd': 'MyPwd',
-\    'fugitive': 'MyFugitive',
-\    'filename': 'MyFilename',
-\    'fileformat': 'MyFileformat',
-\    'filetype': 'MyFiletype',
-\    'fileencoding': 'MyFileencoding',
-\    'mode': 'MyMode'
-\  }
+let g:lightline.active = {
+\ 'left': [['mode', 'paste'], ['filename', 'fugitive', 'anzu']],
+\ 'right': [['lineinfo', 'syntastic'], ['percent'], ['pwd', 'fileformat', 'fileencoding', 'filetype']]
 \}
-
-function! MyModified()
+let g:lightline.inactive = {
+\ 'left': [],
+\ 'right': [['filename']]
+\}
+let g:lightline.component_function = {
+\ 'modified': 'MyModified',
+\ 'readonly': 'MyReadonly',
+\ 'pwd': 'MyPwd',
+\ 'filename': 'MyFilename',
+\ 'fugitive': 'MyFugitive',
+\ 'anzu': 'anzu#search_status',
+\ 'syntastic': 'SyntasticStatuslineFlag',
+\ 'fileformat': 'MyFileformat',
+\ 'filetype': 'MyFiletype',
+\ 'fileencoding': 'MyFileencoding',
+\ 'mode': 'MyMode'
+\}
+function! MyModified() " {{{2
   "return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : ''
 endfunction
-function! MyReadonly()
+function! MyReadonly() " {{{2
   "return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
   return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '[RO]' : ''
 endfunction
-function! MyFilename()
+function! MyFilename() " {{{2
   return (&ft == 'vimfiler' ? vimfiler#get_status_string() :
 \         &ft == 'unite' ? unite#get_status_string() :
 \         &ft == 'vimshell' ? vimshell#get_status_string() :
@@ -1983,7 +1995,7 @@ function! MyFilename()
 \        ('' != MyModified() ? ' ' . MyModified() : '') .
 \        ('' != MyReadonly() ? ' ' . MyReadonly() : '')
 endfunction
-function! MyPwd()
+function! MyPwd() " {{{2
   let path = ''
   if winwidth(0) > 100
     let path = getcwd()
@@ -1993,7 +2005,7 @@ function! MyPwd()
   endif
   return path
 endfunction
-function! MyFugitive()
+function! MyFugitive() " {{{2
   try
     if winwidth(0) > 80 && &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
       return fugitive#head()
@@ -2002,16 +2014,16 @@ function! MyFugitive()
   endtry
   return ''
 endfunction
-function! MyFileformat()
+function! MyFileformat() " {{{2
   return winwidth(0) > 80 ? &fileformat : ''
 endfunction
-function! MyFiletype()
+function! MyFiletype() " {{{2
   return winwidth(0) > 80 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
-function! MyFileencoding()
+function! MyFileencoding() " {{{2
   return winwidth(0) > 80 ? (strlen(&fenc) ? &fenc : &enc) : ''
 endfunction
-function! MyMode()
+function! MyMode() " {{{2
   return &ft == 'help' ? 'Help' :
 \        &ft == 'minibufexpl' ? 'MBE' :
 \        &ft == 'quickrun' ? 'QuickRun' :
@@ -2322,6 +2334,12 @@ call submode#map('my-submode-x', 'n', 'r', 'x', '<Plug>(my-submode-x)')
 " （on_source終わり） {{{2
 endfunction
 unlet s:bundle
+
+" anzu {{{1
+nmap n <Plug>(anzu-n)
+nmap N <Plug>(anzu-N)
+let g:anzu_status_format = "(%i/%l)"
+au myvimrc CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
 
 "}}}1-------------------------------------------------------------------------
 
