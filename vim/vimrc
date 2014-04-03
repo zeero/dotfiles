@@ -322,6 +322,8 @@ NeoBundleLazy 'AnsiEsc.vim'
 \, {'autoload': {'commands': ['AnsiEsc']}}
 NeoBundleLazy 'kana/vim-submode'
 \, {'autoload': {'mappings': [['n', 'x']]}}
+NeoBundleLazy 'tpope/vim-repeat'
+\, {'autoload': {'mappings': ['.']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
