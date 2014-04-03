@@ -28,6 +28,7 @@ nnoremap <S-Tab> gT
 nnoremap <Tab> gt
 " タブを一番右に移動
 nnoremap ,l :tabm<CR>
+nnoremap ,L :tabm 0<CR>
 " ナビゲーションバーのトグル
 nnoremap m :set toolbars+=nonavigation,noaddons<CR>
 nnoremap M :set toolbars+=navigation,addons<CR>
