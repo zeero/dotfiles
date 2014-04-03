@@ -79,7 +79,7 @@ NeoBundleLazy 'Shougo/neosnippet'
 NeoBundleLazy 'Shougo/neosnippet-snippets'
 \, {'autoload': {'insert': 1}}
 NeoBundle 'kien/ctrlp.vim'
-NeoBundleLazy 'haya14busa/vim-easymotion'
+NeoBundleLazy 'Lokaltog/vim-easymotion'
 \, {'autoload': {'mappings':
 \    ['<Plug>(easymotion-S)', '<Plug>(easymotion-s)',
 \     '<Plug>(easymotion-j)', '<Plug>(easymotion-k)']}}
@@ -903,8 +903,8 @@ xnoremap k gk
 " 行末に移動
 nnoremap <C-e> $
 " 0/^のトグル
-nnoremap <expr>0  col('.') == 1 ? '^' : '0'
-nnoremap <expr>^  col('.') == 1 ? '^' : '0'
+nnoremap <expr> 0 match(getline("."), '\S') == col(".") - 1 ? '0' : '^'
+nnoremap <expr> ^ match(getline("."), '\S') == col(".") - 1 ? '0' : '^'
 " diffハンクへのジャンプ
 nnoremap g[ [czz
 nnoremap g] ]czz
@@ -997,7 +997,7 @@ vnoremap ,c "xy:%s/<C-r>=escape(@x, '\\/.*$^~[]')<CR>//gc<Left><Left><Left>
 map s <Plug>(operator-surround-append)
 map S <Plug>(operator-surround-delete)
 map <C-s> <Plug>(operator-surround-replace)
-let g:operator#surround#keeps_input_if_no_block = 1 " 定義済みブロックが現れるまでテキスト保持
+let g:operator#surround#enable_xbrackets_mode = 1 " 定義済みブロックが現れるまでテキスト保持
 " snake_case<=>CamelCase
 map _ <Plug>(operator-camelize-toggle)
 " HTMLエスケープ
@@ -1093,12 +1093,12 @@ function! s:my_quick_inspector_ruby(expr) "{{{
   return vimproc#system('ruby -e '.shellescape('p '.a:expr))
 endfunction "}}}
 " EasyMotion
-nmap f <Plug>(easymotion-S)
-vmap ,f <Plug>(easymotion-S)
-omap ,f <Plug>(easymotion-S)
-nmap F <Plug>(easymotion-s)
-vmap ,F <Plug>(easymotion-s)
-omap ,F <Plug>(easymotion-s)
+nmap f <Plug>(easymotion-bd-w)
+vmap ,f <Plug>(easymotion-bd-w)
+omap ,f <Plug>(easymotion-bd-w)
+nmap F <Plug>(easymotion-s2)
+vmap ,F <Plug>(easymotion-s2)
+omap ,F <Plug>(easymotion-s2)
 au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> f <Plug>(easymotion-j)
 au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> F <Plug>(easymotion-k)
 
@@ -2047,8 +2047,11 @@ let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 let g:surround_34 = "\"\r\""
 let g:surround_39 = "\'\r\'"
 let g:surround_40 = "(\r)"
+let g:surround_41 = "( \r )"
 let g:surround_91 = "[\r]"
+let g:surround_93 = "[ \r ]"
 let g:surround_123 = "{\r}"
+let g:surround_125 = "{ \r }"
 
 " migemo-search {{{1
 if executable('cmigemo')
