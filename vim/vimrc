@@ -1,4 +1,4 @@
-" Last Change: 29-Mar-2014. {{{
+" Last Change: 03-Apr-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -935,6 +935,7 @@ nnoremap <Tab> <C-PageDown>
 nnoremap <S-Tab> <C-PageUp>
 nnoremap ,<Tab> :<C-u>tabnew<CR>
 nnoremap ,l :<C-u>tabm<CR>
+nnoremap ,L :<C-u>tabm 0<CR>
 " gfはタブで開く
 nnoremap gf :tabe <cfile><CR>
 vnoremap gf y:tabe <C-r>"<CR>
