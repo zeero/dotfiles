@@ -1,4 +1,4 @@
-" Last Change: 29-Mar-2014. {{{
+" Last Change: 09-Apr-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -623,6 +623,8 @@ if has('gui_running')
   set bufhidden=wipe
   " タブのラベル
   set guitablabel=%n:%t
+  " 印刷オプション
+  set printoptions=wrap:y,number:y
 endif
 
 " ファイル操作に関する設定 {{{1
