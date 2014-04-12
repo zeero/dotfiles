@@ -1,4 +1,4 @@
-" Last Change: 03-Apr-2014. {{{
+" Last Change: 12-Apr-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ NeoBundleLazy 'Shougo/neosnippet-snippets'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundleLazy 'Lokaltog/vim-easymotion'
 \, {'autoload': {'mappings':
-\    ['<Plug>(easymotion-S)', '<Plug>(easymotion-s)',
+\    ['<Plug>(easymotion-bd-w)', '<Plug>(easymotion-s2)',
 \     '<Plug>(easymotion-j)', '<Plug>(easymotion-k)']}}
 
 " Unite {{{2
@@ -154,6 +154,9 @@ NeoBundleLazy 'kana/vim-textobj-lastpat'
 \,  'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'syngan/vim-textobj-postexpr'
 \, {'autoload': {'mappings': '<Plug>(textobj-postexpr-'}
+\,  'depends': 'kana/vim-textobj-user'}
+NeoBundleLazy 'rhysd/vim-textobj-wiw'
+\, {'autoload': {'mappings': '<Plug>(textobj-wiw-'}
 \,  'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'thinca/vim-textobj-between'
 \, {'autoload': {'mappings': '<Plug>(textobj-between-'}
@@ -252,6 +255,8 @@ NeoBundleLazy 'http://conque.googlecode.com/svn/trunk/'
 \, {'autoload': {'commands': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermTab', 'ConqueTermVSplit']
 \,               'functions': ['conque_term#open', 'conque_term#subprocess', 'conque_term#register_function']}
 \,  'name': 'Conque'}
+NeoBundleLazy 'h1mesuke/vim-alignta.git'
+\, {'autoload': {'commands': ['Align']}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -324,6 +329,8 @@ NeoBundleLazy 'kana/vim-submode'
 \, {'autoload': {'mappings': [['n', 'x']]}}
 NeoBundleLazy 'tpope/vim-repeat'
 \, {'autoload': {'mappings': ['.']}}
+NeoBundleLazy 'fuenor/qfixhowm'
+\, {'autoload': {'mappings': ['g,c', 'g,m']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -2275,6 +2282,12 @@ omap af <Plug>(textobj-postexpr-a)
 vmap af <Plug>(textobj-postexpr-a)
 omap if <Plug>(textobj-postexpr-i)
 vmap if <Plug>(textobj-postexpr-i)
+" wiw
+let g:textobj_wiw_no_default_key_mappings = 1
+omap a_ <Plug>(textobj-wiw-a)
+vmap a_ <Plug>(textobj-wiw-a)
+omap i_ <Plug>(textobj-wiw-i)
+vmap i_ <Plug>(textobj-wiw-i)
 " between
 let g:textobj_between_no_default_key_mappings = 1
 omap a= <Plug>(textobj-between-a)
