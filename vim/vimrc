@@ -1,4 +1,4 @@
-" Last Change: 17-Apr-2014. {{{
+" Last Change: 18-Apr-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -998,6 +998,8 @@ nnoremap ,p :<C-u>set paste<CR>i<C-r>+<Esc>:<C-u>set nopaste<CR>
 " URLを開く
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 map gx <Plug>(openbrowser-smart-search)
+" Esc+noh
+nnoremap <silent> <Esc> <Esc>:<C-u>noh<CR>
 
 " オペレータ {{{2
 " replace
