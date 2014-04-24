@@ -1,4 +1,4 @@
-" Last Change: 18-Apr-2014. {{{
+" Last Change: 24-Apr-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -2052,7 +2052,9 @@ endfunction
 
 " Tagbar {{{1
 let g:tagbar_auto_focus = 1
-let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
+if executable('jsctags')
+  let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
+endif
 
 " surround {{{1
 " KEYMAP:
