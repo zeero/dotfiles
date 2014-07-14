@@ -1,4 +1,4 @@
-" Last Change: 24-Apr-2014. {{{
+" Last Change: 14-Jul-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -939,6 +939,8 @@ noremap { {zz
 noremap } }zz
 " #でも検索方向を揃える
 noremap # *NNzvzz
+" 選択した単語で検索
+vnoremap / y/<C-r>"
 
 " ウィンドウ／タブ {{{2
 " バッファ移動用キーマップ
@@ -1279,16 +1281,24 @@ command! Um Unite menu:shortcuts
 \ -no-empty -silent -buffer-name=menushortcuts
 
 " リファレンス参照
+" ref
+command! UR Unite ref
+\ -no-empty -silent -buffer-name=ref
 " refe
-command! Urr Unite ref/refe
+command! URr Unite ref/refe
 \ -no-empty -silent -buffer-name=ref/refe
 " カーソル下の単語でrefe
-command! Urrw exe 'Unite ref/refe ' .
+command! URrw exe 'Unite ref/refe ' .
 \ '-no-empty -silent -buffer-name=ref/refe -input=' .
 \ escape(expand("<cword>"), '- \\')
 " ri
-command! Urri Unite ref/ri
+command! URri Unite ref/ri
 \ -no-empty -silent -buffer-name=ref/ri
+
+" ファイル
+" file_rec
+command! Uf Unite file_rec
+\ -no-empty -silent -buffer-name=files
 
 " 直前のUniteコマンドの結果に戻る
 command! Ur UniteResume
@@ -1401,6 +1411,20 @@ call unite#custom#action('source/mapping/*', 'verbose', s:action)
 unlet s:action
 
 " Uniteソース {{{2
+" ref {{{3
+let s:unite_source = {
+\   'name': 'ref',
+\ }
+function! s:unite_source.gather_candidates(args, context)
+  return map(ref#available_source_names(), '{
+  \   "word": v:val,
+  \   "source": "ref",
+  \   "kind": "source",
+  \   "action__source_name": "ref/" . v:val,
+  \ }')
+endfunction
+call unite#define_source(s:unite_source)
+unlet s:unite_source
 " サンプル {{{3
 let s:unite_source = {
 \   'name': 'lines',
