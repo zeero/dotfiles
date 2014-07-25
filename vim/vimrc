@@ -1,4 +1,4 @@
-" Last Change: 14-Jul-2014. {{{
+" Last Change: 25-Jul-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -257,6 +257,8 @@ NeoBundleLazy 'http://conque.googlecode.com/svn/trunk/'
 \,  'name': 'Conque'}
 NeoBundleLazy 'h1mesuke/vim-alignta.git'
 \, {'autoload': {'commands': ['Align']}}
+NeoBundleLazy 'copypath.vim'
+\, {'autoload': {'commands': ['CopyPath', 'CopyFileName']}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -1002,6 +1004,8 @@ let g:netrw_nogx = 1 " disable netrw's gx mapping.
 map gx <Plug>(openbrowser-smart-search)
 " Esc+noh
 nnoremap <silent> <Esc> <Esc>:<C-u>noh<CR>
+" CopyFileName
+nnoremap gy :<C-u>CopyFileName<CR>
 
 " オペレータ {{{2
 " replace
