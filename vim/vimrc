@@ -1,4 +1,4 @@
-" Last Change: 25-Jul-2014. {{{
+" Last Change: 22-Aug-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -245,8 +245,10 @@ NeoBundleLazy 'szw/vim-tags'
 \, {'autoload': {'commands': ['TagsGenerate']}}
 NeoBundleLazy 'AndrewRadev/splitjoin.vim'
 \, {'autoload': {'commands': ['SplitjoinSplit', 'SplitjoinJoin']}}
-NeoBundleLazy 'vcscommand.vim'
-\, {'autoload': {'commands': ['VCSUpdate']}}
+NeoBundleLazy 'http://repo.or.cz/r/vcscommand.git'
+\, {'autoload': {'commands': ['VCSStatus', 'VCSLog', 'VCSUpdate']}
+\,  'rev': 'f0750a4'
+\,  'name': 'vcscommand'}
 NeoBundleLazy 'thinca/vim-scall'
 \, {'autoload': {'commands': ['Scall']}}
 NeoBundleLazy 'osyo-manga/vim-over'
