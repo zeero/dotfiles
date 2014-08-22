@@ -1781,7 +1781,7 @@ let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 " キャッシュを終了後も残す（<F5>でキャッシュ更新）
 let g:ctrlp_clear_cache_on_exit = 0
 " MRUファイルの数
-let g:ctrlp_mruf_max = 1000
+let g:ctrlp_mruf_max = 10000
 " 拡張機能を有効にする
 let g:ctrlp_extensions = ['tag', 'dir', 'changes', 'bookmarkdir']
 " コマンドエイリアス
