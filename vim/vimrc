@@ -1,4 +1,4 @@
-" Last Change: 22-Aug-2014. {{{
+" Last Change: 26-Aug-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -892,9 +892,10 @@ if executable('TortoiseProc')
   command! TSVNLog silent call vimproc#system_bg('TortoiseProc /command:log /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSVNDiff silent call vimproc#system_bg('TortoiseProc /command:diff /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSVNUpdate silent call vimproc#system_bg('TortoiseProc /command:update /path:"'.expand("%").'" /notempfile /closeonend')
+  command! TSVNUpdateDir silent call vimproc#system_bg('TortoiseProc /command:update /path:"'.expand("%:h").'" /notempfile /closeonend')
   command! TSVNCommit silent call vimproc#system_bg('TortoiseProc /command:commit /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSVNRevert silent call vimproc#system_bg('TortoiseProc /command:revert /path:"'.expand("%").'" /notempfile /closeonend')
-  command! TSVNProps silent call vimproc#system_bg('TortoiseProc /command:properties /path:"'.expand("%:p:h").'" /notempfile /closeonend')
+  command! TSVNProps silent call vimproc#system_bg('TortoiseProc /command:properties /path:"'.expand("%:h").'" /notempfile /closeonend')
   command! TSVNBlame silent call vimproc#system_bg('TortoiseProc /command:blame /path:"'.expand("%").'" /notempfile /closeonend /line:'.line(".").' /startrev:1 /endrev:-1')
 endif
 
