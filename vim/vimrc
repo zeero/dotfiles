@@ -247,10 +247,6 @@ NeoBundleLazy 'szw/vim-tags'
 \, {'autoload': {'commands': ['TagsGenerate']}}
 NeoBundleLazy 'AndrewRadev/splitjoin.vim'
 \, {'autoload': {'commands': ['SplitjoinSplit', 'SplitjoinJoin']}}
-NeoBundleLazy 'http://repo.or.cz/r/vcscommand.git'
-\, {'autoload': {'commands': ['VCSStatus', 'VCSLog', 'VCSUpdate']}
-\,  'rev': 'f0750a4'
-\,  'name': 'vcscommand'}
 NeoBundleLazy 'thinca/vim-scall'
 \, {'autoload': {'commands': ['Scall']}}
 NeoBundleLazy 'osyo-manga/vim-over'
@@ -744,13 +740,11 @@ au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setlocal ft=apache
 au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
 
 " コマンド定義 {{{1
-"
-" COMMAND:
+" ユーティリティ {{{2
 " H(elp)
 command! -nargs=? -complete=help H if winwidth(0) > 140 | botright vertical help <args> | vertical resize 79 | else | help <args> | endif
 " K(otoba)
 command! -nargs=1 K Ref kotobankej <args>
-
 " Vimrc
 command! Vimrc tabe $MYVIMRC
 " So
@@ -810,6 +804,46 @@ function! s:my_info() "{{{
   echo "ソース行：" . countSource
 endfunction "}}}
 
+" VimDiff
+command! -complete=file -nargs=1 VimDiff vertical diffsplit <args>
+" DiffOrig（編集前とdiff）
+command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+" LoadYAML
+command! -nargs=1 LoadYAML echo s:my_load_yaml(<args>)
+function! s:my_load_yaml(file) "{{{
+  perl << EOF
+use YAML::Syck;
+use JSON::Syck qw(Dump);
+eval {
+  VIM::DoCommand("let ret = " . Dump(LoadFile("".VIM::Eval('a:file'))));
+};
+VIM::DoCommand("let v:errmsg = substitute('$@', \"\\n\", '', 'g')") if $@;
+EOF
+  if !exists('ret')
+    throw v:errmsg
+  endif
+  return ret
+endfunction "}}}
+" LocalInit
+command! LocalInit call vimproc#system("cp " . g:local_init_skel_file . " ./")
+let g:local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
+" QFClear
+command! QFClear call setqflist([])
+
+" TortoiseSVN
+" /endrev:-1 は HEAD（-2：ベースリビジョン、-3：ワーキングコピー）
+if executable('TortoiseProc')
+  command! TSVNLog silent call vimproc#system_bg('TortoiseProc /command:log /path:"'.expand("%").'" /notempfile /closeonend')
+  command! TSVNDiff silent call vimproc#system_bg('TortoiseProc /command:diff /path:"'.expand("%").'" /notempfile /closeonend')
+  command! TSVNUpdate silent call vimproc#system_bg('TortoiseProc /command:update /path:"'.expand("%").'" /notempfile /closeonend')
+  command! TSVNUpdateDir silent call vimproc#system_bg('TortoiseProc /command:update /path:"'.expand("%:h").'" /notempfile /closeonend')
+  command! TSVNCommit silent call vimproc#system_bg('TortoiseProc /command:commit /path:"'.expand("%").'" /notempfile /closeonend')
+  command! TSVNRevert silent call vimproc#system_bg('TortoiseProc /command:revert /path:"'.expand("%").'" /notempfile /closeonend')
+  command! TSVNProps silent call vimproc#system_bg('TortoiseProc /command:properties /path:"'.expand("%:h").'" /notempfile /closeonend')
+  command! TSVNBlame silent call vimproc#system_bg('TortoiseProc /command:blame /path:"'.expand("%").'" /notempfile /closeonend /line:'.line(".").' /startrev:1 /endrev:-1')
+endif
+
+" 別ウィンドウ系 {{{2
 " Esnip
 command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete Esnip NeoSnippetEdit -vertical -split <args>
 " Vimdoc
@@ -825,10 +859,8 @@ endfunction "}}}
 function! MyGetCygwinDir(fullpath) "{{{
   return "/cygdrive/" . substitute(a:fullpath, ':', '', '')
 endfunction "}}}
-" LocalInit
-command! LocalInit call vimproc#system("cp " . g:local_init_skel_file . " ./")
-let g:local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
 
+" カラーリング {{{2
 " SyntaxInfo
 command! SyntaxInfo call s:get_syn_info()
 function! s:get_syn_id(transparent) "{{{
@@ -871,40 +903,6 @@ endfunction "}}}
 command! Colortest belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source $VIMRUNTIME/syntax/colortest.vim
 " Hitest
 command! Hitest belowright vsplit $VIMRUNTIME/syntax/hitest.vim | source $VIMRUNTIME/syntax/hitest.vim
-
-" VimDiff
-command! -complete=file -nargs=1 VimDiff vertical diffsplit <args>
-" DiffOrig（編集前とdiff）
-command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
-" LoadYAML
-command! -nargs=1 LoadYAML echo s:my_load_yaml(<args>)
-function! s:my_load_yaml(file) "{{{
-  perl << EOF
-use YAML::Syck;
-use JSON::Syck qw(Dump);
-eval {
-  VIM::DoCommand("let ret = " . Dump(LoadFile("".VIM::Eval('a:file'))));
-};
-VIM::DoCommand("let v:errmsg = substitute('$@', \"\\n\", '', 'g')") if $@;
-EOF
-  if !exists('ret')
-    throw v:errmsg
-  endif
-  return ret
-endfunction "}}}
-
-" TortoiseSVN
-" /endrev:-1 は HEAD（-2：ベースリビジョン、-3：ワーキングコピー）
-if executable('TortoiseProc')
-  command! TSVNLog silent call vimproc#system_bg('TortoiseProc /command:log /path:"'.expand("%").'" /notempfile /closeonend')
-  command! TSVNDiff silent call vimproc#system_bg('TortoiseProc /command:diff /path:"'.expand("%").'" /notempfile /closeonend')
-  command! TSVNUpdate silent call vimproc#system_bg('TortoiseProc /command:update /path:"'.expand("%").'" /notempfile /closeonend')
-  command! TSVNUpdateDir silent call vimproc#system_bg('TortoiseProc /command:update /path:"'.expand("%:h").'" /notempfile /closeonend')
-  command! TSVNCommit silent call vimproc#system_bg('TortoiseProc /command:commit /path:"'.expand("%").'" /notempfile /closeonend')
-  command! TSVNRevert silent call vimproc#system_bg('TortoiseProc /command:revert /path:"'.expand("%").'" /notempfile /closeonend')
-  command! TSVNProps silent call vimproc#system_bg('TortoiseProc /command:properties /path:"'.expand("%:h").'" /notempfile /closeonend')
-  command! TSVNBlame silent call vimproc#system_bg('TortoiseProc /command:blame /path:"'.expand("%").'" /notempfile /closeonend /line:'.line(".").' /startrev:1 /endrev:-1')
-endif
 
 " キーマップ定義 {{{1
 " 説明 {{{2
