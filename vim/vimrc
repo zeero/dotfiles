@@ -1,4 +1,4 @@
-" Last Change: 27-Aug-2014. {{{
+" Last Change: 29-Aug-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -122,6 +122,8 @@ NeoBundleLazy 'pasela/unite-webcolorname'
 NeoBundleLazy 'zeero/unite-localrc'
 \, {'autoload': {'unite_sources': ['localrc']}
 \,  'depends': ['thinca/vim-localrc']}
+NeoBundleLazy 'osyo-manga/unite-quickfix'
+\, {'autoload': {'unite_sources': ['quickfix']}}
 
 " 入力補助 {{{2
 NeoBundleLazy 'tyru/caw.vim'
@@ -261,6 +263,8 @@ NeoBundleLazy 'h1mesuke/vim-alignta.git'
 \, {'autoload': {'commands': ['Align']}}
 NeoBundleLazy 'copypath.vim'
 \, {'autoload': {'commands': ['CopyPath', 'CopyFileName']}}
+NeoBundleLazy 'jceb/vim-editqf'
+\, {'autoload': {'commands': ['QFAddNote']}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -821,6 +825,9 @@ endfunction "}}}
 function! MyGetCygwinDir(fullpath) "{{{
   return "/cygdrive/" . substitute(a:fullpath, ':', '', '')
 endfunction "}}}
+" LocalInit
+command! LocalInit call vimproc#system("cp " . g:local_init_skel_file . " ./")
+let g:local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
 
 " SyntaxInfo
 command! SyntaxInfo call s:get_syn_info()
@@ -898,36 +905,6 @@ if executable('TortoiseProc')
   command! TSVNProps silent call vimproc#system_bg('TortoiseProc /command:properties /path:"'.expand("%:h").'" /notempfile /closeonend')
   command! TSVNBlame silent call vimproc#system_bg('TortoiseProc /command:blame /path:"'.expand("%").'" /notempfile /closeonend /line:'.line(".").' /startrev:1 /endrev:-1')
 endif
-
-" QFReview
-command! -nargs=0 Rv call s:my_qfreview()
-function! s:my_qfreview() "{{{
-  echon 'comment : '
-  let input = ''
-  while 1
-    let char = getchar()
-    let char = type(char) == type(0) ? nr2char(char) : char
-
-    " cancel when <C-c> or <Esc> is input
-    if char == "\<C-c>" || char == "\<Esc>"
-      echo 'canceled.'
-      return 0
-    endif
-
-    " end when <CR> is input
-    if char == "\<CR>"
-      break
-    endif
-
-    echon char
-    let input .= char
-  endwhile
-
-  let new_comment = {'filename': expand("%"), 'lnum': line("."), 'col': col("."), 'text': input, 'type': 'I'}
-  call setqflist(sort(add(getqflist(), new_comment)))
-  "call setloclist(winnr(), add(getqflist(), new_comment))
-  botright cwindow
-endfunction "}}}
 
 " キーマップ定義 {{{1
 " 説明 {{{2
