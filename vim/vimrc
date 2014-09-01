@@ -495,8 +495,8 @@ set history=1000
 set autoread
 au myvimrc WinEnter * checktime
 " クイックフィックスは常にcwindowで表示する
-autocmd myvimrc QuickFixCmdPost [^l]* nested cwindow
-autocmd myvimrc QuickFixCmdPost    l* nested lwindow
+autocmd myvimrc QuickFixCmdPost [^l]* nested botright cwindow
+autocmd myvimrc QuickFixCmdPost    l* nested botright lwindow
 " 補完時に大文字小文字を区別しない
 set infercase
 " カーソルを文字が存在しない部分でも動けるようにする
@@ -2375,6 +2375,8 @@ inoremap <expr> = smartchr#loop('=', '==', '<=', '>=')
 " Acceralated Smooth Scroll {{{1
 map <silent> <Space> <Plug>(ac-smooth-scroll-c-d)
 map <silent> <S-Space> <Plug>(ac-smooth-scroll-c-u)
+vmap <silent> <Space> <Plug>(ac-smooth-scroll-c-d_v)
+vmap <silent> <S-Space> <Plug>(ac-smooth-scroll-c-u_v)
 
 " Switch {{{1
 nnoremap <expr> <C-a> strpart(getline("."), col(".") - 1, 1) =~ '\d' ? "\<C-a>" : ":\<C-u>Switch\<CR>"
