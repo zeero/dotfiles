@@ -1,4 +1,4 @@
-" Last Change: 29-Aug-2014. {{{
+" Last Change: 01-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -825,7 +825,7 @@ EOF
   return ret
 endfunction "}}}
 " LocalInit
-command! LocalInit call vimproc#system("cp " . g:local_init_skel_file . " ./")
+command! LocalInit call vimproc#system("cp " . g:local_init_skel_file . " ./.local.vimrc")
 let g:local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
 " QFClear
 command! QFClear call setqflist([])
