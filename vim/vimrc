@@ -804,10 +804,20 @@ function! s:my_info() "{{{
   echo "ソース行：" . countSource
 endfunction "}}}
 
-" VimDiff
-command! -complete=file -nargs=1 VimDiff vertical diffsplit <args>
+" Diff
+command! -nargs=0 Diff windo diffthis
+" DiffOff
+command! -nargs=0 Diff windo diffoff
+" DiffWith
+command! -complete=file -nargs=1 DiffWith vertical diffsplit <args>
 " DiffOrig（編集前とdiff）
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+
+" LocalInit
+command! LocalInit call vimproc#system("cp " . g:local_init_skel_file . " ./.local.vimrc")
+let g:local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
+" QFClear
+command! QFClear call setqflist([])
 " LoadYAML
 command! -nargs=1 LoadYAML echo s:my_load_yaml(<args>)
 function! s:my_load_yaml(file) "{{{
@@ -824,11 +834,6 @@ EOF
   endif
   return ret
 endfunction "}}}
-" LocalInit
-command! LocalInit call vimproc#system("cp " . g:local_init_skel_file . " ./.local.vimrc")
-let g:local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
-" QFClear
-command! QFClear call setqflist([])
 
 " TortoiseSVN
 " /endrev:-1 は HEAD（-2：ベースリビジョン、-3：ワーキングコピー）
