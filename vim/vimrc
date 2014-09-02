@@ -1,4 +1,4 @@
-" Last Change: 01-Sep-2014. {{{
+" Last Change: 02-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -1770,9 +1770,12 @@ nnoremap <C-@> :<C-u>CtrlPTag<CR>
 " CtrlPMRUFiles
 nnoremap <C-o> :<C-u>CtrlPMRUFiles<CR>
 " タブで開く
+" t: Tab, e: Enter, h: Horizontal(split), v: Vertical(vsplit)
 let g:ctrlp_prompt_mappings = {
 \ 'AcceptSelection("t")': ['<CR>'],
-\ 'AcceptSelection("e")': ['<C-@>'],
+\ 'AcceptSelection("e")': ['<C-CR>'],
+\ 'AcceptSelection("h")': ['<C-s>'],
+\ 'AcceptSelection("v")': ['<C-v>'],
 \ 'ToggleByFname()':      ['<C-t>', '<C-d>'],
 \}
 " CtrlP動作モード（'w'：ワークディレクトリ）
