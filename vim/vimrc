@@ -743,6 +743,8 @@ au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
 " ユーティリティ {{{2
 " H(elp)
 command! -nargs=? -complete=help H if winwidth(0) > 140 | botright vertical help <args> | vertical resize 79 | else | help <args> | endif
+" H(elp)f(unction-list)
+command! -nargs=0 Hf H function-list
 " K(otoba)
 command! -nargs=1 K Ref kotobankej <args>
 " Vimrc
@@ -762,7 +764,9 @@ function! s:my_command_bd_other() "{{{
   endwhile
 endfunction "}}}
 " Lcd
-command! Lcd exe "lcd " . expand("%:p:h")
+command! Lcd exe "lcd " . expand("%:p:h") | pwd
+" LcdLocalrc
+command! LcdLocalrc exe "lcd " . fnamemodify(get(localrc#search(get(g:, 'localrc_filename')), 0), ":p:h") | pwd
 " Ls
 command! -nargs=* -complete=file Ls echo vimproc#system("ls <args>")
 " Noh
@@ -805,9 +809,9 @@ function! s:my_info() "{{{
 endfunction "}}}
 
 " Diff
-command! -nargs=0 Diff windo diffthis
-" DiffOff
-command! -nargs=0 DiffOff windo diffoff
+command! -nargs=0 Diff windo diffthis | set ve=all
+" Diffoff
+command! -nargs=0 Diffoff windo diffoff | set ve=
 " DiffWith
 command! -complete=file -nargs=1 DiffWith vertical diffsplit <args>
 " DiffOrig（編集前とdiff）
@@ -971,8 +975,8 @@ vnoremap / y/<C-r>"
 
 " ウィンドウ／タブ {{{2
 " バッファ移動用キーマップ
-nnoremap <Tab> <Esc>:MBEbn<CR>
-nnoremap <S-Tab> <Esc>:MBEbp<CR>
+" nnoremap <Tab> <Esc>:MBEbn<CR>
+" nnoremap <S-Tab> <Esc>:MBEbp<CR>
 " タブページ操作
 nnoremap L <C-PageDown>
 nnoremap H <C-PageUp>
@@ -1781,7 +1785,9 @@ let g:ctrlp_prompt_mappings = {
 \ 'AcceptSelection("e")': ['<C-CR>'],
 \ 'AcceptSelection("h")': ['<C-s>'],
 \ 'AcceptSelection("v")': ['<C-v>'],
-\ 'ToggleByFname()':      ['<C-t>', '<C-d>'],
+\ 'ToggleByFname()':      ['<C-t>'],
+\ 'PrtDelete()':          ['<del>', '<C-d>'],
+\ 'PrtInsert()':          ['<C-@>', '<C-\>'],
 \}
 " CtrlP動作モード（'w'：ワークディレクトリ）
 let g:ctrlp_working_path_mode = 'w'
@@ -1797,7 +1803,7 @@ let g:ctrlp_clear_cache_on_exit = 0
 " MRUファイルの数
 let g:ctrlp_mruf_max = 10000
 " 拡張機能を有効にする
-let g:ctrlp_extensions = ['tag', 'dir', 'changes', 'bookmarkdir']
+let g:ctrlp_extensions = ['tag', 'changes', 'quickfix', 'bookmarkdir']
 " コマンドエイリアス
 command! -nargs=? -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
 " migemoを使って日本語正規表現検索
