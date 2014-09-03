@@ -1,4 +1,4 @@
-" Last Change: 02-Sep-2014. {{{
+" Last Change: 03-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -807,7 +807,7 @@ endfunction "}}}
 " Diff
 command! -nargs=0 Diff windo diffthis
 " DiffOff
-command! -nargs=0 Diff windo diffoff
+command! -nargs=0 DiffOff windo diffoff
 " DiffWith
 command! -complete=file -nargs=1 DiffWith vertical diffsplit <args>
 " DiffOrig（編集前とdiff）
@@ -971,12 +971,12 @@ vnoremap / y/<C-r>"
 
 " ウィンドウ／タブ {{{2
 " バッファ移動用キーマップ
-nnoremap H <Esc>:MBEbp<CR>
-nnoremap L <Esc>:MBEbn<CR>
+nnoremap <Tab> <Esc>:MBEbn<CR>
+nnoremap <S-Tab> <Esc>:MBEbp<CR>
 " タブページ操作
-nnoremap <Tab> <C-PageDown>
-nnoremap <S-Tab> <C-PageUp>
-nnoremap ,<Tab> :<C-u>tabnew<CR>
+nnoremap L <C-PageDown>
+nnoremap H <C-PageUp>
+nnoremap t :<C-u>tabnew<CR>
 nnoremap ,l :<C-u>tabm<CR>
 nnoremap ,L :<C-u>tabm 0<CR>
 " gfはタブで開く
