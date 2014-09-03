@@ -1,4 +1,4 @@
-" Last Change: 01-Sep-2014. {{{
+" Last Change: 03-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -743,6 +743,8 @@ au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
 " ユーティリティ {{{2
 " H(elp)
 command! -nargs=? -complete=help H if winwidth(0) > 140 | botright vertical help <args> | vertical resize 79 | else | help <args> | endif
+" H(elp)f(unction-list)
+command! -nargs=0 Hf H function-list
 " K(otoba)
 command! -nargs=1 K Ref kotobankej <args>
 " Vimrc
@@ -762,7 +764,9 @@ function! s:my_command_bd_other() "{{{
   endwhile
 endfunction "}}}
 " Lcd
-command! Lcd exe "lcd " . expand("%:p:h")
+command! Lcd exe "lcd " . expand("%:p:h") | pwd
+" LcdLocalrc
+command! LcdLocalrc exe "lcd " . fnamemodify(get(localrc#search(get(g:, 'localrc_filename')), 0), ":p:h") | pwd
 " Ls
 command! -nargs=* -complete=file Ls echo vimproc#system("ls <args>")
 " Noh
@@ -804,10 +808,20 @@ function! s:my_info() "{{{
   echo "ソース行：" . countSource
 endfunction "}}}
 
-" VimDiff
-command! -complete=file -nargs=1 VimDiff vertical diffsplit <args>
+" Diff
+command! -nargs=0 Diff windo diffthis | set ve=all
+" Diffoff
+command! -nargs=0 Diffoff windo diffoff | set ve=
+" DiffWith
+command! -complete=file -nargs=1 DiffWith vertical diffsplit <args>
 " DiffOrig（編集前とdiff）
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+
+" LocalInit
+command! LocalInit call vimproc#system("cp " . g:local_init_skel_file . " ./.local.vimrc")
+let g:local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
+" QFClear
+command! QFClear call setqflist([])
 " LoadYAML
 command! -nargs=1 LoadYAML echo s:my_load_yaml(<args>)
 function! s:my_load_yaml(file) "{{{
@@ -824,11 +838,6 @@ EOF
   endif
   return ret
 endfunction "}}}
-" LocalInit
-command! LocalInit call vimproc#system("cp " . g:local_init_skel_file . " ./.local.vimrc")
-let g:local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
-" QFClear
-command! QFClear call setqflist([])
 
 " TortoiseSVN
 " /endrev:-1 は HEAD（-2：ベースリビジョン、-3：ワーキングコピー）
@@ -966,12 +975,12 @@ vnoremap / y/<C-r>"
 
 " ウィンドウ／タブ {{{2
 " バッファ移動用キーマップ
-nnoremap H <Esc>:MBEbp<CR>
-nnoremap L <Esc>:MBEbn<CR>
+" nnoremap <Tab> <Esc>:MBEbn<CR>
+" nnoremap <S-Tab> <Esc>:MBEbp<CR>
 " タブページ操作
-nnoremap <Tab> <C-PageDown>
-nnoremap <S-Tab> <C-PageUp>
-nnoremap ,<Tab> :<C-u>tabnew<CR>
+nnoremap L <C-PageDown>
+nnoremap H <C-PageUp>
+nnoremap t :<C-u>tabnew<CR>
 nnoremap ,l :<C-u>tabm<CR>
 nnoremap ,L :<C-u>tabm 0<CR>
 " gfはタブで開く
@@ -1770,10 +1779,15 @@ nnoremap <C-@> :<C-u>CtrlPTag<CR>
 " CtrlPMRUFiles
 nnoremap <C-o> :<C-u>CtrlPMRUFiles<CR>
 " タブで開く
+" t: Tab, e: Enter, h: Horizontal(split), v: Vertical(vsplit)
 let g:ctrlp_prompt_mappings = {
 \ 'AcceptSelection("t")': ['<CR>'],
-\ 'AcceptSelection("e")': ['<C-@>'],
-\ 'ToggleByFname()':      ['<C-t>', '<C-d>'],
+\ 'AcceptSelection("e")': ['<C-CR>'],
+\ 'AcceptSelection("h")': ['<C-s>'],
+\ 'AcceptSelection("v")': ['<C-v>'],
+\ 'ToggleByFname()':      ['<C-t>'],
+\ 'PrtDelete()':          ['<del>', '<C-d>'],
+\ 'PrtInsert()':          ['<C-@>', '<C-\>'],
 \}
 " CtrlP動作モード（'w'：ワークディレクトリ）
 let g:ctrlp_working_path_mode = 'w'
@@ -1789,7 +1803,7 @@ let g:ctrlp_clear_cache_on_exit = 0
 " MRUファイルの数
 let g:ctrlp_mruf_max = 10000
 " 拡張機能を有効にする
-let g:ctrlp_extensions = ['tag', 'dir', 'changes', 'bookmarkdir']
+let g:ctrlp_extensions = ['tag', 'changes', 'quickfix', 'bookmarkdir']
 " コマンドエイリアス
 command! -nargs=? -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
 " migemoを使って日本語正規表現検索

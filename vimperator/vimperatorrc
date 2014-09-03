@@ -24,8 +24,6 @@ nnoremap l <A-Right>
 " タブ移動
 nnoremap H gT
 nnoremap L gt
-nnoremap <S-Tab> gT
-nnoremap <Tab> gt
 " タブを一番右に移動
 nnoremap ,l :tabm<CR>
 nnoremap ,L :tabm 0<CR>
