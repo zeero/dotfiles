@@ -807,6 +807,8 @@ function! s:my_info() "{{{
   echo "コメント行：" . countComment
   echo "ソース行：" . countSource
 endfunction "}}}
+" Open
+command! Open call vimproc#open(expand("%:p:h"))
 
 " Diff
 command! -nargs=0 DF windo diffthis | set ve=all
@@ -817,11 +819,25 @@ command! -complete=file -nargs=1 DiffWith vertical diffsplit <args>
 " DiffOrig（編集前とdiff）
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 
+" QFClear
+command! QFClear call setqflist([])
 " LocalInit
 command! LocalInit call vimproc#system("cp " . g:local_init_skel_file . " ./.local.vimrc")
 let g:local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
-" QFClear
-command! QFClear call setqflist([])
+
+" TortoiseSVN
+" /endrev:-1 は HEAD（-2：ベースリビジョン、-3：ワーキングコピー）
+if executable('TortoiseProc')
+  command! TSVNLog silent call vimproc#system_bg('TortoiseProc /command:log /path:"'.expand("%").'" /notempfile /closeonend')
+  command! TSVNDiff silent call vimproc#system_bg('TortoiseProc /command:diff /path:"'.expand("%").'" /notempfile /closeonend')
+  command! TSVNUpdate silent call vimproc#system_bg('TortoiseProc /command:update /path:"'.expand("%").'" /notempfile /closeonend')
+  command! TSVNUpdateDir silent call vimproc#system_bg('TortoiseProc /command:update /path:"'.expand("%:h").'" /notempfile /closeonend')
+  command! TSVNCommit silent call vimproc#system_bg('TortoiseProc /command:commit /path:"'.expand("%").'" /notempfile /closeonend')
+  command! TSVNRevert silent call vimproc#system_bg('TortoiseProc /command:revert /path:"'.expand("%").'" /notempfile /closeonend')
+  command! TSVNProps silent call vimproc#system_bg('TortoiseProc /command:properties /path:"'.expand("%:h").'" /notempfile /closeonend')
+  command! TSVNBlame silent call vimproc#system_bg('TortoiseProc /command:blame /path:"'.expand("%").'" /notempfile /closeonend /line:'.line(".").' /startrev:1 /endrev:-1')
+endif
+
 " LoadYAML
 command! -nargs=1 LoadYAML echo s:my_load_yaml(<args>)
 function! s:my_load_yaml(file) "{{{
@@ -838,19 +854,6 @@ EOF
   endif
   return ret
 endfunction "}}}
-
-" TortoiseSVN
-" /endrev:-1 は HEAD（-2：ベースリビジョン、-3：ワーキングコピー）
-if executable('TortoiseProc')
-  command! TSVNLog silent call vimproc#system_bg('TortoiseProc /command:log /path:"'.expand("%").'" /notempfile /closeonend')
-  command! TSVNDiff silent call vimproc#system_bg('TortoiseProc /command:diff /path:"'.expand("%").'" /notempfile /closeonend')
-  command! TSVNUpdate silent call vimproc#system_bg('TortoiseProc /command:update /path:"'.expand("%").'" /notempfile /closeonend')
-  command! TSVNUpdateDir silent call vimproc#system_bg('TortoiseProc /command:update /path:"'.expand("%:h").'" /notempfile /closeonend')
-  command! TSVNCommit silent call vimproc#system_bg('TortoiseProc /command:commit /path:"'.expand("%").'" /notempfile /closeonend')
-  command! TSVNRevert silent call vimproc#system_bg('TortoiseProc /command:revert /path:"'.expand("%").'" /notempfile /closeonend')
-  command! TSVNProps silent call vimproc#system_bg('TortoiseProc /command:properties /path:"'.expand("%:h").'" /notempfile /closeonend')
-  command! TSVNBlame silent call vimproc#system_bg('TortoiseProc /command:blame /path:"'.expand("%").'" /notempfile /closeonend /line:'.line(".").' /startrev:1 /endrev:-1')
-endif
 
 " 別ウィンドウ系 {{{2
 " Esnip
