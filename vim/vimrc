@@ -1,4 +1,4 @@
-" Last Change: 03-Sep-2014. {{{
+" Last Change: 04-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -809,9 +809,9 @@ function! s:my_info() "{{{
 endfunction "}}}
 
 " Diff
-command! -nargs=0 Diff windo diffthis | set ve=all
+command! -nargs=0 DF windo diffthis | set ve=all
 " Diffoff
-command! -nargs=0 Diffoff windo diffoff | set ve=
+command! -nargs=0 DFO windo diffoff | set ve=
 " DiffWith
 command! -complete=file -nargs=1 DiffWith vertical diffsplit <args>
 " DiffOrig（編集前とdiff）
@@ -1563,6 +1563,8 @@ function! s:bundle.hooks.on_source(bundle)
 let g:acp_enableAtStartup = 0
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
+" Use ignorecase.
+let g:neocomplete#enable_ignore_case = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
@@ -1788,6 +1790,7 @@ let g:ctrlp_prompt_mappings = {
 \ 'ToggleByFname()':      ['<C-t>'],
 \ 'PrtDelete()':          ['<del>', '<C-d>'],
 \ 'PrtInsert()':          ['<C-@>', '<C-\>'],
+\ 'MarkToOpen()':         ['<C-Space>', '<C-z>'],
 \}
 " CtrlP動作モード（'w'：ワークディレクトリ）
 let g:ctrlp_working_path_mode = 'w'
@@ -2319,8 +2322,6 @@ let g:startify_list_order = [
 \  'bookmarks',
 \ ['   Sessions:'],
 \  'sessions',
-\ ['   MRU:'],
-\  'files',
 \ ]
 " スペシャルメニューなし
 let g:startify_enable_special = 0
