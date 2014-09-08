@@ -2456,7 +2456,7 @@ let g:anzu_status_format = "(%i/%l)"
 au myvimrc CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
 
 " editqf {{{1
-let g:editqf_saveqf_filename  = $MYVIMDIR . "/.editqf/" . strftime("%Y%m%d%H%M%S") . ".qf"
+let g:editqf_saveqf_filename  = "~/.editqf_save_data"
 
 "}}}1-------------------------------------------------------------------------
 
