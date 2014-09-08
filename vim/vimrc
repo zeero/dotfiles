@@ -813,7 +813,7 @@ command! Open call vimproc#open(expand("%:p:h"))
 " Diff
 command! -nargs=0 DF windo diffthis | set ve=all
 " Diffoff
-command! -nargs=0 DFO windo diffoff | set ve=
+command! -nargs=0 DFOff windo diffoff | set ve=
 " DiffWith
 command! -complete=file -nargs=1 DiffWith vertical diffsplit <args>
 " DiffOrig（編集前とdiff）
