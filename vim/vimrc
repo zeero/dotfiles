@@ -1,4 +1,4 @@
-" Last Change: 05-Sep-2014. {{{
+" Last Change: 08-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -916,6 +916,19 @@ command! Colortest belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source $
 " Hitest
 command! Hitest belowright vsplit $VIMRUNTIME/syntax/hitest.vim | source $VIMRUNTIME/syntax/hitest.vim
 
+" 共通ファンクション {{{2
+" パス変換
+function! s:my_path_convert(path) "{{{
+  " セパレータ
+  if has('win32') || has('win64')
+    let path_separater = '\'
+  else
+    let path_separater = '/'
+  endif
+
+  return substitute(a:path, '/', path_separater, 'g')
+endfunction "}}}
+
 " キーマップ定義 {{{1
 " 説明 {{{2
 " map系はリンク先のコマンドを再帰的に展開する。
@@ -1808,6 +1821,8 @@ let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 let g:ctrlp_clear_cache_on_exit = 0
 " MRUファイルの数
 let g:ctrlp_mruf_max = 10000
+" MRUファイルの大文字小文字無視
+let g:ctrlp_mruf_case_sensitive = 0
 " 拡張機能を有効にする
 let g:ctrlp_extensions = ['tag', 'changes', 'quickfix', 'bookmarkdir']
 " コマンドエイリアス
@@ -2439,6 +2454,9 @@ nmap n <Plug>(anzu-n)
 nmap N <Plug>(anzu-N)
 let g:anzu_status_format = "(%i/%l)"
 au myvimrc CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
+
+" editqf {{{1
+let g:editqf_saveqf_filename  = $MYVIMDIR . "/.editqf/" . strftime("%Y%m%d%H%M%S") . ".qf"
 
 "}}}1-------------------------------------------------------------------------
 
