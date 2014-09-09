@@ -1,4 +1,4 @@
-" Last Change: 08-Sep-2014. {{{
+" Last Change: 09-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -196,7 +196,7 @@ NeoBundleLazy 'kana/vim-operator-replace.git'
 \, {'autoload': {'mappings': '<Plug>(operator-replace)'}
 \,  'depends': ['kana/vim-operator-user']}
 " NeoBundleLazy 'rhysd/vim-operator-surround'
-NeoBundleLazy 'zeero/vim-operator-surround'
+NeoBundleLazy 'zeero/vim-operator-surround', 'keep_input_option'
 \, {'autoload': {'mappings': '<Plug>(operator-surround-'}
 \,  'depends': ['kana/vim-operator-user']}
 NeoBundleLazy 'tyru/operator-camelize.vim'
