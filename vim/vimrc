@@ -1,4 +1,4 @@
-" Last Change: 09-Sep-2014. {{{
+" Last Change: 10-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -243,8 +243,6 @@ NeoBundleLazy 'AndrewRadev/linediff.vim'
 \, {'autoload': {'commands': ['Linediff']}}
 NeoBundleLazy 'thinca/vim-prettyprint'
 \, {'autoload': {'commands': ['PP']}}
-NeoBundleLazy 'szw/vim-tags'
-\, {'autoload': {'commands': ['TagsGenerate']}}
 NeoBundleLazy 'AndrewRadev/splitjoin.vim'
 \, {'autoload': {'commands': ['SplitjoinSplit', 'SplitjoinJoin']}}
 NeoBundleLazy 'thinca/vim-scall'
@@ -429,7 +427,9 @@ set hlsearch
 set wrapscan
 " タグ検索パスの設定
 "set tags=./tags,tags
-au myvimrc FileType * exe "setlocal tags+=" . $HOME . "/.tags/" . &ft . ".tags"
+au myvimrc FileType * exe "setlocal tags+="
+\ . $HOME . "/.tags/" . &ft . ".tags,"
+\ . $HOME . "/.tags/tags"
 " タグ検索に二分検索をオフにする（vimdoc-jaフリーズ対策）
 set notagbsearch
 " バックスラッシュやクエスチョンを状況に合わせ自動的にエスケープ
@@ -766,7 +766,7 @@ endfunction "}}}
 " Lcd
 command! Lcd exe "lcd " . expand("%:p:h") | pwd
 " LcdLocalrc
-command! LcdLocalrc exe "lcd " . fnamemodify(get(localrc#search(get(g:, 'localrc_filename')), 0), ":p:h") | pwd
+command! LcdLocalrc exe "lcd " . fnamemodify(get(reverse(localrc#search(get(g:, 'localrc_filename'))), 0), ":p:h") | pwd
 " Ls
 command! -nargs=* -complete=file Ls echo vimproc#system("ls <args>")
 " Noh
@@ -817,13 +817,17 @@ command! -nargs=0 DFOff windo diffoff | set ve=
 " DiffWith
 command! -complete=file -nargs=1 DiffWith vertical diffsplit <args>
 " DiffOrig（編集前とdiff）
-command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+command! -nargs=0 DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 
 " QFClear
-command! QFClear call setqflist([])
+command! -nargs=0 QFClear call setqflist([])
 " LocalInit
-command! LocalInit call vimproc#system("cp " . g:local_init_skel_file . " ./.local.vimrc")
-let g:local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
+command! -nargs=0 LocalInit call s:my_local_init()
+let g:my_local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
+function! s:my_local_init() "{{{
+  call vimproc#system("cp -f " . g:my_local_init_skel_file . " ./.local.vimrc")
+  call vimproc#system("ctags -R -f tags " . getcwd())
+endfunction "}}}
 
 " TortoiseSVN
 " /endrev:-1 は HEAD（-2：ベースリビジョン、-3：ワーキングコピー）
