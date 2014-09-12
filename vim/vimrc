@@ -1,4 +1,4 @@
-" Last Change: 10-Sep-2014. {{{
+" Last Change: 12-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -826,7 +826,7 @@ command! -nargs=0 LocalInit call s:my_local_init()
 let g:my_local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
 function! s:my_local_init() "{{{
   call vimproc#system("cp -f " . g:my_local_init_skel_file . " ./.local.vimrc")
-  call vimproc#system("ctags -R -f tags " . getcwd())
+  call vimproc#system("ctags -R -f tags " . s:my_path_convert(getcwd()))
 endfunction "}}}
 
 " TortoiseSVN
@@ -923,14 +923,16 @@ command! Hitest belowright vsplit $VIMRUNTIME/syntax/hitest.vim | source $VIMRUN
 " 共通ファンクション {{{2
 " パス変換
 function! s:my_path_convert(path) "{{{
-  " セパレータ
   if has('win32') || has('win64')
-    let path_separater = '\'
+    let system_enc = 'cp932'
+    let path_separater = '\\\\'
   else
+    let system_enc = 'utf-8'
     let path_separater = '/'
   endif
 
-  return substitute(a:path, '/', path_separater, 'g')
+  let path = iconv(a:path, &encoding, system_enc)
+  return substitute(path, '/', path_separater, 'g')
 endfunction "}}}
 
 " キーマップ定義 {{{1
@@ -1816,6 +1818,7 @@ let g:ctrlp_prompt_mappings = {
 let g:ctrlp_working_path_mode = 'w'
 " 新規ファイルをタブで開く
 let g:ctrlp_open_new_file = 't'
+let g:ctrlp_tabpage_position = 'l'
 " ウィンドウの設定
 let g:ctrlp_match_window = 'max:20'
 " キャッシュを使う
