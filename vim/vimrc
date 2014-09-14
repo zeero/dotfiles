@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 " Last Change: 14-Sep-2014. {{{
-=======
-" Last Change: 12-Sep-2014. {{{
->>>>>>> 1ccce399c2dc4f445fbffac4e24ca75a2a41ef5c
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -1822,10 +1818,7 @@ let g:ctrlp_prompt_mappings = {
 let g:ctrlp_working_path_mode = 'w'
 " 新規ファイルをタブで開く
 let g:ctrlp_open_new_file = 't'
-<<<<<<< HEAD
 " 開いたタブを一番最後にする
-=======
->>>>>>> 1ccce399c2dc4f445fbffac4e24ca75a2a41ef5c
 let g:ctrlp_tabpage_position = 'l'
 " ウィンドウの設定
 let g:ctrlp_match_window = 'max:20'
