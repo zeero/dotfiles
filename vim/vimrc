@@ -1,4 +1,4 @@
-" Last Change: 14-Sep-2014. {{{
+" Last Change: 17-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -292,6 +292,7 @@ NeoBundleLazy 'ScrollColors'
 NeoBundleLazy 'cocopon/colorswatch.vim'
 \, {'autoload': {'commands': ['ColorSwatchGenerate']}}
 NeoBundle 'osyo-manga/vim-anzu'
+NeoBundle 'itchyny/landscape.vim'
 
 " 補助 {{{2
 NeoBundle 'thinca/vim-singleton'
@@ -833,9 +834,10 @@ endfunction "}}}
 " /endrev:-1 は HEAD（-2：ベースリビジョン、-3：ワーキングコピー）
 if executable('TortoiseProc')
   command! TSVNLog silent call vimproc#system_bg('TortoiseProc /command:log /path:"'.expand("%").'" /notempfile /closeonend')
+  command! TSVNLogDir silent call vimproc#system_bg('TortoiseProc /command:log /path:. /notempfile /closeonend')
   command! TSVNDiff silent call vimproc#system_bg('TortoiseProc /command:diff /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSVNUpdate silent call vimproc#system_bg('TortoiseProc /command:update /path:"'.expand("%").'" /notempfile /closeonend')
-  command! TSVNUpdateDir silent call vimproc#system_bg('TortoiseProc /command:update /path:"'.expand("%:h").'" /notempfile /closeonend')
+  command! TSVNUpdateDir silent call vimproc#system_bg('TortoiseProc /command:update /path:. /notempfile /closeonend')
   command! TSVNCommit silent call vimproc#system_bg('TortoiseProc /command:commit /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSVNRevert silent call vimproc#system_bg('TortoiseProc /command:revert /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSVNProps silent call vimproc#system_bg('TortoiseProc /command:properties /path:"'.expand("%:h").'" /notempfile /closeonend')
@@ -1184,7 +1186,7 @@ nnoremap ,f :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<Space>-toggle<CR>
 " VimShell
 nnoremap ,s :<C-u>VimShellPop<Space>-toggle<Space>-buffer-name=vimshell<CR>
-nnoremap ,S :<C-u>VimShell<Space>-split-command=tabe<Space>-buffer-name=vimshell_tab<CR>
+nnoremap ,S :<C-u>VimShell<Space>-split-command=tabe<Space>-buffer-name=vimshell_tab<Space>-quit<Space>$HOME<CR>
 " MBEToggle
 nnoremap ,b :<C-u>MBEToggle<CR>
 " TagbarToggle
