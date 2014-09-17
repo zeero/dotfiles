@@ -64,6 +64,8 @@ NeoBundle 'Shougo/vimproc'
 NeoBundleLazy 'Shougo/vimshell'
 \, {'autoload': {'commands': ['VimShell', 'VimShellPop']}
 \,  'depends': 'Shougo/vimproc'}
+NeoBundleLazy 'supermomonga/vimshell-inline-history.vim'
+\, {'autoload': {'filetypes': ['vimshell']}}
 if has('lua') && (v:version >= 704 || (v:version == 703 && has('patch885')))
   NeoBundleLazy 'Shougo/neocomplete'
   \, {'autoload': {'insert': 1}}
@@ -1568,16 +1570,34 @@ endfunction "}}}
 " VimShell {{{1
 " VimShellPopの開き方
 let g:vimshell_popup_command = 'topleft 10split'
+" vimコマンドで開いた時の開き方
+let g:vimshell_split_command = 'tabe'
 " 動的プロンプト
 let g:vimshell_prompt_expr = 'getcwd()." > "'
 let g:vimshell_prompt_pattern = '^\f\+ > '
+" VimShell独自のキーマッピングを使用する
+let g:vimshell_no_default_keymappings = 0
+" vimshell-inline-historyでコマンド履歴表示
+let g:vimshell_inline_history#default_mappings = 0
+" キーマップ定義
+au myvimrc FileType vimshell call s:my_vimshell_keymapping()
+function! s:my_vimshell_keymapping() "{{{
+  nmap <buffer> <C-k> <Plug>(vimshell_previous_prompt)
+  nmap <buffer> <C-j> <Plug>(vimshell_next_prompt)
+  imap <buffer> <Up> <Plug>(vimshell_inline_history#prev)
+  imap <buffer> <Down> <Plug>(vimshell_inline_history#next)
+endfunction "}}}
+
+" コマンド履歴の保存
+let g:vimshell_data_directory = expand('~/.cache/vimshell')
+" cdもコマンド履歴に残すようにする
+let g:vimshell_no_save_history_commands = {}
+
 " irbを非同期で起動
 command! Irb VimShellInteractive irb
 " 非同期で開いたインタプリタに現在の行を評価させる
 command! VSSend VimShellSendString
 command! VSAll %VimShellSendString
-" vimコマンドで開いた時の開き方
-let g:vimshell_split_command = 'tabe'
 
 " NeoComplete {{{1
 " 基本設定（以降はon_source）{{{2
@@ -1601,7 +1621,7 @@ let g:neocomplete#enable_fuzzy_completion = 1
 " Define dictionary. {{{2
 let g:neocomplete#sources#dictionary#dictionaries = {
 \ 'default' : '',
-\ 'vimshell' : $HOME.'/.vimshell_hist',
+\ 'vimshell' : $HOME.'/.cache/vimshell/command-history',
 \ 'scheme' : $HOME.'/.gosh_completions',
 \ 'html': $MYVIMDIR.'/dict/bootstrap.dict',
 \}
@@ -1698,7 +1718,7 @@ let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
 \  'default': '',
-\  'vimshell': $HOME.'/.vimshell_hist',
+\  'vimshell': $HOME.'/.cache/vimshell/command-history',
 \  'scheme': $HOME.'/.gosh_completions',
 \  'html': $MYVIMDIR.'/dict/bootstrap.dict',
 \}
