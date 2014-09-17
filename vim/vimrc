@@ -1,4 +1,4 @@
-" Last Change: 17-Sep-2014. {{{
+" Last Change: 18-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -604,6 +604,7 @@ if has('gui_running')
     set guifont=Ricty_Diminished:h12:cSHIFTJIS
   else
     set guifont=Ricty\ Diminished\ Regular:h20
+    let g:vimshell_editor_command = "/Applications/MacPorts/MacVim.app/Contents/MacOS/Vim"
   endif
   " ウィンドウサイズを最大化する
   if has('win32') || has('win64')
@@ -1186,7 +1187,7 @@ nnoremap ,f :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<Space>-toggle<CR>
 " VimShell
 nnoremap ,s :<C-u>VimShellPop<Space>-toggle<Space>-buffer-name=vimshell<CR>
-nnoremap ,S :<C-u>VimShell<Space>-split-command=tabe<Space>-buffer-name=vimshell_tab<Space>-quit<Space>$HOME<CR>
+nnoremap ,S :<C-u>VimShell<Space>-split-command=tabe<Space>-buffer-name=vimshell_tab<Space>$HOME<CR>
 " MBEToggle
 nnoremap ,b :<C-u>MBEToggle<CR>
 " TagbarToggle
@@ -2295,6 +2296,9 @@ let g:syntastic_mode_map = {
 \ 'mode': 'active',
 \ 'passive_filetypes': ['html']
 \}
+if executable('rubocop')
+  let g:syntastic_ruby_checkers = ['rubocop']
+endif
 
 " EasyMotion {{{1
 " 大文字小文字を無視しない
