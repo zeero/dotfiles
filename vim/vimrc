@@ -1031,8 +1031,8 @@ nnoremap <C-j> :tab tj <C-R>=expand('<cword>')<CR><CR>
 vnoremap <C-j> y:tab tj <C-r>"<CR>
 nnoremap ,[ <C-t>
 nnoremap <C-k> <C-t>
-nnoremap <C-h> <C-o>z<CR>
-nnoremap <C-l> <C-i>z<CR>
+nnoremap <C-h> <C-o>zz
+nnoremap <C-l> <C-i>zz
 
 " ノーマルモード操作 {{{2
 " 行末までヤンク
@@ -1839,8 +1839,25 @@ let g:ctrlp_extensions = ['tag', 'changes', 'quickfix', 'bookmarkdir']
 " コマンドエイリアス
 command! -nargs=? -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
 " migemoを使って日本語正規表現検索
-if executable('cmigemo')
-  let g:ctrlp_use_migemo = 1
+if executable('migemogrep')
+  function! MigemoMatch(items, str, limit, mmode, ispath, crfile, regex)
+    let tmp = tempname()
+    try
+      if a:str =~ '^\s*$'
+        return a:items
+      endif
+      call writefile(split(iconv(join(a:items, "\n"), &encoding, 'utf-8'), "\n"), tmp)
+      return split(iconv(system(
+      \  printf('migemogrep %s %s',
+      \    shellescape(a:str),
+      \    shellescape(tmp))), 'utf-8', &encoding), "\n")
+    catch
+      return []
+    finally
+      call delete(tmp)
+    endtry
+  endfunction
+"   let g:ctrlp_match_func = {'match' : 'MigemoMatch' }
 endif
 
 " fugitive {{{1
@@ -2464,8 +2481,8 @@ endfunction
 unlet s:bundle
 
 " anzu {{{1
-nmap n <Plug>(anzu-n)
-nmap N <Plug>(anzu-N)
+nmap n <Plug>(anzu-n)zvzz
+nmap N <Plug>(anzu-N)zvzz
 let g:anzu_status_format = "(%i/%l)"
 au myvimrc CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
 
