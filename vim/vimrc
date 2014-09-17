@@ -1097,8 +1097,8 @@ inoremap <C-w> <S-Right>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <S-CR> <C-o>O
-" 文字削除
-inoremap <C-d> <Del>
+" 文字削除（NeoCompleteで設定するためコメントアウト）
+" inoremap <C-d> <Del>
 " CTRL-Uのundo対策（from exaple.vim）
 inoremap <C-u> <C-g>u<C-u>
 " 日時の挿入
@@ -1127,7 +1127,7 @@ cnoremap <C-l> <Right>
 cnoremap <C-w> <S-Left>
 cnoremap <C-b> <S-Right>
 " 文字削除
-cnoremap <C-d> <Del>
+cnoremap <expr> <C-d> virtcol(".") == virtcol("$") ? "\<BS>" : "\<Del>"
 " ヒストリ
 cnoremap <C-n> <Down>
 cnoremap <C-p> <Up>
@@ -1405,11 +1405,15 @@ endif
 " キーマップ定義 {{{2
 au myvimrc FileType unite call MyUniteKeymaps()
 function! MyUniteKeymaps() "{{{
-  " <C-j>/<C-k>で移動
+  " <C-j>/<C-k>で選択カーソル移動
   nmap <silent> <buffer> <C-j> <Plug>(unite_loop_cursor_down)
   imap <silent> <buffer> <C-j> <Plug>(unite_select_next_line)
   nmap <silent> <buffer> <C-k> <Plug>(unite_loop_cursor_up)
   imap <silent> <buffer> <C-k> <Plug>(unite_select_previous_line)
+  " <C-h>/<C-l>で入力カーソル移動、<C-d>で削除
+  inoremap <buffer> <C-h> <Left>
+  inoremap <buffer> <C-l> <Right>
+  imap <expr> <buffer> <C-d> virtcol(".") == virtcol("$") ? "\<BS>" : "\<Del>"
   " ESCキーを2回押すと終了する
   nmap <silent> <buffer> <Esc><Esc> <Plug>(unite_all_exit)
   " 入力文字が無い時に<BS>で前の画面に戻る
@@ -1586,6 +1590,8 @@ function! s:my_vimshell_keymapping() "{{{
   nmap <buffer> <C-j> <Plug>(vimshell_next_prompt)
   imap <buffer> <Up> <Plug>(vimshell_inline_history#prev)
   imap <buffer> <Down> <Plug>(vimshell_inline_history#next)
+  inoremap <buffer> <C-h> <Left>
+  inoremap <buffer> <C-l> <Right>
 endfunction "}}}
 
 " コマンド履歴の保存
@@ -1633,7 +1639,7 @@ endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
 " Plugin key-mappings. {{{2
-inoremap <expr> <C-d> pumvisible() ? neocomplete#undo_completion() : "\<Del>"
+inoremap <expr> <C-d> pumvisible() ? neocomplete#undo_completion() : virtcol(".") == virtcol("$") ? "\<BS>" : "\<Del>"
 " inoremap <expr> <C-l> neocomplete#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
@@ -1730,7 +1736,7 @@ endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 "
 " Plugin key-mappings.
-inoremap <expr> <C-d> pumvisible() ? neocomplcache#undo_completion() : "\<Del>"
+inoremap <expr> <C-d> pumvisible() ? neocomplcache#undo_completion() : virtcol(".") == virtcol("$") ? "\<BS>" : "\<Del>"
 " inoremap <expr><C-l>     neocomplcache#complete_common_string()
 "
 " Recommended key-mappings.
