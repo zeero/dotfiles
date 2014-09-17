@@ -2287,7 +2287,7 @@ au myvimrc VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=dar
 " ハイライト色の変化の幅
 let g:indent_guides_color_change_percent = 30
 " ガイドの幅
-let g:indent_guides_guide_size = 1
+let g:indent_guides_guide_size = 2
 " 無視するファイルタイプ
 let g:indent_guides_exclude_filetypes = ['help', 'unite', 'vimfiler', 'vimshell', 'startify']
 
