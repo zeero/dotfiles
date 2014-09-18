@@ -65,7 +65,8 @@ NeoBundleLazy 'Shougo/vimshell'
 \, {'autoload': {'commands': ['VimShell', 'VimShellPop']}
 \,  'depends': 'Shougo/vimproc'}
 NeoBundleLazy 'supermomonga/vimshell-inline-history.vim'
-\, {'autoload': {'filetypes': ['vimshell']}}
+\, {'autoload': {'filetypes': ['vimshell']}
+\,  'depends': 'Shougo/vimshell'}
 if has('lua') && (v:version >= 704 || (v:version == 703 && has('patch885')))
   NeoBundleLazy 'Shougo/neocomplete'
   \, {'autoload': {'insert': 1}}
@@ -81,6 +82,10 @@ NeoBundleLazy 'Shougo/neosnippet'
 NeoBundleLazy 'Shougo/neosnippet-snippets'
 \, {'autoload': {'insert': 1}}
 NeoBundle 'ctrlpvim/ctrlp.vim'
+NeoBundle 'sgur/ctrlp-extensions.vim'
+\, {'depends': 'ctrlpvim/ctrlp.vim'}
+NeoBundle 'mattn/ctrlp-register'
+\, {'depends': 'ctrlpvim/ctrlp.vim'}
 NeoBundleLazy 'Lokaltog/vim-easymotion'
 \, {'autoload': {'mappings':
 \    ['<Plug>(easymotion-bd-w)', '<Plug>(easymotion-s2)',
@@ -815,9 +820,9 @@ endfunction "}}}
 command! Open call vimproc#open(expand("%:p:h"))
 
 " Diff
-command! -nargs=0 DF windo diffthis | set ve=all
+command! -nargs=0 DF windo diffthis | setlocal ve=all
 " Diffoff
-command! -nargs=0 DFOff windo diffoff | set ve=
+command! -nargs=0 DFOff windo diffoff | setlocal ve=
 " DiffWith
 command! -complete=file -nargs=1 DiffWith vertical diffsplit <args>
 " DiffOrig（編集前とdiff）
@@ -1007,7 +1012,7 @@ vnoremap / y/<C-r>"
 " タブページ操作
 nnoremap L <C-PageDown>
 nnoremap H <C-PageUp>
-nnoremap t :<C-u>tabnew<CR>
+nnoremap ,t :<C-u>tabnew<CR>
 nnoremap ,l :<C-u>tabm<CR>
 nnoremap ,L :<C-u>tabm 0<CR>
 " gfはタブで開く
@@ -1127,7 +1132,7 @@ cnoremap <C-l> <Right>
 cnoremap <C-w> <S-Left>
 cnoremap <C-b> <S-Right>
 " 文字削除
-cnoremap <expr> <C-d> virtcol(".") == virtcol("$") ? "\<BS>" : "\<Del>"
+cnoremap <C-d> <Del>
 " ヒストリ
 cnoremap <C-n> <Down>
 cnoremap <C-p> <Up>
@@ -1188,8 +1193,8 @@ vmap ,/ <Plug>(caw:I:toggle)
 nnoremap ,f :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<Space>-toggle<CR>
 " VimShell
-nnoremap ,s :<C-u>VimShellPop<Space>-toggle<Space>-buffer-name=vimshell<CR>
-nnoremap ,S :<C-u>VimShell<Space>-split-command=tabe<Space>-buffer-name=vimshell_tab<Space>$HOME<CR>
+nnoremap ,s :<C-u>VimShellPop<Space>-create<Space>-buffer-name=vimshell<CR>
+nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<Space>$HOME<CR>
 " MBEToggle
 nnoremap ,b :<C-u>MBEToggle<CR>
 " TagbarToggle
@@ -1823,14 +1828,35 @@ let g:neosnippet#snippets_directory = $MYVIMDIR . '/neosnippets'
 au myvimrc BufWritePost *.snip NeoSnippetSource %:p
 
 " CtrlP {{{1
-"
+" 説明 {{{2
 " KEYMAP:
 "  C-f/C-b: モード切替（file<=>mru<=>buffer）
 "  C-r: 正規表現モードのオン／オフ
+
+" コマンド設定 {{{2
+" CtrlP
+nnoremap t :<C-u>CtrlP<CR>
+" CtrlPMenu
+nnoremap T :<C-u>CtrlPMenu<CR>
 " CtrlPTag
 nnoremap <C-@> :<C-u>CtrlPTag<CR>
 " CtrlPMRUFiles
 nnoremap <C-o> :<C-u>CtrlPMRUFiles<CR>
+" CtrlPRegister（INSERTモードのみ）
+inoremap <C-@> <C-o>:<C-u>CtrlPRegister<CR>
+" コマンドエイリアス
+command! -nargs=? -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
+" 拡張機能を有効にする
+let g:ctrlp_extensions = [
+\ 'register',
+\ 'tag',
+\ 'changes',
+\ 'quickfix',
+\ 'menu',
+\ 'bookmarkdir',
+\]
+
+" キーマップ設定 {{{2
 " タブで開く
 " t: Tab, e: Enter, h: Horizontal(split), v: Vertical(vsplit)
 let g:ctrlp_prompt_mappings = {
@@ -1843,12 +1869,12 @@ let g:ctrlp_prompt_mappings = {
 \ 'PrtInsert()':          ['<C-@>', '<C-\>'],
 \ 'MarkToOpen()':         ['<C-Space>', '<C-z>'],
 \}
-" CtrlP動作モード（'w'：ワークディレクトリ）
-let g:ctrlp_working_path_mode = 'w'
 " 新規ファイルをタブで開く
 let g:ctrlp_open_new_file = 't'
 " 開いたタブを一番最後にする
 let g:ctrlp_tabpage_position = 'l'
+
+" 詳細設定 {{{2
 " ウィンドウの設定
 let g:ctrlp_match_window = 'max:20'
 " キャッシュを使う
@@ -1860,11 +1886,10 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_mruf_max = 10000
 " MRUファイルの大文字小文字無視
 let g:ctrlp_mruf_case_sensitive = 0
-" 拡張機能を有効にする
-let g:ctrlp_extensions = ['tag', 'changes', 'quickfix', 'bookmarkdir']
-" コマンドエイリアス
-command! -nargs=? -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
-" migemoを使って日本語正規表現検索
+" CtrlP動作モード
+" （'w'：ワークディレクトリ、'r'：プロジェクトルート）
+let g:ctrlp_working_path_mode = 'w'
+" migemoを使って日本語正規表現検索 {{{
 if executable('migemogrep')
   function! MigemoMatch(items, str, limit, mmode, ispath, crfile, regex)
     let tmp = tempname()
@@ -1884,7 +1909,7 @@ if executable('migemogrep')
     endtry
   endfunction
 "   let g:ctrlp_match_func = {'match' : 'MigemoMatch' }
-endif
+endif "}}}
 
 " fugitive {{{1
 " 説明 {{{
