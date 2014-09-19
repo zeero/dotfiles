@@ -1,4 +1,4 @@
-" Last Change: 18-Sep-2014. {{{
+" Last Change: 19-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ NeoBundle 'Shougo/vimproc'
 \    'unix':    'make -f make_unix.mak',
 \  }}
 NeoBundleLazy 'Shougo/vimshell'
-\, {'autoload': {'commands': ['VimShell', 'VimShellPop']}
+\, {'autoload': {'commands': ['VimShell', 'VimShellPop', 'VimShellTab']}
 \,  'depends': 'Shougo/vimproc'}
 NeoBundleLazy 'supermomonga/vimshell-inline-history.vim'
 \, {'autoload': {'filetypes': ['vimshell']}
@@ -340,7 +340,7 @@ NeoBundleLazy 'kana/vim-submode'
 NeoBundleLazy 'tpope/vim-repeat'
 \, {'autoload': {'mappings': ['.']}}
 NeoBundleLazy 'fuenor/qfixhowm'
-\, {'autoload': {'mappings': ['g,c', 'g,m']}}
+\, {'autoload': {'commands': ['QFixHowm']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -1199,9 +1199,12 @@ nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<Spac
 nnoremap ,b :<C-u>MBEToggle<CR>
 " TagbarToggle
 nnoremap ,; :<C-u>TagbarToggle<CR>
+" QFixWindowToggle
+" TODO: toggle
+nnoremap ,, :<C-u>botright cwindow 7<CR>
 " PreviewToggle
-nnoremap ,, :<C-u>PreviewToggle<CR>
-vnoremap ,, y:call PreviewWord('<C-r>"')<CR>
+nnoremap ,. :<C-u>PreviewToggle<CR>
+vnoremap ,. y:<C-u>call PreviewWord('<C-r>"')<CR>
 command! PreviewToggle :call s:my_preview_toggle()
 function! s:my_preview_toggle() "{{{
   silent! wincmd P
@@ -1836,6 +1839,7 @@ au myvimrc BufWritePost *.snip NeoSnippetSource %:p
 " コマンド設定 {{{2
 " CtrlP
 nnoremap t :<C-u>CtrlP<CR>
+nnoremap <C-p> :<C-u>CtrlP<CR>
 " CtrlPMenu
 nnoremap T :<C-u>CtrlPMenu<CR>
 " CtrlPTag
@@ -1888,7 +1892,7 @@ let g:ctrlp_mruf_max = 10000
 let g:ctrlp_mruf_case_sensitive = 0
 " CtrlP動作モード
 " （'w'：ワークディレクトリ、'r'：プロジェクトルート）
-let g:ctrlp_working_path_mode = 'w'
+let g:ctrlp_working_path_mode = 'wr'
 " migemoを使って日本語正規表現検索 {{{
 if executable('migemogrep')
   function! MigemoMatch(items, str, limit, mmode, ispath, crfile, regex)
@@ -2539,6 +2543,14 @@ au myvimrc CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_sta
 
 " editqf {{{1
 let g:editqf_saveqf_filename  = "~/.editqf_save_data"
+
+" qfixhowm {{{1
+" デフォルトキーマップ無効
+let g:qfixmemo_default_keymap = 0
+" コマンド定義
+command! Howm QFixHowm c
+command! HowmList QFixHowm m
+command! HowmListAll QFixHowm ra
 
 "}}}1-------------------------------------------------------------------------
 
