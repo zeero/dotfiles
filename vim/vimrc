@@ -1,4 +1,4 @@
-" Last Change: 19-Sep-2014. {{{
+" Last Change: 22-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -80,16 +80,18 @@ NeoBundleLazy 'Shougo/neosnippet'
 \,               'unite_source': ['neosnippet']
 \,               'filetypes': ['neosnippet']}}
 NeoBundleLazy 'Shougo/neosnippet-snippets'
-\, {'autoload': {'insert': 1}}
-NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'sgur/ctrlp-extensions.vim'
-\, {'depends': 'ctrlpvim/ctrlp.vim'}
-NeoBundle 'mattn/ctrlp-register'
-\, {'depends': 'ctrlpvim/ctrlp.vim'}
 NeoBundleLazy 'Lokaltog/vim-easymotion'
 \, {'autoload': {'mappings':
 \    ['<Plug>(easymotion-bd-w)', '<Plug>(easymotion-s2)',
 \     '<Plug>(easymotion-j)', '<Plug>(easymotion-k)']}}
+
+" CtrlP {{{2
+\, {'autoload': {'insert': 1}}
+NeoBundle 'ctrlpvim/ctrlp.vim'
+NeoBundle 'zeero/ctrlp-extensions.vim', 'menu_mru_order'
+\, {'depends': 'ctrlpvim/ctrlp.vim'}
+NeoBundle 'mattn/ctrlp-register'
+\, {'depends': 'ctrlpvim/ctrlp.vim'}
 
 " Unite {{{2
 NeoBundleLazy 'Shougo/unite.vim'
@@ -751,9 +753,18 @@ au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
 " コマンド定義 {{{1
 " ユーティリティ {{{2
 " H(elp)
-command! -nargs=? -complete=help H if winwidth(0) > 140 | botright vertical help <args> | vertical resize 79 | else | help <args> | endif
+command! -nargs=? -complete=help H
+\ if winwidth(0) > 140 |
+\   botright vertical help <args> |
+\   vertical resize 79 |
+\   wincmd p |
+\ else |
+\   help <args> |
+\   resize 12 |
+\   wincmd p |
+\ endif
 " H(elp)f(unction-list)
-command! -nargs=0 Hf H function-list
+command! -nargs=0 Hf H function-list | wincmd p
 " K(otoba)
 command! -nargs=1 K Ref kotobankej <args>
 " Vimrc
@@ -818,6 +829,8 @@ function! s:my_info() "{{{
 endfunction "}}}
 " Open
 command! Open call vimproc#open(expand("%:p:h"))
+nnoremap gx :<C-u>call vimproc#open(expand("<cword>"))<CR>
+vnoremap gx y:<C-u>call vimproc#open(<C-r>")<CR>
 
 " Diff
 command! -nargs=0 DF windo diffthis | setlocal ve=all
@@ -1062,7 +1075,7 @@ nnoremap ,v v$
 nnoremap ,p :<C-u>set paste<CR>i<C-r>+<Esc>:<C-u>set nopaste<CR>
 " URLを開く
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
-map gx <Plug>(openbrowser-smart-search)
+map gX <Plug>(openbrowser-smart-search)
 " Esc+noh
 nnoremap <silent> <Esc> <Esc>:<C-u>noh<CR>
 " CopyFileName
@@ -1397,6 +1410,8 @@ let g:unite_enable_ignore_case = 1
 let g:unite_enable_smart_case = 1
 " ステータスラインを上書きしない（lightline向け）
 let g:unite_force_overwrite_statusline = 0
+" ウィンドウの高さ
+let g:unite_winheight = 10
 " プロンプト文字
 let g:unite_prompt = 'Unite>>> '
 " カーソルラインのハイライト
@@ -1892,7 +1907,7 @@ let g:ctrlp_mruf_max = 10000
 let g:ctrlp_mruf_case_sensitive = 0
 " CtrlP動作モード
 " （'w'：ワークディレクトリ、'r'：プロジェクトルート）
-let g:ctrlp_working_path_mode = 'wr'
+let g:ctrlp_working_path_mode = 'rw'
 " migemoを使って日本語正規表現検索 {{{
 if executable('migemogrep')
   function! MigemoMatch(items, str, limit, mmode, ispath, crfile, regex)
@@ -2498,6 +2513,8 @@ map <silent> <Space> <Plug>(ac-smooth-scroll-c-d)
 map <silent> <S-Space> <Plug>(ac-smooth-scroll-c-u)
 vmap <silent> <Space> <Plug>(ac-smooth-scroll-c-d_v)
 vmap <silent> <S-Space> <Plug>(ac-smooth-scroll-c-u_v)
+map <silent> <C-w><Space> <C-w>p<Plug>(ac-smooth-scroll-c-d)<C-w>p
+map <silent> <C-w><S-Space> <C-w>p<Plug>(ac-smooth-scroll-c-u)<C-w>p
 
 " Switch {{{1
 nnoremap <expr> <C-a> strpart(getline("."), col(".") - 1, 1) =~ '\d' ? "\<C-a>" : ":\<C-u>Switch\<CR>"
@@ -2548,9 +2565,10 @@ let g:editqf_saveqf_filename  = "~/.editqf_save_data"
 " デフォルトキーマップ無効
 let g:qfixmemo_default_keymap = 0
 " コマンド定義
-command! Howm QFixHowm c
-command! HowmList QFixHowm m
-command! HowmListAll QFixHowm ra
+command! Memo QFixHowm c
+command! MemoAppend QFixHowm N
+command! MemoList QFixHowm m
+command! MemoListAll QFixHowm ra
 
 "}}}1-------------------------------------------------------------------------
 
