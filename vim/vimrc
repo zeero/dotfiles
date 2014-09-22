@@ -338,7 +338,7 @@ NeoBundleLazy 'ShowMarks'
 NeoBundleLazy 'AnsiEsc.vim'
 \, {'autoload': {'commands': ['AnsiEsc']}}
 NeoBundleLazy 'kana/vim-submode'
-\, {'autoload': {'mappings': [['n', 'x']]}}
+\, {'autoload': {'mappings': [['n', 'x'], ['v', 'f']]}}
 NeoBundleLazy 'tpope/vim-repeat'
 \, {'autoload': {'mappings': ['.']}}
 NeoBundleLazy 'fuenor/qfixhowm'
@@ -504,6 +504,7 @@ set history=1000
 " （ウィンドウを移動する度に変更をチェックする）
 set autoread
 au myvimrc WinEnter * checktime
+nnoremap <silent> <F5> :<C-u>checktime<CR>
 " クイックフィックスは常にcwindowで表示する
 autocmd myvimrc QuickFixCmdPost [^l]* nested botright cwindow
 autocmd myvimrc QuickFixCmdPost    l* nested botright lwindow
@@ -760,7 +761,6 @@ command! -nargs=? -complete=help H
 \   wincmd p |
 \ else |
 \   help <args> |
-\   resize 12 |
 \   wincmd p |
 \ endif
 " H(elp)f(unction-list)
@@ -845,9 +845,13 @@ command! -nargs=0 DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | win
 command! -nargs=0 QFClear call setqflist([])
 " LocalInit
 command! -nargs=0 LocalInit call s:my_local_init()
+command! -nargs=0 Ctags call s:my_ctags()
 let g:my_local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
 function! s:my_local_init() "{{{
   call vimproc#system("cp -f " . g:my_local_init_skel_file . " ./.local.vimrc")
+  call s:my_ctags()
+endfunction "}}}
+function! s:my_ctags() "{{{
   call vimproc#system("ctags -R -f tags " . s:my_path_convert(getcwd()))
 endfunction "}}}
 
@@ -1852,15 +1856,13 @@ au myvimrc BufWritePost *.snip NeoSnippetSource %:p
 "  C-r: 正規表現モードのオン／オフ
 
 " コマンド設定 {{{2
-" CtrlP
-nnoremap t :<C-u>CtrlP<CR>
-nnoremap <C-p> :<C-u>CtrlP<CR>
+" CtrlPMRUFiles
+nnoremap <C-o> :<C-u>CtrlPMRUFiles<CR>
+nnoremap t :<C-u>CtrlPMRUFiles<CR>
 " CtrlPMenu
 nnoremap T :<C-u>CtrlPMenu<CR>
 " CtrlPTag
 nnoremap <C-@> :<C-u>CtrlPTag<CR>
-" CtrlPMRUFiles
-nnoremap <C-o> :<C-u>CtrlPMRUFiles<CR>
 " CtrlPRegister（INSERTモードのみ）
 inoremap <C-@> <C-o>:<C-u>CtrlPRegister<CR>
 " コマンドエイリアス
@@ -2365,16 +2367,20 @@ let g:user_emmet_settings = {
 let g:indent_guides_enable_on_vim_startup = 1
 " ガイドをスタートするインデントの量
 let g:indent_guides_start_level = 2
+" ガイドの幅
+let g:indent_guides_guide_size = 2
+" ガイドの最大値
+let g:indent_guides_indent_levels = 40
 " 自動カラーを無効にする
 let g:indent_guides_auto_colors = 0
 " 奇数インデントのカラー
-au myvimrc VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#262626 ctermbg=gray
+hi IndentGuidesOdd  guibg=#262626 ctermbg=gray
+au myvimrc VimEnter,ColorScheme * :hi IndentGuidesOdd  guibg=#262626 ctermbg=gray
 " 偶数インデントのカラー
-au myvimrc VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgray
+hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgray
+au myvimrc VimEnter,ColorScheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgray
 " ハイライト色の変化の幅
 let g:indent_guides_color_change_percent = 30
-" ガイドの幅
-let g:indent_guides_guide_size = 2
 " 無視するファイルタイプ
 let g:indent_guides_exclude_filetypes = ['help', 'unite', 'vimfiler', 'vimshell', 'startify']
 
@@ -2536,10 +2542,12 @@ let g:ConqueTerm_Color = 1
 au myvimrc FileType conque_term setlocal nolist
 
 " submode {{{1
+" （on_source開始） {{{2
 let s:bundle = neobundle#get('vim-submode')
 let s:bundle.hooks = get(s:bundle, "hooks", {})
 function! s:bundle.hooks.on_source(bundle)
-" xで連続で消した履歴を一つにまとめる
+
+" xで連続で消した履歴を一つにまとめる {{{2
 nnoremap <silent> <Plug>(my-submode-x) :<C-u>call <SID>my_submode_x()<CR>
 function! s:my_submode_x() "{{{
   undojoin
@@ -2548,6 +2556,16 @@ endfunction "}}}
 " サブモード抜け時の挙動が気になるので無効化
 " call submode#enter_with('my-submode-x', 'n', '', 'x', '"_x')
 " call submode#map('my-submode-x', 'n', 'r', 'x', '<Plug>(my-submode-x)')
+
+" ビジュアルモードのfで同じ文字をfで探すようにする。（;の代わり） {{{2
+vnoremap <silent> <Plug>(my-submode-f) :<C-u>call <SID>my_submode_f()<CR>
+function! s:my_submode_f() "{{{
+  normal! ;
+endfunction "}}}
+" TODO: うまく動かない、、、、
+" call submode#enter_with('my-submode-f', 'v', '', 'f', 'f')
+" call submode#map('my-submode-f', 'v', 'r', 'f', '<Plug>(my-submode-f)')
+
 " （on_source終わり） {{{2
 endfunction
 unlet s:bundle
