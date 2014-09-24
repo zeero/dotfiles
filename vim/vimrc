@@ -1,4 +1,4 @@
-" Last Change: 22-Sep-2014. {{{
+" Last Change: 24-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -844,15 +844,15 @@ command! -nargs=0 DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | win
 " QFClear
 command! -nargs=0 QFClear call setqflist([])
 " LocalInit
+let g:my_local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
 command! -nargs=0 LocalInit call s:my_local_init()
 command! -nargs=0 Ctags call s:my_ctags()
-let g:my_local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
 function! s:my_local_init() "{{{
   call vimproc#system("cp -f " . g:my_local_init_skel_file . " ./.local.vimrc")
   call s:my_ctags()
 endfunction "}}}
 function! s:my_ctags() "{{{
-  call vimproc#system("ctags -R -f tags " . s:my_path_convert(getcwd()))
+  call vimproc#system_bg("ctags -R --jcode=utf8 -f tags " . s:my_path_convert(getcwd()))
 endfunction "}}}
 
 " TortoiseSVN
@@ -1081,7 +1081,7 @@ nnoremap ,p :<C-u>set paste<CR>i<C-r>+<Esc>:<C-u>set nopaste<CR>
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 map gX <Plug>(openbrowser-smart-search)
 " Esc+noh
-nnoremap <silent> <Esc> <Esc>:<C-u>noh<CR>
+nnoremap <silent> <Esc> <Esc>:<C-u>Noh<CR>
 " CopyFileName
 nnoremap gy :<C-u>CopyFileName<CR>
 
