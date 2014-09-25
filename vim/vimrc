@@ -1,4 +1,4 @@
-" Last Change: 24-Sep-2014. {{{
+" Last Change: 25-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -247,7 +247,8 @@ NeoBundleLazy 'tyru/restart.vim'
 NeoBundleLazy 'sjl/gundo.vim'
 \, {'autoload': {'commands': ['GundoToggle']}}
 NeoBundleLazy 't9md/vim-quickhl'
-\, {'autoload': {'mappings': '<Plug>(quickhl-'}}
+\, {'autoload': {'mappings': '<Plug>(quickhl-'
+\,               'commands': 'QuickhlManualReset'}}
 NeoBundleLazy 'AndrewRadev/linediff.vim'
 \, {'autoload': {'commands': ['Linediff']}}
 NeoBundleLazy 'thinca/vim-prettyprint'
@@ -445,6 +446,8 @@ set notagbsearch
 " バックスラッシュやクエスチョンを状況に合わせ自動的にエスケープ
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
+" ワイルドカード展開と補完で無視するパターン
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.o,*.class,*.pyc
 
 " 編集に関する設定 {{{1
 " タブの画面上での幅
