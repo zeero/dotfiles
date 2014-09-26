@@ -1,4 +1,4 @@
-" Last Change: 25-Sep-2014. {{{
+" Last Change: 26-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -454,9 +454,9 @@ set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.o,*.class,*.pyc
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-" タブをスペースに展開する (noexpandtab:展開しない)
-set expandtab
-" 自動的にインデントする (noautoindent:インデントしない)
+" タブをスペースに展開しない
+set noexpandtab
+" 自動的にインデントする
 set autoindent
 " 高度なオートインデント
 set smartindent
@@ -464,7 +464,7 @@ set smartindent
 set shiftround
 " バックスペースでインデントや改行を削除できるようにする
 set backspace=2
-" 括弧入力時に対応する括弧を表示 (noshowmatch:表示しない)
+" 括弧入力時に対応する括弧を表示
 set showmatch
 " 対応括弧のハイライト表示の秒数
 set matchtime=1
@@ -514,7 +514,7 @@ autocmd myvimrc QuickFixCmdPost    l* nested botright lwindow
 " 補完時に大文字小文字を区別しない
 set infercase
 " カーソルを文字が存在しない部分でも動けるようにする
-" set virtualedit=all
+set virtualedit=all
 " 行頭行末で前行次行に移動する
 " set whichwrap=b,s,h,l,<,>,[,]
 " <C-a>で8進数は除く
@@ -836,9 +836,9 @@ nnoremap gx :<C-u>call vimproc#open(expand("<cword>"))<CR>
 vnoremap gx y:<C-u>call vimproc#open(<C-r>")<CR>
 
 " Diff
-command! -nargs=0 DF windo diffthis | setlocal ve=all
+command! -nargs=0 DF windo diffthis
 " Diffoff
-command! -nargs=0 DFOff windo diffoff | setlocal ve=
+command! -nargs=0 DFOff windo diffoff
 " DiffWith
 command! -complete=file -nargs=1 DiffWith vertical diffsplit <args>
 " DiffOrig（編集前とdiff）
@@ -1427,8 +1427,8 @@ let g:unite_cursor_line_highlight = 'MatchParen'
 if executable('ag')
  let g:unite_source_grep_command = 'ag'
  let g:unite_source_grep_default_opts =
- \ '--line-numbers --nocolor --nogroup --hidden --ignore ' .
- \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+ \ '--line-numbers --nocolor --nogroup --smart-case --hidden ' .
+ \ '--ignore ''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
  let g:unite_source_grep_recursive_opt = ''
 endif
 
