@@ -1,4 +1,4 @@
-" Last Change: 26-Sep-2014. {{{
+" Last Change: 30-Sep-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -454,8 +454,8 @@ set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.o,*.class,*.pyc
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-" タブをスペースに展開しない
-set noexpandtab
+" インデントにスペースを使う
+set expandtab
 " 自動的にインデントする
 set autoindent
 " 高度なオートインデント
@@ -650,7 +650,7 @@ if has('gui_running')
   " （[No Name]バッファへの対策）
   set bufhidden=wipe
   " タブのラベル
-  set guitablabel=%n:%t
+  set guitablabel=%n:%t%m
   " 印刷オプション
   set printoptions=wrap:y,number:y
 endif
@@ -855,7 +855,19 @@ function! s:my_local_init() "{{{
   call s:my_ctags()
 endfunction "}}}
 function! s:my_ctags() "{{{
+  " TODO:
   call vimproc#system_bg("ctags -R --jcode=utf8 -f tags " . s:my_path_convert(getcwd()))
+"   if has('win32') || has('win64')
+"     call vimproc#system_bg(
+"     \ 'ctags -R --jcode=utf8 -f - ' .
+"     \ s:my_path_convert(getcwd()) .
+"     \ ' | iconv -f sjis -t utf-8 > tags'
+"     \)
+"   else
+"     call vimproc#system_bg(
+"     \ 'ctags -R --jcode=utf8 -f tags ' .
+"     \ s:my_path_convert(getcwd()))
+"   endif
 endfunction "}}}
 
 " TortoiseSVN
@@ -866,6 +878,7 @@ if executable('TortoiseProc')
   command! TSVNDiff silent call vimproc#system_bg('TortoiseProc /command:diff /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSVNUpdate silent call vimproc#system_bg('TortoiseProc /command:update /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSVNUpdateDir silent call vimproc#system_bg('TortoiseProc /command:update /path:. /notempfile /closeonend')
+  command! TSVNAdd silent call vimproc#system_bg('TortoiseProc /command:add /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSVNCommit silent call vimproc#system_bg('TortoiseProc /command:commit /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSVNRevert silent call vimproc#system_bg('TortoiseProc /command:revert /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSVNProps silent call vimproc#system_bg('TortoiseProc /command:properties /path:"'.expand("%:h").'" /notempfile /closeonend')
@@ -1159,8 +1172,8 @@ cnoremap <C-p> <Up>
 
 " コマンド実行 {{{2
 " リファレンス
-nnoremap K :<C-u>Ref kotobankej <C-r><C-w><CR>
-vnoremap K y:<C-u>Ref kotobankej <C-r>"<CR>
+nnoremap ,k :<C-u>Ref kotobankej <C-r><C-w><CR>
+vnoremap ,k y:<C-u>Ref kotobankej <C-r>"<CR>
 au myvimrc FileType vim,help nnoremap <buffer> ,h :<C-u>H<Space><C-r><C-w><CR>
 au myvimrc FileType vim,help vnoremap <buffer> ,h y:<C-u>H<Space><C-r>"<CR>
 au myvimrc FileType ruby nnoremap <buffer> ,h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
