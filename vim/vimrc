@@ -1,4 +1,4 @@
-" Last Change: 30-Sep-2014. {{{
+" Last Change: 07-Oct-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -747,12 +747,12 @@ let java_highlight_debug = 1
 
 " ファイルタイプ指定
 " JavaScript
-au myvimrc BufRead,BufNew,BufNewFile *.json setlocal ft=javascript
-au myvimrc BufRead,BufNew,BufNewFile jquery.*.js setlocal ft=javascript syntax=jquery
+au myvimrc BufRead,BufNew,BufNewFile *.json setfiletype javascript
+au myvimrc BufRead,BufNew,BufNewFile jquery.*.js setfiletype javascript | setlocal syntax=jquery
 " Apache
-au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setlocal ft=apache
+au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setfiletype apache
 " ctags
-au myvimrc BufRead,BufNew,BufNewFile *.tags setlocal ft=tags
+au myvimrc BufRead,BufNew,BufNewFile *.tags setfiletype tags
 
 " コマンド定義 {{{1
 " ユーティリティ {{{2
@@ -832,7 +832,7 @@ function! s:my_info() "{{{
 endfunction "}}}
 " Open
 command! Open call vimproc#open(expand("%:p:h"))
-nnoremap gx :<C-u>call vimproc#open(expand("<cword>"))<CR>
+nnoremap gx call vimproc#open(expand("%:p:h"))
 vnoremap gx y:<C-u>call vimproc#open(<C-r>")<CR>
 
 " Diff
@@ -2461,10 +2461,6 @@ let g:startify_custom_header = [
 let g:startify_list_order = [
 \ ['   Bookmarks:'],
 \  'bookmarks',
-\ ['   Sessions:'],
-\  'sessions',
-\ ['   MRU:'],
-\  'files',
 \ ]
 " スペシャルメニューなし
 let g:startify_enable_special = 0
