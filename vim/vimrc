@@ -1,4 +1,4 @@
-" Last Change: 07-Oct-2014. {{{
+" Last Change: 18-Nov-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -747,12 +747,12 @@ let java_highlight_debug = 1
 
 " ファイルタイプ指定
 " JavaScript
-au myvimrc BufRead,BufNew,BufNewFile *.json setfiletype javascript
-au myvimrc BufRead,BufNew,BufNewFile jquery.*.js setfiletype javascript | setlocal syntax=jquery
+au myvimrc BufRead,BufNew,BufNewFile *.json set ft=javascript
+au myvimrc BufRead,BufNew,BufNewFile jquery.*.js set ft=javascript | set syntax=jquery
 " Apache
-au myvimrc BufRead,BufNew,BufNewFile httpd*.conf setfiletype apache
+au myvimrc BufRead,BufNew,BufNewFile httpd*.conf set ft=apache
 " ctags
-au myvimrc BufRead,BufNew,BufNewFile *.tags setfiletype tags
+au myvimrc BufRead,BufNew,BufNewFile *.tags set ft=tags
 
 " コマンド定義 {{{1
 " ユーティリティ {{{2
@@ -2407,6 +2407,9 @@ let g:syntastic_mode_map = {
 \}
 if executable('rubocop')
   let g:syntastic_ruby_checkers = ['rubocop']
+endif
+if executable('jshint')
+  let g:syntastic_javascript_checkers = ['jshint']
 endif
 
 " EasyMotion {{{1
