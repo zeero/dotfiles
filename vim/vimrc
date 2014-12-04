@@ -600,7 +600,7 @@ au myvimrc VimEnter * call s:my_splash()
 function! s:my_splash() "{{{
   view $MYVIMDIR/doc/splash.txt
   set ft=splash
-  setlocal nonumber
+  setlocal buftype=nofile nobuflisted nocursorcolumn nocursorline nolist nonumber noswapfile
   call localrc#load(g:localrc_filename, getcwd())
 "   VimShell -split-command=botright\ 5split
 endfunction "}}}
