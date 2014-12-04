@@ -556,7 +556,7 @@ set number
 " ルーラーを表示 (noruler:非表示)
 set ruler
 " タイトルを表示
-set title
+set title titlestring=%t
 " 終了後のウィンドウタイトル
 set titleold=vim
 " タブや改行を表示 (nolist:非表示)
