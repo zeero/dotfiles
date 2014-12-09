@@ -1,4 +1,4 @@
-" Last Change: 04-Dec-2014. {{{
+" Last Change: 09-Dec-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -596,11 +596,13 @@ set splitright
 " TODO: Unite開くと低くなる
 "au myvimrc BufRead,BufNew,BufNewFile * if winwidth(0) > 140 | wincmd L | wincmd _ | endif
 " スプラッシュ
-au myvimrc VimEnter * call s:my_splash()
+au myvimrc VimEnter * if !argc() | call s:my_splash() | endif
 function! s:my_splash() "{{{
-  view $MYVIMDIR/doc/splash.txt
+  enew
+  silent read $MYVIMDIR/doc/splash.txt
+  call cursor(1, 1)
   set ft=splash
-  setlocal buftype=nofile nobuflisted nocursorcolumn nocursorline nolist nonumber noswapfile
+  setlocal buftype=nofile nobuflisted nocursorcolumn nocursorline nolist nonumber noswapfile nomodifiable nomodified
   call localrc#load(g:localrc_filename, getcwd())
 "   VimShell -split-command=botright\ 5split
 endfunction "}}}
@@ -1625,7 +1627,7 @@ endfunction "}}}
 
 " VimShell {{{1
 " VimShellPopの開き方
-let g:vimshell_popup_command = 'topleft 10split'
+let g:vimshell_popup_command = 'botright 10split'
 " vimコマンドで開いた時の開き方
 let g:vimshell_split_command = 'tabe'
 " 動的プロンプト
