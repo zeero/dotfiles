@@ -1,4 +1,4 @@
-" Last Change: 09-Dec-2014. {{{
+" Last Change: 12-Dec-2014. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -358,6 +358,10 @@ NeoBundle 'edsono/vim-matchit'
 NeoBundleLazy 'mattn/emmet-vim'
 \, {'autoload': {'filetypes': ['html']}
 \,               'insert': 1}
+NeoBundleLazy 'othree/html5.vim'
+\, {'autoload': {'filetypes': ['html']}}
+NeoBundleLazy 'hail2u/vim-css3-syntax'
+\, {'autoload': {'filetypes': ['html']}}
 " NeoBundleLazy 'jiangmiao/simple-javascript-indenter'
 " \, {'autoload': {'filetypes': ['javascript']}}
 NeoBundleLazy 'jelera/vim-javascript-syntax'
