@@ -1,4 +1,4 @@
-" Last Change: 12-Dec-2014. {{{
+" Last Change: 26-Jan-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -9,13 +9,16 @@
 if has('vim_starting')
   set nocompatible
 endif
-" 内部エンコーディングをutf-8に指定
-set encoding=utf-8
-scriptencoding utf-8
+if has('win32')
+  set termencoding=&encoding
+endif
 " Winコマンドプロンプトではcp932
 if !has('gui_running') && &encoding != 'cp932' && &term == 'win32'
   set termencoding=cp932
 endif
+" 内部エンコーディングをutf-8に指定
+set encoding=utf-8
+scriptencoding utf-8
 " ファイルエンコーディング設定
 set fencs=utf-8,cp932,euc-jp,iso-2022-jp
 set ffs=unix,dos,mac
@@ -314,7 +317,8 @@ NeoBundleLazy 'plasticboy/vim-markdown'
 NeoBundleLazy 'mattn/webapi-vim'
 NeoBundleLazy 'tyru/open-browser.vim'
 \, {'autoload': {'filetypes': ['html', 'mkd']
-\,               'mappings': '<Plug>(openbrowser-'}}
+\,               'mappings': '<Plug>(openbrowser-'
+\,               'functions': 'openbrowser#smart_search'}}
 NeoBundleLazy 'mattn/benchvimrc-vim'
 \, {'autoload': {'commands': ['BenchVimrc']}}
 NeoBundle 'haya14busa/vim-migemo'
@@ -342,6 +346,9 @@ NeoBundleLazy 'tpope/vim-repeat'
 \, {'autoload': {'mappings': ['.']}}
 NeoBundleLazy 'fuenor/qfixhowm'
 \, {'autoload': {'commands': ['QFixHowm']}}
+NeoBundle 'xolox/vim-misc'
+NeoBundle 'xolox/vim-reload'
+\, {'depends': ['thinca/vim-misc']}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -845,8 +852,8 @@ function! s:my_info() "{{{
 endfunction "}}}
 " Open
 command! Open call vimproc#open(expand("%:p:h"))
-nnoremap gx call vimproc#open(expand("%:p:h"))
-vnoremap gx y:<C-u>call vimproc#open(<C-r>")<CR>
+" Debug
+command! -nargs=? Debug echohl Debug | echomsg "Debug : ".expand("<sfile>")." : ".expand("<slnum>") | echomsg <args> | echohl None
 
 " Diff
 command! -nargs=0 DF windo diffthis
@@ -1109,6 +1116,8 @@ nnoremap ,p :<C-u>set paste<CR>i<C-r>+<Esc>:<C-u>set nopaste<CR>
 " URLを開く
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 map gX <Plug>(openbrowser-smart-search)
+nnoremap gx call vimproc#open(expand("%:p:h"))
+vnoremap gx y:<C-u>call vimproc#open(<C-r>")<CR>
 " Esc+noh
 nnoremap <silent> <Esc> <Esc>:<C-u>Noh<CR>
 " CopyFileName
@@ -1187,8 +1196,8 @@ cnoremap <C-p> <Up>
 
 " コマンド実行 {{{2
 " リファレンス
-nnoremap ,k :<C-u>Ref kotobankej <C-r><C-w><CR>
-vnoremap ,k y:<C-u>Ref kotobankej <C-r>"<CR>
+nnoremap ,k :<C-u>Ref webdict <C-r><C-w><CR>
+vnoremap ,k y:<C-u>Ref webdict <C-r>"<CR>
 au myvimrc FileType vim,help nnoremap <buffer> ,h :<C-u>H<Space><C-r><C-w><CR>
 au myvimrc FileType vim,help vnoremap <buffer> ,h y:<C-u>H<Space><C-r>"<CR>
 au myvimrc FileType ruby nnoremap <buffer> ,h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
@@ -2027,10 +2036,29 @@ endfunction "}}}
 " ref/refe
 let g:ref_refe_version = 2
 " ref/webdict
+" 要：lynx or w3m or elinks or links
 let g:ref_source_webdict_sites = {
-\ 'default': 'weblio',
-\ 'weblio': 'http://ejje.weblio.jp/content/%s',
+\ 'default': 'ej',
+\ 'ej': {
+\   'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',
+\ },
+\ 'je': {
+\   'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',
+\ },
+\ 'wp': {
+\   'url': 'http://ja.wikipedia.org/wiki/%s',
+\ },
 \}
+" 出力に対するフィルタ。最初の数行を削除。
+function! g:ref_source_webdict_sites.ej.filter(output)
+  return join(split(a:output, "\n")[17 :], "\n")
+endfunction
+function! g:ref_source_webdict_sites.je.filter(output)
+  return join(split(a:output, "\n")[17 :], "\n")
+endfunction
+function! g:ref_source_webdict_sites.wp.filter(output)
+  return join(split(a:output, "\n")[17 :], "\n")
+endfunction
 " ローカルファイルを参照するため、.local.vimrcに以下を宣言
 " ref/javascript
 " let g:ref_javascript_doc_path = 'jsref/htdocs'
