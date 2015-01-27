@@ -2054,7 +2054,7 @@ function! g:ref_source_webdict_sites.je.filter(output)
   return join(split(a:output, "\n")[17 :], "\n")
 endfunction
 function! g:ref_source_webdict_sites.wp.filter(output)
-  return join(split(a:output, "\n")[17 :], "\n")
+  return join(split(a:output, "\n")[2 :], "\n")
 endfunction
 " ローカルファイルを参照するため、.local.vimrcに以下を宣言
 " ref/javascript
