@@ -1,4 +1,4 @@
-" Last Change: 26-Jan-2015. {{{
+" Last Change: 27-Jan-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -8,13 +8,10 @@
 " VI互換モードOFF
 if has('vim_starting')
   set nocompatible
-endif
-if has('win32')
-  set termencoding=&encoding
-endif
-" Winコマンドプロンプトではcp932
-if !has('gui_running') && &encoding != 'cp932' && &term == 'win32'
-  set termencoding=cp932
+  " Winコマンドプロンプトではcp932
+  if has('win32')
+    let &termencoding = &encoding
+  endif
 endif
 " 内部エンコーディングをutf-8に指定
 set encoding=utf-8
