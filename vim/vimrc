@@ -1,4 +1,4 @@
-" Last Change: 29-Jan-2015. {{{
+" Last Change: 30-Jan-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -1947,6 +1947,8 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_mruf_max = 10000
 " MRUファイルの大文字小文字無視
 let g:ctrlp_mruf_case_sensitive = 0
+" helpプラグインのデフォルト動作モード
+let g:ctrlp_help_default_mode = 'v'
 " CtrlP動作モード
 " （'w'：ワークディレクトリ、'r'：プロジェクトルート）
 let g:ctrlp_working_path_mode = 'rw'
