@@ -698,7 +698,7 @@ function! s:my_readpost_move()
   if line("'\"") > 0 && line("'\"") <= line("$")
     exe "normal! g`\""
   endif
-  exe "normal! zvz\<CR>"
+  exe "normal! zvzz"
 endfunction
 
 " ファイルタイプ別の設定 {{{1
