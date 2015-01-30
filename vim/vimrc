@@ -848,6 +848,17 @@ function! s:my_info() "{{{
   echo "空白行：" . countEmpty
   echo "コメント行：" . countComment
   echo "ソース行：" . countSource
+  " git-info
+  if has('win32') || has('win64')
+    let sep = ";"
+  else
+    let sep = ":"
+  endif
+  if exists('*fugitive#head') && strlen(fugitive#head()) && len(globpath(substitute($PATH, sep, ",", "g"), "git-info")) && executable('mktemp')
+    echo vimproc#system('git info')
+  else
+    echo "debug"
+  endif
 endfunction "}}}
 " Open
 command! Open call vimproc#open(expand("%:p:h"))
