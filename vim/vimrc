@@ -2061,10 +2061,10 @@ let g:ref_source_webdict_sites = {
 \}
 " 出力に対するフィルタ。最初の数行を削除。
 function! g:ref_source_webdict_sites.ej.filter(output)
-  return join(split(a:output, "\n")[17 :], "\n")
+  return join(split(a:output, "\n")[9 :], "\n")
 endfunction
 function! g:ref_source_webdict_sites.je.filter(output)
-  return join(split(a:output, "\n")[17 :], "\n")
+  return join(split(a:output, "\n")[9 :], "\n")
 endfunction
 function! g:ref_source_webdict_sites.wp.filter(output)
   return join(split(a:output, "\n")[2 :], "\n")
