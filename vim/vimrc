@@ -1,4 +1,4 @@
-" Last Change: 30-Jan-2015. {{{
+" Last Change: 31-Jan-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -856,8 +856,6 @@ function! s:my_info() "{{{
   endif
   if exists('*fugitive#head') && strlen(fugitive#head()) && len(globpath(substitute($PATH, sep, ",", "g"), "git-info")) && executable('mktemp')
     echo vimproc#system('git info')
-  else
-    echo "debug"
   endif
 endfunction "}}}
 " Open
@@ -1919,10 +1917,9 @@ inoremap <C-@> <C-o>:<C-u>CtrlPRegister<CR>
 command! -nargs=? -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
 " 拡張機能を有効にする
 let g:ctrlp_extensions = [
+\ 'line',
 \ 'register',
 \ 'tag',
-\ 'changes',
-\ 'quickfix',
 \ 'menu',
 \ 'help',
 \ 'bookmarkdir',
@@ -1941,28 +1938,28 @@ let g:ctrlp_prompt_mappings = {
 \ 'PrtInsert()':          ['<C-@>', '<C-\>'],
 \ 'MarkToOpen()':         ['<C-Space>', '<C-z>'],
 \}
-" 新規ファイルをタブで開く
-let g:ctrlp_open_new_file = 't'
-" 開いたタブを一番最後にする
-let g:ctrlp_tabpage_position = 'l'
 
 " 詳細設定 {{{2
 " ウィンドウの設定
 let g:ctrlp_match_window = 'max:20'
+" CtrlP動作モード
+" （'w'：ワークディレクトリ、'r'：プロジェクトルート）
+let g:ctrlp_working_path_mode = 'rw'
 " キャッシュを使う
 let g:ctrlp_use_caching = 1
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 " キャッシュを終了後も残す（<F5>でキャッシュ更新）
 let g:ctrlp_clear_cache_on_exit = 0
+" 新規ファイルをタブで開く
+let g:ctrlp_open_new_file = 't'
+" 開いたタブを一番最後にする
+let g:ctrlp_tabpage_position = 'l'
 " MRUファイルの数
 let g:ctrlp_mruf_max = 10000
 " MRUファイルの大文字小文字無視
 let g:ctrlp_mruf_case_sensitive = 0
 " helpプラグインのデフォルト動作モード
 let g:ctrlp_help_default_mode = 'v'
-" CtrlP動作モード
-" （'w'：ワークディレクトリ、'r'：プロジェクトルート）
-let g:ctrlp_working_path_mode = 'rw'
 " migemoを使って日本語正規表現検索 {{{
 if executable('migemogrep')
   function! MigemoMatch(items, str, limit, mmode, ispath, crfile, regex)
@@ -2003,7 +2000,7 @@ endif "}}}
 command! Gs Gstatus
 command! Ga Gwrite
 command! Gw Gwrite
-command! Gd Gdiff
+command! Gd Gvdiff
 command! Gc Gcommit -v
 command! Gca Gcommit -va
 command! Gl Glog
