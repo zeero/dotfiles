@@ -1,4 +1,4 @@
-" Last Change: 31-Jan-2015. {{{
+" Last Change: 01-Feb-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -866,7 +866,14 @@ command! -nargs=? Debug echohl Debug | echomsg "Debug : ".expand("<sfile>")." : 
 " Diff
 command! -nargs=0 DF windo diffthis
 " Diffoff
-command! -nargs=0 DFOff windo diffoff
+command! -nargs=0 DFOff call s:my_diffoff()
+au myvimrc BufWinLeave * call s:my_diffoff()
+function! s:my_diffoff() "{{{
+  if &diff
+    windo diffoff
+    set foldmethod=marker
+  endif
+endfunction "}}}
 " DiffWith
 command! -complete=file -nargs=1 DiffWith vertical diffsplit <args>
 " DiffOrig（編集前とdiff）
