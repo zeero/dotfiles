@@ -792,7 +792,7 @@ command! -nargs=? -complete=help H
 " H(elp)f(unction-list)
 command! -nargs=0 Hf H function-list | wincmd p
 " K(otoba)
-command! -nargs=1 K Ref kotobankej <args>
+command! -nargs=1 K Ref webdict <args>
 " Vimrc
 command! Vimrc tabe $MYVIMRC
 " So
