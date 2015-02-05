@@ -1,4 +1,4 @@
-" Last Change: 04-Feb-2015. {{{
+" Last Change: 05-Feb-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -348,6 +348,8 @@ NeoBundleLazy 'fuenor/qfixhowm'
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-reload'
 \, {'depends': ['thinca/vim-misc']}
+NeoBundle 'haya14busa/incsearch.vim'
+" \, {'autoload': {'mappings': '<Plug>(incsearch-)'}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -616,6 +618,8 @@ function! s:my_splash() "{{{
   call localrc#load(g:localrc_filename, getcwd())
 "   VimShell -split-command=botright\ 5split
 endfunction "}}}
+" 補完メニューの高さ設定（デフォルト：最大）
+set pumheight=10
 
 " GUI固有の画面表示の設定 {{{1
 if has('gui_running')
@@ -2610,6 +2614,11 @@ command! Memo QFixHowm c
 command! MemoAppend QFixHowm N
 command! MemoList QFixHowm m
 command! MemoListAll QFixHowm ra
+
+" incsearch {{{1
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 
 "}}}1-------------------------------------------------------------------------
 
