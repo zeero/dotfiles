@@ -950,8 +950,8 @@ EOF
 endfunction "}}}
 
 " 別ウィンドウ系 {{{2
-" Esnip
-command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete Esnip NeoSnippetEdit -vertical -split <args>
+" SnipEdit
+command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete SnipEdit NeoSnippetEdit -vertical -split <args>
 " Vimdoc
 command! Vimdoc OpenBrowser http://vim-jp.org/vimdoc-ja/
 " Cygwin
