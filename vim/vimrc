@@ -1,4 +1,4 @@
-" Last Change: 05-Feb-2015. {{{
+" Last Change: 08-Feb-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -1930,6 +1930,7 @@ nnoremap <C-@> :<C-u>CtrlPTag<CR>
 inoremap <C-@> <C-o>:<C-u>CtrlPRegister<CR>
 " コマンドエイリアス
 command! -nargs=? -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
+command! -nargs=? -complete=dir BookmarkEdit exe "tabe " g:ctrlp_cache_dir . "/bkd/cache.txt"
 " 拡張機能を有効にする
 let g:ctrlp_extensions = [
 \ 'line',
