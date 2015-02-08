@@ -366,6 +366,10 @@ NeoBundle 'edsono/vim-matchit'
 " NeoBundleLazy 'tpope/vim-bundler'
 " \, {'autoload': {'filetypes': ['ruby']}}
 
+" Swift {{{2
+NeoBundleLazy 'Keithbsmiley/swift.vim'
+\, {'autoload': {'filetypes': ['swift']}}
+
 " HTML/JavaScript {{{2
 NeoBundleLazy 'mattn/emmet-vim'
 \, {'autoload': {'filetypes': ['html']}
@@ -2147,6 +2151,15 @@ let g:quickrun_config['ruby.rspec'] = {
 \ 'cmdopt': '--color',
 \ 'outputter': 'ansi_buffer',
 \}
+
+" swift {{{2
+if executable('xcrun')
+  let g:quickrun_config['swift'] = {
+  \ 'command': 'xcrun',
+  \ 'cmdopt': 'swift',
+  \ 'exec': '%c %o %s',
+  \}
+endif
 
 " vim.vspec {{{2
 au myvimrc BufRead,BufNew,BufNewFile *_spec.vim setlocal ft=vim.vspec
