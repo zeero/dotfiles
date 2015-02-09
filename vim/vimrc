@@ -1,4 +1,4 @@
-" Last Change: 08-Feb-2015. {{{
+" Last Change: 09-Feb-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -743,8 +743,8 @@ endfunction "}}}
 
 " NeoSnippet
 au myvimrc FileType neosnippet setlocal nofoldenable
-" fugitive
-au myvimrc FileType gitcommit
+" fugitive、vim-vcs
+au myvimrc FileType gitcommit,vcs-*
 \ setlocal nofoldenable |
 \ wincmd L |
 \ noh |
@@ -2637,6 +2637,13 @@ command! MemoListAll QFixHowm ra
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+
+" vim-vcs {{{1
+command! Vs silent Vcs status
+command! Va silent Vcs add
+command! Vc silent Vcs commit
+command! Vca silent call vcs#vcs('add', '.') | silent Vcs commit
+command! Vl silent Vcs log
 
 "}}}1-------------------------------------------------------------------------
 
