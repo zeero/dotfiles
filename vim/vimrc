@@ -1,4 +1,4 @@
-" Last Change: 10-Feb-2015. {{{
+" Last Change: 11-Feb-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -1957,7 +1957,7 @@ let g:ctrlp_prompt_mappings = {
 let g:ctrlp_match_window = 'max:20'
 " CtrlP動作モード
 " （'w'：ワークディレクトリ、'r'：プロジェクトルート）
-let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_working_path_mode = 'rw'
 " キャッシュを使う
 let g:ctrlp_use_caching = 1
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
