@@ -1,4 +1,4 @@
-" Last Change: 09-Feb-2015. {{{
+" Last Change: 10-Feb-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -896,25 +896,18 @@ command! -nargs=0 QFClear call setqflist([])
 " LocalInit
 let g:my_local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
 command! -nargs=0 LocalInit call s:my_local_init()
-command! -nargs=0 Ctags call s:my_ctags()
 function! s:my_local_init() "{{{
   call vimproc#system("cp -f " . g:my_local_init_skel_file . " ./.local.vimrc")
   call s:my_ctags()
 endfunction "}}}
+" Ctags
+command! -nargs=0 Ctags call s:my_ctags()
 function! s:my_ctags() "{{{
-  " TODO:
-  call vimproc#system_bg("ctags -R --jcode=utf8 -f tags " . s:my_path_convert(getcwd()))
-"   if has('win32') || has('win64')
-"     call vimproc#system_bg(
-"     \ 'ctags -R --jcode=utf8 -f - ' .
-"     \ s:my_path_convert(getcwd()) .
-"     \ ' | iconv -f sjis -t utf-8 > tags'
-"     \)
-"   else
-"     call vimproc#system_bg(
-"     \ 'ctags -R --jcode=utf8 -f tags ' .
-"     \ s:my_path_convert(getcwd()))
-"   endif
+  call vimproc#system('ctags -R --jcode=utf8 -f tags ' . s:my_path_convert(getcwd()))
+  if has('win32') || has('win64')
+    call vimproc#system('iconv -f SJIS -t UTF-8 tags > tags.utf8')
+    call vimproc#system('mv -f tags.utf8 tags')
+  endif
 endfunction "}}}
 
 " TortoiseSVN
