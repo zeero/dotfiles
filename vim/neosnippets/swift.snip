@@ -25,3 +25,15 @@ abbr    UIViewController class template
       ${0}
   }
 
+snippet TableViewDataSource
+abbr    UITableViewDataSource required methods
+  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      return ${1:number_of_rows}
+  }
+  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+      var cell = UITableViewCell(style: ${2:.Default}, reuseIdentifier: "${3}")
+      ${0:indexPath.row}
+      return cell
+  }
+
+
