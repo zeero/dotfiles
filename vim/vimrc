@@ -1,4 +1,4 @@
-" Last Change: 11-Feb-2015. {{{
+" Last Change: 13-Feb-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -274,6 +274,8 @@ NeoBundleLazy 'copypath.vim'
 \, {'autoload': {'commands': ['CopyPath', 'CopyFileName']}}
 NeoBundleLazy 'jceb/vim-editqf'
 \, {'autoload': {'commands': ['QFAddNote']}}
+NeoBundleLazy 'will133/vim-dirdiff'
+\, {'autoload': {'commands': [{'name': 'DirDiff', 'complete': 'dir'}]}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -532,7 +534,7 @@ autocmd myvimrc QuickFixCmdPost    l* nested botright lwindow
 " 補完時に大文字小文字を区別しない
 set infercase
 " カーソルを文字が存在しない部分でも動けるようにする
-set virtualedit=all
+" set virtualedit=all
 " 行頭行末で前行次行に移動する
 " set whichwrap=b,s,h,l,<,>,[,]
 " <C-a>で8進数は除く
@@ -1927,7 +1929,16 @@ nnoremap <C-@> :<C-u>CtrlPTag<CR>
 inoremap <C-@> <C-o>:<C-u>CtrlPRegister<CR>
 " コマンドエイリアス
 command! -nargs=? -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
-command! -nargs=? -complete=dir BookmarkEdit exe "tabe " g:ctrlp_cache_dir . "/bkd/cache.txt"
+command! -nargs=? -complete=dir BookmarkEdit exe 'tabe ' g:ctrlp_cache_dir . '/bkd/cache.txt'
+function! g:my_bookmark(name) "{{{
+  for line in readfile(g:ctrlp_cache_dir . '/bkd/cache.txt')
+    let kv = split(line, '\t')
+    if a:name == kv[0]
+      return kv[1]
+    endif
+  endfor
+  echoerr 'no bookmark'
+endfunction "}}}
 " 拡張機能を有効にする
 let g:ctrlp_extensions = [
 \ 'line',
@@ -2637,6 +2648,9 @@ function! s:my_git_vimproc(gitcommand) "{{{
   endfor
   echohl None
 endfunction "}}}
+
+" vim-dirdiff {{{1
+let g:DirDiffExcludes = ".svn,.git,CVS,*.class,*.exe,.*.swp"
 
 "}}}1-------------------------------------------------------------------------
 
