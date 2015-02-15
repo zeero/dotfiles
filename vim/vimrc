@@ -2469,7 +2469,7 @@ let g:indent_guides_exclude_filetypes = ['help', 'unite', 'vimfiler', 'vimshell'
 " Syntastic {{{1
 let g:syntastic_mode_map = {
 \ 'mode': 'active',
-\ 'passive_filetypes': ['html']
+\ 'passive_filetypes': ['html', 'swift']
 \}
 if executable('rubocop')
   let g:syntastic_ruby_checkers = ['rubocop']
