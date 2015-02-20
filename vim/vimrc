@@ -1,4 +1,4 @@
-" Last Change: 18-Feb-2015. {{{
+" Last Change: 20-Feb-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -779,7 +779,7 @@ let java_highlight_functions = "style"
 let java_highlight_debug = 1
 
 " DOS
-au myvimrc BufNew,BufNewFile *.bat setlocal fenc=sjis ff=dos
+au myvimrc BufRead,BufNew,BufNewFile *.bat setlocal fenc=sjis ff=dos
 
 " ファイルタイプ指定
 " JavaScript
