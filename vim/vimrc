@@ -908,11 +908,7 @@ endfunction "}}}
 " Ctags
 command! -nargs=0 Ctags call s:my_ctags()
 function! s:my_ctags() "{{{
-  call vimproc#system('ctags -R --jcode=utf8 -f tags ' . s:my_path_convert(getcwd()))
-  if has('win32') || has('win64')
-    call vimproc#system('iconv -f SJIS -t UTF-8 tags > tags.utf8')
-    call vimproc#system('mv -f tags.utf8 tags')
-  endif
+  call vimproc#system('ctags -R -f tags ' . s:my_path_convert(getcwd()))
 endfunction "}}}
 
 " TortoiseSVN
