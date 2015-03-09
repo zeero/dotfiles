@@ -1,4 +1,4 @@
-" Last Change: 21-Feb-2015. {{{
+" Last Change: 09-Mar-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -620,6 +620,7 @@ set splitright
 " スプラッシュ
 au myvimrc VimEnter * if !argc() | call s:my_splash() | endif
 function! s:my_splash() "{{{
+  " スプラッシュを開く
   enew
   silent read $MYVIMDIR/doc/splash.txt
   call cursor(1, 1)
@@ -627,6 +628,13 @@ function! s:my_splash() "{{{
   setlocal buftype=nofile nobuflisted nocursorcolumn nocursorline nolist nonumber noswapfile nomodifiable nomodified
   call localrc#load(g:localrc_filename, getcwd())
 "   VimShell -split-command=botright\ 5split
+
+  " 引数リストのファイルをタブで開く
+"   let i = 0
+"   while i < argc()
+"     exe 'tabe ' . argv(i)
+"     let i = i + 1
+"   endwhile
 endfunction "}}}
 " 補完メニューの高さ設定（デフォルト：最大）
 set pumheight=10
