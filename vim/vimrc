@@ -1,4 +1,4 @@
-" Last Change: 09-Mar-2015. {{{
+" Last Change: 10-Mar-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -627,7 +627,10 @@ function! s:my_splash() "{{{
   set ft=splash
   setlocal buftype=nofile nobuflisted nocursorcolumn nocursorline nolist nonumber noswapfile nomodifiable nomodified
   call localrc#load(g:localrc_filename, getcwd())
+
+  " VimShellを画面下部に開く
 "   VimShell -split-command=botright\ 5split
+"   exe "normal! \<C-w>\<C-w>\<Esc>"
 
   " 引数リストのファイルをタブで開く
 "   let i = 0
