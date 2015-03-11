@@ -1,4 +1,4 @@
-" Last Change: 10-Mar-2015. {{{
+" Last Change: 11-Mar-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -1151,7 +1151,7 @@ map gX <Plug>(openbrowser-smart-search)
 nnoremap gx call vimproc#open(expand("%:p:h"))
 vnoremap gx y:<C-u>call vimproc#open(<C-r>")<CR>
 " Esc+noh
-nnoremap <silent> <Esc> <Esc>:<C-u>Noh<CR>
+nnoremap <silent> <Esc> <Esc>:<C-u>Noh<CR>:<C-u>echo<CR>
 " CopyFileName
 nnoremap gy :<C-u>CopyFileName<CR>
 " 行の最後ならxで後方削除
