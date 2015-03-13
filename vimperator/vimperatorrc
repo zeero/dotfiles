@@ -49,6 +49,9 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 " コマンドラインモードでIMEオフ
 style -name commandline-ime chrome://* #liberator-commandline-command input {ime-mode: inactive;}
+" スペースのスクロールをページ半分にする
+nnoremap <Space> <C-d>
+nnoremap <S-Space> <C-u>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " プラグインの設定
