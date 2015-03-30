@@ -1,4 +1,4 @@
-" Last Change: 13-Mar-2015. {{{
+" Last Change: 30-Mar-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -147,6 +147,8 @@ NeoBundleLazy 'autodate.vim'
 \, {'autoload': {'insert': 1}}
 NeoBundleLazy 'AndrewRadev/switch.vim'
 \, {'autoload': {'commands': ['Switch']}}
+NeoBundleLazy 'lukaszkorecki/workflowish'
+\, {'autoload': {'filetypes': ['workflowish']}}
 
 " テキストオブジェクト {{{2
 NeoBundleLazy 'kana/vim-textobj-user'
