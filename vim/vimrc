@@ -1156,8 +1156,8 @@ let g:netrw_nogx = 1 " disable netrw's gx mapping.
 map gX <Plug>(openbrowser-smart-search)
 nnoremap gx call vimproc#open(expand("%:p:h"))
 vnoremap gx y:<C-u>call vimproc#open(<C-r>")<CR>
-" Esc+noh
-nnoremap <silent> <Esc> <Esc>:<C-u>Noh<CR>:<C-u>echo<CR>
+" Esc+noh+ZoomReset
+nnoremap <silent> <Esc> <Esc>:<C-u>Noh<CR>:<C-u>ZoomReset<CR>:<C-u>echo<CR>
 " CopyFileName
 nnoremap gy :<C-u>CopyFileName<CR>
 " 行の最後ならxで後方削除
@@ -2668,6 +2668,32 @@ endfunction "}}}
 
 " vim-dirdiff {{{1
 let g:DirDiffExcludes = ".svn,.git,CVS,*.class,*.exe,.*.swp"
+
+" workflowish {{{1
+au myvimrc BufRead,BufNew,BufNewFile *.wofl call s:my_workflowish()
+function! s:my_workflowish() "{{{
+  nnoremap <buffer> <C-j> :call WorkflowishFocusToggle(line("."))<CR>
+  nnoremap <buffer> <C-k> :call WorkflowishFocusPrevious()<CR>
+  nnoremap <buffer> <C-t> :call MyWorkflowishToggle()<CR>
+endfunction "}}}
+function! MyWorkflowishToggle() "{{{
+  let first_char = matchstr(getline('.'), '\S')
+  let col = virtcol('.')
+  let new_col = col + 2
+  if first_char == '*'
+    exe ':s/\*/-/'
+    exe 'normal! ' . col . '|'
+  elseif first_char == '-'
+    exe ':s/\-/*/'
+    exe 'normal! ' . col . '|'
+  elseif first_char == ''
+    exe ':s/$/* /'
+    exe 'normal! $'
+  else
+    exe ':s/\(\S\)/* \1/'
+    exe 'normal! ' . new_col . '|'
+  endif
+endfunction "}}}
 
 "}}}1-------------------------------------------------------------------------
 
