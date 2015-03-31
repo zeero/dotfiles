@@ -192,13 +192,13 @@ NeoBundleLazy 'osyo-manga/vim-textobj-multitextobj'
 NeoBundleLazy 'tpope/vim-surround'
 \, {'autoload': {'mappings':
 \    [['n', 'cs']
-\,    ['x', 'gS']
-\,    ['n', 'ds']
-\,    ['n', 'ySS']
-\,    ['n', 'yss']
-\,    ['n', 'ySs']
-\,    ['n', 'yS']
-\,    ['n', 'ys']]}}
+\,    ['n', 'ds']]}}
+" \,    ['x', 'gS']
+" \,    ['n', 'ySS']
+" \,    ['n', 'yss']
+" \,    ['n', 'ySs']
+" \,    ['n', 'yS']
+" \,    ['n', 'ys']
 " \,    ['i', '<C-G>S']
 " \,    ['i', '<C-G>s']
 " \,    ['i', '<C-S>']]}}
@@ -2343,9 +2343,11 @@ endif
 
 " surround {{{1
 " KEYMAP:
-"  s : side
 "  cs'" : 'を"に変換する
 "  ds' : 'で囲まれた範囲を消す
+let g:surround_no_mappings = 1
+nmap cs <Plug>Csurround
+nmap ds <Plug>Dsurround
 " 置換時の空白を入れない
 let g:surround_34 = "\"\r\""
 let g:surround_39 = "\'\r\'"
