@@ -243,6 +243,11 @@ NeoBundleLazy 'Shougo/vim-vcs'
 NeoBundleLazy 'mattn/gist-vim'
 \, {'autoload': {'commands': ['Gist']}
 \,  'depends': ['mattn/webapi-vim']}
+NeoBundleLazy 'lambdalisue/vim-gista'
+\, {'autoload': {'commands': ['Gista']
+\,               'mappings': '<Plug>(gista-'
+\,               'unite_sources': 'gista'}
+\,  'depends': ['Shougo/unite.vim','tyru/open-browser.vim']}
 NeoBundleLazy 'gregsexton/gitv'
 \, {'autoload': {'commands': ['Gitv']}
 \,  'depends': ['tpope/vim-fugitive']}
@@ -2699,6 +2704,15 @@ function! MyWorkflowishToggle() "{{{
     exe 'normal! ' . new_col . '|'
   endif
 endfunction "}}}
+" vim-gista {{{1
+" Github設定
+let g:gista#github_user = 'zeero'
+" Uniteコマンド
+command! UGista exe 'Unite gista' .
+\ ' -silent -buffer-name=gista' .
+\ ' -tab -no-split -no-quit'
+" リスト表示の開き方
+" let g:gista#list_opener = 'tab'
 
 "}}}1-------------------------------------------------------------------------
 
