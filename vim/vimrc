@@ -1,4 +1,4 @@
-" Last Change: 31-Mar-2015. {{{
+" Last Change: 06-Apr-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -704,6 +704,7 @@ if has('gui_running')
   set guitablabel=%n:%t%m
   " 印刷オプション
   set printoptions=wrap:y,number:y
+  set printheader=%<%f%h%m%=Page-%N
 endif
 
 " ファイル操作に関する設定 {{{1
