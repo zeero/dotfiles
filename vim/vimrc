@@ -2009,6 +2009,8 @@ let g:ctrlp_mruf_max = 10000
 let g:ctrlp_mruf_case_sensitive = 0
 " helpプラグインのデフォルト動作モード
 let g:ctrlp_help_default_mode = 'v'
+" ドットファイルを検索対象にする
+let g:ctrlp_show_hidden = 1
 " migemoを使って日本語正規表現検索 {{{
 if executable('migemogrep')
   function! MigemoMatch(items, str, limit, mmode, ispath, crfile, regex)
