@@ -1,4 +1,4 @@
-" Last Change: 06-Apr-2015. {{{
+" Last Change: 30-Apr-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ NeoBundleLazy 'Lokaltog/vim-easymotion'
 " CtrlP {{{2
 \, {'autoload': {'insert': 1}}
 NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'zeero/ctrlp-extensions.vim', 'menu_mru_order'
+NeoBundle 'sgur/ctrlp-extensions.vim'
 \, {'depends': 'ctrlpvim/ctrlp.vim'}
 NeoBundle 'mattn/ctrlp-register'
 \, {'depends': 'ctrlpvim/ctrlp.vim'}
@@ -1955,15 +1955,15 @@ inoremap <C-@> <C-o>:<C-u>CtrlPRegister<CR>
 " コマンドエイリアス
 command! -nargs=? -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
 command! -nargs=? -complete=dir BookmarkEdit exe 'tabe ' g:ctrlp_cache_dir . '/bkd/cache.txt'
-function! g:my_bookmark(name) "{{{
-  for line in readfile(g:ctrlp_cache_dir . '/bkd/cache.txt')
-    let kv = split(line, '\t')
-    if a:name == kv[0]
-      return kv[1]
-    endif
-  endfor
-  echoerr 'no bookmark'
-endfunction "}}}
+" function! MyBookmark(name) "{{{
+"   for line in readfile(g:ctrlp_cache_dir . '/bkd/cache.txt')
+"     let kv = split(line, '\t')
+"     if a:name == kv[0]
+"       return kv[1]
+"     endif
+"   endfor
+"   echoerr 'no bookmark'
+" endfunction "}}}
 " 拡張機能を有効にする
 let g:ctrlp_extensions = [
 \ 'line',
