@@ -4,3 +4,6 @@
 [submodule "vimperator/xulmigemo"]
 	path = vimperator/xulmigemo
 	url = https://github.com/piroor/xulmigemo.git
+[submodule "RictyDiminished"]
+	path = RictyDiminished
+	url = https://github.com/yascentur/RictyDiminished.git
