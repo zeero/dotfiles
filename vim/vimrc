@@ -406,6 +406,8 @@ NeoBundleLazy 'http://www.fleiner.com/vim/syntax_60/javaid.vim'
 \,  'name': 'javaid.vim'
 \,  'type': 'raw'
 \,  'script_type': 'syntax'}
+NeoBundleLazy 'kamichidu/vim-edit-properties'
+\, {'autoload': {'filetypes': ['java']}}
 
 " VimScript {{{2
 NeoBundleLazy 'vim-jp/vital.vim'
