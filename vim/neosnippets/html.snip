@@ -75,7 +75,7 @@ options indent
   <html lang="ja">
     <head>
       <meta charset="UTF-8">
-      <title>${1}</title>
+      <title>${1:hello world}</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <!-- Bootstrap -->
       <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -88,8 +88,15 @@ options indent
       <![endif]-->
     </head>
     <body>
-      <h1>${2:hello world}</h1>
-      ${0}
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>$1</h1>
+            ${0}
+          </div>
+        </div>
+      </div>
+
       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
       <script src="https://code.jquery.com/jquery.js"></script>
       <!-- Include all compiled plugins (below), or include individual files as needed -->
