@@ -52,6 +52,8 @@ style -name commandline-ime chrome://* #liberator-commandline-command input {ime
 " スペースのスクロールをページ半分にする
 nnoremap <Space> <C-d>
 nnoremap <S-Space> <C-u>
+" <Esc>でズーム100%に戻す
+nnoremap <Esc> zz<Esc>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " プラグインの設定
