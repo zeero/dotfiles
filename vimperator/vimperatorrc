@@ -40,8 +40,8 @@ nnoremap ,b :dialog places<CR>
 " 印刷
 nnoremap <C-p> :ha<CR>
 nnoremap <C-n> <C-t>
-" 中止
-nnoremap <Esc> :st<CR><Esc>
+" 読み込み中止、ズーム100%に戻す
+nnoremap <Esc> :st<CR>zz<Esc>
 " 最近閉じたタブの一覧（補完待ち状態にする）
 nnoremap U :undo<Space>
 " コマンド履歴
@@ -52,8 +52,6 @@ style -name commandline-ime chrome://* #liberator-commandline-command input {ime
 " スペースのスクロールをページ半分にする
 nnoremap <Space> <C-d>
 nnoremap <S-Space> <C-u>
-" <Esc>でズーム100%に戻す
-nnoremap <Esc> zz<Esc>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " プラグインの設定
