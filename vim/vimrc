@@ -1,4 +1,4 @@
-" Last Change: 15-Jun-2015. {{{
+" Last Change: 05-Jul-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -1177,8 +1177,8 @@ nnoremap <expr> x virtcol(".") == virtcol("$") ? 'X' : 'x'
 
 " オペレータ {{{2
 " replace
-xmap c <Plug>(operator-replace)
-xmap C <Plug>(operator-replace)$
+map c <Plug>(operator-replace)
+map C <Plug>(operator-replace)$
 " カーソル下の文字列を置換
 nnoremap ,c :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 " 選択した文字列を置換
