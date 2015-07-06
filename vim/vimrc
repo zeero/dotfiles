@@ -1,4 +1,4 @@
-" Last Change: 03-Jul-2015. {{{
+" Last Change: 06-Jul-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -363,6 +363,7 @@ NeoBundle 'xolox/vim-reload'
 NeoBundle 'thinca/vim-openbuf'
 NeoBundle 'haya14busa/incsearch.vim'
 " \, {'autoload': {'mappings': '<Plug>(incsearch-)'}}
+NeoBundle 'haya14busa/incsearch-migemo.vim'
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -2655,9 +2656,9 @@ command! MemoList QFixHowm m
 command! MemoListAll QFixHowm ra
 
 " incsearch {{{1
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+map /  <Plug>(incsearch-migemo-/)
+map ?  <Plug>(incsearch-migemo-?)
+map g/ <Plug>(incsearch-migemo-stay)
 
 " vim-vcs {{{1
 command! Vs silent Vcs status
