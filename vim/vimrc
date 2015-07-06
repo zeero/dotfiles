@@ -364,6 +364,7 @@ NeoBundle 'thinca/vim-openbuf'
 NeoBundle 'haya14busa/incsearch.vim'
 " \, {'autoload': {'mappings': '<Plug>(incsearch-)'}}
 NeoBundle 'haya14busa/incsearch-migemo.vim'
+NeoBundle 'haya14busa/incsearch-fuzzy.vim'
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -2374,11 +2375,6 @@ let g:surround_93 = "[ \r ]"
 let g:surround_123 = "{\r}"
 let g:surround_125 = "{ \r }"
 
-" migemo-search {{{1
-if executable('cmigemo')
-  cnoremap <expr> <silent> <CR> getcmdtype() =~ '[/?]' ? migemosearch#replace_search_word() . "\<CR>zvzz" : "\<CR>"
-endif
-
 " Emmet {{{1
 "
 " KEYMAP:
@@ -2656,9 +2652,21 @@ command! MemoList QFixHowm m
 command! MemoListAll QFixHowm ra
 
 " incsearch {{{1
-map /  <Plug>(incsearch-migemo-/)
-map ?  <Plug>(incsearch-migemo-?)
+map / <Plug>(incsearch-migemo-/)
+map ? <Plug>(incsearch-migemo-?)
 map g/ <Plug>(incsearch-migemo-stay)
+" migemo-fuzzyは重いのでいったんなしで
+" function! s:config_migemo_fuzzy(...) abort
+"   return extend(copy({
+"   \ 'converters': [
+"   \   incsearch#config#migemo#converter(),
+"   \   incsearch#config#fuzzy#converter(),
+"   \ ],
+"   \}), get(a:, 1, {}))
+" endfunction
+" noremap <silent><expr> / incsearch#go(<SID>config_migemo_fuzzy())
+" noremap <silent><expr> ? incsearch#go(<SID>config_migemo_fuzzy({'command', '?'}))
+" noremap <silent><expr> g/ incsearch#go(<SID>config_migemo_fuzzy({'is_stay': 1}))
 
 " vim-vcs {{{1
 command! Vs silent Vcs status
