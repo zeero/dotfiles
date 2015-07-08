@@ -938,7 +938,7 @@ let g:my_local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
 command! -nargs=0 LocalInit call s:my_local_init()
 function! s:my_local_init() "{{{
   if !filereadable('./.local.vimrc')
-    call vimproc#system('cp -f ' . g:my_local_init_skel_file . ' ./.local.vimrc')
+    call vimproc#system('cp ' . g:my_local_init_skel_file . ' ./.local.vimrc')
   endif
   call s:my_ctags()
 endfunction "}}}
