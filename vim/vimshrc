@@ -1,2 +1,3 @@
-alias la='ls -la'
+alias ls='sls'
+alias la='sls -la'
 
