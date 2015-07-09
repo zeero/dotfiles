@@ -582,10 +582,10 @@ else
 "   }}}
 endif
 " TODOを常にハイライト
-syn match MyTodo /\v(TODO|FIXME)\c:?/ containedin=ALL
+syn match MyTodo /\v\c\[?(TODO|FIXME)[\]:]?/ containedin=ALL
 hi MyTodo term=standout ctermfg=12 gui=bold guifg=#666666 guibg=yellow
 hi! link Todo MyTodo
-au myvimrc Syntax * syn match MyTodo /\v(TODO|FIXME)\c:?/ containedin=ALL
+au myvimrc Syntax * syn match MyTodo /\v\c\[?(TODO|FIXME)[\]:]?/ containedin=ALL
 " 遅延描画
 " set lazyredraw
 " 行を強調表示
@@ -2505,7 +2505,7 @@ au myvimrc VimEnter,ColorScheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=dar
 " ハイライト色の変化の幅
 let g:indent_guides_color_change_percent = 30
 " 無視するファイルタイプ
-let g:indent_guides_exclude_filetypes = ['help', 'unite', 'vimfiler', 'vimshell', 'splash']
+let g:indent_guides_exclude_filetypes = ['help', 'unite', 'vimfiler', 'vimshell', 'splash', 'tagbar']
 
 " Syntastic {{{1
 let g:syntastic_mode_map = {
