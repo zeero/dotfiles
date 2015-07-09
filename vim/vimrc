@@ -1960,12 +1960,13 @@ au myvimrc BufWritePost *.snip NeoSnippetSource %:p
 
 " コマンド設定 {{{2
 " CtrlPMRUFiles
-nnoremap <C-o> :<C-u>CtrlPMRUFiles<CR>
 nnoremap t :<C-u>CtrlPMRUFiles<CR>
 " CtrlPMenu
 nnoremap T :<C-u>CtrlPMenu<CR>
 " CtrlPTag
 nnoremap <C-@> :<C-u>CtrlPTag<CR>
+" CtrlPLine
+nnoremap <C-o> :<C-u>CtrlPLine<CR>
 " CtrlPRegister（INSERTモードのみ）
 inoremap <C-@> <C-o>:<C-u>CtrlPRegister<CR>
 " コマンドエイリアス
