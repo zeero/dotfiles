@@ -1,4 +1,4 @@
-" Last Change: 08-Jul-2015. {{{
+" Last Change: 09-Jul-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -2708,8 +2708,8 @@ let g:DirDiffExcludes = ".svn,.git,CVS,*.class,*.exe,.*.swp"
 " workflowish {{{1
 au myvimrc BufRead,BufNew,BufNewFile *.wofl call s:my_workflowish()
 function! s:my_workflowish() "{{{
-  nnoremap <buffer> <C-j> :call WorkflowishFocusToggle(line("."))<CR>
-  nnoremap <buffer> <C-k> :call WorkflowishFocusPrevious()<CR>
+  nnoremap <buffer> gj :call WorkflowishFocusToggle(line("."))<CR>
+  nnoremap <buffer> gk :call WorkflowishFocusPrevious()<CR>
   nnoremap <buffer> <C-t> :call MyWorkflowishToggle()<CR>
 endfunction "}}}
 function! MyWorkflowishToggle() "{{{
