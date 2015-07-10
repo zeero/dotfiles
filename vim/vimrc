@@ -1102,11 +1102,27 @@ nnoremap dp dp]czz
 " markへのジャンプ
 nnoremap gm `
 " 折り畳み
-" TODO: zj/zkは同レベルの折り畳みに移動するようにしたい
-nnoremap zj zj^
-nnoremap zk zk^
 nnoremap z] zj^
 nnoremap z[ [z^
+" インデント
+nnoremap <silent> zj :<C-u>call<Space><SID>my_indent_move(1)<CR>
+nnoremap <silent> zk :<C-u>call<Space><SID>my_indent_move(0)<CR>
+function! s:my_indent_move(forward) "{{{
+  let cur_level = match(getline('.'), '\S')
+  if a:forward
+    normal! gj
+  else
+    normal! gk
+  endif
+  while cur_level < match(getline('.'), '\S')
+    if a:forward
+      normal! gj
+    else
+      normal! gk
+    endif
+  endwhile
+  normal! ^
+endfunction "}}}
 
 " 検索 {{{2
 " 検索語が真ん中にくるようにする
