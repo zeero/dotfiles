@@ -1,4 +1,4 @@
-" Last Change: 09-Jul-2015. {{{
+" Last Change: 10-Jul-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -1101,6 +1101,12 @@ nnoremap do do]czz
 nnoremap dp dp]czz
 " markへのジャンプ
 nnoremap gm `
+" 折り畳み
+" TODO: zj/zkは同レベルの折り畳みに移動するようにしたい
+nnoremap zj zj^
+nnoremap zk zk^
+nnoremap z] zj^
+nnoremap z[ [z^
 
 " 検索 {{{2
 " 検索語が真ん中にくるようにする
@@ -1966,7 +1972,7 @@ nnoremap T :<C-u>CtrlPMenu<CR>
 " CtrlPTag
 nnoremap <C-@> :<C-u>CtrlPTag<CR>
 " CtrlPLine
-nnoremap <C-o> :<C-u>CtrlPLine<CR>
+nnoremap <C-o> :<C-u>execute 'CtrlPLine ' . expand('%')<CR>
 " CtrlPRegister（INSERTモードのみ）
 inoremap <C-@> <C-o>:<C-u>CtrlPRegister<CR>
 " コマンドエイリアス
@@ -2002,7 +2008,7 @@ let g:ctrlp_prompt_mappings = {
 \ 'ToggleByFname()':      ['<C-t>'],
 \ 'PrtDelete()':          ['<del>', '<C-d>'],
 \ 'PrtInsert()':          ['<C-@>', '<C-\>'],
-\ 'MarkToOpen()':         ['<C-Space>', '<C-z>'],
+\ 'MarkToOpen()':         ['<C-Space>', '<C-z>', '<C-x>'],
 \}
 
 " 詳細設定 {{{2
