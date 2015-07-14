@@ -1,4 +1,4 @@
-" Last Change: 10-Jul-2015. {{{
+" Last Change: 14-Jul-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -192,7 +192,7 @@ NeoBundleLazy 'osyo-manga/vim-textobj-multiblock'
 NeoBundleLazy 'osyo-manga/vim-textobj-multitextobj'
 \, {'autoload': {'mappings': '<Plug>(textobj-multitextobj-'}
 \,  'depends': 'kana/vim-textobj-user'}
-NeoBundleLazy 'tpope/vim-surround'
+NeoBundle 'tpope/vim-surround'
 \, {'autoload': {'mappings':
 \    [['n', 'cs']
 \,    ['n', 'ds']]}}
@@ -603,7 +603,7 @@ set titleold=vim
 " タブや改行を表示 (nolist:非表示)
 set list
 " どの文字でタブや改行を表示するかを設定
-set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
+set listchars=tab:-»,trail:-,extends:»,precedes:«,nbsp:%
 " タブの左側にカーソル表示
 "set listchars=tab:\ \
 " 全角スペースも表示　
