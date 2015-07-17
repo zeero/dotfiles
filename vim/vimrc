@@ -590,6 +590,7 @@ au myvimrc Syntax * syn match MyTodo /\v\c\[?(TODO|FIXME)[\]:]?/ containedin=ALL
 " set lazyredraw
 " 行を強調表示
 set cursorline
+hi CursorLine term=underline cterm=underline gui=underline
 " 行番号を表示 (nonumber:表示)
 set number
 " 行番号の左に余白をとる
