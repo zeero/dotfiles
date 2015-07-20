@@ -1,4 +1,4 @@
-" Last Change: 17-Jul-2015. {{{
+" Last Change: 20-Jul-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -152,6 +152,7 @@ NeoBundleLazy 'AndrewRadev/switch.vim'
 \, {'autoload': {'commands': ['Switch']}}
 NeoBundleLazy 'lukaszkorecki/workflowish'
 \, {'autoload': {'filetypes': ['workflowish']}}
+NeoBundle 'LeafCage/yankround.vim'
 
 " テキストオブジェクト {{{2
 NeoBundleLazy 'kana/vim-textobj-user'
@@ -832,10 +833,10 @@ function! s:my_help(keyword) "{{{
   if winwidth(0) > 140
     exe 'botright vertical help ' . a:keyword
     vertical resize 79
-    wincmd p
+"     wincmd p
   else
     exe 'help ' . a:keyword
-    wincmd p
+"     wincmd p
   endif
 endfunction "}}}
 " H(elp)f(unction-list)
@@ -917,6 +918,8 @@ endfunction "}}}
 command! Open call vimproc#open(expand("%:p:h"))
 " Debug
 command! -nargs=? Debug echohl Debug | echomsg "Debug : ".expand("<sfile>")." : ".expand("<slnum>") | echomsg <args> | echohl None
+" Yank
+command! -nargs=1 Yank redi @" | <args> | redi END
 
 " Diff
 command! -nargs=0 DF windo diffthis
@@ -2009,6 +2012,7 @@ command! -nargs=? -complete=dir BookmarkEdit exe 'tabe ' g:ctrlp_cache_dir . '/b
 " 拡張機能を有効にする
 let g:ctrlp_extensions = [
 \ 'line',
+\ 'yankround',
 \ 'register',
 \ 'tag',
 \ 'menu',
@@ -2310,7 +2314,7 @@ hi MBEChanged ctermfg=red guifg=red guibg=black
 let g:lightline = {}
 " let g:lightline.colorscheme = 'wombat'
 let g:lightline.active = {
-\ 'left': [['mode', 'paste'], ['filename', 'fugitive', 'anzu']],
+\ 'left': [['mode', 'paste'], ['filename', 'fugitive', 'gista', 'anzu']],
 \ 'right': [['lineinfo', 'syntastic'], ['percent'], ['pwd', 'fileformat', 'fileencoding', 'filetype']]
 \}
 let g:lightline.inactive = {
@@ -2323,6 +2327,7 @@ let g:lightline.component_function = {
 \ 'pwd': 'MyPwd',
 \ 'filename': 'MyFilename',
 \ 'fugitive': 'MyFugitive',
+\ 'gista': 'gista#statusline#components#gistid',
 \ 'anzu': 'anzu#search_status',
 \ 'syntastic': 'SyntasticStatuslineFlag',
 \ 'fileformat': 'MyFileformat',
@@ -2756,15 +2761,37 @@ function! MyWorkflowishToggle() "{{{
     exe 'normal! ' . new_col . '|'
   endif
 endfunction "}}}
+
 " vim-gista {{{1
 " Github設定
 let g:gista#github_user = 'zeero'
+" プライベートをデフォルトに
+let g:gista#post_private = 1
+" アップデート時の警告を無効に
+let g:gista#warn_in_partial_save = 0
+" ポストしたら自動でコネクト
+let g:gista#auto_connect_after_post = 1
+" :wで保存時にアップデート
+let g:gista#update_on_write = 1
+" タブで開く
+let g:gista#gist_opener = {
+\ 'edit': 'tabe',
+\ 'split': 'rightbelow split',
+\ 'vsplit': 'rightbelow vsplit',
+\}
+" descriptionは聞かない
+let g:gista#interactive_description = 0
 " Uniteコマンド
 command! UGista exe 'Unite gista' .
 \ ' -silent -buffer-name=gista' .
 \ ' -tab -no-split -no-quit'
 " リスト表示の開き方
 " let g:gista#list_opener = 'tab'
+
+" yankround {{{1
+let g:yankround_max_history = 50
+let g:yankround_use_region_hl = 1
+nmap ,y :<C-u>CtrlPYankRound<CR>
 
 "}}}1-------------------------------------------------------------------------
 
