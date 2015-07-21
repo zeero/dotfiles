@@ -1,4 +1,4 @@
-" Last Change: 20-Jul-2015. {{{
+" Last Change: 21-Jul-2015. {{{
 " vim:ts=2:fdm=marker
 " }}}
 "-----------------------------------------------------------------------------
@@ -862,9 +862,9 @@ function! s:my_command_bd_other() "{{{
   endwhile
 endfunction "}}}
 " Lcd
-command! Lcd exe "lcd " . expand("%:p:h") | pwd
+command! Lcd silent exe "lcd " . expand("%:p:h") | pwd
 " LcdLocalrc
-command! LcdLocalrc exe "lcd " . fnamemodify(get(reverse(localrc#search(get(g:, 'localrc_filename'))), 0), ":p:h") | pwd
+command! LcdLocalrc silent exe "lcd " . fnamemodify(get(reverse(localrc#search(get(g:, 'localrc_filename'))), 0), ":p:h") | pwd
 " Ls
 command! -nargs=* -complete=file Ls echo vimproc#system("ls <args>")
 " Noh
@@ -2773,6 +2773,8 @@ let g:gista#warn_in_partial_save = 0
 let g:gista#auto_connect_after_post = 1
 " :wで保存時にアップデート
 let g:gista#update_on_write = 1
+" リストを自動で閉じる
+let g:gista#close_list_after_open = 1
 " タブで開く
 let g:gista#gist_opener = {
 \ 'edit': 'tabe',
