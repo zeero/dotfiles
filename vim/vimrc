@@ -2774,7 +2774,11 @@ let g:gista#auto_connect_after_post = 1
 " :wで保存時にアップデート
 let g:gista#update_on_write = 1
 " リストを自動で閉じる
-let g:gista#close_list_after_open = 1
+" let g:gista#close_list_after_open = 1
+" リスト表示の開き方
+let g:gista#list_opener = 'tabe'
+" リストのカラー設定
+hi link GistaFiles Directory
 " タブで開く
 let g:gista#gist_opener = {
 \ 'edit': 'tabe',
@@ -2787,8 +2791,6 @@ let g:gista#interactive_description = 0
 command! UGista exe 'Unite gista' .
 \ ' -silent -buffer-name=gista' .
 \ ' -tab -no-split -no-quit'
-" リスト表示の開き方
-" let g:gista#list_opener = 'tab'
 
 " yankround {{{1
 let g:yankround_max_history = 50
