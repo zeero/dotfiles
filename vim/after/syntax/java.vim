@@ -1,5 +1,5 @@
 " new
-hi Operator guifg=#ff33aa
+hi javaOperator guifg=#ff33aa
 
 " constant
 syn match MyJavaConstant "[a-z0-9]\@<!\([A-Z]\+[0-9_]*\)\+[a-z]\@!" containedin=ALLBUT,javaString,javaDocComment,javaLineComment,javaCommentTitle,javaFuncDef,MyJavaClass

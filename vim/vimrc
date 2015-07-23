@@ -1,4 +1,4 @@
-" Last Change: 22-Jul-2015. {{{
+" Last Change: 23-Jul-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -247,7 +247,7 @@ NeoBundleLazy 'Shougo/vim-vcs'
 NeoBundleLazy 'mattn/gist-vim'
 \, {'autoload': {'commands': ['Gist']}
 \,  'depends': ['mattn/webapi-vim']}
-NeoBundleLazy 'lambdalisue/vim-gista'
+NeoBundle 'lambdalisue/vim-gista'
 \, {'autoload': {'commands': ['Gista']
 \,               'mappings': '<Plug>(gista-'
 \,               'unite_sources': 'gista'}
@@ -349,7 +349,7 @@ NeoBundleLazy 'taku-o/vim-zoom'
 \, {'autoload': {'commands': ['ZoomIn', 'ZoomOut', 'ZoomReset']
 \,               'mappings': [['n', '+'], ['n', '-']]}
 \,  'gui': 1}
-NeoBundleLazy 'yonchu/accelerated-smooth-scroll'
+NeoBundle 'yonchu/accelerated-smooth-scroll'
 \, {'autoload': {'mappings': '<Plug>(ac-smooth-scroll-'}}
 NeoBundleLazy 'ShowMarks'
 \, {'autoload': {'commands': ['ShowMarksToggle']}}
@@ -387,8 +387,8 @@ NeoBundleLazy 'Keithbsmiley/swift.vim'
 
 " HTML/JavaScript {{{2
 NeoBundleLazy 'mattn/emmet-vim'
-\, {'autoload': {'filetypes': ['html']}
-\,               'insert': 1}
+\, {'autoload': {'filetypes': ['html']
+\,               'insert': 1}}
 NeoBundleLazy 'othree/html5.vim'
 \, {'autoload': {'filetypes': ['html']}}
 NeoBundleLazy 'hail2u/vim-css3-syntax'
@@ -812,7 +812,9 @@ let java_highlight_functions = "style"
 let java_highlight_debug = 1
 
 " DOS
-au myvimrc BufRead,BufNew,BufNewFile *.bat setlocal fenc=sjis ff=dos
+au myvimrc BufRead,BufNewFile *.bat setlocal fenc=sjis ff=dos
+" Excel
+au myvimrc BufRead {*.xls,*.xlsx} call vimproc#open(expand("<amatch>")) | quit
 
 " ファイルタイプ指定
 " JavaScript
@@ -2420,8 +2422,8 @@ let g:surround_125 = "{ \r }"
 "  <C-_> : コメントアウト／イン
 "          （_と/が同じキーマップになってるのでCtrl+/でできる）
 "let g:user_emmet_leader_key = '<C-e>'
-let g:user_emmet_expandabbr_key = ',e'
-let g:user_emmet_togglecomment_key = '<C-_>'
+let g:user_emmet_leader_key = ',e'
+" let g:user_emmet_togglecomment_key = '<C-_>'
 " タグのコンプリート
 let g:use_emmet_complete_tag = 1
 
@@ -2791,6 +2793,9 @@ let g:gista#interactive_description = 0
 command! UGista exe 'Unite gista' .
 \ ' -silent -buffer-name=gista' .
 \ ' -tab -no-split -no-quit'
+" CtrlPGista
+" nnoremap ,T :<C-u>CtrlPGista<CR>
+nnoremap ,T :<C-u>Gista<Space>-l<CR>
 
 " yankround {{{1
 let g:yankround_max_history = 50
