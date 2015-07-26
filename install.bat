@@ -31,4 +31,11 @@ echo ３．インストールが終わったらNeoBundleInstallでコンパイルが通るはず。
 echo （うまくいかなかったら「make -f make_mingw32.mak」を実行）
 pause
 
+rem others
+echo その他インストールが必要なソフトウェア
+echo ・lua
+echo ・ctags
+echo ・migemo
+echo ・curl（プロクシ必要な場合は~/_curlrc作ること）
+pause
 
