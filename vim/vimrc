@@ -1,4 +1,4 @@
-" Last Change: 24-Jul-2015. {{{
+" Last Change: 27-Jul-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -368,8 +368,12 @@ NeoBundle 'xolox/vim-reload'
 NeoBundle 'thinca/vim-openbuf'
 NeoBundle 'haya14busa/incsearch.vim'
 " \, {'autoload': {'mappings': '<Plug>(incsearch-)'}}
-NeoBundle 'haya14busa/incsearch-migemo.vim'
-NeoBundle 'haya14busa/incsearch-fuzzy.vim'
+NeoBundleLazy 'haya14busa/incsearch-migemo.vim'
+\, {'autoload': {'mappings': '<Plug>(incsearch-migemo-)'
+\,               'functions':['incsearch#config#migemo#converter', 'incsearch#config#migemo#make']}}
+NeoBundleLazy 'haya14busa/incsearch-fuzzy.vim'
+\, {'autoload': {'mappings': '<Plug>(incsearch-fuzzy-)'
+\,               'functions':['incsearch#config#fuzzy#converter', 'incsearch#config#fuzzy#make']}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -708,7 +712,7 @@ if has('gui_running')
   " Alt+CとAlt+Pでコピペする
   vnoremap <M-c> "+y
   inoremap <M-v> <C-r>+
-  cnoremap <M-v> <C-r><C-o>+
+  cnoremap <M-v> <C-r>+
   " C-Scrollでフォントサイズ変更（要Zoom.vim）
   nnoremap <C-ScrollWheelUp> :ZoomIn<CR>
   nnoremap <C-ScrollWheelDown> :ZoomOut<CR>
@@ -2691,18 +2695,20 @@ command! MemoListAll QFixHowm ra
 map / <Plug>(incsearch-forward)
 map ? <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+" migemoは重いのでいったんコマンドで
 " map / <Plug>(incsearch-migemo-/)
 " map ? <Plug>(incsearch-migemo-?)
 " map g/ <Plug>(incsearch-migemo-stay)
+command! MigemoIncsearch call incsearch#call(incsearch#config#migemo#make())
 " migemo-fuzzyは重いのでいったんなしで
-" function! s:config_migemo_fuzzy(...) abort
+" function! s:config_migemo_fuzzy(...) abort "{{{
 "   return extend(copy({
 "   \ 'converters': [
 "   \   incsearch#config#migemo#converter(),
 "   \   incsearch#config#fuzzy#converter(),
 "   \ ],
 "   \}), get(a:, 1, {}))
-" endfunction
+" endfunction "}}}
 " noremap <silent><expr> / incsearch#go(<SID>config_migemo_fuzzy())
 " noremap <silent><expr> ? incsearch#go(<SID>config_migemo_fuzzy({'command', '?'}))
 " noremap <silent><expr> g/ incsearch#go(<SID>config_migemo_fuzzy({'is_stay': 1}))
