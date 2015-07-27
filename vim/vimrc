@@ -2522,7 +2522,7 @@ let g:user_emmet_settings = {
 " vim立ち上げたときに、自動的にIndentGuidesをオンにする
 let g:indent_guides_enable_on_vim_startup = 1
 " ガイドをスタートするインデントの量
-let g:indent_guides_start_level = 2
+let g:indent_guides_start_level = 1
 " ガイドの幅
 let g:indent_guides_guide_size = 2
 " ガイドの最大値
@@ -2530,11 +2530,11 @@ let g:indent_guides_indent_levels = 40
 " 自動カラーを無効にする
 let g:indent_guides_auto_colors = 0
 " 奇数インデントのカラー
-hi IndentGuidesOdd  guibg=#262626 ctermbg=gray
-au myvimrc VimEnter,ColorScheme * :hi IndentGuidesOdd  guibg=#262626 ctermbg=gray
+hi IndentGuidesOdd  guibg=#262626 ctermbg=gray guifg=#000000 ctermfg=black
+au myvimrc VimEnter,ColorScheme * :hi IndentGuidesOdd  guibg=#262626 ctermbg=gray guifg=#000000 ctermfg=black
 " 偶数インデントのカラー
-hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgray
-au myvimrc VimEnter,ColorScheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgray
+hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgray guifg=#000000 ctermfg=black
+au myvimrc VimEnter,ColorScheme * :hi IndentGuidesEven guibg=#3c3c3c ctermbg=darkgray guifg=#000000 ctermfg=black
 " ハイライト色の変化の幅
 let g:indent_guides_color_change_percent = 30
 " 無視するファイルタイプ
