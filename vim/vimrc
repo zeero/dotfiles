@@ -2002,7 +2002,7 @@ nnoremap <C-@> :<C-u>CtrlPTag<CR>
 " CtrlPLine
 nnoremap <C-o> :<C-u>execute 'CtrlPLine ' . expand('%')<CR>
 " CtrlPRegister（INSERTモードのみ）
-inoremap <C-@> <C-o>:<C-u>CtrlPRegister<CR>
+inoremap <C-@> <C-o>:<C-u>CtrlPYankRound<CR>
 " コマンドエイリアス
 command! -nargs=? -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
 command! -nargs=? -complete=dir BookmarkEdit exe 'tabe ' g:ctrlp_cache_dir . '/bkd/cache.txt'
