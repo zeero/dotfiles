@@ -1,4 +1,4 @@
-" Last Change: 27-Jul-2015. {{{
+" Last Change: 04-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -385,6 +385,10 @@ NeoBundle 'taka84u9/vim-ref-ri'
 NeoBundle 'edsono/vim-matchit'
 " NeoBundleLazy 'tpope/vim-bundler'
 " \, {'autoload': {'filetypes': ['ruby']}}
+if executable('rct-complete')
+  NeoBundleLazy 'osyo-manga/vim-monster'
+  \, {'autoload': {'filetypes': ['ruby']}}
+endif
 
 " Swift {{{2
 NeoBundleLazy 'Keithbsmiley/swift.vim'
@@ -2059,6 +2063,10 @@ let g:ctrlp_mruf_case_sensitive = 0
 let g:ctrlp_help_default_mode = 'v'
 " ドットファイルを検索対象にする
 let g:ctrlp_show_hidden = 1
+" 除外設定
+let g:ctrlp_custom_ignore = {
+\ 'dir': '.metadata',
+\}
 " migemoを使って日本語正規表現検索 {{{
 if executable('migemogrep')
   function! MigemoMatch(items, str, limit, mmode, ispath, crfile, regex)
@@ -2517,6 +2525,14 @@ let g:user_emmet_settings = {
 "nmap <silent> <F11> mzggVG!jxmpfilter -a<cr>'z
 "imap <silent> <F11> <Esc><F11>
 "}}}
+
+" monster.vim {{{1
+" Set async completion.
+" let g:monster#completion#rcodetools#backend = "async_rct_complete"
+" Use neocomplete.vim
+let g:neocomplete#sources#omni#input_patterns = {
+\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
+\}
 
 " IndentGuides {{{1
 " vim立ち上げたときに、自動的にIndentGuidesをオンにする
