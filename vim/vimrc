@@ -1,4 +1,4 @@
-" Last Change: 04-Aug-2015. {{{
+" Last Change: 07-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -287,6 +287,8 @@ NeoBundleLazy 'jceb/vim-editqf'
 \, {'autoload': {'commands': ['QFAddNote']}}
 NeoBundleLazy 'will133/vim-dirdiff'
 \, {'autoload': {'commands': [{'name': 'DirDiff', 'complete': 'dir'}]}}
+NeoBundleLazy 'rking/ag.vim'
+\, {'autoload': {'commands': ['Ag']}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
