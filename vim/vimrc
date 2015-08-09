@@ -1,4 +1,4 @@
-" Last Change: 07-Aug-2015. {{{
+" Last Change: 09-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -26,6 +26,8 @@ set ttimeout
 set ttyfast
 " パス区切り文字を共通化する
 set shellslash
+" CursorHoldのインターバル
+set updatetime=1000
 " 自動コマンドの初期化
 augroup myvimrc
   au!
@@ -143,7 +145,8 @@ NeoBundleLazy 'osyo-manga/unite-quickfix'
 NeoBundleLazy 'tyru/caw.vim'
 \, {'autoload': {'mappings': '<Plug>(caw:'}}
 NeoBundleLazy 'thinca/vim-qfreplace'
-\, {'autoload': {'filetypes': ['unite', 'quickfix']}}
+\, {'autoload': {'filetypes': ['unite', 'quickfix']
+\,               'commands': ['Qfreplace']}}
 NeoBundleLazy 'kana/vim-smartchr'
 \, {'autoload': {'insert': 1}}
 NeoBundleLazy 'autodate.vim'
@@ -264,7 +267,7 @@ NeoBundleLazy 'sjl/gundo.vim'
 \, {'autoload': {'commands': ['GundoToggle']}}
 NeoBundleLazy 't9md/vim-quickhl'
 \, {'autoload': {'mappings': '<Plug>(quickhl-'
-\,               'commands': 'QuickhlManualReset'}}
+\,               'commands': ['QuickhlManualAdd', 'QuickhlManualReset']}}
 NeoBundleLazy 'AndrewRadev/linediff.vim'
 \, {'autoload': {'commands': ['Linediff']}}
 NeoBundleLazy 'thinca/vim-prettyprint'
@@ -287,8 +290,6 @@ NeoBundleLazy 'jceb/vim-editqf'
 \, {'autoload': {'commands': ['QFAddNote']}}
 NeoBundleLazy 'will133/vim-dirdiff'
 \, {'autoload': {'commands': [{'name': 'DirDiff', 'complete': 'dir'}]}}
-NeoBundleLazy 'rking/ag.vim'
-\, {'autoload': {'commands': ['Ag']}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -428,7 +429,8 @@ NeoBundle 'kamichidu/vim-edit-properties'
 
 " VimScript {{{2
 NeoBundleLazy 'vim-jp/vital.vim'
-\, {'autoload': {'commands': ['Vitalize']}}
+\, {'autoload': {'commands': ['Vitalize']
+\,               'functions': ['vital#of']}}
 NeoBundle 'kana/vim-vspec'
 NeoBundle 'rhysd/vim-vspec-matchers'
 NeoBundleLazy 'Shougo/vesting'
@@ -566,7 +568,7 @@ set infercase
 " <C-a>で8進数は除く
 set nrformats-=octal
 " スクロールの設定
-set scrolloff=3
+set scrolloff=5
 set sidescroll=0
 set sidescrolloff=9
 " ビープ音を消す
@@ -839,7 +841,7 @@ au myvimrc BufRead,BufNewFile *.tags setf tags
 au myvimrc BufRead,BufNewFile *.log setf log
 
 " コマンド定義 {{{1
-" ユーティリティ {{{2
+" 拡張 {{{2
 " H(elp)
 command! -nargs=? -complete=help H call s:my_help('<args>')
 function! s:my_help(keyword) "{{{
@@ -853,7 +855,7 @@ function! s:my_help(keyword) "{{{
   endif
 endfunction "}}}
 " H(elp)f(unction-list)
-command! -nargs=0 Hf H function-list | wincmd p
+command! -nargs=0 Hf H function-list
 " K(otoba)
 command! -nargs=1 K Ref webdict <args>
 " Vimrc
@@ -934,22 +936,7 @@ command! -nargs=? Debug echohl Debug | echomsg "Debug : ".expand("<sfile>")." : 
 " Yank
 command! -nargs=1 Yank redi @" | <args> | redi END
 
-" Diff
-command! -nargs=0 DF windo diffthis
-" Diffoff
-command! -nargs=0 DFOff call s:my_diffoff()
-au myvimrc BufWinLeave * call s:my_diffoff()
-function! s:my_diffoff() "{{{
-  if &diff
-    windo diffoff
-    set foldmethod=marker
-  endif
-endfunction "}}}
-" DiffWith
-command! -complete=file -nargs=1 DiffWith vertical diffsplit <args>
-" DiffOrig（編集前とdiff）
-command! -nargs=0 DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
-
+" 独自 {{{2
 " QFClear
 command! -nargs=0 QFClear call setqflist([])
 " LocalInit
@@ -966,8 +953,57 @@ command! -nargs=0 Ctags call s:my_ctags()
 function! s:my_ctags() "{{{
   call vimproc#system_bg('ctags -R -f tags ' . s:my_path_convert(getcwd()))
 endfunction "}}}
+" Ag
+command! -nargs=+ Ag call s:my_silver_searcher(<q-args>)
+function! s:my_silver_searcher(args) "{{{
+  " option parse
+  let options = []
+  let pattern = ''
+  let path = '*'
+  let options_after = []
+  for arg in split(a:args)
+    if arg =~ "^[^-]"
+      if empty(pattern)
+        let pattern = arg
+      else
+        let path = arg
+      end
+    else
+      if empty(pattern)
+        call add(options, arg)
+      else
+        call add(options_after, arg)
+      endif
+    endif
+  endfor
+  let options = extend(options, extend([pattern, path], options_after))
 
-" TortoiseSVN
+  " async
+  call s:my_vimproc_async({
+  \ 'cmd': 'ag --nogroup --nocolor --column --line-numbers ' .
+  \        join(options),
+  \ 'callback': 's:my_silver_searcher_finish'
+  \})
+endfunction "}}}
+function! s:my_silver_searcher_finish(result) "{{{
+  let qflist = []
+  let lines = split(a:result, '\n')
+  for line in lines
+    let items = split(line, ':')
+    let qfline = {
+    \ 'filename': get(items, 0),
+    \ 'lnum': get(items, 1),
+    \ 'col': get(items, 2),
+    \}
+    call remove(items, 0, 2)
+    let qfline['text'] = join(items, ':')
+    call add(qflist, qfline)
+  endfor
+  call setqflist(qflist, 'r')
+  tab copen
+endfunction "}}}
+
+" TortoiseSVN {{{2
 " /endrev:-1 は HEAD（-2：ベースリビジョン、-3：ワーキングコピー）
 if executable('TortoiseProc')
   command! TSVNLog silent call vimproc#system_bg('TortoiseProc /command:log /path:"'.expand("%").'" /notempfile /closeonend')
@@ -999,6 +1035,23 @@ EOF
   endif
   return ret
 endfunction "}}}
+
+" Diff {{{2
+" DF
+command! -nargs=0 DF windo diffthis
+" DFOff
+command! -nargs=0 DFOff call s:my_diffoff()
+au myvimrc BufWinLeave * call s:my_diffoff()
+function! s:my_diffoff() "{{{
+  if &diff
+    windo diffoff
+    set foldmethod=marker
+  endif
+endfunction "}}}
+" DiffWith
+command! -complete=file -nargs=1 DiffWith vertical diffsplit <args>
+" DiffOrig（編集前とdiff）
+command! -nargs=0 DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 
 " 別ウィンドウ系 {{{2
 " SnipEdit
@@ -1074,6 +1127,66 @@ function! s:my_path_convert(path) "{{{
 
   let path = iconv(a:path, &encoding, system_enc)
   return substitute(path, '/', path_separater, 'g')
+endfunction "}}}
+" 非同期実行
+command! -nargs=+ MyVimprocAsync call s:my_vimproc_async({'cmd': <q-args>})
+augroup my-vimproc-async
+augroup END
+function! s:my_vimproc_async(args) "{{{
+  let cmd = a:args.cmd
+  let callback = get(a:args, 'callback', 's:my_vimproc_finish')
+
+  let vimproc = vimproc#pgroup_open(cmd)
+  echom "[INFO] my vimproc async started. pid: " . vimproc.pid . ", cmd: " . cmd
+  call vimproc.stdin.close()
+
+  let s:vimproc = vimproc
+  let s:result = ""
+
+  augroup my-vimproc-async
+    execute 'au! CursorHold,CursorHoldI * call'
+    \       's:my_vimproc_receive_result("' . callback . '")'
+  augroup END
+endfunction "}}}
+function! s:my_vimproc_receive_result(callback) "{{{
+  if !has_key(s:, "vimproc")
+    return
+  endif
+
+  let vimproc = s:vimproc
+
+  try
+    if !vimproc.stdout.eof
+      let s:result .= vimproc.stdout.read()
+    endif
+
+    if !vimproc.stderr.eof
+      let s:result .= vimproc.stderr.read()
+    endif
+
+    if !(vimproc.stdout.eof && vimproc.stderr.eof)
+      return 0
+    endif
+  catch
+    echom v:throwpoint
+  endtry
+
+  echom "[INFO] my vimproc async finished. pid: " . vimproc.pid . ", callback: " . a:callback
+  let MyVimprocAsyncCallback = function(a:callback)
+  call MyVimprocAsyncCallback(s:result)
+
+  augroup my-vimproc-async
+    au!
+  augroup END
+
+  call vimproc.stdout.close()
+  call vimproc.stderr.close()
+  call vimproc.waitpid()
+  unlet s:vimproc
+  unlet s:result
+endfunction "}}}
+function! s:my_vimproc_finish(result) "{{{
+  echo a:result
 endfunction "}}}
 
 " キーマップ定義 {{{1
@@ -1191,8 +1304,8 @@ nnoremap <C-j> :tab tj <C-R>=expand('<cword>')<CR><CR>
 vnoremap <C-j> y:tab tj <C-r>"<CR>
 nnoremap ,[ <C-t>
 nnoremap <C-k> <C-t>
-nnoremap <C-h> <C-o>zz
-nnoremap <C-l> <C-i>zz
+nnoremap <C-h> <C-o>
+nnoremap <C-l> <C-i>
 
 " ノーマルモード操作 {{{2
 " 行末までヤンク
