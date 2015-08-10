@@ -2453,6 +2453,7 @@ function! MyFilename() " {{{2
   return (&ft == 'vimfiler' ? vimfiler#get_status_string() :
 \         &ft == 'unite' ? unite#get_status_string() :
 \         &ft == 'vimshell' ? '' :
+\         &ft == '' && 'ControlP' == expand('%:t') ? '' :
 \         '' != expand('%:t') ? expand('%:t') : '[No Name]') .
 \        ('' != MyModified() ? ' ' . MyModified() : '') .
 \        ('' != MyReadonly() ? ' ' . MyReadonly() : '')
@@ -2488,7 +2489,7 @@ function! MyFileencoding() " {{{2
 endfunction
 function! MyMode() " {{{2
   return &ft == 'help' ? 'Help' :
-\        &ft == 'ctrlp' ? 'CtrlP' :
+\        &ft == '' && 'ControlP' == expand('%:t') ? 'CtrlP' :
 \        &ft == 'vimshell' ? 'VimShell' :
 \        &ft == 'qf' ? 'QuickFix' :
 \        &ft == 'unite' ? 'Unite' :
