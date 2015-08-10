@@ -1,4 +1,4 @@
-" Last Change: 09-Aug-2015. {{{
+" Last Change: 10-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -956,32 +956,10 @@ endfunction "}}}
 " Ag
 command! -nargs=+ Ag call s:my_silver_searcher(<q-args>)
 function! s:my_silver_searcher(args) "{{{
-  " option parse
-  let options = []
-  let pattern = ''
-  let path = '*'
-  let options_after = []
-  for arg in split(a:args)
-    if arg =~ "^[^-]"
-      if empty(pattern)
-        let pattern = arg
-      else
-        let path = arg
-      end
-    else
-      if empty(pattern)
-        call add(options, arg)
-      else
-        call add(options_after, arg)
-      endif
-    endif
-  endfor
-  let options = extend(options, extend([pattern, path], options_after))
-
   " async
   call s:my_vimproc_async({
   \ 'cmd': 'ag --nogroup --nocolor --column --line-numbers ' .
-  \        join(options),
+  \        a:args,
   \ 'callback': 's:my_silver_searcher_finish'
   \})
 endfunction "}}}
@@ -1115,7 +1093,7 @@ command! Colortest belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source $
 command! Hitest belowright vsplit $VIMRUNTIME/syntax/hitest.vim | source $VIMRUNTIME/syntax/hitest.vim
 
 " 共通ファンクション {{{2
-" パス変換
+" パス変換 {{{3
 function! s:my_path_convert(path) "{{{
   if has('win32') || has('win64')
     let system_enc = 'cp932'
@@ -1128,7 +1106,7 @@ function! s:my_path_convert(path) "{{{
   let path = iconv(a:path, &encoding, system_enc)
   return substitute(path, '/', path_separater, 'g')
 endfunction "}}}
-" 非同期実行
+" 非同期実行 {{{3
 command! -nargs=+ MyVimprocAsync call s:my_vimproc_async({'cmd': <q-args>})
 augroup my-vimproc-async
 augroup END
@@ -2852,26 +2830,26 @@ command! Va silent Vcs add
 command! Vc silent Vcs commit
 command! Vca silent call vcs#vcs('add', '.') | silent Vcs commit
 command! Vl silent Vcs log
-command! Vpush call s:my_git_vimproc('push')
-command! Vpull call s:my_git_vimproc('pull')
-" Vpush/Vpullのためのvimproc
-function! s:my_git_vimproc(gitcommand) "{{{
-  let command = 'git ' . a:gitcommand
-  let sub = vimproc#popen2(command)
-  let res = ''
-  while !sub.stdout.eof
-    let res .= sub.stdout.read()
-    let res .= sub.stderr.read()
-  endwhile
-  let [cond, status] = sub.waitpid()
-  if 0 != status
-    echohl ErrorMsg
-  endif
-  for line in split(res, '\r\n\|\r\|\n')
-    echomsg "[".command."] ".line
-  endfor
-  echohl None
-endfunction "}}}
+command! Vpush call s:my_vimproc_async({'cmd': 'git push'})
+command! Vpull call s:my_vimproc_async({'cmd': 'git pull'})
+" Vpush/Vpullのためのvimproc（非同期ファンクション使用のため廃止）
+" function! s:my_git_vimproc(gitcommand) "{{{
+"   let command = 'git ' . a:gitcommand
+"   let sub = vimproc#popen2(command)
+"   let res = ''
+"   while !sub.stdout.eof
+"     let res .= sub.stdout.read()
+"     let res .= sub.stderr.read()
+"   endwhile
+"   let [cond, status] = sub.waitpid()
+"   if 0 != status
+"     echohl ErrorMsg
+"   endif
+"   for line in split(res, '\r\n\|\r\|\n')
+"     echomsg "[".command."] ".line
+"   endfor
+"   echohl None
+" endfunction "}}}
 
 " vim-dirdiff {{{1
 let g:DirDiffExcludes = ".svn,.git,CVS,*.class,*.exe,.*.swp"
