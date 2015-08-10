@@ -879,7 +879,7 @@ command! Lcd silent exe "lcd " . expand("%:p:h") | pwd
 " LcdLocalrc
 command! LcdLocalrc silent exe "lcd " . fnamemodify(get(reverse(localrc#search(get(g:, 'localrc_filename'))), 0), ":p:h") | pwd
 " Ls
-command! -nargs=* -complete=file Ls echo vimproc#system("ls <args>")
+command! -nargs=* -complete=file Ls echo globpath("./<args>", "*", 1)
 " Noh
 command! Noh noh | QuickhlManualReset
 " Info
@@ -1223,6 +1223,7 @@ vnoremap gx y:<C-u>call vimproc#open(<C-r>")<CR>
 nnoremap <silent> <Esc> <Esc>:<C-u>Noh<CR>:<C-u>ZoomReset<CR>:<C-u>echo<CR>
 " CopyFileName
 nnoremap gy :<C-u>CopyFileName<CR>
+nnoremap gY :<C-u>CopyPath<CR>
 " 行の最後ならxで後方削除
 nnoremap <expr> x virtcol(".") == virtcol("$") ? 'X' : 'x'
 
@@ -2560,9 +2561,10 @@ let g:indent_guides_exclude_filetypes = ['help', 'unite', 'vimfiler', 'vimshell'
 
 " Syntastic {{{1
 let g:syntastic_mode_map = {
-\ 'mode': 'active',
-\ 'passive_filetypes': ['html', 'swift']
+\ 'mode': 'passive',
 \}
+" \ 'mode': 'active',
+" \ 'passive_filetypes': ['html', 'swift']
 if executable('rubocop')
   let g:syntastic_ruby_checkers = ['rubocop']
 endif
