@@ -1,4 +1,4 @@
-" Last Change: 10-Aug-2015. {{{
+" Last Change: 11-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -99,6 +99,8 @@ NeoBundle 'mattn/ctrlp-register'
 \, {'depends': 'ctrlpvim/ctrlp.vim'}
 NeoBundle 'zeero/vim-ctrlp-help'
 \, {'depends': 'ctrlpvim/ctrlp.vim'}
+NeoBundle 'zeero/vim-ctrlp-gista'
+\, {'depends': ['ctrlpvim/ctrlp.vim', 'lambdalisue/vim-gista']}
 
 " Unite {{{2
 NeoBundleLazy 'Shougo/unite.vim'
@@ -881,7 +883,7 @@ command! Lcd silent exe "lcd " . expand("%:p:h") | pwd
 " LcdLocalrc
 command! LcdLocalrc silent exe "lcd " . fnamemodify(get(reverse(localrc#search(get(g:, 'localrc_filename'))), 0), ":p:h") | pwd
 " Ls
-command! -nargs=* -complete=file Ls echo globpath("./<args>", "*", 1)
+command! -nargs=* -complete=file Ls echo globpath('./<args>', '*', 1)
 " Noh
 command! Noh noh | QuickhlManualReset
 " Info
@@ -2486,11 +2488,12 @@ function! MyFileencoding() " {{{2
 endfunction
 function! MyMode() " {{{2
   return &ft == 'help' ? 'Help' :
-\        &ft == 'minibufexpl' ? 'MBE' :
-\        &ft == 'quickrun' ? 'QuickRun' :
+\        &ft == 'ctrlp' ? 'CtrlP' :
+\        &ft == 'vimshell' ? 'VimShell' :
 \        &ft == 'qf' ? 'QuickFix' :
 \        &ft == 'unite' ? 'Unite' :
-\        &ft == 'vimshell' ? 'VimShell' :
+\        &ft == 'quickrun' ? 'QuickRun' :
+\        &ft == 'minibufexpl' ? 'MBE' :
 \        winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
@@ -2917,6 +2920,9 @@ nnoremap ,T :<C-u>Gista<Space>-l<CR>
 let g:yankround_max_history = 50
 let g:yankround_use_region_hl = 1
 nmap ,y :<C-u>CtrlPYankRound<CR>
+
+" vital {{{1
+let s:V = vital#of('vital')
 
 "}}}1-------------------------------------------------------------------------
 
