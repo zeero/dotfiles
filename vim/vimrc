@@ -1,4 +1,4 @@
-" Last Change: 11-Aug-2015. {{{
+" Last Change: 12-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -2902,6 +2902,7 @@ let g:gista#list_opener = 'tabe'
 " リストのカラー設定
 hi link GistaFiles Directory
 " タブで開く
+let g:gista#gist_default_opener = 'tabe'
 let g:gista#gist_opener = {
 \ 'edit': 'tabe',
 \ 'split': 'rightbelow split',
