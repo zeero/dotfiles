@@ -956,7 +956,7 @@ function! s:my_ctags() "{{{
   call vimproc#system_bg('ctags -R -f tags ' . s:my_path_convert(getcwd()))
 endfunction "}}}
 " Ag
-command! -nargs=+ Ag call s:my_silver_searcher(<q-args>)
+command! -nargs=+ -complete=file Ag call s:my_silver_searcher(<q-args>)
 function! s:my_silver_searcher(args) "{{{
   " async
   call s:my_vimproc_async({
@@ -2114,12 +2114,13 @@ command! -nargs=? -complete=dir BookmarkEdit exe 'tabe ' g:ctrlp_cache_dir . '/b
 " endfunction "}}}
 " 拡張機能を有効にする
 let g:ctrlp_extensions = [
-\ 'line',
-\ 'yankround',
 \ 'register',
+\ 'line',
 \ 'tag',
-\ 'menu',
+\ 'yankround',
 \ 'help',
+\ 'gista',
+\ 'menu',
 \ 'bookmarkdir',
 \]
 
@@ -2916,8 +2917,8 @@ command! UGista exe 'Unite gista' .
 \ ' -silent -buffer-name=gista' .
 \ ' -tab -no-split -no-quit'
 " CtrlPGista
-" nnoremap ,T :<C-u>CtrlPGista<CR>
-nnoremap ,T :<C-u>Gista<Space>-l<CR>
+" nnoremap ,T :<C-u>Gista<Space>-l<CR>
+nnoremap ,T :<C-u>CtrlPGista<CR>
 
 " yankround {{{1
 let g:yankround_max_history = 50
