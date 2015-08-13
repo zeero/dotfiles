@@ -1,4 +1,4 @@
-" Last Change: 12-Aug-2015. {{{
+" Last Change: 13-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -2113,12 +2113,13 @@ command! -nargs=? -complete=dir BookmarkEdit exe 'tabe ' g:ctrlp_cache_dir . '/b
 " endfunction "}}}
 " 拡張機能を有効にする
 let g:ctrlp_extensions = [
-\ 'line',
-\ 'yankround',
 \ 'register',
+\ 'line',
 \ 'tag',
-\ 'menu',
+\ 'yankround',
 \ 'help',
+\ 'gista',
+\ 'menu',
 \ 'bookmarkdir',
 \]
 
@@ -2915,8 +2916,8 @@ command! UGista exe 'Unite gista' .
 \ ' -silent -buffer-name=gista' .
 \ ' -tab -no-split -no-quit'
 " CtrlPGista
-" nnoremap ,T :<C-u>CtrlPGista<CR>
-nnoremap ,T :<C-u>Gista<Space>-l<CR>
+" nnoremap ,T :<C-u>Gista<Space>-l<CR>
+nnoremap ,T :<C-u>CtrlPGista<CR>
 
 " yankround {{{1
 let g:yankround_max_history = 50
