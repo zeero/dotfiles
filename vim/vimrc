@@ -1,4 +1,4 @@
-" Last Change: 12-Aug-2015. {{{
+" Last Change: 13-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -1449,7 +1449,8 @@ nnoremap ,f :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<Space>-toggle<CR>
 " VimShell
 nnoremap ,s :<C-u>VimShellPop<Space>-create<Space>-buffer-name=vimshell<CR>
-nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<Space>$HOME<CR>
+" nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<Space>$HOME<CR>
+nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<CR>
 " MBEToggle
 nnoremap ,b :<C-u>MBEToggle<CR>
 " TagbarToggle
