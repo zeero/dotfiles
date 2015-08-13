@@ -1,4 +1,4 @@
-" Last Change: 13-Aug-2015. {{{
+" Last Change: 14-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -2917,7 +2917,6 @@ command! UGista exe 'Unite gista' .
 \ ' -silent -buffer-name=gista' .
 \ ' -tab -no-split -no-quit'
 " CtrlPGista
-" nnoremap ,T :<C-u>Gista<Space>-l<CR>
 nnoremap ,T :<C-u>CtrlPGista<CR>
 
 " yankround {{{1
