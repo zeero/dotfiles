@@ -956,7 +956,7 @@ function! s:my_ctags() "{{{
   call vimproc#system_bg('ctags -R -f tags ' . s:my_path_convert(getcwd()))
 endfunction "}}}
 " Ag
-command! -nargs=+ Ag call s:my_silver_searcher(<q-args>)
+command! -nargs=+ -complete=file Ag call s:my_silver_searcher(<q-args>)
 function! s:my_silver_searcher(args) "{{{
   " async
   call s:my_vimproc_async({
@@ -1449,7 +1449,8 @@ nnoremap ,f :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<Space>-toggle<CR>
 " VimShell
 nnoremap ,s :<C-u>VimShellPop<Space>-create<Space>-buffer-name=vimshell<CR>
-nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<Space>$HOME<CR>
+" nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<Space>$HOME<CR>
+nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<CR>
 " MBEToggle
 nnoremap ,b :<C-u>MBEToggle<CR>
 " TagbarToggle
