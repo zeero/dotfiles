@@ -2951,5 +2951,15 @@ let g:yankround_max_history = 50
 let g:yankround_use_region_hl = 1
 nmap ,y :<C-u>CtrlPYankRound<CR>
 
+" vim-unified-diff {{{1
+set diffexpr=unified_diff#diffexpr()
+let unified_diff#executable = 'git'
+let unified_diff#arguments = [
+\ 'diff', '--no-index', '--no-color', '--no-ext-diff', '--unified=0', '--histogram'
+\ ]
+let unified_diff#iwhite_arguments = [
+\ '--ignore--all-space',
+\ ]
+
 "}}}1-------------------------------------------------------------------------
 
