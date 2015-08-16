@@ -44,7 +44,15 @@ nnoremap <C-n> <C-t>
 nnoremap <Esc> :st<CR>zz<Esc>
 " 最近閉じたタブの一覧（補完待ち状態にする）
 nnoremap U :undo<Space>
-" コマンド履歴
+" コマンドライン移動
+cnoremap <C-a> <Home>
+cnoremap <C-h> <Left>
+cnoremap <C-l> <Right>
+cnoremap <C-w> <S-Left>
+cnoremap <C-b> <S-Right>
+" 文字削除
+cnoremap <C-d> <Del>
+" ヒストリ
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 " コマンドラインモードでIMEオフ
