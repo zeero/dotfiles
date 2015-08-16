@@ -52,10 +52,12 @@ endif "}}}
 " NeoBundle開始 {{{2
 filetype off
 set rtp& rtp+=$MYVIMDIR/bundle/neobundle.vim
-call neobundle#rc(expand($MYVIMDIR . '/bundle'))
+call neobundle#begin(expand($MYVIMDIR . '/bundle'))
 
 " 基本 {{{2
-NeoBundleFetch 'Shougo/neobundle.vim'
+" Fetchするとレポジトリが壊れるのでしない
+" （submoduleにしてるから？）
+" NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc'
 \, {'build': {
 \    'windows': 'make -f make_mingw32.mak',
@@ -445,6 +447,7 @@ if isdirectory(expand($MYVIMDIR) . '/bundle.local')
 endif
 
 " NeoBundle終了 {{{2
+call neobundle#end()
 filetype plugin indent on
 " インストールチェック
 NeoBundleCheck
@@ -1097,7 +1100,8 @@ command! Hitest belowright vsplit $VIMRUNTIME/syntax/hitest.vim | source $VIMRUN
 
 " 共通ファンクション {{{2
 " vital {{{3
-let s:V = vital#of('vital')
+" vital読み込むと後続の設定がおかしくなるのでvimrcでは直接使わない
+" let s:V = vital#of('vital')
 
 " パス変換 {{{3
 function! s:my_path_convert(path) "{{{
