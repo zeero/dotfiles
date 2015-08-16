@@ -1,4 +1,4 @@
-" Last Change: 16-Aug-2015. {{{
+" Last Change: 17-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -462,7 +462,7 @@ command! Blog NeoBundleLog
 command! -nargs=? Bso NeoBundleSource <args>
 
 " singleton.vim {{{1
-if has('gui_running')
+if has('gui_running') && exists('*singleton#enable')
   let g:singleton#opener = 'tab drop'
   call singleton#enable()
 endif
@@ -658,7 +658,7 @@ set splitright
 " TODO: Unite開くと低くなる
 "au myvimrc BufRead,BufNew,BufNewFile * if winwidth(0) > 140 | wincmd L | wincmd _ | endif
 " スプラッシュ
-au myvimrc VimEnter * if !argc() | call s:my_splash() | endif
+au myvimrc VimEnter * if !argc() && exists('*localrc#load') | call s:my_splash() | endif
 function! s:my_splash() "{{{
   " スプラッシュを開く
   enew
@@ -788,10 +788,7 @@ au myvimrc FileType help setlocal iskeyword+=:
 " vimrcは起動時だったらgit pull
 " au myvimrc VimEnter *vimrc call s:my_vimenter_vimrc()
 function! s:my_vimenter_vimrc() "{{{
-  exe "lcd " . expand("%:p:h")
-  if exists('*fugitive#head')
-    call s:my_git_vimproc('pull')
-  endif
+  call s:my_vimproc_async({'cmd': 'git pull ' . resolve($MYVIMRC)})
   checktime
 endfunction "}}}
 
@@ -931,7 +928,7 @@ function! s:my_info() "{{{
   else
     let sep = ":"
   endif
-  if exists('*fugitive#head') && strlen(fugitive#head()) && len(globpath(substitute($PATH, sep, ",", "g"), "git-info")) && executable('mktemp')
+  if exists('*fugitive#head') && strlen(fugitive#head()) && executable('git-info') && executable('mktemp')
     echo vimproc#system('git info')
   endif
 endfunction "}}}
@@ -1175,11 +1172,11 @@ function! s:my_vimproc_receive_result(callback) "{{{
   unlet s:result
 endfunction "}}}
 function! s:my_vimproc_finish(result) "{{{
-  call s:my_notifier(a:result)
+  call s:my_notify(a:result)
 endfunction "}}}
 
 " 通知 {{{3
-function! s:my_notifier(message) "{{{
+function! s:my_notify(message) "{{{
   if has('mac') && executable('terminal-notifier')
     call vimproc#system_bg('terminal-notifier -message "' . a:message . '"')
   else
@@ -1361,8 +1358,10 @@ xmap r <Plug>(operator-reverse-text)
 xmap + <Plug>(expand_region_expand)
 xmap - <Plug>(expand_region_shrink)
 " パス置換
-xmap \ <Plug>(operator-path-convert)
-call operator#user#define('path-convert', 'MyOpPathConvert')
+xmap <F12> <Plug>(operator-path-convert)
+if exists('*operator#user#define')
+  call operator#user#define('path-convert', 'MyOpPathConvert')
+endif
 function! MyOpPathConvert(motion_wiseness) "{{{
   '[,']s/\//\\/g
 endfunction "}}}
@@ -2309,7 +2308,9 @@ function! s:ansi_buffer.finish(session)
   AnsiEsc
   call call(quickrun#outputter#buffer#new().finish, [a:session], self)
 endfunction
-call quickrun#register_outputter("ansi_buffer", s:ansi_buffer)
+if exists('*quickrun#register_outputter')
+  call quickrun#register_outputter("ansi_buffer", s:ansi_buffer)
+endif
 unlet s:ansi_buffer
 
 " 共通設定 {{{2
@@ -2330,11 +2331,13 @@ let g:quickrun_config = {
 \  },
 \}
 " アニメーション
-call quickrun#module#register(shabadou#make_quickrun_hook_anim(
-\ "animation",
-\ ['QuickRun: ／', 'QuickRun: ―', 'QuickRun: ＼', 'QuickRun: ｜',],
-\ 12,
-\), 1)
+if exists('*quickrun#module#register')
+  call quickrun#module#register(shabadou#make_quickrun_hook_anim(
+  \ "animation",
+  \ ['QuickRun: ／', 'QuickRun: ―', 'QuickRun: ＼', 'QuickRun: ｜',],
+  \ 12,
+  \), 1)
+endif
 
 " ruby.rspec {{{2
 au myvimrc BufRead,BufNewFile *_spec.rb set filetype=ruby.rspec syntax=ruby
@@ -2821,7 +2824,9 @@ unlet s:bundle
 nmap n <Plug>(anzu-n)zvzz
 nmap N <Plug>(anzu-N)zvzz
 let g:anzu_status_format = "(%i/%l)"
-au myvimrc CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
+if exists('*anzu#clear_search_status')
+  au myvimrc CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
+endif
 
 " editqf {{{1
 let g:editqf_saveqf_filename  = "~/.editqf_save_data"
