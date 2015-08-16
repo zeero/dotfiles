@@ -1095,6 +1095,9 @@ command! Colortest belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source $
 command! Hitest belowright vsplit $VIMRUNTIME/syntax/hitest.vim | source $VIMRUNTIME/syntax/hitest.vim
 
 " 共通ファンクション {{{2
+" vital {{{3
+let s:V = vital#of('vital')
+
 " パス変換 {{{3
 function! s:my_path_convert(path) "{{{
   if has('win32') || has('win64')
@@ -1108,6 +1111,7 @@ function! s:my_path_convert(path) "{{{
   let path = iconv(a:path, &encoding, system_enc)
   return substitute(path, '/', path_separater, 'g')
 endfunction "}}}
+
 " 非同期実行 {{{3
 command! -nargs=+ MyVimprocAsync call s:my_vimproc_async({'cmd': <q-args>})
 augroup my-vimproc-async
@@ -1166,7 +1170,16 @@ function! s:my_vimproc_receive_result(callback) "{{{
   unlet s:result
 endfunction "}}}
 function! s:my_vimproc_finish(result) "{{{
-  echo a:result
+  call s:my_notifier(a:result)
+endfunction "}}}
+
+" 通知 {{{3
+function! s:my_notifier(message) "{{{
+  if has('mac') && executable('terminal-notifier')
+    call vimproc#system_bg('terminal-notifier -message "' . a:message . '"')
+  else
+    echo a:message
+  endif
 endfunction "}}}
 
 " キーマップ定義 {{{1
@@ -2932,9 +2945,6 @@ nnoremap ,T :<C-u>CtrlPGista<CR>
 let g:yankround_max_history = 50
 let g:yankround_use_region_hl = 1
 nmap ,y :<C-u>CtrlPYankRound<CR>
-
-" vital {{{1
-let s:V = vital#of('vital')
 
 "}}}1-------------------------------------------------------------------------
 
