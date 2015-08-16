@@ -89,6 +89,7 @@ NeoBundleLazy 'Lokaltog/vim-easymotion'
 \, {'autoload': {'mappings':
 \    ['<Plug>(easymotion-bd-w)', '<Plug>(easymotion-s2)',
 \     '<Plug>(easymotion-j)', '<Plug>(easymotion-k)']}}
+NeoBundle 'lambdalisue/vim-unified-diff'
 
 " CtrlP {{{2
 \, {'autoload': {'insert': 1}}
