@@ -1,4 +1,4 @@
-" Last Change: 17-Aug-2015. {{{
+" Last Change: 19-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -1302,14 +1302,14 @@ nnoremap <C-k> <C-t>
 nnoremap <C-h> <C-o>
 nnoremap <C-l> <C-i>
 
-" ノーマルモード操作 {{{2
+" ノーマルモード {{{2
 " 行末までヤンク
 nnoremap Y y$
 " すべてのフォールディングの開け閉め
-nnoremap zO zRzz
+nnoremap zO zRz<CR>
 nnoremap zC zMzz
-nnoremap zV zOzz
-nnoremap zo zvzz
+nnoremap zV zOz<CR>
+nnoremap zo zvz<CR>
 nnoremap zc zczz
 " 水平スクロール
 nnoremap zh 4zh4zh4zh4zh4zh4zh
@@ -1335,6 +1335,11 @@ nnoremap gY :<C-u>CopyPath<CR>
 " 行の最後ならxで後方削除
 nnoremap <expr> x virtcol(".") == virtcol("$") ? 'X' : 'x'
 
+" ビジュアルモード {{{2
+vnoremap y y`]
+vnoremap p p`]
+nnoremap p p`]
+
 " オペレータ {{{2
 " replace
 map c <Plug>(operator-replace)
@@ -1355,8 +1360,8 @@ xmap _ <Plug>(operator-camelize-toggle)
 " 反転
 xmap r <Plug>(operator-reverse-text)
 " エリア拡大
-xmap + <Plug>(expand_region_expand)
-xmap - <Plug>(expand_region_shrink)
+vmap v <Plug>(expand_region_expand)
+vmap - <Plug>(expand_region_shrink)
 " パス置換
 xmap <F12> <Plug>(operator-path-convert)
 call operator#user#define('path-convert', 'MyOpPathConvert')
@@ -2117,7 +2122,7 @@ au myvimrc BufWritePost *.snip NeoSnippetSource %:p
 " CtrlPMRUFiles
 nnoremap t :<C-u>CtrlPMRUFiles<CR>
 " CtrlPMenu
-nnoremap T :<C-u>CtrlPMenu<CR>
+nnoremap ,T :<C-u>CtrlPMenu<CR>
 " CtrlPTag
 nnoremap <C-@> :<C-u>CtrlPTag<CR>
 " CtrlPLine
@@ -2941,7 +2946,7 @@ command! UGista exe 'Unite gista' .
 \ ' -silent -buffer-name=gista' .
 \ ' -tab -no-split -no-quit'
 " CtrlPGista
-nnoremap ,T :<C-u>CtrlPGista<CR>
+nnoremap T :<C-u>CtrlPGista<CR>
 
 " yankround {{{1
 let g:yankround_max_history = 50
