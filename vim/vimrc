@@ -1,4 +1,4 @@
-" Last Change: 19-Aug-2015. {{{
+" Last Change: 20-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -1308,7 +1308,9 @@ nnoremap Y y$
 " すべてのフォールディングの開け閉め
 nnoremap zO zRz<CR>
 nnoremap zC zMzz
-nnoremap zV zOz<CR>
+nnoremap zv zOz<CR>
+" <Plug>マッピングのためzvを退避
+nnoremap zV zv
 nnoremap zo zvz<CR>
 nnoremap zc zczz
 " 水平スクロール
@@ -1359,9 +1361,6 @@ xmap _ <Plug>(operator-camelize-toggle)
 " vmap ; <Plug>(operator-html-escape)
 " 反転
 xmap r <Plug>(operator-reverse-text)
-" エリア拡大
-vmap v <Plug>(expand_region_expand)
-vmap - <Plug>(expand_region_shrink)
 " パス置換
 xmap <F12> <Plug>(operator-path-convert)
 call operator#user#define('path-convert', 'MyOpPathConvert')
@@ -1934,9 +1933,9 @@ inoremap <expr> <C-d> pumvisible() ? neocomplete#undo_completion() : virtcol("."
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-  return neocomplete#smart_close_popup() . "\<CR>"
+"   return neocomplete#smart_close_popup() . "\<CR>"
   " For no inserting <CR> key.
-  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+  return pumvisible() ? neocomplete#close_popup() : "\<CR>"
 endfunction
 " <Tab>: completion.
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -2163,7 +2162,8 @@ let g:ctrlp_prompt_mappings = {
 \ 'AcceptSelection("v")': ['<C-v>'],
 \ 'ToggleByFname()':      ['<C-t>'],
 \ 'PrtDelete()':          ['<del>', '<C-d>'],
-\ 'PrtInsert()':          ['<C-@>', '<C-\>'],
+\ 'PrtInsert()':          ['<C-@>'],
+\ 'PrtInsert("c")':       ['<M-v>'],
 \ 'MarkToOpen()':         ['<C-Space>', '<C-z>', '<C-x>'],
 \}
 
@@ -2752,13 +2752,50 @@ vmap am <Plug>(textobj-multitextobj-a)
 omap im <Plug>(textobj-multitextobj-i)
 vmap im <Plug>(textobj-multitextobj-i)
 " multiblock
-let g:textobj_multiblock_blocks =
-\ [["if", "endif"], ['if', 'fi'], ['if', 'end'],
-\  ["function", "endfunction"], ["def", "end"]]
+let g:textobj_multiblock_blocks = [
+\ ['if', 'endif'], ['if', 'fi'], ['if', 'end'],
+\ ['for', 'endfor'], ['while', 'endwhile'],
+\ ['function', 'endfunction'], ['def', 'end'],
+\ ['[', ']'], ['{', '}'], ['(', ')'],
+\]
 omap aM <Plug>(textobj-multiblock-a)
 vmap aM <Plug>(textobj-multiblock-a)
 omap iM <Plug>(textobj-multiblock-i)
 vmap iM <Plug>(textobj-multiblock-i)
+
+" expand-region {{{1
+" キーマップ
+vmap v <Plug>(expand_region_expand)
+vmap - <Plug>(expand_region_shrink)
+" テキストオブジェクト設定
+let g:expand_region_text_objects = {
+\ 'i_'  :1,
+\ 'a_'  :1,
+\ 'iw'  :0,
+\ 'iW'  :0,
+\ 'aW'  :0,
+\ 'i"'  :0,
+\ 'a"'  :0,
+\ 'i''' :0,
+\ 'a''' :0,
+\ 'i,'  :0,
+\ 'a,'  :0,
+\ 'i>'  :0,
+\ 'a>'  :0,
+\ 'i]'  :1,
+\ 'a]'  :1,
+\ 'ib'  :1,
+\ 'ab'  :1,
+\ 'iB'  :1,
+\ 'aB'  :1,
+\ 'iM'  :1,
+\ 'aM'  :1,
+\ 'il'  :0,
+\ 'ii'  :1,
+\ 'ip'  :0,
+\ 'iz'  :0,
+\ 'ia'  :0,
+\}
 
 " smartchr {{{1
 inoremap <expr> = smartchr#loop('=', '==', '<=', '>=')
@@ -2820,8 +2857,8 @@ endfunction
 unlet s:bundle
 
 " anzu {{{1
-nmap n <Plug>(anzu-n)zvzz
-nmap N <Plug>(anzu-N)zvzz
+nmap n <Plug>(anzu-n)zVzz
+nmap N <Plug>(anzu-N)zVzz
 let g:anzu_status_format = "(%i/%l)"
 au myvimrc CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
 
