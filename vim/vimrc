@@ -829,8 +829,6 @@ let java_highlight_debug = 1
 
 " DOS
 au myvimrc BufRead,BufNewFile *.bat setlocal fenc=sjis ff=dos
-" Excel
-au myvimrc BufRead {*.xls,*.xlsx} call vimproc#open(expand("<amatch>")) | quit
 
 " ファイルタイプ指定
 " JavaScript
@@ -2215,6 +2213,28 @@ if executable('migemogrep')
   endfunction
 "   let g:ctrlp_match_func = {'match' : 'MigemoMatch' }
 endif "}}}
+" 拡張子に応じて外部プログラムで開く
+let g:ctrlp_open_func = {
+\ 'files': 'MyExternalOpenFunc',
+\ 'mru files': 'MyExternalOpenFunc',
+\}
+function! MyExternalOpenFunc(action, line) "{{{
+  let extension_regexp = '^\(xls\|xlsx\)\?$'
+  if a:action =~ '^[tx]$' && fnamemodify(a:line, ':e') =~? extension_regexp
+    " Get the filename
+    let filename = fnameescape(fnamemodify(a:line, ':p'))
+    " Close CtrlP
+    call ctrlp#exit()
+    " Open the file
+    silent! call vimproc#open(filename)
+  elseif a:action == 'x' && fnamemodify(a:line, ':e') !~? extension_regexp
+    " Not a HTML file, simulate pressing <c-o> again and wait for new input
+    call feedkeys("\<c-o>")
+  else
+    " Use CtrlP's default file opening function
+    call call('ctrlp#acceptfile', [a:action, a:line])
+  endif
+endfunction "}}}
 
 " fugitive {{{1
 " 説明 {{{
