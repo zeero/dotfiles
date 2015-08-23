@@ -1,4 +1,4 @@
-" Last Change: 20-Aug-2015. {{{
+" Last Change: 23-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -2124,8 +2124,6 @@ nnoremap ,T :<C-u>CtrlPMenu<CR>
 nnoremap <C-@> :<C-u>CtrlPTag<CR>
 " CtrlPLine
 nnoremap <C-o> :<C-u>execute 'CtrlPLine ' . expand('%')<CR>
-" CtrlPRegister（INSERTモードのみ）
-inoremap <C-@> <C-o>:<C-u>CtrlPYankRound<CR>
 " コマンドエイリアス
 command! -nargs=? -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
 command! -nargs=? -complete=dir BookmarkEdit exe 'tabe ' g:ctrlp_cache_dir . '/bkd/cache.txt'
@@ -2188,6 +2186,8 @@ let g:ctrlp_mruf_case_sensitive = 0
 let g:ctrlp_help_default_mode = 'v'
 " ドットファイルを検索対象にする
 let g:ctrlp_show_hidden = 1
+" 複数ファイルオープン設定
+let g:ctrlp_open_multiple_files = 'thvj'
 " 除外設定
 let g:ctrlp_custom_ignore = {
 \ 'dir': '.metadata',
@@ -3009,6 +3009,7 @@ nnoremap T :<C-u>CtrlPGista<CR>
 let g:yankround_max_history = 50
 let g:yankround_use_region_hl = 1
 nmap ,y :<C-u>CtrlPYankRound<CR>
+inoremap <C-@> <C-o>:<C-u>CtrlPYankRound<CR>
 
 " vim-unified-diff {{{1
 set diffexpr=unified_diff#diffexpr()
