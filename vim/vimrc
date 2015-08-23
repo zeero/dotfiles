@@ -1,4 +1,4 @@
-" Last Change: 23-Aug-2015. {{{
+" Last Change: 24-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -2160,6 +2160,7 @@ let g:ctrlp_prompt_mappings = {
 \ 'PrtDelete()':          ['<del>', '<C-d>'],
 \ 'PrtInsert()':          ['<C-@>'],
 \ 'PrtInsert("c")':       ['<M-v>'],
+\ 'OpenMulti()':          ['<c-o>'],
 \ 'MarkToOpen()':         ['<C-Space>', '<C-z>', '<C-x>'],
 \}
 
@@ -2169,6 +2170,8 @@ let g:ctrlp_match_window = 'max:20'
 " CtrlP動作モード
 " （'w'：ワークディレクトリ、'r'：プロジェクトルート）
 let g:ctrlp_working_path_mode = 'rw'
+" ルートディレクトリのマーカー
+" let g:ctrlp_root_markers = [g:localrc_filename]
 " キャッシュを使う
 let g:ctrlp_use_caching = 1
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
@@ -2187,7 +2190,7 @@ let g:ctrlp_help_default_mode = 'v'
 " ドットファイルを検索対象にする
 let g:ctrlp_show_hidden = 1
 " 複数ファイルオープン設定
-let g:ctrlp_open_multiple_files = 'thvj'
+let g:ctrlp_open_multiple_files = 'tj'
 " 除外設定
 let g:ctrlp_custom_ignore = {
 \ 'dir': '.metadata',
