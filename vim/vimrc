@@ -2219,7 +2219,7 @@ let g:ctrlp_open_func = {
 \ 'mru files': 'MyExternalOpenFunc',
 \}
 function! MyExternalOpenFunc(action, line) "{{{
-  let extension_regexp = '^\(xls\|xlsx\)\?$'
+  let extension_regexp = '^\(xls\|xlsx\)$'
   if a:action =~ '^[tx]$' && fnamemodify(a:line, ':e') =~? extension_regexp
     " Get the filename
     let filename = fnameescape(fnamemodify(a:line, ':p'))
