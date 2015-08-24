@@ -1,4 +1,4 @@
-" Last Change: 20-Aug-2015. {{{
+" Last Change: 21-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -1017,11 +1017,12 @@ endfunction "}}}
 
 " Diff {{{2
 " DF
-command! -nargs=0 DF windo diffthis
+command! -nargs=0 DF setl virtualedit=all | windo diffthis
 " DFOff
 command! -nargs=0 DFOff call s:my_diffoff()
 au myvimrc BufWinLeave * call s:my_diffoff()
 function! s:my_diffoff() "{{{
+  setl virtualedit&
   if &diff
     windo diffoff
     set foldmethod=marker
