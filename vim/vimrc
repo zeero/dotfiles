@@ -956,12 +956,9 @@ endfunction "}}}
 " Ag
 command! -nargs=+ -complete=file Ag call s:my_silver_searcher(<q-args>)
 function! s:my_silver_searcher(args) "{{{
-  " set default option
-  let default_option = has('mac') ? ' --vimgrep ' : ' --nogroup --nocolor --column --line-numbers '
-
   " async
   call s:my_vimproc_async({
-  \ 'cmd': 'ag' . default_option . a:args,
+  \ 'cmd': 'ag --vimgrep ' . a:args,
   \ 'callback': 's:my_silver_searcher_finish'
   \})
 endfunction "}}}
