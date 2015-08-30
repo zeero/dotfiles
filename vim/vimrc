@@ -71,9 +71,6 @@ NeoBundleLazy 'Shougo/vimshell'
 NeoBundleLazy 'supermomonga/vimshell-inline-history.vim'
 \, {'autoload': {'filetypes': ['vimshell']}
 \,  'depends': 'Shougo/vimshell'}
-NeoBundleLazy 'basyura/vimshell-sls'
-\, {'autoload': {'filetypes': ['vimshell']}
-\,  'depends': 'Shougo/vimshell'}
 if has('lua') && (v:version >= 704 || (v:version == 703 && has('patch885')))
   NeoBundleLazy 'Shougo/neocomplete'
   \, {'autoload': {'insert': 1}}
@@ -360,7 +357,7 @@ NeoBundleLazy 'taku-o/vim-zoom'
 \, {'autoload': {'commands': ['ZoomIn', 'ZoomOut', 'ZoomReset']
 \,               'mappings': [['n', '+'], ['n', '-']]}
 \,  'gui': 1}
-NeoBundle 'yonchu/accelerated-smooth-scroll'
+NeoBundleLazy 'yonchu/accelerated-smooth-scroll'
 \, {'autoload': {'mappings': '<Plug>(ac-smooth-scroll-'}}
 NeoBundleLazy 'ShowMarks'
 \, {'autoload': {'commands': ['ShowMarksToggle']}}
