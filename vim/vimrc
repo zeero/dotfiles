@@ -1,4 +1,4 @@
-" Last Change: 29-Aug-2015. {{{
+" Last Change: 30-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -252,12 +252,10 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundleLazy 'Shougo/vim-vcs'
 \, {'autoload': {'commands': ['Vcs']}
 \,  'depends': ['Shougo/vimproc', 'thinca/vim-openbuf']}
-" NeoBundleLazy 'mattn/gist-vim'
-" \, {'autoload': {'commands': ['Gist']}
-" \,  'depends': ['mattn/webapi-vim']}
-NeoBundle 'lambdalisue/vim-gista'
+NeoBundleLazy 'lambdalisue/vim-gista'
 \, {'autoload': {'commands': ['Gista']
 \,               'mappings': '<Plug>(gista-'
+\,               'functions': ['gista#gist#api#list']
 \,               'unite_sources': 'gista'}
 \,  'depends': ['Shougo/unite.vim','tyru/open-browser.vim']}
 NeoBundleLazy 'gregsexton/gitv'
@@ -961,10 +959,12 @@ endfunction "}}}
 " Ag
 command! -nargs=+ -complete=file Ag call s:my_silver_searcher(<q-args>)
 function! s:my_silver_searcher(args) "{{{
+  " set default option
+  let default_option = has('mac') ? ' --vimgrep ' : ' --nogroup --nocolor --column --line-numbers '
+
   " async
   call s:my_vimproc_async({
-  \ 'cmd': 'ag --nogroup --nocolor --column --line-numbers ' .
-  \        a:args,
+  \ 'cmd': 'ag' . default_option . a:args,
   \ 'callback': 's:my_silver_searcher_finish'
   \})
 endfunction "}}}
