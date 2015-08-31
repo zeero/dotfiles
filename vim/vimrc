@@ -1,4 +1,4 @@
-" Last Change: 26-Aug-2015. {{{
+" Last Change: 30-Aug-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -69,9 +69,6 @@ NeoBundleLazy 'Shougo/vimshell'
 \, {'autoload': {'commands': ['VimShell', 'VimShellPop', 'VimShellTab']}
 \,  'depends': 'Shougo/vimproc'}
 NeoBundleLazy 'supermomonga/vimshell-inline-history.vim'
-\, {'autoload': {'filetypes': ['vimshell']}
-\,  'depends': 'Shougo/vimshell'}
-NeoBundleLazy 'basyura/vimshell-sls'
 \, {'autoload': {'filetypes': ['vimshell']}
 \,  'depends': 'Shougo/vimshell'}
 if has('lua') && (v:version >= 704 || (v:version == 703 && has('patch885')))
@@ -252,12 +249,10 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundleLazy 'Shougo/vim-vcs'
 \, {'autoload': {'commands': ['Vcs']}
 \,  'depends': ['Shougo/vimproc', 'thinca/vim-openbuf']}
-NeoBundleLazy 'mattn/gist-vim'
-\, {'autoload': {'commands': ['Gist']}
-\,  'depends': ['mattn/webapi-vim']}
-NeoBundle 'lambdalisue/vim-gista'
+NeoBundleLazy 'lambdalisue/vim-gista'
 \, {'autoload': {'commands': ['Gista']
 \,               'mappings': '<Plug>(gista-'
+\,               'functions': ['gista#gist#api#list']
 \,               'unite_sources': 'gista'}
 \,  'depends': ['Shougo/unite.vim','tyru/open-browser.vim']}
 NeoBundleLazy 'gregsexton/gitv'
@@ -295,6 +290,10 @@ NeoBundleLazy 'jceb/vim-editqf'
 \, {'autoload': {'commands': ['QFAddNote']}}
 NeoBundleLazy 'will133/vim-dirdiff'
 \, {'autoload': {'commands': [{'name': 'DirDiff', 'complete': 'dir'}]}}
+NeoBundleLazy 'loremipsum'
+\, {'autoload': {'commands': ['Loremipsum']}}
+NeoBundleLazy 'thinca/vim-scouter'
+\, {'autoload': {'commands': ['Scouter']}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -358,7 +357,7 @@ NeoBundleLazy 'taku-o/vim-zoom'
 \, {'autoload': {'commands': ['ZoomIn', 'ZoomOut', 'ZoomReset']
 \,               'mappings': [['n', '+'], ['n', '-']]}
 \,  'gui': 1}
-NeoBundle 'yonchu/accelerated-smooth-scroll'
+NeoBundleLazy 'yonchu/accelerated-smooth-scroll'
 \, {'autoload': {'mappings': '<Plug>(ac-smooth-scroll-'}}
 NeoBundleLazy 'ShowMarks'
 \, {'autoload': {'commands': ['ShowMarksToggle']}}
@@ -960,8 +959,7 @@ command! -nargs=+ -complete=file Ag call s:my_silver_searcher(<q-args>)
 function! s:my_silver_searcher(args) "{{{
   " async
   call s:my_vimproc_async({
-  \ 'cmd': 'ag --nogroup --nocolor --column --line-numbers ' .
-  \        a:args,
+  \ 'cmd': 'ag --vimgrep ' . a:args,
   \ 'callback': 's:my_silver_searcher_finish'
   \})
 endfunction "}}}
