@@ -1,4 +1,4 @@
-" Last Change: 30-Aug-2015. {{{
+" Last Change: 03-Sep-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -601,10 +601,10 @@ else
 "   }}}
 endif
 " TODOを常にハイライト
-syn match MyTodo /\v\c\[?(TODO|FIXME)[\]:]?/ containedin=ALL
+syn match MyTodo /\v\c \[?(TODO|FIXME)\]?:? /hs=s+1,he=e-1 containedin=ALL
 hi MyTodo term=standout ctermfg=12 gui=bold guifg=#666666 guibg=yellow
 hi! link Todo MyTodo
-au myvimrc Syntax * syn match MyTodo /\v\c\[?(TODO|FIXME)[\]:]?/ containedin=ALL
+au myvimrc Syntax * syn match MyTodo /\v\c \[?(TODO|FIXME)\]?:? /hs=s+1,he=e-1 containedin=ALL
 " 遅延描画
 " set lazyredraw
 " 行を強調表示
@@ -940,6 +940,25 @@ command! -nargs=1 Yank redi @" | <args> | redi END
 " 独自 {{{2
 " QFClear
 command! -nargs=0 QFClear call setqflist([])
+" QFSave/QFLoad
+command! -nargs=? QFSave call s:my_qf_save(<args>)
+command! -nargs=? QFLoad call s:my_qf_load(<args>)
+function! s:my_qf_save(...) "{{{
+  let filename = get(a:000, 1, 'temp.qf')
+  execute 'redi! > ' . filename
+  for line in getqflist()
+    echo line
+  endfor
+  execute 'redi END'
+endfunction "}}}
+function! s:my_qf_load(...) "{{{
+  let filename = get(a:000, 1, 'temp.qf')
+  let qflist = readfile(filename)
+  call map(qflist, 'eval("v:val")')
+  echo qflist
+  call setqflist(qflist)
+endfunction "}}}
+
 " LocalInit
 let g:my_local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
 command! -nargs=0 LocalInit call s:my_local_init()
@@ -1293,7 +1312,7 @@ nnoremap <C-]> g<C-]>
 vnoremap <C-]> g<C-]>
 nnoremap ,] g<C-]>
 vnoremap ,] g<C-]>
-nnoremap <C-j> :tab tj <C-R>=expand('<cword>')<CR><CR>
+nnoremap <C-j> :tab tj <C-r><C-w><CR>
 vnoremap <C-j> y:tab tj <C-r>"<CR>
 nnoremap ,[ <C-t>
 nnoremap <C-k> <C-t>
@@ -1485,7 +1504,7 @@ nnoremap ,; :<C-u>TagbarToggle<CR>
 " TODO: toggle
 nnoremap ,. :<C-u>botright cwindow 7<CR>
 " PreviewToggle
-nnoremap ,, :<C-u>PreviewToggle<CR>
+nnoremap ,, :<C-u>PreviewToggle<CR>zz
 vnoremap ,, y:<C-u>call PreviewWord('<C-r>"')<CR>
 command! PreviewToggle :call s:my_preview_toggle()
 function! s:my_preview_toggle() "{{{
@@ -2193,7 +2212,7 @@ let g:ctrlp_show_hidden = 1
 let g:ctrlp_open_multiple_files = 'tj'
 " 除外設定
 let g:ctrlp_custom_ignore = {
-\ 'dir': '.metadata',
+\ 'dir': '\.metadata',
 \}
 " migemoを使って日本語正規表現検索 {{{
 if executable('migemogrep')

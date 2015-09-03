@@ -35,7 +35,8 @@ rem others
 echo その他インストールが必要なソフトウェア
 echo ・lua
 echo ・ctags
-echo ・migemo
+echo ・cmigemo
 echo ・curl（プロクシ必要な場合は~/_curlrc作ること）
+echo ・Ag（The silver searcher）
 pause
 
