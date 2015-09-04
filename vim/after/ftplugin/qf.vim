@@ -18,7 +18,7 @@
 " endfunction "}}}
 
 " プレビュー（開いて戻る）
-noremap <buffer> p  <CR>zz<C-w>p
+noremap <buffer> p <CR>zz<C-w>J<C-w>p
 
 " ステータスラインに総行数表示
 " setlocal statusline+=\ %L
