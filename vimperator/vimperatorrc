@@ -14,6 +14,8 @@ set hintchars=gfdsavcxzrew
 set complete=slb
 " カラースキーム導入
 colorscheme ZeeroBlue
+" 検索エンジン
+setglobal defsearch=yahoo
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " キー設定
