@@ -1,4 +1,4 @@
-" Last Change: 04-Sep-2015. {{{
+" Last Change: 10-Sep-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -941,15 +941,14 @@ command! -nargs=1 Yank redi @" | <args> | redi END
 " QFClear
 command! -nargs=0 QFClear call setqflist([])
 " QFSave/QFLoad
-command! -nargs=? QFSave call s:my_qf_save(<args>)
+" bufnrが再現できないのであまり意味はない
+command! -nargs=? QFSave silent call s:my_qf_save(<args>)
 command! -nargs=? QFLoad call s:my_qf_load(<args>)
 function! s:my_qf_save(...) "{{{
   let filename = get(a:000, 1, 'temp.qf')
-  execute 'redi! > ' . filename
-  for line in getqflist()
-    echo line
-  endfor
-  execute 'redi END'
+  let qflist = getqflist()
+  call map(qflist, 'string(v:val)')
+  call writefile(qflist, filename)
 endfunction "}}}
 function! s:my_qf_load(...) "{{{
   let filename = get(a:000, 1, 'temp.qf')
