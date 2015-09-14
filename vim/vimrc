@@ -1,4 +1,4 @@
-" Last Change: 10-Sep-2015. {{{
+" Last Change: 14-Sep-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -1380,7 +1380,7 @@ xmap _ <Plug>(operator-camelize-toggle)
 " HTMLエスケープ
 " vmap ; <Plug>(operator-html-escape)
 " 反転
-xmap r <Plug>(operator-reverse-text)
+xmap R <Plug>(operator-reverse-text)
 " パス置換
 xmap <F12> <Plug>(operator-path-convert)
 call operator#user#define('path-convert', 'MyOpPathConvert')
