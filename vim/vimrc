@@ -1,4 +1,4 @@
-" Last Change: 14-Sep-2015. {{{
+" Last Change: 15-Sep-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -287,7 +287,7 @@ NeoBundleLazy 'h1mesuke/vim-alignta.git'
 NeoBundleLazy 'copypath.vim'
 \, {'autoload': {'commands': ['CopyPath', 'CopyFileName']}}
 NeoBundleLazy 'jceb/vim-editqf'
-\, {'autoload': {'commands': ['QFAddNote']}}
+\, {'autoload': {'commands': ['QFAddNote', 'QFSave', 'QFLoad']}}
 NeoBundleLazy 'will133/vim-dirdiff'
 \, {'autoload': {'commands': [{'name': 'DirDiff', 'complete': 'dir'}]}}
 NeoBundleLazy 'loremipsum'
@@ -940,23 +940,6 @@ command! -nargs=1 Yank redi @" | <args> | redi END
 " 独自 {{{2
 " QFClear
 command! -nargs=0 QFClear call setqflist([])
-" QFSave/QFLoad
-" bufnrが再現できないのであまり意味はない
-command! -nargs=? QFSave silent call s:my_qf_save(<args>)
-command! -nargs=? QFLoad call s:my_qf_load(<args>)
-function! s:my_qf_save(...) "{{{
-  let filename = get(a:000, 1, 'temp.qf')
-  let qflist = getqflist()
-  call map(qflist, 'string(v:val)')
-  call writefile(qflist, filename)
-endfunction "}}}
-function! s:my_qf_load(...) "{{{
-  let filename = get(a:000, 1, 'temp.qf')
-  let qflist = readfile(filename)
-  call map(qflist, 'eval("v:val")')
-  echo qflist
-  call setqflist(qflist)
-endfunction "}}}
 
 " LocalInit
 let g:my_local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
