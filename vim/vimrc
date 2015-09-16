@@ -1,4 +1,4 @@
-" Last Change: 15-Sep-2015. {{{
+" Last Change: 16-Sep-2015. {{{
 " vim:ts=2:fdm=marker:fenc=utf-8:ff=unix
 " }}}
 "-----------------------------------------------------------------------------
@@ -297,6 +297,7 @@ NeoBundleLazy 'thinca/vim-scouter'
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'osyo-manga/vim-anzu'
 NeoBundleLazy 'fholgado/minibufexpl.vim'
 \, {'autoload': {'commands': ['MBEbp', 'MBEbn', 'MBEToggle']}
 \,  'augroup': 'MiniBufExpl'}
@@ -326,8 +327,8 @@ NeoBundleLazy 'ScrollColors'
 \, {'autoload': {'commands': ['SCROLLCOLOR']}}
 NeoBundleLazy 'cocopon/colorswatch.vim'
 \, {'autoload': {'commands': ['ColorSwatchGenerate']}}
-NeoBundle 'osyo-manga/vim-anzu'
-NeoBundle 'itchyny/landscape.vim'
+NeoBundleLazy 'itchyny/landscape.vim'
+NeoBundleLazy 'jscappini/material.vim'
 
 " 補助 {{{2
 NeoBundle 'thinca/vim-singleton'
@@ -1365,7 +1366,8 @@ xmap _ <Plug>(operator-camelize-toggle)
 " 反転
 xmap R <Plug>(operator-reverse-text)
 " パス置換
-xmap <F12> <Plug>(operator-path-convert)
+xmap <C-@>/ <Plug>(operator-path-convert)
+cmap <C-@>/ <C-\>eMyCmdlinePathConvert()<CR>
 call operator#user#define('path-convert', 'MyOpPathConvert')
 function! MyOpPathConvert(motion_wiseness) "{{{
   '[,']s/\//\\/g
@@ -1373,7 +1375,6 @@ endfunction "}}}
 function! MyCmdlinePathConvert() "{{{
   return substitute(getcmdline(), '\/', '\\', 'g')
 endfunction "}}}
-cmap <F12> <C-\>eMyCmdlinePathConvert()<CR>
 
 " インサートモード {{{2
 " 移動
@@ -1391,8 +1392,10 @@ inoremap <S-CR> <C-o>O
 " CTRL-Uのundo対策（from exaple.vim）
 inoremap <C-u> <C-g>u<C-u>
 " 日時の挿入
-inoremap <expr> ,; strftime('%Y/%m/%d')
-inoremap <expr> ,: strftime('%H:%M:%S')
+inoremap <expr> <C-\>; strftime('%Y/%m/%d')
+inoremap <expr> <C-\>: strftime('%H:%M:%S')
+cnoremap <C-@>; <C-r>=strftime('%Y%m%d')<CR>
+cnoremap <C-@>: <C-r>=strftime('%H%M%S')<CR>
 " インデント
 inoremap <C-g> <C-o>>><End>
 inoremap <C-s> <C-o><<<End>
@@ -1564,6 +1567,8 @@ nmap ,m :<C-u>ShowMarksToggle<CR>
 nnoremap ZZ <Nop>
 " 保存せずに閉じる
 nnoremap ZQ <Nop>
+" imap/cmapのマップリーダにするため、無効化
+inoremap <C-@> <Nop>
 " 退避
 nnoremap <F2><C-y> <C-y>
 nnoremap <F2><C-e> <C-e>
@@ -3021,7 +3026,7 @@ nnoremap T :<C-u>CtrlPGista<CR>
 let g:yankround_max_history = 50
 let g:yankround_use_region_hl = 1
 nmap ,y :<C-u>CtrlPYankRound<CR>
-inoremap <C-@> <C-o>:<C-u>CtrlPYankRound<CR>
+inoremap <C-@>y <C-o>:<C-u>CtrlPYankRound<CR>
 
 " vim-unified-diff {{{1
 set diffexpr=unified_diff#diffexpr()
