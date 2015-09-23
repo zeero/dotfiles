@@ -938,6 +938,23 @@ command! -nargs=1 Yank redi @" | <args> | redi END
 " 独自 {{{2
 " QFClear
 command! -nargs=0 QFClear call setqflist([])
+" QFTodo
+command! -nargs=0 QFTodo call s:my_qf_todo()
+function! s:my_qf_todo() "{{{
+  let qflist = []
+  let index = 1
+  for line in getline('1', line('$'))
+    if line =~? ' \[\?\(todo\|fixme\)\]\?:\? '
+      call add(qflist, {
+      \ 'bufnr': bufnr('%'),
+      \ 'lnum': index,
+      \ 'text': line,
+      \})
+    endif
+    let index += 1
+  endfor
+  call setqflist(qflist)
+endfunction "}}}
 
 " LocalInit
 let g:my_local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
