@@ -38,5 +38,7 @@ echo ・ctags
 echo ・cmigemo
 echo ・curl（プロクシ必要な場合は~/_curlrc作ること）
 echo ・Ag（The silver searcher）
+echo ・nkf
+echo http://www.vector.co.jp/soft/win95/util/se295331.html
 pause
 
