@@ -371,14 +371,18 @@ NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-reload'
 \, {'depends': ['thinca/vim-misc']}
 NeoBundle 'thinca/vim-openbuf'
-NeoBundle 'haya14busa/incsearch.vim'
-" \, {'autoload': {'mappings': '<Plug>(incsearch-)'}}
+NeoBundleLazy 'haya14busa/incsearch.vim'
+\, {'autoload': {'mappings': '<Plug>(incsearch-'}}
 NeoBundleLazy 'haya14busa/incsearch-migemo.vim'
-\, {'autoload': {'mappings': '<Plug>(incsearch-migemo-)'
-\,               'functions':['incsearch#config#migemo#converter', 'incsearch#config#migemo#make']}}
+\, {'autoload': {'mappings': '<Plug>(incsearch-migemo-'
+\,               'functions':['incsearch#config#migemo#converter', 'incsearch#config#migemo#make']}
+\,  'depends': ['haya14busa/incsearch.vim']}
 NeoBundleLazy 'haya14busa/incsearch-fuzzy.vim'
-\, {'autoload': {'mappings': '<Plug>(incsearch-fuzzy-)'
-\,               'functions':['incsearch#config#fuzzy#converter', 'incsearch#config#fuzzy#make']}}
+\, {'autoload': {'mappings': '<Plug>(incsearch-fuzzy-'
+\,               'functions':['incsearch#config#fuzzy#converter', 'incsearch#config#fuzzy#make']}
+\,  'depends': ['haya14busa/incsearch.vim']}
+NeoBundleLazy 'thinca/vim-visualstar'
+\, {'autoload': {'mappings': '<Plug>(visualstar-'}}
 
 " Ruby {{{2
 NeoBundleLazy 'tpope/vim-rails'
@@ -1284,18 +1288,20 @@ endfunction "}}}
 
 " 検索 {{{2
 " 検索語が真ん中にくるようにする
-" noremap n nzvzz
-" noremap N Nzvzz
+nmap n <Plug>(anzu-n)zVzz
+nmap N <Plug>(anzu-N)zVzz
 noremap * *zvzz
-" nnoremap # #zvzz
+" #でも検索方向を揃える
+noremap # *NNzvzz
 noremap g* g*zvzz
 noremap g# g#zvzz
 noremap { {zz
 noremap } }zz
-" #でも検索方向を揃える
-noremap # *NNzvzz
 " 選択した単語で検索
 vnoremap / y/<C-r>"
+vnoremap ? y?<C-r>"
+vmap * <Plug>(visualstar-*)zVzz
+vmap # <Plug>(visualstar-*)NNzVzz
 
 " ウィンドウ／タブ {{{2
 " バッファ移動用キーマップ
@@ -2692,14 +2698,13 @@ let unified_diff#iwhite_arguments = [
 let g:DirDiffExcludes = ".svn,.git,CVS,*.class,*.exe,.*.swp"
 
 " incsearch {{{1
-map / <Plug>(incsearch-forward)
-map ? <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-" migemoは重いのでいったんコマンドで
-" map / <Plug>(incsearch-migemo-/)
-" map ? <Plug>(incsearch-migemo-?)
+" map / <Plug>(incsearch-forward)
+" map ? <Plug>(incsearch-backward)
+" map g/ <Plug>(incsearch-stay)
+map g/ <Plug>(incsearch-migemo-/)
+map g? <Plug>(incsearch-migemo-?)
 " map g/ <Plug>(incsearch-migemo-stay)
-command! MigemoIncsearch call incsearch#call(incsearch#config#migemo#make())
+" command! MigemoIncsearch call incsearch#call(incsearch#config#migemo#make())
 " migemo-fuzzyは重いのでいったんなしで
 " function! s:config_migemo_fuzzy(...) abort "{{{
 "   return extend(copy({
@@ -2714,8 +2719,6 @@ command! MigemoIncsearch call incsearch#call(incsearch#config#migemo#make())
 " noremap <silent><expr> g/ incsearch#go(<SID>config_migemo_fuzzy({'is_stay': 1}))
 
 " anzu {{{1
-nmap n <Plug>(anzu-n)zVzz
-nmap N <Plug>(anzu-N)zVzz
 let g:anzu_status_format = "(%i/%l)"
 au myvimrc CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
 
