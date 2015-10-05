@@ -13,6 +13,14 @@ pause
 rem git submodules (NeoBundle, etc)
 git submodule update --init
 
+rem git configuration
+git config --global user.name zeero
+git config --global user.email zeero26@gmail.com
+git config --global github.user zeero
+git config --global diff.algorithm histogram
+git config --global diff.tool vimdiff
+git config --global push.default matching
+
 rem Ricty
 echo RictyDiminishedをインストールしてください。
 explorer RictyDiminished\RictyDiminished-Regular.ttf
