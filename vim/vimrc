@@ -300,10 +300,8 @@ NeoBundleLazy 'fholgado/minibufexpl.vim'
 \,  'augroup': 'MiniBufExpl'}
 NeoBundle 'molokai'
 \, {'terminal': 1}
-NeoBundle 'http://blog.toddwerth.com/entry_files/8/ir_black.vim'
-\, {'name': 'ir_black.vim'
-\,  'script_type': 'colors'
-\,  'gui': 1}
+NeoBundle 'twerth/ir_black'
+\, {'gui': 1}
 " 普段使わないカラースキームは使用時に:NeoBundleSource
 NeoBundleLazy 'wombat256.vim'
 NeoBundleLazy 'altercation/vim-colors-solarized'

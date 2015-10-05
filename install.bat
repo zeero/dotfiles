@@ -4,10 +4,11 @@ cd /d %~dp0
 
 rem symlink
 move %HOMEDRIVE%%HOMEPATH%\vimperator %HOMEDRIVE%%HOMEPATH%\vimperator.org
-mklink /d %HOMEDRIVE%%HOMEPATH%\vimfiles vim
-mklink /d %HOMEDRIVE%%HOMEPATH%\vimperator vimperator
-mklink %HOMEDRIVE%%HOMEPATH%\_vimrc vim\vimrc
-mklink %HOMEDRIVE%%HOMEPATH%\_vimperatorrc vimperator\vimperatorrc
+mklink /d %HOMEDRIVE%%HOMEPATH%\vimfiles %~dp0\vim
+mklink /d %HOMEDRIVE%%HOMEPATH%\vimperator %~dp0\vimperator
+mklink %HOMEDRIVE%%HOMEPATH%\_vimrc %~dp0\vim\vimrc
+mklink %HOMEDRIVE%%HOMEPATH%\_vimperatorrc %~dp0\vimperator\vimperatorrc
+pause
 
 rem git submodules (NeoBundle, etc)
 git submodule update --init
