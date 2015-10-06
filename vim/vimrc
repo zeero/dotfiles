@@ -1247,8 +1247,12 @@ endfunction "}}}
 " 表示行単位で行移動
 nnoremap j gj
 nnoremap k gk
-xnoremap j gj
-xnoremap k gk
+vnoremap j gj
+vnoremap k gk
+nnoremap gj j
+nnoremap gk k
+vnoremap gj j
+vnoremap gk k
 " 行末に移動
 nnoremap <C-e> $
 " 0/^のトグル
@@ -1371,6 +1375,9 @@ nnoremap gy :<C-u>CopyFileName<CR>
 nnoremap gY :<C-u>CopyPath<CR>
 " 行の最後ならxで後方削除
 nnoremap <expr> x virtcol(".") == virtcol("$") ? 'X' : 'x'
+" 行結合
+nnoremap J gJ
+nnoremap gJ J
 
 " ビジュアルモード {{{2
 vnoremap y y`]
