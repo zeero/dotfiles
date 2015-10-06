@@ -1393,18 +1393,18 @@ nnoremap ,c :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 " 選択した文字列を置換
 vnoremap ,c "xy:%s/<C-r>=escape(@x, '\\/.*$^~[]')<CR>//gc<Left><Left><Left>
 " surround
-xmap s <Plug>(operator-surround-append)
-xmap S <Plug>(operator-surround-delete)
-xmap <C-s> <Plug>(operator-surround-replace)
+map s <Plug>(operator-surround-append)
+map S <Plug>(operator-surround-delete)
+map <C-s> <Plug>(operator-surround-replace)
 let g:operator#surround#enable_xbrackets_mode = 1 " 定義済みブロックが現れるまでテキスト保持
 " snake_case<=>CamelCase
-xmap _ <Plug>(operator-camelize-toggle)
+vmap _ <Plug>(operator-camelize-toggle)
 " HTMLエスケープ
 " vmap ; <Plug>(operator-html-escape)
 " 反転
-xmap R <Plug>(operator-reverse-text)
+vmap R <Plug>(operator-reverse-text)
 " パス置換
-xmap <C-@>/ <Plug>(operator-path-convert)
+vmap <C-@>/ <Plug>(operator-path-convert)
 cmap <C-@>/ <C-\>eMyCmdlinePathConvert()<CR>
 call operator#user#define('path-convert', 'MyOpPathConvert')
 function! MyOpPathConvert(motion_wiseness) "{{{
