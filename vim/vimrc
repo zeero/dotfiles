@@ -383,6 +383,8 @@ NeoBundleLazy 'thinca/vim-visualstar'
 \, {'autoload': {'mappings': '<Plug>(visualstar-'}}
 
 " Ruby {{{2
+NeoBundleLazy 'vim-ruby/vim-ruby'
+\, {'autoload': {'filetypes': ['ruby']}}
 NeoBundleLazy 'tpope/vim-rails'
 \, {'autoload': {'filetypes': ['ruby']}}
 NeoBundle 'taka84u9/vim-ref-ri'
@@ -396,6 +398,9 @@ if executable('rct-complete')
   NeoBundleLazy 'osyo-manga/vim-monster'
   \, {'autoload': {'filetypes': ['ruby']}}
 endif
+NeoBundleLazy 'rhysd/vim-textobj-ruby'
+\, {'autoload': {'filetypes': ['ruby']}
+\,  'depends': ['kana/vim-operator-user']}
 
 " Swift {{{2
 NeoBundleLazy 'Keithbsmiley/swift.vim'
@@ -1965,6 +1970,7 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 \ 'vimshell' : $HOME.'/.cache/vimshell/command-history',
 \ 'scheme' : $HOME.'/.gosh_completions',
 \ 'html': $MYVIMDIR.'/dict/bootstrap.dict',
+\ 'ruby': $MYVIMDIR.'/dict/pocke_dicts/ruby.dict',
 \}
 
 " Define keyword. {{{2
