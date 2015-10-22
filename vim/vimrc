@@ -381,6 +381,8 @@ NeoBundleLazy 'haya14busa/incsearch-fuzzy.vim'
 \,  'depends': ['haya14busa/incsearch.vim']}
 NeoBundleLazy 'thinca/vim-visualstar'
 \, {'autoload': {'mappings': '<Plug>(visualstar-'}}
+NeoBundleLazy 'rhysd/clever-f.vim'
+\, {'autoload': {'mappings': ['<Plug>(clever-f-']}}
 
 " Ruby {{{2
 NeoBundleLazy 'vim-ruby/vim-ruby'
@@ -2846,21 +2848,24 @@ endfunction "}}}
 " call submode#enter_with('my-submode-x', 'n', '', 'x', '"_x')
 " call submode#map('my-submode-x', 'n', 'r', 'x', '<Plug>(my-submode-x)')
 
-" ビジュアルモードのfで同じ文字をfで探すようにする。（;の代わり） {{{2
-vnoremap <silent> <Plug>(my-submode-f) :<C-u>call <SID>my_submode_f()<CR>
-function! s:my_submode_f() "{{{
-  normal! ;
-endfunction "}}}
-" TODO: うまく動かない、、、、
-" call submode#enter_with('my-submode-f', 'v', '', 'f', 'f')
-" call submode#map('my-submode-f', 'v', 'r', 'f', '<Plug>(my-submode-f)')
-
 " （on_source終わり） {{{2
 endfunction
 unlet s:bundle
 
 " smartchr {{{1
 inoremap <expr> = smartchr#loop('=', '==', '<=', '>=')
+
+" clever-f {{{1
+" マッピング
+let g:clever_f_not_overwrites_standard_mappings = 1
+vmap f <Plug>(clever-f-f)
+vmap F <Plug>(clever-f-F)
+" 大文字小文字無視
+let g:clever_f_smart_case = 1
+" migemo
+let g:clever_f_use_migemo = 1
+" 検索方向固定
+let g:clever_f_fix_key_direction = 1
 
 " editqf {{{1
 let g:editqf_saveqf_filename  = "~/.editqf_save_data"
