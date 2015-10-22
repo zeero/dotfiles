@@ -1382,9 +1382,6 @@ nnoremap gy :<C-u>CopyFileName<CR>
 nnoremap gY :<C-u>CopyPath<CR>
 " 行の最後ならxで後方削除
 nnoremap <expr> x virtcol(".") == virtcol("$") ? 'X' : 'x'
-" 行結合
-nnoremap J gJ
-nnoremap gJ J
 
 " ビジュアルモード {{{2
 vnoremap y y`]
@@ -1437,13 +1434,13 @@ inoremap <S-CR> <C-o>O
 " CTRL-Uのundo対策（from exaple.vim）
 inoremap <C-u> <C-g>u<C-u>
 " 日時の挿入
-inoremap <expr> <C-\>; strftime('%Y/%m/%d')
-inoremap <expr> <C-\>: strftime('%H:%M:%S')
+inoremap <expr> <C-@>; strftime('%Y/%m/%d')
+inoremap <expr> <C-@>: strftime('%H:%M:%S')
 cnoremap <C-@>; <C-r>=strftime('%Y%m%d')<CR>
 cnoremap <C-@>: <C-r>=strftime('%H%M%S')<CR>
 " インデント
-inoremap <C-g> <C-o>>><End>
-inoremap <C-s> <C-o><<<End>
+inoremap <C-@>> <C-o>>><End>
+inoremap <C-@>< <C-o><<<End>
 
 " エンドワイズ {{{2
 inoremap ( ()<Left>
