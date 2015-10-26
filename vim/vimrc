@@ -331,8 +331,6 @@ NeoBundle 'thinca/vim-singleton'
 NeoBundle 'thinca/vim-localrc'
 \, {'augroup': 'plugin-localrc'}
 NeoBundle 'vim-jp/vimdoc-ja'
-NeoBundleLazy 'plasticboy/vim-markdown'
-\, {'autoload': {'filetypes': ['mkd']}}
 NeoBundleLazy 'mattn/webapi-vim'
 NeoBundleLazy 'tyru/open-browser.vim'
 \, {'autoload': {'filetypes': ['html', 'mkd']
@@ -408,7 +406,7 @@ NeoBundleLazy 'rhysd/vim-textobj-ruby'
 NeoBundleLazy 'Keithbsmiley/swift.vim'
 \, {'autoload': {'filetypes': ['swift']}}
 
-" HTML/JavaScript {{{2
+" HTML/JavaScript/Markdown {{{2
 NeoBundleLazy 'mattn/emmet-vim'
 \, {'autoload': {'filetypes': ['html']
 \,               'insert': 1}}
@@ -428,6 +426,10 @@ NeoBundleLazy 'https://bitbucket.org/teramako/jscomplete-vim'
 \,  'type': 'git'}
 NeoBundleLazy 'scrooloose/syntastic'
 \, {'autoload': {'insert': 1}}
+NeoBundleLazy 'plasticboy/vim-markdown'
+\, {'autoload': {'filetypes': ['mkd']}}
+NeoBundleLazy 'kannokanno/previm'
+\, {'autoload': {'filetypes': ['mkd']}}
 
 " Java {{{2
 NeoBundleLazy 'http://www.fleiner.com/vim/syntax_60/javaid.vim'
