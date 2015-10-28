@@ -31,7 +31,7 @@ pause
 echo.
 
 rem vimproc
-echo １．vimprocコンパイルのために以下をダウンロードし、インストールしてください。
+echo １．vimprocコンパイルのために以下をダウンロードし、インストール。
 echo ・Gnu on Windows
 echo https://github.com/bmatzelle/gow/wiki
 echo ・MinGW（「mingw32-base」をメニューから選択してインストール）
@@ -53,11 +53,17 @@ echo ・nkf
 echo 　　http://www.vector.co.jp/soft/win95/util/se295331.html
 echo.
 echo その他設定
-echo ・msysgitのバグでgit pushが失敗するので以下の対応をとること
+echo ・msysgitのバグでgit pushが失敗するので以下の対応をとること。
 echo 　・https://username:password@bitbucket.org/username/reponame.git のようにユーザー、パスワードを指定する
 echo 　　・git remote set-url origin ${REPO_URL}
 echo 　・sshプロトコルを使用する
 echo 　・gitプロトコルを使用する
 echo 　・1.8.4にダウングレードする
+echo ・キーリピートを速くする方が快適。以下のどちらかを実施。
+echo 　・レジストリをいじる
+echo 　　１．regedit
+echo 　　２．HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response
+echo 　　３．"AutoRepeatDelay"="300" "AutoRepeatRate"="16" "BounceTime"="0" "DelayBeforeAcceptance"="0" "Flags"="59"
+echo 　・コンパネ→キーボード→表示までの待ち時間を短く
 pause
 
