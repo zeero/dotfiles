@@ -154,7 +154,7 @@ NeoBundleLazy 'AndrewRadev/switch.vim'
 \, {'autoload': {'commands': ['Switch']}}
 NeoBundleLazy 'lukaszkorecki/workflowish'
 \, {'autoload': {'filetypes': ['workflowish']}}
-NeoBundle 'zeero/yankround.vim'
+NeoBundle 'zeero/yankround.vim', 'feature/wipe'
 
 " テキストオブジェクト {{{2
 NeoBundleLazy 'kana/vim-textobj-user'
