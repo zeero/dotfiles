@@ -155,6 +155,8 @@ NeoBundleLazy 'AndrewRadev/switch.vim'
 NeoBundleLazy 'lukaszkorecki/workflowish'
 \, {'autoload': {'filetypes': ['workflowish']}}
 NeoBundle 'zeero/yankround.vim', 'feature/wipe'
+NeoBundleLazy 'osyo-manga/vim-jplus'
+\, {'autoload': {'mappings': ['<Plug>(jplus']}}
 
 " テキストオブジェクト {{{2
 NeoBundleLazy 'kana/vim-textobj-user'
@@ -2742,6 +2744,10 @@ map g? <Plug>(incsearch-migemo-?)
 " anzu {{{1
 let g:anzu_status_format = "(%i/%l)"
 au myvimrc CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
+
+" jplus {{{1
+nmap J <Plug>(jplus)
+vmap J <Plug>(jplus)
 
 " textobj-user {{{1
 " entire
