@@ -811,7 +811,7 @@ au myvimrc FileType gitcommit,vcs-*
 \ let @/ = "^@@ .*"
 " diff
 " TODO: normal ]cが効かない…
-au myvimrc BufRead * if 1 == &diff | noh | exe "normal! ]c" | endif
+au myvimrc BufReadPost * if 1 == &diff | noh | exe "normal! ]c" | endif
 
 " html
 " 閉じタグの自動入力設定
@@ -965,6 +965,7 @@ function! s:my_qf_todo() "{{{
     let index += 1
   endfor
   call setqflist(qflist)
+  botright cwindow 7
 endfunction "}}}
 
 " LocalInit
@@ -1533,9 +1534,13 @@ nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<CR>
 nnoremap ,b :<C-u>MBEToggle<CR>
 " TagbarToggle
 nnoremap ,; :<C-u>TagbarToggle<CR>
-" QFixWindowToggle
-" TODO: toggle
-nnoremap ,. :<C-u>botright cwindow 7<CR>
+" QFToggle
+nnoremap ,. :<C-u>QFToggle<CR>
+command! QFToggle :call s:my_qf_toggle()
+function! s:my_qf_toggle() "{{{
+  windo if 'qf' == &ft | cclose | return | endif
+  botright cwindow 7
+endfunction "}}}
 " PreviewToggle
 nnoremap ,, :<C-u>PreviewToggle<CR>zz
 vnoremap ,, y:<C-u>call PreviewWord('<C-r>"')<CR>
@@ -1677,9 +1682,6 @@ command! Ub Unite bookmark
 command! Uba UniteBookmarkAdd
 " ブックマーク手動編集
 command! Ube edit $HOME/.unite/bookmark/default
-" TODO: 'TODO:'をつけた行をファイル保存時に自動でブックマークするau
-command! Ubt Unite bookmark:todos
-\ -no-empty -silent -buffer-name=bookmarktodos
 " メニュー
 command! Um Unite menu:shortcuts
 \ -no-empty -silent -buffer-name=menushortcuts
