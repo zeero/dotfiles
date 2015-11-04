@@ -154,7 +154,7 @@ NeoBundleLazy 'AndrewRadev/switch.vim'
 \, {'autoload': {'commands': ['Switch']}}
 NeoBundleLazy 'lukaszkorecki/workflowish'
 \, {'autoload': {'filetypes': ['workflowish']}}
-NeoBundle 'LeafCage/yankround.vim'
+NeoBundle 'zeero/yankround.vim', 'feature/wipe'
 
 " テキストオブジェクト {{{2
 NeoBundleLazy 'kana/vim-textobj-user'
@@ -1444,6 +1444,9 @@ cnoremap <C-@>: <C-r>=strftime('%H%M%S')<CR>
 " インデント
 inoremap <C-@>> <C-o>>><End>
 inoremap <C-@>< <C-o><<<End>
+" YankRound
+inoremap <C-@>y <C-o>:CtrlPYankRound<CR>
+nnoremap ,y :CtrlPYankRound<CR>
 
 " エンドワイズ {{{2
 inoremap ( ()<Left>
@@ -2712,14 +2715,18 @@ let unified_diff#iwhite_arguments = [
 let g:DirDiffExcludes = ".svn,.git,CVS,*.class,*.exe,.*.swp"
 
 " incsearch {{{1
+" incsearch
 " map / <Plug>(incsearch-forward)
 " map ? <Plug>(incsearch-backward)
 " map g/ <Plug>(incsearch-stay)
+
+" incsearch-migemo
 map g/ <Plug>(incsearch-migemo-/)
 map g? <Plug>(incsearch-migemo-?)
 " map g/ <Plug>(incsearch-migemo-stay)
 " command! MigemoIncsearch call incsearch#call(incsearch#config#migemo#make())
-" migemo-fuzzyは重いのでいったんなしで
+
+" incsearch-migemo-fuzzy
 " function! s:config_migemo_fuzzy(...) abort "{{{
 "   return extend(copy({
 "   \ 'converters': [
@@ -2728,8 +2735,8 @@ map g? <Plug>(incsearch-migemo-?)
 "   \ ],
 "   \}), get(a:, 1, {}))
 " endfunction "}}}
-" noremap <silent><expr> / incsearch#go(<SID>config_migemo_fuzzy())
-" noremap <silent><expr> ? incsearch#go(<SID>config_migemo_fuzzy({'command', '?'}))
+" noremap <silent><expr> g/ incsearch#go(<SID>config_migemo_fuzzy())
+" noremap <silent><expr> g? incsearch#go(<SID>config_migemo_fuzzy({'command', '?'}))
 " noremap <silent><expr> g/ incsearch#go(<SID>config_migemo_fuzzy({'is_stay': 1}))
 
 " anzu {{{1
