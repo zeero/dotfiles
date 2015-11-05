@@ -23,10 +23,10 @@ git config --global push.default matching
 
 rem Ricty
 echo RictyDiminishedをインストールしてください。
-explorer RictyDiminished\RictyDiminished-Regular.ttf
-explorer RictyDiminished\RictyDiminished-Bold.ttf
-explorer RictyDiminished\RictyDiminished-Oblique.ttf
-explorer RictyDiminished\RictyDiminished-BoldOblique.ttf
+explorer lib\RictyDiminished\RictyDiminished-Regular.ttf
+explorer lib\RictyDiminished\RictyDiminished-Bold.ttf
+explorer lib\RictyDiminished\RictyDiminished-Oblique.ttf
+explorer lib\RictyDiminished\RictyDiminished-BoldOblique.ttf
 pause
 echo.
 
