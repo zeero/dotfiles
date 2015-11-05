@@ -7,3 +7,6 @@
 [submodule "lib/git-info"]
 	path = lib/git-info
 	url = https://github.com/gitbits/git-info.git
+[submodule "lib/RictyDiminished"]
+	path = lib/RictyDiminished
+	url = https://github.com/yascentur/RictyDiminished.git
