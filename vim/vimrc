@@ -2748,6 +2748,10 @@ au myvimrc CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_sta
 " jplus {{{1
 nmap J <Plug>(jplus)
 vmap J <Plug>(jplus)
+nnoremap gJ J
+vnoremap gJ J
+nmap ,J <Plug>(jplus-getchar)
+vmap ,J <Plug>(jplus-getchar)
 
 " textobj-user {{{1
 " entire
