@@ -2878,6 +2878,8 @@ inoremap <expr> = smartchr#loop('=', '==', '<=', '>=')
 let g:clever_f_not_overwrites_standard_mappings = 1
 vmap f <Plug>(clever-f-f)
 vmap F <Plug>(clever-f-F)
+vmap t <Plug>(clever-f-t)
+vmap T <Plug>(clever-f-T)
 " 大文字小文字無視
 let g:clever_f_smart_case = 1
 " migemo
