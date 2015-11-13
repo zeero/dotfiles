@@ -8,6 +8,8 @@ mklink /d %HOMEDRIVE%%HOMEPATH%\vimfiles %~dp0\vim
 mklink /d %HOMEDRIVE%%HOMEPATH%\vimperator %~dp0\vimperator
 mklink %HOMEDRIVE%%HOMEPATH%\_vimrc %~dp0\vim\vimrc
 mklink %HOMEDRIVE%%HOMEPATH%\_vimperatorrc %~dp0\vimperator\vimperatorrc
+mklink %HOMEDRIVE%%HOMEPATH%\.gitignore %~dp0\home\.gitignore
+mklink %HOMEDRIVE%%HOMEPATH%\.ctags %~dp0\home\.ctags
 pause
 
 rem git submodules (NeoBundle, etc)
