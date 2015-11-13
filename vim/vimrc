@@ -946,7 +946,7 @@ command! Open call vimproc#open(expand("%:p:h"))
 " Debug
 command! -nargs=? Debug echohl Debug | echomsg "Debug : ".expand("<sfile>")." : ".expand("<slnum>") | echomsg <args> | echohl None
 " Yank
-command! -nargs=1 Yank redi @" | <args> | redi END
+command! -nargs=1 Yank redi @" | execute <q-args> | redi END
 
 " 独自 {{{2
 " QFClear
@@ -1543,7 +1543,9 @@ nnoremap ,; :<C-u>TagbarToggle<CR>
 nnoremap ,. :<C-u>QFToggle<CR>
 command! QFToggle :call s:my_qf_toggle()
 function! s:my_qf_toggle() "{{{
-  windo if 'qf' == &ft | cclose | return | endif
+  let cur_win = winnr()
+  windo if 'qf' == &ft | cclose | execute cur_win . "wincmd w" | return | endif
+  execute cur_win . "wincmd w"
   botright cwindow 7
 endfunction "}}}
 " PreviewToggle
