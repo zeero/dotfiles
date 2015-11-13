@@ -946,7 +946,7 @@ command! Open call vimproc#open(expand("%:p:h"))
 " Debug
 command! -nargs=? Debug echohl Debug | echomsg "Debug : ".expand("<sfile>")." : ".expand("<slnum>") | echomsg <args> | echohl None
 " Yank
-command! -nargs=1 Yank redi @" | <args> | redi END
+command! -nargs=1 Yank redi @" | execute <q-args> | redi END
 
 " 独自 {{{2
 " QFClear
