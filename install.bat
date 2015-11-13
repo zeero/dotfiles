@@ -68,4 +68,10 @@ echo 　　２．HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response
 echo 　　３．"AutoRepeatDelay"="300" "AutoRepeatRate"="16" "BounceTime"="0" "DelayBeforeAcceptance"="0" "Flags"="59"
 echo 　・コンパネ→キーボード→表示までの待ち時間を短く
 pause
+echo.
+
+
+rem finally
+echo 以下のコマンドで起動
+echo vim +NeoBundleInstall +qall
 
