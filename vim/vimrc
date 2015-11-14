@@ -779,7 +779,7 @@ function! s:my_last_position_jump()
 endfunction
 
 " ファイルタイプ別の設定 {{{1
-" Vim
+" Vim {{{2
 " vimrcの保存時に再読み込み
 if !has('gui_running')
   au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
@@ -803,19 +803,17 @@ function! s:my_vimenter_vimrc() "{{{
   checktime
 endfunction "}}}
 
-" NeoSnippet
+" NeoSnippet {{{2
 au myvimrc FileType neosnippet setlocal nofoldenable
-" fugitive、vim-vcs
+
+" fugitive、vim-vcs {{{2
 au myvimrc FileType gitcommit,vcs-*
 \ setlocal nofoldenable |
 \ wincmd L |
 \ noh |
 \ let @/ = "^@@ .*"
-" diff
-" TODO: normal ]cが効かない…
-au myvimrc BufReadPost * if 1 == &diff | noh | exe "normal! ]c" | endif
 
-" html
+" html {{{2
 " 閉じタグの自動入力設定
 au myvimrc FileType html,xml inoremap <expr> <buffer> > MyHtmlEndwise()
 function! MyHtmlEndwise() "{{{
@@ -832,16 +830,17 @@ function! MyHtmlEndwise() "{{{
   let val .= substitute(strpart(str, idx, col - 1 - idx), '<\([^ ]\+\).*', '</\1>', '')
   return val . "\<Esc>" . col . "|a"
 endfunction "}}}
-" Java
+
+" Java {{{2
 " ハイライト設定
 let java_highlight_all = 1
 let java_highlight_functions = "style"
 let java_highlight_debug = 1
 
-" DOS
+" DOS {{{2
 au myvimrc BufRead,BufNewFile *.bat setlocal fenc=sjis ff=dos
 
-" ファイルタイプ指定
+" ファイルタイプ指定 {{{2
 " JavaScript
 au myvimrc BufRead,BufNewFile *.json setf javascript
 au myvimrc BufRead,BufNewFile jquery.*.js set filetype=javascript syntax=jquery
@@ -1062,7 +1061,18 @@ endfunction "}}}
 
 " Diff {{{2
 " DF
-command! -nargs=0 DF setl virtualedit=all | windo diffthis | wincmd w
+command! -nargs=0 DF windo diffthis | wincmd w | noh | exe "normal! ]c"
+" diff
+au myvimrc FilterWritePost * call s:my_diff()
+function! s:my_diff() "{{{
+  if &diff
+    setl virtualedit=all
+    " autocmd中はnohは効かない
+    "noh
+    " TODO: normal ]cが効かない…
+    exe "normal! ]c"
+  endif
+endfunction "}}}
 " DFOff
 command! -nargs=0 DFOff call s:my_diffoff()
 au myvimrc BufWinLeave * call s:my_diffoff()
