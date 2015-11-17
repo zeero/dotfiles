@@ -359,8 +359,7 @@ NeoBundleLazy 'ShowMarks'
 \, {'autoload': {'commands': ['ShowMarksToggle']}}
 NeoBundleLazy 'AnsiEsc.vim'
 \, {'autoload': {'commands': ['AnsiEsc']}}
-NeoBundleLazy 'kana/vim-submode'
-\, {'autoload': {'mappings': [['n', 'x'], ['v', 'f']]}}
+NeoBundle 'kana/vim-submode'
 NeoBundleLazy 'tpope/vim-repeat'
 \, {'autoload': {'mappings': ['.']}}
 NeoBundleLazy 'fuenor/qfixhowm'
@@ -2863,11 +2862,6 @@ let g:surround_123 = "{\r}"
 let g:surround_125 = "{ \r }"
 
 " submode {{{1
-" （on_source開始） {{{2
-let s:bundle = neobundle#get('vim-submode')
-let s:bundle.hooks = get(s:bundle, "hooks", {})
-function! s:bundle.hooks.on_source(bundle)
-
 " xで連続で消した履歴を一つにまとめる {{{2
 nnoremap <silent> <Plug>(my-submode-x) :<C-u>call <SID>my_submode_x()<CR>
 function! s:my_submode_x() "{{{
@@ -2875,12 +2869,14 @@ function! s:my_submode_x() "{{{
   normal! "_x
 endfunction "}}}
 " サブモード抜け時の挙動が気になるので無効化
-" call submode#enter_with('my-submode-x', 'n', '', 'x', '"_x')
-" call submode#map('my-submode-x', 'n', 'r', 'x', '<Plug>(my-submode-x)')
+" call submode#enter_with('submode-x', 'n', '', 'x', '"_x')
+" call submode#map('submode-x', 'n', 'r', 'x', '<Plug>(my-submode-x)')
 
-" （on_source終わり） {{{2
-endfunction
-unlet s:bundle
+" zl/zhで連続横移動 {{{2
+call submode#enter_with('submode-zl/zh', 'n', '', 'zl', '4zl4zl4zl4zl4zl4zl')
+call submode#enter_with('submode-zl/zh', 'n', '', 'zl', '4zl4zl4zl4zl4zl4zl')
+call submode#map('submode-zl/zh', 'n', '', 'l', '4zl4zl4zl4zl4zl4zl')
+call submode#map('submode-zl/zh', 'n', '', 'h', '4zh4zh4zh4zh4zh4zh')
 
 " smartchr {{{1
 inoremap <expr> = smartchr#loop('=', '==', '<=', '>=')
