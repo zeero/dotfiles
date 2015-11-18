@@ -1037,7 +1037,7 @@ if executable('TortoiseProc')
   endfunction "}}}
   command! TSVNRevert silent call vimproc#system_bg('TortoiseProc /command:revert /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSVNProps silent call vimproc#system_bg('TortoiseProc /command:properties /path:"'.expand("%:h").'" /notempfile /closeonend')
-  command! TSVNBlame silent call vimproc#system_bg('TortoiseProc /command:blame /path:"'.expand("%").'" /notempfile /closeonend /line:'.line(".").' /startrev:1 /endrev:-1')
+  command! TSVNBlame silent call vimproc#system_bg('TortoiseProc /command:blame /path:"'.expand("%").'" /notempfile /closeonend /line:'.line(".").' /endrev:-1')
 endif
 " SVNレポジトリ上のパスをコピー
 if executable('svn_path_copy')
