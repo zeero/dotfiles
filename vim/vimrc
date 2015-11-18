@@ -934,11 +934,11 @@ function! s:my_info() "{{{
 
   " git-info
   if has('win32') || has('win64')
-    let sep = ";"
+    let sep = ';'
   else
-    let sep = ":"
+    let sep = ':'
   endif
-  if exists('*fugitive#head') && strlen(fugitive#head()) && len(globpath(substitute($PATH, sep, ",", "g"), "git-info")) && executable('mktemp')
+  if exists('*fugitive#head') && strlen(fugitive#head()) && len(globpath(substitute($PATH, sep, ',', 'g'), 'git-info')) && executable('mktemp')
     echo vimproc#system('git info')
   endif
 endfunction "}}}
