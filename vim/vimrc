@@ -911,15 +911,17 @@ function! s:my_info() "{{{
     echo line
   endfor
   let v:statusmsg = old_status
+
   " ステップカウンタ
   let countEmpty = 0
   let countComment = 0
   let countSource = 0
   let lnum = 1
   while lnum <= line("$")
-    if getline(lnum) =~ '^\s*$'
+    let line = getline(lnum)
+    if line =~ '^\s*$'
       let countEmpty = countEmpty + 1
-    elseif synIDattr(synIDtrans(synID(lnum, match(getline(lnum), '\S') + 1, 1)), "name") == 'Comment'
+    elseif synIDattr(synIDtrans(synID(lnum, match(line, '\S') + 1, 1)), "name") == 'Comment'
       let countComment = countComment + 1
     else
       let countSource = countSource + 1
@@ -929,6 +931,7 @@ function! s:my_info() "{{{
   echo "空白行：" . countEmpty
   echo "コメント行：" . countComment
   echo "ソース行：" . countSource
+
   " git-info
   if has('win32') || has('win64')
     let sep = ";"
