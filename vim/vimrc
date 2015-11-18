@@ -638,7 +638,7 @@ set listchars=tab:-»,trail:-,extends:»,precedes:«,nbsp:%
 " タブの左側にカーソル表示
 "set listchars=tab:\ \
 " 全角スペースも表示　
-highlight JpSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
+highlight JpSpace ctermfg=darkgrey guifg=darkgrey
 au myvimrc BufRead,BufNew * match JpSpace /　/
 " □や○の文字があってもカーソル位置をずらさせない
 set ambiwidth=double
