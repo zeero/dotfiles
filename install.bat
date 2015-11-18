@@ -53,6 +53,8 @@ echo ・curl（プロクシ必要な場合は~/_curlrc作ること）
 echo ・Ag（The silver searcher）
 echo ・nkf
 echo 　　http://www.vector.co.jp/soft/win95/util/se295331.html
+echo ・mktemp
+echo 　　http://gnuwin32.sourceforge.net/packages/mktemp.htm
 echo.
 echo その他設定
 echo ・msysgitのバグでgit pushが失敗するので以下の対応をとること。
