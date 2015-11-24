@@ -2877,7 +2877,7 @@ endfunction "}}}
 
 " zl/zhで連続横移動 {{{2
 call submode#enter_with('submode-zl/zh', 'n', '', 'zl', '4zl4zl4zl4zl4zl4zl')
-call submode#enter_with('submode-zl/zh', 'n', '', 'zl', '4zl4zl4zl4zl4zl4zl')
+call submode#enter_with('submode-zl/zh', 'n', '', 'zh', '4zh4zh4zh4zh4zh4zh')
 call submode#map('submode-zl/zh', 'n', '', 'l', '4zl4zl4zl4zl4zl4zl')
 call submode#map('submode-zl/zh', 'n', '', 'h', '4zh4zh4zh4zh4zh4zh')
 
