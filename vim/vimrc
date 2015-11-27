@@ -1020,7 +1020,6 @@ if executable('TortoiseProc')
     let path = a:path == '' ? a:fname : a:path
     call vimproc#system_bg('TortoiseProc /command:log /path:"'.path.'" /notempfile /closeonend')
   endfunction "}}}
-  command! TSVNLogDir silent call vimproc#system_bg('TortoiseProc /command:log /path:. /notempfile /closeonend')
   command! TSVNDiff silent call vimproc#system_bg('TortoiseProc /command:diff /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSVNDiffPrev silent call vimproc#system_bg('TortoiseProc /command:prevdiff /path:"'.expand("%").'" /notempfile /closeonend')
   command! -nargs=? -complete=dir TSVNUpdate silent call s:my_tsvn_update(expand("%"), <q-args>)
@@ -1028,7 +1027,6 @@ if executable('TortoiseProc')
     let path = a:path == '' ? a:fname : a:path
     call vimproc#system_bg('TortoiseProc /command:update /path:"'.path.'" /notempfile /closeonend')
   endfunction "}}}
-  command! TSVNUpdateDir silent call vimproc#system_bg('TortoiseProc /command:update /path:. /notempfile /closeonend')
   command! TSVNAdd silent call vimproc#system_bg('TortoiseProc /command:add /path:"'.expand("%").'" /notempfile /closeonend')
   command! -nargs=? -complete=dir TSVNCommit silent call s:my_tsvn_commit(expand("%"), <q-args>)
   function! s:my_tsvn_commit(fname, path) "{{{
@@ -2271,6 +2269,7 @@ let g:ctrlp_open_multiple_files = 'tj'
 let g:ctrlp_custom_ignore = {
 \ 'dir': '\.metadata',
 \}
+let g:ctrlp_mruf_exclude = '.*\.svn[0-9]\{3\}\.tmp\..*'
 " migemoを使って日本語正規表現検索 {{{
 if executable('migemogrep')
   function! MigemoMatch(items, str, limit, mmode, ispath, crfile, regex)
