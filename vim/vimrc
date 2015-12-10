@@ -2506,7 +2506,7 @@ let g:quickrun_config['jshint'] = {
 au myvimrc BufWritePost *.js QuickRun jshint
 
 " database {{{2
-let g:quickrun_config['sql'] = {'type': executable('sqlite3') ? 'sql.sqlite3' : ''}
+let g:quickrun_config['sql'] = {'type': executable('sqlite3') ? 'sql.sqlite3' : 'sql.alt'}
 let g:quickrun_config['sql.alt'] = {'type': executable('sqlplus') ? 'sql.oracle' : ''}
 let g:quickrun_config['sql.sqlite3'] = {
 \ 'exec': '%c %o %a < %S',
@@ -2516,8 +2516,19 @@ let g:quickrun_config['sql.sqlite3'] = {
 let g:quickrun_config['sql.oracle'] = {
 \ 'exec': '%c %o \@%s',
 \ 'command': 'sqlplus',
-\ 'cmdopt': '-S /nolog',
+\ 'cmdopt': '-S %{get(g:, "quickrun_oracle_conn", "/nolog")}',
 \ 'hook/output_encode/encoding': 'sjis',
+\ 'hook/eval/enable': 1,
+\ 'hook/eval/template':
+\   'set echo off' . "\r" .
+\   'set linesize 1000' . "\r" .
+\   '-- set pagesize 0' . "\r" .
+\   'set trimspool on' . "\r" .
+\   'set feedback off' . "\r" .
+\   'set colsep ","' . "\r" .
+\   'set heading on' . "\r" .
+\   'set underline off' . "\r" .
+\   '%s',
 \}
 
 " lightline {{{1
