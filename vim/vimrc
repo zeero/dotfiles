@@ -282,7 +282,8 @@ NeoBundleLazy 'http://conque.googlecode.com/svn/trunk/'
 \,               'functions': ['conque_term#open', 'conque_term#subprocess', 'conque_term#register_function']}
 \,  'name': 'Conque'}
 NeoBundleLazy 'h1mesuke/vim-alignta.git'
-\, {'autoload': {'commands': ['Align', 'Alignta']}}
+\, {'autoload': {'commands': ['Align', 'Alignta']
+\,               'unite-sources': ['ref']}}
 NeoBundleLazy 'copypath.vim'
 \, {'autoload': {'commands': ['CopyPath', 'CopyFileName']}}
 NeoBundleLazy 'jceb/vim-editqf'
@@ -2880,6 +2881,19 @@ let g:surround_93 = "[ \r ]"
 let g:surround_123 = "{\r}"
 let g:surround_125 = "{ \r }"
 
+" smartchr {{{1
+inoremap <expr> = smartchr#loop('=', '==', '<=', '>=')
+
+" Alingta
+let g:alignta_default_options = '<<<1:1'
+" デフォルトは非空白文字で整列
+let g:alignta_default_arguments = '<< \S\+'
+" unite-alignta
+let g:unite_source_alignta_preset_arguments = [
+\ ['Align at "="', '='],
+\ ['Align Right at "\\S\\+"', '>>> \S\+'],
+\]
+
 " submode {{{1
 " xで連続で消した履歴を一つにまとめる {{{2
 nnoremap <silent> <Plug>(my-submode-x) :<C-u>call <SID>my_submode_x()<CR>
@@ -2896,9 +2910,6 @@ call submode#enter_with('submode-zl/zh', 'n', '', 'zl', '4zl4zl4zl4zl4zl4zl')
 call submode#enter_with('submode-zl/zh', 'n', '', 'zh', '4zh4zh4zh4zh4zh4zh')
 call submode#map('submode-zl/zh', 'n', '', 'l', '4zl4zl4zl4zl4zl4zl')
 call submode#map('submode-zl/zh', 'n', '', 'h', '4zh4zh4zh4zh4zh4zh')
-
-" smartchr {{{1
-inoremap <expr> = smartchr#loop('=', '==', '<=', '>=')
 
 " clever-f {{{1
 " マッピング
