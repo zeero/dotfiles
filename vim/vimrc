@@ -282,7 +282,7 @@ NeoBundleLazy 'http://conque.googlecode.com/svn/trunk/'
 \,               'functions': ['conque_term#open', 'conque_term#subprocess', 'conque_term#register_function']}
 \,  'name': 'Conque'}
 NeoBundleLazy 'h1mesuke/vim-alignta.git'
-\, {'autoload': {'commands': ['Align']}}
+\, {'autoload': {'commands': ['Align', 'Alignta']}}
 NeoBundleLazy 'copypath.vim'
 \, {'autoload': {'commands': ['CopyPath', 'CopyFileName']}}
 NeoBundleLazy 'jceb/vim-editqf'
@@ -2522,7 +2522,7 @@ let g:quickrun_config['sql.oracle'] = {
 \ 'hook/eval/template':
 \   'set echo off' . "\r" .
 \   'set linesize 1000' . "\r" .
-\   '-- set pagesize 0' . "\r" .
+\   '-- set pagesize 1000' . "\r" .
 \   'set trimspool on' . "\r" .
 \   'set feedback off' . "\r" .
 \   'set colsep ","' . "\r" .
