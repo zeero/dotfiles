@@ -46,6 +46,9 @@ nnoremap <C-n> <C-t>
 nnoremap <Esc> :st<CR>zz<Esc>
 " 最近閉じたタブの一覧（補完待ち状態にする）
 nnoremap U :undo<Space>
+" URLコピー
+nnoremap gy :copy plain:url<CR>
+nnoremap gY :copy plain:title+url<CR>
 " コマンドライン移動
 cnoremap <C-a> <Home>
 cnoremap <C-h> <Left>
