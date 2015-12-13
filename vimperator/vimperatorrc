@@ -26,6 +26,8 @@ nnoremap l <A-Right>
 " タブ移動
 nnoremap H gT
 nnoremap L gt
+"  新規タブ
+nnoremap ,t :tabnew<CR>
 " タブを一番右に移動
 nnoremap ,l :tabm<CR>
 nnoremap ,L :tabm 0<CR>
