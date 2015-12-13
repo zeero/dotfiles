@@ -2531,6 +2531,18 @@ let g:quickrun_config['sql.oracle'] = {
 \   'set underline off' . "\r" .
 \   '%s',
 \}
+" hook
+let s:my_quickrun_oracle_hook = {
+\ 'name': 'my_quickrun_oracle_hook',
+\ 'kind': 'hook',
+\ 'config': {
+\   'enable': 0,
+\ }
+\}
+function! s:my_quickrun_oracle_hook.on_finish(session, context) "{{{
+  echomsg 'test'
+endfunction "}}}
+call quickrun#module#register(s:my_quickrun_oracle_hook, 1)
 
 " lightline {{{1
 let g:lightline = {}
@@ -2884,7 +2896,7 @@ let g:surround_125 = "{ \r }"
 " smartchr {{{1
 inoremap <expr> = smartchr#loop('=', '==', '<=', '>=')
 
-" Alingta
+" Alingta {{{1
 let g:alignta_default_options = '<<<1:1'
 " デフォルトは非空白文字で整列
 let g:alignta_default_arguments = '<< \S\+'
