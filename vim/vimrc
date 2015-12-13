@@ -154,7 +154,7 @@ NeoBundleLazy 'AndrewRadev/switch.vim'
 \, {'autoload': {'commands': ['Switch']}}
 NeoBundleLazy 'lukaszkorecki/workflowish'
 \, {'autoload': {'filetypes': ['workflowish']}}
-NeoBundle 'zeero/yankround.vim', 'feature/wipe'
+NeoBundle 'zeero/yankround.vim'
 NeoBundleLazy 'osyo-manga/vim-jplus'
 \, {'autoload': {'mappings': ['<Plug>(jplus']}}
 
@@ -712,7 +712,7 @@ if has('gui_running')
     set guifont=Ricty_Diminished:h12:cSHIFTJIS
   else
     set guifont=Ricty\ Diminished\ Regular:h20
-    let g:vimshell_editor_command = "/Applications/MacPorts/MacVim.app/Contents/MacOS/Vim"
+"     let g:vimshell_editor_command = '/usr/local/opt/macvim/MacVim.app/Contents/MacOS/MacVim'
   endif
   " ウィンドウサイズを最大化する
   if has('win32') || has('win64')
