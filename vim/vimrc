@@ -1391,7 +1391,8 @@ nnoremap gp `[v`]
 " カーソル位置から末尾までビジュアル選択
 nnoremap ,v vg_
 " PASTEモードでクリップボード貼り付け
-nnoremap ,p :<C-u>set paste<CR>i<C-r>+<Esc>:<C-u>set nopaste<CR>
+nnoremap ,p :<C-u>set paste<CR>a<C-r>+<Esc>:<C-u>set nopaste<CR>
+nnoremap ,P :<C-u>set paste<CR>i<C-r>+<Esc>:<C-u>set nopaste<CR>
 " URLを開く
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 map gX <Plug>(openbrowser-smart-search)
