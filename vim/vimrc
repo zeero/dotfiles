@@ -282,7 +282,7 @@ NeoBundleLazy 'http://conque.googlecode.com/svn/trunk/'
 \,               'functions': ['conque_term#open', 'conque_term#subprocess', 'conque_term#register_function']}
 \,  'name': 'Conque'}
 NeoBundleLazy 'h1mesuke/vim-alignta.git'
-\, {'autoload': {'commands': ['Align', 'Alignta']
+\, {'autoload': {'commands': ['Alignta']
 \,               'unite-sources': ['ref']}}
 NeoBundleLazy 'copypath.vim'
 \, {'autoload': {'commands': ['CopyPath', 'CopyFileName']}}
@@ -2531,19 +2531,25 @@ let g:quickrun_config['sql.oracle'] = {
 \   'set heading on' . "\r" .
 \   'set underline off' . "\r" .
 \   '%s',
+\ 'outputter/oracle/enable': 1,
 \}
+" \ 'outputter': 'oracle',
 " hook
-let s:my_quickrun_oracle_hook = {
-\ 'name': 'my_quickrun_oracle_hook',
-\ 'kind': 'hook',
+let s:my_quickrun_outputter_oracle = {
+\ 'name': 'oracle',
+\ 'kind': 'outputter',
 \ 'config': {
 \   'enable': 0,
 \ }
 \}
-function! s:my_quickrun_oracle_hook.on_finish(session, context) "{{{
-  echomsg 'test'
+function! s:my_quickrun_outputter_oracle.output(data, session) "{{{
+  silent! echon a:data
 endfunction "}}}
-call quickrun#module#register(s:my_quickrun_oracle_hook, 1)
+function! s:my_quickrun_outputter_oracle.finish(session) "{{{
+  exe '%Alignta ,'
+  echomsg winnr()
+endfunction "}}}
+call quickrun#module#register(s:my_quickrun_outputter_oracle, 1)
 
 " lightline {{{1
 let g:lightline = {}
