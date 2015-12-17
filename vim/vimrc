@@ -282,8 +282,12 @@ NeoBundleLazy 'http://conque.googlecode.com/svn/trunk/'
 \,               'functions': ['conque_term#open', 'conque_term#subprocess', 'conque_term#register_function']}
 \,  'name': 'Conque'}
 NeoBundleLazy 'h1mesuke/vim-alignta.git'
-\, {'autoload': {'commands': ['Alignta']
-\,               'unite-sources': ['ref']}}
+\, {'autoload': {'commands': ['Alignta', 'Al']
+\,               'unite-sources': ['alignta']}}
+NeoBundleLazy 'Align'
+\, {'autoload': {'commands': ['Align', 'AlignCtrl', 'AlignPush', 'AlignPop']}}
+NeoBundleLazy 'SQLUtilities'
+\, {'autoload': {'commands': ['SQLUFormatter']}}
 NeoBundleLazy 'copypath.vim'
 \, {'autoload': {'commands': ['CopyPath', 'CopyFileName']}}
 NeoBundleLazy 'jceb/vim-editqf'
@@ -2904,13 +2908,16 @@ let g:surround_125 = "{ \r }"
 inoremap <expr> = smartchr#loop('=', '==', '<=', '>=')
 
 " Alingta {{{1
+" デフォルト整列オプション
 let g:alignta_default_options = '<<<1:1'
-" デフォルトは非空白文字で整列
+" 引数なしは非空白文字で整列
 let g:alignta_default_arguments = '<< \S\+'
+" コマンド短縮名
+command! -range -bang -nargs=* Al <line1>,<line2>Alignta<bang> <args>
 " unite-alignta
 let g:unite_source_alignta_preset_arguments = [
-\ ['Align at "="', '='],
-\ ['Align Right at "\\S\\+"', '>>> \S\+'],
+\ ['Alignta at "="', '='],
+\ ['Alignta Right at "\\S\\+"', '>>> \S\+'],
 \]
 
 " submode {{{1
