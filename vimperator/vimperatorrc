@@ -85,14 +85,15 @@ lazy fmaps -u='http://code.google.com/p/vimperator-labs/issues/detail' u
 " copy.js
 javascript <<EOM
 liberator.globalVariables.copy_templates = [
-   { label: 'plain:title+url', value: '%TITLE% %URL%' },
-   { label: 'plain:url',       value: '%URL%' },
-   { label: 'plain:title',     value: '%TITLE%' },
-   { label: 'wiki',            value: '[[%TITLE%|%URL%]]' },
-   { label: 'markdown',        value: '[%TITLE%](%URL%)' },
-   { label: 'html',            value: '<a href="%URL%">%TITLE%</a>' },
-   { label: 'html:select',     value: '<a href="%URL%" title="%TITLE%">%SEL%</a>' },
-   { label: 'html:blockquote', value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' }
+   { label: '1.markdown',          value: '[%TITLE%](%URL%)' },
+   { label: '2.redmine',           value: '"%TITLE%":%URL%' },
+   { label: '3.wiki',              value: '[[%TITLE%|%URL%]]' },
+   { label: '4-1.html',            value: '<a href="%URL%">%TITLE%</a>' },
+   { label: '4-2.html:select',     value: '<a href="%URL%" title="%TITLE%">%SEL%</a>' },
+   { label: '4-3.html:blockquote', value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' },
+   { label: '5-1.plain:title+url', value: '%TITLE% %URL%' },
+   { label: '5-2.plain:url',       value: '%URL%' },
+   { label: '5-3.plain:title',     value: '%TITLE%' },
 ];
 EOM
 
