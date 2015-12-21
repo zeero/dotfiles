@@ -1288,18 +1288,16 @@ nnoremap gj j
 nnoremap gk k
 vnoremap gj j
 vnoremap gk k
-" 行末に移動
-nnoremap <C-e> $
 " 0/^のトグル
 nnoremap <expr> 0 match(getline("."), '\S') == col(".") - 1 ? '0' : '^'
 nnoremap <expr> ^ match(getline("."), '\S') == col(".") - 1 ? '0' : '^'
+" markへのジャンプ
+nnoremap gm `
 " diffハンクへのジャンプ
 nnoremap g[ [czz
 nnoremap g] ]czz
 nnoremap do do]czz
 nnoremap dp dp]czz
-" markへのジャンプ
-nnoremap gm `
 " 折り畳み
 nnoremap z] zj^
 nnoremap z[ [z^
@@ -1392,6 +1390,8 @@ nnoremap zh 4zh4zh4zh4zh4zh4zh
 nnoremap zl 4zl4zl4zl4zl4zl4zl
 nnoremap zH zh
 nnoremap zL zl
+" 画面下で再描画
+nnoremap z<S-CR> z-
 " 直前に変更またはヤンクした文字を選択
 nnoremap gp `[v`]
 " カーソル位置から末尾までビジュアル選択
@@ -1650,8 +1650,6 @@ nnoremap ZQ <Nop>
 " imap/cmapのマップリーダにするため、無効化
 inoremap <C-@> <Nop>
 " 退避
-nnoremap <F2><C-y> <C-y>
-nnoremap <F2><C-e> <C-e>
 nnoremap <F2><C-g> <C-g>
 nnoremap <F2>[[ [[
 nnoremap <F2>]] ]]
