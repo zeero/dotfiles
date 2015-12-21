@@ -2785,7 +2785,10 @@ let g:DirDiffExcludes = ".svn,.git,CVS,*.class,*.exe,.*.swp"
 map g/ <Plug>(incsearch-migemo-/)
 map g? <Plug>(incsearch-migemo-?)
 " map g/ <Plug>(incsearch-migemo-stay)
-" command! MigemoIncsearch call incsearch#call(incsearch#config#migemo#make())
+command! MigemoIncsearch call incsearch#call(incsearch#config#migemo#make())
+
+" incsearch-fuzzy
+command! FuzzyIncsearch call incsearch#call(incsearch#config#fuzzy#make())
 
 " incsearch-migemo-fuzzy
 " function! s:config_migemo_fuzzy(...) abort "{{{
