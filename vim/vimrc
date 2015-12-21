@@ -2026,9 +2026,8 @@ endfunction
 " <Tab>: completion.
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr> <C-h> neocomplete#smart_close_popup() . "\<Left>"
-inoremap <expr> <BS> neocomplete#smart_close_popup() . "\<C-h>"
+" <Esc>: close popup and delete backword char.
+inoremap <expr> <Esc> neocomplete#smart_close_popup() . "\<Esc>"
 " inoremap <expr> <C-y> neocomplete#close_popup()
 " inoremap <expr> <C-e> neocomplete#cancel_popup()
 " Close popup by <Space>.
