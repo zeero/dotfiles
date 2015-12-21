@@ -298,6 +298,8 @@ NeoBundleLazy 'loremipsum'
 \, {'autoload': {'commands': ['Loremipsum']}}
 NeoBundleLazy 'thinca/vim-scouter'
 \, {'autoload': {'commands': ['Scouter']}}
+NeoBundleLazy 'dbext.vim'
+" \, {'autoload': {'commands': ['DBExt']}}
 
 " 表示 {{{2
 NeoBundle 'itchyny/lightline.vim'
@@ -2057,10 +2059,14 @@ au myvimrc FileType html,mkd setlocal omnifunc=htmlcomplete#CompleteTags
 au myvimrc FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 au myvimrc FileType python setlocal omnifunc=pythoncomplete#Complete
 au myvimrc FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+au myvimrc FileType ruby setlocal omnifunc=rubycomplete#Complete
 
 " Enable heavy omni completion. {{{2
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
+endif
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
 endif
 "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
@@ -3130,6 +3136,9 @@ let g:user_emmet_settings = {
 " let g:monster#completion#rcodetools#backend = "async_rct_complete"
 " Use neocomplete.vim
 let g:neocomplete#sources#omni#input_patterns = {
+\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
+\}
+let g:neocomplete#force_omni_input_patterns = {
 \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
 \}
 
