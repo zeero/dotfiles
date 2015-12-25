@@ -3005,7 +3005,7 @@ let g:gista#warn_in_partial_save = 0
 " ポストしたら自動でコネクト
 let g:gista#auto_connect_after_post = 1
 " :wで保存時にアップデート（デフォルトは:w!）
-" let g:gista#update_on_write = 1
+let g:gista#update_on_write = 1
 " リストを自動で閉じる
 " let g:gista#close_list_after_open = 1
 " リスト表示の開き方
