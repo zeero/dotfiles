@@ -1083,7 +1083,7 @@ function! s:my_diff() "{{{
     " autocmd中はnohは効かない
     "noh
     " TODO: normal ]cが効かない…
-    exe "normal! ]c"
+    " exe 'normal! ]c'
   endif
 endfunction "}}}
 " DFOff
