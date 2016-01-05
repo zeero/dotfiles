@@ -1,26 +1,63 @@
-" incremental searching.
+"-----------------------------------------------------------------------------
+" オプション
+"-----------------------------------------------------------------------------
+" 表示関連
+" set blinkcursor "アシスタントエディタ上でカーソル表示が消えてしまう
+
+" 検索関連
 set incsearch
-
-" Case-insensitive searching.
 set ignorecase
-
-" But case-sensitive if expression contains a capital letter.
 set smartcase
+" set hlsearch "見難い
 
 " Default to global substitutions on lines
-set gdefault
+" set gdefault
 
 " Use the system pasteboard
 set pasteboard
 
-" show Assistant Editor
-nmap ,t :xccmd changeToGeniusEditor<CR>
-nmap ,T :xccmd removeAssistantEditor<CR>
+"-----------------------------------------------------------------------------
+" キーマップ
+"-----------------------------------------------------------------------------
+" 移動
+nnoremap 0 ^
+nnoremap ^ 0
 
-" toggle comment
-nmap ,/ :xccmd commentAndUncommentCurrentLines<CR>
+" qで閉じる
+nnoremap q :q<CR>
+nnoremap Q q
 
-" input mode
+" タブ
+nnoremap ,t :xccmd newTab<CR>
+nnoremap H :xccmd selectPreviousTab<CR>
+nnoremap L :xccmd selectNextTab<CR>
+
+" 履歴
+nnoremap <C-H> :xccmd goBackInHistoryByCommand<CR>
+nnoremap <C-L> :xccmd goForwardInHistoryByCommand<CR>
+
+" アシスタントエディタ
+"   キーボードショートカット
+"   Cmd + Opt + <CR> / Cmd + <CR>
+nnoremap ,, :xccmd changeToGeniusEditor<CR>
+nnoremap ,q :xccmd changeToStandardEditor<CR>
+
+" クイックオープン
+"   キーボードショートカット
+"   Cmd + Shift + O
+nnoremap t :xccmd openQuickly<CR>
+
+" ヘルプ
+nnoremap K :xccmd showQuickHelp<CR>
+nnoremap ,h :xccmd showQuickHelp<CR>
+
+" コメントアウト（トグル）
+nnoremap ,/ :xccmd commentAndUncommentCurrentLines<CR>
+
+" ブレイクポイント（トグル）
+nnoremap ,b :xccmd toggleBreakpointAtCurrentLine<CR>
+
+" インサートモードの移動
 " うまくいかないのでXCodeのキーバインドで設定
 " imap <C-H> <Left>
 " imap <C-L> <Right>
