@@ -1468,8 +1468,8 @@ inoremap <expr> <C-@>: strftime('%H:%M:%S')
 cnoremap <C-@>; <C-r>=strftime('%Y%m%d')<CR>
 cnoremap <C-@>: <C-r>=strftime('%H%M%S')<CR>
 " インデント
-inoremap <C-@>> <C-o>>><End>
-inoremap <C-@>< <C-o><<<End>
+inoremap <C-@>> <C-t>
+inoremap <C-@>< <C-d>
 " YankRound
 inoremap <C-@>y <C-o>:CtrlPYankRound<CR>
 nnoremap ,y :CtrlPYankRound<CR>
