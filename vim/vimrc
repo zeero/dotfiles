@@ -2452,10 +2452,9 @@ let g:quickrun_config['ruby.rspec'] = {
 \}
 
 " swift {{{2
-if executable('xcrun')
+if executable('swift')
   let g:quickrun_config['swift'] = {
-  \ 'command': 'xcrun',
-  \ 'cmdopt': 'swift',
+  \ 'command': 'swift',
   \ 'exec': '%c %o %s',
   \}
 endif
@@ -3035,7 +3034,7 @@ nnoremap T :<C-u>CtrlPGista<CR>
 "  <C-_> : コメントアウト／イン
 "          （_と/が同じキーマップになってるのでCtrl+/でできる）
 "let g:user_emmet_leader_key = '<C-e>'
-let g:user_emmet_leader_key = ',e'
+let g:user_emmet_leader_key = '<C-@><C-e>'
 " let g:user_emmet_togglecomment_key = '<C-_>'
 " タグのコンプリート
 let g:use_emmet_complete_tag = 1
