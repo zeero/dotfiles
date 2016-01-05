@@ -1,0 +1,28 @@
+" incremental searching.
+set incsearch
+
+" Case-insensitive searching.
+set ignorecase
+
+" But case-sensitive if expression contains a capital letter.
+set smartcase
+
+" Default to global substitutions on lines
+set gdefault
+
+" Use the system pasteboard
+set pasteboard
+
+" show Assistant Editor
+nmap ,t :xccmd changeToGeniusEditor<CR>
+nmap ,T :xccmd removeAssistantEditor<CR>
+
+" toggle comment
+nmap ,/ :xccmd commentAndUncommentCurrentLines<CR>
+
+" input mode
+" うまくいかないのでXCodeのキーバインドで設定
+" imap <C-H> <Left>
+" imap <C-L> <Right>
+" imap <C-D> <Del>
+
