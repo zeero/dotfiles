@@ -3161,6 +3161,11 @@ let g:neocomplete#force_omni_input_patterns = {
 \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
 \}
 
+" splitjoin {{{1
+" デフォルトのgJ/gSは無効化
+let g:splitjoin_split_mapping = ''
+let g:splitjoin_join_mapping = ''
+
 " Syntastic {{{1
 let g:syntastic_mode_map = {
 \ 'mode': 'passive',
