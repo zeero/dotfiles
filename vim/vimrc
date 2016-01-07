@@ -1006,6 +1006,8 @@ endfunction "}}}
 " Ag
 command! -nargs=+ -complete=file Ag call s:my_silver_searcher(<q-args>)
 function! s:my_silver_searcher(args) "{{{
+  " set search keyword
+  let @/ = a:args
   " async
   call s:my_vimproc_async({
   \ 'cmd': 'ag --vimgrep ' . a:args,
