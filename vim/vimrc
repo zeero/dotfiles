@@ -1383,12 +1383,12 @@ nnoremap <C-l> <C-i>
 
 " ノーマルモード {{{2
 " すべてのフォールディングの開け閉め
-nnoremap zO zRz<CR>
+nnoremap zO zR
 nnoremap zC zMzz
-nnoremap zv zOz<CR>
+nnoremap zv zczO
 " <Plug>マッピングのためzvを退避
 nnoremap zV zv
-nnoremap zo zvz<CR>
+nnoremap zo zv
 nnoremap zc zczz
 " 水平スクロール
 nnoremap zh 4zh4zh4zh4zh4zh4zh
