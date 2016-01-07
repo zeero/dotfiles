@@ -1382,8 +1382,6 @@ nnoremap <C-h> <C-o>
 nnoremap <C-l> <C-i>
 
 " ノーマルモード {{{2
-" 行末までヤンク
-nnoremap Y y$
 " すべてのフォールディングの開け閉め
 nnoremap zO zRz<CR>
 nnoremap zC zMzz
@@ -1399,10 +1397,14 @@ nnoremap zH zh
 nnoremap zL zl
 " 画面下で再描画
 nnoremap z<S-CR> z-
-" 直前に変更またはヤンクした文字を選択
-nnoremap gp `[v`]
+" 行末までヤンク
+nnoremap Y yg_
 " カーソル位置から末尾までビジュアル選択
 nnoremap ,v vg_
+" 直前に変更またはヤンクした文字を選択
+nnoremap gp `[v`]
+" ペースト後末尾に移動
+nnoremap p p`]
 " PASTEモードでクリップボード貼り付け
 nnoremap ,p :<C-u>set paste<CR>a<C-r>+<Esc>:<C-u>set nopaste<CR>
 nnoremap ,P :<C-u>set paste<CR>i<C-r>+<Esc>:<C-u>set nopaste<CR>
@@ -1420,9 +1422,11 @@ nnoremap gY :<C-u>CopyPath<CR>
 nnoremap <expr> x virtcol(".") == virtcol("$") ? 'X' : 'x'
 
 " ビジュアルモード {{{2
+" ヤンク後末尾に移動
 vnoremap y y`]
-vnoremap p p`]
-nnoremap p p`]
+" 選択文字を削除してインサートモードを開始する
+" （ただし<C-i>＝<Tab>であることは注意）
+vnoremap <C-i> c
 
 " オペレータ {{{2
 " replace
@@ -1434,8 +1438,6 @@ nnoremap ,c :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 vnoremap ,c "xy:%s/<C-r>=escape(@x, '\\/.*$^~[]')<CR>//gc<Left><Left><Left>
 " surround
 map s <Plug>(operator-surround-append)
-map S <Plug>(operator-surround-delete)
-map <C-s> <Plug>(operator-surround-replace)
 let g:operator#surround#enable_xbrackets_mode = 1 " 定義済みブロックが現れるまでテキスト保持
 " snake_case<=>CamelCase
 vmap _ <Plug>(operator-camelize-toggle)
