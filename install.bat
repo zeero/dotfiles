@@ -57,18 +57,26 @@ echo ・mktemp
 echo 　　http://gnuwin32.sourceforge.net/packages/mktemp.htm
 echo.
 echo その他設定
-echo ・msysgitのバグでgit pushが失敗するので以下の対応をとること。
+echo ■msysgitのバグでgit pushが失敗するので以下の対応をとること。
 echo 　・https://username:password@bitbucket.org/username/reponame.git のようにユーザー、パスワードを指定する
 echo 　　・git remote set-url origin ${REPO_URL}
 echo 　・sshプロトコルを使用する
 echo 　・gitプロトコルを使用する
 echo 　・1.8.4にダウングレードする
-echo ・キーリピートを速くする方が快適。以下のどちらかを実施。
+echo ■キーリピートを速くする方が快適。以下のどちらかを実施。
 echo 　・レジストリをいじる
 echo 　　１．regedit
 echo 　　２．HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response
 echo 　　３．"AutoRepeatDelay"="300" "AutoRepeatRate"="16" "BounceTime"="0" "DelayBeforeAcceptance"="0" "Flags"="59"
 echo 　・コンパネ→キーボード→表示までの待ち時間を短く
+echo ■コンテキストメニューに「Vimで開く」を追加する。
+echo 　・レジストリをいじる
+echo 　　１．regedit
+echo 　　２．「HKEY_CLASSES_ROOT\*\Shell」に移動
+echo 　　３．Shellキーの中に新規キー「Vimで開く」を作成
+echo 　　４．「Vimで開く」キーの中に新規キーcommandを作成する。
+echo 　　５．commandキーの文字列の値を変更
+echo 　　　　"${gvim.exeへのフルパス}" "%1"
 pause
 echo.
 
