@@ -2762,6 +2762,8 @@ command! Gc Gcommit -v
 command! Gca Gcommit -va
 command! Gl Glog
 command! Gb Gblame
+" HEADに戻す
+command! Gr Gread! show HEAD:%
 
 " Gitv {{{1
 let g:Gitv_OpenHorizontal = 1
