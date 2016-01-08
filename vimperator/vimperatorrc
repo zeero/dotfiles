@@ -34,6 +34,9 @@ nnoremap ,L :tabm 0<CR>
 " タブを閉じる（マクロはQに退避）
 nnoremap q d
 nnoremap Q q
+" スペースのスクロールをページ半分にする
+" nnoremap <Space> <C-d>
+" nnoremap <S-Space> <C-u>
 " ナビゲーションバーのトグル
 nnoremap m :set toolbars+=nonavigation,noaddons<CR>
 nnoremap M :set toolbars+=navigation,addons<CR>
@@ -51,6 +54,9 @@ nnoremap U :undo<Space>
 " URLコピー
 nnoremap gy :copy plain:url<CR>
 nnoremap gY :copy plain:title+url<CR>
+" タブグループビューを開く
+nnoremap x <C-S-e>
+
 " コマンドライン移動
 cnoremap <C-a> <Home>
 cnoremap <C-h> <Left>
@@ -64,9 +70,6 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 " コマンドラインモードでIMEオフ
 style -name commandline-ime chrome://* #liberator-commandline-command input {ime-mode: inactive;}
-" スペースのスクロールをページ半分にする
-" nnoremap <Space> <C-d>
-" nnoremap <S-Space> <C-u>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " プラグインの設定
