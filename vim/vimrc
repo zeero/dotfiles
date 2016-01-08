@@ -272,7 +272,8 @@ NeoBundleLazy 'AndrewRadev/linediff.vim'
 NeoBundleLazy 'thinca/vim-prettyprint'
 \, {'autoload': {'commands': ['PP']}}
 NeoBundleLazy 'AndrewRadev/splitjoin.vim'
-\, {'autoload': {'commands': ['SplitjoinSplit', 'SplitjoinJoin']}}
+\, {'autoload': {'commands': ['SplitjoinSplit', 'SplitjoinJoin']
+\,               'mappings': [['n', ',o'], ['n', ',J']]}}
 NeoBundleLazy 'thinca/vim-scall'
 \, {'autoload': {'commands': ['Scall']}}
 NeoBundleLazy 'osyo-manga/vim-over'
@@ -2817,12 +2818,15 @@ let g:anzu_status_format = "(%i/%l)"
 au myvimrc CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
 
 " jplus {{{1
+" キーマッピング
 nmap J <Plug>(jplus)
 vmap J <Plug>(jplus)
-nnoremap gJ J
-vnoremap gJ J
-nmap ,J <Plug>(jplus-getchar)
-vmap ,J <Plug>(jplus-getchar)
+nmap gJ <Plug>(jplus-getchar)
+vmap gJ <Plug>(jplus-getchar)
+" 初期化
+let g:jplus#config = {}
+" 区切り文字はなし
+let g:jplus#config._ = {'delimiter': ''}
 
 " textobj-user {{{1
 " entire
@@ -3167,9 +3171,9 @@ let g:neocomplete#force_omni_input_patterns = {
 \}
 
 " splitjoin {{{1
-" デフォルトのgJ/gSは無効化
-let g:splitjoin_split_mapping = ''
-let g:splitjoin_join_mapping = ''
+" キーマッピング
+let g:splitjoin_split_mapping = ',o'
+let g:splitjoin_join_mapping = ',J'
 
 " Syntastic {{{1
 let g:syntastic_mode_map = {
