@@ -13,3 +13,4 @@
 [submodule "vimperator/vimppm"]
 	path = vimperator/vimppm
 	url = https://github.com/cd01/vimppm.git
+	ignore = dirty
