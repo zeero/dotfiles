@@ -10,3 +10,6 @@
 [submodule "lib/RictyDiminished"]
 	path = lib/RictyDiminished
 	url = https://github.com/yascentur/RictyDiminished.git
+[submodule "vimperator/vimppm"]
+	path = vimperator/vimppm
+	url = https://github.com/cd01/vimppm.git

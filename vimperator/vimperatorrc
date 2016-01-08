@@ -1,8 +1,8 @@
 " 2.2 (created: 2009/10/28 19:04:27)
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"-----------------------------------------------------------------------------
 " Vimperator固有の設定
-"
+"-----------------------------------------------------------------------------
 set toolbars=menu,tabs,navigation,nobookmarks,addons
 set hlsearch
 set newtab=all
@@ -17,9 +17,9 @@ colorscheme ZeeroBlue
 " 検索エンジン
 setglobal defsearch=yahoo
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"-----------------------------------------------------------------------------
 " キー設定
-"
+"-----------------------------------------------------------------------------
 " 戻る/進む
 nnoremap h <A-Left>
 nnoremap l <A-Right>
@@ -71,9 +71,19 @@ cnoremap <C-n> <Down>
 " コマンドラインモードでIMEオフ
 style -name commandline-ime chrome://* #liberator-commandline-command input {ime-mode: inactive;}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"-----------------------------------------------------------------------------
 " プラグインの設定
-"
+"-----------------------------------------------------------------------------
+" Vimppm
+silent source ~/.vimperator/vimppm/plugin/vimppm.js
+silent source ~/vimperator/vimppm/plugin/vimppm.js
+" Github
+" vimppm 'cd01/evernote-clearly-vimp'
+" vimpr/vimperator-plugins
+vimppm '_libly.js'
+vimppm 'copy.js'
+vimppm 'feedSomeKeys_3.js'
+
 " My Commands
 command! resource source $MY_VIMPERATORRC
 
