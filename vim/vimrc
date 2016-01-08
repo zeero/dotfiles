@@ -2972,7 +2972,7 @@ let g:clever_f_use_migemo = 1
 " 検索方向固定
 let g:clever_f_fix_key_direction = 1
 
-" vim-smartword {{{1
+" vim-smartword & CamelCaseMotion {{{1
 map <Plug>(smartword-basic-w) <Plug>CamelCaseMotion_w
 map <Plug>(smartword-basic-b) <Plug>CamelCaseMotion_b
 map <Plug>(smartword-basic-e) <Plug>CamelCaseMotion_e
@@ -2984,6 +2984,9 @@ vmap w <Plug>(smartword-w)
 vmap b <Plug>(smartword-b)
 vmap e <Plug>(smartword-e)
 vmap ge <Plug>(smartword-ge)
+omap w <Plug>CamelCaseMotion_w
+omap b <Plug>CamelCaseMotion_b
+omap e <Plug>CamelCaseMotion_e
 
 " editqf {{{1
 let g:editqf_saveqf_filename  = "~/.editqf_save_data"
