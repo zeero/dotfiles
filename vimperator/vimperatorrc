@@ -40,9 +40,9 @@ nnoremap Q q
 " タブグループビューを開く
 javascript <<EOM
 if (liberator.has("Windows")) {
-  liberator.execute("nnoremap gt <C-S-e>", "", "");
+  liberator.execute("nnoremap gt <C-S-e>", "", true);
 } else {
-  liberator.execute("nnoremap gt <M-S-e>", "", "");
+  liberator.execute("nnoremap gt <M-S-e>", "", true);
 }
 EOM
 " ナビゲーションバーのトグル
