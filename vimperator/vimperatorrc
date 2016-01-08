@@ -37,6 +37,8 @@ nnoremap Q q
 " スペースのスクロールをページ半分にする
 " nnoremap <Space> <C-d>
 " nnoremap <S-Space> <C-u>
+" タブグループビューを開く
+nnoremap s <C-S-e>
 " ナビゲーションバーのトグル
 nnoremap m :set toolbars+=nonavigation,noaddons<CR>
 nnoremap M :set toolbars+=navigation,addons<CR>
@@ -54,8 +56,6 @@ nnoremap U :undo<Space>
 " URLコピー
 nnoremap gy :copy plain:url<CR>
 nnoremap gY :copy plain:title+url<CR>
-" タブグループビューを開く
-nnoremap x <C-S-e>
 
 " コマンドライン移動
 cnoremap <C-a> <Home>
