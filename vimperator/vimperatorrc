@@ -38,7 +38,7 @@ nnoremap Q q
 " nnoremap <Space> <C-d>
 " nnoremap <S-Space> <C-u>
 " タブグループビューを開く
-nnoremap s <C-S-e>
+nnoremap gt <C-S-e>
 " ナビゲーションバーのトグル
 nnoremap m :set toolbars+=nonavigation,noaddons<CR>
 nnoremap M :set toolbars+=navigation,addons<CR>
