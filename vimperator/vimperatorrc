@@ -38,7 +38,13 @@ nnoremap Q q
 " nnoremap <Space> <C-d>
 " nnoremap <S-Space> <C-u>
 " タブグループビューを開く
-nnoremap gt <C-S-e>
+javascript <<EOM
+if (liberator.has("Windows")) {
+  liberator.execute("nnoremap gt <C-S-e>", "", "");
+} else {
+  liberator.execute("nnoremap gt <M-S-e>", "", "");
+}
+EOM
 " ナビゲーションバーのトグル
 nnoremap m :set toolbars+=nonavigation,noaddons<CR>
 nnoremap M :set toolbars+=navigation,addons<CR>
@@ -75,8 +81,13 @@ style -name commandline-ime chrome://* #liberator-commandline-command input {ime
 " プラグインの設定
 "-----------------------------------------------------------------------------
 " Vimppm
-silent source ~/.vimperator/vimppm/plugin/vimppm.js
-silent source ~/vimperator/vimppm/plugin/vimppm.js
+javascript <<EOM
+if (liberator.has("Windows")) {
+  io.source("~/vimperator/vimppm/plugin/vimppm.js");
+} else {
+  io.source("~/.vimperator/vimppm/plugin/vimppm.js");
+}
+EOM
 " Github
 "vimppm 'cd01/evernote-clearly-vimp'
 " Vimpr
