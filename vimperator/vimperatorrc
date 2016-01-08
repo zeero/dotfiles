@@ -81,7 +81,6 @@ silent source ~/vimperator/vimppm/plugin/vimppm.js
 "vimppm 'cd01/evernote-clearly-vimp'
 " Vimpr
 vimppm '_libly.js'
-vimppm '_smooziee.js'
 vimppm 'copy.js'
 vimppm 'feedSomeKeys_3.js'
 
@@ -114,9 +113,6 @@ EOM
 " caret-hint
 let g:caret_hint_key = 'g'
 let g:caret_hint_tail_key = 'G'
-
-" smooziee
-let g:smooziee_scroll_amount="100"
 
 " vim:ft=vim
 
