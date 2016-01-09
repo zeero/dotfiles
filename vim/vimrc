@@ -278,10 +278,12 @@ NeoBundleLazy 'thinca/vim-scall'
 \, {'autoload': {'commands': ['Scall']}}
 NeoBundleLazy 'osyo-manga/vim-over'
 \, {'autoload': {'commands': ['OverCommandLine']}}
-NeoBundleLazy 'http://conque.googlecode.com/svn/trunk/'
-\, {'autoload': {'commands': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermTab', 'ConqueTermVSplit']
-\,               'functions': ['conque_term#open', 'conque_term#subprocess', 'conque_term#register_function']}
-\,  'name': 'Conque'}
+if has('python') || has('python3')
+  NeoBundleLazy 'http://conque.googlecode.com/svn/trunk/'
+  \, {'autoload': {'commands': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermTab', 'ConqueTermVSplit']
+  \,               'functions': ['conque_term#open', 'conque_term#subprocess', 'conque_term#register_function']}
+  \,  'name': 'Conque'}
+endif
 NeoBundleLazy 'h1mesuke/vim-alignta.git'
 \, {'autoload': {'commands': ['Alignta', 'Al']
 \,               'unite-sources': ['alignta']}}
@@ -1299,6 +1301,8 @@ vnoremap gk k
 " 0/^のトグル
 nnoremap <expr> 0 match(getline("."), '\S') == col(".") - 1 ? '0' : '^'
 nnoremap <expr> ^ match(getline("."), '\S') == col(".") - 1 ? '0' : '^'
+vnoremap <expr> 0 match(getline("."), '\S') == col(".") - 1 ? '0' : '^'
+vnoremap <expr> ^ match(getline("."), '\S') == col(".") - 1 ? '0' : '^'
 " markへのジャンプ
 nnoremap gm `
 " diffハンクへのジャンプ
@@ -1383,19 +1387,8 @@ nnoremap <C-h> <C-o>
 nnoremap <C-l> <C-i>
 
 " ノーマルモード {{{2
-" すべてのフォールディングの開け閉め
-nnoremap zO zR
-nnoremap zC zMzz
-nnoremap zv zczO
-" <Plug>マッピングのためzvを退避
-nnoremap zV zv
-nnoremap zo zv
-nnoremap zc zczz
-" 水平スクロール
-nnoremap zh 4zh4zh4zh4zh4zh4zh
-nnoremap zl 4zl4zl4zl4zl4zl4zl
-nnoremap zH zh
-nnoremap zL zl
+" ;を:にマップする
+nnoremap ; :
 " 画面下で再描画
 nnoremap z<S-CR> z-
 " 行末までヤンク
@@ -1410,6 +1403,19 @@ nnoremap P P`]
 " PASTEモードでクリップボード貼り付け
 nnoremap ,p :<C-u>set paste<CR>a<C-r>+<Esc>:<C-u>set nopaste<CR>`]
 nnoremap ,P :<C-u>set paste<CR>i<C-r>+<Esc>:<C-u>set nopaste<CR>`]
+" すべてのフォールディングの開け閉め
+nnoremap zO zR
+nnoremap zC zMzz
+nnoremap zv zczO
+" <Plug>マッピングのためzvを退避
+nnoremap zV zv
+nnoremap zo zv
+nnoremap zc zczz
+" 水平スクロール
+nnoremap zh 4zh4zh4zh4zh4zh4zh
+nnoremap zl 4zl4zl4zl4zl4zl4zl
+nnoremap zH zh
+nnoremap zL zl
 " URLを開く
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 map gX <Plug>(openbrowser-smart-search)
