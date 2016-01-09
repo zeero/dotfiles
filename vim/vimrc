@@ -278,7 +278,7 @@ NeoBundleLazy 'thinca/vim-scall'
 \, {'autoload': {'commands': ['Scall']}}
 NeoBundleLazy 'osyo-manga/vim-over'
 \, {'autoload': {'commands': ['OverCommandLine']}}
-if has('python') || has('python3')
+if (has('python') || has('python3')) && (has('win32') || has('win64'))
   NeoBundleLazy 'http://conque.googlecode.com/svn/trunk/'
   \, {'autoload': {'commands': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermTab', 'ConqueTermVSplit']
   \,               'functions': ['conque_term#open', 'conque_term#subprocess', 'conque_term#register_function']}
