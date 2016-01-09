@@ -1422,7 +1422,9 @@ map gX <Plug>(openbrowser-smart-search)
 nnoremap gx call vimproc#open(expand("%:p:h"))
 vnoremap gx y:<C-u>call vimproc#open(<C-r>")<CR>
 " Esc+noh+ZoomReset
-nnoremap <silent> <Esc> <Esc>:<C-u>Noh<CR>:<C-u>ZoomReset<CR>:<C-u>echo<CR>
+if has('gui_running')
+  nnoremap <silent> <Esc> <Esc>:<C-u>Noh<CR>:<C-u>ZoomReset<CR>:<C-u>echo<CR>
+endif
 " CopyFileName
 nnoremap gy :<C-u>CopyFileName<CR>
 nnoremap gY :<C-u>CopyPath<CR>
