@@ -238,11 +238,13 @@ NeoBundleLazy 'thinca/vim-ref'
 \,               'unite-sources': ['ref']}
 \,  'depends': ['mattn/webapi-vim']}
 NeoBundle 'mojako/ref-sources.vim'
-NeoBundle 'thinca/vim-quickrun'
-" \, {'autoload': {'commands': ['QuickRun']
-" \,               'mappings': '<Plug>(quickrun)'}}
-NeoBundle 'osyo-manga/shabadou.vim'
-\, {'depends': ['thinca/vim-quickrun']}
+NeoBundleLazy 'thinca/vim-quickrun'
+\, {'autoload': {'commands': ['QuickRun']
+\,               'mappings': '<Plug>(quickrun'}}
+NeoBundleLazy 'osyo-manga/shabadou.vim'
+\, {'autoload': {'commands': ['QuickRun']
+\,               'mappings': '<Plug>(quickrun'}
+\,  'depends': ['thinca/vim-quickrun']}
 NeoBundle 'tpope/vim-fugitive'
 \, {'augroup': 'fugitive'}
 NeoBundleLazy 'Shougo/vim-vcs'
@@ -2423,7 +2425,10 @@ endfunction
 " KEYMAP:
 "  ,r : バッファの内容を実行
 
-" 基本設定 {{{2
+" 基本設定（以降はon_source） {{{2
+let s:bundle = neobundle#get('vim-quickrun')
+let s:bundle.hooks = get(s:bundle, "hooks", {})
+function! s:bundle.hooks.on_source(bundle)
 " quickrun.vim が実行していない場合には <C-c> を呼び出す
 nnoremap <expr> <silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 " カラー出力用outputter追加
@@ -2575,6 +2580,10 @@ function! s:my_quickrun_outputter_oracle.finish(session) "{{{
   echomsg winnr()
 endfunction "}}}
 call quickrun#module#register(s:my_quickrun_outputter_oracle, 1)
+
+" （on_source終わり） {{{2
+endfunction
+unlet s:bundle
 
 " lightline {{{1
 let g:lightline = {}
