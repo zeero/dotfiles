@@ -1408,7 +1408,7 @@ nnoremap ,P :<C-u>set paste<CR>i<C-r>+<Esc>:<C-u>set nopaste<CR>`]
 " すべてのフォールディングの開け閉め
 nnoremap zO zR
 nnoremap zC zMzz
-nnoremap zv zczO
+nnoremap zv zozczO
 " <Plug>マッピングのためzvを退避
 nnoremap zV zv
 nnoremap zo zv
