@@ -60,8 +60,8 @@ nnoremap <Esc> :st<CR>:noh<CR>zz<Esc>
 " 最近閉じたタブの一覧（補完待ち状態にする）
 nnoremap U :undo<Space>
 " URLコピー
-nnoremap gy :copy plain:url<CR>
-nnoremap gY :copy plain:title+url<CR>
+nnoremap gy :copy 5-1.plain:title+url<CR>
+nnoremap gY :copy 1.markdown<CR>
 
 " コマンドライン移動
 cnoremap <C-a> <Home>
@@ -109,15 +109,15 @@ lazy fmaps -u='http://code.google.com/p/vimperator-labs/issues/detail' u
 " copy.js
 javascript <<EOM
 liberator.globalVariables.copy_templates = [
-   { label: '1.markdown',          value: '[%TITLE%](%URL%)' },
-   { label: '2.redmine',           value: '"%TITLE%":%URL%' },
-   { label: '3.wiki',              value: '[[%TITLE%|%URL%]]' },
-   { label: '4-1.html',            value: '<a href="%URL%">%TITLE%</a>' },
-   { label: '4-2.html:select',     value: '<a href="%URL%" title="%TITLE%">%SEL%</a>' },
-   { label: '4-3.html:blockquote', value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' },
-   { label: '5-1.plain:title+url', value: '%TITLE% %URL%' },
-   { label: '5-2.plain:url',       value: '%URL%' },
-   { label: '5-3.plain:title',     value: '%TITLE%' },
+   { label: "1.markdown",          value: "[%TITLE%](%URL%)" },
+   { label: "2.redmine",           value: "\"%TITLE%\":%URL%" },
+   { label: "3.wiki",              value: "[[%TITLE%|%URL%]]" },
+   { label: "4-1.html",            value: "<a href=\"%URL%\">%TITLE%</a>" },
+   { label: "4-2.html:select",     value: "<a href=\"%URL%\" title=\"%TITLE%\">%SEL%</a>" },
+   { label: "4-3.html:blockquote", value: "<blockquote cite=\"%URL%\" title=\"%TITLE%\">%HTMLSEL%</blockquote>" },
+   { label: "5-1.plain:title+url", value: "%TITLE%\n%URL%" },
+   { label: "5-2.plain:url",       value: "%URL%" },
+   { label: "5-3.plain:title",     value: "%TITLE%" },
 ];
 EOM
 
