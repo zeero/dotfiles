@@ -22,6 +22,7 @@ git config --global github.user zeero
 git config --global diff.algorithm histogram
 git config --global diff.tool vimdiff
 git config --global push.default matching
+git config --global core.excludesfile ~/.gitignore
 
 rem Ricty
 echo RictyDiminishedをインストールしてください。
