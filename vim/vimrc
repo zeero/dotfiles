@@ -3056,6 +3056,8 @@ endfunction "}}}
 " vim-gista {{{1
 " Github設定
 let g:gista#github_user = 'zeero'
+let g:gista#client#default_username = 'zeero'
+let g:gista#client#default_apiname = 'GitHub'
 " プライベートをデフォルトに
 let g:gista#post_private = 1
 " アップデート時の警告を無効に
