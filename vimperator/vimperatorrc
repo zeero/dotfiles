@@ -60,15 +60,15 @@ nnoremap <Esc> :st<CR>:noh<CR>zz<Esc>
 " 最近閉じたタブの一覧（補完待ち状態にする）
 nnoremap U :undo<Space>
 " URLコピー
-nnoremap gy :copy 5-1.plain:title+url<CR>
-nnoremap gY :copy 1.markdown<CR>
+nnoremap gy :silent copy 5-1.plain:title+url<CR>:echo "copied!"<CR>
+nnoremap gY :silent copy 1.markdown<CR>:echo "copied!"<CR>
 
 " コマンドライン移動
 cnoremap <C-a> <Home>
 cnoremap <C-h> <Left>
 cnoremap <C-l> <Right>
-cnoremap <C-w> <S-Left>
-cnoremap <C-b> <S-Right>
+cnoremap <C-w> <C-Left>
+cnoremap <C-b> <C-Right>
 " 文字削除
 cnoremap <C-d> <Del>
 " ヒストリ
@@ -86,6 +86,8 @@ if (liberator.has("Windows")) {
   io.source("~/vimperator/vimppm/plugin/vimppm.js");
 } else {
   io.source("~/.vimperator/vimppm/plugin/vimppm.js");
+
+  // TODO: MacだとwgetがデフォルトPATHにないのでインストール失敗する...
 }
 EOM
 " Github
