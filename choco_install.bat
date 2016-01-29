@@ -24,6 +24,7 @@ choco install StrawberryPerl -y
 choco install svn -y
 choco install tortoisesvn  -y
 
+choco install Firefox -y
 choco install ConEmu -y
 choco install picasa -y
 choco install mactype -y
