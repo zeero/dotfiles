@@ -886,6 +886,8 @@ au myvimrc BufRead,BufNewFile httpd*.conf setf apache
 au myvimrc BufRead,BufNewFile *.tags setf tags
 " log
 au myvimrc BufRead,BufNewFile *.log* setf log
+" markdown
+au myvimrc BufRead,BufNewFile *.md setf markdown
 
 " コマンド定義 {{{1
 " 拡張 {{{2
