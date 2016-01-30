@@ -3017,7 +3017,7 @@ vmap ge <Plug>(smartword-ge)
 " omap e <Plug>CamelCaseMotion_e
 
 " editqf {{{1
-let g:editqf_saveqf_filename  = "~/.editqf_save_data"
+let g:editqf_saveqf_filename = "~/.editqf_save_data"
 
 " qfixhowm {{{1
 " デフォルトキーマップ無効
@@ -3053,6 +3053,10 @@ function! MyWorkflowishToggle() "{{{
     exe 'normal! ' . new_col . '|'
   endif
 endfunction "}}}
+
+" previm {{{1
+" リアルタイムプレビュー
+let g:previm_enable_realtime = 1
 
 " vim-gista {{{1
 " Github設定
