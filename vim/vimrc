@@ -444,10 +444,14 @@ NeoBundleLazy 'https://bitbucket.org/teramako/jscomplete-vim'
 \,  'type': 'git'}
 NeoBundleLazy 'scrooloose/syntastic'
 \, {'autoload': {'insert': 1}}
-NeoBundleLazy 'plasticboy/vim-markdown'
-\, {'autoload': {'filetypes': ['mkd']}}
+" NeoBundleLazy 'plasticboy/vim-markdown'
+" \, {'autoload': {'filetypes': ['markdown']}}
+NeoBundleLazy 'tpope/vim-markdown'
+\, {'autoload': {'filetypes': ['markdown']}}
 NeoBundleLazy 'kannokanno/previm'
-\, {'autoload': {'filetypes': ['mkd']}}
+\, {'autoload': {'filetypes': ['markdown']}}
+NeoBundleLazy 'nelstrom/vim-markdown-folding'
+\, {'autoload': {'filetypes': ['markdown']}}
 
 " Java {{{2
 NeoBundleLazy 'http://www.fleiner.com/vim/syntax_60/javaid.vim'
@@ -1430,9 +1434,9 @@ nnoremap zH zh
 nnoremap zL zl
 " URLを開く
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
-map gX <Plug>(openbrowser-smart-search)
-nnoremap gx call vimproc#open(expand("%:p:h"))
-vnoremap gx y:<C-u>call vimproc#open(<C-r>")<CR>
+map gx <Plug>(openbrowser-smart-search)
+nnoremap gX call vimproc#open(expand("%:p:h"))
+vnoremap gX y:<C-u>call vimproc#open(<C-r>")<CR>
 " Esc+noh+ZoomReset
 if has('gui_running')
   nnoremap <silent> <Esc> <Esc>:<C-u>Noh<CR>:<C-u>ZoomReset<CR>:<C-u>echo<CR>
