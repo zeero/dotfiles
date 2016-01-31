@@ -3064,6 +3064,10 @@ endfunction "}}}
 " リアルタイムプレビュー
 let g:previm_enable_realtime = 1
 
+" markdown-folding {{{1
+" フォールディングをネストする
+let g:markdown_fold_style = 'nested'
+
 " vim-gista {{{1
 " Github設定
 let g:gista#github_user = 'zeero'
