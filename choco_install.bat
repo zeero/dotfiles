@@ -7,17 +7,18 @@ pause
 rem install chocolatey packages
 choco install vim -y
 choco install msysgit -y
+choco install Git-Credential-Manager-for-Windows -y
 choco install Gow -y
 choco install mingw -y
 choco install mingw-get -y
 choco install Lua -y
 choco install ctags -y
-rem choco install cmigemo -y
 choco install curl -y
 choco install ag -y
+echo TODO: cmigemo、nkf、mktemp は別途インストール
+rem choco install cmigemo -y
 rem choco install nkf -y
 rem choco install mktemp -y
-echo TODO: cmigemo、nkf、mktemp は別途インストール
 
 choco install ruby -y
 choco install StrawberryPerl -y
