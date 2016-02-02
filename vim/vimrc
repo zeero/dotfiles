@@ -2287,7 +2287,7 @@ let g:ctrlp_prompt_mappings = {
 \ 'PrtDelete()':          ['<del>', '<C-d>'],
 \ 'PrtInsert()':          ['<C-@>'],
 \ 'PrtInsert("c")':       ['<M-v>'],
-\ 'OpenMulti()':          ['<c-o>'],
+\ 'OpenMulti()':          ['<C-o>'],
 \ 'MarkToOpen()':         ['<C-Space>', '<C-z>', '<C-x>'],
 \}
 
