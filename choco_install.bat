@@ -1,36 +1,30 @@
 @echo off
 
-rem install chocolatey
-@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
-pause
-
 rem install chocolatey packages
-choco install vim -y
-choco install msysgit -y
-choco install Git-Credential-Manager-for-Windows -y
-choco install Gow -y
-choco install mingw -y
-choco install mingw-get -y
-choco install Lua -y
-choco install ctags -y
-choco install curl -y
-choco install ag -y
-echo TODO: cmigemo、nkf、mktemp は別途インストール
-rem choco install cmigemo -y
-rem choco install nkf -y
-rem choco install mktemp -y
+choco install vim -y -ia "INSTALLDIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\vim"
+choco install git.install -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\git"
+choco install Git-Credential-Manager-for-Windows -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\Git-Credential-Manager-for-Windows"
+choco install Gow -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\Gow"
+choco install mingw -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\mingw"
+choco install mingw-get -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\mingw-get"
+choco install Lua -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\Lua"
+choco install ctags -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\ctags"
+choco install curl -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\curl"
+choco install ag -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\ag"
 
-choco install ruby -y
-choco install StrawberryPerl -y
-choco install svn -y
-choco install tortoisesvn  -y
+choco install ruby -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\ruby"
+choco install StrawberryPerl -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\StrawberryPerl"
+choco install svn -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\svn"
+choco install tortoisesvn  -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\tortoisesvn"
 
-choco install Firefox -y
-choco install ConEmu -y
-choco install picasa -y
-choco install mactype -y
-choco install putty -y
-choco install teraterm -y
+choco install Firefox -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\Firefox"
+choco install GoogleChrome -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\GoogleChrome"
+choco install picasa -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\picasa"
+choco install mactype -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\mactype"
+choco install putty -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\putty"
+choco install teraterm -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\teraterm"
+choco install ConEmu -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\ConEmu"
+choco install clink -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\clink"
 
 pause
 
