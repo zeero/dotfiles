@@ -33,37 +33,27 @@ explorer lib\RictyDiminished\RictyDiminished-BoldOblique.ttf
 pause
 echo.
 
+rem chocolatey
+@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
+echo コマンドプロンプトを再起動して、choco_install.batを実行してください。
+echo 別途インストールが必要なソフトウェア
+echo ・cmigemo
+echo 　　http://www.kaoriya.net/software/cmigemo/
+echo ・nkf
+echo 　　http://www.vector.co.jp/soft/win95/util/se295331.html
+echo ・mktemp
+echo 　　http://gnuwin32.sourceforge.net/packages/mktemp.htm
+pause
+echo.
+
 rem vimproc
-echo １．vimprocコンパイルのために以下をダウンロードし、インストール。
-echo ・Gnu on Windows
-echo https://github.com/bmatzelle/gow/wiki
-echo ・MinGW（「mingw32-base」をメニューから選択してインストール）
-echo http://sourceforge.net/projects/mingw/
-echo ２．両方のインストールパス直下のbinフォルダにPathを通す。
-echo ３．インストールが終わったらNeoBundleInstallでコンパイルが通るはず。
+echo NeoBundleInstallでvimprocのコンパイルが通るはず。
 echo （うまくいかなかったら「make -f make_mingw32.mak」を実行）
 pause
 echo.
 
 rem others
-echo その他インストールが必要なソフトウェア
-echo ・lua
-echo ・ctags
-echo ・cmigemo
-echo ・curl（プロクシ必要な場合は~/_curlrc作ること）
-echo ・Ag（The silver searcher）
-echo ・nkf
-echo 　　http://www.vector.co.jp/soft/win95/util/se295331.html
-echo ・mktemp
-echo 　　http://gnuwin32.sourceforge.net/packages/mktemp.htm
-echo.
 echo その他設定
-echo ■msysgitのバグでgit pushが失敗するので以下の対応をとること。
-echo 　・https://username:password@bitbucket.org/username/reponame.git のようにユーザー、パスワードを指定する
-echo 　　・git remote set-url origin ${REPO_URL}
-echo 　・sshプロトコルを使用する
-echo 　・gitプロトコルを使用する
-echo 　・1.8.4にダウングレードする
 echo ■キーリピートを速くする方が快適。以下のどちらかを実施。
 echo 　・レジストリをいじる
 echo 　　１．regedit
