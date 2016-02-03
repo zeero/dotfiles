@@ -1437,7 +1437,8 @@ nnoremap zL zl
 " URLを開く
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 map gx <Plug>(openbrowser-smart-search)
-nnoremap gX call vimproc#open(expand("%:p:h"))
+" デフォルトアプリで開く
+nnoremap gX :call vimproc#open(expand("%:p"))<CR>
 vnoremap gX y:<C-u>call vimproc#open(<C-r>")<CR>
 " Esc+noh+ZoomReset
 if has('gui_running')
