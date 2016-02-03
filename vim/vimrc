@@ -1445,9 +1445,9 @@ nnoremap zL zl
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 map gx <Plug>(openbrowser-smart-search)
 " デフォルトアプリで開く
-nnoremap gX :MyGX<CR>
+nnoremap gX :<C-u>MyGX<CR>
 vnoremap gX y:<C-u>call vimproc#open(<C-r>")<CR>
-command! -nargs=0 MyGX call s:my_gX()
+command! -nargs=0 MyGX :call s:my_gX()
 function! s:my_gX() "{{{
   if 'markdown' == &filetype
     PrevimOpen
@@ -1603,8 +1603,8 @@ au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> F <Plug>(easymotion-k
 
 " トグル {{{2
 " コメントアウトの切り替え（caw.vim）
-nmap ,/ <Plug>(caw:I:toggle)
-vmap ,/ <Plug>(caw:I:toggle)
+nmap ,/ <Plug>(caw:i:toggle)
+vmap ,/ <Plug>(caw:i:toggle)
 " VimFiler
 nnoremap ,f :<C-u>VimFilerBufferDir
 \<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-quit<Space>-toggle<CR>
@@ -1968,7 +1968,7 @@ function! MyVimfilerKeymaps() "{{{
   " キーマップヘルプを表示
   nnoremap <buffer> ,, :MyVimFilerHelp<CR>
   " システムハンドラで開く
-  nmap gx <Plug>(vimfiler_execute_system_associated)
+  nmap <buffer> gx <Plug>(vimfiler_execute_system_associated)
 endfunction "}}}
 command! MyVimFilerHelp :call MyVimfilerHelp()
 function! MyVimfilerHelp() "{{{
