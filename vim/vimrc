@@ -1445,16 +1445,8 @@ nnoremap zL zl
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 map gx <Plug>(openbrowser-smart-search)
 " デフォルトアプリで開く
-nnoremap gX :<C-u>MyGX<CR>
+nnoremap gX :<C-u>call vimproc#open(expand("%:p"))<CR>
 vnoremap gX y:<C-u>call vimproc#open(<C-r>")<CR>
-command! -nargs=0 MyGX :call s:my_gX()
-function! s:my_gX() "{{{
-  if 'markdown' == &filetype
-    PrevimOpen
-  else
-    call vimproc#open(expand("%:p"))
-  endif
-endfunction "}}}
 " Esc+noh+ZoomReset
 if has('gui_running')
   nnoremap <silent> <Esc> <Esc>:<C-u>Noh<CR>:<C-u>ZoomReset<CR>:<C-u>echo<CR>
