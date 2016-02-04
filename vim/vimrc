@@ -858,13 +858,16 @@ function! MyHtmlEndwise() "{{{
   let str = getline(".")
   let idx = strridx(str, "<", col - 2)
   let idx_slash = strridx(str, "/", col - 1)
-  echomsg "idx:" . idx
-  echomsg "idx_slash:" . idx_slash
   if idx == -1 || idx < idx_slash
     return val
   endif
-  let val .= substitute(strpart(str, idx, col - 1 - idx), '<\([^ ]\+\).*', '</\1>', '')
-  return val . "\<Esc>" . col . "|a"
+  let str_part = strpart(str, idx, col - 1 - idx)
+  if str_part !~ '\(<br\|<img\)'
+    let val .= substitute(str_part, '<\([^ ]\+\).*', '</\1>', '')
+    return val . "\<Esc>" . col . "|a"
+  else
+    return val
+  endif
 endfunction "}}}
 
 " Java {{{2
