@@ -1059,8 +1059,8 @@ endfunction "}}}
 " Wofl2Md
 command! -nargs=0 Wofl2Md call s:my_wofl_to_md()
 function! s:my_wofl_to_md() "{{{
+  exe '%s/#/\\#/'
   exe '%s/^\* /\r# /'
-  exe '%s/^.\+- /\r* /'
 endfunction "}}}
 
 " TortoiseSVN {{{2
