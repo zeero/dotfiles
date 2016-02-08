@@ -20,4 +20,5 @@ brew 'openssl'
 brew 'brew-cask'
 cask 'firefox'
 cask 'alfred'
+cask 'appcleaner'
 
