@@ -21,4 +21,5 @@ brew 'brew-cask'
 cask 'firefox'
 cask 'alfred'
 cask 'appcleaner'
+cask 'clipmenu'
 
