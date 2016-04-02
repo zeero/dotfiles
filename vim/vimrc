@@ -287,7 +287,7 @@ if (has('python') || has('python3')) && (has('win32') || has('win64'))
   \,  'name': 'Conque'}
 endif
 NeoBundleLazy 'h1mesuke/vim-alignta.git'
-\, {'autoload': {'commands': ['Alignta', 'Al']
+\, {'autoload': {'commands': ['Alignta', 'AL']
 \,               'unite-sources': ['alignta']}}
 NeoBundleLazy 'Align'
 \, {'autoload': {'commands': ['Align', 'AlignCtrl', 'AlignPush', 'AlignPop']}}
@@ -483,13 +483,13 @@ filetype plugin indent on
 NeoBundleCheck
 
 " NeoBundleコマンド定義 {{{2
-command! Bi NeoBundleInstall
-command! Bu NeoBundleUpdate
-command! -nargs=? Bs NeoBundleSearch <args>
-command! Bc NeoBundleClean
-command! Bls NeoBundleList
-command! Blog NeoBundleLog
-command! -nargs=? Bso NeoBundleSource <args>
+command! NBi NeoBundleInstall
+command! NBu NeoBundleUpdate
+command! -nargs=? NBs NeoBundleSearch <args>
+command! NBc NeoBundleClean
+command! NBls NeoBundleList
+command! NBlog NeoBundleLog
+command! -nargs=? NBso NeoBundleSource <args>
 
 " singleton.vim {{{1
 if has('gui_running')
@@ -1074,12 +1074,14 @@ if executable('TortoiseProc')
   command! TSVNDiff silent call vimproc#system_bg('TortoiseProc /command:diff /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSVNDiffPrev silent call vimproc#system_bg('TortoiseProc /command:prevdiff /path:"'.expand("%").'" /notempfile /closeonend')
   command! -nargs=? -complete=dir TSVNUpdate silent call s:my_tsvn_update(expand("%"), <q-args>)
+  command! -nargs=? -complete=dir TSupdate TSVNUpdate <args>
   function! s:my_tsvn_update(fname, path) "{{{
     let path = a:path == '' ? a:fname : a:path
     call vimproc#system_bg('TortoiseProc /command:update /path:"'.path.'" /notempfile /closeonend')
   endfunction "}}}
   command! TSVNAdd silent call vimproc#system_bg('TortoiseProc /command:add /path:"'.expand("%").'" /notempfile /closeonend')
   command! -nargs=? -complete=dir TSVNCommit silent call s:my_tsvn_commit(expand("%"), <q-args>)
+  command! -nargs=? -complete=dir TScommit silent TSVNCommit <args>
   function! s:my_tsvn_commit(fname, path) "{{{
     let path = a:path == '' ? a:fname : a:path
     call vimproc#system_bg('TortoiseProc /command:commit /path:"'.path.'" /notempfile /closeonend')
@@ -2978,11 +2980,13 @@ let g:alignta_default_options = '<<<1:1'
 " 引数なしは非空白文字で整列
 let g:alignta_default_arguments = '<< \S\+'
 " コマンド短縮名
-command! -range -bang -nargs=* Al <line1>,<line2>Alignta<bang> <args>
+command! -range -bang -nargs=* AL <line1>,<line2>Alignta<bang> <args>
+command! -range ALe <line1>,<line2>Alignta =
+command! -range ALl <line1>,<line2>Alignta >>> \S\+
 " unite-alignta
 let g:unite_source_alignta_preset_arguments = [
 \ ['Alignta at "="', '='],
-\ ['Alignta Right at "\\S\\+"', '>>> \S\+'],
+\ ['Alignta Left at "\\S\\+"', '>>> \S\+'],
 \]
 
 " submode {{{1
