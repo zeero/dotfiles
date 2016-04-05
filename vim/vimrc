@@ -1499,7 +1499,7 @@ endfunction "}}}
 
 " インサートモード {{{2
 " 移動
-inoremap <C-a> <Home>
+inoremap <expr> <C-a> match(getline("."), '\S') == col(".") - 1 ? '<Home>' : '<C-o>^'
 inoremap <C-e> <End>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
