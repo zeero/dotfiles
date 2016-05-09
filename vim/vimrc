@@ -1458,7 +1458,15 @@ if has('gui_running')
 endif
 " CopyFileName
 nnoremap gy :<C-u>CopyFileName<CR>
-nnoremap gY :<C-u>CopyPath<CR>
+nnoremap gY :<C-u>MyCopyPath<CR>
+command! -nargs=0 MyCopyPath call s:my_copy_path()
+function! s:my_copy_path()
+  let path = expand('%:p')
+  if has('win32') || has('win64')
+    let path = substitute(path, '/', '\\', 'g')
+  endif
+  let @* = path
+endfunction
 " 行の最後ならxで後方削除
 nnoremap <expr> x virtcol(".") == virtcol("$") ? 'X' : 'x'
 
