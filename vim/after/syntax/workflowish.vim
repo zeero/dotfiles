@@ -11,7 +11,6 @@ syn region workflowishLink matchgroup=workflowishLinkDelimiter start="(" end=")"
 syn region workflowishId matchgroup=workflowishIdDelimiter start="\[" end="\]" keepend contained
 syn region workflowishAutomaticLink matchgroup=workflowishUrlDelimiter start="<\%(\w\+:\|[[:alnum:]_+-]\+@\)\@=" end=">" keepend oneline
 
-" URL
 hi def link workflowishLinkText              htmlLink
 hi def link workflowishIdDeclaration         Typedef
 hi def link workflowishId                    Type
@@ -21,4 +20,13 @@ hi def link workflowishUrlTitle              String
 hi def link workflowishIdDelimiter           workflowishLinkDelimiter
 hi def link workflowishUrlDelimiter          htmlTag
 hi def link workflowishUrlTitleDelimiter     Delimiter
+
+
+" コードブロック
+syn match workflowishInlineCode "`[^`]\{-}`"
+syn region workflowishBlockCode matchgroup=workflowishBlockCodeDelimiter start="^```" end="^```"
+
+hi def link workflowishInlineCode            Special
+hi def link workflowishBlockCode             Special
+hi def link workflowishBlockCodeDelimiter    Special
 
