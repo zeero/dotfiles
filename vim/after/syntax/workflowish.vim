@@ -1,32 +1,32 @@
 " URL
-syn region workflowishIdDeclaration matchgroup=workflowishLinkDelimiter start="^ \{0,3\}!\=\[" end="\]:" oneline keepend nextgroup=workflowishUrl skipwhite
-syn match workflowishUrl "\S\+" nextgroup=workflowishUrlTitle skipwhite contained
-syn region workflowishUrl matchgroup=workflowishUrlDelimiter start="<" end=">" oneline keepend nextgroup=workflowishUrlTitle skipwhite contained
-syn region workflowishUrlTitle matchgroup=workflowishUrlTitleDelimiter start=+"+ end=+"+ keepend contained
-syn region workflowishUrlTitle matchgroup=workflowishUrlTitleDelimiter start=+'+ end=+'+ keepend contained
-syn region workflowishUrlTitle matchgroup=workflowishUrlTitleDelimiter start=+(+ end=+)+ keepend contained
+syn region WFIdDeclaration matchgroup=WFLinkDelimiter start="^ \{0,3\}!\=\[" end="\]:" oneline keepend nextgroup=WFUrl skipwhite
+syn match WFUrl "\S\+" nextgroup=WFUrlTitle skipwhite contained
+syn region WFUrl matchgroup=WFUrlDelimiter start="<" end=">" oneline keepend nextgroup=WFUrlTitle skipwhite contained
+syn region WFUrlTitle matchgroup=WFUrlTitleDelimiter start=+"+ end=+"+ keepend contained
+syn region WFUrlTitle matchgroup=WFUrlTitleDelimiter start=+'+ end=+'+ keepend contained
+syn region WFUrlTitle matchgroup=WFUrlTitleDelimiter start=+(+ end=+)+ keepend contained
+" syn region WFLinkText matchgroup=WFLinkTextDelimiter start="!\=\[\%(\_[^]]*]\%( \=[[(]\)\)\@=" end="\]\%( \=[[(]\)\@=" nextgroup=WFLink,WFId skipwhite contains=@WFInline,WFLineStart
+syn region WFLinkText matchgroup=WFLinkTextDelimiter start="!\=\[\%(\_[^]]*]\%( \=[[(]\)\)\@=" end="\]\%( \=[[(]\)\@=" nextgroup=WFLink,WFId skipwhite
+syn region WFLink matchgroup=WFLinkDelimiter start="(" end=")" contains=WFUrl keepend contained
+syn region WFId matchgroup=WFIdDelimiter start="\[" end="\]" keepend contained
+syn region WFAutomaticLink matchgroup=WFUrlDelimiter start="<\%(\w\+:\|[[:alnum:]_+-]\+@\)\@=" end=">" keepend oneline
 
-syn region workflowishLinkText matchgroup=workflowishLinkTextDelimiter start="!\=\[\%(\_[^]]*]\%( \=[[(]\)\)\@=" end="\]\%( \=[[(]\)\@=" nextgroup=workflowishLink,workflowishId skipwhite contains=@workflowishInline,workflowishLineStart
-syn region workflowishLink matchgroup=workflowishLinkDelimiter start="(" end=")" contains=workflowishUrl keepend contained
-syn region workflowishId matchgroup=workflowishIdDelimiter start="\[" end="\]" keepend contained
-syn region workflowishAutomaticLink matchgroup=workflowishUrlDelimiter start="<\%(\w\+:\|[[:alnum:]_+-]\+@\)\@=" end=">" keepend oneline
-
-hi def link workflowishLinkText              htmlLink
-hi def link workflowishIdDeclaration         Typedef
-hi def link workflowishId                    Type
-hi def link workflowishAutomaticLink         workflowishUrl
-hi def link workflowishUrl                   Float
-hi def link workflowishUrlTitle              String
-hi def link workflowishIdDelimiter           workflowishLinkDelimiter
-hi def link workflowishUrlDelimiter          htmlTag
-hi def link workflowishUrlTitleDelimiter     Delimiter
+hi def link WFLinkText              htmlLink
+hi def link WFIdDeclaration         Typedef
+hi def link WFId                    Type
+hi def link WFAutomaticLink         WFUrl
+hi def link WFUrl                   Float
+hi def link WFUrlTitle              String
+hi def link WFIdDelimiter           WFLinkDelimiter
+hi def link WFUrlDelimiter          htmlTag
+hi def link WFUrlTitleDelimiter     Delimiter
 
 
 " コードブロック
-syn match workflowishInlineCode "`[^`]\{-1,}`"
-syn region workflowishBlockCode matchgroup=workflowishBlockCodeDelimiter start="^\s*```" end="^\s*```"
+syn match WFInlineCode "`[^`]\{-1,}`"
+syn region WFBlockCode matchgroup=WFBlockCodeDelimiter start="^\s*```" end="^\s*```" keepend
 
-hi def link workflowishInlineCode            Special
-hi def link workflowishBlockCode             Special
-hi def link workflowishBlockCodeDelimiter    Special
+hi def link WFInlineCode            Special
+hi def link WFBlockCode             Special
+hi def link WFBlockCodeDelimiter    Special
 
