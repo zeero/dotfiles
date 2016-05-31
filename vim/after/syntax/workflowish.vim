@@ -23,8 +23,8 @@ hi def link workflowishUrlTitleDelimiter     Delimiter
 
 
 " コードブロック
-syn match workflowishInlineCode "`[^`]\{-}`"
-syn region workflowishBlockCode matchgroup=workflowishBlockCodeDelimiter start="^```" end="^```"
+syn match workflowishInlineCode "`[^`]\{-1,}`"
+syn region workflowishBlockCode matchgroup=workflowishBlockCodeDelimiter start="^\s*```" end="^\s*```"
 
 hi def link workflowishInlineCode            Special
 hi def link workflowishBlockCode             Special
