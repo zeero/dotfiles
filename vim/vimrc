@@ -775,7 +775,7 @@ if has('gui_running')
   " （[No Name]バッファへの対策）
   set bufhidden=wipe
   " タブのラベル
-  set guitablabel=%n:%t%m
+  set guitablabel=%{tabpagenr()}:%t%m
   " 印刷オプション
   set printoptions=wrap:y,number:y
   set printheader=%<%f%h%m%=Page-%N
@@ -1403,6 +1403,13 @@ au myvimrc FileType qf,gitcommit nnoremap <buffer> <Esc><Esc> <C-w>c
 " qでウィンドウを閉じる、マクロはQ（EXモードは使わない）
 nnoremap q :<C-u>q<CR>
 nnoremap Q q
+" タブ番号指定
+let s:tabnr = 1
+while s:tabnr < 10
+  exe 'nnoremap ,'.s:tabnr.' :tabn '.s:tabnr.'<CR>'
+  let s:tabnr = s:tabnr + 1
+endwhile
+nnoremap ,0 :tabl<CR>
 
 " タグジャンプ {{{2
 nnoremap <C-]> g<C-]>
