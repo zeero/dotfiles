@@ -1387,7 +1387,7 @@ vmap # <Plug>(visualstar-*)NNzVzz
 " タブページ操作
 nnoremap L <C-PageDown>
 nnoremap H <C-PageUp>
-nnoremap ,t :<C-u>tabnew<CR>
+nnoremap ,t :<C-u>$tabnew<CR>
 nnoremap ,l :<C-u>tabm<CR>
 nnoremap ,L :<C-u>tabm 1<CR>
 " gfはタブで開く
