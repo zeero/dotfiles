@@ -1,25 +1,35 @@
 cask_args appdir: '/Applications'
 tap 'caskroom/cask'
 
-brew 'macvim', args: ['with-lua']
-brew 'vim', args: ['with-lua']
-brew 'ctags'
-brew 'cmigemo'
-brew 'lua'
-brew 'python'
-
+# language
 brew 'ruby'
 brew 'rbenv'
 brew 'ruby-build'
+brew 'python'
+brew 'lua'
 
-brew 'git'
+# command
+# gitははじめに手動でいれる
+# brew 'git'
 brew 'curl'
 brew 'wget'
 brew 'openssl'
 
+# vim
+brew 'macvim', args: ['with-lua']
+brew 'vim', args: ['with-lua']
+brew 'ctags'
+brew 'cmigemo'
+
+# coding tool
+brew 'swiftlint'
+
+# cask
 brew 'brew-cask'
-cask 'firefox'
 cask 'alfred'
-cask 'appcleaner'
 cask 'clipmenu'
+cask 'spectacle'
+cask 'appcleaner'
+cask 'firefox'
+cask 'iterm2'
 
