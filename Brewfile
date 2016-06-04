@@ -32,4 +32,5 @@ cask 'spectacle'
 cask 'appcleaner'
 cask 'firefox'
 cask 'iterm2'
+cask 'alcatraz'
 
