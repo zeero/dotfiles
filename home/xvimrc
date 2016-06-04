@@ -23,6 +23,9 @@ set pasteboard
 nnoremap 0 ^
 nnoremap ^ 0
 
+" 編集
+inoremap <S-CR> <C-o>O
+
 " qで閉じる
 nnoremap q :q<CR>
 nnoremap Q q
