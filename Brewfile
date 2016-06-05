@@ -27,12 +27,25 @@ brew 'swiftlint'
 cask 'alcatraz'
 cask 'realm-browser'
 
-# cask
+# utility
 cask 'alfred'
 cask 'clipmenu'
 cask 'spectacle'
-cask 'appcleaner'
-cask 'firefox'
-cask 'iterm2'
+# 'calendar 2'
+# 'memorycleaner'
+# 'cloudclip'
+# 'degrees'
 
+# application
+cask 'iterm2'
+cask 'firefox'
+cask 'google-chrome'
+cask 'google-japanese-ime'
+# cask 'google-photos-backup'
+# cask 'android-file-transfer'
+cask 'appcleaner'
+cask 'skitch'
+# cask 'vlc'
+# cask 'mplayerx'
+# cask 'clipgrab'
 
