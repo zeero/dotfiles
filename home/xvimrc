@@ -9,22 +9,31 @@ set incsearch
 set ignorecase
 set smartcase
 " set hlsearch "見難い
-
 " Default to global substitutions on lines
 " set gdefault
 
 " Use the system pasteboard
 set pasteboard
+" Use vim-style regular expression
+set vimregex
 
 "-----------------------------------------------------------------------------
 " キーマップ
 "-----------------------------------------------------------------------------
+" ノーマルモード
 " 移動
 nnoremap 0 ^
 nnoremap ^ 0
+" 行末までヤンク
+nnoremap Y y$
 
-" 編集
+" インサートモード
 inoremap <S-CR> <C-o>O
+
+" ビジュアルモード
+" 行末まで選択
+nnoremap ,v v$
+
 
 " qで閉じる
 nnoremap q :q<CR>
@@ -39,11 +48,12 @@ nnoremap L :xccmd selectNextTab<CR>
 nnoremap <C-H> :xccmd goBackInHistoryByCommand<CR>
 nnoremap <C-L> :xccmd goForwardInHistoryByCommand<CR>
 
+
 " アシスタントエディタ
 "   キーボードショートカット
 "   Cmd + Opt + <CR> / Cmd + <CR>
 nnoremap ,, :xccmd changeToGeniusEditor<CR>
-nnoremap ,q :xccmd changeToStandardEditor<CR>
+nnoremap ,. :xccmd changeToStandardEditor<CR>
 
 " クイックオープン
 "   キーボードショートカット
@@ -60,9 +70,10 @@ nnoremap ,/ :xccmd commentAndUncommentCurrentLines<CR>
 " ブレイクポイント（トグル）
 nnoremap ,b :xccmd toggleBreakpointAtCurrentLine<CR>
 
-" インサートモードの移動
-" うまくいかないのでXCodeのキーバインドで設定
+" XCodeのキーバインドで設定
 " imap <C-H> <Left>
 " imap <C-L> <Right>
 " imap <C-D> <Del>
+" nmap <M-E> :Execute Playground
+" nmap <M-D> :Detach
 
