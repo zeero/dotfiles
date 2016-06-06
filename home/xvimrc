@@ -19,9 +19,14 @@ set pasteboard
 "-----------------------------------------------------------------------------
 " キーマップ
 "-----------------------------------------------------------------------------
+" xccmdの一覧
+" https://github.com/XVimProject/XVim/blob/master/Documents/Developers/MenuActionList.txt
+
 " 移動
 nnoremap 0 ^
 nnoremap ^ 0
+" nnoremap j gj
+" nnoremap k gk
 
 " qで閉じる
 nnoremap q :q<CR>
@@ -48,8 +53,8 @@ nnoremap ,q :xccmd changeToStandardEditor<CR>
 nnoremap t :xccmd openQuickly<CR>
 
 " ヘルプ
-nnoremap K :xccmd showQuickHelp<CR>
-nnoremap ,h :xccmd showQuickHelp<CR>
+nnoremap K :xccmd searchDocumentationForSelectedText<CR>
+nnoremap ,h :xccmd searchDocumentationForSelectedText<CR>
 
 " コメントアウト（トグル）
 nnoremap ,/ :xccmd commentAndUncommentCurrentLines<CR>
