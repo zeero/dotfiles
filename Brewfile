@@ -14,6 +14,7 @@ brew 'lua'
 brew 'curl'
 brew 'wget'
 brew 'openssl'
+brew 'brew-cask'
 
 # vim
 brew 'macvim', args: ['with-lua']
@@ -23,13 +24,15 @@ brew 'cmigemo'
 
 # coding tool
 brew 'swiftlint'
+cask 'alcatraz'
+cask 'realm-browser'
 
 # cask
-brew 'brew-cask'
 cask 'alfred'
 cask 'clipmenu'
 cask 'spectacle'
 cask 'appcleaner'
 cask 'firefox'
 cask 'iterm2'
+
 
