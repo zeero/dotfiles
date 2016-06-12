@@ -7,6 +7,8 @@ brew 'rbenv'
 brew 'ruby-build'
 brew 'python'
 brew 'lua'
+brew 'node'
+brew 'zsh'
 
 # command
 # gitははじめに手動でいれる
