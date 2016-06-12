@@ -13,10 +13,13 @@ brew 'zsh'
 # command
 # gitははじめに手動でいれる
 # brew 'git'
+brew 'brew-cask'
 brew 'curl'
 brew 'wget'
 brew 'openssl'
-brew 'brew-cask'
+brew 'coreutils'
+brew 'bash-completion'
+brew 'bash-git-prompt'
 
 # vim
 brew 'macvim', args: ['with-lua']
@@ -33,22 +36,14 @@ cask 'realm-browser'
 cask 'alfred'
 cask 'clipmenu'
 cask 'spectacle'
-# 'calendar 2'
-# 'memorycleaner'
-# 'cloudclip'
-# 'degrees'
 
 # application
 cask 'iterm2'
 cask 'firefox'
 cask 'google-chrome'
 cask 'google-japanese-ime'
-# cask 'google-photos-backup'
-# cask 'android-file-transfer'
 cask 'appcleaner'
 cask 'skitch'
 cask 'imageoptim'
-# cask 'vlc'
-# cask 'mplayerx'
-# cask 'clipgrab'
+cask 'witch'
 

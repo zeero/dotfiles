@@ -1,0 +1,19 @@
+# brew bundle --file="Brewfile.optin"
+cask_args appdir: '/Applications'
+tap 'caskroom/cask'
+
+# utility
+# 'calendar 2'
+# 'memorycleaner'
+# 'cloudclip'
+# 'degrees'
+
+# application
+cask 'google-photos-backup'
+cask 'android-file-transfer'
+cask 'vlc'
+cask 'mplayerx'
+cask 'dropbox'
+# cask 'clipgrab'
+# cask 'boxofsnoo-fairmount'
+
