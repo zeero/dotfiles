@@ -1,0 +1,16 @@
+# utility
+'calendar 2'
+'memorycleaner'
+'cloudclip'
+'degrees'
+
+# application
+cask 'google-photos-backup'
+cask 'android-file-transfer'
+cask 'vlc'
+cask 'mplayerx'
+cask 'clipgrab'
+
+cask 'dropbox'
+cask 'fairmount'
+
