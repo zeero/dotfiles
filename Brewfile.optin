@@ -9,6 +9,7 @@ tap 'caskroom/cask'
 # 'degrees'
 
 # application
+cask 'google-chrome'
 cask 'google-photos-backup'
 cask 'android-file-transfer'
 cask 'vlc'
