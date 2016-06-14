@@ -1613,8 +1613,8 @@ au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> F <Plug>(easymotion-k
 
 " トグル {{{2
 " コメントアウトの切り替え（caw.vim）
-nmap ,/ <Plug>(caw:i:toggle)
-vmap ,/ <Plug>(caw:i:toggle)
+nmap ,/ <Plug>(caw:hatpos:toggle)
+vmap ,/ <Plug>(caw:hatpos:toggle)
 " VimFiler
 nnoremap ,f :<C-u>VimFilerBufferDir<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-force-quit<Space>-toggle<CR>
 " VimShell

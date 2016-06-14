@@ -4,17 +4,12 @@ tap 'caskroom/cask'
 
 # utility
 # 'calendar 2'
-# 'memorycleaner'
-# 'cloudclip'
-# 'degrees'
+# 'clean memory 2'
 
 # application
 cask 'google-chrome'
 cask 'google-photos-backup'
 cask 'android-file-transfer'
-cask 'vlc'
 cask 'mplayerx'
 cask 'dropbox'
-# cask 'clipgrab'
-# cask 'boxofsnoo-fairmount'
 
