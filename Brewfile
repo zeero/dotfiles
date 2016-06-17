@@ -30,7 +30,6 @@ brew 'cmigemo'
 # coding tool
 brew 'swiftlint'
 cask 'alcatraz'
-cask 'simpholders'
 cask 'realm-browser'
 
 # utility
