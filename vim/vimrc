@@ -152,8 +152,6 @@ NeoBundleLazy 'kana/vim-smartchr'
 " \, {'autoload': {'insert': 1}}
 NeoBundleLazy 'AndrewRadev/switch.vim'
 \, {'autoload': {'commands': ['Switch']}}
-NeoBundleLazy 'lukaszkorecki/workflowish'
-\, {'autoload': {'filetypes': ['workflowish']}}
 NeoBundle 'zeero/yankround.vim'
 NeoBundleLazy 'osyo-manga/vim-jplus'
 \, {'autoload': {'mappings': ['<Plug>(jplus']}}
@@ -345,6 +343,7 @@ NeoBundle 'thinca/vim-singleton'
 NeoBundle 'thinca/vim-localrc'
 \, {'augroup': 'plugin-localrc'}
 NeoBundle 'vim-jp/vimdoc-ja'
+NeoBundle 'Konfekt/FastFold'
 NeoBundleLazy 'mattn/webapi-vim'
 NeoBundleLazy 'tyru/open-browser.vim'
 \, {'autoload': {'filetypes': ['html', 'mkd']
@@ -444,14 +443,16 @@ NeoBundleLazy 'https://bitbucket.org/teramako/jscomplete-vim'
 \,  'type': 'git'}
 NeoBundleLazy 'scrooloose/syntastic'
 \, {'autoload': {'insert': 1}}
+NeoBundleLazy 'lukaszkorecki/workflowish'
+\, {'autoload': {'filetypes': ['workflowish']}}
+NeoBundleLazy 'kannokanno/previm'
+\, {'autoload': {'filetypes': ['workflowish']}}
 " NeoBundleLazy 'plasticboy/vim-markdown'
 " \, {'autoload': {'filetypes': ['markdown']}}
-NeoBundleLazy 'tpope/vim-markdown'
-\, {'autoload': {'filetypes': ['markdown']}}
-NeoBundleLazy 'kannokanno/previm'
-\, {'autoload': {'filetypes': ['markdown']}}
-NeoBundleLazy 'nelstrom/vim-markdown-folding'
-\, {'autoload': {'filetypes': ['markdown']}}
+" NeoBundleLazy 'tpope/vim-markdown'
+" \, {'autoload': {'filetypes': ['markdown']}}
+" NeoBundleLazy 'nelstrom/vim-markdown-folding'
+" \, {'autoload': {'filetypes': ['markdown']}}
 
 " Java {{{2
 NeoBundleLazy 'http://www.fleiner.com/vim/syntax_60/javaid.vim'
@@ -880,17 +881,18 @@ let java_highlight_debug = 1
 au myvimrc BufRead,BufNewFile *.bat setlocal fenc=sjis ff=dos
 
 " ファイルタイプ指定 {{{2
+" setfは二度書き防止をされているため、setlocal filetypeをすること！
 " JavaScript
-au myvimrc BufRead,BufNewFile *.json setf javascript
+au myvimrc BufRead,BufNewFile *.json setlocal filetype= javascript
 au myvimrc BufRead,BufNewFile jquery.*.js set filetype=javascript syntax=jquery
 " Apache
-au myvimrc BufRead,BufNewFile httpd*.conf setf apache
+au myvimrc BufRead,BufNewFile httpd*.conf setlocal filetype= apache
 " ctags
-au myvimrc BufRead,BufNewFile *.tags setf tags
+au myvimrc BufRead,BufNewFile *.tags setlocal filetype= tags
 " log
-au myvimrc BufRead,BufNewFile *.log* setf log
-" markdown
-au myvimrc BufRead,BufNewFile *.md setf markdown
+au myvimrc BufRead,BufNewFile *.log* setlocal filetype= log
+" markdown（workflowishで扱う）
+au myvimrc BufNewFile,BufRead *.md,*.mkd,*.markdown setlocal filetype=workflowish
 
 " コマンド定義 {{{1
 " 拡張 {{{2
@@ -2890,6 +2892,10 @@ vmap gJ <Plug>(jplus-getchar)
 let g:jplus#config = {}
 " 区切り文字はなし
 let g:jplus#config._ = {'delimiter': ''}
+
+" FastFold {{{1
+" 自動でフォールドを更新しない
+let g:fastfold_fold_command_suffixes = []
 
 " textobj-user {{{1
 " entire

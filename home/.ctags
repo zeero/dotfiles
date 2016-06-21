@@ -6,5 +6,12 @@
 --regex-swift=/func[ \t]+([^\(\)]+)\([^\(\)]*\)/\1/,function/
 --regex-swift=/class[ \t]+([^:\{]+).*$/\1/,class/
 --regex-swift=/protocol[ \t]+([^:\{]+).*$/\1/,protocol/
+--langdef=Markdown
+--langmap=Markdown:+.md
+--langmap=Markdown:+.mkd
+--langmap=Markdown:+.markdown
+--langmap=Markdown:+.wofl
+--regex-markdown=/^# (.+)/\1/,Heading/
+
 #--jcode=utf8
 
