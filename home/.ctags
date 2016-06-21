@@ -1,17 +1,19 @@
 --recurse=yes
 --sort=yes
---langdef=Swift
---langmap=Swift:+.swift
+--langdef=swift
+--langmap=swift:+.swift
 --regex-swift=/(var|let)[ \t]+([^:=]+).*$/\2/,variable/
 --regex-swift=/func[ \t]+([^\(\)]+)\([^\(\)]*\)/\1/,function/
 --regex-swift=/class[ \t]+([^:\{]+).*$/\1/,class/
 --regex-swift=/protocol[ \t]+([^:\{]+).*$/\1/,protocol/
---langdef=Markdown
---langmap=Markdown:+.md
---langmap=Markdown:+.mkd
---langmap=Markdown:+.markdown
---langmap=Markdown:+.wofl
---regex-markdown=/^# (.+)/\1/,Heading/
+--langdef=markdown
+--langmap=markdown:+.md
+--langmap=markdown:+.mkd
+--langmap=markdown:+.markdown
+--langmap=markdown:+.wofl
+--regex-markdown=/^#[ \t]+(.*)/\1/h,Heading_L1/
+--regex-markdown=/^##[ \t]+(.*)/\1/i,Heading_L2/
+--regex-markdown=/^###[ \t]+(.*)/\1/k,Heading_L3/
 
 #--jcode=utf8
 

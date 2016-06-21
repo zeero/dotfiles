@@ -2717,6 +2717,31 @@ let g:tagbar_auto_focus = 1
 if executable('jsctags')
   let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 endif
+if executable('markdown2ctags.py')
+  let g:tagbar_type_workflowish = {
+    \ 'ctagstype': 'markdown',
+    \ 'ctagsbin' : 'markdown2ctags.py',
+    \ 'ctagsargs' : '-f - --sort=yes',
+    \ 'kinds' : [
+      \ 's:sections',
+      \ 'i:images'
+    \ ],
+    \ 'sro' : '|',
+    \ 'kind2scope' : {
+      \ 's' : 'section',
+    \ },
+    \ 'sort': 0,
+  \}
+else
+  let g:tagbar_type_workflowish = {
+    \ 'ctagstype' : 'markdown',
+    \ 'kinds' : [
+      \ 'h:Heading_L1',
+      \ 'i:Heading_L2',
+      \ 'k:Heading_L3'
+    \]
+  \}
+endif
 
 " IndentGuides {{{1
 " vim立ち上げたときに、自動的にIndentGuidesをオンにする
