@@ -883,14 +883,14 @@ au myvimrc BufRead,BufNewFile *.bat setlocal fenc=sjis ff=dos
 " ファイルタイプ指定 {{{2
 " setfは二度書き防止をされているため、setlocal filetypeをすること！
 " JavaScript
-au myvimrc BufRead,BufNewFile *.json setlocal filetype= javascript
-au myvimrc BufRead,BufNewFile jquery.*.js set filetype=javascript syntax=jquery
+au myvimrc BufRead,BufNewFile *.json setlocal filetype=javascript
+au myvimrc BufRead,BufNewFile jquery.*.js setlocal filetype=javascript syntax=jquery
 " Apache
-au myvimrc BufRead,BufNewFile httpd*.conf setlocal filetype= apache
+au myvimrc BufRead,BufNewFile httpd*.conf setlocal filetype=apache
 " ctags
-au myvimrc BufRead,BufNewFile *.tags setlocal filetype= tags
+au myvimrc BufRead,BufNewFile *.tags setlocal filetype=tags
 " log
-au myvimrc BufRead,BufNewFile *.log* setlocal filetype= log
+au myvimrc BufRead,BufNewFile *.log* setlocal filetype=log
 " markdown（workflowishで扱う）
 au myvimrc BufNewFile,BufRead *.md,*.mkd,*.markdown setlocal filetype=workflowish
 
