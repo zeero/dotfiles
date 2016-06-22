@@ -2015,6 +2015,8 @@ let g:vimshell_split_command = 'tabe'
 " 動的プロンプト
 let g:vimshell_prompt_expr = 'getcwd()." > "'
 let g:vimshell_prompt_pattern = '^\f\+ > '
+" エディタコマンド指定
+let g:vimshell_editor_command = 'mvim'
 " VimShell独自のキーマッピングを使用する
 let g:vimshell_no_default_keymappings = 0
 " vimshell-inline-historyでコマンド履歴表示
