@@ -21,8 +21,7 @@ brew 'coreutils'
 brew 'bash-completion'
 
 # vim
-brew 'macvim', args: ['with-lua']
-brew 'vim', args: ['with-lua']
+brew 'macvim', args: ['with-lua', 'with-override-system-vim']
 brew 'ctags'
 brew 'cmigemo'
 
