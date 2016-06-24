@@ -1029,18 +1029,18 @@ command! -nargs=0 Ctags call s:my_ctags()
 function! s:my_ctags() "{{{
   call vimproc#system_bg('ctags -R -f tags ' . s:my_path_convert(getcwd()))
 endfunction "}}}
-" Ag
-command! -nargs=+ -complete=file Ag call s:my_silver_searcher(<q-args>)
+" AG
+command! -nargs=+ -complete=file AG call s:my_silver_searcher(<q-args>)
 function! s:my_silver_searcher(args) "{{{
   " set search keyword
   let @/ = a:args
   " async
   call s:my_vimproc_async({
   \ 'cmd': 'ag --vimgrep ' . a:args,
-  \ 'callback': 's:my_silver_searcher_finish'
+  \ 'callback': 's:my_grep_finish'
   \})
 endfunction "}}}
-function! s:my_silver_searcher_finish(result) "{{{
+function! s:my_grep_finish(result) "{{{
   let qflist = []
   let lines = split(a:result, '\n')
   for line in lines
@@ -1056,6 +1056,17 @@ function! s:my_silver_searcher_finish(result) "{{{
   endfor
   call setqflist(qflist, 'r')
   tab copen
+endfunction "}}}
+" PT
+command! -nargs=+ -complete=file PT call s:my_platinum_searcher(<q-args>)
+function! s:my_platinum_searcher(args) "{{{
+  " set search keyword
+  let @/ = a:args
+  " async
+  call s:my_vimproc_async({
+  \ 'cmd': 'pt --nocolor --nogroup ' . a:args,
+  \ 'callback': 's:my_grep_finish'
+  \})
 endfunction "}}}
 
 " Wofl2Md
