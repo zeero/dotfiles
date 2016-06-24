@@ -25,6 +25,8 @@ brew 'macvim', args: ['with-lua']
 brew 'vim', args: ['with-lua']
 brew 'ctags'
 brew 'cmigemo'
+brew 'the_silver_searcher'
+brew 'the_platinum_searcher'
 
 # coding tool
 brew 'swiftlint'
