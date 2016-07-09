@@ -1375,6 +1375,9 @@ nnoremap gj j
 nnoremap gk k
 vnoremap gj j
 vnoremap gk k
+" 先頭末尾で行移動
+nnoremap <expr> h col('.') == 1 ? 'k$' : 'h'
+nnoremap <expr> l col('.') == col('$') - 1 ? 'j^' : 'l'
 " 0/^のトグル
 nnoremap <expr> 0 match(getline("."), '\S') == col(".") - 1 ? '0' : '^'
 nnoremap <expr> ^ match(getline("."), '\S') == col(".") - 1 ? '0' : '^'
@@ -1563,8 +1566,8 @@ endfunction "}}}
 " 移動
 inoremap <expr> <C-a> match(getline("."), '\S') == col(".") - 1 ? '<Home>' : '<C-o>^'
 inoremap <C-e> <End>
-inoremap <C-h> <Left>
-inoremap <C-l> <Right>
+inoremap <expr> <C-h> col('.') == 1 ? '<Up><End>' : '<Left>'
+inoremap <expr> <C-l> col('.') == col('$') ? '<Down><Home>' : '<Right>'
 inoremap <C-b> <S-Left>
 inoremap <C-w> <S-Right>
 inoremap <C-j> <Down>
