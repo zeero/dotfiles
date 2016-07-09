@@ -208,6 +208,8 @@ NeoBundle 'tpope/vim-surround'
 " \,    ['i', '<C-G>S']
 " \,    ['i', '<C-G>s']
 " \,    ['i', '<C-S>']]}}
+NeoBundleLazy 'terryma/vim-expand-region'
+\, {'autoload': {'mappings': '<Plug>(expand_region_'}}
 
 " オペレータ {{{2
 NeoBundle 'kana/vim-operator-user'
@@ -227,8 +229,6 @@ NeoBundleLazy 'tyru/operator-html-escape.vim'
 NeoBundleLazy 'tyru/operator-reverse.vim'
 \, {'autoload': {'mappings': '<Plug>(operator-reverse-'}
 \,  'depends': ['kana/vim-operator-user']}
-NeoBundleLazy 'terryma/vim-expand-region'
-\, {'autoload': {'mappings': '<Plug>(expand_region_'}}
 
 " コマンド {{{2
 NeoBundleLazy 'thinca/vim-ref'
@@ -1014,7 +1014,6 @@ function! s:my_qf_todo() "{{{
   call setqflist(qflist)
   botright cwindow 7
 endfunction "}}}
-
 " LocalInit
 let g:my_local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
 command! -nargs=0 LocalInit call s:my_local_init()
@@ -1068,12 +1067,49 @@ function! s:my_platinum_searcher(args) "{{{
   \ 'callback': 's:my_grep_finish'
   \})
 endfunction "}}}
-
 " Wofl2Md
 command! -nargs=0 Wofl2Md call s:my_wofl_to_md()
 function! s:my_wofl_to_md() "{{{
   exe '%s/#/\\#/'
   exe '%s/^\* /\r# /'
+endfunction "}}}
+" Lipsum
+nmap \s :Lipsum \s<CR>
+nmap \d :Lipsum \d<CR>
+nmap \S :Lipsum \S<CR>
+command! -count -nargs=1 Lipsum call s:my_lipsum(<q-args>)
+function! s:my_lipsum(mode) "{{{
+  if count == 0
+    let cnt = 1
+  else
+    let cnt = count
+  endif
+  if a:mode ==# '\s'
+    execute 'normal! ' . cnt . 'a '
+  elseif a:mode ==# '\d'
+    let str = ''
+    let i = 1
+    while i <= cnt
+      let str .= string(i % 10)
+      let i += 1
+    endwhile
+    execute 'normal! a' . str
+  elseif a:mode ==# '\S'
+    let lipsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. '
+    let loop = cnt / len(lipsum)
+    let len = cnt % len(lipsum)
+    let str = ''
+    let i = 0
+    while i <= loop
+      if i == loop
+        let str .= strpart(lipsum, 0, len)
+      else
+        let str .= lipsum
+      endif
+      let i += 1
+    endwhile
+    execute 'normal! a' . str
+  endif
 endfunction "}}}
 
 " TortoiseSVN {{{2
@@ -3187,7 +3223,7 @@ nnoremap T :<C-u>CtrlPGista<CR>
 " HTML/CSSのみキーマッピングする
 " let g:user_emmet_leader_key = '<C-@><C-e>'
 let g:user_emmet_install_global = 0
-au myvimrc FileType html,css imap <buffer> <C-@><C-e> <Plug>(emmet-expand-abbr)
+au myvimrc FileType html,css nmap <buffer> <C-@><C-e> <Plug>(emmet-expand-abbr)
 " let g:user_emmet_togglecomment_key = '<C-_>'
 " タグのコンプリート
 let g:use_emmet_complete_tag = 1
@@ -3243,8 +3279,8 @@ let g:user_emmet_settings = {
 \    'filters': 'fc',
 \    'extends': 'css',
 \  },
-\  'lorem_lipsum_ja': {
-\    '^\%(lorem\|lipsum\)\(\d*\)$': function('emmet#lorem#ja#expand'),
+\  'lorem_ipsum_ja': {
+\    '^\%(lorem\|ipsum\)\(\d*\)$': function('emmet#lorem#ja#expand'),
 \  },
 \}
 
