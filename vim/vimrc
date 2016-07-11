@@ -3149,7 +3149,7 @@ command! MemoList QFixHowm m
 command! MemoListAll QFixHowm ra
 
 " workflowish {{{1
-au myvimrc BufRead,BufNew,BufNewFile *.wofl call s:my_workflowish()
+au myvimrc BufRead,BufNew,BufNewFile *.wofl,*.md call s:my_workflowish()
 function! s:my_workflowish() "{{{
   nnoremap <buffer> gj :call WorkflowishFocusToggle(line("."))<CR>
   nnoremap <buffer> gk :call WorkflowishFocusPrevious()<CR>
