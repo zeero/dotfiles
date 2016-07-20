@@ -792,9 +792,9 @@ set noswapfile
 " set directory+=,~/tmp,$TMP
 " 永続undo
 if has('persistent_undo')
-  let s:undodir='$HOME/.vimundo'
+  let s:undodir='~/.vimundo'
   if !isdirectory(s:undodir)
-    silent exe '!mkdir' s:undodir
+    call vimproc#system_bg('mkdir ' . s:undodir)
   endif
   set undodir=s:undodir
   set undofile
@@ -2148,11 +2148,11 @@ inoremap <expr> <C-d> pumvisible() ? neocomplete#undo_completion() : virtcol("."
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-t>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-d>"
 
-" <BS>: close popup.
-inoremap <expr> <BS> pumvisible() ? neocomplete#smart_close_popup() : "\<BS>"
-" inoremap <expr> <Esc> pumvisible() ? neocomplete#smart_close_popup() : "\<Esc>"
 " <BS>: close popup and delete backword char.
-" inoremap <expr> <BS> neocomplete#smart_close_popup() . "\<BS>"
+inoremap <expr> <BS> neocomplete#smart_close_popup() . "\<BS>"
+inoremap <expr> <Esc> neocomplete#smart_close_popup() . "\<Esc>"
+" <BS>: close popup.
+" inoremap <expr> <BS> pumvisible() ? neocomplete#smart_close_popup() : "\<BS>"
 " inoremap <expr> <C-y> neocomplete#close_popup()
 " inoremap <expr> <C-e> neocomplete#cancel_popup()
 
