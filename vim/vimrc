@@ -2976,7 +2976,7 @@ let g:jplus#config._ = {'delimiter': ''}
 
 " FastFold {{{1
 " 自動でフォールドを更新しない
-let g:fastfold_fold_command_suffixes = []
+let g:fastfold_fold_movement_commands = []
 
 " textobj-user {{{1
 " entire
