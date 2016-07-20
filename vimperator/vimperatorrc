@@ -11,7 +11,7 @@ set focuscontent
 " ヒントキャラクタの指定
 set hintchars=gfdsavcxzrew
 " :[tab]open時の補完設定(s=検索エンジン+キーワードURL,S=サジェストエンジン,l=ロケーションバーの補完機能を利用,b=ブックマーク)
-set complete=slb
+set complete=sb
 " カラースキーム導入
 colorscheme ZeeroBlue
 " 検索エンジン
