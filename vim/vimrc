@@ -2150,7 +2150,6 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-d>"
 
 " <BS>: close popup and delete backword char.
 inoremap <expr> <BS> neocomplete#smart_close_popup() . "\<BS>"
-inoremap <expr> <Esc> neocomplete#smart_close_popup() . "\<Esc>"
 " <BS>: close popup.
 " inoremap <expr> <BS> pumvisible() ? neocomplete#smart_close_popup() : "\<BS>"
 " inoremap <expr> <C-y> neocomplete#close_popup()
