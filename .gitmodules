@@ -17,3 +17,6 @@
 [submodule "lib/markdown2ctags"]
 	path = lib/markdown2ctags
 	url = https://github.com/jszakmeister/markdown2ctags
+[submodule "vim/dein/repos/github.com/Shougo/dein.vim"]
+	path = vim/dein/repos/github.com/Shougo/dein.vim
+	url = https://github.com/Shougo/dein.vim.git
