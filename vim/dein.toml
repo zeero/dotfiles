@@ -207,8 +207,9 @@ on_cmd = ['Qfreplace']
 
 [[plugins]]
 repo = 'kana/vim-smartchr'
-lazy = 1
-on_i = 1
+#いったんlazyをコメントアウト
+# lazy = 1
+# on_i = 1
 
 # [[plugins]]
 # repo = 'autodate.vim'
