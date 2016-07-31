@@ -1,4 +1,5 @@
-vim/dein/repos
+vim/dein
+vim/dein.local
 vim/bundle
 vim/bundle.local
 tags

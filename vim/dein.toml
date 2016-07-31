@@ -1,0 +1,900 @@
+# 基本 {{{2
+
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+hook_post_update = '''
+  if dein#util#_is_windows()
+    let cmd = 'tools\\update-dll-mingw'
+  elseif dein#util#_is_cygwin()
+    let cmd = 'make -f make_cygwin.mak'
+  elseif executable('gmake')
+    let cmd = 'gmake'
+  else
+    let cmd = 'make'
+  endif
+  let g:dein#plugin.build = cmd
+'''
+
+[[plugins]]
+repo = 'Shougo/vimshell'
+lazy = 1
+on_cmd = ['VimShell', 'VimShellPop', 'VimShellTab']
+depends = 'vimproc'
+
+[[plugins]]
+repo = 'supermomonga/vimshell-inline-history.vim'
+lazy = 1
+on_ft = ['vimshell']
+depends = 'vimshell'
+
+[[plugins]]
+repo = 'Shougo/neocomplete'
+lazy = 1
+on_i = 1
+if = '''has('lua') && (v:version >= 704 || (v:version == 703 && has('patch885')))'''
+hook_post_source = '''call MyDeinHookNeoComplete()'''
+
+[[plugins]]
+repo = 'Shougo/neocomplcache'
+lazy = 1
+on_i = 1
+if = '''!has('lua') || !(v:version >= 704 || (v:version == 703 && has('patch885')))'''
+hook_post_source = '''call MyDeinHookNeoComplcache()'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet'
+lazy = 1
+on_i = 1
+on_cmd = ['NeoSnippetEdit']
+on_source = ['unite.vim']
+on_ft = ['neosnippet']
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+lazy = 1
+on_i = 1
+
+[[plugins]]
+repo = 'Lokaltog/vim-easymotion'
+lazy = 1
+on_map = ['<Plug>(easymotion-bd-w)', '<Plug>(easymotion-s2)', '<Plug>(easymotion-j)', '<Plug>(easymotion-k)']
+
+[[plugins]]
+repo = 'lambdalisue/vim-unified-diff'
+
+
+# CtrlP {{{2
+
+[[plugins]]
+repo = 'ctrlpvim/ctrlp.vim'
+
+[[plugins]]
+repo = 'sgur/ctrlp-extensions.vim'
+depends = 'ctrlp.vim'
+
+[[plugins]]
+repo = 'mattn/ctrlp-register'
+depends = 'ctrlp.vim'
+
+[[plugins]]
+repo = 'zeero/vim-ctrlp-help'
+depends = 'ctrlp.vim'
+
+[[plugins]]
+repo = 'zeero/vim-ctrlp-gista'
+depends = ['ctrlp.vim', 'vim-gista']
+
+
+# Unite {{{2
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+lazy = 1
+on_cmd = ['Unite', 'UniteWithBufferDir', 'UniteResume']
+hook_post_source = '''call MyDeinHookUnite()'''
+
+[[plugins]]
+repo = 'Shougo/vimfiler'
+lazy = 1
+on_cmd = ['VimFiler', 'VimFilerBufferDir']
+depends = ['unite.vim']
+
+[[plugins]]
+repo = 'Shougo/unite-outline'
+lazy = 1
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'osyo-manga/unite-fold'
+lazy = 1
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'thinca/vim-unite-history'
+lazy = 1
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'tsukkee/unite-help'
+lazy = 1
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'tsukkee/unite-tag'
+lazy = 1
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'basyura/unite-rails'
+lazy = 1
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'ujihisa/unite-rake'
+lazy = 1
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'ujihisa/unite-gem'
+lazy = 1
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'ujihisa/unite-locate'
+lazy = 1
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'ujihisa/unite-colorscheme'
+lazy = 1
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'osyo-manga/unite-highlight'
+lazy = 1
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'tacroe/unite-alias'
+lazy = 1
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'pasela/unite-webcolorname'
+lazy = 1
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'zeero/unite-localrc'
+lazy = 1
+on_source = ['unite.vim']
+depends = ['vim-localrc']
+
+[[plugins]]
+repo = 'osyo-manga/unite-quickfix'
+lazy = 1
+on_source = ['unite.vim']
+
+
+# 入力補助 {{{2
+
+[[plugins]]
+repo = 'tyru/caw.vim'
+lazy = 1
+on_map = '<Plug>(caw:'
+
+[[plugins]]
+repo = 'thinca/vim-qfreplace'
+lazy = 1
+on_ft = ['unite', 'quickfix']
+on_cmd = ['Qfreplace']
+
+[[plugins]]
+repo = 'kana/vim-smartchr'
+lazy = 1
+on_i = 1
+
+# [[plugins]]
+# repo = 'autodate.vim'
+# lazy = 1
+# on_i = 1
+
+[[plugins]]
+repo = 'AndrewRadev/switch.vim'
+lazy = 1
+on_cmd = ['Switch']
+
+[[plugins]]
+repo = 'zeero/yankround.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-jplus'
+lazy = 1
+on_map = ['<Plug>(jplus']
+
+
+# テキストオブジェクト {{{2
+
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+lazy = 1
+
+[[plugins]]
+repo = 'kana/vim-textobj-fold'
+lazy = 1
+on_map = [['ov', 'iz', 'az']]
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+lazy = 1
+on_map = '<Plug>(textobj-entire-'
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'kana/vim-textobj-line'
+lazy = 1
+on_map = [['ov', 'il', 'al']]
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'kana/vim-textobj-indent'
+lazy = 1
+on_map = [['ov', 'ii', 'ai']]
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'kana/vim-textobj-lastpat'
+lazy = 1
+on_map = [['ov', 'i/', 'a/']]
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'syngan/vim-textobj-postexpr'
+lazy = 1
+on_map = '<Plug>(textobj-postexpr-'
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'rhysd/vim-textobj-wiw'
+lazy = 1
+on_map = '<Plug>(textobj-wiw-'
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'thinca/vim-textobj-between'
+lazy = 1
+on_map = '<Plug>(textobj-between-'
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'sgur/vim-textobj-parameter'
+lazy = 1
+on_map = [['ov', 'i,', 'a,']]
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'deris/vim-textobj-enclosedsyntax'
+lazy = 1
+on_map = [['ov', 'iq', 'aq']]
+on_ft = ['ruby', 'perl']
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'osyo-manga/vim-textobj-multiblock'
+lazy = 1
+on_map = '<Plug>(textobj-multiblock-'
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'osyo-manga/vim-textobj-multitextobj'
+lazy = 1
+on_map = '<Plug>(textobj-multitextobj-'
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+on_map = [['n', 'cs'], ['n', 'ds']]
+# , ['x', 'gS']
+# , ['n', 'ySS']
+# , ['n', 'yss']
+# , ['n', 'ySs']
+# , ['n', 'yS']
+# , ['n', 'ys']
+# , ['i', '<C-G>S']
+# , ['i', '<C-G>s']
+# , ['i', '<C-S>']]
+
+[[plugins]]
+repo = 'terryma/vim-expand-region'
+lazy = 1
+on_map = '<Plug>(expand_region_'
+
+
+# オペレータ {{{2
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'kana/vim-operator-replace.git'
+lazy = 1
+on_map = '<Plug>(operator-replace)'
+depends = ['vim-operator-user']
+
+# [[plugins]]
+# repo = 'rhysd/vim-operator-surround'
+# lazy = 1
+
+[[plugins]]
+repo = 'zeero/vim-operator-surround'
+rev = 'keep_input_option'
+lazy = 1
+on_map = '<Plug>(operator-surround-'
+depends = ['vim-operator-user']
+
+[[plugins]]
+repo = 'tyru/operator-camelize.vim'
+lazy = 1
+on_map = '<Plug>(operator-camelize-'
+depends = ['vim-operator-user']
+
+[[plugins]]
+repo = 'tyru/operator-html-escape.vim'
+lazy = 1
+on_map = '<Plug>(operator-html-'
+depends = ['vim-operator-user']
+
+[[plugins]]
+repo = 'tyru/operator-reverse.vim'
+lazy = 1
+on_map = '<Plug>(operator-reverse-'
+depends = ['vim-operator-user']
+
+
+# コマンド {{{2
+
+[[plugins]]
+repo = 'thinca/vim-ref'
+lazy = 1
+on_cmd = ['Ref']
+on_source = ['unite.vim']
+depends = ['webapi-vim']
+
+[[plugins]]
+repo = 'mojako/ref-sources.vim'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+lazy = 1
+on_cmd = ['QuickRun']
+on_map = '<Plug>(quickrun'
+hook_post_source = '''call MyDeinHookNeoQuickrun()'''
+
+[[plugins]]
+repo = 'osyo-manga/shabadou.vim'
+lazy = 1
+on_cmd = ['QuickRun']
+on_map = '<Plug>(quickrun'
+depends = ['vim-quickrun']
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+augroup = 'fugitive'
+
+[[plugins]]
+repo = 'Shougo/vim-vcs'
+#いったんlazyをコメントアウト
+# lazy = 1
+# on_cmd = ['Vcs']
+# depends = ['vimproc', 'vim-openbuf']
+
+[[plugins]]
+repo = 'lambdalisue/vim-gista'
+#いったんlazyをコメントアウト
+# lazy = 1
+# on_cmd = ['Gista']
+# on_map = '<Plug>(gista-'
+# on_func = ['gista#gist#api#list']
+# on_source = ['unite.vim']
+#いったんlazyをコメントアウト
+# depends = ['unite.vim', 'open-browser.vim']
+depends = ['open-browser.vim']
+
+[[plugins]]
+repo = 'gregsexton/gitv'
+lazy = 1
+on_cmd = ['Gitv']
+depends = ['vim-fugitive']
+
+[[plugins]]
+repo = 'majutsushi/tagbar'
+lazy = 1
+on_cmd = ['TagbarToggle', 'TagbarOpen']
+
+[[plugins]]
+repo = 'tyru/restart.vim'
+lazy = 1
+on_cmd = ['Restart']
+gui = 1
+
+[[plugins]]
+repo = 'sjl/gundo.vim'
+lazy = 1
+on_cmd = ['GundoToggle']
+
+[[plugins]]
+repo = 't9md/vim-quickhl'
+lazy = 1
+on_map = '<Plug>(quickhl-'
+on_cmd = ['QuickhlManualAdd', 'QuickhlManualReset']
+
+[[plugins]]
+repo = 'AndrewRadev/linediff.vim'
+lazy = 1
+on_cmd = ['Linediff', 'LD']
+
+[[plugins]]
+repo = 'thinca/vim-prettyprint'
+lazy = 1
+on_cmd = ['PP']
+
+[[plugins]]
+repo = 'AndrewRadev/splitjoin.vim'
+lazy = 1
+on_cmd = ['SplitjoinSplit', 'SplitjoinJoin']
+on_map = [['n', ',o'], ['n', ',J']]
+
+[[plugins]]
+repo = 'thinca/vim-scall'
+lazy = 1
+on_cmd = ['Scall']
+
+[[plugins]]
+repo = 'osyo-manga/vim-over'
+lazy = 1
+on_cmd = ['OverCommandLine']
+
+[[plugins]]
+repo = 'https://conque.googlecode.com/svn/trunk/'
+lazy = 1
+on_cmd = ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermTab', 'ConqueTermVSplit']
+on_func = ['conque_term#open', 'conque_term#subprocess', 'conque_term#register_function']
+name = 'Conque'
+if = '''(has('python') || has('python3')) && (has('win32') || has('win64'))'''
+
+[[plugins]]
+repo = 'h1mesuke/vim-alignta.git'
+lazy = 1
+on_cmd = ['Alignta', 'AL']
+on_source = ['unite.vim']
+
+[[plugins]]
+repo = 'Align'
+lazy = 1
+on_cmd = ['Align', 'AlignCtrl', 'AlignPush', 'AlignPop']
+
+[[plugins]]
+repo = 'SQLUtilities'
+lazy = 1
+on_cmd = ['SQLUFormatter']
+
+[[plugins]]
+repo = 'copypath.vim'
+lazy = 1
+on_cmd = ['CopyPath', 'CopyFileName']
+
+[[plugins]]
+repo = 'jceb/vim-editqf'
+lazy = 1
+on_cmd = ['QFAddNote', 'QFSave', 'QFLoad']
+
+[[plugins]]
+repo = 'will133/vim-dirdiff'
+lazy = 1
+on_cmd = ['DirDiff']
+
+[[plugins]]
+repo = 'loremipsum'
+lazy = 1
+on_cmd = ['Loremipsum']
+
+[[plugins]]
+repo = 'thinca/vim-scouter'
+lazy = 1
+on_cmd = ['Scouter']
+
+[[plugins]]
+repo = 'dbext.vim'
+lazy = 1
+# on_cmd = ['DBExt']
+
+
+# 表示 {{{2
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-anzu'
+
+[[plugins]]
+repo = 'fholgado/minibufexpl.vim'
+lazy = 1
+on_cmd = ['MBEbp', 'MBEbn', 'MBEToggle']
+augroup = 'MiniBufExpl'
+
+[[plugins]]
+repo = 'molokai'
+gui = 0
+
+[[plugins]]
+repo = 'twerth/ir_black'
+gui = 1
+
+# 普段使わないカラースキームは使用時にアクティベート
+
+[[plugins]]
+repo = 'wombat256.vim'
+lazy = 1
+
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
+lazy = 1
+
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+lazy = 1
+
+[[plugins]]
+repo = 'nanotech/jellybeans.vim'
+lazy = 1
+
+[[plugins]]
+repo = 'jpo/vim-railscasts-theme'
+lazy = 1
+
+[[plugins]]
+repo = 'jonathanfilip/vim-lucius'
+lazy = 1
+
+[[plugins]]
+repo = 'Zephyr-Color-Scheme'
+lazy = 1
+
+[[plugins]]
+repo = 'cocopon/iceberg.vim'
+lazy = 1
+
+[[plugins]]
+repo = 'newspaper.vim'
+lazy = 1
+
+[[plugins]]
+repo = 'thinca/vim-guicolorscheme'
+lazy = 1
+on_cmd = ['GuiColorScheme']
+gui = 0
+
+[[plugins]]
+repo = 'godlygeek/csapprox'
+lazy = 1
+on_cmd = ['CSApproxSnapshot']
+gui = 1
+
+[[plugins]]
+repo = 'ScrollColors'
+lazy = 1
+on_cmd = ['SCROLLCOLOR']
+
+[[plugins]]
+repo = 'cocopon/colorswatch.vim'
+lazy = 1
+on_cmd = ['ColorSwatchGenerate']
+
+[[plugins]]
+repo = 'itchyny/landscape.vim'
+lazy = 1
+
+[[plugins]]
+repo = 'jscappini/material.vim'
+lazy = 1
+
+
+# 補助 {{{2
+
+[[plugins]]
+repo = 'thinca/vim-singleton'
+gui = 1
+
+[[plugins]]
+repo = 'thinca/vim-localrc'
+augroup = 'plugin-localrc'
+
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+
+[[plugins]]
+repo = 'Konfekt/FastFold'
+
+[[plugins]]
+repo = 'mattn/webapi-vim'
+lazy = 1
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+lazy = 1
+on_ft = ['html', 'mkd']
+on_map = '<Plug>(openbrowser-'
+on_func = 'openbrowser#smart_search'
+
+[[plugins]]
+repo = 'mattn/benchvimrc-vim'
+lazy = 1
+on_cmd = ['BenchVimrc']
+
+[[plugins]]
+repo = 'haya14busa/vim-migemo'
+
+[[plugins]]
+repo = 'rhysd/migemo-search.vim'
+
+[[plugins]]
+repo = 'sudo.vim'
+lazy = 1
+on_cmd = ['SudoWrite', 'SudoRead']
+
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+
+[[plugins]]
+repo = 'thinca/vim-splash'
+lazy = 1
+on_cmd = ['Splash']
+
+[[plugins]]
+repo = 'mklabs/vim-cowsay'
+lazy = 1
+on_cmd = ['Cowsay']
+
+[[plugins]]
+repo = 'taku-o/vim-zoom'
+lazy = 1
+on_cmd = ['ZoomIn', 'ZoomOut', 'ZoomReset']
+on_map = [['n', '+'], ['n', '-']]
+gui = 1
+
+[[plugins]]
+repo = 'yonchu/accelerated-smooth-scroll'
+lazy = 1
+on_map = '<Plug>(ac-smooth-scroll-'
+
+[[plugins]]
+repo = 'ShowMarks'
+lazy = 1
+on_cmd = ['ShowMarksToggle']
+
+[[plugins]]
+repo = 'AnsiEsc.vim'
+lazy = 1
+on_cmd = ['AnsiEsc']
+
+[[plugins]]
+repo = 'kana/vim-submode'
+
+[[plugins]]
+repo = 'tpope/vim-repeat'
+lazy = 1
+on_map = ['.']
+
+[[plugins]]
+repo = 'fuenor/qfixhowm'
+lazy = 1
+on_cmd = ['QFixHowm']
+
+[[plugins]]
+repo = 'xolox/vim-misc'
+
+[[plugins]]
+repo = 'xolox/vim-reload'
+depends = ['vim-misc']
+
+[[plugins]]
+repo = 'thinca/vim-openbuf'
+
+[[plugins]]
+repo = 'haya14busa/incsearch.vim'
+lazy = 1
+on_map = '<Plug>(incsearch-'
+
+[[plugins]]
+repo = 'haya14busa/incsearch-migemo.vim'
+lazy = 1
+on_map = '<Plug>(incsearch-migemo-'
+on_func = ['incsearch#config#migemo#converter', 'incsearch#config#migemo#make']}
+depends = ['incsearch.vim']
+
+[[plugins]]
+repo = 'haya14busa/incsearch-fuzzy.vim'
+lazy = 1
+on_map = '<Plug>(incsearch-fuzzy-'
+on_func = ['incsearch#config#fuzzy#converter', 'incsearch#config#fuzzy#make']}
+depends = ['incsearch.vim']
+
+[[plugins]]
+repo = 'thinca/vim-visualstar'
+lazy = 1
+on_map = '<Plug>(visualstar-'
+
+[[plugins]]
+repo = 'rhysd/clever-f.vim'
+lazy = 1
+on_map = ['<Plug>(clever-f-']
+
+[[plugins]]
+repo = 'bkad/CamelCaseMotion'
+lazy = 1
+on_map = ['<Plug>CamelCaseMotion_']
+
+[[plugins]]
+repo = 'zeero/vim-smartword'
+lazy = 1
+on_map = ['<Plug>(smartword-']
+depends = ['CamelCaseMotion']
+
+
+# Ruby {{{2
+
+[[plugins]]
+repo = 'vim-ruby/vim-ruby'
+lazy = 1
+on_ft = ['ruby']
+
+[[plugins]]
+repo = 'tpope/vim-rails'
+lazy = 1
+on_ft = ['ruby']
+
+[[plugins]]
+repo = 'taka84u9/vim-ref-ri'
+# on_ft = ['ruby']
+# on_source = ['unite.vim']
+# depends = 'vim-ref'
+
+[[plugins]]
+repo = 'edsono/vim-matchit'
+
+# [[plugins]]
+# repo = 'tpope/vim-bundler'
+# lazy = 1
+# on_ft = ['ruby']
+
+[[plugins]]
+repo = 'osyo-manga/vim-monster'
+lazy = 1
+on_ft = ['ruby']
+if = '''executable('rct-complete')'''
+
+[[plugins]]
+repo = 'rhysd/vim-textobj-ruby'
+lazy = 1
+on_ft = ['ruby']
+depends = ['vim-operator-user']
+
+
+# Swift {{{2
+
+[[plugins]]
+repo = 'Keithbsmiley/swift.vim'
+lazy = 1
+on_ft = ['swift']
+
+
+# HTML/JavaScript/Markdown {{{2
+
+[[plugins]]
+repo = 'mattn/emmet-vim'
+lazy = 1
+on_ft = ['html']
+on_i = 1
+
+[[plugins]]
+repo = 'othree/html5.vim'
+lazy = 1
+on_ft = ['html']
+
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+lazy = 1
+on_ft = ['html']
+
+# [[plugins]]
+# repo = 'jiangmiao/simple-javascript-indenter'
+# lazy = 1
+# on_ft = ['javascript']
+
+[[plugins]]
+repo = 'jelera/vim-javascript-syntax'
+lazy = 1
+on_ft = ['javascript']
+
+[[plugins]]
+repo = 'jQuery'
+lazy = 1
+on_ft = ['javascript']
+
+[[plugins]]
+repo = 'https://bitbucket.org/teramako/jscomplete-vim'
+lazy = 1
+on_ft = ['javascript']
+on_i = 1
+type = 'git'
+
+[[plugins]]
+repo = 'scrooloose/syntastic'
+# lazy = 1
+# on_i = 1
+
+[[plugins]]
+repo = 'lukaszkorecki/workflowish'
+lazy = 1
+on_ft = ['workflowish']
+
+[[plugins]]
+repo = 'kannokanno/previm'
+lazy = 1
+on_ft = ['workflowish']
+
+# [[plugins]]
+# repo = 'plasticboy/vim-markdown'
+# lazy = 1
+# on_ft = ['markdown']
+
+# [[plugins]]
+# repo = 'tpope/vim-markdown'
+# lazy = 1
+# on_ft = ['markdown']
+
+# [[plugins]]
+# repo = 'nelstrom/vim-markdown-folding'
+# lazy = 1
+# on_ft = ['markdown']
+
+
+# Java {{{2
+
+[[plugins]]
+repo = 'http://www.fleiner.com/vim/syntax_60/javaid.vim'
+lazy = 1
+on_ft = ['java']
+name = 'javaid.vim'
+type = 'raw'
+script_type = 'syntax'
+
+[[plugins]]
+repo = 'kamichidu/vim-edit-properties'
+on_ft = ['jproperties']
+
+
+# VimScript {{{2
+
+[[plugins]]
+repo = 'vim-jp/vital.vim'
+lazy = 1
+on_cmd = ['Vitalize']
+on_func = ['vital#of']
+
+[[plugins]]
+repo = 'kana/vim-vspec'
+
+[[plugins]]
+repo = 'rhysd/vim-vspec-matchers'
+
+[[plugins]]
+repo = 'Shougo/vesting'
+lazy = 1
+on_source = ['unite.vim']
+
