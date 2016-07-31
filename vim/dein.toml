@@ -65,6 +65,19 @@ on_map = ['<Plug>(easymotion-bd-w)', '<Plug>(easymotion-s2)', '<Plug>(easymotion
 [[plugins]]
 repo = 'lambdalisue/vim-unified-diff'
 
+[[plugins]]
+repo = 'lambdalisue/vim-gista'
+#CtrlPGistaより先に読み込まれないとgistを開けなくなる...
+#いったんlazyをコメントアウト
+# lazy = 1
+# on_cmd = ['Gista']
+# on_map = '<Plug>(gista-'
+# on_func = ['gista#gist#api#list']
+# on_source = ['unite.vim']
+#いったんlazyをコメントアウト
+# depends = ['unite.vim', 'open-browser.vim']
+depends = ['open-browser.vim']
+
 
 # CtrlP {{{2
 
@@ -391,18 +404,6 @@ repo = 'Shougo/vim-vcs'
 # lazy = 1
 # on_cmd = ['Vcs']
 # depends = ['vimproc', 'vim-openbuf']
-
-[[plugins]]
-repo = 'lambdalisue/vim-gista'
-#いったんlazyをコメントアウト
-# lazy = 1
-# on_cmd = ['Gista']
-# on_map = '<Plug>(gista-'
-# on_func = ['gista#gist#api#list']
-# on_source = ['unite.vim']
-#いったんlazyをコメントアウト
-# depends = ['unite.vim', 'open-browser.vim']
-depends = ['open-browser.vim']
 
 [[plugins]]
 repo = 'gregsexton/gitv'
