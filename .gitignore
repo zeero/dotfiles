@@ -1,7 +1,5 @@
 vim/dein
 vim/dein.local
-vim/bundle
-vim/bundle.local
 tags
 home/bin/git-*
 
