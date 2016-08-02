@@ -22,7 +22,7 @@ hook_post_update = '''
 repo = 'Shougo/vimshell'
 lazy = 1
 on_cmd = ['VimShell', 'VimShellPop', 'VimShellTab']
-depends = 'vimproc'
+depends = 'vimproc.vim'
 
 [[plugins]]
 repo = 'supermomonga/vimshell-inline-history.vim'
@@ -404,7 +404,7 @@ repo = 'Shougo/vim-vcs'
 #いったんlazyをコメントアウト
 # lazy = 1
 # on_cmd = ['Vcs']
-# depends = ['vimproc', 'vim-openbuf']
+# depends = ['vimproc.vim', 'vim-openbuf']
 
 [[plugins]]
 repo = 'gregsexton/gitv'
