@@ -1711,7 +1711,8 @@ inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<C-t>'
 inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<C-d>'
 
 " <BS>: close popup and delete backword char.
-inoremap <expr> <BS> match(getline("."), '\S') == col(".") - 1 ? neocomplete#smart_close_popup() . "\<C-o>:left\<CR>" : match(getline("."), '^\s*$') >= 0 ? neocomplete#smart_close_popup() . "\<C-o>:left\<CR>" : neocomplete#smart_close_popup() . "\<BS>"
+inoremap <expr> <BS> neocomplete#smart_close_popup() . "\<BS>"
+" inoremap <expr> <BS> match(getline("."), '\S') == col(".") - 1 ? neocomplete#smart_close_popup() . "\<C-o>:left\<CR>" : match(getline("."), '^\s*$') >= 0 ? neocomplete#smart_close_popup() . "\<C-o>:left\<CR>" : neocomplete#smart_close_popup() . "\<BS>"
 " <BS>: close popup.
 " inoremap <expr> <BS> pumvisible() ? neocomplete#smart_close_popup() : '<BS>'
 " inoremap <expr> <C-y> neocomplete#close_popup()
