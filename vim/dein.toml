@@ -436,8 +436,8 @@ on_cmd = ['QuickhlManualAdd', 'QuickhlManualReset']
 
 [[plugins]]
 repo = 'AndrewRadev/linediff.vim'
-lazy = 1
-on_cmd = ['Linediff', 'LD']
+# lazy = 1
+# on_cmd = ['Linediff', 'LD']
 
 [[plugins]]
 repo = 'thinca/vim-prettyprint'
