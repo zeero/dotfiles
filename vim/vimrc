@@ -124,6 +124,8 @@ set expandtab
 set autoindent
 " 高度なオートインデント
 set smartindent
+" 折り返しでもインデント
+set breakindent
 " '<'や'>'でインデントする際に'shiftwidth'の倍数に丸める
 set shiftround
 " バックスペースでインデントや改行を削除できるようにする
