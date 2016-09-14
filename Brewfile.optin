@@ -13,4 +13,5 @@ cask 'android-file-transfer'
 cask 'mplayerx'
 cask 'dropbox'
 cask 'cloudytabs'
+cask 'kindle'
 

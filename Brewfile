@@ -45,5 +45,4 @@ cask 'google-japanese-ime'
 cask 'appcleaner'
 cask 'skitch'
 cask 'imageoptim'
-cask 'kindle'
 
