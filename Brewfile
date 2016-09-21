@@ -26,6 +26,7 @@ brew 'ctags'
 brew 'cmigemo'
 brew 'the_silver_searcher'
 brew 'the_platinum_searcher'
+brew 'jq'  # json parser
 
 # coding tool
 brew 'swiftlint'
