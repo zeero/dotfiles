@@ -2297,7 +2297,7 @@ function! MyPwd() " {{{2
   if winwidth(0) > 100
     let path = getcwd()
     while len(path) >= 50 && stridx(path, '/') >= 0
-      let path = '...' . strpart(path, stridx(path, '/') + 1)
+      let path = '.../' . strpart(path, stridx(path, '/', 4) + 1)
     endwhile
   endif
   return path
