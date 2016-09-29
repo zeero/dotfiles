@@ -11,6 +11,7 @@ choco install Lua -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\Lua"
 choco install ctags -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\ctags"
 choco install curl -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\curl"
 choco install ag -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\ag"
+choco install jq -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\jq"
 
 choco install ruby -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\ruby"
 choco install StrawberryPerl -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\StrawberryPerl"
