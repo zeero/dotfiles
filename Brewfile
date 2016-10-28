@@ -20,6 +20,7 @@ brew 'wget'
 brew 'openssl'
 brew 'coreutils'
 brew 'bash-completion'
+brew 'bash-git-prompt'
 
 # vim
 brew 'macvim', args: ['with-lua', 'with-override-system-vim']
