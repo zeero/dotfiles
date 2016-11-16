@@ -47,7 +47,7 @@ let s:dein_toml_local = expand($MYVIMDIR . '/dein.local')
 filetype off
 set rtp& rtp+=$MYVIMDIR/dein/repos/github.com/Shougo/dein.vim
 if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir)
+  call dein#begin(s:dein_dir, [$MYVIMRC, s:dein_toml])
   call dein#load_toml(s:dein_toml, {})
   if filereadable(s:dein_toml_local)
     call dein#load_toml(s:dein_toml_local, {})
