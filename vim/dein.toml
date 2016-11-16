@@ -396,23 +396,6 @@ on_map = '<Plug>(quickrun'
 depends = ['vim-quickrun']
 
 [[plugins]]
-repo = 'tpope/vim-fugitive'
-augroup = 'fugitive'
-
-[[plugins]]
-repo = 'Shougo/vim-vcs'
-#いったんlazyをコメントアウト
-# lazy = 1
-# on_cmd = ['Vcs']
-# depends = ['vimproc.vim', 'vim-openbuf']
-
-[[plugins]]
-repo = 'gregsexton/gitv'
-lazy = 1
-on_cmd = ['Gitv']
-depends = ['vim-fugitive']
-
-[[plugins]]
 repo = 'majutsushi/tagbar'
 lazy = 1
 on_cmd = ['TagbarToggle', 'TagbarOpen']
@@ -746,6 +729,29 @@ repo = 'zeero/vim-smartword'
 lazy = 1
 on_map = ['<Plug>(smartword-']
 depends = ['CamelCaseMotion']
+
+
+# Git {{{2
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+augroup = 'fugitive'
+
+[[plugins]]
+repo = 'Shougo/vim-vcs'
+#いったんlazyをコメントアウト
+# lazy = 1
+# on_cmd = ['Vcs']
+# depends = ['vimproc.vim', 'vim-openbuf']
+
+[[plugins]]
+repo = 'gregsexton/gitv'
+lazy = 1
+on_cmd = ['Gitv']
+depends = ['vim-fugitive']
+
+[[plugins]]
+repo = 'jreybert/vimagit'
 
 
 # Ruby {{{2
