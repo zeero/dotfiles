@@ -2478,6 +2478,15 @@ command! Gr Gread! show HEAD:%
 " Gitv {{{1
 let g:Gitv_OpenHorizontal = 1
 
+" vimagit {{{1
+" ヘルプ非表示
+" let g:magit_show_help = 0
+" diffを最初から開いておく
+let g:magit_default_show_all_files = 2
+let g:magit_default_fold_level = 2
+" 表示するセクションと並び順
+let g:magit_default_sections = ['commit', 'info', 'global_help', 'staged', 'unstaged']
+
 " vim-unified-diff {{{1
 set diffexpr=unified_diff#diffexpr()
 let unified_diff#executable = 'git'
