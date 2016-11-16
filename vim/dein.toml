@@ -588,6 +588,16 @@ lazy = 1
 repo = 'jscappini/material.vim'
 lazy = 1
 
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+lazy = 1
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+lazy = 1
+on_i = 1
+depends = ['context_filetype.vim']
+
 
 # 補助 {{{2
 
