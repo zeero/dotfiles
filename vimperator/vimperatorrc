@@ -28,6 +28,8 @@ nnoremap H gT
 nnoremap L gt
 "  新規タブ
 nnoremap ,t :tabnew<CR>
+"  新規ウィンドウ
+nnoremap ,w :winopen<CR>
 " タブを一番右に移動
 nnoremap ,l :tabm<CR>
 nnoremap ,L :tabm 0<CR>
