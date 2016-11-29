@@ -23,6 +23,7 @@ brew 'bash-completion'
 brew 'bash-git-prompt'
 brew 'tmux'
 brew 'reattach-to-user-namespace'
+brew 'git-flow'
 
 # vim
 brew 'macvim', args: ['with-lua', 'with-override-system-vim']
