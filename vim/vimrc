@@ -997,7 +997,6 @@ function! s:my_indent_move(isForward, isCursurLevel) "{{{
   if level == match(getline(lnum), '\S')
     exe 'normal! ' . lnum . 'G'
   endif
-  normal! ^
 endfunction "}}}
 
 " 検索 {{{2
