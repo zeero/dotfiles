@@ -976,9 +976,12 @@ nnoremap <silent> zK :<C-u>call<Space><SID>my_indent_move(0, 1)<CR>
 function! s:my_indent_move(isForward, isCursurLevel) "{{{
   let lnum = getcurpos()[1]
   if a:isCursurLevel
-    let level = getcurpos()[2] - 1
+    let level = getcurpos()[2]
   else
-    let level = match(getline(lnum), '\S')
+    let level = match(getline(lnum), '\S') + 1
+    if level == 0
+      let level += 1
+    endif
   endif
 
   if a:isForward
@@ -986,7 +989,7 @@ function! s:my_indent_move(isForward, isCursurLevel) "{{{
   else
     let lnum -= 1
   endif
-  while level < match(getline(lnum), '\S') || match(getline(lnum), '\S') == -1
+  while level < match(getline(lnum), '\S') + 1 || match(getline(lnum), '\S') == -1
     if a:isForward
       let lnum += 1
     else
@@ -994,7 +997,7 @@ function! s:my_indent_move(isForward, isCursurLevel) "{{{
     endif
   endwhile
 
-  if level == match(getline(lnum), '\S')
+  if level == match(getline(lnum), '\S') + 1
     exe 'normal! ' . lnum . 'G'
   endif
 endfunction "}}}
