@@ -2517,6 +2517,9 @@ command! -range LD call linediff#Linediff(<line1>, <line2>)
 " vim-dirdiff {{{1
 let g:DirDiffExcludes = ".svn,.git,CVS,*.class,*.exe,.*.swp"
 
+" Gundo {{{1
+let g:gundo_close_on_revert = 1
+
 " incsearch {{{1
 " incsearch
 " map / <Plug>(incsearch-forward)
