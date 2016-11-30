@@ -1137,7 +1137,20 @@ let g:operator#surround#enable_xbrackets_mode = 1 " 定義済みブロックが�
 " snake_case<=>CamelCase
 vmap _ <Plug>(operator-camelize-toggle)
 " HTMLエスケープ
-" vmap ; <Plug>(operator-html-escape)
+vmap % <Plug>(operator-html-escape)
+call operator#user#define('html-escape', 'Op_html_escape')
+function! Op_html_escape(motion_wiseness)
+  if a:motion_wiseness == 'char'
+    echo getline("'[")
+  elseif a:motion_wiseness == 'line'
+    echo getline("'[")
+  elseif a:motion_wiseness == 'block'
+    echo getline("'[")
+  else
+    echoerr 'internal error'
+    return
+  endif
+endfunction
 " 反転
 vmap R <Plug>(operator-reverse-text)
 " パス置換
