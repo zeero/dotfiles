@@ -1080,13 +1080,13 @@ nnoremap P P`]
 nnoremap ,p :<C-u>set paste<CR>a<C-r>+<Esc>:<C-u>set nopaste<CR>`]
 nnoremap ,P :<C-u>set paste<CR>i<C-r>+<Esc>:<C-u>set nopaste<CR>`]
 " すべてのフォールディングの開け閉め
-nnoremap zO zR
-nnoremap zC zMzz
-nnoremap zv zozczO
+nnoremap zO :FastFoldUpdate<CR>zR
+nnoremap zC :FastFoldUpdate<CR>zMzz
+nnoremap zv :FastFoldUpdate<CR>zozczO
 " <Plug>マッピングのためzvを退避
-nnoremap zV zv
-nnoremap zo zv
-nnoremap zc zczz
+nnoremap zV :FastFoldUpdate<CR>zv
+nnoremap zo :FastFoldUpdate<CR>zv
+nnoremap zc :FastFoldUpdate<CR>zczz
 " 水平スクロール
 nnoremap zh 4zh4zh4zh4zh4zh4zh
 nnoremap zl 4zl4zl4zl4zl4zl4zl
@@ -2566,6 +2566,8 @@ let g:jplus#config = {}
 let g:jplus#config._ = {'delimiter': ''}
 
 " FastFold {{{1
+" キーマップを変えない
+let g:fastfold_fold_command_suffixes = []
 " 自動でフォールドを更新しない
 let g:fastfold_fold_movement_commands = []
 
