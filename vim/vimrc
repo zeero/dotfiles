@@ -1080,13 +1080,13 @@ nnoremap P P`]
 nnoremap ,p :<C-u>set paste<CR>a<C-r>+<Esc>:<C-u>set nopaste<CR>`]
 nnoremap ,P :<C-u>set paste<CR>i<C-r>+<Esc>:<C-u>set nopaste<CR>`]
 " すべてのフォールディングの開け閉め
-nnoremap zO :FastFoldUpdate<CR>zR
-nnoremap zC :FastFoldUpdate<CR>zMzz
-nnoremap zv :FastFoldUpdate<CR>zozczO
+nnoremap zO :silent<Space>FastFoldUpdate<CR>zR
+nnoremap zC :silent<Space>FastFoldUpdate<CR>zMzz
+nnoremap zv :silent<Space>FastFoldUpdate<CR>zozczO
 " <Plug>マッピングのためzvを退避
-nnoremap zV :FastFoldUpdate<CR>zv
-nnoremap zo :FastFoldUpdate<CR>zv
-nnoremap zc :FastFoldUpdate<CR>zczz
+nnoremap zV :silent<Space>FastFoldUpdate<CR>zv
+nnoremap zo :silent<Space>FastFoldUpdate<CR>zv
+nnoremap zc :silent<Space>FastFoldUpdate<CR>zczz
 " 水平スクロール
 nnoremap zh 4zh4zh4zh4zh4zh4zh
 nnoremap zl 4zl4zl4zl4zl4zl4zl
@@ -1137,9 +1137,14 @@ let g:operator#surround#enable_xbrackets_mode = 1 " 定義済みブロックが�
 " snake_case<=>CamelCase
 vmap _ <Plug>(operator-camelize-toggle)
 " HTMLエスケープ
-vmap % <Plug>(operator-html-escape)
-call operator#user#define('html-escape', 'Op_html_escape')
-function! Op_html_escape(motion_wiseness)
+vmap ; <Plug>(operator-html-escape)
+" URLエンコード
+"%はmatchitとかぶるので考慮が必要
+"vmap % <Plug>(operator-url-encode)
+" ひらがなカタカナ変換
+" vmap ~ <Plug>(operator-hirakana)
+call operator#user#define('hirakana', 'Op_hirakana')
+function! Op_hirakana(motion_wiseness)
   if a:motion_wiseness == 'char'
     echo getline("'[")
   elseif a:motion_wiseness == 'line'
