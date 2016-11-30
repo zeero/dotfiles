@@ -749,10 +749,10 @@ augroup = 'fugitive'
 
 [[plugins]]
 repo = 'Shougo/vim-vcs'
-#いったんlazyをコメントアウト
-# lazy = 1
-# on_cmd = ['Vcs']
-# depends = ['vimproc.vim', 'vim-openbuf']
+lazy = 1
+# lightlineのためにon_cmdが必要
+on_cmd = ['Vcs']
+depends = ['vimproc.vim', 'vim-openbuf']
 
 [[plugins]]
 repo = 'gregsexton/gitv'
