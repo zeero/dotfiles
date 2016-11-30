@@ -2279,7 +2279,7 @@ let g:lightline.component_function = {
 \ 'readonly': 'MyReadonly',
 \ 'pwd': 'MyPwd',
 \ 'filename': 'MyFilename',
-\ 'fugitive': 'MyFugitive',
+\ 'fugitive': 'MyVcs',
 \ 'gista': 'gista#statusline#components#gistid',
 \ 'anzu': 'anzu#search_status',
 \ 'syntastic': 'SyntasticStatuslineFlag',
@@ -2316,10 +2316,12 @@ function! MyPwd() " {{{2
   endif
   return path
 endfunction
-function! MyFugitive() " {{{2
+function! MyVcs() " {{{2
   try
-    if winwidth(0) > 80 && &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
-      return fugitive#head()
+    if winwidth(0) > 80 && &ft !~? 'vimfiler\|gundo' && exists(':Vcs')
+      let branch = vcs#info('%b')
+      let target_statuses = ['added', 'modified', 'deleted', 'conflicted', 'untracked', 'renamed']
+      return branch
     endif
   catch
   endtry
