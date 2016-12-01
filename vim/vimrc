@@ -1088,13 +1088,13 @@ nnoremap P P`]
 nnoremap ,p :<C-u>set paste<CR>a<C-r>+<Esc>:<C-u>set nopaste<CR>`]
 nnoremap ,P :<C-u>set paste<CR>i<C-r>+<Esc>:<C-u>set nopaste<CR>`]
 " すべてのフォールディングの開け閉め
-nnoremap zO zR
-nnoremap zC zMzz
-nnoremap zv zozczO
+nnoremap zO :silent<Space>FastFoldUpdate<CR>zR
+nnoremap zC :silent<Space>FastFoldUpdate<CR>zMzz
+nnoremap zv :silent<Space>FastFoldUpdate<CR>zozczO
 " <Plug>マッピングのためzvを退避
-nnoremap zV zv
-nnoremap zo zv
-nnoremap zc zczz
+nnoremap zV :silent<Space>FastFoldUpdate<CR>zv
+nnoremap zo :silent<Space>FastFoldUpdate<CR>zv
+nnoremap zc :silent<Space>FastFoldUpdate<CR>zczz
 " 水平スクロール
 nnoremap zh 4zh4zh4zh4zh4zh4zh
 nnoremap zl 4zl4zl4zl4zl4zl4zl
@@ -1145,7 +1145,25 @@ let g:operator#surround#enable_xbrackets_mode = 1 " 定義済みブロックが�
 " snake_case<=>CamelCase
 vmap _ <Plug>(operator-camelize-toggle)
 " HTMLエスケープ
-" vmap ; <Plug>(operator-html-escape)
+vmap ; <Plug>(operator-html-escape)
+" URLエンコード
+"%はmatchitとかぶるので考慮が必要
+"vmap % <Plug>(operator-url-encode)
+" ひらがなカタカナ変換
+" vmap ~ <Plug>(operator-hirakana)
+call operator#user#define('hirakana', 'Op_hirakana')
+function! Op_hirakana(motion_wiseness)
+  if a:motion_wiseness == 'char'
+    echo getline("'[")
+  elseif a:motion_wiseness == 'line'
+    echo getline("'[")
+  elseif a:motion_wiseness == 'block'
+    echo getline("'[")
+  else
+    echoerr 'internal error'
+    return
+  endif
+endfunction
 " 反転
 vmap R <Plug>(operator-reverse-text)
 " パス置換
@@ -2287,7 +2305,7 @@ let g:lightline.component_function = {
 \ 'readonly': 'MyReadonly',
 \ 'pwd': 'MyPwd',
 \ 'filename': 'MyFilename',
-\ 'fugitive': 'MyFugitive',
+\ 'fugitive': 'MyVcs',
 \ 'gista': 'gista#statusline#components#gistid',
 \ 'anzu': 'anzu#search_status',
 \ 'syntastic': 'SyntasticStatuslineFlag',
@@ -2324,10 +2342,12 @@ function! MyPwd() " {{{2
   endif
   return path
 endfunction
-function! MyFugitive() " {{{2
+function! MyVcs() " {{{2
   try
-    if winwidth(0) > 80 && &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
-      return fugitive#head()
+    if winwidth(0) > 80 && &ft !~? 'vimfiler\|gundo' && exists(':Vcs')
+      let branch = vcs#info('%b')
+      let target_statuses = ['added', 'modified', 'deleted', 'conflicted', 'untracked', 'renamed']
+      return branch
     endif
   catch
   endtry
@@ -2572,6 +2592,8 @@ let g:jplus#config = {}
 let g:jplus#config._ = {'delimiter': ''}
 
 " FastFold {{{1
+" キーマップを変えない
+let g:fastfold_fold_command_suffixes = []
 " 自動でフォールドを更新しない
 let g:fastfold_fold_movement_commands = []
 
