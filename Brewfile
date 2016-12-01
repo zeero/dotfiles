@@ -14,7 +14,7 @@ brew 'zsh'
 # command
 # gitははじめに手動でいれる
 # brew 'git'
-brew 'brew-cask'
+brew 'cask'
 brew 'curl'
 brew 'wget'
 brew 'openssl'
