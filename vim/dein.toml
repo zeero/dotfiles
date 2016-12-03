@@ -884,13 +884,13 @@ on_ft = ['markdown']
 
 # Java {{{2
 
-[[plugins]]
-repo = 'http://www.fleiner.com/vim/syntax_60/javaid.vim'
-lazy = 1
-on_ft = ['java']
-name = 'javaid.vim'
-type = 'raw'
-script_type = 'syntax'
+# [[plugins]]
+# repo = 'http://www.fleiner.com/vim/syntax_60/javaid.vim'
+# lazy = 1
+# on_ft = ['java']
+# name = 'javaid.vim'
+# type = 'raw'
+# script_type = 'syntax'
 
 [[plugins]]
 repo = 'kamichidu/vim-edit-properties'
