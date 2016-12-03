@@ -1148,11 +1148,11 @@ let g:operator#surround#enable_xbrackets_mode = 1 " 定義済みブロックが�
 " snake_case<=>CamelCase
 vmap _ <Plug>(operator-camelize-toggle)
 
-" HTMLエスケープ
-vmap ; <Plug>(operator-html-escape)
-
 " 反転
 vmap R <Plug>(operator-reverse-text)
+
+" HTMLエスケープ
+vmap <C-@>; <Plug>(operator-html-escape)
 
 " パス置換
 vmap <C-@>/ <Plug>(operator-path-convert)
@@ -1166,8 +1166,7 @@ function! MyCmdlinePathConvert() "{{{
 endfunction "}}}
 
 " URLエンコード
-" %はmatchitとキーマップが重複するため<buffer>指定
-vmap <buffer> % <Plug>(operator-url-encode)
+vmap <C-@>% <Plug>(operator-url-encode)
 call operator#user#define('url-encode', 'Op_url_encode')
 function! Op_url_encode(motion_wise) "{{{
   let visual_command = s:visual_command_from_wise_name(a:motion_wise)
@@ -1197,16 +1196,27 @@ endfunction "}}}
 " vmap ~ <Plug>(operator-hirakana)
 call operator#user#define('hirakana', 'Op_hirakana')
 function! Op_hirakana(motion_wiseness) "{{{
-  if a:motion_wiseness == 'char'
-    echo getline("'[")
-  elseif a:motion_wiseness == 'line'
-    echo getline("'[")
-  elseif a:motion_wiseness == 'block'
-    echo getline("'[")
-  else
-    echoerr 'internal error'
-    return
-  endif
+  let visual_command = s:visual_command_from_wise_name(a:motion_wise)
+
+  let put_command = (s:deletion_moves_the_cursor_p(
+  \                    a:motion_wise,
+  \                    getpos("']")[1:2],
+  \                    len(getline("']")),
+  \                    [line('$'), len(getline('$'))]
+  \                  )
+  \                  ? 'p'
+  \                  : 'P')
+
+  let @x = ''
+  if !s:is_empty_region(getpos("'["), getpos("']"))
+    let original_selection = &g:selection
+    let &g:selection = 'inclusive'
+    execute 'normal!' '`['.visual_command.'`]"xd'
+    let &g:selection = original_selection
+    let @x = webapi#http#encodeURI(@x)
+  end
+  execute 'normal! "x'.put_command
+  return
 endfunction "}}}
 
 " ローカルファンクション
