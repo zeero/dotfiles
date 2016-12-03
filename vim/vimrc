@@ -1258,7 +1258,7 @@ endfunction "}}}
 
 " インサートモード {{{2
 " 移動
-inoremap <expr> <C-a> match(getline("."), '\S') == col(".") - 1 ? '<Home>' : '<Home><S-Right>'
+inoremap <expr> <C-a> match(getline("."), '\S') == col(".") - 1 ? '<Home>' : match(getline("."), '\S') == 0 ? '<Home>' : '<Home><S-Right>'
 inoremap <C-e> <End>
 inoremap <expr> <C-h> col('.') == 1 ? '<Up><End>' : '<Left>'
 inoremap <expr> <C-l> col('.') == col('$') ? '<Down><Home>' : '<Right>'
