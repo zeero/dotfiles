@@ -1193,9 +1193,9 @@ function! Op_url_encode(motion_wise) "{{{
 endfunction "}}}
 
 " ひらがなカタカナ変換
-" vmap ~ <Plug>(operator-hirakana)
+vmap ~ <Plug>(operator-hirakana)
 call operator#user#define('hirakana', 'Op_hirakana')
-function! Op_hirakana(motion_wiseness) "{{{
+function! Op_hirakana(motion_wise) "{{{
   let visual_command = s:visual_command_from_wise_name(a:motion_wise)
 
   let put_command = (s:deletion_moves_the_cursor_p(
@@ -1213,13 +1213,30 @@ function! Op_hirakana(motion_wiseness) "{{{
     let &g:selection = 'inclusive'
     execute 'normal!' '`['.visual_command.'`]"xd'
     let &g:selection = original_selection
-    let @x = webapi#http#encodeURI(@x)
+
+    let value = ''
+    for ch in split(@x, '.\zs')
+      let nr = char2nr(ch)
+      if char2nr('a') <= nr && nr <= char2nr('z')
+        let value .= nr2char(nr + (char2nr('A') - char2nr('a')))
+      elseif char2nr('A') <= nr && nr <= char2nr('Z')
+        let value .= nr2char(nr + (char2nr('a') - char2nr('A')))
+      elseif char2nr('ぁ') <= nr && nr <= char2nr('ゔ')
+        let value .= nr2char(nr + (char2nr('ア') - char2nr('あ')))
+      elseif char2nr('ァ') <= nr && nr <= char2nr('ヴ')
+        let value .= nr2char(nr + (char2nr('あ') - char2nr('ア')))
+      else
+        let value .= ch
+      endif
+    endfor
+
+    let @x = value
   end
   execute 'normal! "x'.put_command
   return
 endfunction "}}}
 
-" ローカルファンクション
+" ヘルパーファンクション
 function! s:deletion_moves_the_cursor_p(motion_wise, motion_end_pos, motion_end_last_col, buffer_end_pos) "{{{
   let [buffer_end_line, buffer_end_col] = a:buffer_end_pos
   let [motion_end_line, motion_end_col] = a:motion_end_pos
