@@ -1132,6 +1132,7 @@ vnoremap y y`]
 vnoremap <C-i> c
 
 " オペレータ {{{2
+
 " replace
 map c <Plug>(operator-replace)
 map C <Plug>(operator-replace)$
@@ -1139,13 +1140,31 @@ map C <Plug>(operator-replace)$
 nnoremap ,c :%s/\<<C-r><C-w>\>//gc<Left><Left><Left>
 " 選択した文字列を置換
 vnoremap ,c "xy:%s/<C-r>=escape(@x, '\\/.*$^~[]')<CR>//gc<Left><Left><Left>
+
 " surround
 map s <Plug>(operator-surround-append)
 let g:operator#surround#enable_xbrackets_mode = 1 " 定義済みブロックが現れるまでテキスト保持
+
 " snake_case<=>CamelCase
 vmap _ <Plug>(operator-camelize-toggle)
+
 " HTMLエスケープ
 vmap ; <Plug>(operator-html-escape)
+
+" 反転
+vmap R <Plug>(operator-reverse-text)
+
+" パス置換
+vmap <C-@>/ <Plug>(operator-path-convert)
+cmap <C-@>/ <C-\>eMyCmdlinePathConvert()<CR>
+call operator#user#define('path-convert', 'MyOpPathConvert')
+function! MyOpPathConvert(motion_wiseness) "{{{
+  '[,']s/\//\\/g
+endfunction "}}}
+function! MyCmdlinePathConvert() "{{{
+  return substitute(getcmdline(), '\/', '\\', 'g')
+endfunction "}}}
+
 " URLエンコード
 " %はmatchitとキーマップが重複するため<buffer>指定
 vmap <buffer> % <Plug>(operator-url-encode)
@@ -1173,6 +1192,24 @@ function! Op_url_encode(motion_wise) "{{{
   execute 'normal! "x'.put_command
   return
 endfunction "}}}
+
+" ひらがなカタカナ変換
+" vmap ~ <Plug>(operator-hirakana)
+call operator#user#define('hirakana', 'Op_hirakana')
+function! Op_hirakana(motion_wiseness) "{{{
+  if a:motion_wiseness == 'char'
+    echo getline("'[")
+  elseif a:motion_wiseness == 'line'
+    echo getline("'[")
+  elseif a:motion_wiseness == 'block'
+    echo getline("'[")
+  else
+    echoerr 'internal error'
+    return
+  endif
+endfunction "}}}
+
+" ローカルファンクション
 function! s:deletion_moves_the_cursor_p(motion_wise, motion_end_pos, motion_end_last_col, buffer_end_pos) "{{{
   let [buffer_end_line, buffer_end_col] = a:buffer_end_pos
   let [motion_end_line, motion_end_col] = a:motion_end_pos
@@ -1207,33 +1244,6 @@ function! s:visual_command_from_wise_name(wise_name) "{{{
     echoerr 'E1: Invalid wise name:' string(a:wise_name)
     return 'v'  " fallback
   endif
-endfunction "}}}
-" ひらがなカタカナ変換
-" vmap ~ <Plug>(operator-hirakana)
-call operator#user#define('hirakana', 'Op_hirakana')
-function! Op_hirakana(motion_wiseness) "{{{
-  if a:motion_wiseness == 'char'
-    echo getline("'[")
-  elseif a:motion_wiseness == 'line'
-    echo getline("'[")
-  elseif a:motion_wiseness == 'block'
-    echo getline("'[")
-  else
-    echoerr 'internal error'
-    return
-  endif
-endfunction "}}}
-" 反転
-vmap R <Plug>(operator-reverse-text)
-" パス置換
-vmap <C-@>/ <Plug>(operator-path-convert)
-cmap <C-@>/ <C-\>eMyCmdlinePathConvert()<CR>
-call operator#user#define('path-convert', 'MyOpPathConvert')
-function! MyOpPathConvert(motion_wiseness) "{{{
-  '[,']s/\//\\/g
-endfunction "}}}
-function! MyCmdlinePathConvert() "{{{
-  return substitute(getcmdline(), '\/', '\\', 'g')
 endfunction "}}}
 
 " インサートモード {{{2
