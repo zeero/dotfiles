@@ -237,7 +237,8 @@ set titleold=vim
 " タブや改行を表示 (nolist:非表示)
 set list
 " どの文字でタブや改行を表示するかを設定
-set listchars=tab:__,trail:-,extends:»,precedes:«,nbsp:%
+" set listchars=tab:･￫,trail:-,extends:»,precedes:«,nbsp:%
+set listchars=tab:._,trail:-,extends:»,precedes:«,nbsp:%
 " タブの左側にカーソル表示
 "set listchars=tab:\ \
 " 全角スペースも表示　
