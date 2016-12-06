@@ -3053,9 +3053,11 @@ let g:neocomplete#force_omni_input_patterns = {
 \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
 \}
 
-" SQLUtilities
+" SQLUtilities {{{1
 " カンマで行分割
 let g:sqlutil_align_comma = 1
+" 比較子で整列させない
+let g:sqlutil_align_where = 0
 " 左寄せにする
 let g:sqlutil_align_keyword_right = 0
 " キーワードを大文字にする
