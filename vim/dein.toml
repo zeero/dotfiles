@@ -311,7 +311,8 @@ depends = 'vim-textobj-user'
 
 [[plugins]]
 repo = 'tpope/vim-surround'
-on_map = [['n', 'cs'], ['n', 'ds']]
+# lazy = 1
+# on_map = [['n', 'cs'], ['n', 'ds']]
 # , ['x', 'gS']
 # , ['n', 'ySS']
 # , ['n', 'yss']
@@ -750,9 +751,9 @@ augroup = 'fugitive'
 [[plugins]]
 repo = 'Shougo/vim-vcs'
 lazy = 1
-# lightlineのためにon_cmdが必要
 on_cmd = ['Vcs']
 depends = ['vimproc.vim', 'vim-openbuf']
+# lightlineのためにon_cmdが必要
 
 [[plugins]]
 repo = 'gregsexton/gitv'
