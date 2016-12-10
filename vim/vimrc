@@ -460,6 +460,7 @@ au myvimrc BufRead,BufNewFile *.bat setlocal fenc=sjis ff=dos
 " JavaScript
 au myvimrc BufRead,BufNewFile *.json setlocal filetype=javascript
 au myvimrc BufRead,BufNewFile jquery.*.js setlocal filetype=javascript syntax=jquery
+au myvimrc BufRead,BufNewFile *.coffee setlocal filetype=coffee
 " Apache
 au myvimrc BufRead,BufNewFile httpd*.conf setlocal filetype=apache
 " ctags
