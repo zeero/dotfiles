@@ -60,8 +60,8 @@ nnoremap <Esc> :st<CR>:noh<CR>zz<Esc>
 " 最近閉じたタブの一覧（補完待ち状態にする）
 nnoremap U :undo<Space>
 " URLコピー
-nnoremap gy :silent copy 5-1.plain:title+url<CR>:echo "title & url copied!(plain style)"<CR>
-nnoremap gY :silent copy 1.markdown<CR>:echo "title & url copied!(markdown style)"<CR>
+nnoremap gy :silent copy 1.markdown<CR>:echo "title & url copied!(markdown style)"<CR>
+nnoremap gY :silent copy 5-1.plain:title+url<CR>:echo "title & url copied!(plain style)"<CR>
 
 " コマンドライン移動
 cnoremap <C-a> <Home>
