@@ -22,6 +22,12 @@ git config --global alias.graph "log --graph --decorate --name-status"
 # HomeBrew
 brew bundle
 
+# ruby
+brew link readline --force
+CONFIGURE_OPTS="--with-readline-dir=/usr/local/opt" rbenv install 2.3.1
+rbenv global 2.3.1
+gem install bundler cocoapods ruboty
+
 # node.js
 npm install -g coffee-script jshint hubot hubot-generator yo
 
