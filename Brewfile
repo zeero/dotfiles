@@ -8,7 +8,8 @@ brew 'ruby-build'
 brew 'python'
 brew 'python3'
 brew 'lua'
-brew 'node'
+brew 'node', args: ['with-full-icu']
+brew 'npm'
 brew 'zsh'
 
 # command
@@ -24,6 +25,7 @@ brew 'bash-git-prompt'
 brew 'tmux'
 brew 'reattach-to-user-namespace'
 brew 'git-flow'
+brew 'heroku'
 
 # vim
 brew 'macvim', args: ['with-lua', 'with-override-system-vim']
