@@ -853,6 +853,11 @@ on_i = 1
 type = 'git'
 
 [[plugins]]
+repo = 'kchmck/vim-coffee-script'
+lazy = 1
+on_ft = ['javascript', 'coffee']
+
+[[plugins]]
 repo = 'scrooloose/syntastic'
 # lazy = 1
 # on_i = 1
