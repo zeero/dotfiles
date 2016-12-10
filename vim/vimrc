@@ -1101,12 +1101,12 @@ nnoremap zh 4zh4zh4zh4zh4zh4zh
 nnoremap zl 4zl4zl4zl4zl4zl4zl
 nnoremap zH zh
 nnoremap zL zl
-" URLを開く
-let g:netrw_nogx = 1 " disable netrw's gx mapping.
-map gx <Plug>(openbrowser-smart-search)
 " デフォルトアプリで開く
-nnoremap gX :<C-u>call vimproc#open(escape('<C-r>*', ' \'))<CR>
-vnoremap gX y:<C-u>call vimproc#open(escape('<C-r>"', ' \'))<CR>
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nnoremap gx :<C-u>call vimproc#open(escape('<C-r>*', ' \'))<CR>
+vnoremap gx y:<C-u>call vimproc#open(escape('<C-r>"', ' \'))<CR>
+" Webで検索する
+map gX <Plug>(openbrowser-smart-search)
 " Esc+noh+ZoomReset
 if has('gui_running')
   nnoremap <silent> <Esc> <Esc>:<C-u>Noh<CR>:<C-u>ZoomReset<CR>:<C-u>echo<CR>
