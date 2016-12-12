@@ -922,3 +922,9 @@ repo = 'Shougo/vesting'
 lazy = 1
 on_source = ['unite.vim']
 
+# その他のファイルタイプ {{{2
+
+[[plugins]]
+repo = 'chase/vim-ansible-yaml'
+on_ft = ['ansible']
+
