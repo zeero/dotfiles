@@ -229,6 +229,11 @@ repo = 'osyo-manga/vim-jplus'
 lazy = 1
 on_map = ['<Plug>(jplus']
 
+[[plugins]]
+repo = 'tpope/vim-endwise'
+lazy = 1
+on_i = 1
+
 
 # テキストオブジェクト {{{2
 
