@@ -80,8 +80,11 @@ style -name commandline-ime chrome://* #liberator-commandline-command input {ime
 "-----------------------------------------------------------------------------
 " ブックマーク
 "-----------------------------------------------------------------------------
+" 検索
 bmark -title="Google マップ検索" -keyword="map" https://www.google.co.jp/maps/?hl=ja&q=%s
 bmark -title="Google アイコン検索" -keyword="icon" https://www.google.co.jp/search?as_st=y&tbm=isch&hl=ja&as_q=%s&safe=images&tbs=isz:i
+" その他
+bmark -title="Gist" -keyword="gist" https://gist.github.com/zeero
 
 "-----------------------------------------------------------------------------
 " プラグインの設定
