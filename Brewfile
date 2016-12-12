@@ -29,7 +29,8 @@ brew 'heroku'
 
 # vim
 brew 'macvim', args: ['with-lua', 'with-override-system-vim']
-brew 'ctags'
+tap 'universal-ctags/universal-ctags'
+brew 'universal-ctags', args: ['HEAD']
 brew 'cmigemo'
 brew 'the_silver_searcher'
 brew 'the_platinum_searcher'
