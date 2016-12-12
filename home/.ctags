@@ -1,5 +1,8 @@
 --recurse=yes
 --sort=yes
+--input-encoding=utf-8
+--input-encoding-java=sjis
+--input-encoding-vim=utf-8
 --langdef=swift
 --langmap=swift:+.swift
 --regex-swift=/(var|let)[ \t]+([^:=]+).*$/\2/,variable/
@@ -14,6 +17,4 @@
 --regex-markdown=/^#[ \t]+(.*)/\1/h,Heading_L1/
 --regex-markdown=/^##[ \t]+(.*)/\1/i,Heading_L2/
 --regex-markdown=/^###[ \t]+(.*)/\1/k,Heading_L3/
-
-#--jcode=utf8
 
