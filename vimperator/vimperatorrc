@@ -83,6 +83,7 @@ style -name commandline-ime chrome://* #liberator-commandline-command input {ime
 " 検索
 bmark -title="Google マップ検索" -keyword="map" https://www.google.co.jp/maps/?hl=ja&q=%s
 bmark -title="Google アイコン検索" -keyword="icon" https://www.google.co.jp/search?as_st=y&tbm=isch&hl=ja&as_q=%s&safe=images&tbs=isz:i
+bmark -title="Google トレンド検索" -keyword="trend" https://www.google.co.jp/trends/explore?q=%s
 bmark -title="Github検索" -keyword="github" https://github.com/search?utf8=%E2%9C%93&q=%s
 " その他
 bmark -title="Gist" -keyword="gist" https://gist.github.com/zeero
