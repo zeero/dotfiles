@@ -78,6 +78,12 @@ cnoremap <C-n> <Down>
 style -name commandline-ime chrome://* #liberator-commandline-command input {ime-mode: inactive;}
 
 "-----------------------------------------------------------------------------
+" ブックマーク
+"-----------------------------------------------------------------------------
+bmark -title="Google マップ検索" -keyword="map" https://www.google.co.jp/maps/?hl=ja&q=%s
+bmark -title="Google アイコン検索" -keyword="icon" https://www.google.co.jp/search?as_st=y&tbm=isch&hl=ja&as_q=%s&safe=images&tbs=isz:i
+
+"-----------------------------------------------------------------------------
 " プラグインの設定
 "-----------------------------------------------------------------------------
 " Vimppm
