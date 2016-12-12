@@ -8,6 +8,7 @@ choco install Gow -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\Gow"
 choco install mingw -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\mingw"
 choco install mingw-get -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\mingw-get"
 choco install Lua -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\Lua"
+rem TODO universal-ctags
 choco install ctags -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\ctags"
 choco install curl -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\curl"
 choco install ag -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\ag"
