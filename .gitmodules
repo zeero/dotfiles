@@ -6,7 +6,7 @@
 	url = https://github.com/gitbits/git-info.git
 [submodule "lib/RictyDiminished"]
 	path = lib/RictyDiminished
-	url = https://github.com/yascentur/RictyDiminished.git
+	url = https://github.com/edihbrandon/RictyDiminished.git
 [submodule "vimperator/vimppm"]
 	path = vimperator/vimppm
 	url = https://github.com/cd01/vimppm.git
