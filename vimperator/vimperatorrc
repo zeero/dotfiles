@@ -94,9 +94,12 @@ style -name commandline-ime chrome://* #liberator-commandline-command input {ime
 "-----------------------------------------------------------------------------
 " 検索
 bmark -title="Google マップ検索" -keyword="map" https://www.google.co.jp/maps/?hl=ja&q=%s
+bmark -title="Google イメージ検索" -keyword="image" https://www.google.co.jp/search?tbm=isch&q=%s
 bmark -title="Google アイコン検索" -keyword="icon" https://www.google.co.jp/search?as_st=y&tbm=isch&hl=ja&as_q=%s&safe=images&tbs=isz:i
 bmark -title="Google トレンド検索（キーワードはカンマ区切り）" -keyword="trend" https://www.google.co.jp/trends/explore?q=%s
-bmark -title="Github検索" -keyword="github" https://github.com/search?utf8=%E2%9C%93&o=desc&s=stars&q=%s
+bmark -title="Google 英和翻訳" -keyword="eiwa" https://translate.google.com/#en/ja/%s
+bmark -title="Google 和英翻訳" -keyword="waei" https://translate.google.com/#ja/en/%s
+bmark -title="Github 検索" -keyword="github" https://github.com/search?utf8=%E2%9C%93&o=desc&s=stars&q=%s
 " その他
 bmark -title="zeero's gists" -keyword="gist" https://gist.github.com/zeero
 
