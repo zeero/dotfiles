@@ -5,6 +5,9 @@ require 'pp'
 # Require for rubygems library
 require 'rubygems'
 
+# Debug mode
+$DEBUG = true
+
 # irbtoolsのカスタマイズ
 # require 'irbtools'
 require 'irbtools/configure'
