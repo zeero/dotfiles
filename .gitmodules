@@ -17,3 +17,6 @@
 [submodule "lib/RictyDiminished"]
 	path = lib/RictyDiminished
 	url = https://github.com/zeero/RictyDiminished.git
+[submodule "lib/scoop-my-bucket"]
+	path = lib/scoop-my-bucket
+	url = https://github.com/zeero/scoop-my-bucket.git
