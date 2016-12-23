@@ -7,6 +7,18 @@
 # git-submodules
 git submodule update --init
 
+# symlink
+ln -s `dirname $0`/vim ~/.vim
+ln -s `dirname $0`/vim/vimrc ~/.vimrc
+ln -s `dirname $0`/vimperator ~/.vimperator
+ln -s `dirname $0`/vimperator/vimperatorrc ~/.vimperatorrc
+ln -s `dirname $0`/home/.xvimrc ~/.xvimrc
+ln -s `dirname $0`/home/.gitignore ~/.gitignore
+ln -s `dirname $0`/home/.git-prompt-colors.sh ~/.git-prompt-colors.sh
+ln -s `dirname $0`/home/.tmux.conf ~/.tmux.conf
+ln -s `dirname $0`/home/.irbrc ~/.irbrc
+ln -s `dirname $0`/home/.ctags ~/.ctags
+
 # git config
 git config --global user.name zeero
 git config --global user.email zeero26@gmail.com
@@ -19,9 +31,11 @@ git config --global diff.tool vimdiff
 git config --global diff.algorithm histogram
 git config --global alias.graph "log --graph --decorate --name-status"
 
-# symlink
-
 # Ricty
+open `dirname $0`/lib/RictyDiminished/RictyDiminished-Regular.ttf
+open `dirname $0`/lib/RictyDiminished/RictyDiminished-Bold.ttf
+open `dirname $0`/lib/RictyDiminished/RictyDiminished-Oblique.ttf
+open `dirname $0`/lib/RictyDiminished/RictyDiminished-BoldOblique.ttf
 
 # HomeBrew
 brew bundle
