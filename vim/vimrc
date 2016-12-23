@@ -2232,8 +2232,8 @@ endfunction
 " KEYMAP:
 "  ,r : バッファの内容を実行
 
-" 基本設定（以降はon_source） {{{2
-" function! MyDeinHookQuickrun() abort
+" on_source設定 {{{2
+function! MyDeinHookQuickrun() abort
 " quickrun.vim が実行していない場合には <C-c> を呼び出す
 nnoremap <expr> <silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 " カラー出力用outputter追加
@@ -2247,6 +2247,17 @@ function! s:ansi_buffer.finish(session)
 endfunction
 call quickrun#register_outputter("ansi_buffer", s:ansi_buffer)
 unlet s:ansi_buffer
+" アニメーション
+call quickrun#module#register(shabadou#make_quickrun_hook_anim(
+\ "animation",
+\ ['QuickRun: ／', 'QuickRun: ―', 'QuickRun: ＼', 'QuickRun: ｜',],
+\ 12,
+\), 1)
+" Oracle出力設定
+call quickrun#module#register(s:my_quickrun_outputter_oracle, 1)
+
+" （on_source終わり） {{{2
+endfunction
 
 " 共通設定 {{{2
 "  実行にvimprocを使う
@@ -2265,12 +2276,6 @@ let g:quickrun_config = {
 \    'hook/animation/wait': 10,
 \  },
 \}
-" アニメーション
-call quickrun#module#register(shabadou#make_quickrun_hook_anim(
-\ "animation",
-\ ['QuickRun: ／', 'QuickRun: ―', 'QuickRun: ＼', 'QuickRun: ｜',],
-\ 12,
-\), 1)
 
 " ruby.rspec {{{2
 au myvimrc BufRead,BufNewFile *_spec.rb set filetype=ruby.rspec syntax=ruby
@@ -2386,10 +2391,6 @@ function! s:my_quickrun_outputter_oracle.finish(session) "{{{
   exe '%Alignta ,'
   echomsg winnr()
 endfunction "}}}
-call quickrun#module#register(s:my_quickrun_outputter_oracle, 1)
-
-" （on_source終わり） {{{2
-" endfunction
 
 " lightline {{{1
 let g:lightline = {}
