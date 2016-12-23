@@ -5,9 +5,6 @@ require 'pp'
 # Require for rubygems library
 require 'rubygems'
 
-# Debug mode
-$DEBUG = true
-
 # irbtoolsのカスタマイズ
 # require 'irbtools'
 require 'irbtools/configure'
@@ -21,6 +18,9 @@ FancyIrb.start(
   }
 )
 Wirb.load_schema :ultra
+
+# Debug mode
+$DEBUG = true
 
 # 入力コマンドの履歴
 IRB.conf[:SAVE_HISTORY] = 1000
