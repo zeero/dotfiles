@@ -32,17 +32,17 @@ depends = 'vimshell'
 
 [[plugins]]
 repo = 'Shougo/neocomplete'
+if = '''has('lua') && (v:version >= 704 || (v:version == 703 && has('patch885')))'''
+hook_source = '''call MyDeinHookNeoComplete()'''
 lazy = 1
 on_i = 1
-if = '''has('lua') && (v:version >= 704 || (v:version == 703 && has('patch885')))'''
-hook_post_source = '''call MyDeinHookNeoComplete()'''
 
 [[plugins]]
 repo = 'Shougo/neocomplcache'
 lazy = 1
 on_i = 1
 if = '''!has('lua') || !(v:version >= 704 || (v:version == 703 && has('patch885')))'''
-hook_post_source = '''call MyDeinHookNeoComplcache()'''
+hook_source = '''call MyDeinHookNeoComplcache()'''
 
 [[plugins]]
 repo = 'Shougo/neosnippet'
