@@ -2233,7 +2233,7 @@ endfunction
 "  ,r : バッファの内容を実行
 
 " 基本設定（以降はon_source） {{{2
-function! MyDeinHookQuickrun() abort
+" function! MyDeinHookQuickrun() abort
 " quickrun.vim が実行していない場合には <C-c> を呼び出す
 nnoremap <expr> <silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 " カラー出力用outputter追加
@@ -2325,7 +2325,9 @@ let g:quickrun_config['html'] = {
 \ 'outputter': 'browser',
 \}
 let g:quickrun_config['xhtml'] = {'type': 'html'}
-let g:quickrun_config['mkd'] = {'command': 'kramdown', 'outputter': 'browser'}
+let g:quickrun_config['md'] = {'command': 'kramdown', 'outputter': 'browser'}
+let g:quickrun_config['markdown'] = {'command': 'kramdown', 'outputter': 'browser'}
+let g:quickrun_config['workflowish'] = {'command': 'kramdown', 'outputter': 'browser'}
 
 " javascript {{{2
 let g:quickrun_config['javascript'] = {'command': 'node'}
@@ -2387,7 +2389,7 @@ endfunction "}}}
 call quickrun#module#register(s:my_quickrun_outputter_oracle, 1)
 
 " （on_source終わり） {{{2
-endfunction
+" endfunction
 
 " lightline {{{1
 let g:lightline = {}
