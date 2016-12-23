@@ -3107,5 +3107,62 @@ let g:ConqueTerm_Color = 1
 " trail非表示
 au myvimrc FileType conque_term setlocal nolist
 
+" vim-precious {{{1
+" help でカーソル移動時の |:PreciousSwitch| を無効にする。
+let g:precious_enable_switchers = {
+\ "*": { "setfiletype": 1},
+\ "help": { "setfiletype": 0}
+\}
+let g:precious_enable_switch_CursorMoved = {
+\ "*": 1,
+\ "help": 0
+\}
+let g:precious_enable_switch_CursorMoved_i= {
+\ "*": 1,
+\ "help": 0
+\}
+" カーソル位置から前後 300行の範囲で判定を行う
+let g:context_filetype#search_offset = 300
+" workflowish中の埋め込み判別
+let g:context_filetype#filetypes = {
+\ 'workflowish': [
+\   {
+\     'start': '^\s*```ruby',
+\     'end': '^\s*```',
+\     'filetype': 'ruby',
+\   },
+\   {
+\     'start': '^\s*```sh',
+\     'end': '^\s*```',
+\     'filetype': 'sh',
+\   },
+\   {
+\     'start': '^\s*```diff',
+\     'end': '^\s*```',
+\     'filetype': 'diff',
+\   },
+\   {
+\     'start': '^\s*```vim',
+\     'end': '^\s*```',
+\     'filetype': 'vim',
+\   },
+\   {
+\     'start': '^\s*```js',
+\     'end': '^\s*```',
+\     'filetype': 'javascript',
+\   },
+\   {
+\     'start': '^\s*```coffee',
+\     'end': '^\s*```',
+\     'filetype': 'coffee',
+\   },
+\   {
+\     'start': '^\s*```yaml',
+\     'end': '^\s*```',
+\     'filetype': 'yaml',
+\   },
+\ ],
+\}
+
 "}}}1-------------------------------------------------------------------------
 
