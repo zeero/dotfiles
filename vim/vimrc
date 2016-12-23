@@ -1736,7 +1736,7 @@ function! MyVimfilerKeymaps() "{{{
   " ESCキーを2回押すと終了する
   nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
   " キーマップヘルプを表示
-  nnoremap <buffer> ,, :MyVimFilerHelp<CR>
+  nnoremap <buffer> ,h :MyVimFilerHelp<CR>
   " システムハンドラで開く
   nmap <buffer> gx <Plug>(vimfiler_execute_system_associated)
 endfunction "}}}
