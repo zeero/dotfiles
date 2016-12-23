@@ -808,11 +808,6 @@ lazy = 1
 on_ft = ['ruby']
 depends = ['vim-operator-user']
 
-[[plugins]]
-repo = 'sunaku/vim-ruby-minitest'
-lazy = 1
-on_ft = ['ruby']
-
 
 # Swift {{{2
 
