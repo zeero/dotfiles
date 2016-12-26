@@ -20,8 +20,10 @@ FancyIrb.start(
 Wirb.load_schema :ultra
 
 # Bundler
-require 'bundler/setup'
-Bundler.setup
+if File.exist? "Gemfile"
+  require 'bundler/setup'
+  Bundler.setup
+end
 
 # Debug mode
 $DEBUG = true
