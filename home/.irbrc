@@ -19,6 +19,10 @@ FancyIrb.start(
 )
 Wirb.load_schema :ultra
 
+# Bundler
+require 'bundler/setup'
+Bundler.setup
+
 # Debug mode
 $DEBUG = true
 
