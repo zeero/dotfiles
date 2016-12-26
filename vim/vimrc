@@ -2907,7 +2907,7 @@ endfunction "}}}
 
 " previm {{{1
 " リアルタイムプレビュー
-let g:previm_enable_realtime = 1
+let g:previm_enable_realtime = 0
 
 " markdown-folding {{{1
 " フォールディングをネストする
