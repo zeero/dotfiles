@@ -873,9 +873,9 @@ lazy = 1
 on_ft = ['workflowish']
 
 [[plugins]]
-repo = 'kannokanno/previm'
+repo = 'zeero/previm'
 lazy = 1
-on_ft = ['markdown']
+on_ft = ['markdown', 'workflowish']
 
 # [[plugins]]
 # repo = 'plasticboy/vim-markdown'
