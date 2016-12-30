@@ -57,7 +57,6 @@ open `dirname $0`/lib/RictyDiminished/RictyDiminished-BoldOblique.ttf
 brew bundle
 
 # ruby
-brew link readline --force
 CONFIGURE_OPTS="--with-readline-dir=/usr/local/opt" rbenv install 2.3.1
 rbenv global 2.3.1
 gem install \
@@ -75,6 +74,12 @@ gem install \
   ruboty \
   ruboty-gen \
   kramdown \
+
+brew link --force libxml2 libxslt
+gem install nokogiri -- --use-system-libraries
+# bundler経由の場合は以下で設定
+# （さらにherokuの場合は、heroku runで動かす）
+# bundle config build.nokogiri --use-system-libraries
 
 bitclust setup
 
