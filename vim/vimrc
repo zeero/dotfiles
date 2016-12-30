@@ -2184,7 +2184,7 @@ let g:ref_detect_filetype = {
 \ 'ruby': 'refe',
 \ 'ruby.rspec': 'refe',
 \}
-au myvimrc FileType ref call MyRefMappings()
+au myvimrc FileType ref* call MyRefMappings()
 function! MyRefMappings() "{{{
   nnoremap <buffer> ,] <Plug>(ref-keyword)
   nnoremap <buffer> ,[ <Plug>(ref-back)
