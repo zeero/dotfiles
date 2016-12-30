@@ -40,6 +40,7 @@ brew 'jq'  # json parser
 brew 'swiftlint'
 cask 'alcatraz'
 cask 'realm-browser'
+cask 'sourcetree'
 
 # utility
 cask 'alfred'
@@ -54,4 +55,9 @@ cask 'google-japanese-ime'
 cask 'appcleaner'
 cask 'skitch'
 cask 'imageoptim'
+
+# dupes
+tap 'homebrew/dupes'
+brew 'libxml2'
+brew 'libxlst'
 
