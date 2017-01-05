@@ -789,7 +789,7 @@ repo = 'taka84u9/vim-ref-ri'
 # depends = 'vim-ref'
 
 [[plugins]]
-repo = 'edsono/vim-matchit'
+repo = 'k-takata/vim-matchit'
 
 # [[plugins]]
 # repo = 'tpope/vim-bundler'
