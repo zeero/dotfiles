@@ -106,3 +106,4 @@ function GetIconLocation(){
   var r=fso.OpenTextFile(FolderItem.Path).ReadAll().match(/IconFile=([^\r]*)/im);
   return r?r[1]:"";
 }
+
