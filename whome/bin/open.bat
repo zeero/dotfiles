@@ -1,3 +1,3 @@
 @echo off
 
-explorer %~dp1
+explorer %1
