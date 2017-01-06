@@ -9,7 +9,7 @@ hook_post_update = '''
   if dein#util#_is_windows()
     let cmd = 'tools\\update-dll-mingw'
   elseif dein#util#_is_cygwin()
-    let cmd = 'make -f make_cygwin.mak'
+    let cmd = 'mingw32-make -f make_cygwin.mak'
   elseif executable('gmake')
     let cmd = 'gmake'
   else
@@ -789,7 +789,7 @@ repo = 'taka84u9/vim-ref-ri'
 # depends = 'vim-ref'
 
 [[plugins]]
-repo = 'k-takata/vim-matchit'
+repo = 'k-takata/matchit.vim'
 
 # [[plugins]]
 # repo = 'tpope/vim-bundler'
