@@ -1,23 +1,25 @@
-# .minttyrc
+# General
+Term=xterm-256color
+CopyOnSelect=yes
+RightClickAction=paste
+BackspaceSendsBS=yes
+
+# Font
 BoldAsFont=no
 Font=Ricty Diminished
 FontHeight=12
 
-Columns=120
+# Window
+Columns=150
 Rows=40
 CursorType=block
 Scrollbar=none
 Transparency=glass
 BackgroundColour=0,0,0
 ForegroundColour=243,243,243
+IMECursorColour=255,0,0
 
+# Locale
 Locale=ja_JP
 Charset=UTF-8
-Term=xterm-256color
-
-CopyOnSelect=yes
-RightClickAction=paste
-BackspaceSendsBS=yes
-
-IMECursorColour=255,0,0
 
