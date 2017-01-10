@@ -2799,8 +2799,8 @@ let g:surround_123 = "{\r}"
 let g:surround_125 = "{ \r }"
 
 " smartchr {{{1
-inoremap <expr> = smartchr#loop('<', '<<', '<=')
-inoremap <expr> = smartchr#loop('>', '>>', '>=')
+inoremap <expr> < smartchr#loop('<', '<<', '<=')
+inoremap <expr> > smartchr#loop('>', '>>', '>=')
 
 " vim-endwise {{{1
 let g:endwise_no_mappings = 1
