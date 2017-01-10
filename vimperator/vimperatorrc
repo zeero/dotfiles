@@ -28,6 +28,9 @@ set! browser.cache.disk.capacity=0
 set! browser.sessionstore.max_tabs_undo=20
 " 複数タブをクローズ
 set! browser.tabs.warnOnClose=false
+" 日本語
+set! intl.locale.matchOS=false
+set! general.useragent.locale=ja
 
 "-----------------------------------------------------------------------------
 " キー設定
