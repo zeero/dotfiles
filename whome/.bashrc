@@ -108,7 +108,7 @@
 # alias l='ls -CF'                              #
 alias ls='ls --color=auto'
 alias ll='ls -l'
-alias la='ls -la'
+alias la='ls -a'
 alias lh='ls -lh'
 alias scoop=scoop.cmd
 alias open=explorer
