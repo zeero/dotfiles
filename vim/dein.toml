@@ -7,7 +7,7 @@ repo = 'Shougo/dein.vim'
 repo = 'Shougo/vimproc.vim'
 hook_post_update = '''
   if dein#util#_is_windows()
-    let cmd = 'tools\\update-dll-mingw'
+    let cmd = 'make -f make_mingw32.mak'
   elseif dein#util#_is_cygwin()
     let cmd = 'mingw32-make -f make_cygwin.mak'
   elseif executable('gmake')
