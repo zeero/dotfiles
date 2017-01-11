@@ -54,6 +54,7 @@
 # Uncomment to turn on programmable completion enhancements.
 # Any completions you add in ~/.bash_completion are sourced last.
 # [[ -f /etc/bash_completion ]] && . /etc/bash_completion
+[[ -f /usr/share/bash_completion ]] && . /usr/share/bash_completion
 
 # History Options
 #
@@ -105,6 +106,12 @@
 # alias ll='ls -l'                              # long list
 # alias la='ls -A'                              # all but . and ..
 # alias l='ls -CF'                              #
+alias ls='ls --color=auto'
+alias ll='ls -l'
+alias la='ls -la'
+alias lh='ls -lh'
+alias scoop=scoop.cmd
+alias open=explorer
 
 # Umask
 #
@@ -188,5 +195,3 @@
 # }
 # 
 # alias cd=cd_func
-alias scoop=scoop.cmd
-alias open=explorer

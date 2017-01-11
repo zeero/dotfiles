@@ -15,6 +15,13 @@
 
 # User dependent .bash_profile file
 
+## man とかを見るときはいつも less を使う。
+export PAGER=less
+## less のステータス行にファイル名と行数、いま何%かを表示するようにする。
+export LESS='-R -X -i -M -g -W'
+## デフォルトのエディタ
+export EDITOR=vim
+
 # source the users bashrc if it exists
 if [ -f "${HOME}/.bashrc" ] ; then
   source "${HOME}/.bashrc"
@@ -34,3 +41,4 @@ fi
 # if [ -d "${HOME}/info" ]; then
 #   INFOPATH="${HOME}/info:${INFOPATH}"
 # fi
+
