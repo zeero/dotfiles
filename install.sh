@@ -105,4 +105,6 @@ firebrew install "Tab Groups"
 firebrew install "Tab Mix Plus"
 firebrew install "Vimperator"
 firebrew install "Vimperator-ja"
+firebrew install "Text Link"
+firebrew install "Snap Links"
 
