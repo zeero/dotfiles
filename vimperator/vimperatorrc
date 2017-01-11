@@ -20,6 +20,10 @@ setglobal defsearch=yahoo
 "-----------------------------------------------------------------------------
 " about:config
 "-----------------------------------------------------------------------------
+" about:config警告非表示
+set! general.warnOnAboutConfig=false
+" 開始時にセッション復元
+set! browser.startup.page=3
 " MacType有効
 set! gfx.direct2d.disabled=true
 " キャッシュ無効
