@@ -2397,9 +2397,10 @@ endfunction "}}}
 let g:lightline = {}
 " let g:lightline.colorscheme = 'wombat'
 let g:lightline.active = {
-\ 'left': [['mode', 'paste'], ['filename', 'fugitive', 'gista', 'anzu']],
+\ 'left': [['mode', 'paste'], ['filename', 'vcs', 'gista', 'anzu']],
 \ 'right': [['lineinfo', 'syntastic'], ['percent'], ['pwd', 'fileformat', 'fileencoding', 'filetype']]
 \}
+" \ 'left': [['mode', 'paste'], ['filename', 'gista', 'anzu']],
 let g:lightline.inactive = {
 \ 'left': [],
 \ 'right': [['filename']]
@@ -2409,7 +2410,7 @@ let g:lightline.component_function = {
 \ 'readonly': 'MyReadonly',
 \ 'pwd': 'MyPwd',
 \ 'filename': 'MyFilename',
-\ 'fugitive': 'MyVcs',
+\ 'vcs': 'MyVcs',
 \ 'gista': 'gista#statusline#components#gistid',
 \ 'anzu': 'anzu#search_status',
 \ 'syntastic': 'SyntasticStatuslineFlag',
@@ -2447,14 +2448,18 @@ function! MyPwd() " {{{2
   return path
 endfunction
 function! MyVcs() " {{{2
-  try
-    if winwidth(0) > 80 && &ft !~? 'vimfiler\|gundo' && exists(':Vcs')
-      let branch = vcs#info('%b')
-      let target_statuses = ['added', 'modified', 'deleted', 'conflicted', 'untracked', 'renamed']
-      return branch
-    endif
-  catch
-  endtry
+  " try
+  "   if winwidth(0) > 80 && &ft !~? 'vimfiler\|gundo' && exists(':Vcs')
+  "     let branch = vcs#info('%b')
+  "     let target_statuses = ['added', 'modified', 'deleted', 'conflicted', 'untracked', 'renamed']
+  "     return branch
+  "   endif
+  " catch
+  " endtry
+  " return ''
+  if exists('*fugitive#head')
+    return fugitive#head()
+  endif
   return ''
 endfunction
 function! MyFileformat() " {{{2
