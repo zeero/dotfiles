@@ -1,34 +1,87 @@
 @echo off
 
+rem scoop
+rem scoopをインストールします。
+rem powershell3がインストールされていることを確認してください。
+rem   @powershell -Command "set-executionpolicy unrestricted -s cu"
+rem   @powershell -Command "iex (new-object net.webclient).downloadstring('https://get.scoop.sh')"
+rem gitとgit-credential-manager-for-windowsをインストールします。
+rem   scoop bucket add extras
+rem   scoop bucket add my-bucket https://github.com/zeero/scoop-my-bucket.git
+rem   scoop install git git-credential-manager-for-windows
+
 rem chocolatey
-rem まずは以下のコマンドを実行して、chocolateyをインストールする
-rem @powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))" && SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
+rem chocolateyをインストールします。
+rem   @powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))"
+rem   set PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
 
-rem choco_install.batを実行
-
-rem インストールが終わったら、dotfilesを落とします
+rem dotfilesをダウンロードします。
 rem git clone https://github.com/zeero/dotfiles.git
 
 
-cd /d %~dp0
+set DOTFILES=%~dp0
+cd /d %DOTFILES%
 
-rem git submodule
-git submodule update --init
+rem mkdir
+mkdir %HOMEDRIVE%%HOMEPATH%\bin
+mkdir %HOMEDRIVE%%HOMEPATH%\tmp
+mkdir %HOMEDRIVE%%HOMEPATH%\lib
 
-rem symlink
-move %HOMEDRIVE%%HOMEPATH%\vimperator %HOMEDRIVE%%HOMEPATH%\vimperator.org
-mklink /d %HOMEDRIVE%%HOMEPATH%\vimfiles %~dp0\vim
-mklink /d %HOMEDRIVE%%HOMEPATH%\vimperator %~dp0\vimperator
-mklink %HOMEDRIVE%%HOMEPATH%\_vimrc %~dp0\vim\vimrc
-mklink %HOMEDRIVE%%HOMEPATH%\_vimperatorrc %~dp0\vimperator\vimperatorrc
-mklink %HOMEDRIVE%%HOMEPATH%\.gitignore %~dp0\home\.gitignore
-mklink %HOMEDRIVE%%HOMEPATH%\.ctags %~dp0\home\.ctags
-rem msys2
-mklink %HOMEDRIVE%%HOMEPATH%\lib\msys32\home\%USERNAME%\.minttyrc %~dp0\msys2\home\.minttyrc
-move %HOMEDRIVE%%HOMEPATH%\lib\msys32\etc\pacman.conf %HOMEDRIVE%%HOMEPATH%\lib\msys32\etc\pacman.conf.org
-mklink %HOMEDRIVE%%HOMEPATH%\lib\msys32\etc\pacman.conf %~dp0\msys2\etc\pacman.conf
+rem setx
+set HOME=%HOMEDRIVE%%HOMEPATH%
+setx HOME %HOMEDRIVE%%HOMEPATH%
+rem このスクリプト内での一時的なPATH追加
+set PATH=%HOME%\bin;%HOME%\lib\msys32\usr\bin;%HOME%\lib\msys32\mingw32\bin;%PATH%
+echo 以下を環境変数PATHに追加してください
+echo %HOME%\bin;%HOME%\lib\msys32\usr\bin;%HOME%\lib\msys32\mingw32\bin
 pause
 echo.
+
+rem scoop
+scoop install sudo
+scoop install 7zip
+scoop install firefox
+scoop install nodejs
+rem scoop-my-bucket
+scoop install gvim-kaoriya
+scoop install sakura
+scoop install tortoisesvn
+scoop install tortoisesvn_ja
+scoop install a5m2
+scoop install clipnote
+scoop install explzh
+scoop install honeyview
+scoop install keyswap
+scoop install kiki
+scoop install mausuji
+scoop install magnet_window
+scoop install softtilt
+scoop install wheel_redirector
+scoop install cmigemo
+scoop install nkf
+scoop install mktemp
+scoop install df
+scoop install pathcp
+scoop install madonote
+REM TODO: make scoop package
+REM choco install mactype -y
+REM choco install msys2 -y
+
+rem chocolatey
+choco install GoogleChrome -y
+choco install GoogleJapaneseInput -y
+choco install winscp -y
+REM mingwへの移行に伴い不要候補
+REM choco install putty -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\putty"
+REM choco install teraterm -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\teraterm"
+REM choco install ConEmu -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\ConEmu"
+REM choco install clink -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\clink"
+REM choco install Gow -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\Gow"
+REM wget
+REM curl
+
+bash msys2_install.sh
+
 
 rem git configuration
 git config --global user.name zeero
@@ -36,6 +89,7 @@ git config --global user.email zeero26@gmail.com
 git config --global push.default simple
 git config --global http.sslVerify false
 git config --global core.excludesfile ~/.gitignore
+git config --global core.autocrlf false
 git config --global core.editor vim
 git config --global diff.tool vimdiff
 git config --global diff.algorithm histogram
@@ -46,6 +100,63 @@ git config --global alias.graph "log --graph --decorate --name-status"
 git config --global alias.ignore "update-index --skip-worktree"
 git config --global alias.noignore "update-index --no-skip-worktree"
 git config --global alias.stashdiff "diff HEAD..stash@{0}"
+pause
+echo.
+
+rem git submodule
+git submodule update --init
+
+rem symlink
+rem home
+move %HOMEDRIVE%%HOMEPATH%\vimperator %HOMEDRIVE%%HOMEPATH%\vimperator.org
+mklink /d %HOMEDRIVE%%HOMEPATH%\vimfiles %DOTFILES%\vim
+mklink /d %HOMEDRIVE%%HOMEPATH%\vimperator %DOTFILES%\vimperator
+mklink %HOMEDRIVE%%HOMEPATH%\_vimrc %DOTFILES%\vim\vimrc
+mklink %HOMEDRIVE%%HOMEPATH%\_vimperatorrc %DOTFILES%\vimperator\vimperatorrc
+mklink %HOMEDRIVE%%HOMEPATH%\.gitignore %DOTFILES%\home\.gitignore
+mklink %HOMEDRIVE%%HOMEPATH%\.ctags %DOTFILES%\home\.ctags
+mklink %HOMEDRIVE%%HOMEPATH%\.tmux.conf %DOTFILES%\home\.tmux.conf
+rem whome
+mklink %HOMEDRIVE%%HOMEPATH%\.minttyrc %DOTFILES%\whome\.minttyrc
+mklink %HOMEDRIVE%%HOMEPATH%\.bashrc %DOTFILES%\whome\.bashrc
+mklink %HOMEDRIVE%%HOMEPATH%\.bash_profile %DOTFILES%\whome\.bash_profile
+mklink %HOMEDRIVE%%HOMEPATH%\.inputrc %DOTFILES%\whome\.inputrc
+mklink %HOMEDRIVE%%HOMEPATH%\.profile %DOTFILES%\whome\.profile
+move %HOMEDRIVE%%HOMEPATH%\scoop\apps\mausuji\1.33\MauSuji.ini %HOMEDRIVE%%HOMEPATH%\scoop\apps\mausuji\1.33\MauSuji.ini.org
+mklink %HOMEDRIVE%%HOMEPATH%\scoop\apps\mausuji\1.33\MauSuji.ini %DOTFILES%\whome\mausuji\MauSuji.ini
+rem msys2
+move %HOMEDRIVE%%HOMEPATH%\lib\msys32\etc\pacman.conf %HOMEDRIVE%%HOMEPATH%\lib\msys32\etc\pacman.conf.org
+mklink %HOMEDRIVE%%HOMEPATH%\lib\msys32\etc\pacman.conf %DOTFILES%\msys2\etc\pacman.conf
+rem wbin
+mklink %HOMEDRIVE%%HOMEPATH%\bin\open.bat %DOTFILES%\whome\bin\open.bat
+mklink %HOMEDRIVE%%HOMEPATH%\bin\PPPath.bat %DOTFILES%\whome\bin\PPPath.bat
+mklink %HOMEDRIVE%%HOMEPATH%\bin\Shortcut.CMD %DOTFILES%\whome\bin\Shortcut.CMD
+mklink %HOMEDRIVE%%HOMEPATH%\bin\svn_path_copy.bat %DOTFILES%\whome\bin\svn_path_copy.bat
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\bin" %HOMEDRIVE%%HOMEPATH%\bin\bin.lnk
+shortcut /t:"C:\Program Files\Google\Google Japanese Input\GoogleIMEJaTool.exe" /a:"--mode=word_register_dialog" %HOMEDRIVE%%HOMEPATH%\bin\dct.lnk
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\Downloads" %HOMEDRIVE%%HOMEPATH%\bin\dl.lnk
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%" %HOMEDRIVE%%HOMEPATH%\bin\home.lnk
+shortcut /t:"%windir%\System32\drivers\etc\hosts" %HOMEDRIVE%%HOMEPATH%\bin\hosts.lnk
+shortcut /t:"C:\Program Files\Internet Explorer\iexplore.exe" %HOMEDRIVE%%HOMEPATH%\bin\ie.lnk
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\lib" %HOMEDRIVE%%HOMEPATH%\bin\lib.lnk
+shortcut /t:"D:\Users\UU077856\lib\msys32\msys2_shell.cmd" /a:"-mingw32 -use-full-path" %HOMEDRIVE%%HOMEPATH%\bin\mingw.lnk
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" %HOMEDRIVE%%HOMEPATH%\bin\startup.lnk
+shortcut /t:"%windir%\system32\services.msc" %HOMEDRIVE%%HOMEPATH%\bin\svc.lnk
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\tortoiseproc.exe" /a:"/command:repobrowser" %HOMEDRIVE%%HOMEPATH%\bin\svnb.lnk
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\tmp" %HOMEDRIVE%%HOMEPATH%\bin\tmp.lnk
+REM shortcut /t:"" %HOMEDRIVE%%HOMEPATH%\bin\my.lnk
+REM shortcut /t:"" %HOMEDRIVE%%HOMEPATH%\bin\ol.lnk
+REM shortcut /t:"" %HOMEDRIVE%%HOMEPATH%\bin\sys.lnk
+rem sendto
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\DF.exe" %HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\SendTo\DFで開く.lnk
+shortcut /t:"C:\Program Files\Internet Explorer\iexplore.exe" %HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\SendTo\IEで開く.lnk
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\bin\svn_path_copy.bat" %HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\SendTo\SVNレポジトリURLをコピー.lnk
+rem startup
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\clipnote2.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\ClipNote.lnk"
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\MauSuji.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\MauSuji.lnk"
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\MgntWnd.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\MgntWnd.lnk"
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\SoftTilt.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\SoftTilt.lnk"
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\Wheel Redirector.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\WheelRedirector.lnk"
 pause
 echo.
 
@@ -60,19 +171,7 @@ echo.
 
 rem vimproc
 echo NeoBundleInstallでvimprocのコンパイルが通るはず。
-echo （うまくいかなかったら「make -f make_mingw32.mak」を実行）
-pause
-echo.
-
-echo 別途インストールが必要なソフトウェア
-echo ・mactype（chocolateyパッケージが壊れている）
-echo 　　https://github.com/snowie2000/mactype/releases
-echo ・cmigemo
-echo 　　http://www.kaoriya.net/software/cmigemo/
-echo ・nkf
-echo 　　http://www.vector.co.jp/soft/win95/util/se295331.html
-echo ・mktemp
-echo 　　http://gnuwin32.sourceforge.net/packages/mktemp.htm
+echo （うまくいかなかったらmingw32から「make -f make_mingw32.mak」を実行）
 pause
 echo.
 
@@ -95,8 +194,8 @@ echo 　　　　"${gvim.exeへのフルパス}" "%1"
 pause
 echo.
 
-
 rem finally
 echo 以下のコマンドで起動
 echo vim +NeoBundleInstall +qall
+pause
 
