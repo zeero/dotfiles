@@ -1,0 +1,14 @@
+snippet class:Ruboty::Handler
+  class ${1:class_name} < Base
+    on(
+      /${2:regexp}/i,
+      name: "${3:method_name}",
+      description: "${4:description}"
+    )
+
+    def $3(msg)
+      ${0}
+      msg.reply("")
+    end
+  end
+
