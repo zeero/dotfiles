@@ -955,8 +955,8 @@ nnoremap gk k
 vnoremap gj j
 vnoremap gk k
 " 先頭末尾で行移動
-nnoremap <expr> h col('.') == 1 ? 'k$' : 'h'
-nnoremap <expr> l col('.') == col('$') - 1 ? 'j^' : 'l'
+nnoremap <expr> h virtcol('.') == 1 ? 'k$' : 'h'
+nnoremap <expr> l virtcol('.') == virtcol('$') - 1 ? 'j^' : 'l'
 " 0/^のトグル
 nnoremap <expr> 0 match(getline("."), '\S') == col(".") - 1 ? '0' : match(getline("."), '^\s*$') >= 0 ? '0' : '^'
 nnoremap <expr> ^ match(getline("."), '\S') == col(".") - 1 ? '0' : match(getline("."), '^\s*$') >= 0 ? '0' : '^'
