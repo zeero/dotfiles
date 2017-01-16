@@ -107,6 +107,8 @@ bmark -title="Google トレンド検索（キーワードはカンマ区切り�
 bmark -title="Google 英和翻訳" -keyword="eiwa" https://translate.google.com/#en/ja/%s
 bmark -title="Google 和英翻訳" -keyword="waei" https://translate.google.com/#ja/en/%s
 bmark -title="Github 検索" -keyword="github" https://github.com/search?utf8=%E2%9C%93&o=desc&s=stars&q=%s
+bmark -title="RubyGems 検索" -keyword="gem" https://rubygems.org/search?utf8=%E2%9C%93&query=%s
+bmark -title="npm 検索" -keyword="npm" https://www.npmjs.com/search?q=%s
 " その他
 bmark -title="Zeero's Gists" -keyword="gist" https://gist.github.com/zeero
 bmark -title="Gmail" -keyword="gmail" https://mail.google.com/mail/u/0/#inbox
