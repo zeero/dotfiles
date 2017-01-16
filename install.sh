@@ -86,7 +86,7 @@ npm install -g \
   coffee-script \
   jshint \
   hubot \
-  hubot-generator \
+  generator-hubot \
   yo \
 
 # firebrew
