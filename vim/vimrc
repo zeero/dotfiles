@@ -2179,6 +2179,7 @@ let g:EasyMotion_enter_jump_first = 1
 "
 " COMMAND:
 "  :Ref refe Array
+let g:ref_no_default_key_mappings = 1
 let g:ref_use_vimproc = 1 " 0:disable / 1:enable
 let g:ref_open = 'vsplit'
 let g:ref_detect_filetype = {
@@ -2187,10 +2188,11 @@ let g:ref_detect_filetype = {
 \}
 au myvimrc FileType ref* call MyRefMappings()
 function! MyRefMappings() "{{{
-  nnoremap <buffer> ,] <Plug>(ref-keyword)
-  nnoremap <buffer> ,[ <Plug>(ref-back)
-  nnoremap <buffer> <C-h> <Plug>(ref-back)
-  nnoremap <buffer> <C-l> <Plug>(ref-forward)
+  nmap <buffer> <C-]> <Plug>(ref-keyword)
+  nmap <buffer> ,] <Plug>(ref-keyword)
+  nmap <buffer> ,[ <Plug>(ref-back)
+  nmap <buffer> <C-h> <Plug>(ref-back)
+  nmap <buffer> <C-l> <Plug>(ref-forward)
 endfunction "}}}
 " ref/refe
 let g:ref_refe_version = 2
