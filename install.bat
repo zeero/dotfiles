@@ -152,11 +152,11 @@ shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\DF.exe" %HOMEDRIVE%%HOMEPATH%\App
 shortcut /t:"C:\Program Files\Internet Explorer\iexplore.exe" %HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\SendTo\IEで開く.lnk
 shortcut /t:"%HOMEDRIVE%%HOMEPATH%\bin\svn_path_copy.bat" %HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\SendTo\SVNレポジトリURLをコピー.lnk
 rem startup
-shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\clipnote2.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\ClipNote.lnk"
-shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\MauSuji.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\MauSuji.lnk"
-shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\MgntWnd.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\MgntWnd.lnk"
-shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\SoftTilt.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\SoftTilt.lnk"
-shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\Wheel Redirector.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\WheelRedirector.lnk"
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\apps\clipnote\current\clipnote2.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\ClipNote.lnk"
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\apps\mausuji\current\MauSuji.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\MauSuji.lnk"
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\apps\magnet_window\current\MgntWnd58003\MgntWnd.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\MgntWnd.lnk"
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\apps\softtilt\current\SoftTilt.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\SoftTilt.lnk"
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\apps\wheel_redirector\current\Wheel Redirector.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\WheelRedirector.lnk"
 pause
 echo.
 
