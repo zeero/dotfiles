@@ -189,9 +189,10 @@ echo ■コンテキストメニューに「Vimで開く」を追加する。
 echo 　・レジストリをいじる
 echo 　　１．regedit
 echo 　　２．「HKEY_CLASSES_ROOT\*\Shell」に移動
-echo 　　３．Shellキーの中に新規キー「Vimで開く」を作成
-echo 　　４．「Vimで開く」キーの中に新規キーcommandを作成する。
-echo 　　５．commandキーの文字列の値を変更
+echo 　　３．Shellキーの中に新規キーgvimを作成する。
+echo 　　４．gvimキーの文字列の値を「Vimで開く(&V)」に変更
+echo 　　５．「Vimで開く」キーの中に新規キーcommandを作成する。
+echo 　　６．commandキーの文字列の値を変更
 echo 　　　　"${gvim.exeへのフルパス}" "%1"
 pause
 echo.
