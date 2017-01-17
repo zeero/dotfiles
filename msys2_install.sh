@@ -8,6 +8,7 @@ pacman -S base-devel
 pacman -S msys2-devel
 pacman -S tmux-git
 pacman -S openssh
+pacman -S vim
 pacman -S mingw-w64-i686-curl
 pacman -S mingw-w64-i686-ruby
 pacman -S mingw-w64-i686-lua

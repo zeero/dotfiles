@@ -173,6 +173,7 @@ echo.
 rem vimproc
 echo NeoBundleInstallでvimprocのコンパイルが通るはず。
 echo （うまくいかなかったらmingw32から「make -f make_mingw32.mak」を実行）
+echo （pacmanからインストールしたvimを使う場合、vimproc_cygwin.dllが必要となる。msys2から「/usr/bin/make -f make_cygwin.mak」を実行）
 pause
 echo.
 
