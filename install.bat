@@ -31,9 +31,9 @@ rem setx
 set HOME=%HOMEDRIVE%%HOMEPATH%
 setx HOME %HOMEDRIVE%%HOMEPATH%
 rem このスクリプト内での一時的なPATH追加
-set PATH=%HOME%\bin;%HOME%\lib\msys32\usr\bin;%HOME%\lib\msys32\mingw32\bin;%PATH%
+set PATH=%HOME%\bin;%HOME%\lib\msys32\mingw32\bin;%HOME%\lib\msys32\usr\bin;%PATH%
 echo 以下を環境変数PATHに追加してください
-echo %HOME%\bin;%HOME%\lib\msys32\usr\bin;%HOME%\lib\msys32\mingw32\bin
+echo %HOME%\bin;%HOME%\lib\msys32\mingw32\bin;%HOME%\lib\msys32\usr\bin
 pause
 echo.
 
@@ -45,7 +45,6 @@ scoop install nodejs
 rem scoop-my-bucket
 scoop install gvim-kaoriya
 scoop install sakura
-scoop install tortoisesvn
 scoop install tortoisesvn_ja
 scoop install a5m2
 scoop install clipnote
@@ -71,6 +70,7 @@ rem chocolatey
 choco install GoogleChrome -y
 choco install GoogleJapaneseInput -y
 choco install winscp -y
+choco install tortoisesvn -y
 REM mingwへの移行に伴い不要候補
 REM choco install putty -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\putty"
 REM choco install teraterm -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\teraterm"
@@ -80,7 +80,8 @@ REM choco install Gow -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\Gow"
 REM wget
 REM curl
 
-bash msys2_install.sh
+REM TODO: コマンド実行できるか確認
+REM bash msys2_install.sh
 
 
 rem git configuration
@@ -172,6 +173,7 @@ echo.
 rem vimproc
 echo NeoBundleInstallでvimprocのコンパイルが通るはず。
 echo （うまくいかなかったらmingw32から「make -f make_mingw32.mak」を実行）
+echo （pacmanからインストールしたvimを使う場合、vimproc_cygwin.dllが必要となる。msys2から「/usr/bin/make -f make_cygwin.mak」を実行）
 pause
 echo.
 
