@@ -1645,6 +1645,7 @@ let g:unite_source_menu_menus = {
 \     ['[unite] colorscheme', 'Unite colorscheme -auto-preview'],
 \     ['[unite] output:message', 'Unite output:message'],
 \     ['[unite] mapping(all)', 'Unite output:map|map!|lmap'],
+\     ['[dein] clean plugins', 'for s:dein_clean_plugin in dein#check_clean() | call delete(s:dein_clean_plugin, "rf") | endfor'],
 \   ],
 \ },
 \}
