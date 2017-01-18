@@ -230,9 +230,16 @@ lazy = 1
 on_map = ['<Plug>(jplus']
 
 [[plugins]]
-repo = 'tpope/vim-endwise'
+repo = 'kana/vim-smartinput'
 lazy = 1
 on_i = 1
+
+[[plugins]]
+repo = 'cohama/vim-smartinput-endwise'
+lazy = 1
+on_i = 1
+hook_post_source = 'call smartinput_endwise#define_default_rules()'
+depends = 'vim-smartinput'
 
 
 # テキストオブジェクト {{{2

@@ -2823,10 +2823,6 @@ let g:switch_custom_definitions =
 \   ['=', '<=', '>='],
 \ ]
 
-" vim-endwise {{{1
-let g:endwise_no_mappings = 1
-autocmd myvimrc FileType ruby,sh,vim imap <buffer> <CR> <CR><Plug>DiscretionaryEnd
-
 " Alingta {{{1
 " デフォルト整列オプション
 let g:alignta_default_options = '<<<1:1'
