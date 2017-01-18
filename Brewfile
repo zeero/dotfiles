@@ -35,6 +35,7 @@ brew 'cmigemo'
 brew 'the_silver_searcher'
 brew 'the_platinum_searcher'
 brew 'jq'  # json parser
+brew 'jvgrep'
 
 # coding tool
 brew 'swiftlint'
@@ -59,5 +60,5 @@ cask 'imageoptim'
 # dupes
 tap 'homebrew/dupes'
 brew 'libxml2'
-brew 'libxlst'
+brew 'libxslt'
 
