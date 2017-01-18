@@ -133,6 +133,7 @@ mklink %HOMEDRIVE%%HOMEPATH%\bin\open.bat %DOTFILES%\whome\bin\open.bat
 mklink %HOMEDRIVE%%HOMEPATH%\bin\PPPath.bat %DOTFILES%\whome\bin\PPPath.bat
 mklink %HOMEDRIVE%%HOMEPATH%\bin\Shortcut.CMD %DOTFILES%\whome\bin\Shortcut.CMD
 mklink %HOMEDRIVE%%HOMEPATH%\bin\svn_path_copy.bat %DOTFILES%\whome\bin\svn_path_copy.bat
+rem shortcut
 shortcut /t:"%HOMEDRIVE%%HOMEPATH%\bin" %HOMEDRIVE%%HOMEPATH%\bin\bin.lnk
 shortcut /t:"C:\Program Files\Google\Google Japanese Input\GoogleIMEJaTool.exe" /a:"--mode=word_register_dialog" %HOMEDRIVE%%HOMEPATH%\bin\dct.lnk
 shortcut /t:"%HOMEDRIVE%%HOMEPATH%\Downloads" %HOMEDRIVE%%HOMEPATH%\bin\dl.lnk
@@ -140,6 +141,7 @@ shortcut /t:"%HOMEDRIVE%%HOMEPATH%" %HOMEDRIVE%%HOMEPATH%\bin\home.lnk
 shortcut /t:"%windir%\System32\drivers\etc\hosts" %HOMEDRIVE%%HOMEPATH%\bin\hosts.lnk
 shortcut /t:"C:\Program Files\Internet Explorer\iexplore.exe" %HOMEDRIVE%%HOMEPATH%\bin\ie.lnk
 shortcut /t:"%HOMEDRIVE%%HOMEPATH%\lib" %HOMEDRIVE%%HOMEPATH%\bin\lib.lnk
+REM TODO msys2ÇscoopâªÇµÇΩÇÁÉpÉXèCê≥
 shortcut /t:"D:\Users\UU077856\lib\msys32\msys2_shell.cmd" /a:"-mingw32 -use-full-path" %HOMEDRIVE%%HOMEPATH%\bin\mingw.lnk
 shortcut /t:"%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" %HOMEDRIVE%%HOMEPATH%\bin\startup.lnk
 shortcut /t:"%windir%\system32\services.msc" %HOMEDRIVE%%HOMEPATH%\bin\svc.lnk
