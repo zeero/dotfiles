@@ -2813,8 +2813,15 @@ let g:surround_123 = "{\r}"
 let g:surround_125 = "{ \r }"
 
 " smartchr {{{1
-inoremap <expr> < smartchr#loop('<', '<<', '<=')
-inoremap <expr> > smartchr#loop('>', '>>', '>=')
+" inoremap <expr> < smartchr#loop('<', '<<', '<=')
+" inoremap <expr> > smartchr#loop('>', '>>', '>=')
+
+" Switch {{{1
+nnoremap <expr> <C-a> strpart(getline("."), col(".") - 1, 1) =~ '\d' ? "\<C-a>" : ":\<C-u>Switch\<CR>"
+let g:switch_custom_definitions =
+\ [
+\   ['=', '<=', '>='],
+\ ]
 
 " vim-endwise {{{1
 let g:endwise_no_mappings = 1
@@ -3109,9 +3116,6 @@ endif
 
 " Restart {{{1
 let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
-
-" Switch {{{1
-nnoremap <expr> <C-a> strpart(getline("."), col(".") - 1, 1) =~ '\d' ? "\<C-a>" : ":\<C-u>Switch\<CR>"
 
 " Conque {{{1
 " 終了時に閉じる
