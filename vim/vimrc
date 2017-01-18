@@ -114,6 +114,10 @@ cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 " ワイルドカード展開と補完で無視するパターン
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.o,*.class,*.pyc
+" jvgrep
+if executable('jvgrep')
+  set grepprg=jvgrep
+endif
 
 " 編集に関する設定 {{{1
 " タブの画面上での幅
