@@ -41,21 +41,23 @@ if !has('gui_running') && has('xterm_clipboard')
 endif "}}}
 
 " Dein {{{1
-let s:dein_dir = expand($MYVIMDIR . '/dein')
-let s:dein_toml = expand($MYVIMDIR . '/dein.toml')
-let s:dein_toml_local = expand($MYVIMDIR . '/dein.local')
-filetype off
-set rtp& rtp+=$MYVIMDIR/dein/repos/github.com/Shougo/dein.vim
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir, [$MYVIMRC, s:dein_toml])
-  call dein#load_toml(s:dein_toml, {})
-  if filereadable(s:dein_toml_local)
-    call dein#load_toml(s:dein_toml_local, {})
+if has('vim_starting')
+  let s:dein_dir = expand($MYVIMDIR . '/dein')
+  let s:dein_toml = expand($MYVIMDIR . '/dein.toml')
+  let s:dein_toml_local = expand($MYVIMDIR . '/dein.local')
+  filetype off
+  set rtp& rtp+=$MYVIMDIR/dein/repos/github.com/Shougo/dein.vim
+  if dein#load_state(s:dein_dir)
+    call dein#begin(s:dein_dir, [$MYVIMRC, s:dein_toml])
+    call dein#load_toml(s:dein_toml, {})
+    if filereadable(s:dein_toml_local)
+      call dein#load_toml(s:dein_toml_local, {})
+    endif
+    call dein#end()
+    call dein#save_state()
   endif
-  call dein#end()
-  call dein#save_state()
+  filetype plugin indent on
 endif
-filetype plugin indent on
 
 if dein#check_install()
   call dein#install()
