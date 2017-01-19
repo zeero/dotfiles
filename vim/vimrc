@@ -696,6 +696,25 @@ function! s:my_lipsum(mode) "{{{
     execute 'normal! a' . str
   endif
 endfunction "}}}
+" Tw2Md
+command! -nargs=0 -range Tw2Md call s:my_tw_to_md(<line1>, <line2>)
+function! s:my_tw_to_md(line1, line2) "{{{
+  execute a:line1 . ',' . a:line2 . 's/<\/+?code.*/```/e'
+  execute a:line1 . ',' . a:line2 . 's/\(\s*\)\({{{\|}}}\)$/```/e'
+  execute a:line1 . ',' . a:line2 . 's/\({{{\|}}}\)/`/eg'
+  execute a:line1 . ',' . a:line2 . 's/\[\[\(.*\)|\(http.*\)\]\]/[\1](\2)/e'
+  execute a:line1 . ',' . a:line2 . 's/^@@\(.*\)@@/\\ \1/e'
+  execute a:line1 . ',' . a:line2 . 's/#/*/eg'
+  execute a:line1 . ',' . a:line2 . 's/\*/* /eg'
+  execute a:line1 . ',' . a:line2 . 's/\* \* /  \* /e'
+  execute a:line1 . ',' . a:line2 . 's/\* \* /  \* /e'
+  execute a:line1 . ',' . a:line2 . 's/\* \* /  \* /e'
+  execute a:line1 . ',' . a:line2 . 's/\* \* /  \* /e'
+  execute a:line1 . ',' . a:line2 . 's/\* \* /  \* /e'
+  execute a:line1 . ',' . a:line2 . 's/^!!!/### /e'
+  execute a:line1 . ',' . a:line2 . 's/^!!/## /e'
+  execute a:line1 . ',' . a:line2 . 's/^!/# /e'
+endfunction "}}}
 
 " TortoiseSVN {{{2
 " /endrev:-1 は HEAD（-2：ベースリビジョン、-3：ワーキングコピー）
@@ -2830,9 +2849,9 @@ let g:alignta_default_options = '<<<1:1'
 " 引数なしは非空白文字で整列
 let g:alignta_default_arguments = '<< \S\+'
 " コマンド短縮名
-command! -range -bang -nargs=* AL <line1>,<line2>Alignta<bang> <args>
 command! -range ALe <line1>,<line2>Alignta =
 command! -range ALl <line1>,<line2>Alignta >>> \S\+
+command! -range -bang -nargs=* AL <line1>,<line2>Alignta<bang> <args>
 " unite-alignta
 let g:unite_source_alignta_preset_arguments = [
 \ ['Alignta at "="', '='],
