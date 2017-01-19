@@ -41,21 +41,23 @@ if !has('gui_running') && has('xterm_clipboard')
 endif "}}}
 
 " Dein {{{1
-let s:dein_dir = expand($MYVIMDIR . '/dein')
-let s:dein_toml = expand($MYVIMDIR . '/dein.toml')
-let s:dein_toml_local = expand($MYVIMDIR . '/dein.local')
-filetype off
-set rtp& rtp+=$MYVIMDIR/dein/repos/github.com/Shougo/dein.vim
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir, [$MYVIMRC, s:dein_toml])
-  call dein#load_toml(s:dein_toml, {})
-  if filereadable(s:dein_toml_local)
-    call dein#load_toml(s:dein_toml_local, {})
+if has('vim_starting')
+  let s:dein_dir = expand($MYVIMDIR . '/dein')
+  let s:dein_toml = expand($MYVIMDIR . '/dein.toml')
+  let s:dein_toml_local = expand($MYVIMDIR . '/dein.local')
+  filetype off
+  set rtp& rtp+=$MYVIMDIR/dein/repos/github.com/Shougo/dein.vim
+  if dein#load_state(s:dein_dir)
+    call dein#begin(s:dein_dir, [$MYVIMRC, s:dein_toml])
+    call dein#load_toml(s:dein_toml, {})
+    if filereadable(s:dein_toml_local)
+      call dein#load_toml(s:dein_toml_local, {})
+    endif
+    call dein#end()
+    call dein#save_state()
   endif
-  call dein#end()
-  call dein#save_state()
+  filetype plugin indent on
 endif
-filetype plugin indent on
 
 if dein#check_install()
   call dein#install()
@@ -112,6 +114,10 @@ cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 " ワイルドカード展開と補完で無視するパターン
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.o,*.class,*.pyc
+" jvgrep
+if executable('jvgrep')
+  set grepprg=jvgrep
+endif
 
 " 編集に関する設定 {{{1
 " タブの画面上での幅
@@ -1639,6 +1645,7 @@ let g:unite_source_menu_menus = {
 \     ['[unite] colorscheme', 'Unite colorscheme -auto-preview'],
 \     ['[unite] output:message', 'Unite output:message'],
 \     ['[unite] mapping(all)', 'Unite output:map|map!|lmap'],
+\     ['[dein] clean plugins', 'for s:dein_clean_plugin in dein#check_clean() | call delete(s:dein_clean_plugin, "rf") | endfor'],
 \   ],
 \ },
 \}
@@ -2179,6 +2186,7 @@ let g:EasyMotion_enter_jump_first = 1
 "
 " COMMAND:
 "  :Ref refe Array
+let g:ref_no_default_key_mappings = 1
 let g:ref_use_vimproc = 1 " 0:disable / 1:enable
 let g:ref_open = 'vsplit'
 let g:ref_detect_filetype = {
@@ -2187,10 +2195,11 @@ let g:ref_detect_filetype = {
 \}
 au myvimrc FileType ref* call MyRefMappings()
 function! MyRefMappings() "{{{
-  nnoremap <buffer> ,] <Plug>(ref-keyword)
-  nnoremap <buffer> ,[ <Plug>(ref-back)
-  nnoremap <buffer> <C-h> <Plug>(ref-back)
-  nnoremap <buffer> <C-l> <Plug>(ref-forward)
+  nmap <buffer> <C-]> <Plug>(ref-keyword)
+  nmap <buffer> ,] <Plug>(ref-keyword)
+  nmap <buffer> ,[ <Plug>(ref-back)
+  nmap <buffer> <C-h> <Plug>(ref-back)
+  nmap <buffer> <C-l> <Plug>(ref-forward)
 endfunction "}}}
 " ref/refe
 let g:ref_refe_version = 2
@@ -2805,12 +2814,15 @@ let g:surround_123 = "{\r}"
 let g:surround_125 = "{ \r }"
 
 " smartchr {{{1
-inoremap <expr> < smartchr#loop('<', '<<', '<=')
-inoremap <expr> > smartchr#loop('>', '>>', '>=')
+" inoremap <expr> < smartchr#loop('<', '<<', '<=')
+" inoremap <expr> > smartchr#loop('>', '>>', '>=')
 
-" vim-endwise {{{1
-let g:endwise_no_mappings = 1
-autocmd myvimrc FileType ruby,sh,vim imap <buffer> <CR> <CR><Plug>DiscretionaryEnd
+" Switch {{{1
+nnoremap <expr> <C-a> strpart(getline("."), col(".") - 1, 1) =~ '\d' ? "\<C-a>" : ":\<C-u>Switch\<CR>"
+let g:switch_custom_definitions =
+\ [
+\   ['=', '<=', '>='],
+\ ]
 
 " Alingta {{{1
 " デフォルト整列オプション
@@ -3101,9 +3113,6 @@ endif
 
 " Restart {{{1
 let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
-
-" Switch {{{1
-nnoremap <expr> <C-a> strpart(getline("."), col(".") - 1, 1) =~ '\d' ? "\<C-a>" : ":\<C-u>Switch\<CR>"
 
 " Conque {{{1
 " 終了時に閉じる
