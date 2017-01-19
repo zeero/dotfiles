@@ -2771,9 +2771,9 @@ omap im <Plug>(textobj-multitextobj-i)
 vmap im <Plug>(textobj-multitextobj-i)
 " multiblock
 let g:textobj_multiblock_blocks = [
-\ ['if', 'endif'], ['if', 'fi'], ['if', 'end'],
-\ ['for', 'endfor'], ['while', 'endwhile'],
-\ ['function', 'endfunction'], ['def', 'end'],
+\ ['function.*\_$', '\s*endfunction'], ['def.*\_$', '\s*end'],
+\ ['for.*\_$', '\s*endfor'], ['while.*\_$', '\s*endwhile'], ['do.*\_$', '\s*end'],
+\ ['if.*\_$', '\s*endif'], ['if.*\_$', '\s*fi'], ['if.*\_$', '\s*end'],
 \ ['[', ']'], ['{', '}'], ['(', ')'],
 \]
 omap aM <Plug>(textobj-multiblock-a)
