@@ -5,10 +5,11 @@ rem scoopをインストールします。
 rem powershell3がインストールされていることを確認してください。
 rem   @powershell -Command "set-executionpolicy unrestricted -s cu"
 rem   @powershell -Command "iex (new-object net.webclient).downloadstring('https://get.scoop.sh')"
-rem gitとgit-credential-manager-for-windowsをインストールします。
+rem git-for-windows-sdkとgit-credential-manager-for-windowsをインストールしてください。
+rem （git-for-windows-sdkではpacmanのついたmsysがインストールされます）
 rem   scoop bucket add extras
 rem   scoop bucket add my-bucket https://github.com/zeero/scoop-my-bucket.git
-rem   scoop install git git-credential-manager-for-windows
+rem   scoop install git-for-windows-sdk git-credential-manager-for-windows
 
 rem chocolatey
 rem chocolateyをインストールします。
@@ -16,10 +17,11 @@ rem   @powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((new-object 
 rem   set PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin
 
 rem dotfilesをダウンロードします。
-rem git clone https://github.com/zeero/dotfiles.git
+rem   git clone https://github.com/zeero/dotfiles.git
 
 
 set DOTFILES=%~dp0
+setx DOTFILES %~dp0
 cd /d %DOTFILES%
 
 rem mkdir
@@ -31,9 +33,9 @@ rem setx
 set HOME=%HOMEDRIVE%%HOMEPATH%
 setx HOME %HOMEDRIVE%%HOMEPATH%
 rem このスクリプト内での一時的なPATH追加
-set PATH=%HOME%\bin;%HOME%\lib\msys32\mingw32\bin;%HOME%\lib\msys32\usr\bin;%PATH%
+set PATH=%HOME%\bin;%HOME%\lib\git-sdk-32\mingw32\bin;%HOME%\lib\git-sdk-32\usr\bin;%PATH%
 echo 以下を環境変数PATHに追加してください
-echo %HOME%\bin;%HOME%\lib\msys32\mingw32\bin;%HOME%\lib\msys32\usr\bin
+echo %HOME%\bin;%HOME%\lib\git-sdk-32\mingw32\bin;%HOME%\lib\git-sdk-32\usr\bin
 pause
 echo.
 
@@ -45,7 +47,6 @@ scoop install nodejs
 rem scoop-my-bucket
 scoop install gvim-kaoriya
 scoop install sakura
-scoop install tortoisesvn_ja
 scoop install a5m2
 scoop install clipnote
 scoop install explzh
@@ -62,9 +63,11 @@ scoop install mktemp
 scoop install df
 scoop install pathcp
 scoop install madonote
-REM TODO: make scoop package
-REM choco install mactype -y
-REM choco install msys2 -y
+REM TODO: 要検証
+scoop install mactype
+REM TODO: 要調整
+REM scoop install tortoisesvn
+REM scoop install tortoisesvn_ja
 
 rem chocolatey
 choco install GoogleChrome -y
@@ -126,30 +129,29 @@ mklink %HOMEDRIVE%%HOMEPATH%\.profile %DOTFILES%\whome\.profile
 move %HOMEDRIVE%%HOMEPATH%\scoop\apps\mausuji\1.33\MauSuji.ini %HOMEDRIVE%%HOMEPATH%\scoop\apps\mausuji\1.33\MauSuji.ini.org
 mklink %HOMEDRIVE%%HOMEPATH%\scoop\apps\mausuji\1.33\MauSuji.ini %DOTFILES%\whome\mausuji\MauSuji.ini
 rem msys2
-move %HOMEDRIVE%%HOMEPATH%\lib\msys32\etc\pacman.conf %HOMEDRIVE%%HOMEPATH%\lib\msys32\etc\pacman.conf.org
-mklink %HOMEDRIVE%%HOMEPATH%\lib\msys32\etc\pacman.conf %DOTFILES%\msys2\etc\pacman.conf
+move %HOMEDRIVE%%HOMEPATH%\lib\git-sdk-32\etc\pacman.conf %HOMEDRIVE%%HOMEPATH%\lib\git-sdk-32\etc\pacman.conf.org
+mklink %HOMEDRIVE%%HOMEPATH%\lib\git-sdk-32\etc\pacman.conf %DOTFILES%\msys2\etc\pacman.conf
+mklink /d %HOMEDRIVE%%HOMEPATH%\.vim %DOTFILES%\vim
+move %HOMEDRIVE%%HOMEPATH%\.vimrc %HOMEDRIVE%%HOMEPATH%\.vimrc.org
+mklink %HOMEDRIVE%%HOMEPATH%\.vimrc %DOTFILES%\vim\vimrc
 rem wbin
 mklink %HOMEDRIVE%%HOMEPATH%\bin\open.bat %DOTFILES%\whome\bin\open.bat
 mklink %HOMEDRIVE%%HOMEPATH%\bin\PPPath.bat %DOTFILES%\whome\bin\PPPath.bat
 mklink %HOMEDRIVE%%HOMEPATH%\bin\Shortcut.CMD %DOTFILES%\whome\bin\Shortcut.CMD
 mklink %HOMEDRIVE%%HOMEPATH%\bin\svn_path_copy.bat %DOTFILES%\whome\bin\svn_path_copy.bat
 rem shortcut
-shortcut /t:"%HOMEDRIVE%%HOMEPATH%\bin" %HOMEDRIVE%%HOMEPATH%\bin\bin.lnk
-shortcut /t:"C:\Program Files\Google\Google Japanese Input\GoogleIMEJaTool.exe" /a:"--mode=word_register_dialog" %HOMEDRIVE%%HOMEPATH%\bin\dct.lnk
-shortcut /t:"%HOMEDRIVE%%HOMEPATH%\Downloads" %HOMEDRIVE%%HOMEPATH%\bin\dl.lnk
 shortcut /t:"%HOMEDRIVE%%HOMEPATH%" %HOMEDRIVE%%HOMEPATH%\bin\home.lnk
-shortcut /t:"%windir%\System32\drivers\etc\hosts" %HOMEDRIVE%%HOMEPATH%\bin\hosts.lnk
-shortcut /t:"C:\Program Files\Internet Explorer\iexplore.exe" %HOMEDRIVE%%HOMEPATH%\bin\ie.lnk
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\Downloads" %HOMEDRIVE%%HOMEPATH%\bin\dl.lnk
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\bin" %HOMEDRIVE%%HOMEPATH%\bin\bin.lnk
 shortcut /t:"%HOMEDRIVE%%HOMEPATH%\lib" %HOMEDRIVE%%HOMEPATH%\bin\lib.lnk
-REM TODO msys2をscoop化したらパス修正
-shortcut /t:"D:\Users\UU077856\lib\msys32\msys2_shell.cmd" /a:"-mingw32 -use-full-path" %HOMEDRIVE%%HOMEPATH%\bin\mingw.lnk
-shortcut /t:"%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" %HOMEDRIVE%%HOMEPATH%\bin\startup.lnk
-shortcut /t:"%windir%\system32\services.msc" %HOMEDRIVE%%HOMEPATH%\bin\svc.lnk
-shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\tortoiseproc.exe" /a:"/command:repobrowser" %HOMEDRIVE%%HOMEPATH%\bin\svnb.lnk
 shortcut /t:"%HOMEDRIVE%%HOMEPATH%\tmp" %HOMEDRIVE%%HOMEPATH%\bin\tmp.lnk
-REM shortcut /t:"" %HOMEDRIVE%%HOMEPATH%\bin\my.lnk
-REM shortcut /t:"" %HOMEDRIVE%%HOMEPATH%\bin\ol.lnk
-REM shortcut /t:"" %HOMEDRIVE%%HOMEPATH%\bin\sys.lnk
+shortcut /t:"%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" %HOMEDRIVE%%HOMEPATH%\bin\startup.lnk
+shortcut /t:"%windir%\System32\drivers\etc\hosts" %HOMEDRIVE%%HOMEPATH%\bin\hosts.lnk
+shortcut /t:"%windir%\system32\services.msc" %HOMEDRIVE%%HOMEPATH%\bin\svc.lnk
+shortcut /t:"C:\Program Files\Internet Explorer\iexplore.exe" %HOMEDRIVE%%HOMEPATH%\bin\ie.lnk
+shortcut /t:"%HOME%\lib\git-sdk-32\git-bash.exe" %HOMEDRIVE%%HOMEPATH%\bin\mingw.lnk
+shortcut /t:"C:\Program Files\Google\Google Japanese Input\GoogleIMEJaTool.exe" /a:"--mode=word_register_dialog" %HOMEDRIVE%%HOMEPATH%\bin\dct.lnk
+shortcut /t:"C:\Program Files\TortoiseSVN\bin\TortoiseProc.exe" /a:"/command:repobrowser" %HOMEDRIVE%%HOMEPATH%\bin\svnb.lnk
 rem sendto
 shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\shims\DF.exe" %HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\SendTo\DFで開く.lnk
 shortcut /t:"C:\Program Files\Internet Explorer\iexplore.exe" %HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\SendTo\IEで開く.lnk
@@ -160,6 +162,11 @@ shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\apps\mausuji\current\MauSuji.exe" "%HOM
 shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\apps\magnet_window\current\MgntWnd58003\MgntWnd.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\MgntWnd.lnk"
 shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\apps\softtilt\current\SoftTilt.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\SoftTilt.lnk"
 shortcut /t:"%HOMEDRIVE%%HOMEPATH%\scoop\apps\wheel_redirector\current\Wheel Redirector.exe" "%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\WheelRedirector.lnk"
+REM shortcut /t:"" %HOMEDRIVE%%HOMEPATH%\bin\my.lnk
+REM shortcut /t:"" %HOMEDRIVE%%HOMEPATH%\bin\ol.lnk
+REM shortcut /t:"" %HOMEDRIVE%%HOMEPATH%\bin\sys.lnk
+echo.
+echo %HOME%\binにmy、ol、sysのショートカットを手動で作成してください。
 pause
 echo.
 
