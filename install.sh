@@ -89,6 +89,9 @@ npm install -g \
   generator-hubot \
   yo \
 
+# tpm
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 # firebrew
 firebrew install "Japanese Language Pack"
 firebrew install "Nightly Tester Tools"
@@ -107,4 +110,5 @@ firebrew install "Vimperator"
 firebrew install "Vimperator-ja"
 firebrew install "Text Link"
 firebrew install "Snap Links"
+firebrew install "Tile Tabs"
 
