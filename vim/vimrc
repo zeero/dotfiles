@@ -1313,6 +1313,7 @@ inoremap <C-w> <S-Right>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <S-CR> <C-o>O
+inoremap <C-@><CR> <C-o>:SplitjoinSplit<CR><Down><Home>
 " 文字削除（NeoCompleteで設定するためコメントアウト）
 " inoremap <C-d> <Del>
 " CTRL-Uのundo対策（from exaple.vim）
@@ -2216,6 +2217,7 @@ au myvimrc FileType ref* call MyRefMappings()
 function! MyRefMappings() "{{{
   nmap <buffer> <C-]> <Plug>(ref-keyword)
   nmap <buffer> ,] <Plug>(ref-keyword)
+  nmap <buffer> <C-j> <Plug>(ref-keyword)
   nmap <buffer> ,[ <Plug>(ref-back)
   nmap <buffer> <C-h> <Plug>(ref-back)
   nmap <buffer> <C-l> <Plug>(ref-forward)
