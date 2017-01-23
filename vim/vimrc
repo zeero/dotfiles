@@ -696,6 +696,25 @@ function! s:my_lipsum(mode) "{{{
     execute 'normal! a' . str
   endif
 endfunction "}}}
+" Tw2Md
+command! -nargs=0 -range Tw2Md call s:my_tw_to_md(<line1>, <line2>)
+function! s:my_tw_to_md(line1, line2) "{{{
+  execute a:line1 . ',' . a:line2 . 's/<\/+?code.*/```/e'
+  execute a:line1 . ',' . a:line2 . 's/\(\s*\)\({{{\|}}}\)$/```/e'
+  execute a:line1 . ',' . a:line2 . 's/\({{{\|}}}\)/`/eg'
+  execute a:line1 . ',' . a:line2 . 's/\[\[\(.*\)|\(http.*\)\]\]/[\1](\2)/e'
+  execute a:line1 . ',' . a:line2 . 's/^@@\(.*\)@@/\\ \1/e'
+  execute a:line1 . ',' . a:line2 . 's/#/*/eg'
+  execute a:line1 . ',' . a:line2 . 's/\*/* /eg'
+  execute a:line1 . ',' . a:line2 . 's/\* \* /  \* /e'
+  execute a:line1 . ',' . a:line2 . 's/\* \* /  \* /e'
+  execute a:line1 . ',' . a:line2 . 's/\* \* /  \* /e'
+  execute a:line1 . ',' . a:line2 . 's/\* \* /  \* /e'
+  execute a:line1 . ',' . a:line2 . 's/\* \* /  \* /e'
+  execute a:line1 . ',' . a:line2 . 's/^!!!/### /e'
+  execute a:line1 . ',' . a:line2 . 's/^!!/## /e'
+  execute a:line1 . ',' . a:line2 . 's/^!/# /e'
+endfunction "}}}
 
 " TortoiseSVN {{{2
 " /endrev:-1 は HEAD（-2：ベースリビジョン、-3：ワーキングコピー）
@@ -1294,6 +1313,7 @@ inoremap <C-w> <S-Right>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <S-CR> <C-o>O
+inoremap <C-@><CR> <C-o>:SplitjoinSplit<CR><Down><Home>
 " 文字削除（NeoCompleteで設定するためコメントアウト）
 " inoremap <C-d> <Del>
 " CTRL-Uのundo対策（from exaple.vim）
@@ -2197,6 +2217,7 @@ au myvimrc FileType ref* call MyRefMappings()
 function! MyRefMappings() "{{{
   nmap <buffer> <C-]> <Plug>(ref-keyword)
   nmap <buffer> ,] <Plug>(ref-keyword)
+  nmap <buffer> <C-j> <Plug>(ref-keyword)
   nmap <buffer> ,[ <Plug>(ref-back)
   nmap <buffer> <C-h> <Plug>(ref-back)
   nmap <buffer> <C-l> <Plug>(ref-forward)
@@ -2286,6 +2307,14 @@ let g:quickrun_config = {
 \    'hook/animation/enable': 1,
 \    'hook/animation/wait': 10,
 \  },
+\}
+
+" ruby
+let g:quickrun_config['ruby.alt'] = {'type': 'ruby.bundle'}
+let g:quickrun_config['ruby.bundle'] = {
+\ 'command': 'bundle',
+\ 'cmdopt': 'exec ruby',
+\ 'exec': '%c %o %s'
 \}
 
 " ruby.rspec {{{2
@@ -2752,9 +2781,9 @@ omap im <Plug>(textobj-multitextobj-i)
 vmap im <Plug>(textobj-multitextobj-i)
 " multiblock
 let g:textobj_multiblock_blocks = [
-\ ['if', 'endif'], ['if', 'fi'], ['if', 'end'],
-\ ['for', 'endfor'], ['while', 'endwhile'],
-\ ['function', 'endfunction'], ['def', 'end'],
+\ ['function.*\_$', '\s*endfunction'], ['def.*\_$', '\s*end'],
+\ ['for.*\_$', '\s*endfor'], ['while.*\_$', '\s*endwhile'], ['do.*\_$', '\s*end'],
+\ ['if.*\_$', '\s*endif'], ['if.*\_$', '\s*fi'], ['if.*\_$', '\s*end'],
 \ ['[', ']'], ['{', '}'], ['(', ')'],
 \]
 omap aM <Plug>(textobj-multiblock-a)
@@ -2830,9 +2859,9 @@ let g:alignta_default_options = '<<<1:1'
 " 引数なしは非空白文字で整列
 let g:alignta_default_arguments = '<< \S\+'
 " コマンド短縮名
-command! -range -bang -nargs=* AL <line1>,<line2>Alignta<bang> <args>
 command! -range ALe <line1>,<line2>Alignta =
 command! -range ALl <line1>,<line2>Alignta >>> \S\+
+command! -range -bang -nargs=* AL <line1>,<line2>Alignta<bang> <args>
 " unite-alignta
 let g:unite_source_alignta_preset_arguments = [
 \ ['Alignta at "="', '='],
