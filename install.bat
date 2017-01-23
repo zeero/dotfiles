@@ -133,9 +133,6 @@ mklink %HOMEDRIVE%%HOMEPATH%\scoop\apps\mausuji\1.33\MauSuji.ini %DOTFILES%\whom
 rem msys2
 move %HOMEDRIVE%%HOMEPATH%\lib\git-sdk-32\etc\pacman.conf %HOMEDRIVE%%HOMEPATH%\lib\git-sdk-32\etc\pacman.conf.org
 mklink %HOMEDRIVE%%HOMEPATH%\lib\git-sdk-32\etc\pacman.conf %DOTFILES%\msys2\etc\pacman.conf
-mklink /d %HOMEDRIVE%%HOMEPATH%\.vim %DOTFILES%\vim
-move %HOMEDRIVE%%HOMEPATH%\.vimrc %HOMEDRIVE%%HOMEPATH%\.vimrc.org
-mklink %HOMEDRIVE%%HOMEPATH%\.vimrc %DOTFILES%\vim\vimrc
 rem wbin
 mklink %HOMEDRIVE%%HOMEPATH%\bin\open.bat %DOTFILES%\whome\bin\open.bat
 mklink %HOMEDRIVE%%HOMEPATH%\bin\PPPath.bat %DOTFILES%\whome\bin\PPPath.bat
