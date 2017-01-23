@@ -44,6 +44,8 @@ scoop install sudo
 scoop install 7zip
 scoop install firefox
 scoop install nodejs
+scoop install ruby
+scoop install lua
 rem scoop-my-bucket
 scoop install gvim-kaoriya
 scoop install sakura
