@@ -16,9 +16,6 @@ pacman -S mingw-w64-i686-ag
 pacman -S mingw-w64-i686-jq
 pacman -S mingw-w64-i686-universal-ctags-git
 
-pacman -S mingw-w64-i686-ruby
-pacman -S mingw-w64-i686-lua
 # pacman -S mingw-w64-i686-python2
 # pacman -S mingw-w64-i686-python3
 # pacman -S mingw-w64-i686-perl
-#
