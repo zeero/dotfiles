@@ -120,6 +120,8 @@ mklink %HOMEDRIVE%%HOMEPATH%\_vimperatorrc %DOTFILES%\vimperator\vimperatorrc
 mklink %HOMEDRIVE%%HOMEPATH%\.gitignore %DOTFILES%\home\.gitignore
 mklink %HOMEDRIVE%%HOMEPATH%\.ctags %DOTFILES%\home\.ctags
 mklink %HOMEDRIVE%%HOMEPATH%\.tmux.conf %DOTFILES%\home\.tmux.conf
+mkdir %HOMEDRIVE%%HOMEPATH%\.tmux\plugins
+mklink /d %HOMEDRIVE%%HOMEPATH%\.tmux\plugins\tpm %DOTFILES%\home\.tmux\plugins\tpm
 rem whome
 mklink %HOMEDRIVE%%HOMEPATH%\.minttyrc %DOTFILES%\whome\.minttyrc
 mklink %HOMEDRIVE%%HOMEPATH%\.bashrc %DOTFILES%\whome\.bashrc
