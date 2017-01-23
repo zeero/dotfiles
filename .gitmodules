@@ -17,3 +17,6 @@
 [submodule "lib/RictyDiminished"]
 	path = lib/RictyDiminished
 	url = https://github.com/zeero/RictyDiminished.git
+[submodule "home/.tmux/plugins/tpm"]
+	path = home/.tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm

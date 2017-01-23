@@ -13,6 +13,8 @@ git submodule update --init
 
 # symlink
 find ${DOTFILES}/home -type f -depth 1 -exec ln -s {} ~ \;
+mkdir -p ~/.tmux/plugins
+ln -s ${DOTFILES}/home/.tmux/plugins/tpm ~/.tmux/plugins/tpm
 ln -s ${DOTFILES}/vim ~/.vim
 ln -s ${DOTFILES}/vim/vimrc ~/.vimrc
 ln -s ${DOTFILES}/vimperator ~/.vimperator
@@ -88,9 +90,6 @@ npm install -g \
   hubot \
   generator-hubot \
   yo \
-
-# tpm
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # firebrew
 firebrew install "Japanese Language Pack"
