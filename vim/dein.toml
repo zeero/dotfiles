@@ -9,7 +9,7 @@ hook_post_update = '''
   if dein#util#_is_windows()
     let cmd = 'make -f make_mingw32.mak'
   elseif dein#util#_is_cygwin()
-    let cmd = 'mingw32-make -f make_cygwin.mak'
+    let cmd = 'make -f make_cygwin.mak'
   elseif executable('gmake')
     let cmd = 'gmake'
   else
