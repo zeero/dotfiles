@@ -26,6 +26,7 @@ brew 'tmux'
 brew 'reattach-to-user-namespace'
 brew 'git-flow'
 brew 'heroku'
+brew 'fzf'
 
 # vim
 brew 'macvim', args: ['with-lua', 'with-override-system-vim']
