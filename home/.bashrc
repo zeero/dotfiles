@@ -3,6 +3,9 @@
 # 基本設定
 ## プロンプトの表示
 PS1='\u@\h:\w $ '
+## キーバインド解除
+tty -s && stty stop  undef # C-s
+tty -s && stty start undef # C-q
 
 # エイリアス
 #alias ls='ls -G'
@@ -18,17 +21,12 @@ alias be='bundle exec'
 ## 計算
 calc() { awk "BEGIN { print $* }"; }
 ## fzf-git-branch補完
-_fzf_complete_git_branch() {
-  [ -n "${COMP_WORDS[COMP_CWORD]}" ] && return 1
-
+__fzf_git_branch__() {
   local selected fzf
   [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux -d ${FZF_TMUX_HEIGHT:-40%}" || fzf="fzf"
-  tput sc
   selected=$(git branch | $fzf | awk '{print $2}' | tr '\n' ' ')
-  tput rc
-
   if [ -n "$selected" ]; then
-    COMPREPLY=( "$selected" )
+    echo -n "$selected"
     return 0
   fi
 }
@@ -47,4 +45,5 @@ if [ -f "$BREW_BASH_GIT_PROMPT/share/gitprompt.sh" ]; then
 fi
 ## fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+bind '"\C-g": "$(__fzf_git_branch__)\e\C-e\er"'
 
