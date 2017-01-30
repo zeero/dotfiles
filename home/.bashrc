@@ -3,9 +3,6 @@
 # 基本設定
 ## プロンプトの表示
 PS1='\u@\h:\w $ '
-## キーバインド解除
-tty -s && stty stop  undef # C-s
-tty -s && stty start undef # C-q
 
 # エイリアス
 #alias ls='ls -G'
@@ -45,5 +42,18 @@ if [ -f "$BREW_BASH_GIT_PROMPT/share/gitprompt.sh" ]; then
 fi
 ## fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# キーバインド
+## キーバインド解除
+tty -s && stty stop  undef # C-s
+tty -s && stty start undef # C-q
+## fzf-git-branch
 bind '"\C-g": "$(__fzf_git_branch__)\e\C-e\er"'
+## カーソル移動
+bind '"\C-h": backward-char'
+bind '"\C-l": forward-char'
+bind '"\C-b": backward-word'
+bind '"\C-w": forward-word'
+## 文字削除
+bind '"\C-d": forward-backward-delete-char'
 
