@@ -15,36 +15,21 @@ PATH=/usr/local/bin:$PATH
 PATH=$HOME/bin:$PATH
 PATH=~/.rbenv/shims:$PATH
 PATH=$PATH:/usr/local/opt/coreutils/libexec/gnubin
-# PATH=$PATH:/usr/local/lib/appengine-java-sdk/bin
-# PATH=$PATH:$ANDROID_HOME/tools
-# PATH=$PATH:$CATALINA_HOME/bin
-# PATH=$PATH:$MVN_HOME/bin
 export PATH
-
-# Ruby
-#export RUBY_HOME=/usr/local/lib/ruby/1.8
-#export GEM_HOME=/usr/local/lib/ruby/gems/1.8/gems
 
 # Java
 export _JAVA_OPTIONS='-Dfile.encoding=UTF-8'
 export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
-#export ANDROID_HOME=/usr/local/lib/android-sdk-mac_86
-#export CATALINA_HOME=~/dev/java/lib/apache-tomcat-6.0.32
-#export MVN_HOME=~/dev/java/lib/apache-maven-3.0.2
 
 # Node.js
 export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
 
-# Android NDK
-#export ANDROID_HOME=/usr/local/opt/android-sdk
-#export NDK_TOP=/usr/local/opt/android-ndk
-#export SYSROOT=${NDK_TOP}/platforms/android-8/arch-arm
-#export CFLAGS="-march=armv5te -msoft-float"
-#export CC="${NDK_TOP}/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-gcc -mandroid --sysroot=${SYSROOT}"
+# others
+export DOTFILES=~/lib/dotfiles
+
+# local
+[ -f ~/.local.bash_profile ] && source ~/.local.bash_profile
 
 # read .bashrc
 [ -f ~/.bashrc ] && source ~/.bashrc
-
-## .local.bash_profile
-[ -f ~/.local.bash_profile ] && source ~/.local.bash_profile
 

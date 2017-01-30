@@ -12,6 +12,7 @@ alias la='ls -a'
 alias lla='ls -la'
 alias lh='ls -lh'
 alias fcd='source ~/bin/fcd'
+alias be='bundle exec'
 
 # ファンクション
 ## 計算
