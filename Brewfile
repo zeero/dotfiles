@@ -27,6 +27,7 @@ brew 'reattach-to-user-namespace'
 brew 'git-flow'
 brew 'heroku'
 brew 'fzf'
+brew 'tree'
 
 # vim
 brew 'macvim', args: ['with-lua', 'with-override-system-vim']
