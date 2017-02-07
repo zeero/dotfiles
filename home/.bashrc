@@ -21,7 +21,7 @@ calc() { awk "BEGIN { print $* }"; }
 __fzf_git_branch__() {
   local selected fzf
   [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux -d ${FZF_TMUX_HEIGHT:-40%}" || fzf="fzf"
-  selected=$(git branch | $fzf | awk '{print $2}' | tr '\n' ' ')
+  selected=$(git branch -a | $fzf | awk '{print $2}' | tr '\n' ' ')
   if [ -n "$selected" ]; then
     echo -n "$selected"
     return 0
