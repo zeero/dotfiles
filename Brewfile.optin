@@ -2,6 +2,9 @@
 cask_args appdir: '/Applications'
 tap 'caskroom/cask'
 
+# server
+brew 'redis'
+
 # utility
 # 'calendar 2'
 # 'clean memory 2'
