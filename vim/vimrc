@@ -3131,15 +3131,29 @@ let g:splitjoin_join_mapping = ',J'
 " Syntastic {{{1
 let g:syntastic_mode_map = {
 \ 'mode': 'passive',
+\ 'active_filetypes': ['ruby', 'coffee', 'javascript']
 \}
 " \ 'mode': 'active',
 " \ 'passive_filetypes': ['html', 'swift']
+let g:syntastic_quiet_messages = {
+\ 'type': 'style',
+\}
 if executable('rubocop')
   let g:syntastic_ruby_checkers = ['rubocop']
 endif
-if executable('jshint')
+if executable('coffeelint')
+  let g:syntastic_coffee_checkers = ['coffeelint']
+endif
+if executable('eslint')
+  let g:syntastic_javascript_checkers = ['eslint']
+elseif executable('jshint')
   let g:syntastic_javascript_checkers = ['jshint']
 endif
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_check_on_wq = 0
 
 " Restart {{{1
 let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
