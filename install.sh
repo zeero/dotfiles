@@ -87,6 +87,8 @@ bitclust setup
 # node.js
 npm install -g \
   coffee-script \
+  coffeelint \
+  eslint \
   jshint \
   hubot \
   generator-hubot \
