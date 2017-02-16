@@ -6,7 +6,7 @@
 
 # install packages
 # pacman -S mingw-w64-i686-toolchain
-# pacman -S base-devel
+pacman -S base-devel
 pacman -S msys2-devel
 pacman -S tmux-git
 # pacman -S openssh
