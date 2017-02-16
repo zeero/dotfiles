@@ -28,6 +28,7 @@ brew 'git-flow'
 brew 'heroku'
 brew 'fzf'
 brew 'tree'
+brew 'hub'
 
 # vim
 brew 'macvim', args: ['with-lua', 'with-override-system-vim']
