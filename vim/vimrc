@@ -3129,6 +3129,7 @@ let g:splitjoin_split_mapping = ',o'
 let g:splitjoin_join_mapping = ',J'
 
 " Syntastic {{{1
+" チェック設定
 let g:syntastic_mode_map = {
 \ 'mode': 'passive',
 \ 'active_filetypes': ['ruby', 'coffee', 'javascript']
@@ -3138,6 +3139,7 @@ let g:syntastic_mode_map = {
 let g:syntastic_quiet_messages = {
 \ 'type': 'style',
 \}
+" ファイルタイプ別設定
 if executable('rubocop')
   let g:syntastic_ruby_checkers = ['rubocop']
 endif
@@ -3149,11 +3151,15 @@ if executable('eslint')
 elseif executable('jshint')
   let g:syntastic_javascript_checkers = ['jshint']
 endif
+" ロケーションリスト設定
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
+let g:syntastic_loc_list_height = 5
+" サイン表示しない（する場合はb:変数で上書きする）
 let g:syntastic_enable_signs = 0
-" let g:syntastic_error_symbol='✗'
-" let g:syntastic_warning_symbol='⚠'
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+" :wqでチェックしない
 let g:syntastic_check_on_wq = 0
 
 " Restart {{{1
