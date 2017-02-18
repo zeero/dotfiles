@@ -2742,9 +2742,12 @@ let g:jplus#config._ = {'delimiter': ''}
 " FastFold {{{1
 " キーマップを変えない
 let g:fastfold_fold_command_suffixes = []
+let g:fastfold_fold_movement_commands = []
 " 自動でフォールドを更新しない
 let g:fastfold_fold_movement_commands = []
 let g:fastfold_savehook = 0
+let g:fastfold_fdmhook = 0
+let g:fastfold_skip_filetypes = [ 'workflowish' ]
 
 " textobj-user {{{1
 " entire
@@ -3176,17 +3179,15 @@ let g:ConqueTerm_Color = 1
 au myvimrc FileType conque_term setlocal nolist
 
 " vim-precious {{{1
-" help でカーソル移動時の |:PreciousSwitch| を無効にする。
+" help でFiletype切り替えを無効にする
 let g:precious_enable_switchers = {
-\ "*": { "setfiletype": 1},
 \ "help": { "setfiletype": 0}
 \}
+" help でカーソル移動時の |:PreciousSwitch| を無効にする
 let g:precious_enable_switch_CursorMoved = {
-\ "*": 1,
 \ "help": 0
 \}
 let g:precious_enable_switch_CursorMoved_i= {
-\ "*": 1,
 \ "help": 0
 \}
 " カーソル位置から前後 300行の範囲で判定を行う
