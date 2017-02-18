@@ -607,9 +607,9 @@ lazy = 1
 
 [[plugins]]
 repo = 'osyo-manga/vim-precious'
-lazy = 1
-on_i = 1
 depends = ['context_filetype.vim']
+# lazy = 1
+# on_i = 1
 
 
 # 補助 {{{2
@@ -627,6 +627,7 @@ repo = 'vim-jp/vimdoc-ja'
 
 [[plugins]]
 repo = 'Konfekt/FastFold'
+lazy = 1
 
 [[plugins]]
 repo = 'mattn/webapi-vim'
