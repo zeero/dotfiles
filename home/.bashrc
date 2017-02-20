@@ -42,6 +42,11 @@ if [ -f "$BREW_BASH_GIT_PROMPT/share/gitprompt.sh" ]; then
 fi
 ## fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+## hub
+BREW_HUB=$(brew --prefix hub)
+if [ -f "$BREW_HUB/etc/bash_completion.d/hub.bash_completion.sh" ]; then
+  source "$BREW_HUB/etc/bash_completion.d/hub.bash_completion.sh"
+fi
 
 # キーバインド
 ## キーバインド解除
