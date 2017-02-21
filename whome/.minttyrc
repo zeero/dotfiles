@@ -7,7 +7,7 @@ BackspaceSendsBS=yes
 # Font
 BoldAsFont=no
 Font=Ricty Diminished
-FontHeight=12
+FontHeight=14
 
 # Window
 Columns=150
@@ -23,3 +23,5 @@ IMECursorColour=255,0,0
 Locale=ja_JP
 Charset=UTF-8
 
+FontWeight=400
+FontIsBold=no
