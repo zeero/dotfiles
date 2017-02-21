@@ -317,7 +317,7 @@ if has('gui_running')
   set guioptions-=L
   " フォントを指定
   if has('win32') || has('win64')
-    set guifont=Ricty_Diminished:h12:cSHIFTJIS
+    set guifont=Ricty_Diminished:h16:cSHIFTJIS
   else
     set guifont=Ricty\ Diminished\ Regular:h20
 "     let g:vimshell_editor_command = '/usr/local/opt/macvim/MacVim.app/Contents/MacOS/MacVim'
