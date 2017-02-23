@@ -44,14 +44,14 @@ endif "}}}
 if has('vim_starting')
   let s:dein_dir = expand($MYVIMDIR . '/dein')
   let s:dein_toml = expand($MYVIMDIR . '/dein.toml')
-  let s:dein_toml_local = expand($MYVIMDIR . '/dein.local')
+  let s:dein_local = expand($MYVIMDIR . '/dein.local')
   filetype off
   set rtp& rtp+=$MYVIMDIR/dein/repos/github.com/Shougo/dein.vim
   if dein#load_state(s:dein_dir)
     call dein#begin(s:dein_dir, [$MYVIMRC, s:dein_toml])
     call dein#load_toml(s:dein_toml, {})
-    if filereadable(s:dein_toml_local)
-      call dein#load_toml(s:dein_toml_local, {})
+    if isdirectory(s:dein_local)
+      call dein#local(s:dein_local)
     endif
     call dein#end()
     call dein#save_state()
