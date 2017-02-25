@@ -608,8 +608,8 @@ lazy = 1
 [[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
-# lazy = 1
-# on_i = 1
+lazy = 1
+on_cmd = ['PreciousSwitch', 'PreciousReset']
 
 
 # 補助 {{{2
