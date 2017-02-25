@@ -47,9 +47,12 @@ snippet <C-r><C-w>
 snippet <C-r>"
   <C-r>"
 
-snippet vim:plugin
+snippet template
 abbr    plugin template
-  " vim-${1:plugin_name} - ${2:Description}
+  " =============================================================================
+  " File:          plugin/${1:plugin_name}.vim
+  " Description:   ${2:Description}
+  " =============================================================================
 
   if exists('g:loaded_$1')
     finish
@@ -59,18 +62,18 @@ abbr    plugin template
   let s:save_cpo = &cpo
   set cpo&vim
 
+
   " Variables
   " Commands
-  " Keymaps
   ${0}
+  " Keymaps
+
 
   let &cpo = s:save_cpo
   unlet s:save_cpo
 
-snippet vim:option:default
+snippet variable_with_default
 abbr    set option default value
-  if !exists('g:${1}')
-    let g:$1 = '${2}'
-  endif
-  ${0}
+alias   var
+  let g:${1:var_name} = get(g:, '$1', '${2:default_value}')${0}
 
