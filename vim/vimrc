@@ -2070,6 +2070,8 @@ nnoremap ,T :<C-u>CtrlPMenu<CR>
 nnoremap <C-@> :<C-u>CtrlPTag<CR>
 " CtrlPLine
 nnoremap <C-o> :<C-u>execute 'CtrlPLine ' . expand('%')<CR>
+" CtrlPCmdline
+nnoremap ,<C-r> :<C-u>CtrlPCmdline<CR>
 " コマンドエイリアス
 command! -nargs=? -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
 command! -nargs=? -complete=dir BookmarkEdit exe 'tabe ' g:ctrlp_cache_dir . '/bkd/cache.txt'
@@ -2087,8 +2089,9 @@ let g:ctrlp_extensions = [
 \ 'register',
 \ 'line',
 \ 'tag',
-\ 'yankround',
 \ 'help',
+\ 'yankround',
+\ 'cmdline',
 \ 'gista',
 \ 'menu',
 \ 'bookmarkdir',
