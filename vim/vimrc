@@ -627,6 +627,12 @@ endfunction "}}}
 function! s:my_grep_finish(result) "{{{
   let qflist = []
   let lines = split(a:result, '\n')
+  if empty(lines)
+    echohl WarningMsg
+    echo 'AG: Pattern not found.'
+    echohl None
+    return
+  endif
   for line in lines
     let items = split(line, ':')
     let qfline = {
