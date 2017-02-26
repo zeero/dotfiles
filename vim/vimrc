@@ -353,7 +353,7 @@ if has('gui_running')
   " （[No Name]バッファへの対策）
   set bufhidden=wipe
   " タブのラベル
-  set guitablabel=%{tabpagenr()}:%t%m
+  set guitablabel=%{tabpagenr()}:%{pathshorten(expand('%:.'))}%m
   " 印刷オプション
   set printoptions=wrap:y,number:y
   set printheader=%<%f%h%m%=Page-%N
