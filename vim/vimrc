@@ -1913,11 +1913,12 @@ inoremap <expr> <BS> neocomplete#smart_close_popup() . '<BS>'
 
 " Enable omni completion. {{{2
 au myvimrc FileType css setlocal omnifunc=csscomplete#CompleteCSS
-au myvimrc FileType html,mkd setlocal omnifunc=htmlcomplete#CompleteTags
+au myvimrc FileType html setlocal omnifunc=htmlcomplete#CompleteTags
 au myvimrc FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 au myvimrc FileType python setlocal omnifunc=pythoncomplete#Complete
 au myvimrc FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 au myvimrc FileType ruby setlocal omnifunc=rubycomplete#Complete
+au myvimrc FileType workflowish,markdown setlocal omnifunc=github_complete#complete
 
 " Enable heavy omni completion. {{{2
 if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -1926,6 +1927,10 @@ endif
 if !exists('g:neocomplete#force_omni_input_patterns')
   let g:neocomplete#force_omni_input_patterns = {}
 endif
+let g:neocomplete#sources#omni#input_patterns.workflowish = ':'
+let g:neocomplete#sources#omni#input_patterns.markdown = ':'
+let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
@@ -3111,13 +3116,6 @@ let g:user_emmet_settings = {
 " monster.vim {{{1
 " Set async completion.
 " let g:monster#completion#rcodetools#backend = "async_rct_complete"
-" Use neocomplete.vim
-let g:neocomplete#sources#omni#input_patterns = {
-\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-\}
-let g:neocomplete#force_omni_input_patterns = {
-\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-\}
 
 " SQLUtilities {{{1
 " カンマで行分割

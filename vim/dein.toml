@@ -241,6 +241,12 @@ on_i = 1
 hook_post_source = 'call smartinput_endwise#define_default_rules()'
 depends = 'vim-smartinput'
 
+[[plugins]]
+repo = 'rhysd/github-complete.vim'
+lazy = 1
+on_i = 1
+on_ft = ['workflowish', 'markdown']
+
 
 # テキストオブジェクト {{{2
 
