@@ -59,6 +59,7 @@ cask 'google-japanese-ime'
 cask 'appcleaner'
 cask 'skitch'
 cask 'imageoptim'
+cask 'coteditor'
 
 # dupes
 tap 'homebrew/dupes'
