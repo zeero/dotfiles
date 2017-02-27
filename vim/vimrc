@@ -1923,9 +1923,7 @@ au myvimrc FileType html        setlocal omnifunc=htmlcomplete#CompleteTags
 au myvimrc FileType javascript  setlocal omnifunc=javascriptcomplete#CompleteJS
 au myvimrc FileType python      setlocal omnifunc=pythoncomplete#Complete
 au myvimrc FileType xml         setlocal omnifunc=xmlcomplete#CompleteTags
-" au myvimrc FileType ruby        setlocal omnifunc=rubycomplete#Complete
 au myvimrc FileType workflowish setlocal omnifunc=github_complete#complete
-au myvimrc FileType markdown    setlocal omnifunc=github_complete#complete
 
 " Enable heavy omni completion. {{{2
 if !exists('g:neocomplete#sources#omni#input_patterns')
