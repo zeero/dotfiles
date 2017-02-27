@@ -1918,13 +1918,14 @@ inoremap <expr> <BS> neocomplete#smart_close_popup() . '<BS>'
 "inoremap <expr> <TAB> pumvisible() ? '<Down>' : '<C-x>\<C-u>'
 
 " Enable omni completion. {{{2
-au myvimrc FileType css setlocal omnifunc=csscomplete#CompleteCSS
-au myvimrc FileType html setlocal omnifunc=htmlcomplete#CompleteTags
-au myvimrc FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-au myvimrc FileType python setlocal omnifunc=pythoncomplete#Complete
-au myvimrc FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-au myvimrc FileType ruby setlocal omnifunc=rubycomplete#Complete
-au myvimrc FileType workflowish,markdown setlocal omnifunc=github_complete#complete
+au myvimrc FileType css         setlocal omnifunc=csscomplete#CompleteCSS
+au myvimrc FileType html        setlocal omnifunc=htmlcomplete#CompleteTags
+au myvimrc FileType javascript  setlocal omnifunc=javascriptcomplete#CompleteJS
+au myvimrc FileType python      setlocal omnifunc=pythoncomplete#Complete
+au myvimrc FileType xml         setlocal omnifunc=xmlcomplete#CompleteTags
+" au myvimrc FileType ruby        setlocal omnifunc=rubycomplete#Complete
+au myvimrc FileType workflowish setlocal omnifunc=github_complete#complete
+au myvimrc FileType markdown    setlocal omnifunc=github_complete#complete
 
 " Enable heavy omni completion. {{{2
 if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -3121,7 +3122,7 @@ let g:user_emmet_settings = {
 
 " monster.vim {{{1
 " Set async completion.
-" let g:monster#completion#rcodetools#backend = "async_rct_complete"
+let g:monster#completion#rcodetools#backend = "async_rct_complete"
 
 " SQLUtilities {{{1
 " カンマで行分割
