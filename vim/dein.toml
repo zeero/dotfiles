@@ -471,9 +471,14 @@ name = 'Conque'
 if = '''(has('python') || has('python3')) && (has('win32') || has('win64'))'''
 
 [[plugins]]
+repo = 'junegunn/vim-easy-align'
+lazy = 1
+on_cmd = ['EasyAlign']
+
+[[plugins]]
 repo = 'h1mesuke/vim-alignta.git'
 lazy = 1
-on_cmd = ['Alignta', 'AL']
+on_cmd = ['Alignta']
 on_source = ['unite.vim']
 
 [[plugins]]

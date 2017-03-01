@@ -2876,14 +2876,25 @@ let g:alignta_default_options = '<<<1:1'
 " 引数なしは非空白文字で整列
 let g:alignta_default_arguments = '<< \S\+'
 " コマンド短縮名
-command! -range ALe <line1>,<line2>Alignta =
-command! -range ALl <line1>,<line2>Alignta >>> \S\+
-command! -range -bang -nargs=* AL <line1>,<line2>Alignta<bang> <args>
+" command! -range ALe <line1>,<line2>Alignta =
+" command! -range ALl <line1>,<line2>Alignta >>> \S\+
+" command! -range -bang -nargs=* AL <line1>,<line2>Alignta<bang> <args>
 " unite-alignta
 let g:unite_source_alignta_preset_arguments = [
 \ ['Alignta at "="', '='],
 \ ['Alignta Left at "\\S\\+"', '>>> \S\+'],
 \]
+
+" EasyAlign {{{1
+" カスタムデリミタ
+" （括弧対応関係のためのコメント [[((<<）
+let g:easy_align_delimiters = {
+\ ']': {'pattern': '\]', 'left_margin': 0, 'right_margin': 1, 'stick_to_left': 1},
+\ ')': {'pattern': ')', 'left_margin': 0, 'right_margin': 1, 'stick_to_left': 1},
+\ '>': {'pattern': '>', 'left_margin': 0, 'right_margin': 1, 'stick_to_left': 1},
+\}
+" コマンド短縮名
+command! -range -bang -nargs=* AL <line1>,<line2>EasyAlign<bang> <args>
 
 " submode {{{1
 " xで連続で消した履歴を一つにまとめる {{{2
