@@ -66,6 +66,11 @@ on_map = ['<Plug>(easymotion-bd-w)', '<Plug>(easymotion-s2)', '<Plug>(easymotion
 repo = 'lambdalisue/vim-unified-diff'
 
 [[plugins]]
+repo = 'zeero/vim-slack_files'
+lazy = 1
+on_cmd = ['SlackFilesUpload', 'CtrlPSlackFiles']
+
+[[plugins]]
 repo = 'lambdalisue/vim-gista'
 #CtrlPGistaより先に読み込まれないとgistを開けなくなる...
 #いったんlazyをコメントアウト

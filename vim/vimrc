@@ -2102,6 +2102,7 @@ let g:ctrlp_extensions = [
 \ 'help',
 \ 'yankround',
 \ 'cmdline',
+\ 'slack_files',
 \ 'gista',
 \ 'menu',
 \ 'bookmarkdir',
@@ -2989,6 +2990,10 @@ let g:previm_enable_realtime = 0
 " フォールディングをネストする
 let g:markdown_fold_style = 'nested'
 
+" vim-slack_files "{{{1
+nnoremap T :<C-u>CtrlPSlackFiles<CR>
+command! SFu SlackFilesUpload
+
 " vim-gista {{{1
 " Github設定
 let g:gista#github_user = 'zeero'
@@ -3021,8 +3026,6 @@ let g:gista#interactive_description = 0
 command! UGista exe 'Unite gista' .
 \ ' -silent -buffer-name=gista' .
 \ ' -tab -no-split -no-quit'
-" CtrlPGista
-nnoremap T :<C-u>CtrlPGista<CR>
 
 " Emmet {{{1
 "
