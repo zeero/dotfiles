@@ -7,7 +7,7 @@ BackspaceSendsBS=yes
 # Font
 BoldAsFont=no
 Font=Ricty Diminished
-FontHeight=14
+FontHeight=16
 
 # Window
 Columns=150
