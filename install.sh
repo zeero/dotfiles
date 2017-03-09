@@ -93,6 +93,7 @@ npm install -g \
   hubot \
   generator-hubot \
   yo \
+  bower \
 
 # firebrew
 firebrew install "Japanese Language Pack"

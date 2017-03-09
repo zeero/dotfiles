@@ -67,6 +67,7 @@ repo = 'lambdalisue/vim-unified-diff'
 
 [[plugins]]
 repo = 'zeero/vim-slack_files'
+depends = 'ctrlp.vim'
 lazy = 1
 on_cmd = ['SlackFilesUpload', 'CtrlPSlackFiles']
 
