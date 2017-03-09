@@ -464,7 +464,7 @@ au myvimrc BufRead,BufNewFile *.bat setlocal fenc=sjis ff=dos
 " ファイルタイプ指定 {{{2
 " setfは二度書き防止をされているため、setlocal filetypeをすること！
 " JavaScript
-au myvimrc BufRead,BufNewFile *.json setlocal filetype=javascript
+au myvimrc BufRead,BufNewFile *.json setlocal filetype=json
 au myvimrc BufRead,BufNewFile jquery.*.js setlocal filetype=javascript syntax=jquery
 au myvimrc BufRead,BufNewFile *.coffee setlocal filetype=coffee
 " Apache
@@ -3155,7 +3155,7 @@ let g:splitjoin_join_mapping = ',J'
 " チェック設定
 let g:syntastic_mode_map = {
 \ 'mode': 'passive',
-\ 'active_filetypes': ['ruby', 'coffee', 'javascript']
+\ 'active_filetypes': ['ruby', 'coffee', 'javascript', 'json']
 \}
 " \ 'mode': 'active',
 " \ 'passive_filetypes': ['html', 'swift']
@@ -3173,6 +3173,9 @@ if executable('eslint')
   let g:syntastic_javascript_checkers = ['eslint']
 elseif executable('jshint')
   let g:syntastic_javascript_checkers = ['jshint']
+endif
+if executable('jsonlint')
+  let g:syntastic_json_checkers = ['jsonlint']
 endif
 " ロケーションリスト設定
 let g:syntastic_always_populate_loc_list = 1
