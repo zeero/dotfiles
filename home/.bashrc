@@ -27,6 +27,8 @@ __fzf_git_branch__() {
     return 0
   fi
 }
+## gitignore
+function gitignore() { curl -L -o .gitignore -s https://www.gitignore.io/api/$@ ;}
 
 # 外部ファイルの読み込み
 ## .local.bashrc
