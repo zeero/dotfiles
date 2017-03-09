@@ -883,6 +883,11 @@ on_i = 1
 type = 'git'
 
 [[plugins]]
+repo = 'leshill/vim-json'
+lazy = 1
+on_ft = ['json']
+
+[[plugins]]
 repo = 'kchmck/vim-coffee-script'
 lazy = 1
 on_ft = ['javascript', 'coffee']
