@@ -1,18 +1,58 @@
-snippet class:Ruboty::Handler
+snippet template:Rakefile
+  require 'bundler/gem_tasks'
+  require 'rake/testtask'
+
+  Rake::TestTask.new(:test) do |t|
+    t.libs << 'test'
+    t.libs << 'lib'
+    t.test_files = FileList['test/**/*_test.rb']
+  end
+
+  task :default => :test
+  ${0}
+
+
+snippet template:minitest
+  require 'test_helper'
+
+  describe ${1:class_name} do
+    before do
+    end
+
+    describe "${2:function_name}" do
+      it "${3:spec}" do
+        assert_equal ${4:actual}, ${5:expect}
+      end
+    end
+  end
+
+
+snippet template:Ruboty::Handler
   class ${1:class_name} < Base
     on(
       /${2:regexp}/i,
-      name: "${3:method_name}",
-      description: "${4:description}"
+      name: '${3:function_name}',
+      description: '${4:description}'
     )
 
     def $3(msg)
       ${0}
-      msg.reply("")
+      msg.reply('')
     end
   end
 
+
+snippet require
+abbr    require ./**/*.rb
+  # require ./**/*.rb
+  Dir[File.expand_path('..', __FILE__) << '/**/*.rb'].each do |file|
+    require file
+  end
+  ${0}
+
+
 snippet pry
+abbr    binding.pry
 alias   debug byebug binding
   require 'pry'; binding.pry${0}
 
