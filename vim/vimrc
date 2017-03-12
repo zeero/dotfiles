@@ -2238,6 +2238,7 @@ function! MyRefMappings() "{{{
 endfunction "}}}
 " ref/refe
 let g:ref_refe_version = 2
+command! -nargs=* Refe :Ref refe <args>
 " ref/webdict
 " 要：lynx or w3m or elinks or links
 let g:ref_source_webdict_sites = {
