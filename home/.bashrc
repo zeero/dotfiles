@@ -13,6 +13,7 @@ alias lla='ls -la'
 alias lh='ls -lh'
 alias fcd='source ~/bin/fcd'
 alias be='bundle exec'
+alias rails='bundle exec rails'
 
 # ファンクション
 ## 計算
