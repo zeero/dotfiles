@@ -52,6 +52,14 @@ abbr    require ./**/*.rb
 
 snippet pry
 abbr    binding.pry
-alias   debug byebug binding
+alias   byebug binding
   require 'pry'; binding.pry${0}
+
+
+snippet debug
+abbr    def debug
+  def debug(str = '')
+    puts "[DEBUG] #{__FILE__} L#{__LINE__} #{str}" if $DEBUG
+  end
+  ${0}
 
