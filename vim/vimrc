@@ -3156,7 +3156,7 @@ let g:splitjoin_join_mapping = ',J'
 " チェック設定
 let g:syntastic_mode_map = {
 \ 'mode': 'passive',
-\ 'active_filetypes': ['ruby', 'coffee', 'javascript', 'json']
+\ 'active_filetypes': ['coffee', 'javascript', 'json']
 \}
 " \ 'mode': 'active',
 " \ 'passive_filetypes': ['html', 'swift']
