@@ -59,7 +59,8 @@ alias   byebug binding
 snippet debug
 abbr    def debug
   def debug(str = '')
-    puts "#{Time.now.to_s} [DEBUG] #{__FILE__} L#{__LINE__} #{str}" if $DEBUG
+    str = ' ' + str if !str.empty?
+    puts "#{Time.now.to_s} [DEBUG] #{__FILE__} L#{__LINE__}#{str}" if $DEBUG
   end
   ${0}
 
