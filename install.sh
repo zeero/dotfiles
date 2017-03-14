@@ -115,3 +115,6 @@ firebrew install "Text Link"
 firebrew install "Snap Links"
 firebrew install "Tile Tabs"
 
+# その他設定
+echo "・キー移動を速くするために「システム環境設定」の「キーボード」からキーリピート、リピート認識を最大にする"
+
