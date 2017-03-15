@@ -2344,7 +2344,15 @@ let g:quickrun_config['ruby.bundle'] = {
 \ 'exec': '%c %o %s',
 \}
 
-au myvimrc BufRead,BufNewFile *_test.rb set filetype=ruby.test syntax=ruby
+" Gemfile
+au myvimrc BufRead,BufNewFile Gemfile let b:quickrun_config = {'type': 'ruby.gemfile'}
+au myvimrc BufRead,BufNewFile *.gemspec let b:quickrun_config = {'type': 'ruby.gemfile'}
+let g:quickrun_config['ruby.gemfile'] = {
+\ 'exec': 'bundle',
+\}
+
+" ruby.test
+au myvimrc BufRead,BufNewFile *_test.rb let b:quickrun_config = {'type': 'ruby.test'}
 let g:quickrun_config['ruby.test'] = {
 \ 'command': 'rake',
 \ 'cmdopt': 'test',
@@ -2352,7 +2360,7 @@ let g:quickrun_config['ruby.test'] = {
 \}
 
 " ruby.rspec
-au myvimrc BufRead,BufNewFile *_spec.rb set filetype=ruby.rspec syntax=ruby
+au myvimrc BufRead,BufNewFile *_spec.rb let b:quickrun_config = {'type': 'ruby.rspec'}
 let g:quickrun_config['ruby.rspec'] = {
 \ 'command': 'rspec',
 \ 'cmdopt': '--color',
