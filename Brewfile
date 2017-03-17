@@ -45,7 +45,8 @@ brew 'swiftlint'
 cask 'alcatraz'
 cask 'realm-browser'
 cask 'sourcetree'
-cask 'jsonlint'
+brew 'jsonlint'
+brew 'terminal-notifier'
 
 # utility
 cask 'alfred'
