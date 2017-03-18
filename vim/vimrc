@@ -174,7 +174,7 @@ let format_allow_over_tw = 1	" ぶら下り可能幅
 " 新しく開く代わりにすでに開いてあるバッファを開く
 set switchbuf=useopen
 " コマンドライン履歴
-set history=1000
+set history=10000
 " 外部のエディタで編集中のファイルが変更されたら自動で読み直す
 " （ウィンドウを移動する度に変更をチェックする）
 set autoread
