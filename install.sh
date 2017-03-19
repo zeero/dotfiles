@@ -76,6 +76,7 @@ gem install \
   firebrew \
   synx \
   travis \
+  rdoc-generator-fivefish \
 
 # nokogiriのインストールには設定が必要となる
 # bundler経由の場合は以下で設定 （さらにherokuの場合は、heroku runで動かす）
