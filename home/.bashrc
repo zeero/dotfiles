@@ -65,3 +65,6 @@ bind '"\C-w": forward-word'
 ## 文字削除
 bind '"\C-d": forward-backward-delete-char'
 
+
+# added by travis gem
+[ -f /Users/jiro/.travis/travis.sh ] && source /Users/jiro/.travis/travis.sh
