@@ -26,6 +26,7 @@ set! general.warnOnAboutConfig=false
 set! browser.startup.page=3
 " MacType有効
 set! gfx.direct2d.disabled=true
+set! gfx.content.azure.backends=direct2d1.1,cairo
 " キャッシュ無効
 set! browser.cache.disk.capacity=0
 " アンドゥ履歴
