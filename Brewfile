@@ -29,6 +29,7 @@ brew 'heroku'
 brew 'fzf'
 brew 'tree'
 brew 'hub'
+brew 'rename'
 
 # vim
 brew 'macvim', args: ['with-lua', 'with-override-system-vim']
