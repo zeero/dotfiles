@@ -47,3 +47,9 @@ setl conceallevel=2
 nnoremap <buffer> gj :call WorkflowishFocusToggle(line("."))<CR>
 nnoremap <buffer> gk :call WorkflowishFocusPrevious()<CR>
 
+" インデントを削除しない
+nnoremap o oX<C-h>
+nnoremap O OX<C-h>
+inoremap <buffer> <CR> <CR>X<C-h>
+inoremap <buffer> <S-CR> <C-o>OX<C-h>
+
