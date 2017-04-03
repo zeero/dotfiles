@@ -18,3 +18,6 @@ function! s:my_markdown_header(char) "{{{
   exe 'normal! ' . len . 'i' . a:char
 endfunction "}}}
 
+" コンシール
+setl conceallevel=2
+
