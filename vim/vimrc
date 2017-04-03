@@ -433,7 +433,7 @@ au myvimrc FileType gitcommit,vcs-*
 
 " html {{{2
 " 閉じタグの自動入力設定
-au myvimrc FileType html,xml inoremap <expr> <buffer> > MyHtmlEndwise()
+au myvimrc FileType html,xml,eruby inoremap <expr> <buffer> > MyHtmlEndwise()
 function! MyHtmlEndwise() "{{{
   let val = ">"
   let col = col(".")
@@ -2975,32 +2975,6 @@ command! Memo QFixHowm c
 command! MemoAppend QFixHowm N
 command! MemoList QFixHowm m
 command! MemoListAll QFixHowm ra
-
-" workflowish {{{1
-au myvimrc BufRead,BufNew,BufNewFile *.wofl,*.md call s:my_workflowish()
-function! s:my_workflowish() "{{{
-  nnoremap <buffer> gj :call WorkflowishFocusToggle(line("."))<CR>
-  nnoremap <buffer> gk :call WorkflowishFocusPrevious()<CR>
-  nnoremap <buffer> <C-t> :call MyWorkflowishToggle()<CR>
-endfunction "}}}
-function! MyWorkflowishToggle() "{{{
-  let first_char = matchstr(getline('.'), '\S')
-  let col = virtcol('.')
-  let new_col = col + 2
-  if first_char == '*'
-    exe ':s/\*/-/'
-    exe 'normal! ' . col . '|'
-  elseif first_char == '-'
-    exe ':s/\-/*/'
-    exe 'normal! ' . col . '|'
-  elseif first_char == ''
-    exe ':s/$/* /'
-    exe 'normal! $'
-  else
-    exe ':s/\(\S\)/* \1/'
-    exe 'normal! ' . new_col . '|'
-  endif
-endfunction "}}}
 
 " previm {{{1
 " リアルタイムプレビュー
