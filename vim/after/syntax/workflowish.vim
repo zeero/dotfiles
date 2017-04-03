@@ -22,8 +22,10 @@ hi def link WFUrlTitleDelimiter     Delimiter
 
 " コードブロック
 syn match WFInlineCode "`[^`]\{-1,}`"
+syn match WFInlineCodeConceal "`" containedin=WFInlineCode contained conceal
 syn region WFBlockCode matchgroup=WFBlockCodeDelimiter start="^\s*```" end="^\s*```" keepend
 hi def link WFInlineCode            Special
+hi def link WFInlineCodeConceal     Special
 hi def link WFBlockCode             Special
 hi def link WFBlockCodeDelimiter    Special
 
