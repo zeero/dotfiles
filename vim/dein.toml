@@ -957,6 +957,14 @@ repo = 'Shougo/vesting'
 lazy = 1
 on_source = ['unite.vim']
 
+[[plugins]]
+repo = 'thinca/vim-themis'
+lazy = 1
+
+[[plugins]]
+repo = 'kannokanno/vmock'
+lazy = 1
+
 # その他のファイルタイプ {{{2
 
 [[plugins]]
