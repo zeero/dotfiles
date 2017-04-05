@@ -1073,8 +1073,23 @@ nnoremap ,t :<C-u>$tabnew<CR>
 nnoremap ,l :<C-u>tabm<CR>
 nnoremap ,L :<C-u>tabm 1<CR>
 " gfはタブで開く
-nnoremap gf :tabe <cfile><CR>
-vnoremap gf y:tabe <C-r>"<CR>
+nnoremap gf :tab drop <cfile><CR>
+vnoremap gf y:tab drop <C-r>"<CR>
+" gFでカウンターパートを開く
+nnoremap gF :exe 'tab drop ' . MyGetCounterpart()<CR>
+function! MyGetCounterpart() "{{{
+  let path = expand('%:h')
+  let fname = expand('%:t')
+  if fname =~ '^test_'
+    return substitute(path, '^test/', '', '') . '/' . substitute(fname, '^test_', '', '')
+  else
+    let test_path = 'test/' . path
+    if ! isdirectory(test_path)
+      call mkdir(test_path, 'p')
+    endif
+    return test_path . '/test_' . fname
+  endif
+endfunction "}}}
 " ウィンドウサイズ変更
 nnoremap <S-Up> <C-w>+
 nnoremap <S-Down> <C-w>-
