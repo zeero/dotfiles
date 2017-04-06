@@ -80,3 +80,14 @@ abbr    set option default value
 alias   var
   let g:${1:var_name} = get(g:, '$1', '${2:default_value}')${0}
 
+snippet template:themis
+abbr    template for themis test script
+  let s:suite = themis#suite('${1:Test for `MyGetCounterpart()` - }')
+  let s:assert = themis#helper('assert')
+
+  function! s:suite.${2:function}()
+    let actual = ${3}
+    let expected = ${4}
+    call s:assert.equals(actual, expected)
+  endfunction
+
