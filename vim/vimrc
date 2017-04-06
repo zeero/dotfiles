@@ -2392,7 +2392,16 @@ if executable('swift')
 endif
 
 " vim {{{2
-au myvimrc BufRead,BufNewFile *_spec.vim set filetype=vim.vspec syntax=vim
+" themis
+au myvimrc BufRead,BufNewFile test_*.vim let b:quickrun_config = {'type': 'vim.themis'}
+let g:quickrun_config['vim.themis'] = {
+\ 'command': 'themis',
+\ 'cmdopt': '',
+\ 'exec': '%c %o %s',
+\}
+
+" vspec
+au myvimrc BufRead,BufNewFile *_spec.vim let b:quickrun_config = {'type': 'vim.vspec'}
 if (has('win32') || has('win64')) && exists('$CYGWIN_HOME')
   let g:quickrun_config['vim.vspec'] = {
   \ 'exec': '%c --login -c ' .
