@@ -6,8 +6,8 @@ syn region WFUrlTitle      matchgroup=WFUrlTitleDelimiter start=+"+ end=+"+ keep
 syn region WFUrlTitle      matchgroup=WFUrlTitleDelimiter start=+'+ end=+'+ keepend contained
 syn region WFUrlTitle      matchgroup=WFUrlTitleDelimiter start=+(+ end=+)+ keepend contained
 "   syn    region          WFLinkText matchgroup=WFLinkTextDelimiter start="!\=\[\%(\_[^]]*]\%( \=[[(]\)\)\@=" end="\]\%( \=[[(]\)\@=" nextgroup=WFLink,WFId skipwhite contains=@WFInline,WFLineStart
-syn region WFLinkText      matchgroup=WFLinkTextDelimiter start="!\=\[\%(\_[^]]*]\%( \=[[(]\)\)\@=" end="\]\%( \=[[(]\)\@=" nextgroup=WFLink,WFId skipwhite
-syn region WFLink          matchgroup=WFLinkDelimiter start="(" end=")" contains=WFUrl keepend contained
+syn region WFLinkText      matchgroup=WFLinkTextDelimiter start="!\=\[\%(\_[^]]*]\%( \=[[(]\)\)\@=" end="\]\%( \=[[(]\)\@=" nextgroup=WFLink,WFId skipwhite concealends
+syn region WFLink          matchgroup=WFLinkDelimiter start="(" end=")" contains=WFUrl keepend contained conceal
 syn region WFId            matchgroup=WFIdDelimiter start="\[" end="\]" keepend contained
 syn region WFAutomaticLink matchgroup=WFUrlDelimiter start="<\%(\w\+:\|[[:alnum:]_+-]\+@\)\@=" end=">" keepend oneline
 hi def link WFLinkText              PreProc
@@ -23,7 +23,7 @@ hi def link WFUrlTitleDelimiter     Delimiter
 " コードブロック
 syn match WFInlineCode "`[^`]\{-1,}`"
 syn match WFInlineCodeConceal "`" containedin=WFInlineCode contained conceal
-syn region WFBlockCode matchgroup=WFBlockCodeDelimiter start="^\s*```" end="^\s*```" keepend
+syn region WFBlockCode matchgroup=WFBlockCodeDelimiter start="^\s*```.*$" end="^\s*```$" keepend concealends
 hi def link WFInlineCode            Special
 hi def link WFInlineCodeConceal     Special
 hi def link WFBlockCode             Special
