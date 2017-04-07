@@ -91,3 +91,16 @@ abbr    template for themis test script
     call s:assert.equals(actual, expected)
   endfunction
 
+snippet template:vmock
+abbr    template for vmock
+  try
+    call vmock#mock('${1:function}').with(${2:args}).return(${3:value}).once()
+    s:assert.equals(${4:autual}, ${5:expected})
+    ${0}
+    call vmock#verify()
+  catch
+    echoerr v:exception
+  finally
+    call vmock#clear()
+  endtry
+
