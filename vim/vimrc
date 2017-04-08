@@ -2307,6 +2307,19 @@ call quickrun#module#register(shabadou#make_quickrun_hook_anim(
 \ 12,
 \), 1)
 
+" CRLFを消す
+let s:my_quickrun_hook_delete_crlf = {
+\ 'name' : 'delete_crlf',
+\ 'kind' : 'hook',
+\ 'config' : {
+\   'enable' : 1,
+\ }
+\}
+function! s:my_quickrun_hook_delete_crlf.on_output(session, context) "{{{
+  let a:context.data = substitute(a:context.data, '\r', '', 'g')
+endfunction "}}}
+call quickrun#module#register(s:my_quickrun_hook_delete_crlf, 1)
+
 " Oracle出力設定
 let s:my_quickrun_outputter_oracle = {
 \ 'name': 'oracle',
