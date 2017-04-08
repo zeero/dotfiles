@@ -85,7 +85,7 @@ abbr    template for themis test script
   let s:suite = themis#suite('${1:Test for `MyGetCounterpart()` -}')
   let s:assert = themis#helper('assert')
 
-  function! s:suite.${2:function}()
+  function! s:suite.${2:test_name}()
     let actual = ${3}
     let expected = ${4}
     call s:assert.equals(actual, expected)
@@ -94,7 +94,7 @@ abbr    template for themis test script
 snippet template:vmock
 abbr    template for vmock
   try
-    call vmock#mock('${1:function}').with(${2:args}).return(${3:value}).once()
+    call vmock#mock('${1:func_name}').with(${2:args}).return(${3:value}).once()
     s:assert.equals(${4:autual}, ${5:expected})
     ${0}
     call vmock#verify()
