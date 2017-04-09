@@ -80,13 +80,16 @@ abbr    template for vmock
 
 snippet call:assert:equals
 abbr    themis assertion
+alias   assert:equals
   call s:assert.equals(${1:actual}, ${2:expected})
 
 snippet call:assert:true
 abbr    themis assertion
+alias   assert:true
   call s:assert.true(${1:1})
 
 snippet call:assert:fail
 abbr    themis assertion
+alias   assert:fail
   call s:assert.fail('Unreachable')${0}
 

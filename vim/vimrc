@@ -1081,9 +1081,16 @@ function! MyGetCounterpart() "{{{
   let path = expand('%:h')
   let fname = expand('%:t')
   if fname =~ '^test_'
-    return substitute(path, '^test/', '', '') . '/' . substitute(fname, '^test_', '', '')
+    let counterpart = substitute(path, '^test/', '', '') . '/' . substitute(fname, '^test_', '', '')
+    if filereadable('src/' . counterpart)
+      return 'src/' . counterpart
+    elseif filereadable('lib/' . counterpart)
+      return 'lib/' . counterpart
+    else
+      return counterpart
+    endif
   else
-    let test_path = 'test/' . path
+    let test_path = 'test/' . substitute(path, '^\(src\|lib\)/', '', '')
     if ! isdirectory(test_path)
       call mkdir(test_path, 'p')
     endif
