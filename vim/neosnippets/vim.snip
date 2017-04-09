@@ -1,4 +1,4 @@
-snippet function
+snippet func
 abbr    my function (override default snippet)
 options head
   function! ${1:#:func_name}(${2}) "{{{
@@ -7,54 +7,18 @@ options head
 
 snippet command
 abbr    my command (override default snippet)
-  command! -nargs=${1} ${2:CommandName} ${0}
+  command! -nargs=${1} ${2:#:CommandName}
 
 snippet command:unite
 abbr    add Unite command
-  command! ${1:cmd_name} :Unite ${2:unite_source}
+  command! ${1:#:cmd_name} :Unite ${2:#:unite_source}
   \ -no-empty -silent -buffer-name=$2${0}
 
-snippet lazy:insert
-  NeoBundleLazy '${1:bundle}'
-  \, {'autoload': {'insert': 1}}
-
-snippet lazy:commands
-  NeoBundleLazy '${1:bundle}'
-  \, {'autoload': {'commands': ['${2:Command}'${0}]}}
-
-snippet lazy:filetypes
-  NeoBundleLazy '${1:bundle}'
-  \, {'autoload': {'filetypes': ['${2:filetype}'${0}]}}
-
-snippet lazy:unite
-  NeoBundleLazy '${1:bundle}'
-  \, {'autoload': {'unite_sources': ['${2:source}'${0}]}}
-
-snippet lazy:mappings
-  NeoBundleLazy '${1:bundle}'
-  \, {'autoload': {'mappings': ['${2:mapping}'${0}]}}
-
-snippet on_source
-abbr    NeoBundle on_source start and end
-  let s:bundle = neobundle#get('${1:bundle}')
-  let s:bundle.hooks = get(s:bundle, "hooks", {})
-  function! s:bundle.hooks.on_source(bundle)
-  ${0}
-  " （on_source終わり） {{{2
-  endfunction
-  unlet s:bundle
-
-snippet <C-r><C-w>
-  <C-r><C-w>
-
-snippet <C-r>"
-  <C-r>"
-
-snippet template
+snippet template:plugin
 abbr    plugin template
   " =============================================================================
   " File:          ${1:`expand('%')`}
-  " Description:   ${2:Description}
+  " Description:   ${2:#:Description}
   " =============================================================================
 
   if exists('g:loaded_$1')
@@ -75,17 +39,25 @@ abbr    plugin template
   let &cpo = s:save_cpo
   unlet s:save_cpo
 
-snippet variable_with_default
+snippet let:default_config
 abbr    set option default value
 alias   var
-  let g:${1:var_name} = get(g:, '$1', '${2:default_value}')${0}
+  let g:${1:#:var_name} = get(g:, '$1', '${2:#:default_value}')${0}
 
 snippet template:themis
 abbr    template for themis test script
   let s:suite = themis#suite('${1:Test for `MyGetCounterpart()` -}')
   let s:assert = themis#helper('assert')
 
-  function! s:suite.${2:test_name}()
+  function! s:suite.${2:#:test_name}()
+    let actual = ${3}
+    let expected = ${4}
+    call s:assert.equals(actual, expected)
+  endfunction
+
+snippet func:themis
+abbr    function definition for themis test
+  function! s:suite.${2:#:test_name}()
     let actual = ${3}
     let expected = ${4}
     call s:assert.equals(actual, expected)
@@ -94,8 +66,10 @@ abbr    template for themis test script
 snippet template:vmock
 abbr    template for vmock
   try
-    call vmock#mock('${1:func_name}').with(${2:args}).return(${3:value}).once()
-    s:assert.equals(${4:autual}, ${5:expected})
+    call vmock#mock('${1:#:func_name}').with(${2:args}).return(${3:'mock value'}).once()
+    let actual = ${4}
+    let expected = ${5}
+    call s:assert.equals(actual, expected)
     ${0}
     call vmock#verify()
   catch
@@ -103,4 +77,16 @@ abbr    template for vmock
   finally
     call vmock#clear()
   endtry
+
+snippet call:assert:equals
+abbr    themis assertion
+  call s:assert.equals(${1:actual}, ${2:expected})
+
+snippet call:assert:true
+abbr    themis assertion
+  call s:assert.true(${1:1})
+
+snippet call:assert:fail
+abbr    themis assertion
+  call s:assert.fail('Unreachable')${0}
 
