@@ -484,14 +484,20 @@ au myvimrc BufNewFile,BufRead *.yaml,*.yml setlocal filetype=ansible
 " H(elp)
 command! -nargs=? -complete=help H call s:my_help('<args>')
 function! s:my_help(keyword) "{{{
-  if winwidth(0) > 140
-    exe 'botright vertical help ' . a:keyword
-    vertical resize 79
-"     wincmd p
-  else
-    exe 'help ' . a:keyword
-"     wincmd p
-  endif
+  try
+    if winwidth(0) > 140
+      exe 'botright vertical help ' . a:keyword
+      vertical resize 79
+      " wincmd p
+    else
+      exe 'help ' . a:keyword
+      " wincmd p
+    endif
+  catch
+    echohl WarningMsg
+    echo substitute(v:exception, '^Vim(help):', '', '')
+    echohl None
+  endtry
 endfunction "}}}
 " H(elp)f(unction-list)
 command! -nargs=0 Hf H function-list
