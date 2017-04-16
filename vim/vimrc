@@ -1683,11 +1683,12 @@ function! MyUniteKeymaps() "{{{
   nmap <silent> <buffer> p <Plug>(unite_toggle_auto_preview))
 endfunction "}}}
 
-" メニュー設定 {{{2
+" Unite menu {{{2
 let g:unite_source_menu_menus = {
 \ 'shortcuts': {
 \   'description': 'command shortcuts.',
 \   'command_candidates': [
+\     ['[help] themis-quickref', 'H themis-quickref'],
 \     ['[help] vim-regexp', 'H pattern-overview'],
 \     ['[help] functions', 'H function-list'],
 \     ['[help] registers', 'H registers'],
