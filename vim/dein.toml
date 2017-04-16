@@ -70,6 +70,7 @@ repo = 'zeero/vim-slack_files'
 depends = 'ctrlp.vim'
 lazy = 1
 on_cmd = ['SlackFilesUpload', 'CtrlPSlackFiles']
+on_source = ['unite.vim']
 
 [[plugins]]
 repo = 'lambdalisue/vim-gista'
