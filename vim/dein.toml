@@ -963,7 +963,7 @@ repo = 'thinca/vim-themis'
 lazy = 1
 
 [[plugins]]
-repo = 'kannokanno/vmock'
+repo = 'zeero/vmock'
 lazy = 1
 
 # その他のファイルタイプ {{{2
