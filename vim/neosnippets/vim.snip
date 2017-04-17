@@ -5,6 +5,13 @@ options head
     ${0}
   endfunction "}}}
 
+snippet func:autoload
+abbr    my function (override default snippet)
+options head
+  function! ${1:`substitute(substitute(expand('%'), '\(^autoload\/\|\.vim$\)', '', 'g'), '\/', '#', 'g')`}#${2:#:func_name}(${3}) "{{{
+    ${0}
+  endfunction "}}}
+
 snippet command
 abbr    my command (override default snippet)
   command! -nargs=${1} ${2:#:CommandName}
