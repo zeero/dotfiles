@@ -76,7 +76,7 @@ on_source = ['unite.vim']
 repo = 'lambdalisue/vim-gista'
 #CtrlPGistaより先に読み込まれないとgistを開けなくなる...
 #いったんlazyをコメントアウト
-# lazy = 1
+lazy = 1
 # on_cmd = ['Gista']
 # on_map = '<Plug>(gista-'
 # on_func = ['gista#gist#api#list']
