@@ -1,14 +1,14 @@
 snippet func
 abbr    my function (override default snippet)
 options head
-  function! ${1:#:func_name}(${2}) "{{{
+  function! ${1:#:func_name}(${2}) abort "{{{
     ${0}
   endfunction "}}}
 
 snippet func:autoload
 abbr    my function (override default snippet)
 options head
-  function! ${1:`substitute(substitute(expand('%'), '\(^autoload\/\|\.vim$\)', '', 'g'), '\/', '#', 'g')`}#${2:#:func_name}(${3}) "{{{
+  function! ${1:`substitute(substitute(expand('%'), '\(^autoload\/\|\.vim$\)', '', 'g'), '\/', '#', 'g')`}#${2:#:func_name}(${3}) abort "{{{
     ${0}
   endfunction "}}}
 
@@ -37,9 +37,9 @@ abbr    plugin template
   set cpo&vim
 
 
-  " Commands
-  ${0}
+  " Commands${0}
   " Keymaps
+  " Autocommands
 
 
   let &cpo = s:save_cpo
@@ -55,19 +55,19 @@ abbr    template for themis test script
   let s:suite = themis#suite('${1:Test for `MyGetCounterpart()` -}')
   let s:assert = themis#helper('assert')
 
-  function! s:suite.${2:#:test_name}()
+  function! s:suite.${2:#:test_name}() "{{{
     let actual = ${3}
     let expected = ${4}
     call s:assert.equals(actual, expected)
-  endfunction
+  endfunction "}}}
 
 snippet func:themis
 abbr    function definition for themis test
-  function! s:suite.${2:#:test_name}()
+  function! s:suite.${2:#:test_name}() "{{{
     let actual = ${3}
     let expected = ${4}
     call s:assert.equals(actual, expected)
-  endfunction
+  endfunction "}}}
 
 snippet template:vmock
 abbr    template for vmock
