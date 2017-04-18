@@ -894,7 +894,7 @@ lazy = 1
 on_ft = ['javascript', 'coffee']
 
 [[plugins]]
-repo = 'scrooloose/syntastic'
+repo = 'vim-syntastic/syntastic'
 # lazy = 1
 # on_i = 1
 
@@ -965,6 +965,17 @@ lazy = 1
 [[plugins]]
 repo = 'kannokanno/vmock'
 lazy = 1
+
+[[plugins]]
+repo = 'haya14busa/go-vimlparser'
+lazy = 1
+
+[[plugins]]
+repo = 'syngan/vim-vimlint'
+lazy = 1
+on_func = ['vimlint#vimlint']
+on_cmd = ['VimLint']
+depends = ['go-vimlparser']
 
 # その他のファイルタイプ {{{2
 
