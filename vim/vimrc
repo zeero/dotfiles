@@ -1165,7 +1165,7 @@ nnoremap zH zh
 nnoremap zL zl
 " デフォルトアプリで開く
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nnoremap gx :<C-u>call vimproc#open(escape('<C-r>*', ' \'))<CR>
+nnoremap gx :<C-u>call vimproc#open(escape('<C-r><C-w>', ' \'))<CR>
 vnoremap gx y:<C-u>call vimproc#open(escape('<C-r>"', ' \'))<CR>
 " Webで検索する
 map gX <Plug>(openbrowser-smart-search)
