@@ -528,6 +528,11 @@ repo = 'dbext.vim'
 lazy = 1
 # on_cmd = ['DBExt']
 
+[[plugins]]
+repo = 'mattn/qiita-vim'
+lazy = 1
+on_cmd = ['Qiita', 'CtrlPQiita']
+
 
 # 表示 {{{2
 
@@ -665,9 +670,12 @@ on_cmd = ['BenchVimrc']
 
 [[plugins]]
 repo = 'haya14busa/vim-migemo'
+lazy = 1
 
 [[plugins]]
 repo = 'rhysd/migemo-search.vim'
+lazy = 1
+depends = ['vim-migemo']
 
 [[plugins]]
 repo = 'sudo.vim'
