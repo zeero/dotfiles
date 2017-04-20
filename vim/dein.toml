@@ -413,13 +413,11 @@ lazy = 1
 on_cmd = ['QuickRun']
 on_map = '<Plug>(quickrun'
 hook_post_source = '''call MyDeinHookQuickrun()'''
+depends = ['shabadou.vim']
 
 [[plugins]]
 repo = 'osyo-manga/shabadou.vim'
 lazy = 1
-on_cmd = ['QuickRun']
-on_map = '<Plug>(quickrun'
-depends = ['vim-quickrun']
 
 [[plugins]]
 repo = 'majutsushi/tagbar'
