@@ -10,7 +10,7 @@ syn region WFLinkText      matchgroup=WFLinkTextDelimiter start="!\=\[\%(\_[^]]*
 syn region WFLink          matchgroup=WFLinkDelimiter start="(" end=")" contains=WFUrl keepend contained conceal
 syn region WFId            matchgroup=WFIdDelimiter start="\[" end="\]" keepend contained
 syn region WFAutomaticLink matchgroup=WFUrlDelimiter start="<\%(\w\+:\|[[:alnum:]_+-]\+@\)\@=" end=">" keepend oneline
-hi def link WFLinkText              PreProc
+hi          WFLinkText              term=underline ctermfg=9 guifg=#96CBFE gui=underline
 hi def link WFIdDeclaration         Typedef
 hi def link WFId                    Type
 hi def link WFAutomaticLink         WFUrl
