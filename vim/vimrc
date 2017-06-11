@@ -422,7 +422,7 @@ function! s:my_vimenter_vimrc() "{{{
 endfunction "}}}
 
 " NeoSnippet {{{2
-au myvimrc FileType neosnippet setlocal nofoldenable
+au myvimrc FileType neosnippet setlocal nofoldenable noexpandtab
 
 " fugitive、vim-vcs {{{2
 au myvimrc FileType gitcommit,vcs-*
