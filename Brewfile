@@ -51,7 +51,7 @@ brew 'terminal-notifier'
 
 # utility
 cask 'alfred'
-cask 'clipmenu'
+cask 'clipy'
 cask 'spectacle'
 cask 'witch'
 
