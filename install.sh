@@ -31,16 +31,22 @@ mkdir ~/.bundle
 find ${DOTFILES}/home/.bundle -type f -depth 1 -exec ln -s {} ~/.bundle \;
 
 # git config
-git config --global user.name zeero
-git config --global user.email zeero26@gmail.com
-git config --global github.user zeero
-git config --global push.default matching
+# git config --global user.name zeero
+# git config --global user.email zeero26@gmail.com
+# git config --global github.user zeero
+git config --global push.default simple
 git config --global http.sslVerify false
 git config --global core.excludesfile ~/.gitignore
 git config --global core.editor vim
 git config --global diff.tool vimdiff
 git config --global diff.algorithm histogram
+git config --global merge.tool vimdiff
+git config --global alias.co "checkout"
+git config --global alias.st "status"
 git config --global alias.graph "log --graph --decorate --name-status"
+git config --global alias.ignore "update-index --skip-worktree"
+git config --global alias.noignore "update-index --no-skip-worktree"
+git config --global alias.stashdiff "diff HEAD..stash@{0}"
 
 # Ricty
 open ${DOTFILES}/lib/RictyDiminished/RictyDiminished-Regular.ttf
