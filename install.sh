@@ -4,6 +4,7 @@
 # - Homebrew install
 # - brew install git
 # - git clone https://github.com/zeero/dotfiles.git
+# - Xcode install
 
 cd `dirname $0`
 DOTFILES=`pwd`
