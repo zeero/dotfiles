@@ -48,6 +48,8 @@ cask 'realm-browser'
 cask 'sourcetree'
 brew 'jsonlint'
 brew 'terminal-notifier'
+brew 'docker'
+cask 'docker'
 
 # utility
 cask 'alfred'
