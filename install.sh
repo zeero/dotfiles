@@ -123,6 +123,8 @@ npm install -g \
 # firebrew install "Text Link"
 # firebrew install "Snap Links"
 # firebrew install "Tile Tabs"
+# firebrew install "Vimfx"
+# firebrew install "XUL/Migemo"
 
 # その他設定
 echo "・キー移動を速くするために「システム環境設定」の「キーボード」からキーリピート、リピート認識を最大にする"
