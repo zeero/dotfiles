@@ -144,6 +144,7 @@ lazy fmaps -u='mail\.google\.com/mail' c / l j k n p o u e x s r a I *a *n # [ ]
 lazy fmaps -u='www\.google\.co\.jp/reader' -events=vkeypress j k n p m s v A r S N P X O gh ga gs gt gu u / ? J K
 lazy fmaps -u='http://code.google.com/p/vimperator-labs/issues/list' o j k
 lazy fmaps -u='http://code.google.com/p/vimperator-labs/issues/detail' u
+lazy fmaps -u='\.slack\.com/' <C-k>
 
 " copy.js
 javascript <<EOM
@@ -163,6 +164,9 @@ EOM
 " caret-hint
 let g:caret_hint_key = 'g'
 let g:caret_hint_tail_key = 'G'
+
+" 読み込み完了メッセージ
+echo "Loaded from vimperatorrc."
 
 " vim:ft=vim
 
