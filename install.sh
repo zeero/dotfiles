@@ -84,6 +84,11 @@ gem install \
   synx \
   travis \
   rdoc-generator-fivefish \
+  update_xcode_plugins \
+
+# Xcode8以降にalcatrazを導入する場合、以下のコマンド実行が必要になる
+#   update_xcode_plugins --unsign
+# Xcodeのバージョンとxcodebuildコマンドも対象にするか聞かれるので対象にして実行する
 
 # nokogiriのインストールには設定が必要となる
 # bundler経由の場合は以下で設定 （さらにherokuの場合は、heroku runで動かす）
