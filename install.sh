@@ -18,8 +18,6 @@ mkdir -p ~/.tmux/plugins
 ln -s ${DOTFILES}/home/.tmux/plugins/tpm ~/.tmux/plugins/tpm
 ln -s ${DOTFILES}/vim ~/.vim
 ln -s ${DOTFILES}/vim/vimrc ~/.vimrc
-ln -s ${DOTFILES}/vimperator ~/.vimperator
-ln -s ${DOTFILES}/vimperator/vimperatorrc ~/.vimperatorrc
 mkdir ~/bin
 chmod 744 ${DOTFILES}/home/bin/*
 chmod 744 ${DOTFILES}/lib/git-info/*
