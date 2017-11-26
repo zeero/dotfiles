@@ -1,0 +1,197 @@
+"-----------------------------------------------------------------------------
+" Settings
+"-----------------------------------------------------------------------------
+" 表示 {{{1
+set hud
+let barposition = "bottom"
+set completeonopen
+
+" 移動 {{{1
+set smoothscroll
+let scrollstep = 70
+let hintcharacters = "qwerzxcvasdfg"
+
+" 編集 {{{1
+set noautofocus " The opposite of autofocus; this setting stops sites from focusing on an input box when they load
+
+" 検索エンジン {{{1
+let searchlimit = 20
+let locale = "jp" " Current choices are 'jp' and 'uk'. This allows cVim to use sites like google.co.uk
+                  " or google.co.jp to search rather than google.com. Support is currently limited.
+                  " Let me know if you need a different locale for one of the completion/search engines
+let completionengines = ["google", "wikipedia"]
+
+let searchengine map = "https://www.google.co.jp/maps/?hl=ja&q=%s"
+let searchengine image = "https://www.google.co.jp/search?tbm=isch&q=%s"
+let searchengine icon = "https://www.google.co.jp/search?as_st=y&tbm=isch&hl=ja&as_q=%s&safe=images&tbs=isz:i"
+let searchengine trend = "https://www.google.co.jp/trends/explore?q=%s"
+let searchengine eiwa = "https://translate.google.com/#en/ja/%s"
+let searchengine waei = "https://translate.google.com/#ja/en/%s"
+let searchengine hub = "https://github.com/search?utf8=%E2%9C%93&o=desc&s=stars&q=%s"
+let searchengine gem = "https://rubygems.org/search?utf8=%E2%9C%93&query=%s"
+let searchengine npmjs = "https://www.npmjs.com/search?q=%s"
+let searchengine photo = "https://pixabay.com/ja/photos/?q=%s&image_type=&cat=&min_width=&min_height="
+
+let searchalias ggl = "google"
+let searchalias wkp = "wikipedia"
+let searchalias amzn = "amazon"
+
+" ブックマーク {{{1
+let qmark g = ["https://gist.github.com/zeero"]
+" defineBookmarks -> {{
+"   bmarks = [
+"     {url: 'https://gist.github.com/zeero', title: 'My Gists'}
+"   ]
+"   for (bmark in bmarks) {
+"     chrome.bookmarks.search({url: bmark.url}, function(results) {
+"       if (!results.length) {
+"         chrome.bookmarks.create(bmark);
+"       } else {
+"         // alert(results.length);
+"       }
+"     });
+"   }
+" }}
+" call defineBookmarks
+
+
+" 除外リスト {{{1
+" blacklists prefixed by '@' act as a whitelist
+" let blacklists = ["https://mail.google.com/*", "*://mail.google.com/*", "@https://mail.google.com/mail/*"]
+" this will enable the config block below on the domain
+site '*://mail.google.com/*' {
+  unmap j
+  unmap k
+  unmap c
+  unmap /
+  unmap l
+  unmap n
+  unmap p
+  unmap o
+  unmap u
+  unmap e
+  unmap x
+  unmap s
+  unmap r
+  unmap a
+  unmap I
+  unmap ?
+  unmap gi
+  unmap gs
+  unmap gt
+  unmap gd
+  unmap ga
+  unmap gc
+}
+
+" TODO: Chrome設定 {{{1
+
+"1}}}
+
+"-----------------------------------------------------------------------------
+" Keymaps
+"-----------------------------------------------------------------------------
+" 設定 {{{1
+let mapleader = ","
+" map <Leader>r reloadTabUncached
+
+map ,r :call resource<CR>
+resource -> {{
+  let repeat = 1;
+  let msgTime = 2;
+  if (settings.configpath === '') {
+    Status.setMessage("Please re-configure configpath (:let configpath = '/path/to/cvimrc')", msgTime, 'error');
+  } else {
+    Command.execute('source ' + settings.configpath, repeat);
+    Status.setMessage('cvimrc Resourced!', msgTime);
+  }
+}}
+
+" 移動 {{{1
+map h goBack
+map l goForward
+map zh scrollLeft
+map zl scrollRight
+map <C-a> incrementURLPath
+map <C-x> decrementURLPath
+map <C-h> previousScrollPosition
+map <C-l> nextScrollPosition
+
+" 表示 {{{1
+map R reloadTabUncached
+map + zoomPageIn
+map - zoomPageOut
+map = zoomOrig
+" TODO: ツールバーのトグル
+
+" タブ {{{1
+map H previousTab
+map L nextTab
+map d closeTab
+map q closeTab
+map D :execute dH<CR>
+map u lastClosedTab
+map U :restore<Space>
+map ,l 100moveTabRight
+map ,L 100moveTabLeft
+map ,t :tabnew<CR>
+
+" ウィンドウ {{{1
+map w :new<Space>
+map W :new @%
+
+" ヤンク {{{1
+map y yankDocumentUrl
+map gy :call copy_title_and_url(false)<CR>
+map gY :call copy_title_and_url(true)<CR>
+" copy_title_and_url(isMarkdown) {{{
+copy_title_and_url(isMarkdown) -> {{
+  let url = document.URL;
+  let title = document.title;
+  if (isMarkdown) {
+    var fmt = '[' + title + '](' + url + ')';
+  } else {
+    var fmt = title + '\n' + url;
+  }
+  Status.setMessage(fmt, 2);
+  Clipboard.copy(fmt);
+}}
+"}}}
+" ヒントURLをヤンク
+map Y yankUrl
+
+" マーク {{{1
+map m* setMark
+map gm* goToMark
+
+" 入力 {{{1
+imap <C-h> backwardChar
+imap <C-l> forwardChar
+imap <C-d> deleteChar
+imap <C-a> beginningOfLine
+imap <C-e> endOfLine
+imap <C-w> forwardWord
+imap <C-b> backwardWord
+" TODO: unfocus
+" map <Esc> 
+
+" コマンドモード {{{1
+" TODO: previous/next
+set cncpcompletion
+map <C-n> nextCompletionResult
+
+"1}}}
+
+"-----------------------------------------------------------------------------
+" Commands
+"-----------------------------------------------------------------------------
+command restart    chrome<Space>restart
+command downloads  tabnew<Space>chrome://downloads
+command extensions tabnew<Space>chrome://extensions
+command webstore   tabnew<Space>https://chrome.google.com/webstore/category/extensions?hl=ja
+
+
+"Paste belows to cVimrc options (:settings)
+" let configpath = '/path/to/.cvimrc'
+" set localconfig
+
