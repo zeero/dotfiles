@@ -123,6 +123,7 @@ mklink %HOMEDRIVE%%HOMEPATH%\_vimrc %DOTFILES%\vim\vimrc
 mklink %HOMEDRIVE%%HOMEPATH%\_vimperatorrc %DOTFILES%\vimperator\vimperatorrc
 mklink %HOMEDRIVE%%HOMEPATH%\.gitignore %DOTFILES%\home\.gitignore
 mklink %HOMEDRIVE%%HOMEPATH%\.ctags %DOTFILES%\home\.ctags
+mklink %HOMEDRIVE%%HOMEPATH%\.cvimrc %DOTFILES%\home\.cvimrc
 mklink %HOMEDRIVE%%HOMEPATH%\.tmux.conf %DOTFILES%\home\.tmux.conf
 mkdir %HOMEDRIVE%%HOMEPATH%\.tmux\plugins
 mklink /d %HOMEDRIVE%%HOMEPATH%\.tmux\plugins\tpm %DOTFILES%\home\.tmux\plugins\tpm

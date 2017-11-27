@@ -59,7 +59,7 @@ cask 'witch'
 
 # application
 cask 'iterm2'
-cask 'firefox'
+cask 'google-chrome'
 cask 'google-japanese-ime'
 cask 'appcleaner'
 cask 'skitch'
