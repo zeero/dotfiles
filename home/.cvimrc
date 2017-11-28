@@ -143,16 +143,19 @@ map W :new @%
 
 " ヤンク {{{1
 map y yankDocumentUrl
-map gy :call copy_title_and_url(false)<CR>
-map gY :call copy_title_and_url(true)<CR>
+map gy :call copy_title_and_url(0)<CR>
+map gY :call copy_title_and_url(1)<CR>
+map ,y :call copy_title_and_url(2)<CR>
 " copy_title_and_url(isMarkdown) {{{
-copy_title_and_url(isMarkdown) -> {{
+copy_title_and_url(mode) -> {{
   let url = document.URL;
   let title = document.title;
-  if (isMarkdown) {
+  if (mode === 0) {
+    var fmt = title + '\n' + url;
+  } else if (mode === 1) {
     var fmt = '[' + title + '](' + url + ')';
   } else {
-    var fmt = title + '\n' + url;
+    var fmt = '<a href="' + url + '">' + title + '</a>';
   }
   Status.setMessage(fmt, 2);
   Clipboard.copy(fmt);
@@ -190,6 +193,7 @@ command restart    chrome<Space>restart
 command downloads  tabnew<Space>chrome://downloads
 command extensions tabnew<Space>chrome://extensions
 command webstore   tabnew<Space>https://chrome.google.com/webstore/category/extensions?hl=ja
+command bmark      chrome<Space>bookmarks
 
 
 "Paste belows to cVimrc options (:settings)
