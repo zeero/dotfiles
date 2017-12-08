@@ -9,7 +9,7 @@ set completeonopen
 " 移動 {{{1
 set smoothscroll
 let scrollstep = 70
-let hintcharacters = "qwerzxcvasdfg"
+let hintcharacters = "fdsavcxzrewqg"
 
 " 編集 {{{1
 set noautofocus " The opposite of autofocus; this setting stops sites from focusing on an input box when they load
@@ -189,11 +189,16 @@ map <C-n> nextCompletionResult
 "-----------------------------------------------------------------------------
 " Commands
 "-----------------------------------------------------------------------------
-command restart    chrome<Space>restart
+command bmarks     tabnew<Space>chrome://bookmarks
 command downloads  tabnew<Space>chrome://downloads
 command extensions tabnew<Space>chrome://extensions
 command webstore   tabnew<Space>https://chrome.google.com/webstore/category/extensions?hl=ja
-command bmark      chrome<Space>bookmarks
+command restart    chrome<Space>restart
+let qmark b = ["chrome://bookmarks"]
+let qmark d = ["chrome://downloads"]
+let qmark e = ["chrome://extensions"]
+let qmark w = ["https://chrome.google.com/webstore/category/extensions?hl=ja"]
+let qmark r = ["chrome://restart"]
 
 
 "Paste belows to cVimrc options (:settings)
