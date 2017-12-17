@@ -1,18 +1,18 @@
+set encoding=utf-8
+scriptencoding utf-8
+
 "-----------------------------------------------------------------------------
 " 初期設定
 "-----------------------------------------------------------------------------
 " 初期設定 {{{1
 " VI互換モードOFF
-if has('vim_starting')
+if &compatible
   set nocompatible
-  " Winコマンドプロンプトではcp932
-  if has('win32')
-    let &termencoding = &encoding
-  endif
 endif
-" 内部エンコーディングをutf-8に指定
-set encoding=utf-8
-scriptencoding utf-8
+" Winコマンドプロンプトではcp932
+if has('vim_starting') && has('win32')
+  let &termencoding = &encoding
+endif
 " ファイルエンコーディング設定
 set fencs=utf-8,cp932,euc-jp,iso-2022-jp
 set ffs=unix,dos,mac
