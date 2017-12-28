@@ -1,5 +1,6 @@
 cask_args appdir: '/Applications'
 tap 'caskroom/cask'
+tap 'homebrew/versions'
 
 # language
 brew 'ruby'
@@ -30,6 +31,7 @@ brew 'fzf'
 brew 'tree'
 brew 'hub'
 brew 'rename'
+brew 'cmake'
 
 # vim
 brew 'macvim', args: ['with-lua', 'with-override-system-vim']
