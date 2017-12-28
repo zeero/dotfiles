@@ -1445,15 +1445,19 @@ vmap ,/ <Plug>(caw:hatpos:toggle)
 " VimFiler
 nnoremap ,f :<C-u>VimFilerBufferDir<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-force-quit<Space>-toggle<CR>
 " VimShell
-nnoremap ,s :<C-u>VimShellPop<Space>-create<Space>-buffer-name=vimshell<CR>
+" nnoremap ,s :<C-u>VimShellPop<Space>-create<Space>-buffer-name=vimshell<CR>
 " nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<Space>$HOME<CR>
-nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<CR>
+" nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<CR>
+" :terminal
+nnoremap ,s :<C-u>botright<Space>term<CR>
+nnoremap ,S :<C-u>tabnew<Space>term<CR>
+tnoremap <Esc> <C-w>N
 " MBEToggle
 nnoremap ,b :<C-u>MBEToggle<CR>
 " TagbarToggle
 nnoremap ,; :<C-u>TagbarToggle<CR>
 " QFToggle
-nnoremap ,. :<C-u>QFToggle<CR>
+nnoremap ,, :<C-u>QFToggle<CR>
 command! QFToggle :call s:my_qf_toggle()
 function! s:my_qf_toggle() "{{{
   let cur_win = winnr()
