@@ -1466,8 +1466,8 @@ function! s:my_qf_toggle() "{{{
   botright cwindow 7
 endfunction "}}}
 " PreviewToggle
-nnoremap ,, :<C-u>PreviewToggle<CR>zz
-vnoremap ,, y:<C-u>call PreviewWord('<C-r>"')<CR>
+nnoremap ,. :<C-u>PreviewToggle<CR>zz
+vnoremap ,. y:<C-u>call PreviewWord('<C-r>"')<CR>
 command! PreviewToggle :call s:my_preview_toggle()
 function! s:my_preview_toggle() "{{{
   silent! wincmd P
