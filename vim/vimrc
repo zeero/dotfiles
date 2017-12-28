@@ -300,6 +300,9 @@ function! s:my_splash() "{{{
 endfunction "}}}
 " 補完メニューの高さ設定（デフォルト：最大）
 set pumheight=10
+" ウィンドウの開く位置（下or右）
+set splitbelow
+set splitright
 
 " GUI固有の画面表示の設定 {{{1
 if has('gui_running')
