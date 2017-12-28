@@ -9,6 +9,8 @@ export PAGER=less
 export LESS='-R -X -i -P ?f%f:(stdin).  ?lb%lb?L/%L..  [?eEOF:?pb%pb\%..]'
 ## デフォルトのエディタ
 export EDITOR=vim
+## 端末
+export TERM=xterm-256color
 
 # PATH
 PATH=/usr/local/bin:$PATH

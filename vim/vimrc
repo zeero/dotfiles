@@ -39,6 +39,11 @@ let $LANG = 'ja_JP.UTF-8'
 if !has('gui_running') && has('xterm_clipboard')
   set clipboard=exclude:cons\\\|linux\\\|cygwin\\\|rxvt\\\|screen
 endif "}}}
+" NeoVim
+if has('mac')
+  let g:python_host_prog='/usr/local/bin/python'
+  let g:python3_host_prog='/usr/local/bin/python3'
+endif
 
 " Dein {{{1
 if has('vim_starting')
