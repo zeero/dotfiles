@@ -1452,8 +1452,8 @@ nnoremap ,f :<C-u>VimFilerBufferDir<Space>-buffer-name=vimfiler<Space>-split<Spa
 " nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<Space>$HOME<CR>
 " nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<CR>
 " :terminal
-nnoremap ,s :<C-u>botright<Space>term<CR>
-nnoremap ,S :<C-u>tabnew<Space>term<CR>
+nnoremap ,s :<C-u>botright<Space>terminal<Space>++close<Space>++rows=7<CR>
+nnoremap ,S :<C-u>tab<Space>terminal<Space>++close<CR>
 tnoremap <Esc> <C-w>N
 " MBEToggle
 nnoremap ,b :<C-u>MBEToggle<CR>
