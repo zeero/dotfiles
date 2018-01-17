@@ -1459,7 +1459,9 @@ nnoremap ,f :<C-u>VimFilerBufferDir<Space>-buffer-name=vimfiler<Space>-split<Spa
 " :terminal
 nnoremap ,s :<C-u>botright<Space>terminal<Space>++close<Space>++rows=7<CR>
 nnoremap ,S :<C-u>tab<Space>terminal<Space>++close<CR>
-tnoremap <Esc> <C-w>N
+if has('terminal')
+  tnoremap <Esc> <C-w>N
+endif
 " MBEToggle
 nnoremap ,b :<C-u>MBEToggle<CR>
 " TagbarToggle
