@@ -254,6 +254,10 @@ lazy = 1
 on_i = 1
 on_ft = ['workflowish', 'markdown']
 
+[[plugins]]
+repo = 'dhruvasagar/vim-table-mode'
+lazy = 1
+on_cmd = ['TableModeToggle']
 
 # テキストオブジェクト {{{1
 
@@ -547,14 +551,41 @@ on_cmd = ['MBEbp', 'MBEbn', 'MBEToggle']
 augroup = 'MiniBufExpl'
 
 [[plugins]]
+repo = 'Shougo/context_filetype.vim'
+lazy = 1
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+lazy = 1
+on_cmd = ['PreciousSwitch', 'PreciousReset']
+
+[[plugins]]
+repo = 'thinca/vim-guicolorscheme'
+lazy = 1
+on_cmd = ['GuiColorScheme']
+gui = 0
+
+[[plugins]]
+repo = 'godlygeek/csapprox'
+lazy = 1
+on_cmd = ['CSApproxSnapshot']
+gui = 1
+
+[[plugins]]
+repo = 'ScrollColors'
+lazy = 1
+on_cmd = ['SCROLLCOLOR']
+
+# 普段使わないカラースキームは使用時にアクティベート
+
+[[plugins]]
 repo = 'molokai'
 gui = 0
 
 [[plugins]]
 repo = 'twerth/ir_black'
 gui = 1
-
-# 普段使わないカラースキームは使用時にアクティベート
 
 [[plugins]]
 repo = 'wombat256.vim'
@@ -593,23 +624,6 @@ repo = 'newspaper.vim'
 lazy = 1
 
 [[plugins]]
-repo = 'thinca/vim-guicolorscheme'
-lazy = 1
-on_cmd = ['GuiColorScheme']
-gui = 0
-
-[[plugins]]
-repo = 'godlygeek/csapprox'
-lazy = 1
-on_cmd = ['CSApproxSnapshot']
-gui = 1
-
-[[plugins]]
-repo = 'ScrollColors'
-lazy = 1
-on_cmd = ['SCROLLCOLOR']
-
-[[plugins]]
 repo = 'cocopon/colorswatch.vim'
 lazy = 1
 on_cmd = ['ColorSwatchGenerate']
@@ -621,16 +635,6 @@ lazy = 1
 [[plugins]]
 repo = 'jscappini/material.vim'
 lazy = 1
-
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
-lazy = 1
-
-[[plugins]]
-repo = 'osyo-manga/vim-precious'
-depends = ['context_filetype.vim']
-lazy = 1
-on_cmd = ['PreciousSwitch', 'PreciousReset']
 
 
 # 補助 {{{1
@@ -901,8 +905,19 @@ on_ft = ['javascript', 'coffee']
 
 [[plugins]]
 repo = 'vim-syntastic/syntastic'
-# lazy = 1
+lazy = 1
 # on_i = 1
+
+[[plugins]]
+repo = 'w0rp/ale'
+lazy = 1
+on_i = 1
+
+[[plugins]]
+repo = 'maximbaz/lightline-ale'
+lazy = 1
+on_i = 1
+depends = ['ale']
 
 [[plugins]]
 repo = 'lukaszkorecki/workflowish'
