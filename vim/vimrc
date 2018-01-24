@@ -1194,6 +1194,8 @@ function! s:my_copy_path()
 endfunction
 " 行の最後ならxで後方削除
 nnoremap <expr> x virtcol(".") == virtcol("$") ? 'X' : 'x'
+" 行の先頭ならXで改行削除、行の非空白文字の先頭ならXで空白全削除
+nnoremap <expr> X virtcol(".") == 1 ? 'kJ' : virtcol(".") - 1 == match(getline("."), '\S') ? ':left<CR>' : 'X'
 
 " ビジュアルモード {{{2
 " ヤンク後末尾に移動
@@ -2773,7 +2775,7 @@ command! Gca Gcommit -va
 command! Gl Glog
 command! Gb Gblame
 " HEADに戻す
-command! Gr Gread! show HEAD:%
+command! Grevert Gread! show HEAD:%
 
 " Gitv {{{1
 let g:Gitv_OpenHorizontal = 1
