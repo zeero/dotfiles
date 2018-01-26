@@ -1,6 +1,6 @@
 cask_args appdir: '/Applications'
 tap 'caskroom/cask'
-tap 'homebrew/versions'
+tap 'caskroom/versions'
 
 # language
 brew 'ruby'
@@ -12,6 +12,7 @@ brew 'lua'
 brew 'node', args: ['with-full-icu']
 brew 'npm'
 brew 'zsh'
+cask 'java'
 
 # command
 # gitははじめに手動でいれる
