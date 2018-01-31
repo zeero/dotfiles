@@ -803,6 +803,11 @@ on_cmd = ['Gitv']
 depends = ['vim-fugitive']
 
 [[plugins]]
+repo = 'cohama/agit.vim'
+lazy = 1
+on_cmd = ['Agit']
+
+[[plugins]]
 repo = 'jreybert/vimagit'
 
 
