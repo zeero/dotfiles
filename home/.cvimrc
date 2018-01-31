@@ -31,6 +31,7 @@ let searchengine hub = "https://github.com/search?utf8=%E2%9C%93&o=desc&s=stars&
 let searchengine gem = "https://rubygems.org/search?utf8=%E2%9C%93&query=%s"
 let searchengine npmjs = "https://www.npmjs.com/search?q=%s"
 let searchengine photo = "https://pixabay.com/ja/photos/?q=%s&image_type=&cat=&min_width=&min_height="
+let searchengine tw = "https://twitter.com/search?q=%s&src=typd&lang=ja"
 
 let searchalias ggl = "google"
 let searchalias wkp = "wikipedia"
