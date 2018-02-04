@@ -45,7 +45,6 @@ brew 'jq'  # json parser
 brew 'jvgrep'
 
 # coding tool
-brew 'swiftlint'
 cask 'alcatraz'
 cask 'realm-browser'
 cask 'sourcetree'
