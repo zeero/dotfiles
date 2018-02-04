@@ -54,6 +54,7 @@ open ${DOTFILES}/lib/RictyDiminished/RictyDiminished-BoldOblique.ttf
 
 # HomeBrew
 brew bundle
+brew linkapps macvim
 
 # ruby
 CONFIGURE_OPTS="--with-readline-dir=/usr/local/opt" rbenv install 2.3.1
