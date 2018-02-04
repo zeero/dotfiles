@@ -99,7 +99,7 @@ bitclust setup
 
 # node.js
 npm install -g \
-  coffee-script \
+  coffeescript \
   coffeelint \
   eslint \
   jshint \
