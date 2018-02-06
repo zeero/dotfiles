@@ -67,6 +67,7 @@ cask 'appcleaner'
 cask 'skitch'
 cask 'imageoptim'
 cask 'coteditor'
+cask 'slack'
 
 # dupes
 tap 'homebrew/dupes'
