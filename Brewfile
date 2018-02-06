@@ -13,6 +13,7 @@ brew 'node', args: ['with-full-icu']
 brew 'npm'
 brew 'zsh'
 cask 'java'
+brew 'go'
 
 # command
 # gitははじめに手動でいれる
