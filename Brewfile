@@ -44,7 +44,6 @@ brew 'the_silver_searcher'
 brew 'the_platinum_searcher'
 brew 'jq'  # json parser
 brew 'jvgrep'
-brew 'ghq'
 
 # coding tool
 cask 'alcatraz'
@@ -54,6 +53,8 @@ brew 'jsonlint'
 brew 'terminal-notifier'
 brew 'docker'
 cask 'docker'
+brew 'ghq'
+brew 'gibo'
 
 # utility
 cask 'alfred'
