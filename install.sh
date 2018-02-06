@@ -45,6 +45,7 @@ git config --global alias.graph "log --graph --decorate --name-status"
 git config --global alias.ignore "update-index --skip-worktree"
 git config --global alias.noignore "update-index --no-skip-worktree"
 git config --global alias.stashdiff "diff HEAD..stash@{0}"
+git config --global ghq.root "~/dev"
 
 # Ricty
 open ${DOTFILES}/lib/RictyDiminished/RictyDiminished-Regular.ttf

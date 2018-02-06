@@ -28,6 +28,12 @@ __fzf_git_branch__() {
     return 0
   fi
 }
+## fzf-ghq
+ghqcd() {
+  local dir fzf
+  [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux -d ${FZF_TMUX_HEIGHT:-40%}" || fzf="fzf"
+  dir=$(ghq list | fzf-tmux --reverse) && cd $(ghq root)/$dir
+}
 ## gitignore
 function gitignore() { curl -L -o .gitignore -s https://www.gitignore.io/api/$@ ;}
 
