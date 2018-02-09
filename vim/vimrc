@@ -3261,19 +3261,30 @@ let g:syntastic_warning_symbol='⚠'
 let g:syntastic_check_on_wq = 0
 
 " ALE {{{1
+" 基本 {{{2
 " エラー発生時にロケーションリストを開く
 let g:ale_open_list = 1
 " 保存時のみ実行する
 let g:ale_lint_on_text_changed = 0
-" 表示
+let g:ale_lint_on_enter = 0
+
+" 表示 {{{2
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 "let g:ale_sign_error = ''
 "let g:ale_sign_warning = ''
-let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 "highlight link ALEErrorSign Tag
 "highlight link ALEWarningSign StorageClass
+
+" キーマップ {{{2
 " Ctrl + kで次の指摘へ、Ctrl + jで前の指摘へ移動
 "nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 "nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+" Linter {{{2
+let g:ale_linters = {
+\ 'ruby': ['rubocop'],
+\ 'javascript': ['eslint'],
+\}
 
 " Restart {{{1
 let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'

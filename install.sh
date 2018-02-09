@@ -102,7 +102,6 @@ npm install -g \
   coffeescript \
   coffeelint \
   eslint \
-  jshint \
   hubot \
   generator-hubot \
   yo \
