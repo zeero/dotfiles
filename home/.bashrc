@@ -64,6 +64,32 @@ alcatraz_reload() {
   find ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins -name Info.plist -maxdepth 3 \
   | xargs -I{} defaults write {} DVTPlugInCompatibilityUUIDs -array-add $uuid
 }
+## pdfmerge {{{2
+pdfmerge() {
+  local usage length count infile outfile
+  length=$#
+  count=0
+  infile=""
+  
+  if [ $length -le 1 ]
+  then
+    echo "USAGE: pdfmerge infile... outfile"
+    return
+  fi
+  
+  while [ -n "$1" ]
+  do
+    count=$((++count))
+    if [ $length -eq $count ]
+    then
+      outfile="$1"
+    else
+      infile="$infile $1"
+    fi
+    shift
+  done
+  gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$outfile $infile
+}
 ## _fzf-git-branch {{{2
 _fzf_git_branch() {
   local selected fzf
