@@ -1,25 +1,71 @@
 # .bashrcにはexportしない設定値を記載する
 
-# 基本設定
+# 基本設定 {{{1
 ## プロンプトの表示
 PS1='\u@\h:\w $ '
 
-# エイリアス
+# エイリアス {{{1
 #alias ls='ls -G'
 alias ls='gls --color=auto'
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lh='ls -lh'
-alias fcd='source ~/bin/fcd'
 alias be='bundle exec'
 alias rails='bundle exec rails'
 
-# ファンクション
-## 計算
+# ファンクション {{{1
+## calc {{{2
 calc() { awk "BEGIN { print $* }"; }
-## fzf-git-branch補完
-__fzf_git_branch__() {
+## mkdatedir {{{2
+mkdatedir() { mkdir `date "+%Y%m%d%H%M%S"`; }
+## fcd {{{2
+fcd() {
+  local targetDir
+  targetDir=`osascript << EOS
+  tell application "Finder"
+    set theLocation to insertion location
+    
+    if class of theLocation is not in {folder, disk} then
+      set theLocation to folder of theLocation
+    end if
+    
+    if exists Finder window 1 then
+      if (target of Finder window 1 as Unicode text) is (theLocation as Unicode text) then
+        set theSelection to selection
+        if theSelection is not {} then
+          set theSelection to item 1 of theSelection
+          if (theSelection as Unicode text) ends with ":" then
+            set theLocation to theSelection
+          else
+            set theLocation to folder of theSelection
+          end if
+        end if
+      end if
+    end if
+    
+    set theLocation to theLocation as alias
+  end tell
+  
+  set theLocation to POSIX path of theLocation
+  return theLocation
+  EOS`
+  
+  cd "$targetDir"
+  echo $PWD
+}
+## gitignore {{{2
+gitignore() { curl -L -o .gitignore -s https://www.gitignore.io/api/$@; }
+## alcatraz_reload {{{2
+alcatraz_reload() {
+  local uuid
+  uuid=`defaults read /Applications/Xcode.app/Contents/Info DVTPlugInCompatibilityUUID`
+
+  find ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins -name Info.plist -maxdepth 3 \
+  | xargs -I{} defaults write {} DVTPlugInCompatibilityUUIDs -array-add $uuid
+}
+## _fzf-git-branch {{{2
+_fzf_git_branch() {
   local selected fzf
   [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux -d ${FZF_TMUX_HEIGHT:-40%}" || fzf="fzf"
   selected=$(git branch -a | sed -e 's/remotes\/origin\///' | sort | uniq | $fzf | cut -b 3- | tr '\n' ' ')
@@ -28,16 +74,14 @@ __fzf_git_branch__() {
     return 0
   fi
 }
-## fzf-ghq
+## ghqcd {{{2
 ghqcd() {
   local dir fzf
   [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux -d ${FZF_TMUX_HEIGHT:-40%}" || fzf="fzf"
   dir=$(ghq list | fzf-tmux --reverse) && cd $(ghq root)/$dir
 }
-## gitignore
-function gitignore() { curl -L -o .gitignore -s https://www.gitignore.io/api/$@ ;}
 
-# 外部ファイルの読み込み
+# 外部ファイルの読み込み {{{1
 ## .local.bashrc
 [ -f ~/.local.bashrc ] && source ~/.local.bashrc
 ## bash-completion
@@ -56,13 +100,15 @@ BREW_HUB=$(brew --prefix hub)
 if [ -f "$BREW_HUB/etc/bash_completion.d/hub.bash_completion.sh" ]; then
   source "$BREW_HUB/etc/bash_completion.d/hub.bash_completion.sh"
 fi
+## travis gem
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
-# キーバインド
+# キーバインド {{{1
 ## キーバインド解除
 tty -s && stty stop  undef # C-s
 tty -s && stty start undef # C-q
 ## fzf-git-branch
-bind '"\C-g": "$(__fzf_git_branch__)\e\C-e\er"'
+bind '"\C-g": "$(_fzf_git_branch)\e\C-e\er"'
 ## カーソル移動
 bind '"\C-h": backward-char'
 bind '"\C-l": forward-char'
@@ -71,6 +117,5 @@ bind '"\C-w": forward-word'
 ## 文字削除
 bind '"\C-d": forward-backward-delete-char'
 
+# 1}}}
 
-# added by travis gem
-[ -f /Users/jiro/.travis/travis.sh ] && source /Users/jiro/.travis/travis.sh

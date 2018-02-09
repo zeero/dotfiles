@@ -20,9 +20,8 @@ ln -s ${DOTFILES}/vim ~/.vim
 ln -s ${DOTFILES}/vim/vimrc ~/.vimrc
 mkdir ~/bin
 chmod 744 ${DOTFILES}/home/bin/*
-chmod 744 ${DOTFILES}/lib/git-info/*
+chmod 744 ${DOTFILES}/lib/git-info/git-*
 chmod 744 ${DOTFILES}/lib/markdown2ctags/markdown2ctags.py
-find ${DOTFILES}/home/bin -type f -depth 1 -exec ln -s {} ~/bin \;
 find ${DOTFILES}/lib/git-info -type f -depth 1 -exec ln -s {} ~/bin \;
 ln -s ${DOTFILES}/lib/markdown2ctags/markdown2ctags.py ~/bin/markdown2ctags.py
 mkdir ~/.bundle
