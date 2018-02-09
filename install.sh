@@ -45,6 +45,7 @@ git config --global alias.ignore "update-index --skip-worktree"
 git config --global alias.noignore "update-index --no-skip-worktree"
 git config --global alias.stashdiff "diff HEAD..stash@{0}"
 git config --global ghq.root "~/dev"
+git config --global commit.template "~/.git-commit-template"
 
 # Ricty
 open ${DOTFILES}/lib/RictyDiminished/RictyDiminished-Regular.ttf
@@ -132,4 +133,5 @@ npm install -g \
 # その他設定
 echo "・キー移動を速くするために「システム環境設定」の「キーボード」からキーリピート、リピート認識を最大にする"
 echo "・ダブルタップでドラッグするために「システム環境設定」の「アクセシビリティ」→「マウスとトラックパッド」→「トラックパッドオプション」→「ドラッグロック」を有効にする"
+echo "シフトスペースをVimに送るためにGoogleIMEの英語キーボードを導入すること"
 
