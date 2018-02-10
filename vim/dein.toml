@@ -107,6 +107,12 @@ depends = 'ctrlp.vim'
 repo = 'zeero/vim-ctrlp-gista'
 depends = ['ctrlp.vim', 'vim-gista']
 
+[[plugins]]
+repo = 'zeero/vim-ctrlp_highlight'
+lazy = 1
+on_cmd = ['CtrlPHighlight']
+depends = ['ctrlp.vim']
+
 
 # Unite {{{1
 
