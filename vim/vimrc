@@ -3288,6 +3288,14 @@ let g:ale_linters = {
 \ 'javascript': ['eslint'],
 \}
 let g:ale_ruby_rubocop_options = '--except Layout/TrailingBlankLines,Metrics/LineLength'
+let g:ale_javascript_eslint_options = "--no-eslintrc --config 'eslint' --rule " .
+\ "'{" .
+\ "\"no-console\":      \"off\"," .
+\ "\"no-undef\":        \"off\"," .
+\ "\"quotes\":          \"off\"," .
+\ "\"linebreak-style\": [\"error\", \"unix\"]," .
+\ "\"semi\":            [\"error\", \"always\"]," .
+\ "}'"
 
 " Restart {{{1
 let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
