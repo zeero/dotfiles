@@ -2539,8 +2539,8 @@ let g:quickrun_config['brewfile'] = {
 let g:lightline = {}
 " let g:lightline.colorscheme = 'wombat'
 let g:lightline.active = {
-\ 'left': [['mode', 'paste'], ['filename', 'vcs', 'gista', 'anzu']],
-\ 'right': [['lineinfo'], ['percent'], ['pwd', 'fileformat', 'fileencoding', 'filetype', 'linter_warnings', 'linter_errors']]
+\ 'left': [['mode', 'paste'], ['filename', 'vcs', 'gista', 'anzu', 'linter_warnings', 'linter_errors']],
+\ 'right': [['lineinfo'], ['percent'], ['pwd', 'fileformat', 'fileencoding', 'filetype']]
 \}
 " \ 'left': [['mode', 'paste'], ['filename', 'gista', 'anzu']],
 let g:lightline.inactive = {
@@ -3267,12 +3267,14 @@ let g:ale_open_list = 1
 " 保存時のみ実行する
 let g:ale_lint_on_text_changed = 0
 let g:ale_lint_on_enter = 0
+" loclistの行数
+let g:ale_list_window_size = 5
 
 " 表示 {{{2
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 "let g:ale_sign_error = ''
 "let g:ale_sign_warning = ''
-"highlight link ALEErrorSign Tag
+highlight link ALEErrorSign ErrorMsg
 "highlight link ALEWarningSign StorageClass
 
 " キーマップ {{{2
@@ -3285,6 +3287,7 @@ let g:ale_linters = {
 \ 'ruby': ['rubocop'],
 \ 'javascript': ['eslint'],
 \}
+let g:ale_ruby_rubocop_options = '--except Layout/TrailingBlankLines,Metrics/LineLength'
 
 " Restart {{{1
 let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
