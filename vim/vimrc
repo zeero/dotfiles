@@ -380,7 +380,7 @@ if has('persistent_undo')
 endif
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
-au myvimrc BufRead * call s:my_lcd()
+au myvimrc BufRead,BufNewFile * call s:my_lcd()
 function! s:my_lcd() "{{{
   if isdirectory(expand('%:p:h'))
     exe 'lcd' expand('%:p:h')
