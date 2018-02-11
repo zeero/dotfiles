@@ -109,30 +109,12 @@ npm install -g \
   yo \
   bower \
 
-# firebrew
-# firebrew install "Japanese Language Pack"
-# firebrew install "Nightly Tester Tools"
-# firebrew install "AutoAuth"
-# firebrew install "ColorfulTabs"
-# firebrew install "Fasterfox Lite"
-# firebrew install "FaviconizeTab"
-# firebrew install "Firebug"
-# firebrew install "Free Memory Button"
-# firebrew install "Live HTTP Headers"
-# firebrew install "Pearl Crescent Page Saver"
-# firebrew install "Stylish"
-# firebrew install "Tab Groups"
-# firebrew install "Tab Mix Plus"
-# firebrew install "Vimperator"
-# firebrew install "Vimperator-ja"
-# firebrew install "Text Link"
-# firebrew install "Snap Links"
-# firebrew install "Tile Tabs"
-# firebrew install "Vimfx"
-# firebrew install "XUL/Migemo"
+# python
+pip2 install \
+  vim-vint
 
 # その他設定
 echo "・キー移動を速くするために「システム環境設定」の「キーボード」からキーリピート、リピート認識を最大にする"
 echo "・ダブルタップでドラッグするために「システム環境設定」の「アクセシビリティ」→「マウスとトラックパッド」→「トラックパッドオプション」→「ドラッグロック」を有効にする"
-echo "シフトスペースをVimに送るためにGoogleIMEの英語キーボードを導入すること"
+echo "・シフトスペースをVimに送るためにGoogleIMEの英語キーボードを導入すること"
 

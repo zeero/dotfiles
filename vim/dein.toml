@@ -1003,13 +1003,6 @@ repo = 'haya14busa/go-vimlparser'
 lazy = 1
 
 [[plugins]]
-repo = 'syngan/vim-vimlint'
-lazy = 1
-on_func = ['vimlint#vimlint']
-on_cmd = ['VimLint']
-depends = ['go-vimlparser']
-
-[[plugins]]
 repo = 'machakann/vim-Verdin'
 lazy = 1
 on_ft = ['vim']
