@@ -552,6 +552,9 @@ on_cmd = ['Qiita', 'CtrlPQiita']
 repo = 'itchyny/lightline.vim'
 
 [[plugins]]
+repo = 'ryanoasis/vim-devicons'
+
+[[plugins]]
 repo = 'osyo-manga/vim-anzu'
 
 [[plugins]]

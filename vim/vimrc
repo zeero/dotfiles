@@ -319,9 +319,9 @@ if has('gui_running')
   set guioptions-=L
   " フォントを指定
   if has('win32') || has('win64')
-    set guifont=Ricty_Diminished:h16:cSHIFTJIS
+    set guifont=Ricty_Diminished_devicon:h16:cSHIFTJIS
   else
-    set guifont=Ricty\ Diminished\ Regular:h20
+    set guifont=Ricty\ Diminished\ devicon\ Regular:h20
 "     let g:vimshell_editor_command = '/usr/local/opt/macvim/MacVim.app/Contents/MacOS/MacVim'
   endif
   " ウィンドウサイズを最大化する
@@ -2547,6 +2547,7 @@ let g:quickrun_config['brewfile'] = {
 " lightline {{{1
 let g:lightline = {}
 " let g:lightline.colorscheme = 'wombat'
+" let g:lightline.separator = { 'left': '', 'right': '' }
 let g:lightline.active = {
 \ 'left': [['mode', 'paste'], ['filename', 'vcs', 'gista', 'anzu', 'linter_warnings', 'linter_errors']],
 \ 'right': [['lineinfo'], ['percent'], ['pwd', 'fileformat', 'fileencoding', 'filetype']]
@@ -2585,7 +2586,7 @@ function! MyModified() " {{{2
 endfunction
 function! MyReadonly() " {{{2
   "return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '[RO]' : ''
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '' : ''
 endfunction
 function! MyFilename() " {{{2
   return (&ft ==? 'vimfiler' ? vimfiler#get_status_string() :
@@ -2618,15 +2619,16 @@ function! MyVcs() " {{{2
   " endtry
   " return ''
   if exists('*fugitive#head')
-    return fugitive#head()
+    let branch = fugitive#head()
+    return branch !=# '' ? '' . branch : ''
   endif
   return ''
 endfunction
 function! MyFileformat() " {{{2
-  return winwidth(0) > 80 ? &fileformat : ''
+  return winwidth(0) > 80 ? &fileformat : WebDevIconsGetFileFormatSymbol()
 endfunction
 function! MyFiletype() " {{{2
-  return winwidth(0) > 80 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+  return winwidth(0) > 80 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() . &filetype : 'no ft') : WebDevIconsGetFileTypeSymbol()
 endfunction
 function! MyFileencoding() " {{{2
   return winwidth(0) > 80 ? (strlen(&fenc) ? &fenc : &enc) : ''
@@ -3281,8 +3283,8 @@ let g:ale_list_window_size = 5
 
 " 表示 {{{2
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
-"let g:ale_sign_error = ''
-"let g:ale_sign_warning = ''
+let g:ale_sign_error = ''
+let g:ale_sign_warning = ''
 highlight link ALEErrorSign ErrorMsg
 "highlight link ALEWarningSign StorageClass
 
