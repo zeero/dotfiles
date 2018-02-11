@@ -5,10 +5,6 @@ scriptencoding utf-8
 " 初期設定
 "-----------------------------------------------------------------------------
 " 初期設定 {{{1
-" VI互換モードOFF
-if &compatible
-  set nocompatible
-endif
 " Winコマンドプロンプトではcp932
 if has('vim_starting') && has('win32')
   let &termencoding = &encoding
@@ -172,8 +168,6 @@ else
   set iskeyword&
   set iskeyword+=-
 endif
-" 日本語整形スクリプト(by. 西岡拓洋さん)用の設定
-let format_allow_over_tw = 1	" ぶら下り可能幅
 " 編集後保存していなくても別のファイルを開く
 " set hidden
 " 新しく開く代わりにすでに開いてあるバッファを開く
@@ -388,8 +382,8 @@ endif
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
 au myvimrc BufRead * call s:my_lcd()
 function! s:my_lcd() "{{{
-  if isdirectory(expand("%:p:h"))
-    exe "lcd" expand("%:p:h")
+  if isdirectory(expand('%:p:h'))
+    exe 'lcd' expand('%:p:h')
   endif
   call localrc#load(g:localrc_filename, getcwd())
 endfunction "}}}
@@ -398,10 +392,10 @@ endfunction "}}}
 " TODO: 真ん中にならない。たぶんなんかのプラグインが悪さしてる。
 au myvimrc BufReadPost * call s:my_last_position_jump()
 function! s:my_last_position_jump()
-  if line("'\"") > 1 && line("'\"") <= line("$")
+  if line("'\"") > 1 && line("'\"") <= line('$')
     exe "normal! g`\"zvzz"
   endif
-  exe "normal! zvzz"
+  exe 'normal! zvzz'
 endfunction
 
 " ファイルタイプ別の設定 {{{1
@@ -418,7 +412,7 @@ endif
 " バックスラッシュのインデントを無くす
 let g:vim_indent_cont = 0
 " vimrc、helpでは:もiskに入れる
-if expand("%") =~ "vimrc"
+if expand('%') =~? 'vimrc'
   setlocal iskeyword+=:,#
 endif
 au myvimrc FileType help setlocal iskeyword+=:
@@ -443,18 +437,18 @@ au myvimrc FileType gitcommit,vcs-*
 " 閉じタグの自動入力設定
 au myvimrc FileType html,xml,eruby inoremap <expr> <buffer> > MyHtmlEndwise()
 function! MyHtmlEndwise() "{{{
-  let val = ">"
-  let col = col(".")
-  let str = getline(".")
-  let idx = strridx(str, "<", col - 2)
-  let idx_slash = strridx(str, "/", col - 1)
+  let val = '>'
+  let col = col('.')
+  let str = getline('.')
+  let idx = strridx(str, '<', col - 2)
+  let idx_slash = strridx(str, '/', col - 1)
   if idx == -1 || idx < idx_slash
     return val
   endif
   let str_part = strpart(str, idx, col - 1 - idx)
-  if str_part !~ '\(<br\|<img\)'
+  if str_part !~# '\(<br\|<img\)'
     let val .= substitute(str_part, '<\([^ ]\+\).*', '</\1>', '')
-    return val . "\<Esc>" . col . "|a"
+    return val . "\<Esc>" . col . '|a'
   else
     return val
   endif
@@ -463,7 +457,7 @@ endfunction "}}}
 " Java {{{2
 " ハイライト設定
 let java_highlight_all = 1
-let java_highlight_functions = "style"
+let java_highlight_functions = 'style'
 let java_highlight_debug = 1
 
 " DOS {{{2
@@ -521,18 +515,18 @@ command! QuitOther call s:my_command_bd_other()
 command! QO call s:my_command_bd_other()
 function! s:my_command_bd_other() "{{{
   let i = 1
-  let cur = bufnr("%")
-  while i <= bufnr("$")
+  let cur = bufnr('%')
+  while i <= bufnr('$')
     if buflisted(i) && i != cur
-      exe "bdelete" i
+      exe 'bdelete' i
     endif
     let i = i + 1
   endwhile
 endfunction "}}}
 " Lcd
-command! Lcd silent exe "lcd " . expand("%:p:h") | pwd
+command! Lcd silent exe 'lcd ' . expand('%:p:h') | pwd
 " LcdLocalrc
-command! LcdLocalrc silent exe "lcd " . fnamemodify(get(reverse(localrc#search(get(g:, 'localrc_filename'))), 0), ":p:h") | pwd
+command! LcdLocalrc silent exe 'lcd ' . fnamemodify(get(reverse(localrc#search(get(g:, 'localrc_filename'))), 0), ':p:h') | pwd
 " Ls
 command! -nargs=* -complete=file Ls echo globpath('./<args>', '*', 1)
 " Noh
@@ -543,13 +537,13 @@ command! Info call s:my_info()
 function! s:my_info() "{{{
   " ファイル名、パス
   echohl Identifier
-  echo expand("%:t")
+  echo expand('%:t')
   echohl None
-  echo expand("%:p")
+  echo expand('%:p')
   " 行数など
   let old_status = v:statusmsg
   exe "silent normal! g\<C-g>"
-  let msg = split(v:statusmsg, "; ")
+  let msg = split(v:statusmsg, '; ')
   for line in msg
     echo line
   endfor
@@ -560,20 +554,20 @@ function! s:my_info() "{{{
   let countComment = 0
   let countSource = 0
   let lnum = 1
-  while lnum <= line("$")
+  while lnum <= line('$')
     let line = getline(lnum)
-    if line =~ '^\s*$'
+    if line =~? '^\s*$'
       let countEmpty = countEmpty + 1
-    elseif synIDattr(synIDtrans(synID(lnum, match(line, '\S') + 1, 1)), "name") == 'Comment'
+    elseif synIDattr(synIDtrans(synID(lnum, match(line, '\S') + 1, 1)), 'name') ==# 'Comment'
       let countComment = countComment + 1
     else
       let countSource = countSource + 1
     endif
     let lnum = lnum + 1
   endwhile
-  echo "空白行：" . countEmpty
-  echo "コメント行：" . countComment
-  echo "ソース行：" . countSource
+  echo '空白行：' . countEmpty
+  echo 'コメント行：' . countComment
+  echo 'ソース行：' . countSource
 
   " git-info
   if has('win32') || has('win64')
@@ -679,16 +673,12 @@ function! s:my_wofl_to_md() "{{{
   exe '%s/^\* /\r# /'
 endfunction "}}}
 " Lipsum
-nmap \s :Lipsum \s<CR>
-nmap \d :Lipsum \d<CR>
-nmap \S :Lipsum \S<CR>
+nnoremap \s :Lipsum \s<CR>
+nnoremap \d :Lipsum \d<CR>
+nnoremap \S :Lipsum \S<CR>
 command! -count -nargs=1 Lipsum call s:my_lipsum(<q-args>)
 function! s:my_lipsum(mode) "{{{
-  if count == 0
-    let cnt = 1
-  else
-    let cnt = count
-  endif
+  let cnt = v:count1
   if a:mode ==# '\s'
     execute 'normal! ' . cnt . 'a '
   elseif a:mode ==# '\d'
@@ -741,20 +731,20 @@ endfunction "}}}
 if executable('TortoiseProc')
   command! -nargs=? -complete=dir TSlog silent call s:my_tsvn_log(expand("%"), <q-args>)
   function! s:my_tsvn_log(fname, path) "{{{
-    let path = a:path == '' ? a:fname : a:path
+    let path = a:path ==# '' ? a:fname : a:path
     call vimproc#system_bg('TortoiseProc /command:log /path:"'.path.'" /notempfile /closeonend')
   endfunction "}}}
   command! TSdiff silent call vimproc#system_bg('TortoiseProc /command:diff /path:"'.expand("%").'" /notempfile /closeonend')
   command! TSdiffPrev silent call vimproc#system_bg('TortoiseProc /command:prevdiff /path:"'.expand("%").'" /notempfile /closeonend')
   command! -nargs=? -complete=dir TSupdate silent call s:my_tsvn_update(expand("%"), <q-args>)
   function! s:my_tsvn_update(fname, path) "{{{
-    let path = a:path == '' ? a:fname : a:path
+    let path = a:path ==# '' ? a:fname : a:path
     call vimproc#system_bg('TortoiseProc /command:update /path:"'.path.'" /notempfile /closeonend')
   endfunction "}}}
   command! TSadd silent call vimproc#system_bg('TortoiseProc /command:add /path:"'.expand("%").'" /notempfile /closeonend')
   command! -nargs=? -complete=dir TScommit silent call s:my_tsvn_commit(expand("%"), <q-args>)
   function! s:my_tsvn_commit(fname, path) "{{{
-    let path = a:path == '' ? a:fname : a:path
+    let path = a:path ==# '' ? a:fname : a:path
     call vimproc#system_bg('TortoiseProc /command:commit /path:"'.path.'" /notempfile /closeonend')
   endfunction "}}}
   command! TSrevert silent call vimproc#system_bg('TortoiseProc /command:revert /path:"'.expand("%").'" /notempfile /closeonend')
@@ -769,6 +759,7 @@ endif
 " LoadYAML
 command! -nargs=1 LoadYAML echo s:my_load_yaml(<args>)
 function! s:my_load_yaml(file) "{{{
+  let ret = ''
   perl << EOF
 use YAML::Syck;
 use JSON::Syck qw(Dump);
@@ -822,19 +813,19 @@ command! Vimdoc OpenBrowser http://vim-jp.org/vimdoc-ja/
 command! Cygwin call s:my_cygwin()
 function! s:my_cygwin() "{{{
   let my_conque_term = conque_term#open($CYGWIN_HOME . '\Cygwin.bat', ['topleft split', 'resize 10'])
-  while my_conque_term.read() == ''
+  while my_conque_term.read() ==# ''
   endwhile
   call my_conque_term.writeln('cd ' . MyGetCygwinDir(getcwd()))
 endfunction "}}}
 function! MyGetCygwinDir(fullpath) "{{{
-  return "/cygdrive/" . substitute(a:fullpath, ':', '', '')
+  return '/cygdrive/' . substitute(a:fullpath, ':', '', '')
 endfunction "}}}
 
 " カラーリング {{{2
 " Syn
 command! Syn call s:get_syn_info()
 function! s:get_syn_id(transparent) "{{{
-  let synid = synID(line("."), col("."), 1)
+  let synid = synID(line('.'), col('.'), 1)
   if a:transparent
     return synIDtrans(synid)
   else
@@ -842,32 +833,32 @@ function! s:get_syn_id(transparent) "{{{
   endif
 endfunction
 function! s:get_syn_attr(synid)
-  let name = synIDattr(a:synid, "name")
-  let ctermfg = synIDattr(a:synid, "fg", "cterm")
-  let ctermbg = synIDattr(a:synid, "bg", "cterm")
-  let guifg = synIDattr(a:synid, "fg", "gui")
-  let guibg = synIDattr(a:synid, "bg", "gui")
+  let name = synIDattr(a:synid, 'name')
+  let ctermfg = synIDattr(a:synid, 'fg', 'cterm')
+  let ctermbg = synIDattr(a:synid, 'bg', 'cterm')
+  let guifg = synIDattr(a:synid, 'fg', 'gui')
+  let guibg = synIDattr(a:synid, 'bg', 'gui')
   return {
-        \ "name": name,
-        \ "ctermfg": ctermfg,
-        \ "ctermbg": ctermbg,
-        \ "guifg": guifg,
-        \ "guibg": guibg}
+        \ 'name': name,
+        \ 'ctermfg': ctermfg,
+        \ 'ctermbg': ctermbg,
+        \ 'guifg': guifg,
+        \ 'guibg': guibg}
 endfunction
 function! s:get_syn_info()
   let baseSyn = s:get_syn_attr(s:get_syn_id(0))
-  echo "name: " . baseSyn.name .
-        \ " ctermfg: " . baseSyn.ctermfg .
-        \ " ctermbg: " . baseSyn.ctermbg .
-        \ " guifg: " . baseSyn.guifg .
-        \ " guibg: " . baseSyn.guibg
+  echo 'name: ' . baseSyn.name .
+        \ ' ctermfg: ' . baseSyn.ctermfg .
+        \ ' ctermbg: ' . baseSyn.ctermbg .
+        \ ' guifg: ' . baseSyn.guifg .
+        \ ' guibg: ' . baseSyn.guibg
   let linkedSyn = s:get_syn_attr(s:get_syn_id(1))
-  echo "link to"
-  echo "name: " . linkedSyn.name .
-        \ " ctermfg: " . linkedSyn.ctermfg .
-        \ " ctermbg: " . linkedSyn.ctermbg .
-        \ " guifg: " . linkedSyn.guifg .
-        \ " guibg: " . linkedSyn.guibg
+  echo 'link to'
+  echo 'name: ' . linkedSyn.name .
+        \ ' ctermfg: ' . linkedSyn.ctermfg .
+        \ ' ctermbg: ' . linkedSyn.ctermbg .
+        \ ' guifg: ' . linkedSyn.guifg .
+        \ ' guibg: ' . linkedSyn.guibg
 endfunction "}}}
 " Colortest
 command! Colortest belowright vsplit $VIMRUNTIME/syntax/colortest.vim | source $VIMRUNTIME/syntax/colortest.vim
@@ -902,11 +893,11 @@ function! s:my_vimproc_async(args) "{{{
   let callback = get(a:args, 'callback', 's:my_vimproc_finish')
 
   let vimproc = vimproc#pgroup_open(cmd)
-  echom "[INFO] my vimproc async started. pid: " . vimproc.pid . ", cmd: " . cmd
+  echom '[INFO] my vimproc async started. pid: ' . vimproc.pid . ', cmd: ' . cmd
   call vimproc.stdin.close()
 
   let s:vimproc = vimproc
-  let s:result = ""
+  let s:result = ''
 
   augroup my-vimproc-async
     execute 'au! CursorHold,CursorHoldI * call'
@@ -914,7 +905,7 @@ function! s:my_vimproc_async(args) "{{{
   augroup END
 endfunction "}}}
 function! s:my_vimproc_receive_result(callback) "{{{
-  if !has_key(s:, "vimproc")
+  if !has_key(s:, 'vimproc')
     return
   endif
 
@@ -936,7 +927,7 @@ function! s:my_vimproc_receive_result(callback) "{{{
     echom v:throwpoint
   endtry
 
-  echom "[INFO] my vimproc async finished. pid: " . vimproc.pid . ", callback: " . a:callback
+  echom '[INFO] my vimproc async finished. pid: ' . vimproc.pid . ', callback: ' . a:callback
   let MyVimprocAsyncCallback = function(a:callback)
   call MyVimprocAsyncCallback(s:result)
 
@@ -1094,7 +1085,7 @@ nnoremap gF :exe 'tab drop ' . MyGetCounterpart()<CR>
 function! MyGetCounterpart() "{{{
   let path = expand('%:h')
   let fname = expand('%:t')
-  if fname =~ '^test_'
+  if fname =~# '^test_'
     let counterpart = substitute(path, '^test/', '', '') . '/' . substitute(fname, '^test_', '', '')
     if filereadable('src/' . counterpart)
       return 'src/' . counterpart
@@ -1231,8 +1222,28 @@ vmap <C-@>; <Plug>(operator-html-escape)
 vmap <C-@>/ <Plug>(operator-path-convert)
 cmap <C-@>/ <C-\>eMyCmdlinePathConvert()<CR>
 call operator#user#define('path-convert', 'MyOpPathConvert')
-function! MyOpPathConvert(motion_wiseness) "{{{
-  '[,']s/\//\\/g
+function! MyOpPathConvert(motion_wise) "{{{
+  let visual_command = s:visual_command_from_wise_name(a:motion_wise)
+
+  let put_command = (s:deletion_moves_the_cursor_p(
+  \                    a:motion_wise,
+  \                    getpos("']")[1:2],
+  \                    len(getline("']")),
+  \                    [line('$'), len(getline('$'))]
+  \                  )
+  \                  ? 'p'
+  \                  : 'P')
+
+  let @x = ''
+  if !s:is_empty_region(getpos("'["), getpos("']"))
+    let original_selection = &g:selection
+    let &g:selection = 'inclusive'
+    execute 'normal!' '`['.visual_command.'`]"xd'
+    let &g:selection = original_selection
+    let @x = substitute(@x, '\/', '\\', 'g')
+  end
+  execute 'normal! "x'.put_command
+  return
 endfunction "}}}
 function! MyCmdlinePathConvert() "{{{
   return substitute(getcmdline(), '\/', '\\', 'g')
@@ -1322,7 +1333,7 @@ function! s:deletion_moves_the_cursor_p(motion_wise, motion_end_pos, motion_end_
   elseif a:motion_wise ==# 'block'
     return 0
   else
-    echoerr 'E2: Invalid wise name:' string(a:wise_name)
+    echoerr 'E2: Invalid wise name:' string(a:motion_wise)
     return 0
   endif
 endfunction "}}}
@@ -1473,8 +1484,8 @@ nnoremap ,, :<C-u>QFToggle<CR>
 command! QFToggle :call s:my_qf_toggle()
 function! s:my_qf_toggle() "{{{
   let cur_win = winnr()
-  windo if 'qf' == &ft | cclose | execute cur_win . "wincmd w" | return | endif
-  execute cur_win . "wincmd w"
+  windo if 'qf' == &ft | cclose | execute cur_win . 'wincmd w' | return | endif
+  execute cur_win . 'wincmd w'
   botright cwindow 7
 endfunction "}}}
 " PreviewToggle
@@ -1493,24 +1504,23 @@ function! s:my_preview_toggle() "{{{
 endfunction
 function! PreviewWord(...)
   " 設定
-  let direction = "belowright"
+  let direction = 'belowright'
   let height = 7
-  let action = "ptjump"
+  let action = 'ptjump'
   "hi PreviewWord term=bold ctermfg=black ctermbg=lightgreen guifg=black guibg=lightgreen
   hi link PreviewWord Search
 
-  if &previewwindow			" プレビューウィンドウ内では実行しない
+  if &previewwindow  " プレビューウィンドウ内では実行しない
     return
   endif
-  let w = a:0 == 0 ? expand("<cword>") : a:1		" カーソル下の単語を得る
-  "if w =~ '\a'			" その単語が文字を含んでいるなら
-  if w !~ '\s'			" その単語が文字を含んでいるなら
+  let w = a:0 == 0 ? expand('<cword>') : a:1  " カーソル下の単語を得る
+  if w !~# '\s'      " その単語が文字を含んでいるなら
 
     " 別のタグを表示させる前にすでに存在するハイライトを消去する
-    silent! wincmd P			" プレビューウィンドウにジャンプ
-    if &previewwindow			" すでにそこにいるなら
-      match none			" 存在するハイライトを消去する
-      wincmd p			" もとのウィンドウに戻る
+    silent! wincmd P  " プレビューウィンドウにジャンプ
+    if &previewwindow  " すでにそこにいるなら
+      match none  " 存在するハイライトを消去する
+      wincmd p  " もとのウィンドウに戻る
     endif
 
     " カーソル下の単語にマッチするタグを表示してみる
@@ -1518,24 +1528,24 @@ function! PreviewWord(...)
        exe direction action w
     catch
       echohl ErrorMsg
-      echo substitute(v:exception, '^Vim\%((\a\+)\)\=:', '', "")
+      echo substitute(v:exception, '^Vim\%((\a\+)\)\=:', '', '')
       echohl None
       return
     endtry
 
-    silent! wincmd P			" プレビューウィンドウにジャンプ
-    if &previewwindow		" すでにそこにいるなら
-      if has("folding")
-        silent! .foldopen		" 閉じた折り畳みを開く
+    silent! wincmd P      " プレビューウィンドウにジャンプ
+    if &previewwindow    " すでにそこにいるなら
+      if has('folding')
+        silent! .foldopen    " 閉じた折り畳みを開く
       endif
-      exe "resize" height
-      exe "normal! zz"
-      call search("$", "b")		" 前の行の最後へ
-      let w = substitute(w, '\\', '\\\\', "")
-      call search('\<\V' . w . '\>')	" カーソルをマッチしたところへ
+      exe 'resize' height
+      exe 'normal! zz'
+      call search('$', 'b')    " 前の行の最後へ
+      let w = substitute(w, '\\', '\\\\', '')
+      call search('\<\V' . w . '\>')  " カーソルをマッチしたところへ
       " ここで単語にハイライトをつける
-      exe 'match PreviewWord "\%' . line(".") . 'l\%' . col(".") . 'c\k*"'
-      wincmd p			" もとのウィンドウへ戻る
+      exe 'match PreviewWord "\%' . line('.') . 'l\%' . col('.') . 'c\k*"'
+      wincmd p      " もとのウィンドウへ戻る
     endif
   endif
 endfunction "}}}
@@ -1741,7 +1751,7 @@ let s:action = {
 \}
 function! s:action.func(candidates)
   for candidate in a:candidates
-    execute "verbose map" substitute(candidate.action__mapping, '\\\(<.*>\)', '\1', "g")
+    execute 'verbose map' substitute(candidate.action__mapping, '\\\(<.*>\)', '\1', 'g')
   endfor
 endfunction
 " kind ではなくて source の mapping に対して action を設定する
@@ -1756,12 +1766,12 @@ let s:unite_source = {
 \   'name': 'ref',
 \ }
 function! s:unite_source.gather_candidates(args, context)
-  return map(ref#available_source_names(), '{
-  \   "word": v:val,
-  \   "source": "ref",
-  \   "kind": "source",
-  \   "action__source_name": "ref/" . v:val,
-  \ }')
+  return map(ref#available_source_names(), "{
+  \   'word': v:val,
+  \   'source': 'ref',
+  \   'kind': 'source',
+  \   'action__source_name': 'ref/' . v:val,
+  \ }")
 endfunction
 call unite#define_source(s:unite_source)
 unlet s:unite_source
@@ -1773,13 +1783,13 @@ function! s:unite_source.gather_candidates(args, context)
   let path = expand('%:p')
   let lines = getbufline('%', 1, '$')
   let format = '%' . strlen(len(lines)) . 'd: %s'
-  return map(lines, '{
-  \   "word": printf(format, v:key + 1, v:val),
-  \   "source": "lines",
-  \   "kind": "jump_list",
-  \   "action__path": path,
-  \   "action__line": v:key + 1,
-  \ }')
+  return map(lines, "{
+  \   'word': printf(format, v:key + 1, v:val),
+  \   'source': 'lines',
+  \   'kind': 'jump_list',
+  \   'action__path': path,
+  \   'action__line': v:key + 1,
+  \ }")
 endfunction
 call unite#define_source(s:unite_source)
 unlet s:unite_source
@@ -1837,7 +1847,7 @@ function! MyVimfilerHelp() "{{{
     match none
     setlocal nonumber
     resize 20
-    exe "normal! gg"
+    exe 'normal! gg'
     nnoremap <buffer> ,, :MyVimFilerHelp<CR>
     call matchadd('MyVimFilerHelp', '.', 0)
     call matchadd('MyVimFilerHelpTitle', '--.*')
@@ -2207,7 +2217,7 @@ if executable('migemogrep')
   function! MigemoMatch(items, str, limit, mmode, ispath, crfile, regex)
     let tmp = tempname()
     try
-      if a:str =~ '^\s*$'
+      if a:str =~# '^\s*$'
         return a:items
       endif
       call writefile(split(iconv(join(a:items, "\n"), &encoding, 'utf-8'), "\n"), tmp)
@@ -2230,14 +2240,14 @@ let g:ctrlp_open_func = {
 \}
 function! MyExternalOpenFunc(action, line) "{{{
   let extension_regexp = '^\(xls\|xlsx\)$'
-  if a:action =~ '^[tx]$' && fnamemodify(a:line, ':e') =~? extension_regexp
+  if a:action =~# '^[tx]$' && fnamemodify(a:line, ':e') =~? extension_regexp
     " Get the filename
     let filename = fnameescape(fnamemodify(a:line, ':p'))
     " Close CtrlP
     call ctrlp#exit()
     " Open the file
     silent! call vimproc#open(filename)
-  elseif a:action == 'x' && fnamemodify(a:line, ':e') !~? extension_regexp
+  elseif a:action ==# 'x' && fnamemodify(a:line, ':e') !~? extension_regexp
     " Not a HTML file, simulate pressing <c-o> again and wait for new input
     call feedkeys("\<c-o>")
   else
@@ -2333,7 +2343,7 @@ nnoremap <expr> <silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions()
 
 " アニメーション
 call quickrun#module#register(shabadou#make_quickrun_hook_anim(
-\ "animation",
+\ 'animation',
 \ ['QuickRun: ／', 'QuickRun: ―', 'QuickRun: ＼', 'QuickRun: ｜',],
 \ 12,
 \), 1)
@@ -2377,7 +2387,7 @@ endfunction
 "  TODO: close_quickfixフックが動かない、、
 let g:quickrun_config = {}
 let g:quickrun_config = {
-\  "_": {
+\  '_': {
 \    'runner': 'vimproc',
 \    'runner/vimproc/updatetime': 100,
 \    'outputter': 'error',
@@ -2572,20 +2582,20 @@ let g:lightline.component_type = {
 \}
 function! MyModified() " {{{2
   "return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : ''
+  return &ft =~? 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : ''
 endfunction
 function! MyReadonly() " {{{2
   "return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
   return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '[RO]' : ''
 endfunction
 function! MyFilename() " {{{2
-  return (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-\         &ft == 'unite' ? unite#get_status_string() :
-\         &ft == 'vimshell' ? '' :
-\         &ft == '' && 'ControlP' == expand('%:t') ? '' :
-\         '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-\        ('' != MyModified() ? ' ' . MyModified() : '') .
-\        ('' != MyReadonly() ? ' ' . MyReadonly() : '')
+  return (&ft ==? 'vimfiler' ? vimfiler#get_status_string() :
+\         &ft ==? 'unite' ? unite#get_status_string() :
+\         &ft ==? 'vimshell' ? '' :
+\         &ft ==? '' && 'ControlP' ==# expand('%:t') ? '' :
+\         '' !=# expand('%:t') ? expand('%:t') : '[No Name]') .
+\        ('' !=# MyModified() ? ' ' . MyModified() : '') .
+\        ('' !=# MyReadonly() ? ' ' . MyReadonly() : '')
 endfunction
 " \         &ft == 'vimshell' ? vimshell#get_status_string() :
 function! MyPwd() " {{{2
@@ -2623,13 +2633,13 @@ function! MyFileencoding() " {{{2
   return winwidth(0) > 80 ? (strlen(&fenc) ? &fenc : &enc) : ''
 endfunction
 function! MyMode() " {{{2
-  return &ft == 'help' ? 'Help' :
-\        &ft == '' && 'ControlP' == expand('%:t') ? 'CtrlP' :
-\        &ft == 'vimshell' ? 'VimShell' :
-\        &ft == 'qf' ? 'QuickFix' :
-\        &ft == 'unite' ? 'Unite' :
-\        &ft == 'quickrun' ? 'QuickRun' :
-\        &ft == 'minibufexpl' ? 'MBE' :
+  return &ft ==? 'help' ? 'Help' :
+\        &ft ==? '' && 'ControlP' ==? expand('%:t') ? 'CtrlP' :
+\        &ft ==? 'vimshell' ? 'VimShell' :
+\        &ft ==? 'qf' ? 'QuickFix' :
+\        &ft ==? 'unite' ? 'Unite' :
+\        &ft ==? 'quickrun' ? 'QuickRun' :
+\        &ft ==? 'minibufexpl' ? 'MBE' :
 \        winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
@@ -2791,11 +2801,11 @@ let g:magit_default_sections = ['commit', 'info', 'global_help', 'staged', 'unst
 
 " vim-unified-diff {{{1
 set diffexpr=unified_diff#diffexpr()
-let unified_diff#executable = 'git'
-let unified_diff#arguments = [
+let g:unified_diff#executable = 'git'
+let g:unified_diff#arguments = [
 \ 'diff', '--no-index', '--no-color', '--no-ext-diff', '--unified=0', '--histogram'
 \ ]
-let unified_diff#iwhite_arguments = [
+let g:unified_diff#iwhite_arguments = [
 \ '--ignore--all-space',
 \ ]
 
@@ -2803,7 +2813,7 @@ let unified_diff#iwhite_arguments = [
 command! -range LD call linediff#Linediff(<line1>, <line2>)
 
 " vim-dirdiff {{{1
-let g:DirDiffExcludes = ".svn,.git,CVS,*.class,*.exe,.*.swp"
+let g:DirDiffExcludes = '.svn,.git,CVS,*.class,*.exe,.*.swp'
 
 " Gundo {{{1
 let g:gundo_close_on_revert = 1
@@ -2837,7 +2847,7 @@ command! FuzzyIncsearch call incsearch#call(incsearch#config#fuzzy#make())
 " noremap <silent><expr> g/ incsearch#go(<SID>config_migemo_fuzzy({'is_stay': 1}))
 
 " anzu {{{1
-let g:anzu_status_format = "(%i/%l)"
+let g:anzu_status_format = '(%i/%l)'
 au myvimrc CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
 
 " jplus {{{1
@@ -3043,7 +3053,7 @@ vmap ge <Plug>(smartword-ge)
 " omap e <Plug>CamelCaseMotion_e
 
 " editqf {{{1
-let g:editqf_saveqf_filename = "~/.editqf_save_data"
+let g:editqf_saveqf_filename = '~/.editqf_save_data'
 
 " qfixhowm {{{1
 " デフォルトキーマップ無効
@@ -3116,13 +3126,13 @@ let g:use_emmet_complete_tag = 1
 " カスタマイズ設定
 let g:user_emmet_settings = {
 \  'lang': 'ja',
-\  'indentation': "  ",
+\  'indentation': '  ',
 \  'html': {
 \    'filters': 'html',
 \    'snippets': {
 \      'meta:viewport': "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">",
 \      'css:bs': "<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">",
-\      'cd': "<![CDATA[|]]>",
+\      'cd': '<![CDATA[|]]>',
 \      'js:jq': "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n<script>\n\\$(function() {\n\t|\n})()\n</script>",
 \      'js:bs': "<script src=\"https://code.jquery.com/jquery.js\"></script>\n<script src=\"js/bootstrap.min.js\"></script>",
 \    },
@@ -3206,7 +3216,7 @@ let g:user_emmet_settings = {
 
 " monster.vim {{{1
 " Set async completion.
-let g:monster#completion#rcodetools#backend = "async_rct_complete"
+let g:monster#completion#rcodetools#backend = 'async_rct_complete'
 
 " SQLUtilities {{{1
 " カンマで行分割
@@ -3287,6 +3297,7 @@ let g:ale_linters = {
 \ 'ruby': ['rubocop'],
 \ 'javascript': ['eslint'],
 \}
+let g:ale_vim_vint_show_style_issues = 0
 let g:ale_ruby_rubocop_options = '--except Layout/TrailingBlankLines,Metrics/LineLength'
 let g:ale_javascript_eslint_options = "--no-eslintrc --config 'eslint' --rule " .
 \ "'{" .
@@ -3313,14 +3324,14 @@ au myvimrc FileType conque_term setlocal nolist
 " vim-precious {{{1
 " Filetype切り替えを無効にする（手動でPreciousSwitchする）
 let g:precious_enable_switchers = {
-\ "*": { "setfiletype": 0}
+\ '*': { 'setfiletype': 0}
 \}
 " カーソル移動時のPreciousSwitchを無効にする
 let g:precious_enable_switch_CursorMoved = {
-\ "*": 0
+\ '*': 0
 \}
 let g:precious_enable_switch_CursorMoved_i= {
-\ "*": 0
+\ '*': 0
 \}
 " カーソル位置から前後 300行の範囲で判定を行う
 let g:context_filetype#search_offset = 300
