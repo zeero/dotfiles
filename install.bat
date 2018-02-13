@@ -122,6 +122,7 @@ mklink /d %HOMEDRIVE%%HOMEPATH%\vimperator %DOTFILES%\vimperator
 mklink %HOMEDRIVE%%HOMEPATH%\_vimrc %DOTFILES%\vim\vimrc
 mklink %HOMEDRIVE%%HOMEPATH%\_vimperatorrc %DOTFILES%\vimperator\vimperatorrc
 mklink %HOMEDRIVE%%HOMEPATH%\.gitignore %DOTFILES%\home\.gitignore
+mklink %HOMEDRIVE%%HOMEPATH%\.git-commit-template %DOTFILES%\home\.git-commit-template
 mklink %HOMEDRIVE%%HOMEPATH%\.ctags %DOTFILES%\home\.ctags
 mklink %HOMEDRIVE%%HOMEPATH%\.cvimrc %DOTFILES%\home\.cvimrc
 mklink %HOMEDRIVE%%HOMEPATH%\.tmux.conf %DOTFILES%\home\.tmux.conf
@@ -176,10 +177,10 @@ echo.
 
 rem Ricty
 echo RictyDiminishedをインストールしてください。
-explorer lib\RictyDiminished\RictyDiminished-Regular.ttf
-explorer lib\RictyDiminished\RictyDiminished-Bold.ttf
-explorer lib\RictyDiminished\RictyDiminished-Oblique.ttf
-explorer lib\RictyDiminished\RictyDiminished-BoldOblique.ttf
+explorer lib\RictyDiminished\RictyDiminished-devicon-Regular.ttf
+explorer lib\RictyDiminished\RictyDiminished-devicon-Bold.ttf
+explorer lib\RictyDiminished\RictyDiminished-devicon-Oblique.ttf
+explorer lib\RictyDiminished\RictyDiminished-devicon-BoldOblique.ttf
 pause
 echo.
 
