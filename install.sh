@@ -48,10 +48,7 @@ git config --global ghq.root "~/dev"
 git config --global commit.template "~/.git-commit-template"
 
 # Ricty
-open ${DOTFILES}/lib/RictyDiminished/RictyDiminished-Regular.ttf
-open ${DOTFILES}/lib/RictyDiminished/RictyDiminished-Bold.ttf
-open ${DOTFILES}/lib/RictyDiminished/RictyDiminished-Oblique.ttf
-open ${DOTFILES}/lib/RictyDiminished/RictyDiminished-BoldOblique.ttf
+open ${DOTFILES}/lib/RictyDiminished/RictyDiminished-devicon*.ttf
 
 # HomeBrew
 brew bundle
