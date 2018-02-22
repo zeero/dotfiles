@@ -1075,8 +1075,8 @@ vmap # <Plug>(visualstar-*)NNzVzz
 nnoremap L <C-PageDown>
 nnoremap H <C-PageUp>
 nnoremap ,t :<C-u>$tabnew<CR>
-nnoremap ,l :<C-u>tabm<CR>
-nnoremap ,L :<C-u>tabm 1<CR>
+nnoremap <silent> ,l :<C-u>tabm<CR>
+nnoremap <silent> ,L :<C-u>tabm 1<CR>
 " gfはタブで開く
 nnoremap gf :tab drop <cfile><CR>
 vnoremap gf y:tab drop <C-r>"<CR>
