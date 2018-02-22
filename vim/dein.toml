@@ -229,7 +229,7 @@ repo = 'kana/vim-smartchr'
 # on_i = 1
 
 # [[plugins]]
-# repo = 'autodate.vim'
+# repo = 'vim-scripts/autodate.vim'
 # lazy = 1
 # on_i = 1
 
@@ -482,7 +482,7 @@ lazy = 1
 on_cmd = ['OverCommandLine']
 
 [[plugins]]
-repo = 'Conque-Shell'
+repo = 'vim-scripts/Conque-Shell'
 lazy = 1
 on_cmd = ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermTab', 'ConqueTermVSplit']
 on_func = ['conque_term#open', 'conque_term#subprocess', 'conque_term#register_function']
@@ -501,17 +501,17 @@ on_cmd = ['Alignta']
 on_source = ['unite.vim']
 
 [[plugins]]
-repo = 'Align'
+repo = 'vim-scripts/Align'
 lazy = 1
 on_cmd = ['Align', 'AlignCtrl', 'AlignPush', 'AlignPop']
 
 [[plugins]]
-repo = 'SQLUtilities'
+repo = 'vim-scripts/SQLUtilities'
 lazy = 1
 on_cmd = ['SQLUFormatter']
 
 [[plugins]]
-repo = 'copypath.vim'
+repo = 'vim-scripts/copypath.vim'
 lazy = 1
 on_cmd = ['CopyPath', 'CopyFileName']
 
@@ -526,7 +526,7 @@ lazy = 1
 on_cmd = ['DirDiff']
 
 [[plugins]]
-repo = 'loremipsum'
+repo = 'vim-scripts/loremipsum'
 lazy = 1
 on_cmd = ['Loremipsum']
 
@@ -536,7 +536,7 @@ lazy = 1
 on_cmd = ['Scouter']
 
 [[plugins]]
-repo = 'dbext.vim'
+repo = 'vim-scripts/dbext.vim'
 lazy = 1
 # on_cmd = ['DBExt']
 
@@ -586,14 +586,14 @@ on_cmd = ['CSApproxSnapshot']
 gui = 1
 
 [[plugins]]
-repo = 'ScrollColors'
+repo = 'vim-scripts/ScrollColors'
 lazy = 1
 on_cmd = ['SCROLLCOLOR']
 
 # 普段使わないカラースキームは使用時にアクティベート
 
 [[plugins]]
-repo = 'molokai'
+repo = 'vim-scripts/molokai'
 gui = 0
 
 [[plugins]]
@@ -601,7 +601,7 @@ repo = 'twerth/ir_black'
 gui = 1
 
 [[plugins]]
-repo = 'wombat256.vim'
+repo = 'vim-scripts/wombat256.vim'
 lazy = 1
 
 [[plugins]]
@@ -625,7 +625,7 @@ repo = 'jonathanfilip/vim-lucius'
 lazy = 1
 
 [[plugins]]
-repo = 'Zephyr-Color-Scheme'
+repo = 'vim-scripts/Zephyr-Color-Scheme'
 lazy = 1
 
 [[plugins]]
@@ -633,7 +633,7 @@ repo = 'cocopon/iceberg.vim'
 lazy = 1
 
 [[plugins]]
-repo = 'newspaper.vim'
+repo = 'vim-scripts/newspaper.vim'
 lazy = 1
 
 [[plugins]]
@@ -693,7 +693,7 @@ lazy = 1
 depends = ['vim-migemo']
 
 [[plugins]]
-repo = 'sudo.vim'
+repo = 'vim-scripts/sudo.vim'
 lazy = 1
 on_cmd = ['SudoWrite', 'SudoRead']
 
@@ -723,12 +723,12 @@ lazy = 1
 on_map = '<Plug>(ac-smooth-scroll-'
 
 [[plugins]]
-repo = 'ShowMarks'
+repo = 'vim-scripts/ShowMarks'
 lazy = 1
 on_cmd = ['ShowMarksToggle']
 
 [[plugins]]
-repo = 'AnsiEsc.vim'
+repo = 'vim-scripts/AnsiEsc.vim'
 lazy = 1
 on_cmd = ['AnsiEsc']
 
@@ -900,7 +900,7 @@ lazy = 1
 on_ft = ['javascript']
 
 [[plugins]]
-repo = 'jQuery'
+repo = 'vim-scripts/jQuery'
 lazy = 1
 on_ft = ['javascript']
 
