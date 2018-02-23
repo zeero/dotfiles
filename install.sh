@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # Requirements
+# - Xcode install
+#   - インストールが終わってから次へ進むこと
 # - Homebrew install
 # - brew install git
 # - git clone https://github.com/zeero/dotfiles.git
-# - Xcode install
 
 cd `dirname $0`
 DOTFILES=`pwd`
