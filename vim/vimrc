@@ -1383,7 +1383,7 @@ cnoremap <C-@>: <C-r>=strftime('%H%M%S')<CR>
 " inoremap <S-Tab> <C-d>
 " YankRound
 inoremap <C-@>y <C-o>:CtrlPYankRound<CR>
-nnoremap ,y :CtrlPYankRound<CR>
+nnoremap <C-@>y :CtrlPYankRound<CR>
 
 " エンドワイズ {{{2
 inoremap ( ()<Left>
