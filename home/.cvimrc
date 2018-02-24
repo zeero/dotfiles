@@ -58,7 +58,7 @@ let qmark g = ["https://gist.github.com/zeero"]
 
 " 除外リスト {{{1
 " blacklists prefixed by '@' act as a whitelist
-" let blacklists = ["https://mail.google.com/*", "*://mail.google.com/*", "@https://mail.google.com/mail/*"]
+let blacklists = ["*://webrd8.remoteworks.jp/*"]
 " this will enable the config block below on the domain
 site '*://mail.google.com/*' {
   unmap j
