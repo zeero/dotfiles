@@ -2140,6 +2140,10 @@ nnoremap <C-@><C-o> :<C-u>execute 'CtrlPLine ' . expand('%')<CR>
 nnoremap <C-@>' :<C-u>CtrlPCmdline<CR>
 " CtrlPRegister
 nnoremap <C-@><C-r> :<C-u>CtrlPRegister<CR>
+" CtrlPGit
+nnoremap <C-@>gb :<C-u>CtrlPGitBranch<CR>
+nnoremap <C-@>gl :<C-u>CtrlPGitLog<CR>
+nnoremap <C-@>gs :<C-u>CtrlPGitStatus<CR>
 " コマンドエイリアス
 command! -nargs=? -complete=dir Bookmark CtrlPBookmarkDirAdd <args>
 command! -nargs=? -complete=dir BookmarkEdit exe 'tabe ' g:ctrlp_cache_dir . '/bkd/cache.txt'

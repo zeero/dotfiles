@@ -117,6 +117,12 @@ depends = ['ctrlp.vim']
 lazy = 1
 on_cmd = ['CtrlPHighlight']
 
+[[plugins]]
+repo = 'zeero/vim-ctrlp_git'
+depends = ['ctrlp.vim']
+lazy = 1
+on_cmd = ['CtrlpGitBranch', 'CtrlpGitLog', 'CtrlpGitStatus']
+
 
 # Unite {{{1
 
