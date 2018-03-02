@@ -3312,6 +3312,10 @@ let g:ale_javascript_eslint_options = "--no-eslintrc --config 'eslint' --rule " 
 \ "\"linebreak-style\": [\"error\", \"unix\"]," .
 \ "\"semi\":            [\"error\", \"always\"]," .
 \ "}'"
+" fixer
+let g:ale_fixers = {
+\ 'ruby': ['rubocop'],
+\}
 
 " Restart {{{1
 let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
