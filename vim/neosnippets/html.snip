@@ -1,121 +1,125 @@
 snippet bs:breadcrumb
 abbr    Bootstrap Breadcrumb
-  <ol class="breadcrumb">
-    <li><a href="${1:Url}">${2:Home}</a></li>
-    <li class="active">${3:Active}</li>
-  </ol>
+options head
+	<ol class="breadcrumb">
+		<li><a href="${1:Url}">${2:Home}</a></li>
+		<li class="active">${3:Active}</li>
+	</ol>
 
 snippet bs:btn:dropdown
 abbr    Single button dropdowns
-options indent
-  <!-- Single button -->
-  <div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-      ${1:Action} <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" role="menu">
-      <li><a href="#">${2:Action}</a></li>
-      <li><a href="#">${3:Another action}</a></li>
-      <li><a href="#">${4:Something else here}</a></li>
-      <li class="divider"></li>
-      <li><a href="#">${5:Separated link}</a></li>
-    </ul>
-  </div>
+options head
+	<!-- Single button -->
+	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			${1:Action} <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="#">${2:Action}</a></li>
+			<li><a href="#">${3:Another action}</a></li>
+			<li><a href="#">${4:Something else here}</a></li>
+			<li class="divider"></li>
+			<li><a href="#">${5:Separated link}</a></li>
+		</ul>
+	</div>
 
 snippet bs:btn:dropdown-split
 abbr    Split button dropdowns
-  <!-- Split button -->
-  <div class="btn-group">
-    <button type="button" class="btn btn-default">${1:Action}</button>
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-      <span class="caret"></span>
-      <span class="sr-only">Toggle Dropdown</span>
-    </button>
-    <ul class="dropdown-menu" role="menu">
-      <li><a href="#">${2:Action}</a></li>
-      <li><a href="#">${3:Another action}</a></li>
-      <li><a href="#">${4:Something else here}</a></li>
-      <li class="divider"></li>
-      <li><a href="#">${5:Separated link}</a></li>
-    </ul>
-  </div>
+options head
+	<!-- Split button -->
+	<div class="btn-group">
+		<button type="button" class="btn btn-default">${1:Action}</button>
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<span class="caret"></span>
+			<span class="sr-only">Toggle Dropdown</span>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="#">${2:Action}</a></li>
+			<li><a href="#">${3:Another action}</a></li>
+			<li><a href="#">${4:Something else here}</a></li>
+			<li class="divider"></li>
+			<li><a href="#">${5:Separated link}</a></li>
+		</ul>
+	</div>
 
 snippet meta:viewport
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+options head
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
 snippet css:bs
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+options head
+	<link href="css/bootstrap.min.css" rel="stylesheet">
 
 snippet js:jq
 abbr    jQuery
-options indent
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  <script>
-    $(function() {
-      ${0}
-    })();
-  </script>
+options head
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script>
+		$(function() {
+			${0}
+		})();
+	</script>
 
 snippet js:bs
 abbr    Bootstrap js
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+options head
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 
-snippet cd
+snippet cdata
 abbr    CDATA
-options indent
-  <![CDATA[
-    ${0}
-  ]]>
+options word
+	<![CDATA[
+		${0}
+	]]>
 
 snippet html:bs
 abbr    Bootstrap html template
-options indent
-  <!DOCTYPE html>
-  <html lang="ja">
-    <head>
-      <meta charset="UTF-8">
-      <title>${1:hello world}</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <!-- Bootstrap -->
-      <link href="css/bootstrap.min.css" rel="stylesheet">
+options head
+	<!DOCTYPE html>
+	<html lang="ja">
+		<head>
+			<meta charset="UTF-8">
+			<title>${1:hello world}</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<!-- Bootstrap -->
+			<link href="css/bootstrap.min.css" rel="stylesheet">
 
-      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-      <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-      <![endif]-->
-    </head>
-    <body>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <h1>$1</h1>
-            ${0}
-          </div>
-        </div>
-      </div>
+			<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+			<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+			<!--[if lt IE 9]>
+				<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+				<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+			<![endif]-->
+		</head>
+		<body>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1>$1</h1>
+						${0}
+					</div>
+				</div>
+			</div>
 
-      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-      <script src="https://code.jquery.com/jquery.js"></script>
-      <!-- Include all compiled plugins (below), or include individual files as needed -->
-      <script src="js/bootstrap.min.js"></script>
-    </body>
-  </html>
+			<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+			<script src="https://code.jquery.com/jquery.js"></script>
+			<!-- Include all compiled plugins (below), or include individual files as needed -->
+			<script src="js/bootstrap.min.js"></script>
+		</body>
+	</html>
 
 snippet html:5
 abbr    html5 template
-options indent
-  <!DOCTYPE html>
-  <html lang="ja">
-  <head>
-    <meta charset="UTF-8">
-    <title>${1}</title>
-  </head>
-  <body>
-    ${0}
-  </body>
-  </html>
-
+options head
+	<!DOCTYPE html>
+	<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<title>${1}</title>
+	</head>
+	<body>
+		${0}
+	</body>
+	</html>
 

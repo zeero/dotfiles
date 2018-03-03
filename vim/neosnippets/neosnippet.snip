@@ -1,13 +1,13 @@
 snippet snip
-abbr    snippet template
-  snippet ${1}
-  abbr    ${2:desc}
-    ${0${0}}
+abbr    neosnippet
+	snippet ${1:keyword}
+	abbr    ${2:desc}
+		${${0:0}}
 
-snippet snip:indent
-abbr    snippet template
-options indent
-  snippet ${1}
-  abbr    ${2:desc}
-    ${0${0}}
+snippet snip:word
+abbr    neosnippet (options word)
+	snippet ${1:keyword}
+	abbr    ${2:desc}
+	options word
+		${${0:0}}
 
