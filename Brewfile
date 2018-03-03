@@ -7,7 +7,6 @@ brew 'ruby'
 brew 'rbenv'
 brew 'ruby-build'
 brew 'python'
-brew 'python3'
 brew 'lua'
 brew 'node', args: ['with-full-icu']
 brew 'npm'
