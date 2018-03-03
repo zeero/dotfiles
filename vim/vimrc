@@ -39,6 +39,7 @@ endif "}}}
 if has('mac')
   let g:python_host_prog='/usr/local/bin/python'
   let g:python3_host_prog='/usr/local/bin/python3'
+  set pyxversion=3
 endif
 
 " Dein {{{1
@@ -1891,6 +1892,116 @@ command! Irb VimShellInteractive irb
 " 非同期で開いたインタプリタに現在の行を評価させる
 command! VSSend VimShellSendString
 command! VSAll %VimShellSendString
+
+" Deoplete {{{1
+" 基本設定（以降はon_source）{{{2
+function! MyDeinHookDeoplete() abort
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+" Use ignorecase.
+let g:deoplete#enable_ignore_case = 1
+" Use smartcase.
+let g:deoplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:deoplete#sources#syntax#min_keyword_length = 3
+let g:deoplete#lock_buffer_name_pattern = '\*ku\*'
+" Use fuzzy completion.
+let g:deoplete#enable_fuzzy_completion = 1
+
+" Define dictionary. {{{2
+let g:deoplete#sources#dictionary#dictionaries = {
+\ 'default' : '',
+\ 'vimshell' : $HOME.'/.cache/vimshell/command-history',
+\ 'scheme' : $HOME.'/.gosh_completions',
+\ 'html': $MYVIMDIR.'/dict/bootstrap.dict',
+\ 'ruby': $MYVIMDIR.'/dict/pocke_dicts/ruby.dict',
+\}
+
+" Define keyword. {{{2
+if !exists('g:deoplete#keyword_patterns')
+  let g:deoplete#keyword_patterns = {}
+endif
+let g:deoplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings. {{{2
+inoremap <expr> <C-p> pumvisible() ? '<C-p>' : ""
+inoremap <expr> <C-d> pumvisible() ? deoplete#undo_completion() : virtcol(".") == virtcol("$") ? '<BS>' : '<Del>'
+" inoremap <expr> <C-l> deoplete#complete_common_string()
+
+" <CR>: close popup and save indent.
+" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+" function! s:my_cr_function()
+" "   return deoplete#smart_close_popup() . '<CR>'
+"   " For no inserting <CR> key.
+"   return pumvisible() ? deoplete#close_popup() : '<CR>'
+" endfunction
+
+" <Tab>: completion.
+inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<C-t>'
+inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<C-d>'
+
+" <BS>: close popup and delete backword char.
+inoremap <expr> <BS> deoplete#smart_close_popup() . '<BS>'
+" inoremap <expr> <BS> pumvisible() ? deoplete#smart_close_popup() : '<BS>'
+" inoremap <expr> <BS> match(getline("."), '\S') == col(".") - 1 ? deoplete#smart_close_popup() . "\<C-o>:left\<CR>" : match(getline("."), '^\s*$') >= 0 ? deoplete#smart_close_popup() . "\<C-o>:left\<CR>" : deoplete#smart_close_popup() . "\<BS>"
+" <BS>: close popup.
+" inoremap <expr> <BS> pumvisible() ? deoplete#smart_close_popup() : '<BS>'
+" inoremap <expr> <C-y> deoplete#close_popup()
+" inoremap <expr> <C-e> deoplete#cancel_popup()
+
+" Close popup by <Space>.
+"inoremap <expr> <Space> pumvisible() ? deoplete#close_popup() : '<Space>'
+
+" For cursor moving in insert mode(Not recommended)
+"inoremap <expr> <Left>  deoplete#close_popup() . '<Left>'
+"inoremap <expr> <Right> deoplete#close_popup() . '<Right>'
+"inoremap <expr> <Up>    deoplete#close_popup() . '<Up>'
+"inoremap <expr> <Down>  deoplete#close_popup() . '<Down>'
+" Or set this.
+"let g:deoplete#enable_cursor_hold_i = 1
+" Or set this.
+"let g:deoplete#enable_insert_char_pre = 1
+
+" AutoComplPop like behavior.
+"let g:deoplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:deoplete#enable_auto_select = 1
+"let g:deoplete#disable_auto_complete = 1
+"inoremap <expr> <TAB> pumvisible() ? '<Down>' : '<C-x>\<C-u>'
+
+" Enable omni completion. {{{2
+au myvimrc FileType css         setlocal omnifunc=csscomplete#CompleteCSS
+au myvimrc FileType html        setlocal omnifunc=htmlcomplete#CompleteTags
+au myvimrc FileType javascript  setlocal omnifunc=javascriptcomplete#CompleteJS
+au myvimrc FileType python      setlocal omnifunc=pythoncomplete#Complete
+au myvimrc FileType xml         setlocal omnifunc=xmlcomplete#CompleteTags
+au myvimrc FileType workflowish setlocal omnifunc=github_complete#complete
+
+" Enable heavy omni completion. {{{2
+if !exists('g:deoplete#sources#omni#input_patterns')
+  let g:deoplete#sources#omni#input_patterns = {}
+endif
+if !exists('g:deoplete#force_omni_input_patterns')
+  let g:deoplete#force_omni_input_patterns = {}
+endif
+let g:deoplete#sources#omni#input_patterns.workflowish = ':'
+let g:deoplete#sources#omni#input_patterns.markdown = ':'
+let g:deoplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+let g:deoplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+let g:deoplete#force_omni_input_patterns.vim = '\%(\w\|[:\.]\)\{3,}'
+"let g:deoplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:deoplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:deoplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+" let g:deoplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+" （on_source終わり）{{{2
+endfunction
 
 " NeoComplete {{{1
 " 基本設定（以降はon_source）{{{2

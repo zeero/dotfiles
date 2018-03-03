@@ -31,18 +31,39 @@ on_ft = ['vimshell']
 depends = 'vimshell'
 
 [[plugins]]
+repo = 'Shougo/deoplete.nvim'
+if = '''has('python3') && v:version >= 800'''
+# hook_source = '''call MyDeinHookDeomplete()'''
+depends = ['nvim-yarp']
+lazy = 1
+on_i = 1
+
+[[plugins]]
+repo = 'roxma/nvim-yarp'
+if = '''has('python3') && v:version >= 800'''
+depends = ['vim-hug-neovim-rpc']
+lazy = 1
+on_i = 1
+
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+if = '''has('python3') && v:version >= 800'''
+lazy = 1
+on_i = 1
+
+[[plugins]]
 repo = 'Shougo/neocomplete'
-if = '''has('lua') && (v:version >= 704 || (v:version == 703 && has('patch885')))'''
+if = '''!has('python3') && has('lua') && (v:version >= 704 || (v:version == 703 && has('patch885')))'''
 hook_source = '''call MyDeinHookNeoComplete()'''
 lazy = 1
 on_i = 1
 
 [[plugins]]
 repo = 'Shougo/neocomplcache'
-lazy = 1
-on_i = 1
 if = '''!has('lua') || !(v:version >= 704 || (v:version == 703 && has('patch885')))'''
 hook_source = '''call MyDeinHookNeoComplcache()'''
+lazy = 1
+on_i = 1
 
 [[plugins]]
 repo = 'Shougo/neosnippet'
