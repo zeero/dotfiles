@@ -1,17 +1,17 @@
 snippet     select_data
 abbr        select * from ... where ...
 options     head
-  select ${1:*}
-  from   ${2:cities}
-  where  ${3:area = 'asia'}
+  select ${0:*}
+  from   ${1:cities}
+  where  ${2:area = 'asia'}
   ;
 
 snippet     select_join_data
 abbr        select * from t1 join t2 ... on ...
-  select ${1:*}
-  from   ${2:table1} ${3:t1}
-    join ${4:table2} ${5:t2}
-      on $3.${6:column} = $5.$6
+  select ${0:*}
+  from   ${1:table1} ${2:t1}
+    join ${3:table2} ${4:t2}
+      on $2.${5:column} = $4.$5
   ;
 
 snippet     insert_data
@@ -25,22 +25,22 @@ snippet     insert_select_data
 abbr        insert into ... select * from ... where ...
 options     head
   insert into ${1:cities}
-  select ${2:*}
-  from   ${3:cities}
-  where  ${4:area = 'asia'}
+  select ${0:*}
+  from   ${2:cities}
+  where  ${3:area = 'asia'}
   ;
 
 snippet     update_data
 abbr        update ... set ... where ...
   update ${1:table}
   set    ${2:column} = ${3:value}
-  where  ${4:condition}
+  where  ${0:condition}
   ;
 
 snippet     delete_data
 abbr        delete from ... where ...
   delete from ${1:table}
-  where  ${2:condition}
+  where  ${0:condition}
   ;
 
 snippet     delete_select_data
@@ -48,6 +48,6 @@ abbr        delete from t1 join t2 on ... where ...
   delete from ${1:table1} ${2:t1}
     join ${3:table2} ${4:t2}
       on $2.${5:column} = $4.$5
-  where  $4.${6:condition}
+  where  $4.${0:condition}
   ;
 
