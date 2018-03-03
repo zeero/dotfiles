@@ -28,6 +28,7 @@ export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
 
 # others
 export DOTFILES=~/lib/dotfiles
+export FZF_TMUX=1
 
 # local
 [ -f ~/.local.bash_profile ] && source ~/.local.bash_profile
