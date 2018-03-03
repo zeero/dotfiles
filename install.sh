@@ -108,8 +108,9 @@ npm install -g \
   bower \
 
 # python
-pip2 install \
-  vim-vint
+pip3 install \
+  neovim \
+  vim-vint \
 
 # その他設定
 echo "・キー移動を速くするために「システム環境設定」の「キーボード」からキーリピート、リピート認識を最大にする"
