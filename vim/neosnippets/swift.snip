@@ -1,39 +1,38 @@
 snippet ViewController
 abbr    UIViewController class template
-  //
-  //  `expand('%')`
-  //  `expand('%:p:h:t')`
-  //
-  //  Created by zeero on 2015/02/08.
-  //  Copyright (c) 2015 26wonders. All rights reserved.
-  //
+	//
+	//  `expand('%')`
+	//  `expand('%:p:h:t')`
+	//
+	//  Created by zeero on 2015/02/08.
+	//  Copyright (c) 2015 26wonders. All rights reserved.
+	//
 
-  import UIKit
+	import UIKit
 
-  class `expand('%:t:r')`: UIViewController {
+	class `expand('%:t:r')`: UIViewController {
 
-      override func viewDidLoad() {
-          super.viewDidLoad()
-          // Do any additional setup after loading the view, typically from a nib.
-      }
+			override func viewDidLoad() {
+					super.viewDidLoad()
+					// Do any additional setup after loading the view, typically from a nib.
+			}
 
-      override func didReceiveMemoryWarning() {
-          super.didReceiveMemoryWarning()
-          // Dispose of any resources that can be recreated.
-      }
+			override func didReceiveMemoryWarning() {
+					super.didReceiveMemoryWarning()
+					// Dispose of any resources that can be recreated.
+			}
 
-      ${0}
-  }
+			${0}
+	}
 
 snippet TableViewDataSource
 abbr    UITableViewDataSource required methods
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return ${1:number_of_rows}
-  }
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-      var cell = UITableViewCell(style: ${2:.Default}, reuseIdentifier: "${3}")
-      ${0:indexPath.row}
-      return cell
-  }
-
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+			return ${1:number_of_rows}
+	}
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+			var cell = UITableViewCell(style: ${2:.Default}, reuseIdentifier: "${3}")
+			${0:indexPath.row}
+			return cell
+	}
 

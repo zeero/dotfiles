@@ -1,101 +1,101 @@
 snippet func
 abbr    my function (override default snippet)
 options head
-  function! ${1:#:func_name}(${2}) abort "{{{
-    ${0}
-  endfunction "}}}
+	function! ${1:#:func_name}(${2}) abort "{{{
+		${0}
+	endfunction "}}}
 
 snippet func:autoload
 abbr    my function (override default snippet)
 options head
-  function! ${1:`substitute(substitute(expand('%'), '\(^autoload\/\|\.vim$\)', '', 'g'), '\/', '#', 'g')`}#${2:#:func_name}(${3}) abort "{{{
-    ${0}
-  endfunction "}}}
+	function! ${1:`substitute(substitute(expand('%'), '\(^autoload\/\|\.vim$\)', '', 'g'), '\/', '#', 'g')`}#${2:#:func_name}(${3}) abort "{{{
+		${0}
+	endfunction "}}}
 
 snippet command
 abbr    my command (override default snippet)
-  command! -nargs=${1} ${2:#:CommandName}
+	command! -nargs=${1} ${2:#:CommandName}
 
 snippet command:unite
 abbr    add Unite command
-  command! ${1:#:cmd_name} :Unite ${2:#:unite_source}
-  \ -no-empty -silent -buffer-name=$2${0}
+	command! ${1:#:cmd_name} :Unite ${2:#:unite_source}
+	\ -no-empty -silent -buffer-name=$2${0}
 
 snippet template:plugin
 abbr    plugin template
-  " =============================================================================
-  " File:          ${1:`expand('%')`}
-  " Description:   ${2:#:Description}
-  " =============================================================================
+	" =============================================================================
+	" File:          ${1:`expand('%')`}
+	" Description:   ${2:#:Description}
+	" =============================================================================
 
-  if exists('g:loaded_$1')
-    finish
-  endif
-  let g:loaded_$1 = 1
+	if exists('g:loaded_$1')
+		finish
+	endif
+	let g:loaded_$1 = 1
 
-  let s:save_cpo = &cpo
-  set cpo&vim
-
-
-  " Commands${0}
-  " Keymaps
-  " Autocmds
+	let s:save_cpo = &cpo
+	set cpo&vim
 
 
-  let &cpo = s:save_cpo
-  unlet s:save_cpo
+	" Commands${0}
+	" Keymaps
+	" Autocmds
+
+
+	let &cpo = s:save_cpo
+	unlet s:save_cpo
 
 snippet let:default_config
 abbr    set option default value
 alias   var
-  let g:${1:#:var_name} = get(g:, '$1', '${2:#:default_value}')${0}
+	let g:${1:#:var_name} = get(g:, '$1', '${2:#:default_value}')${0}
 
 snippet template:themis
 abbr    template for themis test script
-  let s:suite = themis#suite('${1:Test for `MyGetCounterpart()` -}')
-  let s:assert = themis#helper('assert')
+	let s:suite = themis#suite('${1:Test for `MyGetCounterpart()` -}')
+	let s:assert = themis#helper('assert')
 
-  function! s:suite.${2:#:test_name}() "{{{
-    let actual = ${3}
-    let expected = ${4}
-    call s:assert.equals(actual, expected)
-  endfunction "}}}
+	function! s:suite.${2:#:test_name}() "{{{
+		let actual = ${3}
+		let expected = ${4}
+		call s:assert.equals(actual, expected)
+	endfunction "}}}
 
 snippet func:themis
 abbr    function definition for themis test
-  function! s:suite.${2:#:test_name}() "{{{
-    let actual = ${3}
-    let expected = ${4}
-    call s:assert.equals(actual, expected)
-  endfunction "}}}
+	function! s:suite.${2:#:test_name}() "{{{
+		let actual = ${3}
+		let expected = ${4}
+		call s:assert.equals(actual, expected)
+	endfunction "}}}
 
 snippet template:vmock
 abbr    template for vmock
-  try
-    call vmock#mock('${1:#:func_name}').with(${2:args}).return(${3:'mock value'}).once()
-    let actual = ${4}
-    let expected = ${5}
-    call s:assert.equals(actual, expected)
-    ${0}
-    call vmock#verify()
-  catch
-    echoerr v:exception
-  finally
-    call vmock#clear()
-  endtry
+	try
+		call vmock#mock('${1:#:func_name}').with(${2:args}).return(${3:'mock value'}).once()
+		let actual = ${4}
+		let expected = ${5}
+		call s:assert.equals(actual, expected)
+		${0}
+		call vmock#verify()
+	catch
+		echoerr v:exception
+	finally
+		call vmock#clear()
+	endtry
 
 snippet call:assert:equals
 abbr    themis assertion
 alias   assert:equals
-  call s:assert.equals(${1:actual}, ${2:expected})
+	call s:assert.equals(${1:actual}, ${2:expected})
 
 snippet call:assert:true
 abbr    themis assertion
 alias   assert:true
-  call s:assert.true(${1:1})
+	call s:assert.true(${1:1})
 
 snippet call:assert:fail
 abbr    themis assertion
 alias   assert:fail
-  call s:assert.fail('Unreachable')${0}
+	call s:assert.fail('Unreachable')${0}
 

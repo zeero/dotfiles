@@ -1,69 +1,69 @@
 snippet template:Rakefile
 alias   rake
-  require 'rake/testtask'
+	require 'rake/testtask'
 
-  task :test do |t|
-    t.libs << 'test'
-    t.libs << 'src'
-    t.test_files = FileList['test/**/*_test.rb']
-  end
+	task :test do |t|
+		t.libs << 'test'
+		t.libs << 'src'
+		t.test_files = FileList['test/**/*_test.rb']
+	end
 
-  task default: :test
-  ${0}
+	task default: :test
+	${0}
 
 
 snippet template:minitest
 alias   minitest
-  require 'test_helper'
+	require 'test_helper'
 
-  describe ${1:class_name} do
-    before do
-    end
+	describe ${1:class_name} do
+		before do
+		end
 
-    describe '${2:function_name}' do
-      it '${3:spec}' do
-        assert_equal ${4:expected}, ${5:actual}
-      end
-    end
-  end
+		describe '${2:function_name}' do
+			it '${3:spec}' do
+				assert_equal ${4:expected}, ${5:actual}
+			end
+		end
+	end
 
 
 snippet template:Ruboty::Handler
 alias   ruboty
-  class ${1:class_name} < Base
-    on(
-      /${2:regexp}/i,
-      name: '${3:function_name}',
-      description: '${4:description}'
-    )
+	class ${1:class_name} < Base
+		on(
+			/${2:regexp}/i,
+			name: '${3:function_name}',
+			description: '${4:description}'
+		)
 
-    def $3(msg)
-      ${0}
-      msg.reply('')
-    end
-  end
+		def $3(msg)
+			${0}
+			msg.reply('')
+		end
+	end
 
 
 snippet require
 abbr    require ./**/*.rb
-  # require ./**/*.rb
-  Dir[File.expand_path('..', __FILE__) << '/**/*.rb'].each do |file|
-    require file
-  end
-  ${0}
+	# require ./**/*.rb
+	Dir[File.expand_path('..', __FILE__) << '/**/*.rb'].each do |file|
+		require file
+	end
+	${0}
 
 
 snippet pry
 abbr    binding.pry
 alias   byebug binding
-  require 'pry'; binding.pry${0}
+	require 'pry'; binding.pry${0}
 
 
 snippet debug
 abbr    def debug
-  def debug(str = '')
-    str = ' ' + str if !str.empty?
-    puts "#{Time.now.to_s} [DEBUG] #{__FILE__} L#{__LINE__}#{str}" if $DEBUG
-  end
-  ${0}
+	def debug(str = '')
+		str = ' ' + str if !str.empty?
+		puts "#{Time.now.to_s} [DEBUG] #{__FILE__} L#{__LINE__}#{str}" if $DEBUG
+	end
+	${0}
 
