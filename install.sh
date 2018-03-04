@@ -83,6 +83,7 @@ gem install \
   travis \
   rdoc-generator-fivefish \
   update_xcode_plugins \
+  sqlint \
 
 # Xcode8以降にalcatrazを導入する場合、以下のコマンド実行が必要になる
 #   update_xcode_plugins --unsign
