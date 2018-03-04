@@ -14,6 +14,12 @@ alias   rake
 	task default: :test
 
 
+snippet template:Rake:Task
+alias   task
+	task :${0:other} do |t|
+	end
+
+
 snippet template:minitest
 alias   minitest
 	require 'test_helper'
