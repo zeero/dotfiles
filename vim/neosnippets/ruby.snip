@@ -2,6 +2,8 @@ snippet template:Rakefile
 alias   rake
 	require 'rake/testtask'
 
+	task default: :test
+
 	Rake::TestTask.new(:test) do |t|
 		t.libs << 'test'
 		t.libs << 'src'
@@ -10,8 +12,6 @@ alias   rake
 
 	task :${0:other} do |t|
 	end
-
-	task default: :test
 
 
 snippet template:Rake:Task

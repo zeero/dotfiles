@@ -423,6 +423,8 @@ function! s:my_vimenter_vimrc() "{{{
   call s:my_vimproc_async({'cmd': 'git pull ' . resolve($MYVIMRC)})
   checktime
 endfunction "}}}
+" neosnippet
+au myvimrc FileType neosnippet setlocal noexpandtab
 
 " NeoSnippet {{{2
 au myvimrc FileType neosnippet setlocal nofoldenable noexpandtab
