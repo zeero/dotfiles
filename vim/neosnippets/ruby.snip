@@ -2,14 +2,16 @@ snippet template:Rakefile
 alias   rake
 	require 'rake/testtask'
 
-	task :test do |t|
+	Rake::TestTask.new(:test) do |t|
 		t.libs << 'test'
 		t.libs << 'src'
 		t.test_files = FileList['test/**/*_test.rb']
 	end
 
+	task :${0:other} do |t|
+	end
+
 	task default: :test
-	${0}
 
 
 snippet template:minitest
