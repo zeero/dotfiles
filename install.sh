@@ -84,6 +84,10 @@ gem install \
   rdoc-generator-fivefish \
   update_xcode_plugins \
   sqlint \
+  yard \
+  json \
+  rest-client \
+  solargraph \
 
 # Xcode8以降にalcatrazを導入する場合、以下のコマンド実行が必要になる
 #   update_xcode_plugins --unsign
@@ -96,6 +100,9 @@ brew link --force libxml2 libxslt
 gem install nokogiri -- --use-system-libraries
 
 bitclust setup
+
+yard gems
+yard config --gem-install-yri
 
 # node.js
 npm install -g \
@@ -112,6 +119,7 @@ npm install -g \
 pip3 install \
   neovim \
   vim-vint \
+  solargraph-utils.py \
 
 # その他設定
 echo "・キー移動を速くするために「システム環境設定」の「キーボード」からキーリピート、リピート認識を最大にする"

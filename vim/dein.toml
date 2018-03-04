@@ -896,15 +896,22 @@ repo = 'k-takata/matchit.vim'
 
 [[plugins]]
 repo = 'osyo-manga/vim-monster'
+if = '''executable('rct-complete')'''
 lazy = 1
 on_ft = ['ruby']
-if = '''executable('rct-complete')'''
 
 [[plugins]]
 repo = 'rhysd/vim-textobj-ruby'
 lazy = 1
 on_ft = ['ruby']
 depends = ['vim-operator-user']
+
+[[plugins]]
+repo = 'uplus/deoplete-solargraph'
+if = '''executable('solargraph')'''
+lazy = 1
+on_ft = ['ruby']
+on_i = 1
 
 
 # Swift {{{1
@@ -1063,4 +1070,6 @@ on_ft = ['vim']
 [[plugins]]
 repo = 'chase/vim-ansible-yaml'
 on_ft = ['ansible']
+
+# 1}}}
 
