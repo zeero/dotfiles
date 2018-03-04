@@ -14,7 +14,7 @@ options head
 
 snippet command
 abbr    my command (override default snippet)
-	command! -nargs=${1} ${2:#:CommandName}
+	command! ${1:-nargs= }${0:CommandName}
 
 snippet command:unite
 abbr    add Unite command

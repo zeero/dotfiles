@@ -1084,25 +1084,27 @@ nnoremap <silent> ,L :<C-u>tabm 1<CR>
 nnoremap gf :tab drop <cfile><CR>
 vnoremap gf y:tab drop <C-r>"<CR>
 " gFでカウンターパートを開く
-nnoremap gF :exe 'tab drop ' . MyGetCounterpart()<CR>
-function! MyGetCounterpart() "{{{
+nnoremap gF :MyGetCounterpart<CR>
+command! MyGetCounterpart call s:my_get_counterpart()
+function! s:my_get_counterpart() abort "{{{
   let path = expand('%:h')
-  let fname = expand('%:t')
-  if fname =~# '^test_'
-    let counterpart = substitute(path, '^test/', '', '') . '/' . substitute(fname, '^test_', '', '')
-    if filereadable('src/' . counterpart)
-      return 'src/' . counterpart
-    elseif filereadable('lib/' . counterpart)
-      return 'lib/' . counterpart
+  let fname = expand('%:t:r')
+  let ext = expand('%:e')
+  if fname =~? '_test$'
+    let counterpart = substitute(path, '^test', '', '') . '/' . substitute(fname, '_test$', '', '') . '.' . ext
+    if filereadable('src' . counterpart)
+      exe 'tab drop src' . counterpart
+    elseif filereadable('lib' . counterpart)
+      exe 'tab drop lib' . counterpart
     else
-      return counterpart
+      echoerr 'MyGetCounterpart cant find counterpart'
     endif
   else
-    let test_path = 'test/' . substitute(path, '^\(src\|lib\)/', '', '')
+    let test_path = substitute(path, '^\(src\|lib\)', 'test', '')
     if ! isdirectory(test_path)
       call mkdir(test_path, 'p')
     endif
-    return test_path . '/test_' . fname
+    exe 'tab drop ' . test_path . '/' . fname . '_test.' . ext
   endif
 endfunction "}}}
 " ウィンドウサイズ変更
