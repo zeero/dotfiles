@@ -58,6 +58,11 @@ brew linkapps macvim
 # ruby
 CONFIGURE_OPTS="--with-readline-dir=/usr/local/opt" rbenv install 2.3.1
 rbenv global 2.3.1
+
+gem install yard
+yard gems
+yard config --gem-install-yri
+
 gem install \
   bundler \
   refe2 \
@@ -84,7 +89,6 @@ gem install \
   rdoc-generator-fivefish \
   update_xcode_plugins \
   sqlint \
-  yard \
   json \
   rest-client \
   solargraph \
@@ -100,9 +104,6 @@ brew link --force libxml2 libxslt
 gem install nokogiri -- --use-system-libraries
 
 bitclust setup
-
-yard gems
-yard config --gem-install-yri
 
 # node.js
 npm install -g \
