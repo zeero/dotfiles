@@ -52,12 +52,10 @@ alias   ruboty
 	end
 
 
-snippet require
+snippet require:cur_dir
 abbr    require ./**/*.rb
-	# require ./**/*.rb
-	Dir[File.expand_path('..', __FILE__) << '/**/*.rb'].each do |file|
-		require file
-	end
+	# require ./${1:path}/**/*.rb
+	Dir[File.expand_path('$1', __dir__) << '/**/*.rb'].each { |file| require file }
 	${0}
 
 
