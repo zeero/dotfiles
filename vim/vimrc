@@ -1463,6 +1463,8 @@ vmap ,F <Plug>(easymotion-s2)
 omap ,F <Plug>(easymotion-s2)
 au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> f <Plug>(easymotion-j)
 au myvimrc FileType unite,vimfiler,gitcommit nmap <buffer> F <Plug>(easymotion-k)
+" ALEFix
+nmap ,= <Plug>(ale_fix)
 
 " トグル {{{2
 " コメントアウトの切り替え（caw.vim）
