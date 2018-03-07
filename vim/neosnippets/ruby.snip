@@ -166,3 +166,13 @@ abbr    begin ... rescue ... ensure ... end
 	ensure
 	end
 
+# def:rescue {{{1
+snippet def:rescue
+alias   try catch
+abbr    def ... rescue ... ensure ... end
+	def ${1:func_name}
+		${0}
+	rescue => e
+	ensure
+	end
+
