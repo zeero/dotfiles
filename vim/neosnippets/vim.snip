@@ -1,3 +1,4 @@
+# func {{{1
 snippet func
 abbr    my function (override default snippet)
 options head
@@ -5,6 +6,7 @@ options head
 		${0}
 	endfunction "}}}
 
+# func:autoload {{{1
 snippet func:autoload
 abbr    my function (override default snippet)
 options head
@@ -12,15 +14,18 @@ options head
 		${0}
 	endfunction "}}}
 
+# command {{{1
 snippet command
 abbr    my command (override default snippet)
 	command! ${1:-nargs= }${0:CommandName}
 
+# command:unite {{{1
 snippet command:unite
 abbr    add Unite command
 	command! ${1:#:cmd_name} :Unite ${2:#:unite_source}
 	\ -no-empty -silent -buffer-name=$2${0}
 
+# template:plugin {{{1
 snippet template:plugin
 abbr    plugin template
 	" =============================================================================
@@ -45,11 +50,13 @@ abbr    plugin template
 	let &cpo = s:save_cpo
 	unlet s:save_cpo
 
+# let:default_config {{{1
 snippet let:default_config
 abbr    set option default value
 alias   var
 	let g:${1:#:var_name} = get(g:, '$1', '${2:#:default_value}')${0}
 
+# template:themis {{{1
 snippet template:themis
 abbr    template for themis test script
 	let s:suite = themis#suite('${1:Test for `MyGetCounterpart()` -}')
@@ -61,6 +68,7 @@ abbr    template for themis test script
 		call s:assert.equals(actual, expected)
 	endfunction "}}}
 
+# func:themis {{{1
 snippet func:themis
 abbr    function definition for themis test
 	function! s:suite.${2:#:test_name}() "{{{
@@ -69,6 +77,7 @@ abbr    function definition for themis test
 		call s:assert.equals(actual, expected)
 	endfunction "}}}
 
+# template:vmock {{{1
 snippet template:vmock
 abbr    template for vmock
 	try
@@ -84,16 +93,19 @@ abbr    template for vmock
 		call vmock#clear()
 	endtry
 
+# call:assert:equals {{{1
 snippet call:assert:equals
 abbr    themis assertion
 alias   assert:equals
 	call s:assert.equals(${1:actual}, ${2:expected})
 
+# call:assert:true {{{1
 snippet call:assert:true
 abbr    themis assertion
 alias   assert:true
 	call s:assert.true(${1:1})
 
+# call:assert:fail {{{1
 snippet call:assert:fail
 abbr    themis assertion
 alias   assert:fail
