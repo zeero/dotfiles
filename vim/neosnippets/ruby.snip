@@ -21,23 +21,6 @@ alias   task
 	end
 
 
-# template:Ruboty::Handler {{{1
-snippet template:Ruboty::Handler
-alias   ruboty
-	class ${1:class_name} < Base
-		on(
-			/${2:regexp}/i,
-			name: '${3:function_name}',
-			description: '${4:description}'
-		)
-
-		def $3(msg)
-			${0}
-			msg.reply('')
-		end
-	end
-
-
 # template:minitest:spec {{{1
 snippet template:minitest:spec
 alias   minitest:spec spec
@@ -99,10 +82,48 @@ snippet test:assert_equal
 alias   assert_equal
 	assert_equal ${1:expect}, ${2:actual}
 
-# test:assert:true {{{1
-snippet test:assert:true
+# test:assert_true {{{1
+snippet test:assert_true
 alias   assert_true
 	assert ${1:true}
+
+
+# template:Ruboty::Handler {{{1
+snippet template:Ruboty::Handler
+alias   ruboty
+	class ${1:class_name} < Base
+		on(
+			/${2:regexp}/i,
+			name: '${3:function_name}',
+			description: '${4:description}'
+		)
+
+		def $3(msg)
+			${0}
+			msg.reply('')
+		end
+	end
+
+
+# template:ActiveRecord:migration {{{1
+snippet template:ActiveRecord:migration
+abbr    template for migration script
+	class ${1:ClassName} < ActiveRecord::Migration[5.0]
+		def change
+			create_table :${2:table_name} do |t|
+				t.${3:string} :${4:column_name}
+				${0}
+				t.timestamps
+			end
+			add_index :$2, :${5:column_name}
+		end
+	end
+
+# class:ActiveRecord {{{1
+snippet class:ActiveRecord
+	class ${1:ClassName} < ActiveRecord::Base
+		belongs_to :${2:table_name}
+	end
 
 
 # require:cur_dir {{{1
@@ -111,6 +132,11 @@ abbr    require ./**/*.rb
 	# require ./${1:path}/**/*.rb
 	Dir[File.expand_path('$1', __dir__) << '/**/*.rb'].each { |file| require file }
 	${0}
+
+# require:active_support {{{1
+snippet require:active_support
+	require 'active_support'
+	require 'active_support/core_ext'
 
 
 # pry {{{1

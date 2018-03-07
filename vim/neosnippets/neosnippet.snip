@@ -1,15 +1,15 @@
 snippet snip
 abbr    define neosnippet
-	# ${1:keyword} {{{1
-	snippet $1
-	abbr    ${2:desc}
+	# $1 {{{1
+	snippet ${1:keyword}
 		${${0:0}}
 
-snippet snip:word
-abbr    define neosnippet (options word)
-	# ${1:keyword} {{{1
-	snippet $1
+snippet snip:full
+abbr    define neosnippet (options)
+	# $1 {{{1
+	snippet ${1:keyword}
 	abbr    ${2:desc}
-	options word
+	alias   ${3:alias}
+	options ${4:word|head|indent}
 		${${0:0}}
 
