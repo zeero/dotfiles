@@ -894,11 +894,11 @@ repo = 'k-takata/matchit.vim'
 # lazy = 1
 # on_ft = ['ruby']
 
-[[plugins]]
-repo = 'osyo-manga/vim-monster'
-if = '''executable('rct-complete')'''
-lazy = 1
-on_ft = ['ruby']
+# [[plugins]]
+# repo = 'osyo-manga/vim-monster'
+# if = '''executable('rct-complete')'''
+# lazy = 1
+# on_ft = ['ruby']
 
 [[plugins]]
 repo = 'rhysd/vim-textobj-ruby'

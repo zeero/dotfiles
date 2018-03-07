@@ -197,6 +197,8 @@ set sidescroll=0
 set sidescrolloff=9
 " ビープ音を消す
 set visualbell t_vb=
+" 補完でWindowを開かない
+set completeopt=menuone
 
 " 画面表示の設定 {{{1
 " シンタックスハイライト
@@ -1920,11 +1922,11 @@ call deoplete#custom#source('_', 'min_pattern_length', 3)
 au myvimrc FileType html exe 'setlocal dictionary+=' . $MYVIMDIR . '/dict/bootstrap.dict'
 au myvimrc FileType ruby exe 'setlocal dictionary+=' . $MYVIMDIR . '/dict/pocke_dicts/ruby.dict'
 
-" Define keyword. {{{2
-if !exists('g:deoplete#keyword_patterns')
-  let g:deoplete#keyword_patterns = {}
-endif
-let g:deoplete#keyword_patterns['default'] = '\h\w*'
+" " Define keyword. {{{2
+" if !exists('g:deoplete#keyword_patterns')
+"   let g:deoplete#keyword_patterns = {}
+" endif
+" let g:deoplete#keyword_patterns['default'] = '\h\w*'
 
 " Plugin key-mappings. {{{2
 inoremap <expr> <C-p> pumvisible() ? '<C-p>' : ""
@@ -1945,14 +1947,14 @@ au myvimrc FileType python      setlocal omnifunc=pythoncomplete#Complete
 au myvimrc FileType xml         setlocal omnifunc=xmlcomplete#CompleteTags
 au myvimrc FileType workflowish setlocal omnifunc=github_complete#complete
 
-" Enable heavy omni completion. {{{2
-if !exists('g:deoplete#omni_patterns')
-  let g:deoplete#omni_patterns = {}
-endif
-let g:deoplete#omni_patterns.workflowish = ':'
-let g:deoplete#omni_patterns.markdown = ':'
-let g:deoplete#omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
+" " Enable heavy omni completion. {{{2
+" if !exists('g:deoplete#omni_patterns')
+"   let g:deoplete#omni_patterns = {}
+" endif
+" let g:deoplete#omni_patterns.workflowish = ':'
+" let g:deoplete#omni_patterns.markdown = ':'
+" let g:deoplete#omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+" let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
 
 " （on_source終わり）{{{2
 endfunction
