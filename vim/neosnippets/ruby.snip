@@ -159,9 +159,10 @@ abbr    def debug
 # begin {{{1
 snippet begin
 alias   try catch
-abbr    begin ... rescue ... end
+abbr    begin ... rescue ... ensure ... end
 	begin
 		${0}
 	rescue => e
+	ensure
 	end
 
