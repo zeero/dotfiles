@@ -14,28 +14,10 @@ alias   rake
 	task :${0:other} do |t|
 	end
 
-
-# template:Rake:Task {{{1
-snippet template:Rake:Task
+# rake:task {{{1
+snippet rake:task
 alias   task
 	task :${0:other} do |t|
-	end
-
-
-# template:minitest {{{1
-snippet template:minitest
-alias   minitest
-	require 'test_helper'
-
-	describe ${1:class_name} do
-		before do
-		end
-
-		describe '${2:function_name}' do
-			it '${3:spec}' do
-				assert_equal ${4:expected}, ${5:actual}
-			end
-		end
 	end
 
 
@@ -54,6 +36,73 @@ alias   ruboty
 			msg.reply('')
 		end
 	end
+
+
+# template:minitest:spec {{{1
+snippet template:minitest:spec
+alias   minitest:spec spec
+	require 'test_helper'
+
+	describe ${1:ClassName} do
+		before do
+		end
+
+		describe '${2:function_name}' do
+			it '${3:spec}' do
+				${0}
+				expect(${4:expect}).to eq ${5:actual}
+			end
+		end
+	end
+
+# spec:expect {{{1
+snippet spec:expect_to
+alias   expect_to
+	expect(${1:expect}).to eq ${2:actual}
+
+# spec:let {{{1
+snippet spec:let
+alias   let
+	let(:${1:var}) { ${0:value} }
+
+# spec:context {{{1
+snippet spec:context
+alias   context
+	context '${1:case}' do
+		${0}
+	end
+
+# spec:subject {{{1
+snippet spec:subject
+alias   subject
+	subject {${1:subject}}
+
+	context '${2:case}' do
+		${0}
+		it { is_expected.to eq ${3:actual}}
+	end
+
+# template:minitest:test {{{1
+snippet template:minitest:test
+alias   minitest:test test
+	require 'test_helper'
+
+	class ${1:ClassName}Test < ActiveSupport::TestCase
+		test '${2:description}' do
+			${0}
+			assert_equal ${3:expect}, ${4:actual}
+		end
+	end
+
+# test:assert_equal {{{1
+snippet test:assert_equal
+alias   assert_equal
+	assert_equal ${1:expect}, ${2:actual}
+
+# test:assert:true {{{1
+snippet test:assert:true
+alias   assert_true
+	assert ${1:true}
 
 
 # require:cur_dir {{{1
