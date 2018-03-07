@@ -1,3 +1,4 @@
+# template:Rakefile {{{1
 snippet template:Rakefile
 alias   rake
 	require 'rake/testtask'
@@ -14,12 +15,14 @@ alias   rake
 	end
 
 
+# template:Rake:Task {{{1
 snippet template:Rake:Task
 alias   task
 	task :${0:other} do |t|
 	end
 
 
+# template:minitest {{{1
 snippet template:minitest
 alias   minitest
 	require 'test_helper'
@@ -36,6 +39,7 @@ alias   minitest
 	end
 
 
+# template:Ruboty::Handler {{{1
 snippet template:Ruboty::Handler
 alias   ruboty
 	class ${1:class_name} < Base
@@ -52,6 +56,7 @@ alias   ruboty
 	end
 
 
+# require:cur_dir {{{1
 snippet require:cur_dir
 abbr    require ./**/*.rb
 	# require ./${1:path}/**/*.rb
@@ -59,12 +64,14 @@ abbr    require ./**/*.rb
 	${0}
 
 
+# pry {{{1
 snippet pry
 abbr    binding.pry
 alias   byebug binding
 	require 'pry'; binding.pry${0}
 
 
+# debug {{{1
 snippet debug
 abbr    def debug
 	def debug(str = '')
@@ -72,4 +79,14 @@ abbr    def debug
 		puts "#{Time.now.to_s} [DEBUG] #{__FILE__} L#{__LINE__}#{str}" if $DEBUG
 	end
 	${0}
+
+
+# begin {{{1
+snippet begin
+alias   try catch
+abbr    begin ... rescue ... end
+	begin
+		${0}
+	rescue => e
+	end
 

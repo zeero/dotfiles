@@ -1909,20 +1909,14 @@ let g:deoplete#enable_yarp = 1
 let g:deoplete#enable_ignore_case = 1
 " Use smartcase.
 let g:deoplete#enable_smart_case = 1
-" " Set minimum syntax keyword length.
-" let g:deoplete#sources#syntax#min_keyword_length = 3
-" let g:deoplete#lock_buffer_name_pattern = '\*ku\*'
-" " Use fuzzy completion.
-" let g:deoplete#enable_fuzzy_completion = 1
+" sourceの優先順位
+call deoplete#custom#source('neosnippet', 'rank', 9999)
+" Set minimum syntax keyword length.
+call deoplete#custom#source('_', 'min_pattern_length', 3)
 
-" " Define dictionary. {{{2
-" let g:deoplete#sources#dictionary#dictionaries = {
-" \ 'default' : '',
-" \ 'vimshell' : $HOME.'/.cache/vimshell/command-history',
-" \ 'scheme' : $HOME.'/.gosh_completions',
-" \ 'html': $MYVIMDIR.'/dict/bootstrap.dict',
-" \ 'ruby': $MYVIMDIR.'/dict/pocke_dicts/ruby.dict',
-" \}
+" Define dictionary. {{{2
+au myvimrc FileType html exe 'setlocal dictionary+=' . $MYVIMDIR . '/dict/bootstrap.dict'
+au myvimrc FileType ruby exe 'setlocal dictionary+=' . $MYVIMDIR . '/dict/pocke_dicts/ruby.dict'
 
 " Define keyword. {{{2
 if !exists('g:deoplete#keyword_patterns')
