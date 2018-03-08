@@ -2,4 +2,5 @@
 *.swp
 tags
 .local.*
+.ruby-version
 
