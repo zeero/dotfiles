@@ -33,15 +33,20 @@ alias   minitest:spec spec
 		describe '${2:function_name}' do
 			it '${3:spec}' do
 				${0}
-				expect(${4:expect}).to eq ${5:actual}
+				${1:actual}.must_equal ${2:expected}
 			end
 		end
 	end
 
-# spec:expect {{{1
-snippet spec:expect_to
-alias   expect_to
-	expect(${1:expect}).to eq ${2:actual}
+# spec:must_equal {{{1
+snippet spec:must_equal
+alias   must_equal
+	${1:actual}.must_equal ${2:expected}
+
+# spec:must_be_nil {{{1
+snippet spec:must_be_nil
+alias   must_be_nil
+	${1:actual}.must_be_nil
 
 # spec:let {{{1
 snippet spec:let
@@ -58,34 +63,35 @@ alias   context
 # spec:subject {{{1
 snippet spec:subject
 alias   subject
-	subject {${1:subject}}
+	subject { ${1:subject} }
 
-	context '${2:case}' do
-		${0}
-		it { is_expected.to eq ${3:actual}}
-	end
 
-# template:minitest:test {{{1
-snippet template:minitest:test
-alias   minitest:test test
+# template:minitest:unit {{{1
+snippet template:minitest:unit
+alias   minitest:unit unit
 	require 'test_helper'
 
 	class ${1:ClassName}Test < ActiveSupport::TestCase
 		test '${2:description}' do
 			${0}
-			assert_equal ${3:expect}, ${4:actual}
+			assert_equal ${3:expected}, ${4:actual}
 		end
 	end
 
-# test:assert_equal {{{1
-snippet test:assert_equal
+# unit:assert_equal {{{1
+snippet unit:assert_equal
 alias   assert_equal
-	assert_equal ${1:expect}, ${2:actual}
+	assert_equal ${1:expected}, ${2:actual}
 
-# test:assert_true {{{1
-snippet test:assert_true
+# unit:assert_true {{{1
+snippet unit:assert_true
 alias   assert_true
 	assert ${1:true}
+
+# unit:refute_nil {{{1
+snippet unit:refute_nil
+abbr    not nil
+	refute_nil ${0}
 
 
 # template:Ruboty::Handler {{{1
