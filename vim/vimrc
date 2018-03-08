@@ -1490,7 +1490,7 @@ nnoremap ,. :<C-u>QFToggle<CR>
 command! QFToggle :call s:my_qf_toggle()
 function! s:my_qf_toggle() "{{{
   let cur_win = winnr()
-  windo if 'qf' == &ft | cclose | execute cur_win . 'wincmd w' | return | endif
+  windo if 'qf' == &ft | cclose | silent! execute cur_win . 'wincmd w' | return | endif
   execute cur_win . 'wincmd w'
   botright cwindow 7
 endfunction "}}}
@@ -1499,7 +1499,7 @@ nnoremap ,, :<C-u>LLToggle<CR>
 command! LLToggle :call s:my_ll_toggle()
 function! s:my_ll_toggle() "{{{
   let cur_win = winnr()
-  windo if 'qf' == &ft | lclose | execute cur_win . 'wincmd w' | return | endif
+  windo if 'qf' == &ft | lclose | silent! execute cur_win . 'wincmd w' | return | endif
   execute cur_win . 'wincmd w'
   botright lwindow 7
 endfunction "}}}
