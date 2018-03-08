@@ -1486,7 +1486,7 @@ nnoremap ,b :<C-u>MBEToggle<CR>
 " TagbarToggle
 nnoremap ,; :<C-u>TagbarToggle<CR>
 " QFToggle
-nnoremap ,, :<C-u>QFToggle<CR>
+nnoremap ,. :<C-u>QFToggle<CR>
 command! QFToggle :call s:my_qf_toggle()
 function! s:my_qf_toggle() "{{{
   let cur_win = winnr()
@@ -1494,9 +1494,18 @@ function! s:my_qf_toggle() "{{{
   execute cur_win . 'wincmd w'
   botright cwindow 7
 endfunction "}}}
+" LLToggle
+nnoremap ,, :<C-u>LLToggle<CR>
+command! LLToggle :call s:my_ll_toggle()
+function! s:my_ll_toggle() "{{{
+  let cur_win = winnr()
+  windo if 'qf' == &ft | lclose | execute cur_win . 'wincmd w' | return | endif
+  execute cur_win . 'wincmd w'
+  botright lwindow 7
+endfunction "}}}
 " PreviewToggle
-nnoremap ,. :<C-u>PreviewToggle<CR>zz
-vnoremap ,. y:<C-u>call PreviewWord('<C-r>"')<CR>
+" nnoremap ,. :<C-u>PreviewToggle<CR>zz
+" vnoremap ,. y:<C-u>call PreviewWord('<C-r>"')<CR>
 command! PreviewToggle :call s:my_preview_toggle()
 function! s:my_preview_toggle() "{{{
   silent! wincmd P
