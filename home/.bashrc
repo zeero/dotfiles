@@ -12,7 +12,9 @@ alias la='ls -a'
 alias lla='ls -la'
 alias lh='ls -lh'
 alias be='bundle exec'
+alias bi='bundle install'
 alias rails='bundle exec rails'
+alias rake='bundle exec rake'
 
 # ファンクション {{{1
 ## calc {{{2
