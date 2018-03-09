@@ -919,6 +919,12 @@ lazy = 1
 on_ft = ['ruby']
 on_i = 1
 
+[[plugins]]
+repo = 'rlue/vim-fold-rspec'
+lazy = 1
+on_ft = ['ruby']
+on_i = 1
+
 
 # Swift {{{1
 
