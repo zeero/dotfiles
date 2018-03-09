@@ -94,8 +94,8 @@ abbr    not nil
 	refute_nil ${0}
 
 
-# template:Ruboty::Handler {{{1
-snippet template:Ruboty::Handler
+# template:Ruboty:Handler {{{1
+snippet template:Ruboty:Handler
 alias   ruboty
 	class ${1:class_name} < Base
 		on(
@@ -109,6 +109,23 @@ alias   ruboty
 			msg.reply('')
 		end
 	end
+
+
+# template:Ruboty:test_helper {{{1
+snippet template:Ruboty:test_helper
+alias   test_helper
+	require 'minitest/autorun'
+	require 'minitest/reporters'
+	require 'mocha/mini_test'
+	require 'factory_bot'
+	${0}
+	require 'ruboty'
+
+	require 'ruboty/${1:app_name}'
+
+	Dir[File.expand_path('factories', __dir__) << '/*.rb'].each { |file| require file }
+
+	Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 
 # template:ActiveRecord:migration {{{1
@@ -129,6 +146,65 @@ abbr    template for migration script
 snippet class:ActiveRecord
 	class ${1:ClassName} < ActiveRecord::Base
 		belongs_to :${2:table_name}
+	end
+
+
+# template:Gemfile {{{1
+snippet template:Gemfile
+alias   gem
+	gem 'activerecord'
+	gem 'activesupport'
+
+	# development
+	gem 'bundler'
+	gem 'byebug'
+	gem 'factory_bot'
+	gem 'minitest'
+	gem 'minitest-reporters'
+	gem 'mocha'
+	gem 'pry'
+	gem 'pry-byebug'
+	gem 'pry-theme'
+	gem 'rake'
+	${0}
+
+
+# template:gemspec {{{1
+snippet template:gemspec
+alias   gemspec
+		spec.add_dependency 'activerecord'
+		spec.add_dependency 'activesupport'
+		spec.add_development_dependency 'bundler'
+		spec.add_development_dependency 'byebug'
+		spec.add_development_dependency 'factory_bot'
+		spec.add_development_dependency 'minitest'
+		spec.add_development_dependency 'minitest-reporters'
+		spec.add_development_dependency 'mocha'
+		spec.add_development_dependency 'pry'
+		spec.add_development_dependency 'pry-byebug'
+		spec.add_development_dependency 'pry-theme'
+		spec.add_development_dependency 'rake'
+		${0}
+
+
+# template:entry_point {{{1
+snippet template:entry_point
+alias   entry index
+abbr    template for app entry point
+	require 'active_support'
+	require 'active_support/core_ext'
+	${0}
+	Dir[File.expand_path('${1:app_name}', __dir__) << '/**/*.rb'].each { |file| require file }
+
+	module ${2:module_name}
+		# Main module
+		module $1
+			@logger = Logger.new($stdout)
+
+			class << self
+				attr_reader :logger
+			end
+		end
 	end
 
 
