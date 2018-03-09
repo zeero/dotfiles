@@ -258,3 +258,14 @@ abbr    def ... rescue ... ensure ... end
 	ensure
 	end
 
+# switch {{{1
+snippet switch
+alias   case
+abbr    case ... when ... else ... end
+	case ${1:object}
+	when ${2:condition} then
+		${0}
+	else
+	end
+
+
