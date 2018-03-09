@@ -147,6 +147,7 @@ map y yankDocumentUrl
 map gy :call copy_title_and_url(0)<CR>
 map gY :call copy_title_and_url(1)<CR>
 map ,y :call copy_title_and_url(2)<CR>
+map ,Y :call copy_title_and_url(3)<CR>
 " copy_title_and_url(isMarkdown) {{{
 copy_title_and_url(mode) -> {{
   let url = document.URL;
@@ -155,6 +156,8 @@ copy_title_and_url(mode) -> {{
     var fmt = title + '\n' + url;
   } else if (mode === 1) {
     var fmt = '[' + title + '](' + url + ')';
+  } else if (mode === 2) {
+    var fmt = url.replace(/https:\/\/github.com\//, '')
   } else {
     var fmt = '<a href="' + url + '">' + title + '</a>';
   }
