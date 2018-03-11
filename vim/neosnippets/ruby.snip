@@ -156,6 +156,12 @@ alias   let:mock
 	${0}
 
 
+# class:ActiveRecord {{{1
+snippet class:ActiveRecord
+	class ${1:ClassName} < ActiveRecord::Base
+		belongs_to :${2:table_name}
+	end
+
 # template:ActiveRecord:migration {{{1
 snippet template:ActiveRecord:migration
 abbr    template for migration script
@@ -170,11 +176,21 @@ abbr    template for migration script
 		end
 	end
 
-# class:ActiveRecord {{{1
-snippet class:ActiveRecord
-	class ${1:ClassName} < ActiveRecord::Base
-		belongs_to :${2:table_name}
+# rake:ActiveRecord:migration {{{1
+snippet rake:ActiveRecord:migration
+alias   db:migration
+	namespace :db do
+		task migrate: :env do
+			ActiveRecord::Migrator.migrate('db/migrate', ENV['VERSION'] ? ENV['VERSION'].to_i : nil)
+		end
+
+		task :env do
+			dbconfig = YAML.safe_load(File.read('db/database.yml'))
+			ActiveRecord::Base.establish_connection(dbconfig[ENV['ENV']])
+			ActiveRecord::Base.logger = Logger.new('log/database.log')
+		end
 	end
+	${0}
 
 
 # template:Gemfile {{{1
