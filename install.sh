@@ -82,6 +82,7 @@ gem install \
   cocoapods \
   ruboty \
   ruboty-gen \
+  ruboty-megen \
   kramdown \
   firebrew \
   synx \
