@@ -238,7 +238,6 @@ abbr    template for app entry point
 	require 'active_support'
 	require 'active_support/core_ext'
 	${0}
-	Dir[File.expand_path('${1:app_name}', __dir__) << '/**/*.rb'].each { |file| require file }
 
 	module ${2:module_name}
 		# Main module
@@ -251,6 +250,7 @@ abbr    template for app entry point
 		end
 	end
 
+	Dir[File.expand_path('${1:app_name}', __dir__) << '/**/*.rb'].each { |file| require file }
 
 # require:cur_dir {{{1
 snippet require:cur_dir
