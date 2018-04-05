@@ -122,7 +122,6 @@ alias   test_helper
 	require 'ruboty'
 
 	require 'ruboty/${1:app_name}'
-
 	Dir[File.expand_path('factories', __dir__) << '/*.rb'].each { |file| require file }
 
 	Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
@@ -250,7 +249,6 @@ abbr    begin ... rescue ... ensure ... end
 
 # def:rescue {{{1
 snippet def:rescue
-alias   try catch
 abbr    def ... rescue ... ensure ... end
 	def ${1:func_name}
 		${0}
