@@ -127,6 +127,40 @@ alias   test_helper
 	Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 
+# mock:Mocha:expect {{{1
+snippet mock:Mocha:expects:class_method
+alias   expects:class_method
+	${1:Class}.expects(:${2:class_method})${3:.once}
+	${0}
+
+
+# mock:Mocha:expects:instance_method {{{1
+snippet mock:Mocha:expects:instance_method
+alias   expects:instance_method
+	${1:Class}.any_instance.expects(:${2:method})${3:.once}
+	${0}
+
+
+# mock:Mocha:stubs:instance_method {{{1
+snippet mock:Mocha:stubs:instance_method
+alias   stubs:instance_method
+	${1:Class}.any_instance.stubs(:${2:method}).with(:${3:arg_condition}).returns(:${4:return_value})
+	${0}
+
+
+# mock:Mocha:let:new_mock {{{1
+snippet mock:Mocha:let:new_mock
+alias   let:mock
+	let(${1:mock_name}) { mock.tap { |mock| mock.expects(:${2:method})${3:.once} } }
+	${0}
+
+
+# class:ActiveRecord {{{1
+snippet class:ActiveRecord
+	class ${1:ClassName} < ActiveRecord::Base
+		belongs_to :${2:table_name}
+	end
+
 # template:ActiveRecord:migration {{{1
 snippet template:ActiveRecord:migration
 abbr    template for migration script
@@ -141,11 +175,21 @@ abbr    template for migration script
 		end
 	end
 
-# class:ActiveRecord {{{1
-snippet class:ActiveRecord
-	class ${1:ClassName} < ActiveRecord::Base
-		belongs_to :${2:table_name}
+# rake:ActiveRecord:migration {{{1
+snippet rake:ActiveRecord:migration
+alias   db:migration
+	namespace :db do
+		task migrate: :env do
+			ActiveRecord::Migrator.migrate('db/migrate', ENV['VERSION'] ? ENV['VERSION'].to_i : nil)
+		end
+
+		task :env do
+			dbconfig = YAML.safe_load(File.read('db/database.yml'))
+			ActiveRecord::Base.establish_connection(dbconfig[ENV['ENV']])
+			ActiveRecord::Base.logger = Logger.new('log/database.log')
+		end
 	end
+	${0}
 
 
 # template:Gemfile {{{1
@@ -193,7 +237,6 @@ abbr    template for app entry point
 	require 'active_support'
 	require 'active_support/core_ext'
 	${0}
-	Dir[File.expand_path('${1:app_name}', __dir__) << '/**/*.rb'].each { |file| require file }
 
 	module ${2:module_name}
 		# Main module
@@ -206,6 +249,7 @@ abbr    template for app entry point
 		end
 	end
 
+	Dir[File.expand_path('${1:app_name}', __dir__) << '/**/*.rb'].each { |file| require file }
 
 # require:cur_dir {{{1
 snippet require:cur_dir

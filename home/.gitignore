@@ -3,4 +3,5 @@
 tags
 .local.*
 .ruby-version
+.rubocop.yml
 
