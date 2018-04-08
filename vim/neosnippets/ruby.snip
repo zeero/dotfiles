@@ -116,7 +116,7 @@ snippet template:Ruboty:test_helper
 alias   test_helper
 	require 'minitest/autorun'
 	require 'minitest/reporters'
-	require 'mocha/mini_test'
+	require 'mocha/minitest'
 	require 'factory_bot'
 	${0}
 	require 'ruboty'
@@ -215,20 +215,19 @@ alias   gem
 # template:gemspec {{{1
 snippet template:gemspec
 alias   gemspec
-		spec.add_dependency 'activerecord'
-		spec.add_dependency 'activesupport'
-		spec.add_development_dependency 'bundler'
-		spec.add_development_dependency 'byebug'
-		spec.add_development_dependency 'factory_bot'
-		spec.add_development_dependency 'minitest'
-		spec.add_development_dependency 'minitest-reporters'
-		spec.add_development_dependency 'mocha'
-		spec.add_development_dependency 'pry'
-		spec.add_development_dependency 'pry-byebug'
-		spec.add_development_dependency 'pry-theme'
-		spec.add_development_dependency 'rake'
-		${0}
-
+	spec.add_dependency 'activerecord'
+	spec.add_dependency 'activesupport'
+	spec.add_development_dependency 'bundler'
+	spec.add_development_dependency 'byebug'
+	spec.add_development_dependency 'factory_bot'
+	spec.add_development_dependency 'minitest'
+	spec.add_development_dependency 'minitest-reporters'
+	spec.add_development_dependency 'mocha'
+	spec.add_development_dependency 'pry'
+	spec.add_development_dependency 'pry-byebug'
+	spec.add_development_dependency 'pry-theme'
+	spec.add_development_dependency 'rake'
+	${0}
 
 # template:entry_point {{{1
 snippet template:entry_point
