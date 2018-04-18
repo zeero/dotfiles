@@ -40,3 +40,9 @@ Style/RescueStandardError:
 Style/WordArray:
   Enabled: false
 
+Style/Documentation:
+  Enabled: false
+
+Style/RegexpLiteral:
+  Enabled: false
+
