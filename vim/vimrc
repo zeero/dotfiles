@@ -607,6 +607,11 @@ function! s:my_todos() "{{{
   call setqflist(qflist)
   botright cwindow 7
 endfunction "}}}
+" Ctags
+command! -nargs=0 Ctags call s:my_ctags()
+function! s:my_ctags() "{{{
+  call vimproc#system_bg('ctags -R -f tags ' . s:my_path_convert(getcwd()))
+endfunction "}}}
 " LocalInit
 let g:my_local_init_skel_file = $MYVIMDIR . '/skel/local_init.vim'
 command! -nargs=0 LocalInit call s:my_local_init()
@@ -616,10 +621,16 @@ function! s:my_local_init() "{{{
   endif
   call s:my_ctags()
 endfunction "}}}
-" Ctags
-command! -nargs=0 Ctags call s:my_ctags()
-function! s:my_ctags() "{{{
-  call vimproc#system_bg('ctags -R -f tags ' . s:my_path_convert(getcwd()))
+" RubyInit
+let g:my_ruby_init_skel_dir = $MYVIMDIR . '/skel/ruby'
+command! -nargs=0 RubyInit call s:my_ruby_init()
+function! s:my_ruby_init() "{{{
+  let filenames = split(glob(g:my_ruby_init_skel_dir . '/.*'))
+  call extend(filenames, split(glob(g:my_ruby_init_skel_dir . '/*')))
+  for filename in filenames
+    call vimproc#system('cp ' . filename . ' .')
+  endfor
+  call s:my_local_init()
 endfunction "}}}
 " AG
 command! -nargs=+ -complete=file AG call s:my_silver_searcher(<q-args>)
