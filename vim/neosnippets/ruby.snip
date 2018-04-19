@@ -117,15 +117,19 @@ alias   test_helper
 	require 'minitest/autorun'
 	require 'minitest/reporters'
 	require 'mocha/minitest'
-	require 'factory_bot'
-	${0}
+	require 'simplecov'
+	# require 'factory_bot'
+
 	require 'ruboty'
 
 	require 'ruboty/${1:app_name}'
-	Dir[File.expand_path('factories', __dir__) << '/*.rb'].each { |file| require file }
+	# Dir[File.expand_path('factories', __dir__) << '/*.rb'].each { |file| require file }
 
 	Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
-
+	SimpleCov.start do
+		add_filter '/vendor/'
+	end
+	${0}
 
 # mock:Mocha:expect {{{1
 snippet mock:Mocha:expects:class_method
@@ -220,6 +224,8 @@ alias   gemspec
 	spec.add_development_dependency 'bundler'
 	spec.add_development_dependency 'byebug'
 	spec.add_development_dependency 'factory_bot'
+	spec.add_development_dependency 'guard'
+	spec.add_development_dependency 'guard-minitest'
 	spec.add_development_dependency 'minitest'
 	spec.add_development_dependency 'minitest-reporters'
 	spec.add_development_dependency 'mocha'
@@ -227,6 +233,9 @@ alias   gemspec
 	spec.add_development_dependency 'pry-byebug'
 	spec.add_development_dependency 'pry-theme'
 	spec.add_development_dependency 'rake'
+	spec.add_development_dependency 'rb-fsevent'
+	spec.add_development_dependency 'simplecov'
+	spec.add_development_dependency 'terminal-notifier-guard'
 	${0}
 
 # template:entry_point {{{1
@@ -279,7 +288,6 @@ abbr    def debug
 	end
 	${0}
 
-
 # begin {{{1
 snippet begin
 alias   try catch
@@ -308,5 +316,4 @@ abbr    case ... when ... else ... end
 		${0}
 	else
 	end
-
 
