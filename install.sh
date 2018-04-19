@@ -65,35 +65,37 @@ yard config --gem-install-yri
 
 gem install \
   bundler \
-  refe2 \
-  rubocop \
-  fastri \
-  rcodetools \
   byebug \
-  pry \
-  pry-doc \
-  pry-theme \
-  pry-byebug \
+  cocoapods \
+  factory_girl \
+  fastri \
+  firebrew \
   irbtools \
+  json \
+  kramdown \
   minitest \
   minitest-doc_reporter \
   minitest-stub_any_instance \
-  factory_girl \
-  cocoapods \
+  neovim \
+  pry \
+  pry-byebug \
+  pry-doc \
+  pry-theme \
+  rcodetools \
+  rdoc-generator-fivefish \
+  refe2 \
+  rest-client \
+  rubocop \
   ruboty \
-  ruboty-gen \
   ruboty-megen \
-  kramdown \
-  firebrew \
+  solargraph \
+  specific_install \
+  sqlint \
   synx \
   travis \
-  rdoc-generator-fivefish \
   update_xcode_plugins \
-  sqlint \
-  json \
-  rest-client \
-  solargraph \
-  neovim \
+
+gem specific_install -l http://github.com/zeero/ruboty-gen.git
 
 # Xcode8以降にalcatrazを導入する場合、以下のコマンド実行が必要になる
 #   update_xcode_plugins --unsign
