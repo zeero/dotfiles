@@ -109,6 +109,7 @@ set wrapscan
 au myvimrc FileType * exe "setlocal tags+="
 \ . $HOME . "/.tags/" . &ft . ".tags,"
 \ . $HOME . "/.tags/tags"
+au myvimrc FileType ruby exe "setlocal tags+=gems.tags"
 " タグ検索に二分検索をオフにする（vimdoc-jaフリーズ対策）
 set notagbsearch
 " バックスラッシュやクエスチョンを状況に合わせ自動的にエスケープ
