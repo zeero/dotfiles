@@ -114,10 +114,14 @@ alias   ruboty
 # template:Ruboty:test_helper {{{1
 snippet template:Ruboty:test_helper
 alias   test_helper
+	require 'simplecov'
+	SimpleCov.start do
+		add_filter '/test/'
+	end
+
 	require 'minitest/autorun'
 	require 'minitest/reporters'
 	require 'mocha/minitest'
-	require 'simplecov'
 	# require 'factory_bot'
 
 	require 'ruboty'
@@ -126,9 +130,6 @@ alias   test_helper
 	# Dir[File.expand_path('factories', __dir__) << '/*.rb'].each { |file| require file }
 
 	Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
-	SimpleCov.start do
-		add_filter '/vendor/'
-	end
 	${0}
 
 # mock:Mocha:expect {{{1
