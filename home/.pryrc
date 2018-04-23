@@ -22,3 +22,7 @@ if File.exist? 'Gemfile'
   Bundler.setup
 end
 
+# ActiveSupport
+require 'active_support'
+require 'active_support/core_ext'
+
