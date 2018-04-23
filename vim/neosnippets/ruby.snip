@@ -220,25 +220,26 @@ alias   gem
 # template:gemspec {{{1
 snippet template:gemspec
 alias   gemspec
-	spec.add_dependency 'activerecord'
-	spec.add_dependency 'activesupport'
-	spec.add_development_dependency 'bundler'
-	spec.add_development_dependency 'byebug'
-	spec.add_development_dependency 'factory_bot'
-	spec.add_development_dependency 'guard'
-	spec.add_development_dependency 'guard-ctags-bundler'
-	spec.add_development_dependency 'guard-minitest'
-	spec.add_development_dependency 'minitest'
-	spec.add_development_dependency 'minitest-reporters'
-	spec.add_development_dependency 'mocha'
-	spec.add_development_dependency 'pry'
-	spec.add_development_dependency 'pry-byebug'
-	spec.add_development_dependency 'pry-theme'
-	spec.add_development_dependency 'rake'
-	spec.add_development_dependency 'rb-fsevent'
-	spec.add_development_dependency 'simplecov'
-	spec.add_development_dependency 'terminal-notifier-guard'
-	${0}
+		spec.add_dependency 'activerecord'
+		spec.add_dependency 'activesupport'
+		spec.add_development_dependency 'bundler'
+		spec.add_development_dependency 'byebug'
+		spec.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.0'
+		spec.add_development_dependency 'factory_bot'
+		spec.add_development_dependency 'guard'
+		spec.add_development_dependency 'guard-ctags-bundler'
+		spec.add_development_dependency 'guard-minitest'
+		spec.add_development_dependency 'minitest'
+		spec.add_development_dependency 'minitest-reporters'
+		spec.add_development_dependency 'mocha'
+		spec.add_development_dependency 'pry'
+		spec.add_development_dependency 'pry-byebug'
+		spec.add_development_dependency 'pry-theme'
+		spec.add_development_dependency 'rake'
+		spec.add_development_dependency 'rb-fsevent'
+		spec.add_development_dependency 'simplecov'
+		spec.add_development_dependency 'terminal-notifier-guard'
+		${0}
 
 # template:entry_point {{{1
 snippet template:entry_point
