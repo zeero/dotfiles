@@ -46,3 +46,6 @@ Style/Documentation:
 Style/RegexpLiteral:
   Enabled: false
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+
