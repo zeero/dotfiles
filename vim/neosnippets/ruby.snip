@@ -220,11 +220,12 @@ alias   gem
 # template:gemspec {{{1
 snippet template:gemspec
 alias   gemspec
-	# spec.add_dependency 'activerecord'
-	spec.add_dependency 'activesupport'
+	# spec.add_runtime_dependency 'activerecord'
+	spec.add_runtime_dependency 'activesupport'
 	spec.add_development_dependency 'bundler'
 	spec.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.0'
 	# spec.add_development_dependency 'factory_bot'
+	spec.add_development_dependency 'guard-bundler'
 	spec.add_development_dependency 'guard-ctags-bundler'
 	spec.add_development_dependency 'guard-minitest'
 	spec.add_development_dependency 'minitest'
