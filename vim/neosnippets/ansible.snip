@@ -18,3 +18,13 @@ alias   docker
 				device: ${7:host_path}
 				o: bind
 
+# travis:codeclimate {{{1
+snippet travis:codeclimate
+abbr    Code Climate setting for Travis CI
+alias   codeclimate
+	addons:
+		code_climate:
+			repo_token: ${0:token}
+	after_success:
+		- bundle exec codeclimate-test-reporter
+
