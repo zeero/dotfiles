@@ -238,14 +238,12 @@ alias   gemspec
 
 # template:entry_point {{{1
 snippet template:entry_point
-alias   entry index
+alias   entry_point index
 abbr    template for app entry point
 	require 'active_support'
 	require 'active_support/core_ext'
 	${0}
-
 	module ${2:module_name}
-		# Main module
 		module $1
 			@logger = Logger.new($stdout)
 
