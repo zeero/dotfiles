@@ -49,3 +49,6 @@ Style/RegexpLiteral:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Style/Semicolon:
+  Enabled: false
+
