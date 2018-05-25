@@ -3,20 +3,14 @@ snippet template:docker-compose
 abbr    docker-compose.yml template
 alias   docker
 	version: '2'
-	${1:service_name}:
+	services:
+		${1:service_name}:
 			image: '${2:image}'
 			restart: always
 			ports:
 				- '${3:host_port}:${4:container_port}'
 			volumes:
-				- '${5:volume_name}:${6:container_abs_path}'
-
-	volumes:
-		$5:
-			driver_opts:
-				type: none
-				device: ${7:host_path}
-				o: bind
+				- './${5:relative_path}:${6:container_abs_path}'
 
 # travis:codeclimate {{{1
 snippet travis:codeclimate
