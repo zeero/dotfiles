@@ -313,3 +313,61 @@ abbr    case ... when ... else ... end
 	else
 	end
 
+# template:Minitest:Ruboty:Handler {{{1
+snippet template:Minitest:Ruboty:Handler
+abbr    Template for Ruboty::Handler test
+alias   test_ruboty_handler
+	require 'test_helper'
+
+	describe Ruboty::Handlers::${1:ClassName} do
+		let(:robot) { Ruboty::Robot.new }
+
+		before do
+		end
+
+		describe '#${2:method_name}' do
+			let(:action) { Ruboty::Minitest::Actions::${3:ActionClassName} }
+
+			let(:mock_action_call) { mock.tap { |mock| mock.expects(:call).once } }
+
+			it '${4:Matched Testcase}' do
+				action
+					.stubs(:new)
+					.with do |message|
+						message[:${5:capture_label}].must_equal '${6:expected matched string}'
+					end
+					.returns(mock_action_call)
+
+				robot.receive(body: 'ruboty ${7:input string}', from: 'sender', to: 'channel')
+			end
+
+			it '${8:Unmatched Testcase}' do
+				action.any_instance.expects(:call).never
+				robot.receive(body: 'ruboty ${9:input string}', from: 'sender', to: 'channel')
+			end
+		end
+	end
+
+# template:Minitest:Ruboty:Action {{{1
+snippet template:Minitest:Ruboty:Action
+abbr    Template for Ruboty::Action test
+alias   test_ruboty_action
+	require 'test_helper'
+
+	describe Ruboty::${1:ModuleName}::Actions::${2:ClassName} do
+		subject { Ruboty::$1::Actions::$2.new(mock_message) }
+
+		let(:mock_message) { mock }
+
+		before do
+		end
+
+		describe '#call' do
+			it '${3:Testcase with matched string}' do
+				mock_message.stubs(:[]).with(:${4:capture_label}).returns('${5:input string}')
+				mock_message.expects(:reply).with('${6:expected message}').once
+
+				subject.call
+			end
+		end
+	end
