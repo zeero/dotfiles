@@ -2,10 +2,12 @@
 --sort=yes
 --langdef=swift
 --langmap=swift:+.swift
---regex-swift=/(var|let)[ \t]+([^:=]+).*$/\2/,variable/
---regex-swift=/func[ \t]+([^\(\)]+)\([^\(\)]*\)/\1/,function/
---regex-swift=/class[ \t]+([^:\{]+).*$/\1/,class/
---regex-swift=/protocol[ \t]+([^:\{]+).*$/\1/,protocol/
+--regex-swift=/(var|let)[ \t]+([^:=]+).*$/\2/v,variable/
+--regex-swift=/func[ \t]+([^\(\)]+)\([^\(\)]*\)/\1/f,function/
+--regex-swift=/class[ \t]+([^:\{]+).*$/\1/c,class/
+--regex-swift=/protocol[ \t]+([^:\{]+).*$/\1/p,protocol/
+--regex-swift=/struct[ \t]+([^:\{]+).*$/\1/s,struct/
+--regex-swift=/enum[ \t]+([^:\{]+).*$/\1/e,enum/
 --langdef=markdown
 --langmap=markdown:+.md
 --langmap=markdown:+.mkd
