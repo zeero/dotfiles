@@ -326,7 +326,7 @@ alias   test_ruboty_handler
 		end
 
 		describe '#${2:method_name}' do
-			let(:action) { Ruboty::Minitest::Actions::${3:ActionClassName} }
+			let(:action) { Ruboty::$1::Actions::${3:ActionClassName} }
 
 			let(:mock_action_call) { mock.tap { |mock| mock.expects(:call).once } }
 
