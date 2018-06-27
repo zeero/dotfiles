@@ -52,3 +52,6 @@ Style/ClassAndModuleChildren:
 Style/Semicolon:
   Enabled: false
 
+Style/DoubleNegation:
+  Enabled: false
+
