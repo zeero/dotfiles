@@ -5,11 +5,11 @@ rem scoopをインストールします。
 rem powershell3がインストールされていることを確認してください。
 rem   @powershell -Command "set-executionpolicy unrestricted -s cu"
 rem   @powershell -Command "iex (new-object net.webclient).downloadstring('https://get.scoop.sh')"
-rem git-for-windows-sdkとgit-credential-manager-for-windowsをインストールしてください。
+rem git-for-windows-sdkをインストールしてください。
 rem （git-for-windows-sdkではpacmanのついたmsysがインストールされます）
 rem   scoop bucket add extras
 rem   scoop bucket add my-bucket https://github.com/zeero/scoop-my-bucket.git
-rem   scoop install git-for-windows-sdk git-credential-manager-for-windows
+rem   scoop install git-for-windows-sdk
 
 rem chocolatey
 rem chocolateyをインストールします。
@@ -95,6 +95,7 @@ REM bash msys2_install.sh
 rem git configuration
 git config --global user.name zeero
 git config --global user.email zeero26@gmail.com
+git config --global credential.helper wincred
 git config --global push.default simple
 git config --global http.sslVerify false
 git config --global core.excludesfile ~/.gitignore
