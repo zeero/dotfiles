@@ -6,7 +6,7 @@ scriptencoding utf-8
 "-----------------------------------------------------------------------------
 " 初期設定 {{{1
 " Winコマンドプロンプトではcp932
-if has('vim_starting') && has('win32')
+if has('vim_starting') && (has('win32') || has('win64'))
   let &termencoding = &encoding
 endif
 " ファイルエンコーディング設定
@@ -40,6 +40,10 @@ if has('mac')
   let g:python_host_prog='/usr/local/bin/python'
   let g:python3_host_prog='/usr/local/bin/python3'
   set pyxversion=3
+elseif has('win32') || has('win64')
+  let g:python_host_prog='~/lib/git-sdk-32/mingw32/bin/python2.exe'
+  let g:python3_host_prog='~/lib/git-sdk-32/mingw32/bin/python3.exe'
+  " set pyxversion=3
 endif
 
 " Dein {{{1
