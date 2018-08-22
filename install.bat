@@ -46,7 +46,6 @@ scoop install firefox
 scoop install nodejs
 scoop install ruby
 scoop install lua
-scoop install python
 rem git-for-windows-sdk‚ğ‘f‚ÅŒÄ‚Ô‚Æssl_comp_free_compression_methods‚ª‚È‚¢‚İ‚½‚¢‚ÈƒGƒ‰[‚ªo‚éê‡‚Íscoop‚Å‚àgit‚ğ“ü‚ê‚é
 scoop install git openssh
 rem scoop-my-bucket
