@@ -45,6 +45,9 @@ brew 'the_silver_searcher'
 brew 'the_platinum_searcher'
 brew 'jq'  # json parser
 brew 'jvgrep'
+brew 'neovim'
+tap 'lambdalisue/neovim-qt'
+brew 'neovim-qt'
 
 # coding tool
 cask 'alcatraz'

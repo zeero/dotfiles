@@ -17,6 +17,7 @@ PATH=/usr/local/bin:$PATH
 PATH=$HOME/bin:$PATH
 PATH=~/.rbenv/shims:$PATH
 PATH=$PATH:/usr/local/opt/coreutils/libexec/gnubin
+PATH=/usr/local/opt/qt/bin:$PATH
 export PATH
 
 # Java
@@ -25,6 +26,11 @@ export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
 
 # Node.js
 export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
+
+# Qt
+export LDFLAGS="-L/usr/local/opt/qt/lib"
+export CPPFLAGS="-I/usr/local/opt/qt/include"
+export PKG_CONFIG_PATH="/usr/local/opt/qt/lib/pkgconfig"
 
 # others
 export DOTFILES=~/lib/dotfiles

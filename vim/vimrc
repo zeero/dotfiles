@@ -74,6 +74,7 @@ if has('nvim')
   set rtp& rtp+=$MYVIMDIR/after
   source $MYVIMDIR/my-plug.vim
   let g:plug_window = 'vertical botright new'
+  PlugInstall --sync
 endif
 
 " singleton.vim {{{1
