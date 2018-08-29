@@ -47,7 +47,7 @@ elseif has('win32') || has('win64')
 endif
 
 " Dein {{{1
-if has('vim_starting')
+if has('vim_starting') && !has('nvim')
   let s:dein_dir = expand($MYVIMDIR . '/dein')
   let s:dein_toml = expand($MYVIMDIR . '/dein.toml')
   let s:dein_local = expand($MYVIMDIR . '/dein.local')
@@ -65,8 +65,15 @@ if has('vim_starting')
   filetype plugin indent on
 endif
 
-if dein#check_install()
+if !has('nvim') && dein#check_install()
   call dein#install()
+endif
+
+" Plug {{{1
+if has('nvim')
+  set rtp& rtp+=$MYVIMDIR/after
+  source $MYVIMDIR/my-plug.vim
+  let g:plug_window = 'vertical botright new'
 endif
 
 " singleton.vim {{{1
@@ -210,7 +217,7 @@ set completeopt=menuone
 syntax enable
 " カラースキーマ設定
 set t_Co=256
-if has('gui_running')
+if has('gui_running') || has('nvim')
   set background=dark
   colorscheme ir_black
 else
@@ -379,11 +386,11 @@ set noswapfile
 " set directory+=,~/tmp,$TMP
 " 永続undo
 if has('persistent_undo')
-  let s:undodir='~/.vimundo'
+  let s:undodir=expand('~/.vimundo')
   if !isdirectory(s:undodir)
     call vimproc#system_bg('mkdir ' . s:undodir)
   endif
-  set undodir=s:undodir
+  exe 'set undodir=' . s:undodir
   set undofile
 endif
 " ファイルを開くと、そのファイルと同じディレクトリに移動
@@ -3129,9 +3136,9 @@ let g:clever_f_use_migemo = 1
 let g:clever_f_fix_key_direction = 1
 
 " vim-smartword & CamelCaseMotion {{{1
-map <Plug>(smartword-basic-w) <Plug>CamelCaseMotion_w
-map <Plug>(smartword-basic-b) <Plug>CamelCaseMotion_b
-map <Plug>(smartword-basic-e) <Plug>CamelCaseMotion_e
+map! <Plug>(smartword-basic-w) <Plug>CamelCaseMotion_w
+map! <Plug>(smartword-basic-b) <Plug>CamelCaseMotion_b
+map! <Plug>(smartword-basic-e) <Plug>CamelCaseMotion_e
 nmap w <Plug>(smartword-w)
 nmap b <Plug>(smartword-b)
 nmap e <Plug>(smartword-e)

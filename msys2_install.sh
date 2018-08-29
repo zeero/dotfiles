@@ -24,4 +24,6 @@ pacman -S mingw-w64-i686-python3-pip
 
 pip2 install --user neovim
 pip3 install --user neovim
+npm install -g neovim
+gem install neovim
 

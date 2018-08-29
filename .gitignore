@@ -1,4 +1,7 @@
 vim/dein
 vim/dein.local
+vim/init.vim
+vim/after/autoload/plug.vim
+vim/plugged
 home/bin/git-*
 

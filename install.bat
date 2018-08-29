@@ -28,10 +28,13 @@ rem mkdir
 mkdir %HOMEDRIVE%%HOMEPATH%\bin
 mkdir %HOMEDRIVE%%HOMEPATH%\tmp
 mkdir %HOMEDRIVE%%HOMEPATH%\lib
+mkdir %HOMEDRIVE%%HOMEPATH%\.config
 
 rem setx
 set HOME=%HOMEDRIVE%%HOMEPATH%
 setx HOME %HOMEDRIVE%%HOMEPATH%
+set XDG_CONFIG_HOME=%HOMEDRIVE%%HOMEPATH%\.config
+setx XDG_CONFIG_HOME %HOMEDRIVE%%HOMEPATH%\.config
 rem このスクリプト内での一時的なPATH追加
 set PATH=%HOME%\bin;%HOME%\lib\git-sdk-32\mingw32\bin;%HOME%\lib\git-sdk-32\usr\bin;%PATH%
 echo 以下を環境変数PATHに追加してください
@@ -78,6 +81,7 @@ choco install GoogleChrome -y
 choco install GoogleJapaneseInput -y
 choco install winscp -y
 choco install tortoisesvn -y
+choco install neovim -y
 REM mingwへの移行に伴い不要候補
 REM choco install putty -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\putty"
 REM choco install teraterm -y -ia "/DIR=%HOMEDRIVE%%HOMEPATH%\lib\choco\teraterm"
@@ -117,11 +121,12 @@ git submodule update --init
 
 rem symlink
 rem home
-move %HOMEDRIVE%%HOMEPATH%\vimperator %HOMEDRIVE%%HOMEPATH%\vimperator.org
 mklink /d %HOMEDRIVE%%HOMEPATH%\vimfiles %DOTFILES%\vim
-mklink /d %HOMEDRIVE%%HOMEPATH%\vimperator %DOTFILES%\vimperator
 mklink %HOMEDRIVE%%HOMEPATH%\_vimrc %DOTFILES%\vim\vimrc
-mklink %HOMEDRIVE%%HOMEPATH%\_vimperatorrc %DOTFILES%\vimperator\vimperatorrc
+mklink /d %XDG_CONFIG_HOME%\nvim %DOTFILES%\vim
+mklink %XDG_CONFIG_HOME%\nvim\init.vim %DOTFILES%\vim\vimrc
+mkdir %DOTFILES%\vim\after\autoload
+mklink %DOTFILES%\vim\after\autoload\plug.vim %XDG_CONFIG_HOME%\nvim\plugged\vim-plug\plug.vim
 mklink %HOMEDRIVE%%HOMEPATH%\.gitignore %DOTFILES%\home\.gitignore
 mklink %HOMEDRIVE%%HOMEPATH%\.git-commit-template %DOTFILES%\home\.git-commit-template
 mklink %HOMEDRIVE%%HOMEPATH%\.ctags %DOTFILES%\home\.ctags

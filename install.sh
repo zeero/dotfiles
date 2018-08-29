@@ -19,6 +19,10 @@ mkdir -p ~/.tmux/plugins
 ln -s ${DOTFILES}/home/.tmux/plugins/tpm ~/.tmux/plugins/tpm
 ln -s ${DOTFILES}/vim ~/.vim
 ln -s ${DOTFILES}/vim/vimrc ~/.vimrc
+ln -s ${DOTFILES}/vim ~/.config/nvim
+ln -s ${DOTFILES}/vim/vimrc ~/.config/nvim/init.vim
+mkdir -p ${DOTFILES}/vim/after/autoload
+ln -s ${DOTFILES}/vim/plugged/vim-plug/plug.vim ~/.config/nvim/after/autoload/plug.vim
 mkdir ~/bin
 chmod 744 ${DOTFILES}/home/bin/*
 chmod 744 ${DOTFILES}/lib/git-info/git-*
