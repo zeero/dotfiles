@@ -20,3 +20,6 @@
 [submodule "home/.tmux/plugins/tpm"]
 	path = home/.tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "vim/plugged/vim-plug"]
+	path = vim/plugged/vim-plug
+	url = https://github.com/junegunn/vim-plug.git
