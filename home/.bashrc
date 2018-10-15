@@ -20,8 +20,10 @@ alias dc='docker-compose'
 # ファンクション {{{1
 ## calc {{{2
 calc() { awk "BEGIN { print $* }"; }
+
 ## mkdatedir {{{2
 mkdatedir() { mkdir `date "+%Y%m%d%H%M%S"`; }
+
 ## fcd {{{2
 fcd() {
   local targetDir
@@ -57,8 +59,10 @@ fcd() {
   cd "$targetDir"
   echo $PWD
 }
+
 ## gitignore {{{2
 gitignore() { curl -L -o .gitignore -s https://www.gitignore.io/api/$@; }
+
 ## alcatraz_reload {{{2
 alcatraz_reload() {
   local uuid
@@ -67,6 +71,7 @@ alcatraz_reload() {
   find ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins -name Info.plist -maxdepth 3 \
   | xargs -I{} defaults write {} DVTPlugInCompatibilityUUIDs -array-add $uuid
 }
+
 ## pdfmerge {{{2
 pdfmerge() {
   local usage length count infile outfile
@@ -93,6 +98,7 @@ pdfmerge() {
   done
   gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$outfile $infile
 }
+
 ## _fzf-git-branch {{{2
 _fzf_git_branch() {
   local selected fzf
@@ -103,11 +109,17 @@ _fzf_git_branch() {
     return 0
   fi
 }
+
 ## ghqcd {{{2
 ghqcd() {
   local dir fzf
   [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux -d ${FZF_TMUX_HEIGHT:-40%}" || fzf="fzf"
   dir=$(ghq list | fzf-tmux --reverse) && cd $(ghq root)/$dir
+}
+
+## rm derived data {{{2
+rmderiveddata() {
+  rm -rf ~/Library/Developer/Xcode/DerivedData/
 }
 
 # 外部ファイルの読み込み {{{1
