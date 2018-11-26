@@ -1150,8 +1150,8 @@ nnoremap <C-]> g<C-]>
 vnoremap <C-]> g<C-]>
 nnoremap ,] g<C-]>
 vnoremap ,] g<C-]>
-nnoremap <C-j> :tab tj <C-r><C-w><CR>
-vnoremap <C-j> y:tab tj <C-r>"<CR>
+nnoremap <C-j> :CtrlPtjump<CR>
+vnoremap <C-j> :CtrlPtjumpVisual<CR>
 nnoremap ,[ <C-t>
 nnoremap <C-k> <C-t>
 nnoremap <C-h> <C-o>

@@ -161,6 +161,11 @@ depends = ['ctrlp.vim']
 lazy = 1
 on_cmd = ['CtrlpGitBranch', 'CtrlpGitLog', 'CtrlpGitStatus']
 
+[[plugins]]
+repo = 'ivalkeen/vim-ctrlp-tjump'
+lazy = 1
+on_cmd = ['CtrlPtjump', 'CtrlPtjumpVisual']
+
 
 # Unite {{{1
 
