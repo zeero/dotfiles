@@ -2304,6 +2304,8 @@ let g:ctrlp_help_default_mode = 'v'
 let g:ctrlp_show_hidden = 1
 " 複数ファイルオープン設定
 let g:ctrlp_open_multiple_files = 'tj'
+" コマンドカスタマイズ
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
 " 除外設定
 let g:ctrlp_custom_ignore = {
 \ 'dir': '\.metadata',
