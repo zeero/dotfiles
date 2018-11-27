@@ -75,6 +75,7 @@ cask 'skitch'
 cask 'imageoptim'
 cask 'coteditor'
 cask 'slack'
+cask 'ios-console'
 
 # dupes
 tap 'homebrew/dupes'
