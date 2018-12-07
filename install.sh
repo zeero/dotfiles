@@ -98,31 +98,24 @@ gem install \
   synx \
   travis \
   update_xcode_plugins \
+  nokogiri \
 
 gem specific_install -l http://github.com/zeero/ruboty-gen.git
+
+bitclust setup
 
 # Xcode8以降にalcatrazを導入する場合、以下のコマンド実行が必要になる
 #   update_xcode_plugins --unsign
 # Xcodeのバージョンとxcodebuildコマンドも対象にするか聞かれるので対象にして実行する
-
-# nokogiriのインストールには設定が必要となる
-# bundler経由の場合は以下で設定 （さらにherokuの場合は、heroku runで動かす）
-#   bundle config build.nokogiri --use-system-libraries
-brew link --force libxml2 libxslt
-gem install nokogiri -- --use-system-libraries
-
-bitclust setup
 
 # node.js
 npm install -g \
   coffeescript \
   coffeelint \
   eslint \
-  eslint-config-eslint \
   hubot \
   generator-hubot \
   yo \
-  bower \
 
 # python
 pip3 install \

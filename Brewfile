@@ -77,8 +77,3 @@ cask 'coteditor'
 cask 'slack'
 cask 'ios-console'
 
-# dupes
-tap 'homebrew/dupes'
-brew 'libxml2'
-brew 'libxslt'
-
