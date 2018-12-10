@@ -133,12 +133,12 @@ defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "TrackpadCor
 defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "TrackpadRightClick" -bool false
 defaults write "com.apple.dock" "showAppExposeGestureEnabled" -bool true
 defaults write "com.apple.preference.general" "version" -int 1
-defaults write "com.apple.AppleMultitouchTrackpad" "DragLock" -bool True
-defaults write "com.apple.AppleMultitouchTrackpad" "Clicking" -bool True
-defaults write "com.apple.AppleMultitouchTrackpad" "Dragging" -bool True
-defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "DragLock" -bool True
-defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "Clicking" -bool True
-defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "Dragging" -bool True
+defaults write "com.apple.AppleMultitouchTrackpad" "DragLock" -bool true
+defaults write "com.apple.AppleMultitouchTrackpad" "Clicking" -bool true
+defaults write "com.apple.AppleMultitouchTrackpad" "Dragging" -bool true
+defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "DragLock" -bool true
+defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "Clicking" -bool true
+defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "Dragging" -bool true
 ## Dock
 defaults write "com.apple.dock" "tilesize" -int 32
 defaults write "com.apple.dock" "magnification" -bool true
