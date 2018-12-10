@@ -23,3 +23,6 @@
 [submodule "vim/plugged/vim-plug"]
 	path = vim/plugged/vim-plug
 	url = https://github.com/junegunn/vim-plug.git
+[submodule "lib/XVim2"]
+	path = lib/XVim2
+	url = https://github.com/XVimProject/XVim2.git
