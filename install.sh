@@ -2,6 +2,7 @@
 
 # Requirements
 # - Xcode install
+#   - sudo xcode-select -s /Applications/Xcode.app
 #   - インストールが終わってから次へ進むこと
 # - Homebrew install
 # - brew install git
@@ -104,6 +105,11 @@ gem specific_install -l http://github.com/zeero/ruboty-gen.git
 
 bitclust setup
 
+# XVim2
+cd `dirname $0`/lib/XVim2
+make
+cd `dirname $0`
+
 # Xcode8以降にalcatrazを導入する場合、以下のコマンド実行が必要になる
 # Xcodeのバージョンとxcodebuildコマンドも対象にするか聞かれるので対象にして実行する
 update_xcode_plugins
@@ -133,6 +139,7 @@ defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "TrackpadCor
 defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "TrackpadRightClick" -bool false
 defaults write "com.apple.dock" "showAppExposeGestureEnabled" -bool true
 defaults write "com.apple.preference.general" "version" -int 1
+echo "・ダブルタップでドラッグするために「システム環境設定」の「アクセシビリティ」→「マウスとトラックパッド」→「トラックパッドオプション」→「ドラッグロック」を有効にする"
 defaults write "com.apple.AppleMultitouchTrackpad" "DragLock" -bool true
 defaults write "com.apple.AppleMultitouchTrackpad" "Clicking" -bool true
 defaults write "com.apple.AppleMultitouchTrackpad" "Dragging" -bool true
@@ -150,6 +157,5 @@ defaults write "com.clipy-app.Clipy" "kCPYPrefNumberOfItemsPlaceInlineKey" -int 
 
 # その他設定
 echo "・キー移動を速くするために「システム環境設定」の「キーボード」からキーリピート、リピート認識を最大にする"
-echo "・ダブルタップでドラッグするために「システム環境設定」の「アクセシビリティ」→「マウスとトラックパッド」→「トラックパッドオプション」→「ドラッグロック」を有効にする"
 echo "・シフトスペースをVimに送るためにGoogleIMEの英語キーボードを導入すること"
 
