@@ -2525,8 +2525,8 @@ let g:quickrun_config['ruby.gemfile'] = {
 au myvimrc BufRead,BufNewFile *_test.rb let b:quickrun_config = {'type': 'ruby.test'}
 let g:quickrun_config['ruby.test'] = {
 \ 'command': 'bundle',
-\ 'cmdopt': 'exec rake test',
-\ 'exec': '%c %o',
+\ 'cmdopt': 'exec rake test TEST=',
+\ 'exec': '%c %o%s',
 \}
 
 " ruby.rspec
