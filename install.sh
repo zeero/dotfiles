@@ -91,6 +91,7 @@ gem install \
   refe2 \
   rest-client \
   rubocop \
+  rubocop-rspec \
   ruboty \
   ruboty-megen \
   solargraph \
