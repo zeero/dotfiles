@@ -35,6 +35,8 @@ brew 'rename'
 brew 'cmake'
 brew 'ghostscript'
 brew 'gnu-sed'
+brew 'cowsay'
+brew 'figlet'
 
 # vim
 brew 'macvim', args: ['with-lua', 'with-override-system-vim']
