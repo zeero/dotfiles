@@ -412,6 +412,17 @@ function! s:my_last_position_jump()
   endif
   exe 'normal! zvzz'
 endfunction
+" シンボリックリンクを開いた場合は元ファイルを開く
+au myvimrc BufReadPost * call s:my_follow_symlink()
+function! s:my_follow_symlink() abort "{{{
+  let path = expand('%')
+  let resolve_path = resolve(expand('%'))
+  if path == resolve_path || path =~# '^\w\+:/'
+    return
+  endif
+  silent! bwipeout
+  exe 'edit ' . resolve_path
+endfunction "}}}
 
 " ファイルタイプ別の設定 {{{1
 " Vim {{{2
