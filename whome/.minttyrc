@@ -6,7 +6,7 @@ BackspaceSendsBS=yes
 
 # Font
 BoldAsFont=no
-Font=Ricty Diminished
+Font=Ricty Diminished devicon
 FontHeight=16
 
 # Window

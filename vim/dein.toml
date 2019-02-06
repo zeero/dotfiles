@@ -973,7 +973,7 @@ lazy = 1
 on_ft = ['javascript']
 
 [[plugins]]
-repo = 'https://bitbucket.org/teramako/jscomplete-vim'
+repo = 'mattn/jscomplete-vim'
 lazy = 1
 on_ft = ['javascript']
 on_i = 1

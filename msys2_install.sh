@@ -8,7 +8,8 @@
 # pacman -S mingw-w64-i686-toolchain
 pacman -S base-devel
 pacman -S msys2-devel
-pacman -S tmux-git
+#pacman -S tmux-git
+pacman -S tmux
 # pacman -S openssh
 # pacman -S vim
 # pacman -S mingw-w64-i686-curl
@@ -21,6 +22,8 @@ pacman -S mingw-w64-i686-python2-pip
 pacman -S mingw-w64-i686-python3
 pacman -S mingw-w64-i686-python3-pip
 # pacman -S mingw-w64-i686-perl
+pacman -S mingw-w64-i686-lua
+pacman -S mingw-w64-i686-nodejs
 
 pip2 install --user neovim
 pip3 install --user neovim
