@@ -75,6 +75,7 @@ scoop install mactype
 REM TODO: ЧvТ▓Ро
 REM scoop install tortoisesvn
 REM scoop install tortoisesvn_ja
+scoop install screenpresso
 
 rem chocolatey
 choco install GoogleChrome -y
