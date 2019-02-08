@@ -38,7 +38,7 @@ setx XDG_CONFIG_HOME %HOMEDRIVE%%HOMEPATH%\.config
 rem このスクリプト内での一時的なPATH追加
 set PATH=%HOME%\bin;%HOME%\lib\git-sdk-32\mingw32\bin;%HOME%\lib\git-sdk-32\usr\bin;%PATH%
 echo 以下を環境変数PATHに追加してください
-echo %HOME%\bin;%HOME%\lib\git-sdk-32\mingw32\bin;%HOME%\lib\git-sdk-32\usr\bin
+echo %HOME%\bin;%HOME%\lib\git-sdk-32\mingw64\bin;%HOME%\lib\git-sdk-32\mingw32\bin;%HOME%\lib\git-sdk-32\usr\bin
 pause
 echo.
 
