@@ -99,7 +99,7 @@ REM bash msys2_install.sh
 rem git configuration
 git config --global user.name zeero
 git config --global user.email zeero26@gmail.com
-git config --global credential.helper wincred
+git config --global credential.helper manager
 git config --global push.default simple
 git config --global http.sslVerify false
 git config --global core.excludesfile ~/.gitignore
