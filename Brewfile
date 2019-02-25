@@ -50,6 +50,7 @@ brew 'jvgrep'
 brew 'neovim'
 tap 'lambdalisue/neovim-qt'
 brew 'neovim-qt'
+brew 'w3m'
 
 # coding tool
 cask 'alcatraz'

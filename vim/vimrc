@@ -526,8 +526,8 @@ function! s:my_help(keyword) "{{{
 endfunction "}}}
 " H(elp)f(unction-list)
 command! -nargs=0 Hf H function-list
-" K(otoba)
-command! -nargs=1 K Ref webdict <args>
+" K(eyword)
+command! -nargs=1 K exe &keywordprg '<args>'
 " Vimrc
 command! Vimrc tabe $MYVIMRC
 " So
@@ -1449,8 +1449,9 @@ cnoremap <C-p> <Up>
 
 " コマンド実行 {{{2
 " リファレンス
-nnoremap ,k :<C-u>Ref webdict <C-r><C-w><CR>
-vnoremap ,k y:<C-u>Ref webdict <C-r>"<CR>
+set keywordprg=:Ref\ webdict
+nnoremap ,K :<C-u>Ref webdict <C-r><C-w><CR>
+vnoremap ,K y:<C-u>Ref webdict <C-r>"<CR>
 au myvimrc FileType vim,help nnoremap <buffer> ,h :<C-u>H<Space><C-r><C-w><CR>
 au myvimrc FileType vim,help vnoremap <buffer> ,h y:<C-u>H<Space><C-r>"<CR>
 au myvimrc FileType ruby nnoremap <buffer> ,h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
@@ -3032,7 +3033,7 @@ vmap iM <Plug>(textobj-multiblock-i)
 " expand-region {{{1
 " キーマップ
 vmap v <Plug>(expand_region_expand)
-vmap - <Plug>(expand_region_shrink)
+vmap ,v <Plug>(expand_region_shrink)
 " テキストオブジェクト設定
 let g:expand_region_text_objects = {
 \ 'i_'  :1,
