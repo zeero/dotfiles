@@ -84,6 +84,8 @@ gem install \
   rdoc-generator-fivefish \
   refe2 \
   rest-client \
+  rubocop \
+  rubocop-rspec \
   ruboty-megen \
   solargraph \
   specific_install \
