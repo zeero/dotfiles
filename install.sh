@@ -72,15 +72,9 @@ gem install \
   bundler \
   byebug \
   cocoapods \
-  factory_girl \
   fastri \
-  firebrew \
   irbtools \
-  json \
   kramdown \
-  minitest \
-  minitest-doc_reporter \
-  minitest-stub_any_instance \
   neovim \
   pry \
   pry-byebug \
@@ -92,15 +86,12 @@ gem install \
   rest-client \
   rubocop \
   rubocop-rspec \
-  ruboty \
   ruboty-megen \
   solargraph \
   specific_install \
   sqlint \
   synx \
-  travis \
   update_xcode_plugins \
-  nokogiri \
 
 gem specific_install -l http://github.com/zeero/ruboty-gen.git
 

@@ -1,4 +1,7 @@
-if expand('%:t:r') =~ '_test$'
+setl keywordprg=:Refe
+
+" for test scripts
+if expand('%:t:r') =~? '_test$'
   let &l:foldmethod = 'expr'
   let &l:foldexpr   = 'fold_rspec#foldexpr(v:lnum)'
   let &l:foldtext   = 'fold_rspec#foldtext()'
