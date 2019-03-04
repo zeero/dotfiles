@@ -696,7 +696,7 @@ function! s:my_platinum_searcher(args) "{{{
   let @/ = a:args
   " async
   call s:my_vimproc_async({
-  \ 'cmd': 'pt --nocolor --nogroup ' . a:args,
+  \ 'cmd': 'pt --nocolor --nogroup --column ' . a:args . ' .',
   \ 'callback': 's:my_grep_finish'
   \})
 endfunction "}}}
