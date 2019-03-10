@@ -382,3 +382,8 @@ snippet dotenv
 abbr    Load .env
 	require 'dotenv'; Dotenv.load${0}
 
+# rubocop {{{1
+snippet rubocop
+	gem 'rubocop_config', github: 'zeero/rubocop_config'
+	${0}
+
