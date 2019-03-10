@@ -34,7 +34,6 @@ depends = 'vimshell'
 repo = 'Shougo/deoplete.nvim'
 if = '''has('python3') && v:version >= 800'''
 hook_source = '''call MyDeinHookDeoplete()'''
-depends = ['nvim-yarp']
 lazy = 1
 on_i = 1
 
@@ -47,7 +46,6 @@ on_i = 1
 [[plugins]]
 repo = 'roxma/vim-hug-neovim-rpc'
 if = '''has('python3') && v:version >= 800'''
-depends = ['roxma/nvim-yarp']
 lazy = 1
 on_i = 1
 
