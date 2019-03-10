@@ -41,13 +41,13 @@ on_i = 1
 [[plugins]]
 repo = 'roxma/nvim-yarp'
 if = '''has('python3') && v:version >= 800'''
-depends = ['vim-hug-neovim-rpc']
 lazy = 1
 on_i = 1
 
 [[plugins]]
 repo = 'roxma/vim-hug-neovim-rpc'
 if = '''has('python3') && v:version >= 800'''
+depends = ['roxma/nvim-yarp']
 lazy = 1
 on_i = 1
 

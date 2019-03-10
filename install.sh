@@ -87,12 +87,12 @@ gem install \
   rubocop \
   rubocop-rspec \
   ruboty-megen \
-  solargraph \
   specific_install \
   sqlint \
   synx \
   update_xcode_plugins \
 
+gem install solargraph -v 0.18.0
 gem specific_install -l http://github.com/zeero/ruboty-gen.git
 
 bitclust setup
@@ -117,9 +117,9 @@ npm install -g \
   yo \
 
 # python
-pip3 install \
-  neovim \
+pip3 install --user \
   vim-vint \
+  pynvim \
   solargraph-utils.py \
 
 # plist
