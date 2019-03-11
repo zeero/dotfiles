@@ -25,53 +25,54 @@ set vimregex
 
 " ノーマルモード
 " 移動
-nnoremap 0 ^
-nnoremap ^ 0
+nmap 0 ^
+nmap ^ 0
 " 行末までヤンク
-nnoremap Y y$
+nmap Y y$
 
 " インサートモード
-inoremap <S-CR> <C-o>O
+imap <S-CR> <C-o>O
 
 " ビジュアルモード
 " 行末まで選択
-nnoremap ,v v$
+nmap ,v v$
 
 
 " qで閉じる
-nnoremap q :q<CR>
-nnoremap Q q
+nmap q :q<CR>
 
 " タブ
-nnoremap ,t :xccmd newTab<CR>
-nnoremap H :xccmd selectPreviousTab<CR>
-nnoremap L :xccmd selectNextTab<CR>
+nmap ,t :xccmd newTab<CR>
+nmap H :xccmd selectPreviousTab<CR>
+nmap L :xccmd selectNextTab<CR>
 
 " 履歴
-nnoremap <C-H> :xccmd goBackInHistoryByCommand<CR>
-nnoremap <C-L> :xccmd goForwardInHistoryByCommand<CR>
+nmap <C-h> :xcmenucmd Go Back<CR>
+nmap <C-l> :xcmenucmd Go Forward<CR>
 
+" 補完
+imap <C-n> <C-o>:xccmd complete<CR>
 
 " アシスタントエディタ
 "   キーボードショートカット
 "   Cmd + Opt + <CR> / Cmd + <CR>
-nnoremap ,, :xccmd changeToGeniusEditor<CR>
-nnoremap ,. :xccmd changeToStandardEditor<CR>
+nmap ,, :xccmd changeToGeniusEditor<CR>
+nmap ,. :xccmd changeToStandardEditor<CR>
 
 " クイックオープン
 "   キーボードショートカット
 "   Cmd + Shift + O
-nnoremap t :xccmd openQuickly<CR>
+nmap t :xccmd openQuickly<CR>
 
 " ヘルプ
-nnoremap K :xccmd searchDocumentationForSelectedText<CR>
-nnoremap ,h :xccmd searchDocumentationForSelectedText<CR>
+nmap K :xccmd searchDocumentationForSelectedText<CR>
+nmap ,h :xccmd searchDocumentationForSelectedText<CR>
 
 " コメントアウト（トグル）
-nnoremap ,/ :xccmd commentAndUncommentCurrentLines<CR>
+nmap ,/ :xcmenucmd Toggle Comments<CR>
 
 " ブレイクポイント（トグル）
-nnoremap ,b :xccmd toggleBreakpointAtCurrentLine<CR>
+nmap ,b :xccmd toggleBreakpointAtCurrentLine<CR>
 
 " XCodeのキーバインドで設定
 " imap <C-H> <Left>
