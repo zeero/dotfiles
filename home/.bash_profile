@@ -26,6 +26,9 @@ export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
 
 # Node.js
 export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
 
 # Qt
 export LDFLAGS="-L/usr/local/opt/qt/lib"

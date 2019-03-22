@@ -32,6 +32,7 @@ find ${DOTFILES}/lib/git-info -type f -depth 1 -exec ln -s {} ~/bin \;
 ln -s ${DOTFILES}/lib/markdown2ctags/markdown2ctags.py ~/bin/markdown2ctags.py
 mkdir ~/.bundle
 find ${DOTFILES}/home/.bundle -type f -depth 1 -exec ln -s {} ~/.bundle \;
+mkdir ~/.nvm
 
 # git config
 # git config --global user.name zeero
@@ -108,6 +109,9 @@ update_xcode_plugins
 update_xcode_plugins --unsign
 
 # node.js
+nvm install --lts
+nvm alias default lts/*
+npm update -g npm
 npm install -g \
   coffeescript \
   coffeelint \
@@ -115,6 +119,7 @@ npm install -g \
   hubot \
   generator-hubot \
   yo \
+  firebase-tools \
 
 # python
 pip3 install --user \
