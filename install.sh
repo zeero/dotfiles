@@ -62,8 +62,8 @@ brew bundle
 brew linkapps macvim
 
 # ruby
-CONFIGURE_OPTS="--with-readline-dir=/usr/local/opt" rbenv install 2.3.1
-rbenv global 2.3.1
+RUBY_CONFIGURE_OPTS="--with-readline-dir=`brew --prefix readline`" rbenv install 2.6.2
+rbenv global 2.6.2
 
 gem install yard
 yard gems
@@ -71,27 +71,26 @@ yard config --gem-install-yri
 
 gem install \
   bundler \
-  byebug \
-  cocoapods \
   fastri \
   irbtools \
   kramdown \
   neovim \
-  pry \
-  pry-byebug \
-  pry-doc \
-  pry-theme \
   rcodetools \
   rdoc-generator-fivefish \
   refe2 \
   rest-client \
-  rubocop \
-  rubocop-rspec \
   ruboty-megen \
   specific_install \
   sqlint \
   synx \
   update_xcode_plugins \
+  # byebug \
+  # pry \
+  # pry-byebug \
+  # pry-doc \
+  # pry-theme \
+  # rubocop \
+  # rubocop-rspec \
 
 gem install solargraph -v 0.18.0
 gem specific_install -l http://github.com/zeero/ruboty-gen.git

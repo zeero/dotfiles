@@ -18,6 +18,7 @@ PATH=$HOME/bin:$PATH
 PATH=~/.rbenv/shims:$PATH
 PATH=$PATH:/usr/local/opt/coreutils/libexec/gnubin
 PATH=/usr/local/opt/qt/bin:$PATH
+PATH=~/Library/Python/3.7/bin:$PATH
 export PATH
 
 # Java
