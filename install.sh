@@ -112,6 +112,7 @@ nvm install --lts
 nvm alias default lts/*
 npm update -g npm
 npm install -g \
+  typescript \
   coffeescript \
   coffeelint \
   eslint \

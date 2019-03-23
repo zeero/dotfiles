@@ -988,6 +988,16 @@ lazy = 1
 on_ft = ['javascript', 'coffee']
 
 [[plugins]]
+repo = 'leafgarland/typescript-vim'
+lazy = 1
+on_ft = ['typescript']
+
+[[plugins]]
+repo = 'Quramy/tsuquyomi'
+lazy = 1
+on_ft = ['typescript']
+
+[[plugins]]
 repo = 'vim-syntastic/syntastic'
 lazy = 1
 # on_i = 1
