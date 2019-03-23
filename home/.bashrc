@@ -122,9 +122,14 @@ rmderiveddata() {
   rm -rf ~/Library/Developer/Xcode/DerivedData/
 }
 
-## rm unused simulator
+## rm unused simulator {{{2
 rmsimulator() {
   xcrun simctl delete unavailable
+}
+
+## prefix {{{2
+prefix() {
+  mv $2 $1$2
 }
 
 # 外部ファイルの読み込み {{{1
