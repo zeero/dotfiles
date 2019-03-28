@@ -13,10 +13,9 @@ export EDITOR=vim
 export TERM=xterm-256color
 
 # PATH
-PATH=/usr/local/bin:$PATH
+PATH=/usr/local/bin:/usr/local/sbin:$PATH
 PATH=$HOME/bin:$PATH
 PATH=~/.rbenv/shims:$PATH
-PATH=$PATH:/usr/local/opt/coreutils/libexec/gnubin
 PATH=/usr/local/opt/qt/bin:$PATH
 PATH=~/Library/Python/3.7/bin:$PATH
 export PATH
