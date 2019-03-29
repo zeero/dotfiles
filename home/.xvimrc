@@ -74,6 +74,9 @@ nmap ,/ :xcmenucmd Toggle Comments<CR>
 " ブレイクポイント（トグル）
 nmap ,b :xccmd toggleBreakpointAtCurrentLine<CR>
 
+" Issue修正
+nmap ,= :xcmenucmd Fix All Issues<CR>
+
 " XCodeのキーバインドで設定
 " imap <C-H> <Left>
 " imap <C-L> <Right>

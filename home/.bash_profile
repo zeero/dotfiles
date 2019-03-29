@@ -16,6 +16,7 @@ export TERM=xterm-256color
 PATH=/usr/local/bin:/usr/local/sbin:$PATH
 PATH=$HOME/bin:$PATH
 PATH=~/.rbenv/shims:$PATH
+PATH=/usr/local/opt/openssl/bin:$PATH
 PATH=/usr/local/opt/qt/bin:$PATH
 PATH=~/Library/Python/3.7/bin:$PATH
 export PATH
@@ -30,10 +31,15 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
 export NODE_PATH=$NODE_PATH:`npm root -g`
 
+# OpenSSL
+export LDFLAGS="$LDFLAGS -L/usr/local/opt/openssl/lib"
+export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/openssl/include"
+export PKG_CONFIG_PATH="$PKG_CONFIG_PATH /usr/local/opt/openssl/lib/pkgconfig"
+
 # Qt
-export LDFLAGS="-L/usr/local/opt/qt/lib"
-export CPPFLAGS="-I/usr/local/opt/qt/include"
-export PKG_CONFIG_PATH="/usr/local/opt/qt/lib/pkgconfig"
+export LDFLAGS="$LDFLAGS -L/usr/local/opt/qt/lib"
+export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/qt/include"
+export PKG_CONFIG_PATH="$PKG_CONFIG_PATH /usr/local/opt/qt/lib/pkgconfig"
 
 # others
 export DOTFILES=~/lib/dotfiles
