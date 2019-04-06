@@ -84,11 +84,11 @@ gem install \
   sqlint \
   synx \
   update_xcode_plugins \
-  # byebug \
-  # pry \
-  # pry-byebug \
-  # pry-doc \
-  # pry-theme \
+  byebug \
+  pry \
+  pry-byebug \
+  pry-doc \
+  pry-theme \
   # rubocop \
   # rubocop-rspec \
 
@@ -151,6 +151,8 @@ defaults write "com.apple.dock" "autohide" -bool true
 defaults write "com.googlecode.iterm2" "QuitWhenAllWindowsClosed" -bool true
 ## Clipy
 defaults write "com.clipy-app.Clipy" "kCPYPrefNumberOfItemsPlaceInlineKey" -int 10
+## Xcode
+defaults write "com.apple.dt.Xcode" "ShowBuildOperationDuration" -bool true
 
 # その他設定
 echo "・キー移動を速くするために「システム環境設定」の「キーボード」からキーリピート、リピート認識を最大にする"
