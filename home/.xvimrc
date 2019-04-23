@@ -77,6 +77,13 @@ nmap ,b :xccmd toggleBreakpointAtCurrentLine<CR>
 " Issue修正
 nmap ,= :xcmenucmd Fix All Issues<CR>
 
+" テスト実行
+nmap ,r :xccmd editAndTestActiveRunContext<CR>
+nmap ,R :xcmenucmd Test Again<CR>
+
+" リファクタ
+nmap ,C :xcmenucmd Rename...<CR>
+
 " XCodeのキーバインドで設定
 " imap <C-H> <Left>
 " imap <C-L> <Right>
