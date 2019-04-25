@@ -63,7 +63,7 @@ brew 'docker'
 cask 'docker'
 brew 'ghq'
 brew 'gibo'
-brew 'carthage'
+brew 'mint'
 
 # utility
 cask 'alfred'
