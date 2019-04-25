@@ -62,7 +62,9 @@ brew bundle
 brew linkapps macvim
 
 # Mint
-mint bootstrap
+mint install Carthage/Carthage
+mint install yonaskolb/XcodeGen
+mint install toshi0383/xcconfig-extractor
 
 # ruby
 RUBY_CONFIGURE_OPTS="--with-readline-dir=`brew --prefix readline`" rbenv install 2.6.2
@@ -92,6 +94,7 @@ gem install \
   pry-byebug \
   pry-doc \
   pry-theme \
+  cocoapods \
   # rubocop \
   # rubocop-rspec \
 
