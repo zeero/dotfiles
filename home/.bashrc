@@ -132,6 +132,57 @@ prefix() {
   mv $2 $1$2
 }
 
+## ios_init {{{2
+ios_init() {
+  # guard args
+  if [ ! -n "$1" ] || [ ! -d $1 ]
+  then
+    echo "Usage: $0 xcode_project_dir"
+    exit
+  fi
+
+  # prefix
+  mv $1 ios-$1
+  cd ios-$1
+
+  # git rm --cache project.pbxproj xcuserdata
+  git rm --cached -r $1.xcodeproj/project.pbxproj $1.xcodeproj/xcuserdata/
+  git commit -m "chore: git rm --cache project.pbxproj xcuserdata"
+
+  # copy initial files
+  ## gitignore, Gemfile, Cartfile, project.yml, Podfile
+  cp -ip ~/lib/dotfiles/xcode/ios_init/skel/* ~/lib/dotfiles/xcode/ios_init/skel/.[^\.]* ./
+  ruby ~/lib/dotfiles/xcode/ios_init/xcode_gen_template.rb $1
+  ruby ~/lib/dotfiles/xcode/ios_init/podfile_template.rb $1
+  git add .
+  git commit -m "chore: copy initial files"
+
+  # extract xcconfig
+  xcconfig-extractor $1.xcodeproj xcconfigs
+  git add .
+  git commit -m "chore: extract xcconfig"
+
+  # xcodegen
+  xcodegen
+  git add .
+  git commit -m "chore: xcodegen"
+
+  # merge pod xcconfig
+  echo "#include \"Pods/Target Support Files/Pods-$1/Pods-$1.debug.xcconfig\"" >> xcconfigs/$1-Debug.xcconfig
+  echo "#include \"Pods/Target Support Files/Pods-$1/Pods-$1.release.xcconfig\"" >> xcconfigs/$1-Release.xcconfig
+  echo "#include \"Pods/Target Support Files/Pods-$1Tests/Pods-$1Tests.debug.xcconfig\"" >> xcconfigs/$1Tests-Debug.xcconfig
+  echo "#include \"Pods/Target Support Files/Pods-$1Tests/Pods-$1Tests.release.xcconfig\"" >> xcconfigs/$1Tests-Release.xcconfig
+  git add .
+  git commit -m "merge pod xcconfig"
+
+  # bundle install & pod install & carthage update
+  bundle install
+  bundle exec pod install
+  carthage update --platform ios
+  git add .
+  git commit -m "chore: bundle install & pod install & carthage update"
+}
+
 # 外部ファイルの読み込み {{{1
 ## .local.bashrc
 [ -f ~/.local.bashrc ] && source ~/.local.bashrc
