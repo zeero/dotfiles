@@ -394,3 +394,16 @@ snippet rubocop
 	gem 'rubocop_config', github: 'zeero/rubocop_config'
 	${0}
 
+# erb {{{1
+snippet erb
+	require 'erb'
+
+	File.open('${1:file_name}', 'w') do |file|
+		arg0 = ARGV[0]
+		file.puts ERB.new(DATA.read).result(binding)
+	end
+
+	__END__
+	<%= arg0 %>
+	${0}
+
