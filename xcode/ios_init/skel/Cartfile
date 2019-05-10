@@ -1,3 +1,15 @@
+# Extension
 github "SwifterSwift/SwifterSwift"
-# github "malcommac/SwiftDate"
+github "malcommac/SwiftDate"
+
+# Rx
+# github "ReactiveX/RxSwift"
+# github "ReSwift/ReSwift"
+
+# Model
+# github "Moya/Moya"
+# github "realm/realm-cocoa"
+
+# View
+# github "SnapKit/SnapKit"
 

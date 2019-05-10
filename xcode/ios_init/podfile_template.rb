@@ -14,10 +14,20 @@ use_frameworks!
 
 target '<%= project_name %>' do
   # Pods for <%= project_name %>
+  pod 'Then'
+  # pod 'RxViewController'
+  # pod 'R.swift'
+  # pod 'Firebase/Core'
+  # pod 'Fabric'
+  # pod 'Crashlytics'
+  pod 'SwiftLint'
+  # pod 'LicensePlist'
 
   target '<%= project_name %>Tests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'Quick'
+    pod 'Nimble'
   end
 end
 

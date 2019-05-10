@@ -13,7 +13,7 @@ configFiles:
   Debug: xcconfigs/Debug.xcconfig
   Release: xcconfigs/Release.xcconfig
 options:
-  bundleIdPrefix: jp.rtc
+  # bundleIdPrefix: FIXME
 targets:
   <%= project_name %>:
     type: application
@@ -28,7 +28,18 @@ targets:
         - <%= project_name %>Tests
     dependencies:
       - carthage: SwifterSwift
-      # - carthage: SwiftDate
+      - carthage: SwiftDate
+      # - carthage: RxSwift
+      # - carthage: RxCocoa
+      # - carthage: RxAtomic
+      # - carthage: ReSwift
+      # - carthage: Alamofire
+      # - carthage: Result
+      # - carthage: Moya
+      # - carthage: RxMoya
+      # - carthage: Realm
+      # - carthage: RealmSwift
+      # - carthage: SnapKit
   <%= project_name %>Tests:
     type: bundle.unit-test
     platform: iOS
@@ -38,4 +49,6 @@ targets:
       Release: xcconfigs/<%= project_name %>Tests-Release.xcconfig
     dependencies:
       - target: <%= project_name %>
+      # - carthage: RxTest
+      # - carthage: RxBlocking
 
