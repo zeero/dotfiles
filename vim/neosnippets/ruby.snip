@@ -398,12 +398,13 @@ snippet rubocop
 snippet erb
 	require 'erb'
 
-	File.open('${1:file_name}', 'w') do |file|
-		arg0 = ARGV[0]
-		file.puts ERB.new(DATA.read).result(binding)
+	File.open('${1:file_path}', 'w') do |file|
+		${2:var_name} = ARGV[0]
+		# trim_mode with '-'
+		file.puts ERB.new(DATA.read, nil, '-').result(binding)
 	end
 
 	__END__
-	<%= arg0 %>
+	<%= $2 %>
 	${0}
 
