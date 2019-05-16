@@ -1,8 +1,17 @@
 require 'erb'
+require 'optparse'
+
+opt = OptionParser.new
+opt.on('--carthage')
+opt.on('--uitest')
+opt.on('--swift4_2')
+
+options = {}
+opt.parse!(ARGV, into: options)
 
 File.open('project.yml', 'w') do |file|
   project_name = ARGV[0]
-  file.puts ERB.new(DATA.read).result(binding)
+  file.puts ERB.new(DATA.read, nil, '-').result(binding)
 end
 
 __END__
@@ -14,6 +23,8 @@ configFiles:
   Release: xcconfigs/Release.xcconfig
 options:
   # bundleIdPrefix: FIXME
+  deploymentTarget:
+    iOS: 11.2
 targets:
   <%= project_name %>:
     type: application
@@ -26,9 +37,15 @@ targets:
     scheme:
       testTargets:
         - <%= project_name %>Tests
+    <%- if options[:carthage] -%>
     dependencies:
       - carthage: SwifterSwift
       - carthage: SwiftDate
+    <%- else -%>
+    # dependencies:
+      # - carthage: SwifterSwift
+      # - carthage: SwiftDate
+    <%- end -%>
       # - carthage: RxSwift
       # - carthage: RxCocoa
       # - carthage: RxAtomic

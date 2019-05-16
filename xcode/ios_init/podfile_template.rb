@@ -1,8 +1,17 @@
 require 'erb'
+require 'optparse'
+
+opt = OptionParser.new
+opt.on('--carthage')
+opt.on('--uitest')
+opt.on('--swift4_2')
+
+options = {}
+opt.parse!(ARGV, into: options)
 
 File.open('Podfile', 'w') do |file|
   project_name = ARGV[0]
-  file.puts ERB.new(DATA.read).result(binding)
+  file.puts ERB.new(DATA.read, nil, '-').result(binding)
 end
 
 __END__

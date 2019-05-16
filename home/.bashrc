@@ -137,9 +137,37 @@ ios_init() {
   # guard args
   if [ ! -n "$1" ] || [ ! -d $1 ]
   then
-    echo "Usage: $0 xcode_project_dir"
+    echo "Usage: $0 xcode_project_dir [--carthage] [--uitest] [--swift4.2]"
+    echo
+    echo "Options:"
+    echo "  --carthage  => include carthage (default: not included)"
+    echo "  --uitest    => include xcuitest (default: not included)"
+    echo "  --swift4.2  => specify swift version 4.2 (default: Xcode default)"
     exit
   fi
+
+  # parse opts
+  while getopts -- "-:" opt
+  do
+    case "$opt" in
+      -)
+        case "$OPTARG" in
+          carthage)
+            carthage=1
+            template_opts="$template_opts --carthage"
+            ;;
+          uitest)
+            uitest=1
+            template_opts="$template_opts --uitest"
+            ;;
+          swift4.2)
+            swift4_2=1
+            template_opts="$template_opts --swift4_2"
+            ;;
+        esac
+        ;;
+    esac
+  done
 
   # prefix
   mv $1 ios-$1
@@ -152,8 +180,8 @@ ios_init() {
   # copy initial files
   ## gitignore, Gemfile, Cartfile, project.yml, Podfile
   cp -ip ~/lib/dotfiles/xcode/ios_init/skel/* ~/lib/dotfiles/xcode/ios_init/skel/.[^\.]* ./
-  ruby ~/lib/dotfiles/xcode/ios_init/xcode_gen_template.rb $1
-  ruby ~/lib/dotfiles/xcode/ios_init/podfile_template.rb $1
+  ruby ~/lib/dotfiles/xcode/ios_init/xcode_gen_template.rb $1 $template_opts
+  ruby ~/lib/dotfiles/xcode/ios_init/podfile_template.rb $1 $template_opts
   git add .
   git commit -m "chore: copy initial files"
 
@@ -173,14 +201,20 @@ ios_init() {
   echo "#include \"Pods/Target Support Files/Pods-$1Tests/Pods-$1Tests.debug.xcconfig\"" >> xcconfigs/$1Tests-Debug.xcconfig
   echo "#include \"Pods/Target Support Files/Pods-$1Tests/Pods-$1Tests.release.xcconfig\"" >> xcconfigs/$1Tests-Release.xcconfig
   git add .
-  git commit -m "merge pod xcconfig"
+  git commit -m "chore: merge pod xcconfig"
 
   # bundle install & pod install & carthage update
   bundle install
   bundle exec pod install
-  carthage update --platform ios
-  git add .
-  git commit -m "chore: bundle install & pod install & carthage update"
+  if [ ! -z $carthage ]
+  then
+    carthage update --platform ios
+    git add .
+    git commit -m "chore: bundle install & pod install & carthage update"
+  else
+    git add .
+    git commit -m "chore: bundle install & pod install"
+  fi
 }
 
 # 外部ファイルの読み込み {{{1
