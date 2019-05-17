@@ -21,15 +21,15 @@ fileGroups:
 configFiles:
   Debug: xcconfigs/Debug.xcconfig
   Release: xcconfigs/Release.xcconfig
-options:
+# options:
   # bundleIdPrefix: FIXME
-  deploymentTarget:
-    iOS: 11.2
+settings:
+  base:
+    IPHONEOS_DEPLOYMENT_TARGET: 11.2
 targets:
   <%= project_name %>:
     type: application
     platform: iOS
-    deploymentTarget: "11.0"
     sources: <%= project_name %>
     configFiles:
       Debug: xcconfigs/<%= project_name %>-Debug.xcconfig
