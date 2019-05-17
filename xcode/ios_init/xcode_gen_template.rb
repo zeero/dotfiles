@@ -41,6 +41,8 @@ targets:
     dependencies:
       - carthage: SwifterSwift
       - carthage: SwiftDate
+    settings:
+      ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: $(inherited)
     <%- else -%>
     # dependencies:
       # - carthage: SwifterSwift
@@ -64,6 +66,8 @@ targets:
     configFiles:
       Debug: xcconfigs/<%= project_name %>Tests-Debug.xcconfig
       Release: xcconfigs/<%= project_name %>Tests-Release.xcconfig
+    settings:
+      ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: $(inherited)
     dependencies:
       - target: <%= project_name %>
       # - carthage: RxTest
