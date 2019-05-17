@@ -37,12 +37,12 @@ targets:
     scheme:
       testTargets:
         - <%= project_name %>Tests
+    settings:
+      ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: $(inherited)
     <%- if options[:carthage] -%>
     dependencies:
       - carthage: SwifterSwift
       - carthage: SwiftDate
-    settings:
-      ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: $(inherited)
     <%- else -%>
     # dependencies:
       # - carthage: SwifterSwift
