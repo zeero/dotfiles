@@ -156,7 +156,7 @@ ios_init() {
         ;;
     esac
   done
-  shift $(($OPTIND - 1))
+  shift `expr $OPTIND - 1`
 
   # guard args
   if [ ! -n "$1" ] || [ ! -d $1 ]
