@@ -134,18 +134,6 @@ prefix() {
 
 ## ios_init {{{2
 ios_init() {
-  # guard args
-  if [ ! -n "$1" ] || [ ! -d $1 ]
-  then
-    echo "Usage: $0 xcode_project_dir [--carthage] [--uitest] [--swift4.2]"
-    echo
-    echo "Options:"
-    echo "  --carthage  => include carthage (default: not included)"
-    echo "  --uitest    => include xcuitest (default: not included)"
-    echo "  --swift4.2  => specify swift version 4.2 (default: Xcode default)"
-    exit
-  fi
-
   # parse opts
   while getopts -- "-:" opt
   do
@@ -160,7 +148,7 @@ ios_init() {
             uitest=1
             template_opts="$template_opts --uitest"
             ;;
-          swift4.2)
+          swift4_2)
             swift4_2=1
             template_opts="$template_opts --swift4_2"
             ;;
@@ -168,6 +156,19 @@ ios_init() {
         ;;
     esac
   done
+  shift $(($OPTIND - 1))
+
+  # guard args
+  if [ ! -n "$1" ] || [ ! -d $1 ]
+  then
+    echo "Usage: $0 [--carthage] [--uitest] [--swift4_2] xcode_project_dir"
+    echo
+    echo "Options:"
+    echo "  --carthage  => include carthage (default: not included)"
+    echo "  --uitest    => include xcuitest (default: not included)"
+    echo "  --swift4_2  => specify swift version 4.2 (default: Xcode default)"
+    return
+  fi
 
   # prefix
   mv $1 ios-$1
@@ -215,6 +216,9 @@ ios_init() {
     git add .
     git commit -m "chore: bundle install & pod install"
   fi
+
+  # open
+  open $1.xcworkspace
 }
 
 # 外部ファイルの読み込み {{{1
