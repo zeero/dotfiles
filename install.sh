@@ -33,6 +33,7 @@ ln -s ${DOTFILES}/lib/markdown2ctags/markdown2ctags.py ~/bin/markdown2ctags.py
 mkdir ~/.bundle
 find ${DOTFILES}/home/.bundle -type f -depth 1 -exec ln -s {} ~/.bundle \;
 mkdir ~/.nvm
+ln -s ${DOTFILES}/lib/xcode/CodeSnippets ~/Library/Developer/Xcode/UserData/CodeSnippets
 
 # git config
 # git config --global user.name zeero
