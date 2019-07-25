@@ -115,8 +115,8 @@ update_xcode_plugins
 update_xcode_plugins --unsign
 
 # node.js
-nvm install --lts
-nvm alias default lts/*
+mkdir -p ~/.nodebrew/src
+nodebrew install-binary 10.14.2
 npm update -g npm
 npm install -g \
   typescript \

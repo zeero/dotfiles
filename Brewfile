@@ -8,7 +8,7 @@ brew 'rbenv'
 brew 'ruby-build'
 brew 'python'
 brew 'lua'
-brew 'nvm'
+brew 'nodebrew'
 # brew 'node', args: ['with-full-icu']
 # brew 'npm'
 brew 'zsh'
