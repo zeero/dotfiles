@@ -2,9 +2,6 @@
 nmap <buffer> ,/ <Plug>(caw:wrap:toggle)
 vmap <buffer> ,/ <Plug>(caw:wrap:toggle)
 
-" Previm
-nnoremap <buffer> gX :<C-u>PrevimOpen<CR>
-
 " ヘッダ見出しにする（下線スタイル）
 nnoremap <buffer> ,= :<C-u>MyMarkdownHeader =<CR>
 nnoremap <buffer> ,- :<C-u>MyMarkdownHeader -<CR>
