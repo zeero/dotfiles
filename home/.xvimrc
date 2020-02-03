@@ -82,7 +82,7 @@ nmap ,r :xccmd editAndTestActiveRunContext<CR>
 nmap ,R :xcmenucmd Test Again<CR>
 
 " リファクタ
-nmap ,C :xcmenucmd Rename...<CR>
+nmap ,c :xcmenucmd Rename...<CR>
 
 " XCodeのキーバインドで設定
 " imap <C-H> <Left>
