@@ -10,7 +10,7 @@
 //  see http://clean-swift.com
 //
 
-import UIKit
+import Foundation
 
 enum ___VARIABLE_sceneName___ {
     // MARK: Use cases

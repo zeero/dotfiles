@@ -10,7 +10,7 @@
 //  see http://clean-swift.com
 //
 
-import UIKit
+import Foundation
 
 protocol ___VARIABLE_sceneName___BusinessLogic {
     func doSomething(request: ___VARIABLE_sceneName___.Something.Request)
