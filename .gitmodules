@@ -26,3 +26,6 @@
 [submodule "lib/XVim2"]
 	path = lib/XVim2
 	url = https://github.com/XVimProject/XVim2.git
+[submodule "lib/memos"]
+	path = lib/memos
+	url = https://github.com/zeero/memos.git
