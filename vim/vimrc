@@ -1615,6 +1615,8 @@ nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 " imap/cmapのマップリーダにするため、無効化
 inoremap <C-@> <Nop>
+" ヘルプが開くため無効化
+nnoremap <F1> <Nop>
 " 退避
 nnoremap <F2><C-g> <C-g>
 nnoremap <F2>[[ [[
