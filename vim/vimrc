@@ -905,6 +905,8 @@ command! Hitest belowright vsplit $VIMRUNTIME/syntax/hitest.vim | source $VIMRUN
 " vital {{{3
 " vital読み込むと後続の設定がおかしくなるのでvimrcでは直接使わない
 " let s:V = vital#of('vital')
+" let s:my_vital_ScriptLocal = vital#vital#import('Vim.ScriptLocal')
+" let s:my_smartinput_bs = s:my_vital_ScriptLocal.sfuncs('autoload/smartinput.vim')._trigger_or_fallback
 
 " パス変換 {{{3
 function! s:my_path_convert(path) "{{{
@@ -1424,19 +1426,6 @@ cnoremap <C-@>: <C-r>=strftime('%H%M%S')<CR>
 " YankRound
 inoremap <C-@>y <C-o>:CtrlPYankRound<CR>
 nnoremap <C-@>y :CtrlPYankRound<CR>
-
-" エンドワイズ {{{2
-inoremap ( ()<Left>
-inoremap <expr> ) match(getline("."), '()', col(".") - 2) == abs(col(".") - 2) ? '<Right>' : ')'
-inoremap [ []<Left>
-inoremap <expr> ] match(getline("."), '[]', col(".") - 2) == abs(col(".") - 2) ? '<Right>' : ']'
-inoremap <expr> { synIDattr(synID(line("."), col(".") - 1, 1), "name") =~? 'comment' ? '{' : '{}<Left>'
-inoremap <expr> } match(getline("."), '{}', col(".") - 2) == abs(col(".") - 2) ? '<Right>' : '}'
-inoremap <expr> ' match(getline("."), "\'\'", col(".") - 2) == abs(col(".") - 2) ? '<Right>' :
-\                 strlen(substitute(getline("."), "\[^\'\]", "", "g")) % 2 == 1 ? "\'" : "\'\'<Left>"
-inoremap <expr> " match(getline("."), '""', col(".") - 2) == abs(col(".") - 2) ? '<Right>' :
-\                 or(match(strpart(getline("."), 0, col(".")), '\S') == -1,
-\                    strlen(substitute(getline("."), '[^"]', "", "g")) % 2 == 1) ? '"' : '""<Left>'
 
 " コマンドモード {{{2
 " 移動
@@ -1981,7 +1970,10 @@ inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<C-t>'
 inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<C-d>'
 
 " <BS>: close popup and delete backword char.
-inoremap <expr> <BS> deoplete#smart_close_popup() . '<BS>'
+"   Note: <S-BS>を経由して、smartinputの<BS>が呼び出されるようにimapを使う
+"inoremap <expr> <BS> deoplete#smart_close_popup() . '<BS>'
+imap <expr> <BS> deoplete#smart_close_popup() . '<S-BS>'
+call smartinput#map_to_trigger('i', '<S-BS>', '<BS>', '<BS>')
 
 " Enable omni completion. {{{2
 au myvimrc FileType css         setlocal omnifunc=csscomplete#CompleteCSS

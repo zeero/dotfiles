@@ -1060,7 +1060,7 @@ on_ft = ['jproperties']
 repo = 'vim-jp/vital.vim'
 lazy = 1
 on_cmd = ['Vitalize']
-on_func = ['vital#of']
+on_func = ['vital#of', 'vital#vital#import']
 
 [[plugins]]
 repo = 'kana/vim-vspec'
