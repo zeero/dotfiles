@@ -2247,8 +2247,8 @@ nnoremap ,T :<C-u>CtrlPMenu<CR>
 nnoremap <C-@><C-@> :<C-u>CtrlPTag<CR>
 " CtrlPLine
 nnoremap <C-@><C-o> :<C-u>execute 'CtrlPLine ' . expand('%')<CR>
-" CtrlPCmdline (<C-@>' = <C-@><C-:>)
-nnoremap <C-@>' :<C-u>CtrlPCmdline<CR>
+" CtrlPCmdline
+nnoremap <C-@>: :<C-u>CtrlPCmdline<CR>
 " CtrlPRegister
 nnoremap <C-@><C-r> :<C-u>CtrlPRegister<CR>
 " CtrlPGit
