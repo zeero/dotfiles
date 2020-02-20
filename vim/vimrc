@@ -1606,6 +1606,8 @@ nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 " imap/cmapのマップリーダにするため、無効化
 inoremap <C-@> <Nop>
+" ヘルプが開くため無効化
+nnoremap <F1> <Nop>
 " 退避
 nnoremap <F2><C-g> <C-g>
 nnoremap <F2>[[ [[
@@ -2239,8 +2241,8 @@ nnoremap ,T :<C-u>CtrlPMenu<CR>
 nnoremap <C-@><C-@> :<C-u>CtrlPTag<CR>
 " CtrlPLine
 nnoremap <C-@><C-o> :<C-u>execute 'CtrlPLine ' . expand('%')<CR>
-" CtrlPCmdline (<C-@>' = <C-@><C-:>)
-nnoremap <C-@>' :<C-u>CtrlPCmdline<CR>
+" CtrlPCmdline
+nnoremap <C-@>: :<C-u>CtrlPCmdline<CR>
 " CtrlPRegister
 nnoremap <C-@><C-r> :<C-u>CtrlPRegister<CR>
 " CtrlPGit
