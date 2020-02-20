@@ -30,6 +30,8 @@ let $MYVIMDIR = '~/.vim'
 if !isdirectory($MYVIMDIR) && isdirectory($HOME . '/vimfiles')
   let $MYVIMDIR = '~/vimfiles'
 endif
+let $MY_DOTFILES_DIR = '~/lib/dotfiles'
+let $MY_MEMOS_DIR = '~/lib/dotfiles/lib/memos'
 let $LANG = 'ja_JP.UTF-8'
 " コンソール版で環境変数$DISPLAYが設定されていると起動が遅くなる件へ対応 {{{
 if !has('gui_running') && has('xterm_clipboard')
@@ -3196,6 +3198,25 @@ let g:markdown_fold_style = 'nested'
 " vim-slack_files "{{{1
 nnoremap T :<C-u>CtrlPSlackFiles<CR>
 command! SFu SlackFilesUpload
+" nnoremap T :<C-u>exe 'CtrlP ' . $MY_DOTFILES_DIR . '/lib/memos'<CR>
+command! GHu call s:my_github_memo_upload()
+function! s:my_github_memo_upload() abort "{{{
+  " 定数宣言
+  let memo_path = $MY_DOTFILES_DIR . '/lib/memos/'
+  let filename = expand('%:t')
+
+  " レポジトリにsave
+  exe 'save ' . memo_path . filename
+
+  " git add & commit --allow-empty-message ${file}
+  exe 'lcd ' . memo_path
+  exe '!git add ' . filename
+  exe '!git commit --allow-empty-message -m "" ' . filename
+
+  " git push
+  call s:my_vimproc_async({'cmd': 'git push'})
+endfunction "}}}
+" au myvimrc BufWritePost 
 
 " vim-gista {{{1
 " Github設定
