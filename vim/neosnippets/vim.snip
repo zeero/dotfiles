@@ -111,3 +111,17 @@ abbr    themis assertion
 alias   assert:fail
 	call s:assert.fail('Unreachable')${0}
 
+# # template:.local.vimrc {{{1
+snippet template:.local.vimrc
+abbr    template:.local.vimrc
+alias   local
+	scriptencoding utf-8
+
+	" プロジェクトローカルな設定
+
+	" プロジェクトルートに移動
+	exe ':lcd ' . expand('<sfile>:p:h')
+	" tagsファイルの設定
+	exe 'setlocal tags+=' . expand('<sfile>:p:h') . '/tags'
+	${0}
+
