@@ -1972,10 +1972,10 @@ inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<C-t>'
 inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<C-d>'
 
 " <BS>: close popup and delete backword char.
-"   Note: <S-BS>を経由して、smartinputの<BS>が呼び出されるようにimapを使う
-"inoremap <expr> <BS> deoplete#smart_close_popup() . '<BS>'
-imap <expr> <BS> deoplete#smart_close_popup() . '<S-BS>'
-call smartinput#map_to_trigger('i', '<S-BS>', '<BS>', '<BS>')
+"   Note: <S-BS>を経由して、smartinputの<BS>が呼び出されるようにimapを使う→動作不安定のため戻した
+"imap <expr> <BS> deoplete#smart_close_popup() . '<S-BS>'
+"call smartinput#map_to_trigger('i', '<S-BS>', '<BS>', '<BS>')
+inoremap <expr> <BS> deoplete#smart_close_popup() . '<BS>'
 
 " Enable omni completion. {{{2
 au myvimrc FileType css         setlocal omnifunc=csscomplete#CompleteCSS
