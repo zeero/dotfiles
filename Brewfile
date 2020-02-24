@@ -1,6 +1,6 @@
 cask_args appdir: '/Applications'
-tap 'caskroom/cask'
-tap 'caskroom/versions'
+tap 'homebrew/cask-cask'
+tap 'homebrew/cask-versions'
 
 # language
 brew 'ruby'
