@@ -28,12 +28,13 @@ ln -s ${DOTFILES}/vim/plugged/vim-plug/plug.vim ~/.config/nvim/after/autoload/pl
 mkdir ~/bin
 chmod 744 ${DOTFILES}/lib/git-info/git-*
 chmod 744 ${DOTFILES}/lib/markdown2ctags/markdown2ctags.py
-find ${DOTFILES}/lib/git-info -type f -depth 1 -exec ln -s {} ~/bin \;
+find ${DOTFILES}/lib/git-info -type f -name git-* -depth 1 -exec ln -s {} ~/bin \;
 ln -s ${DOTFILES}/lib/markdown2ctags/markdown2ctags.py ~/bin/markdown2ctags.py
 mkdir ~/.bundle
 find ${DOTFILES}/home/.bundle -type f -depth 1 -exec ln -s {} ~/.bundle \;
 mkdir ~/.nvm
 ln -s ${DOTFILES}/xcode/CodeSnippets ~/Library/Developer/Xcode/UserData/CodeSnippets
+mkdir -p ~/Library/Developer/Xcode/Templates
 ln -s ${DOTFILES}/xcode/File\ Templates ~/Library/Developer/Xcode/Templates/File\ Templates
 
 # git config
