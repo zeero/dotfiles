@@ -20,6 +20,7 @@ mkdir -p ~/.tmux/plugins
 ln -s ${DOTFILES}/home/.tmux/plugins/tpm ~/.tmux/plugins/tpm
 ln -s ${DOTFILES}/vim ~/.vim
 ln -s ${DOTFILES}/vim/vimrc ~/.vimrc
+mkdir -p ~/.config
 ln -s ${DOTFILES}/vim ~/.config/nvim
 ln -s ${DOTFILES}/vim/vimrc ~/.config/nvim/init.vim
 mkdir -p ${DOTFILES}/vim/after/autoload
