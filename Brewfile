@@ -28,6 +28,7 @@ brew 'bash-git-prompt'
 brew 'tmux'
 brew 'reattach-to-user-namespace'
 brew 'git-flow'
+tap 'heroku/brew'
 brew 'heroku'
 brew 'fzf'
 brew 'tree'
@@ -40,7 +41,7 @@ brew 'cowsay'
 brew 'figlet'
 
 # vim
-brew 'macvim', args: ['with-lua', 'with-override-system-vim']
+brew 'macvim'
 tap 'universal-ctags/universal-ctags'
 brew 'universal-ctags', args: ['HEAD']
 brew 'cmigemo'
@@ -54,8 +55,7 @@ brew 'neovim-qt'
 brew 'w3m'
 
 # coding tool
-cask 'alcatraz'
-cask 'realm-browser'
+cask 'realm-studio'
 cask 'sourcetree'
 brew 'jsonlint'
 brew 'terminal-notifier'
