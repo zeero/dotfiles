@@ -1099,5 +1099,11 @@ on_ft = ['vim']
 repo = 'chase/vim-ansible-yaml'
 on_ft = ['ansible']
 
+# [[plugins]]
+# repo = 'sheerun/vim-polyglot'
+# コンフリクトが多そうなので無効化
+# 以下コマンドで完全にアンイストールしないと影響している、、
+#   call map(dein#check_clean(), "delete(v:val, 'rf')")
+
 # 1}}}
 
