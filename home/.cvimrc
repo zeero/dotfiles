@@ -135,7 +135,7 @@ map u lastClosedTab
 map U :restore<Space>
 map ,l 100moveTabRight
 map ,L 100moveTabLeft
-map ,t :tabnew<CR>
+map ,t :bookmarks!<Space>
 map ,p :togglepin<CR>
 
 " ウィンドウ {{{1
