@@ -242,6 +242,8 @@ if [ -f "$BREW_HUB/etc/bash_completion.d/hub.bash_completion.sh" ]; then
 fi
 ## travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+# heroku autocomplete setup
+HEROKU_AC_BASH_SETUP_PATH=~/Library/Caches/heroku/autocomplete/bash_setup && test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH
 
 # キーバインド {{{1
 ## キーバインド解除
