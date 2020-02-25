@@ -2855,7 +2855,8 @@ command! Vs silent Vcs status
 command! Va silent Vcs add
 command! Vc silent Vcs commit
 command! Vca silent call vcs#vcs('add', '.') | silent Vcs commit
-command! Vl silent Vcs log
+command! Vl silent call vcs#vcs('log', [{'files': expand('%')}])
+command! Vla silent Vcs log
 command! Vpush call s:my_vimproc_async({'cmd': 'git push'})
 command! Vpull call s:my_vimproc_async({'cmd': 'git pull'})
 " Vpush/Vpullのためのvimproc（非同期ファンクション使用のため廃止）
