@@ -70,6 +70,7 @@ endif
 if !has('nvim') && dein#check_install()
   call dein#install()
 endif
+call map(dein#check_clean(), "delete(v:val, 'rf')")
 
 " Plug {{{1
 if has('nvim')
@@ -1442,9 +1443,7 @@ cnoremap <C-p> <Up>
 
 " コマンド実行 {{{2
 " リファレンス
-set keywordprg=:Ref\ webdict
-nnoremap ,K :<C-u>Ref webdict <C-r><C-w><CR>
-vnoremap ,K y:<C-u>Ref webdict <C-r>"<CR>
+set keywordprg=:Translate
 au myvimrc FileType vim,help nnoremap <buffer> ,h :<C-u>H<Space><C-r><C-w><CR>
 au myvimrc FileType vim,help vnoremap <buffer> ,h y:<C-u>H<Space><C-r>"<CR>
 au myvimrc FileType ruby nnoremap <buffer> ,h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>
@@ -2856,7 +2855,8 @@ command! Vs silent Vcs status
 command! Va silent Vcs add
 command! Vc silent Vcs commit
 command! Vca silent call vcs#vcs('add', '.') | silent Vcs commit
-command! Vl silent Vcs log
+command! Vl silent call vcs#vcs('log', [{'files': expand('%')}])
+command! Vla silent Vcs log
 command! Vpush call s:my_vimproc_async({'cmd': 'git push'})
 command! Vpull call s:my_vimproc_async({'cmd': 'git pull'})
 " Vpush/Vpullのためのvimproc（非同期ファンクション使用のため廃止）
