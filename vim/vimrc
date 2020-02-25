@@ -1442,9 +1442,7 @@ cnoremap <C-p> <Up>
 
 " コマンド実行 {{{2
 " リファレンス
-set keywordprg=:Ref\ webdict
-nnoremap ,K :<C-u>Ref webdict <C-r><C-w><CR>
-vnoremap ,K y:<C-u>Ref webdict <C-r>"<CR>
+set keywordprg=:Translate
 au myvimrc FileType vim,help nnoremap <buffer> ,h :<C-u>H<Space><C-r><C-w><CR>
 au myvimrc FileType vim,help vnoremap <buffer> ,h y:<C-u>H<Space><C-r>"<CR>
 au myvimrc FileType ruby nnoremap <buffer> ,h :<C-u>Ref<Space>refe<Space><C-r><C-w><CR>

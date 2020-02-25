@@ -469,6 +469,9 @@ depends = ['webapi-vim']
 repo = 'mojako/ref-sources.vim'
 
 [[plugins]]
+repo = 'skanehira/translate.vim'
+
+[[plugins]]
 repo = 'thinca/vim-quickrun'
 lazy = 1
 on_cmd = ['QuickRun']
