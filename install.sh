@@ -102,6 +102,8 @@ cat ${DOTFILES}/Piplist | gxargs -E'__EOF__' pip3 install --user
 # plist
 ## OS
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+# フルスクリーン維持するため、アプリケーション終了時のウィンドウの復元をする
+defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool true
 defaults write "com.apple.AppleMultitouchTrackpad" "TrackpadCornerSecondaryClick" -int 2
 defaults write "com.apple.AppleMultitouchTrackpad" "TrackpadRightClick" -bool false
 defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "TrackpadCornerSecondaryClick" -int 2
