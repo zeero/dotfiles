@@ -97,6 +97,7 @@ gem install \
   pry-byebug \
   pry-doc \
   pry-theme \
+  activesupport \
   cocoapods \
   # rubocop \
   # rubocop-rspec \
