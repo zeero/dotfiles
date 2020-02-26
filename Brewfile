@@ -55,9 +55,9 @@ tap 'lambdalisue/neovim-qt'
 brew 'neovim-qt'
 brew 'w3m'
 
-# my formula {{{1
-tap 'zeero/go_builds'
-brew 'gtran'
+# my formulas {{{1
+tap 'zeero/my-formulas'
+brew 'go-gtran'
 
 # development tool {{{1
 cask 'realm-studio'
