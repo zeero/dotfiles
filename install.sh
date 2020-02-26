@@ -62,7 +62,6 @@ open ${DOTFILES}/lib/RictyDiminished/RictyDiminished-devicon*.ttf
 
 # HomeBrew
 brew bundle
-brew linkapps macvim
 
 # Mint
 mint install Carthage/Carthage
@@ -77,32 +76,8 @@ gem install yard
 yard gems
 yard config --gem-install-yri
 
-gem install \
-  bundler \
-  fastri \
-  irbtools \
-  kramdown \
-  neovim \
-  rcodetools \
-  rdoc-generator-fivefish \
-  refe2 \
-  rest-client \
-  ruboty-megen \
-  specific_install \
-  sqlint \
-  synx \
-  update_xcode_plugins \
-  byebug \
-  pry \
-  pry-byebug \
-  pry-doc \
-  pry-theme \
-  activesupport \
-  cocoapods \
-  # rubocop \
-  # rubocop-rspec \
+cat ${DOTFILES}/Gemlist | gxargs -L1 -E'__EOF__' gem install
 
-gem install solargraph -v 0.18.0
 gem specific_install -l http://github.com/zeero/ruboty-gen.git
 
 bitclust setup

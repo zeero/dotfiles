@@ -1,0 +1,28 @@
+bundler
+fastri
+irbtools
+kramdown
+neovim
+rcodetools
+rdoc-generator-fivefish
+refe2
+rest-client
+ruboty-megen
+specific_install
+sqlint
+synx
+update_xcode_plugins
+byebug
+pry
+pry-byebug
+pry-doc
+pry-theme
+activesupport
+cocoapods
+solargraph:0.18.0
+
+__EOF__
+xargsのオプション（-E）で__EOF__以降は無視する
+# rubocop
+# rubocop-rspec
+

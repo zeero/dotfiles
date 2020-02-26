@@ -16,6 +16,7 @@ alias bi='bundle install'
 alias rails='bundle exec rails'
 alias rake='bundle exec rake'
 alias dc='docker-compose'
+alias xargs='gxargs'
 
 # ファンクション {{{1
 ## calc {{{2
