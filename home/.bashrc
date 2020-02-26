@@ -22,7 +22,7 @@ alias dc='docker-compose'
 calc() { awk "BEGIN { print $* }"; }
 
 ## mkdatedir {{{2
-mkdatedir() { mkdir `date "+%Y%m%d%H%M%S"`; }
+mkdatedir() { date=`date "+%Y%m%d%H%M%S"` && mkdir $date && cd $date; }
 
 ## fcd {{{2
 fcd() {
