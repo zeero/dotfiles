@@ -64,9 +64,7 @@ open ${DOTFILES}/lib/RictyDiminished/RictyDiminished-devicon*.ttf
 brew bundle
 
 # Mint
-mint install Carthage/Carthage
-mint install yonaskolb/XcodeGen
-mint install toshi0383/xcconfig-extractor
+cat ${DOTFILES}/Mintlist | gxargs -L1 -E'__EOF__' mint install
 
 # ruby
 RUBY_CONFIGURE_OPTS="--with-readline-dir=`brew --prefix readline`" rbenv install 2.6.2
@@ -76,7 +74,7 @@ gem install yard
 yard gems
 yard config --gem-install-yri
 
-cat ${DOTFILES}/Gemlist | gxargs -L1 -E'__EOF__' gem install
+cat ${DOTFILES}/Gemlist | gxargs -E'__EOF__' gem install
 
 gem specific_install -l http://github.com/zeero/ruboty-gen.git
 
@@ -96,21 +94,10 @@ update_xcode_plugins --unsign
 mkdir -p ~/.nodebrew/src
 nodebrew install-binary 10.14.2
 npm update -g npm
-npm install -g \
-  typescript \
-  coffeescript \
-  coffeelint \
-  eslint \
-  hubot \
-  generator-hubot \
-  yo \
-  firebase-tools \
+cat ${DOTFILES}/Nodelist | gxargs -E'__EOF__' npm install -g
 
 # python
-pip3 install --user \
-  vim-vint \
-  pynvim \
-  solargraph-utils.py \
+cat ${DOTFILES}/Piplist | gxargs -E'__EOF__' pip3 install --user
 
 # plist
 ## OS
