@@ -1971,9 +1971,9 @@ inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<C-t>'
 inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<C-d>'
 
 " <BS>: close popup and delete backword char.
-"   Note: <S-BS>を経由して、smartinputの<BS>が呼び出されるようにimapを使う→動作不安定のため戻した
-"imap <expr> <BS> deoplete#smart_close_popup() . '<S-BS>'
-"call smartinput#map_to_trigger('i', '<S-BS>', '<BS>', '<BS>')
+"   Note: <Plug>を経由して、smartinputの<BS>が呼び出されるようにimapを使う→動作不安定のため戻した
+"call smartinput#map_to_trigger('i', '<Plug>(smartinput_BS)', '<BS>', '<BS>')
+"imap <expr> <BS> deoplete#smart_close_popup() . '<Plug>(smartinput_BS)'
 inoremap <expr> <BS> deoplete#smart_close_popup() . '<BS>'
 
 " Enable omni completion. {{{2
