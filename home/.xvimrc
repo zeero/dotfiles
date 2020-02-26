@@ -84,6 +84,8 @@ nmap ,R :xcmenucmd Test Again<CR>
 " リファクタ
 nmap ,c :xcmenucmd Rename...<CR>
 
+nmap ,; :xcmenucmd Show Document Items<CR>
+
 " XCodeのキーバインドで設定
 " imap <C-H> <Left>
 " imap <C-L> <Right>
