@@ -1,9 +1,6 @@
 [submodule "vim/dict/pocke_dicts"]
 	path = vim/dict/pocke_dicts
 	url = https://github.com/pocke/dicts
-[submodule "lib/git-info"]
-	path = lib/git-info
-	url = https://github.com/gitbits/git-info.git
 [submodule "vimperator/vimppm"]
 	path = vimperator/vimppm
 	url = https://github.com/cd01/vimppm.git

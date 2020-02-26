@@ -27,7 +27,6 @@ ln -s ${DOTFILES}/vim/vimrc ~/.config/nvim/init.vim
 mkdir -p ${DOTFILES}/vim/after/autoload
 ln -s ${DOTFILES}/vim/plugged/vim-plug/plug.vim ~/.config/nvim/after/autoload/plug.vim
 mkdir ~/bin
-chmod 744 ${DOTFILES}/lib/git-info/git-*
 chmod 744 ${DOTFILES}/lib/markdown2ctags/markdown2ctags.py
 find ${DOTFILES}/lib/git-info -type f -name git-* -depth 1 -exec ln -s {} ~/bin \;
 ln -s ${DOTFILES}/lib/markdown2ctags/markdown2ctags.py ~/bin/markdown2ctags.py

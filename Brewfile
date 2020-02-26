@@ -58,6 +58,7 @@ brew 'w3m'
 # my formulas {{{1
 tap 'zeero/my-formulas'
 brew 'go-gtran'
+brew 'git-info'
 
 # development tool {{{1
 cask 'realm-studio'
