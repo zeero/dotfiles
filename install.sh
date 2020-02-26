@@ -13,6 +13,7 @@ DOTFILES=`pwd`
 
 # git submodules
 git submodule update --init
+git clone https://github.com/zeero/memos ~/Documents/memos
 
 # symlink
 find ${DOTFILES}/home -type f -depth 1 -exec ln -s {} ~ \;
