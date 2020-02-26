@@ -2976,7 +2976,7 @@ vmap gJ <Plug>(jplus-getchar)
 " 初期化
 let g:jplus#config = {}
 " 区切り文字はなし
-let g:jplus#config._ = {'delimiter': ''}
+let g:jplus#config._ = {'delimiter': ' '}
 
 " FastFold {{{1
 " キーマップを変えない

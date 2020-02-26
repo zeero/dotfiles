@@ -1,6 +1,6 @@
-cask_args appdir: '/Applications'
 tap 'homebrew/cask'
 tap 'homebrew/cask-versions'
+cask_args appdir: '/Applications'
 
 # language {{{1
 brew 'ruby'
