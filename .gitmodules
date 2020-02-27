@@ -8,9 +8,6 @@
 [submodule "vim/dein/repos/github.com/Shougo/dein.vim"]
 	path = vim/dein/repos/github.com/Shougo/dein.vim
 	url = https://github.com/Shougo/dein.vim.git
-[submodule "lib/RictyDiminished"]
-	path = lib/RictyDiminished
-	url = https://github.com/zeero/RictyDiminished.git
 [submodule "home/.tmux/plugins/tpm"]
 	path = home/.tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm

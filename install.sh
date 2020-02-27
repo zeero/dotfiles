@@ -58,9 +58,6 @@ git config --global alias.stashdiff "diff HEAD..stash@{0}"
 git config --global ghq.root "~/dev"
 git config --global commit.template "~/.git-commit-template"
 
-# Ricty
-open ${DOTFILES}/lib/RictyDiminished/RictyDiminished-devicon*.ttf
-
 # HomeBrew
 brew bundle
 
