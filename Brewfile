@@ -90,4 +90,10 @@ cask 'coteditor'
 cask 'slack'
 cask 'ios-console'
 cask 'image2icon'
+cask 'drawio'
+
+# AppStore {{{1
+brew 'mas'
+mas 'Apple Configurator 2', id: 1037126344
+mas 'Pocket', id: 568494494
 
