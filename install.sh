@@ -15,6 +15,11 @@ DOTFILES=`pwd`
 git submodule update --init
 git clone https://github.com/zeero/memos ~/Documents/memos
 
+# mkdir
+mkdir ~/bin
+mkdir ~/dev
+mkdir ~/tmp
+
 # symlink
 find ${DOTFILES}/home -type f -depth 1 -exec ln -s {} ~ \;
 mkdir -p ~/.tmux/plugins
@@ -26,10 +31,6 @@ ln -s ${DOTFILES}/vim ~/.config/nvim
 ln -s ${DOTFILES}/vim/vimrc ~/.config/nvim/init.vim
 mkdir -p ${DOTFILES}/vim/after/autoload
 ln -s ${DOTFILES}/vim/plugged/vim-plug/plug.vim ~/.config/nvim/after/autoload/plug.vim
-mkdir ~/bin
-chmod 744 ${DOTFILES}/lib/markdown2ctags/markdown2ctags.py
-find ${DOTFILES}/lib/git-info -type f -name git-* -depth 1 -exec ln -s {} ~/bin \;
-ln -s ${DOTFILES}/lib/markdown2ctags/markdown2ctags.py ~/bin/markdown2ctags.py
 mkdir ~/.bundle
 find ${DOTFILES}/home/.bundle -type f -depth 1 -exec ln -s {} ~/.bundle \;
 mkdir ~/.nvm

@@ -59,6 +59,7 @@ brew 'w3m'
 tap 'zeero/my-formulas'
 brew 'go-gtran'
 brew 'git-info'
+brew 'py-markdown2ctags'
 
 # development tool {{{1
 cask 'realm-studio'
