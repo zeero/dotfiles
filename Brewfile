@@ -2,7 +2,7 @@ tap 'homebrew/cask'
 tap 'homebrew/cask-versions'
 cask_args appdir: '/Applications'
 
-# language {{{1
+# Language {{{1
 brew 'ruby'
 brew 'rbenv'
 brew 'ruby-build'
@@ -15,7 +15,7 @@ brew 'zsh'
 cask 'java'
 brew 'go'
 
-# command {{{1
+# Command {{{1
 # gitははじめに手動でいれる
 # brew 'git'
 brew 'cask'
@@ -41,7 +41,7 @@ brew 'gnu-sed'
 brew 'cowsay'
 brew 'figlet'
 
-# vim {{{1
+# Vim {{{1
 brew 'macvim'
 tap 'universal-ctags/universal-ctags'
 brew 'universal-ctags', args: ['HEAD']
@@ -55,14 +55,14 @@ tap 'lambdalisue/neovim-qt'
 brew 'neovim-qt'
 brew 'w3m'
 
-# my formulas {{{1
+# My Formulas {{{1
 tap 'zeero/my-formulas'
 brew 'go-gtran'
 brew 'git-info'
 brew 'py-markdown2ctags'
 cask 'font-ricty_diminished-devicon'
 
-# development tool {{{1
+# Development Tool {{{1
 cask 'realm-studio'
 cask 'sourcetree'
 brew 'jsonlint'
@@ -73,13 +73,13 @@ brew 'ghq'
 brew 'gibo'
 brew 'mint'
 
-# utility {{{1
+# Utility {{{1
 cask 'alfred'
 cask 'clipy'
 cask 'spectacle'
 cask 'witch'
 
-# application {{{1
+# Application {{{1
 cask 'iterm2'
 cask 'google-chrome'
 cask 'google-japanese-ime'
