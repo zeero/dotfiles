@@ -10,6 +10,7 @@
 
 cd `dirname $0`
 DOTFILES=`pwd`
+SUBS=`install.sh.subs`
 
 # git submodules
 git submodule update --init
@@ -19,24 +20,10 @@ git clone https://github.com/zeero/memos ~/Documents/memos
 mkdir ~/bin
 mkdir ~/dev
 mkdir ~/tmp
+mkdir ~/log
 
 # symlink
-find ${DOTFILES}/home -type f -depth 1 -exec ln -s {} ~ \;
-mkdir -p ~/.tmux/plugins
-ln -s ${DOTFILES}/home/.tmux/plugins/tpm ~/.tmux/plugins/tpm
-ln -s ${DOTFILES}/vim ~/.vim
-ln -s ${DOTFILES}/vim/vimrc ~/.vimrc
-mkdir -p ~/.config
-ln -s ${DOTFILES}/vim ~/.config/nvim
-ln -s ${DOTFILES}/vim/vimrc ~/.config/nvim/init.vim
-mkdir -p ${DOTFILES}/vim/after/autoload
-ln -s ${DOTFILES}/vim/plugged/vim-plug/plug.vim ~/.config/nvim/after/autoload/plug.vim
-mkdir ~/.bundle
-find ${DOTFILES}/home/.bundle -type f -depth 1 -exec ln -s {} ~/.bundle \;
-mkdir ~/.nvm
-ln -s ${DOTFILES}/xcode/CodeSnippets ~/Library/Developer/Xcode/UserData/CodeSnippets
-mkdir -p ~/Library/Developer/Xcode/Templates
-ln -s ${DOTFILES}/xcode/File\ Templates ~/Library/Developer/Xcode/Templates/File\ Templates
+./${SUBS}/symlink.sh
 
 # git config
 # git config --global user.name zeero
@@ -61,72 +48,32 @@ git config --global commit.template "~/.git-commit-template"
 # HomeBrew
 brew bundle
 
-# Mint
-cat ${DOTFILES}/Mintlist | gxargs -L1 -E'__EOF__' mint install
-
-# ruby
-RUBY_CONFIGURE_OPTS="--with-readline-dir=`brew --prefix readline`" rbenv install 2.6.2
-rbenv global 2.6.2
-
-gem install yard
-yard gems
-yard config --gem-install-yri
-
-cat ${DOTFILES}/Gemlist | gxargs -E'__EOF__' gem install
-
-gem specific_install -l http://github.com/zeero/ruboty-gen.git
-
-bitclust setup
-
 # XVim2
 cd `dirname $0`/lib/XVim2
 make
 cd `dirname $0`
 
-# Xcode8以降にalcatrazを導入する場合、以下のコマンド実行が必要になる
-# Xcodeのバージョンとxcodebuildコマンドも対象にするか聞かれるので対象にして実行する
-update_xcode_plugins
-update_xcode_plugins --unsign
+# Mint
+./${SUBS}/mint_install.sh
+
+# ruby
+./${SUBS}/ruby.001.rbenv.sh
+./${SUBS}/ruby.002.gem_install_pre.sh
+./${SUBS}/ruby.003.gem_install.sh
+./${SUBS}/ruby.004.gem_install_post.sh
 
 # node.js
-mkdir -p ~/.nodebrew/src
-nodebrew install-binary 10.14.2
-npm update -g npm
-cat ${DOTFILES}/Nodelist | gxargs -E'__EOF__' npm install -g
+./${SUBS}/node.001.nodebrew.sh
+./${SUBS}/node.002.npm_install.sh
 
 # python
-cat ${DOTFILES}/Piplist | gxargs -E'__EOF__' pip3 install --user
+./${SUBS}/pip_install.sh
 
 # plist
-## OS
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-# フルスクリーン維持するため、アプリケーション終了時のウィンドウの復元をする
-defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool true
-defaults write "com.apple.AppleMultitouchTrackpad" "TrackpadCornerSecondaryClick" -int 2
-defaults write "com.apple.AppleMultitouchTrackpad" "TrackpadRightClick" -bool false
-defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "TrackpadCornerSecondaryClick" -int 2
-defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "TrackpadRightClick" -bool false
-defaults write "com.apple.dock" "showAppExposeGestureEnabled" -bool true
-defaults write "com.apple.preference.general" "version" -int 1
-echo "・ダブルタップでドラッグするために「システム環境設定」の「アクセシビリティ」→「マウスとトラックパッド」→「トラックパッドオプション」→「ドラッグロック」を有効にする"
-defaults write "com.apple.AppleMultitouchTrackpad" "DragLock" -bool true
-defaults write "com.apple.AppleMultitouchTrackpad" "Clicking" -bool true
-defaults write "com.apple.AppleMultitouchTrackpad" "Dragging" -bool true
-defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "DragLock" -bool true
-defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "Clicking" -bool true
-defaults write "com.apple.driver.AppleBluetoothMultitouch.trackpad" "Dragging" -bool true
-## Dock
-defaults write "com.apple.dock" "tilesize" -int 32
-defaults write "com.apple.dock" "magnification" -bool true
-defaults write "com.apple.dock" "autohide" -bool true
-## iTerm2
-defaults write "com.googlecode.iterm2" "QuitWhenAllWindowsClosed" -bool true
-## Clipy
-defaults write "com.clipy-app.Clipy" "kCPYPrefNumberOfItemsPlaceInlineKey" -int 10
-## Xcode
-defaults write "com.apple.dt.Xcode" "ShowBuildOperationDuration" -bool true
+./${SUBS}/osx_defaults.sh
 
 # その他設定
+echo "・ダブルタップでドラッグするために「システム環境設定」の「アクセシビリティ」→「マウスとトラックパッド」→「トラックパッドオプション」→「ドラッグロック」を有効にする"
 echo "・キー移動を速くするために「システム環境設定」の「キーボード」からキーリピート、リピート認識を最大にする"
 echo "・シフトスペースをVimに送るためにGoogleIMEの英語キーボードを導入すること"
 
