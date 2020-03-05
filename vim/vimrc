@@ -2862,8 +2862,11 @@ map <silent> <C-w><S-Space> <C-w>p<Plug>(ac-smooth-scroll-c-u)<C-w>p
 " vim-vcs {{{1
 command! Vs silent Vcs status
 command! Va silent Vcs add
-command! Vc silent Vcs commit
-command! Vca silent call vcs#vcs('add', '.') | silent Vcs commit
+" command! Vc silent Vcs commit
+command! Vc silent Gc
+" command! Vca silent call vcs#vcs('add', '.') | silent Vcs commit
+command! Vca silent Gca
+command! Vcamend silent Gcamend
 command! Vl silent call vcs#vcs('log', [{'files': expand('%')}])
 command! Vla silent Vcs log
 command! Vpush call s:my_vimproc_async({'cmd': 'git push'})
@@ -2904,12 +2907,12 @@ command! Vpull call s:my_vimproc_async({'cmd': 'git pull'})
 " }}}
 command! Gs Gstatus
 command! Ga Gwrite
-command! Gw Gwrite
 command! Gd Gvdiff
-command! Gc Gcommit -v
-command! Gca Gcommit -va
-command! Gl Glog
+command! Gc Gcommit --verbose
+command! Gca Gcommit --verbose -a
+command! Gcamend Gcommit --verbose --amend
 command! Gb Gblame
+command! Gl Glog
 " HEADに戻す
 command! Grevert Gread! show HEAD:%
 
