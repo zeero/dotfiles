@@ -398,8 +398,8 @@ if has('persistent_undo')
 endif
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
-au myvimrc BufRead,BufNewFile * call s:my_lcd()
-function! s:my_lcd() "{{{
+au myvimrc BufRead,BufNewFile * call s:my_auto_lcd()
+function! s:my_auto_lcd() "{{{
   if isdirectory(expand('%:p:h'))
     exe 'lcd' expand('%:p:h')
   endif
@@ -551,6 +551,15 @@ function! s:my_command_bd_other() "{{{
 endfunction "}}}
 " Lcd
 command! Lcd silent exe 'lcd ' . expand('%:p:h') | pwd
+command! -nargs=? Lcd call s:my_lcd(<q-args>)
+function! s:my_lcd(path) abort "{{{
+  if a:path ==? ''
+    silent exe 'lcd ' . expand('%:p:h')
+  else
+    silent exe 'lcd ' . a:path
+  endif
+  pwd
+endfunction "}}}
 " LcdLocalrc
 command! LcdLocalrc silent exe 'lcd ' . fnamemodify(get(reverse(localrc#search(get(g:, 'localrc_filename'))), 0), ':p:h') | pwd
 " Ls
