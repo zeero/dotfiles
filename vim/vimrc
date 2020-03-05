@@ -31,7 +31,7 @@ if !isdirectory($MYVIMDIR) && isdirectory($HOME . '/vimfiles')
   let $MYVIMDIR = '~/vimfiles'
 endif
 let $MY_DOTFILES_DIR = '~/lib/dotfiles'
-let $MY_MEMOS_DIR = '~/lib/dotfiles/lib/memos'
+let $MY_MEMOS_DIR = expand('~/Documents/memos')
 let $LANG = 'ja_JP.UTF-8'
 " コンソール版で環境変数$DISPLAYが設定されていると起動が遅くなる件へ対応 {{{
 if !has('gui_running') && has('xterm_clipboard')
@@ -398,8 +398,8 @@ if has('persistent_undo')
 endif
 " ファイルを開くと、そのファイルと同じディレクトリに移動
 " 名無しのvim使い <http://nanasi.jp/articles/vim/cd_vim.html>
-au myvimrc BufRead,BufNewFile * call s:my_lcd()
-function! s:my_lcd() "{{{
+au myvimrc BufRead,BufNewFile * silent call s:my_auto_lcd()
+function! s:my_auto_lcd() "{{{
   if isdirectory(expand('%:p:h'))
     exe 'lcd' expand('%:p:h')
   endif
@@ -551,6 +551,15 @@ function! s:my_command_bd_other() "{{{
 endfunction "}}}
 " Lcd
 command! Lcd silent exe 'lcd ' . expand('%:p:h') | pwd
+command! -nargs=? Lcd call s:my_lcd(<q-args>)
+function! s:my_lcd(path) abort "{{{
+  if a:path ==? ''
+    silent exe 'lcd ' . expand('%:p:h')
+  else
+    silent exe 'lcd ' . a:path
+  endif
+  pwd
+endfunction "}}}
 " LcdLocalrc
 command! LcdLocalrc silent exe 'lcd ' . fnamemodify(get(reverse(localrc#search(get(g:, 'localrc_filename'))), 0), ':p:h') | pwd
 " Ls
@@ -2853,8 +2862,11 @@ map <silent> <C-w><S-Space> <C-w>p<Plug>(ac-smooth-scroll-c-u)<C-w>p
 " vim-vcs {{{1
 command! Vs silent Vcs status
 command! Va silent Vcs add
-command! Vc silent Vcs commit
-command! Vca silent call vcs#vcs('add', '.') | silent Vcs commit
+" command! Vc silent Vcs commit
+command! Vc silent Gc
+" command! Vca silent call vcs#vcs('add', '.') | silent Vcs commit
+command! Vca silent Gca
+command! Vcamend silent Gcamend
 command! Vl silent call vcs#vcs('log', [{'files': expand('%')}])
 command! Vla silent Vcs log
 command! Vpush call s:my_vimproc_async({'cmd': 'git push'})
@@ -2895,12 +2907,12 @@ command! Vpull call s:my_vimproc_async({'cmd': 'git pull'})
 " }}}
 command! Gs Gstatus
 command! Ga Gwrite
-command! Gw Gwrite
 command! Gd Gvdiff
-command! Gc Gcommit -v
-command! Gca Gcommit -va
-command! Gl Glog
+command! Gc Gcommit --verbose
+command! Gca Gcommit --verbose -a
+command! Gcamend Gcommit --verbose --amend
 command! Gb Gblame
+command! Gl Glog
 " HEADに戻す
 command! Grevert Gread! show HEAD:%
 
@@ -3189,11 +3201,15 @@ let g:previm_enable_realtime = 0
 " フォールディングをネストする
 let g:markdown_fold_style = 'nested'
 
-" vim-slack_files "{{{1
-nnoremap T :<C-u>CtrlPSlackFiles<CR>
-command! SFu SlackFilesUpload
-" nnoremap T :<C-u>exe 'CtrlP ' . $MY_DOTFILES_DIR . '/lib/memos'<CR>
-command! GHu call s:my_github_memo_upload()
+" GithubMemos {{{1
+" nnoremap T :<C-u>CtrlP $MY_MEMOS_DIR<CR>
+command! GithubMemoUpload call s:my_github_memo_upload()
+command! GHu GithubMemoUpload
+function! s:my_github_memos_upload(filename) abort "{{{
+  call vimproc#system('git add ' . a:filename)
+  call vimproc#system('git commit --allow-empty-message -m "" ' . a:filename)
+  call s:my_vimproc_async({'cmd': 'git push'})
+endfunction "}}}
 function! s:my_github_memo_upload() abort "{{{
   " 定数宣言
   let memo_path = $MY_DOTFILES_DIR . '/lib/memos/'
@@ -3202,15 +3218,15 @@ function! s:my_github_memo_upload() abort "{{{
   " レポジトリにsave
   exe 'save ' . memo_path . filename
 
-  " git add & commit --allow-empty-message ${file}
+  " git
   exe 'lcd ' . memo_path
-  exe '!git add ' . filename
-  exe '!git commit --allow-empty-message -m "" ' . filename
-
-  " git push
-  call s:my_vimproc_async({'cmd': 'git push'})
+  call s:my_github_memos_upload(expand('%'))
 endfunction "}}}
-" au myvimrc BufWritePost 
+au myvimrc BufWritePost $MY_MEMOS_DIR/* call s:my_github_memos_upload(expand('%'))
+
+" vim-slack_files {{{1
+nnoremap T :<C-u>CtrlPSlackFiles<CR>
+command! SFu SlackFilesUpload
 
 " vim-gista {{{1
 " Github設定
