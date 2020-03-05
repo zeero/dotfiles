@@ -3189,10 +3189,8 @@ let g:previm_enable_realtime = 0
 " フォールディングをネストする
 let g:markdown_fold_style = 'nested'
 
-" vim-slack_files "{{{1
-nnoremap T :<C-u>CtrlPSlackFiles<CR>
-command! SFu SlackFilesUpload
-" nnoremap T :<C-u>exe 'CtrlP ' . $MY_DOTFILES_DIR . '/lib/memos'<CR>
+" GithubMemos {{{1
+" nnoremap T :<C-u>CtrlP $MY_MEMOS_DIR<CR>
 command! GithubMemoUpload call s:my_github_memo_upload()
 command! GHu GithubMemoUpload
 function! s:my_github_memo_upload() abort "{{{
@@ -3211,7 +3209,13 @@ function! s:my_github_memo_upload() abort "{{{
   " git push
   call s:my_vimproc_async({'cmd': 'git push'})
 endfunction "}}}
-au myvimrc BufWritePost $MY_MEMOS_DIR/* call s:my_vimproc_async({'cmd': 'git push'})
+au myvimrc BufWritePost $MY_MEMOS_DIR/* call s:my_vimproc_async({
+\ 'cmd': printf('git add %s && git commit -m "" --allow-empty-message %s && git push', expand('%'), expand('%'))
+\})
+
+" vim-slack_files {{{1
+nnoremap T :<C-u>CtrlPSlackFiles<CR>
+command! SFu SlackFilesUpload
 
 " vim-gista {{{1
 " Github設定
