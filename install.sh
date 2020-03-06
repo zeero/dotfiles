@@ -26,24 +26,37 @@ mkdir ~/log
 ./${SUBS}/symlink.sh
 
 # git config
-# git config --global user.name zeero
-# git config --global user.email zeero26@gmail.com
-# git config --global github.user zeero
 git config --global push.default simple
 git config --global http.sslVerify false
 git config --global core.excludesfile ~/.gitignore
 git config --global core.editor vim
+git config --global core.quotepath false
+git config --global core.safecrlf true
+git config --global core.autocrlf false
+git config --global color.ui true
+git config --global color.diff auto
+git config --global color.status auto
+git config --global color.branch auto
 git config --global diff.tool vimdiff
 git config --global diff.algorithm histogram
+git config --global commit.template "~/.git-commit-template"
 git config --global merge.tool vimdiff
 git config --global alias.co "checkout"
 git config --global alias.st "status"
+# ログをグラフ表示
 git config --global alias.graph "log --graph --decorate --name-status"
+# ローカルで変更を無視
 git config --global alias.ignore "update-index --skip-worktree"
+# ローカルで変更を無視を解除
 git config --global alias.noignore "update-index --no-skip-worktree"
 git config --global alias.stashdiff "diff HEAD..stash@{0}"
 git config --global ghq.root "~/dev"
-git config --global commit.template "~/.git-commit-template"
+
+echo gitのuser.name/user.email/github.userを設定してください
+echo git config --global user.name zeero
+echo git config --global user.email zeero26@gmail.com
+echo git config --global github.user zeero
+read -p "Press Enter to resume..."
 
 # HomeBrew
 brew bundle
