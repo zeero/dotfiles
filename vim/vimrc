@@ -2244,7 +2244,7 @@ au myvimrc BufWritePost *.snip NeoSnippetSource %:p
 " CtrlPMRUFiles
 nnoremap t :<C-u>CtrlPMRUFiles<CR>
 " CtrlPMenu
-nnoremap ,T :<C-u>CtrlPMenu<CR>
+nnoremap ,t :<C-u>CtrlPMenu<CR>
 " CtrlPTag
 nnoremap <C-@><C-@> :<C-u>CtrlPTag<CR>
 " CtrlPLine
@@ -2864,8 +2864,8 @@ command! Vs silent Vcs status
 command! Va silent Vcs add
 " command! Vc silent Vcs commit
 command! Vc silent Gc
-" command! Vca silent call vcs#vcs('add', '.') | silent Vcs commit
-command! Vca silent Gca
+command! Vca silent call vcs#vcs('add', '.') | silent Vcs commit
+" command! Vca silent Gca
 command! Vcamend silent Gcamend
 command! Vl silent call vcs#vcs('log', [{'files': expand('%')}])
 command! Vla silent Vcs log
@@ -3202,30 +3202,38 @@ let g:previm_enable_realtime = 0
 let g:markdown_fold_style = 'nested'
 
 " GithubMemos {{{1
-" nnoremap T :<C-u>CtrlP $MY_MEMOS_DIR<CR>
-command! GithubMemoUpload call s:my_github_memo_upload()
-command! GHu GithubMemoUpload
-function! s:my_github_memos_upload(filename) abort "{{{
+nnoremap T :<C-u>CtrlP $MY_MEMOS_DIR<CR>
+command! -nargs=* GithubMemosUpload call s:my_github_memos_upload(<f-args>)
+command! -nargs=* GMu call s:my_github_memos_upload(<f-args>)
+function! s:my_github_memos_git(filename) abort "{{{
   call vimproc#system('git add ' . a:filename)
   call vimproc#system('git commit --allow-empty-message -m "" ' . a:filename)
   call s:my_vimproc_async({'cmd': 'git push'})
 endfunction "}}}
-function! s:my_github_memo_upload() abort "{{{
+function! s:my_github_memos_upload(...) abort "{{{
+  " ディレクトリ指定
+  let path = '/'
+  if a:0
+    let path = '/' . join(a:000, '/') . '/'
+    if ! isdirectory($MY_MEMOS_DIR . path)
+      call mkdir($MY_MEMOS_DIR . path, 'p')
+    endif
+  endif
+
   " 定数宣言
-  let memo_path = $MY_DOTFILES_DIR . '/lib/memos/'
   let filename = expand('%:t')
 
   " レポジトリにsave
-  exe 'save ' . memo_path . filename
+  exe 'lcd ' . $MY_MEMOS_DIR
+  exe 'save ' . $MY_MEMOS_DIR . path . filename
 
-  " git
-  exe 'lcd ' . memo_path
-  call s:my_github_memos_upload(expand('%'))
+  " gitはautocmdが反応するので処理不要
+  " call s:my_github_memos_git(filename)
 endfunction "}}}
-au myvimrc BufWritePost $MY_MEMOS_DIR/* call s:my_github_memos_upload(expand('%'))
+au myvimrc BufWritePost $MY_MEMOS_DIR/* call s:my_github_memos_git(expand('%'))
 
 " vim-slack_files {{{1
-nnoremap T :<C-u>CtrlPSlackFiles<CR>
+" nnoremap T :<C-u>CtrlPSlackFiles<CR>
 command! SFu SlackFilesUpload
 
 " vim-gista {{{1
@@ -3260,6 +3268,7 @@ let g:gista#interactive_description = 0
 command! UGista exe 'Unite gista' .
 \ ' -silent -buffer-name=gista' .
 \ ' -tab -no-split -no-quit'
+nnoremap ,T :<C-u>CtrlPGista<CR>
 
 " Emmet {{{1
 "
