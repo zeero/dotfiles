@@ -2244,7 +2244,7 @@ au myvimrc BufWritePost *.snip NeoSnippetSource %:p
 " CtrlPMRUFiles
 nnoremap t :<C-u>CtrlPMRUFiles<CR>
 " CtrlPMenu
-nnoremap ,t :<C-u>CtrlPMenu<CR>
+nnoremap ,T :<C-u>CtrlPMenu<CR>
 " CtrlPTag
 nnoremap <C-@><C-@> :<C-u>CtrlPTag<CR>
 " CtrlPLine
@@ -3268,7 +3268,7 @@ let g:gista#interactive_description = 0
 command! UGista exe 'Unite gista' .
 \ ' -silent -buffer-name=gista' .
 \ ' -tab -no-split -no-quit'
-nnoremap ,T :<C-u>CtrlPGista<CR>
+nnoremap <C-@>T :<C-u>CtrlPGista<CR>
 
 " Emmet {{{1
 "
