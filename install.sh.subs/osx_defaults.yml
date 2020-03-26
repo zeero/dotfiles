@@ -1,0 +1,48 @@
+# OS
+NSGlobalDomain:
+  AppleShowAllExtensions: true
+  # フルスクリーンを維持するため、アプリケーション終了時のウィンドウの復元をする
+  NSQuitAlwaysKeepsWindows: true
+
+"com.apple.AppleMultitouchTrackpad":
+  "TrackpadCornerSecondaryClick": 2
+  "TrackpadRightClick": false
+
+"com.apple.driver.AppleBluetoothMultitouch.trackpad":
+  "TrackpadCornerSecondaryClick": 2
+  "TrackpadRightClick": false
+
+"com.apple.dock":
+  "showAppExposeGestureEnabled": true
+
+"com.apple.preference.general":
+  "version": 1
+
+"com.apple.AppleMultitouchTrackpad":
+  "DragLock": true
+  "Clicking": true
+  "Dragging": true
+
+"com.apple.driver.AppleBluetoothMultitouch.trackpad":
+  "DragLock": true
+  "Clicking": true
+  "Dragging": true
+
+# Dock
+"com.apple.dock":
+  "tilesize": 32
+  "magnification": true
+  "autohide": true
+
+# iTerm2
+"com.googlecode.iterm2":
+  "QuitWhenAllWindowsClosed": true
+
+# Clipy
+"com.clipy-app.Clipy":
+  "kCPYPrefNumberOfItemsPlaceInlineKey": 10
+
+# Xcode
+"com.apple.dt.Xcode":
+  "ShowBuildOperationDuration": true
+
