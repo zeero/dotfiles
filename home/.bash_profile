@@ -18,7 +18,7 @@ PATH=$HOME/bin:$PATH
 PATH=~/.rbenv/shims:$PATH
 PATH=/usr/local/opt/openssl/bin:$PATH
 PATH=/usr/local/opt/qt/bin:$PATH
-PATH=~/Library/Python/3.7/bin:$PATH
+PATH=/usr/local/opt/python/libexec/bin:$PATH
 export PATH
 
 # Java
