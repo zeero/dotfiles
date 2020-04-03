@@ -72,12 +72,15 @@ cask 'docker'
 brew 'ghq'
 brew 'gibo'
 brew 'mint'
+cask 'google-cloud-sdk'
 
 # Utility {{{1
 cask 'alfred'
 cask 'clipy'
 cask 'spectacle'
 cask 'witch'
+cask 'cmd-eikana'
+cask 'karabiner-elements'
 
 # Application {{{1
 cask 'iterm2'
