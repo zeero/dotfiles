@@ -22,6 +22,14 @@ mkdir ~/dev
 mkdir ~/tmp
 mkdir ~/log
 
+# HomeBrew
+brew bundle
+
+# XVim2
+cd `dirname $0`/lib/XVim2
+make
+cd `dirname $0`
+
 # symlink
 ./${SUBS}/symlink.sh
 
@@ -57,14 +65,6 @@ echo git config --global user.name zeero
 echo git config --global user.email zeero26@gmail.com
 echo git config --global github.user zeero
 read -p "Press Enter to resume..."
-
-# HomeBrew
-brew bundle
-
-# XVim2
-cd `dirname $0`/lib/XVim2
-make
-cd `dirname $0`
 
 # Mint
 ./${SUBS}/mint_install.sh

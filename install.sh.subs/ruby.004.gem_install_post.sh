@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOTFILES=`dirname $0`/..
+DOTFILES=$(dirname $(realpath $0))/..
 
 bitclust setup
 
