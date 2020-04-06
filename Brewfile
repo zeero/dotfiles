@@ -94,7 +94,6 @@ cask 'slack'
 cask 'ios-console'
 cask 'image2icon'
 cask 'drawio'
-cask 'spotify'
 
 # AppStore {{{1
 brew 'mas'
