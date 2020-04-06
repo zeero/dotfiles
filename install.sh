@@ -10,7 +10,7 @@
 
 cd `dirname $0`
 DOTFILES=`pwd`
-SUBS=`install.sh.subs`
+SUBS=install.sh.subs
 
 # git submodules
 git submodule update --init
