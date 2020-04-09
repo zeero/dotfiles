@@ -85,6 +85,16 @@ site '*://mail.google.com/*' {
   unmap gc
 }
 
+site '*://drive.google.com/*' {
+  unmap s
+  unmap n
+  unmap .
+  unmap /
+  unmap F
+  unmap #
+  unmap Z
+}
+
 " TODO: Chrome設定 {{{1
 
 "1}}}
