@@ -73,6 +73,7 @@ brew 'ghq'
 brew 'gibo'
 brew 'mint'
 cask 'google-cloud-sdk'
+cask 'github'
 
 # Utility {{{1
 cask 'alfred'
