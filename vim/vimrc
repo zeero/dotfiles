@@ -3230,7 +3230,7 @@ function! s:my_github_memos_upload(...) abort "{{{
   " gitはautocmdが反応するので処理不要
   " call s:my_github_memos_git(filename)
 endfunction "}}}
-au myvimrc BufWritePost $MY_MEMOS_DIR/* call s:my_github_memos_git(expand('%'))
+au myvimrc BufWritePost $MY_MEMOS_DIR/* silent call s:my_github_memos_git(expand('%'))
 
 " vim-slack_files {{{1
 " nnoremap T :<C-u>CtrlPSlackFiles<CR>
