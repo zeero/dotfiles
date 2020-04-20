@@ -86,6 +86,9 @@ nmap ,c :xcmenucmd Rename...<CR>
 
 nmap ,; :xcmenucmd Show Document Items<CR>
 
+" gy
+nmap gy :!echo %:t | pbcopy<CR>
+
 " XCodeのキーバインドで設定
 " imap <C-H> <Left>
 " imap <C-L> <Right>
