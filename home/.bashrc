@@ -18,6 +18,7 @@ alias rake='bundle exec rake'
 alias dc='docker-compose'
 alias xargs='gxargs'
 alias ..='cd ..'
+alias resource='exec $SHELL -l'
 
 # ファンクション {{{1
 ## calc {{{2
@@ -101,11 +102,23 @@ pdfmerge() {
   gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$outfile $infile
 }
 
-## _fzf-git-branch {{{2
-_fzf_git_branch() {
+## _fzf-git_branch {{{2
+_fzf-git_branch() {
   local selected fzf
   [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%}" || fzf="fzf"
   selected=$(git branch -a | sed -e "s/remotes\/[^\/]\{1,\}\/\(HEAD -> [^\/]\{1,\}\/\)\{0,1\}//" | sort -r | uniq | $fzf | cut -b 3- | tr '\n' ' ')
+  if [ -n "$selected" ]; then
+    echo -n "$selected"
+    return 0
+  fi
+}
+
+## _fzf-t {{{2
+_fzf-t() {
+  local selected fzf
+  # [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%} --preview 'bat --color=always --style=header,grid --line-range :100 {}'" || fzf="fzf"
+  # selected=$(rg --files --hidden --follow --glob '!.git/*' | $fzf)
+  selected=$(rg --files --hidden --follow --glob '!.git/*' | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%} --preview 'bat --color=always --style=header,grid --line-range :100 {}')
   if [ -n "$selected" ]; then
     echo -n "$selected"
     return 0
@@ -251,8 +264,9 @@ HEROKU_AC_BASH_SETUP_PATH=~/Library/Caches/heroku/autocomplete/bash_setup && tes
 ## キーバインド解除
 tty -s && stty stop  undef # C-s
 tty -s && stty start undef # C-q
-## fzf-git-branch
-bind '"\C-g": "$(_fzf_git_branch)\e\C-e\er"'
+## fzf
+bind '"\C-g": "$(_fzf-git_branch)\e\C-e\er"'
+bind '"\C-t": "$(_fzf-t)\e\C-e\er"'
 ## ghqcd
 bind '"\C-q":"ghqcd\n"'
 ## カーソル移動

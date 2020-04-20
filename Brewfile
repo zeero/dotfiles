@@ -40,6 +40,10 @@ brew 'ghostscript'
 brew 'gnu-sed'
 brew 'cowsay'
 brew 'figlet'
+brew 'ripgrep'
+brew 'bat'
+brew 'exa'
+brew 'fd'
 
 # Vim {{{1
 brew 'macvim'
