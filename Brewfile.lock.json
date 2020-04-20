@@ -991,6 +991,94 @@
             }
           }
         }
+      },
+      "ripgrep": {
+        "version": "12.0.0",
+        "bottle": {
+          "cellar": ":any",
+          "prefix": "/usr/local",
+          "files": {
+            "catalina": {
+              "url": "https://homebrew.bintray.com/bottles/ripgrep-12.0.0.catalina.bottle.tar.gz",
+              "sha256": "b81f5baed031c2081dfce0a05a4d442aa7232bf4b637882236ccd68560baee3a"
+            },
+            "mojave": {
+              "url": "https://homebrew.bintray.com/bottles/ripgrep-12.0.0.mojave.bottle.tar.gz",
+              "sha256": "d1e4b4394918bdf1e15f2de73e978b23574e4b05f134b01373e30d637fd7ada7"
+            },
+            "high_sierra": {
+              "url": "https://homebrew.bintray.com/bottles/ripgrep-12.0.0.high_sierra.bottle.tar.gz",
+              "sha256": "bcdd5dbf707adad635d5b765247d839d89a5f48eb3a025dca3480b2ce77c0e40"
+            }
+          }
+        }
+      },
+      "bat": {
+        "version": "0.13.0",
+        "bottle": {
+          "cellar": ":any_skip_relocation",
+          "prefix": "/usr/local",
+          "files": {
+            "catalina": {
+              "url": "https://homebrew.bintray.com/bottles/bat-0.13.0.catalina.bottle.tar.gz",
+              "sha256": "7a3940396b74afc976f97c19194dbbdcbe93268f6eb657fd4b3422ce60f03e8f"
+            },
+            "mojave": {
+              "url": "https://homebrew.bintray.com/bottles/bat-0.13.0.mojave.bottle.tar.gz",
+              "sha256": "67a235ef3a22a87d17333d44f547146b2d0c13fc1ec9b076133770b565176f51"
+            },
+            "high_sierra": {
+              "url": "https://homebrew.bintray.com/bottles/bat-0.13.0.high_sierra.bottle.tar.gz",
+              "sha256": "1dc30e4059defc1475a2969236fc058a218561d930ef3d7253f53f271d0f4c40"
+            }
+          }
+        }
+      },
+      "exa": {
+        "version": "0.9.0",
+        "bottle": {
+          "cellar": ":any_skip_relocation",
+          "prefix": "/usr/local",
+          "files": {
+            "catalina": {
+              "url": "https://homebrew.bintray.com/bottles/exa-0.9.0.catalina.bottle.tar.gz",
+              "sha256": "cc484e7deb12cdae4ede810258be0ca069d7db395897e9d3fbadd501fb075743"
+            },
+            "mojave": {
+              "url": "https://homebrew.bintray.com/bottles/exa-0.9.0.mojave.bottle.tar.gz",
+              "sha256": "bc80009ad845d914c08e6de1c39c97e0f4f180ef4f077b3ef1957cab519d6743"
+            },
+            "high_sierra": {
+              "url": "https://homebrew.bintray.com/bottles/exa-0.9.0.high_sierra.bottle.tar.gz",
+              "sha256": "7382b758899c756f94c4c99440f71075945d333e302e53139e423fb1798c852e"
+            },
+            "sierra": {
+              "url": "https://homebrew.bintray.com/bottles/exa-0.9.0.sierra.bottle.tar.gz",
+              "sha256": "9499359da5f5fffbd8b22c8cb8e78f0fdf99594c4d2b06e7ba58eb21afbcb582"
+            }
+          }
+        }
+      },
+      "fd": {
+        "version": "7.5.0",
+        "bottle": {
+          "cellar": ":any_skip_relocation",
+          "prefix": "/usr/local",
+          "files": {
+            "catalina": {
+              "url": "https://homebrew.bintray.com/bottles/fd-7.5.0.catalina.bottle.tar.gz",
+              "sha256": "0bdb984cbb1a2f5ad31edb64125f92cb7f258f6942f4e6cc8e4a03bf10ac02a7"
+            },
+            "mojave": {
+              "url": "https://homebrew.bintray.com/bottles/fd-7.5.0.mojave.bottle.tar.gz",
+              "sha256": "25bafcd08c49e4efa084e821eb29dec4e1a116b3ba158ab17bd861cb01d16522"
+            },
+            "high_sierra": {
+              "url": "https://homebrew.bintray.com/bottles/fd-7.5.0.high_sierra.bottle.tar.gz",
+              "sha256": "a0e40188915c506a58e4ff48e4eec0d636cded72c7d0bb773cc543fecb930830"
+            }
+          }
+        }
       }
     },
     "cask": {
@@ -1209,6 +1297,15 @@
             "appdir": "/Applications"
           }
         }
+      },
+      "github": {
+        "version": "2.4.0-568b4113",
+        "options": {
+          "full_name": "github",
+          "args": {
+            "appdir": "/Applications"
+          }
+        }
       }
     },
     "mas": {
@@ -1228,7 +1325,7 @@
         "HOMEBREW_VERSION": "2.2.11-10-gc2133d8",
         "HOMEBREW_PREFIX": "/usr/local",
         "Homebrew/homebrew-core": "4cbcad35497c04fa7f7f85ece98b16d556a69be7",
-        "CLT": "11.4.0.0.1.1583798712",
+        "CLT": "11.4.1.0.1.1586360307",
         "Xcode": "11.4",
         "macOS": "10.15.3"
       }
