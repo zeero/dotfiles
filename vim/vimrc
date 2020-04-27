@@ -429,6 +429,8 @@ endfunction "}}}
 
 " ファイルタイプ別の設定 {{{1
 " Vim {{{2
+" cvimrcのGista自動保管（vimrcのautocmdより先に定義する）
+au myvimrc BufWritePost .cvimrc Gista patch --stay f48b6201a10189b8a6defedf2dc99949
 " vimrcの保存時に再読み込み
 if !has('gui_running')
   au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
