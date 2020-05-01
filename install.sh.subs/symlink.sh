@@ -3,8 +3,10 @@
 DOTFILES=$(dirname $(realpath $0))/..
 
 find ${DOTFILES}/home -type f -depth 1 -exec ln -sf {} ~ \;
+
 mkdir -p ~/.tmux/plugins
 ln -sf ${DOTFILES}/home/.tmux/plugins/tpm ~/.tmux/plugins/tpm
+
 ln -sf ${DOTFILES}/vim ~/.vim
 ln -sf ${DOTFILES}/vim/vimrc ~/.vimrc
 mkdir -p ~/.config
@@ -12,9 +14,14 @@ ln -sf ${DOTFILES}/vim ~/.config/nvim
 ln -sf ${DOTFILES}/vim/vimrc ~/.config/nvim/init.vim
 mkdir -p ${DOTFILES}/vim/after/autoload
 ln -sf ${DOTFILES}/vim/plugged/vim-plug/plug.vim ~/.config/nvim/after/autoload/plug.vim
+mkdir -p ~/.config/coc
+ln -sf ${DOTFILES}/home/.config/coc/extensions ~/.config/coc/extensions
+
 mkdir ~/.bundle
 find ${DOTFILES}/home/.bundle -type f -depth 1 -exec ln -sf {} ~/.bundle \;
+
 mkdir ~/.nvm
+
 ln -sf ${DOTFILES}/xcode/CodeSnippets ~/Library/Developer/Xcode/UserData/CodeSnippets
 mkdir -p ~/Library/Developer/Xcode/Templates
 ln -sf ${DOTFILES}/xcode/File\ Templates ~/Library/Developer/Xcode/Templates/File\ Templates
