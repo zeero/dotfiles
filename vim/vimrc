@@ -1946,6 +1946,45 @@ command! Irb VimShellInteractive irb
 command! VSSend VimShellSendString
 command! VSAll %VimShellSendString
 
+" coc.nvim {{{1
+command! -nargs=1 Ci CocInstall <args>
+command! -nargs=1 Cui CocUninstall <args>
+command! -nargs=0 Cl CocList extensions
+" tabが効いてくれない..
+command! -nargs=0 Cc tab CocConfig
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <Tab>
+\ pumvisible() ? "\<C-n>" :
+\ <SID>check_back_space() ? "\<Tab>" :
+\ coc#refresh()
+inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+
 " Deoplete {{{1
 " 基本設定（以降はon_source）{{{2
 function! MyDeinHookDeoplete() abort

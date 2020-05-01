@@ -31,56 +31,6 @@ on_ft = ['vimshell']
 depends = 'vimshell'
 
 [[plugins]]
-repo = 'Shougo/deoplete.nvim'
-if = '''has('python3') && v:version >= 800'''
-hook_source = '''call MyDeinHookDeoplete()'''
-lazy = 1
-on_i = 1
-
-[[plugins]]
-repo = 'roxma/nvim-yarp'
-if = '''has('python3') && v:version >= 800'''
-lazy = 1
-on_i = 1
-
-[[plugins]]
-repo = 'roxma/vim-hug-neovim-rpc'
-if = '''has('python3') && v:version >= 800'''
-lazy = 1
-on_i = 1
-
-[[plugins]]
-repo = 'Shougo/neco-vim'
-lazy = 1
-on_ft = ['vim']
-on_i  = 1
-
-[[plugins]]
-repo = 'Shougo/neco-syntax'
-lazy = 1
-on_i  = 1
-
-[[plugins]]
-repo = 'ujihisa/neco-look'
-if = '''executable('look')'''
-lazy = 1
-on_i  = 1
-
-[[plugins]]
-repo = 'Shougo/neocomplete'
-if = '''!has('python3') && has('lua') && (v:version >= 704 || (v:version == 703 && has('patch885')))'''
-hook_source = '''call MyDeinHookNeoComplete()'''
-lazy = 1
-on_i = 1
-
-[[plugins]]
-repo = 'Shougo/neocomplcache'
-if = '''!has('lua') || !(v:version >= 704 || (v:version == 703 && has('patch885')))'''
-hook_source = '''call MyDeinHookNeoComplcache()'''
-lazy = 1
-on_i = 1
-
-[[plugins]]
 repo = 'Shougo/neosnippet'
 lazy = 1
 on_i = 1
@@ -255,6 +205,75 @@ repo = 'osyo-manga/unite-quickfix'
 lazy = 1
 on_source = ['unite.vim']
 
+# 補完 {{{1
+
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+rev = 'release'
+merged = 0
+
+# [[plugins]]
+# repo = 'Shougo/deoplete.nvim'
+# if = '''has('python3') && v:version >= 800'''
+# hook_source = '''call MyDeinHookDeoplete()'''
+# lazy = 1
+# on_i = 1
+#
+[[plugins]]
+repo = 'roxma/nvim-yarp'
+if = '''has('python3') && v:version >= 800'''
+lazy = 1
+on_i = 1
+
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+if = '''has('python3') && v:version >= 800'''
+lazy = 1
+on_i = 1
+#
+# [[plugins]]
+# repo = 'Shougo/neco-vim'
+# lazy = 1
+# on_ft = ['vim']
+# on_i  = 1
+#
+# [[plugins]]
+# repo = 'Shougo/neco-syntax'
+# lazy = 1
+# on_i  = 1
+#
+# [[plugins]]
+# repo = 'ujihisa/neco-look'
+# if = '''executable('look')'''
+# lazy = 1
+# on_i  = 1
+#
+# [[plugins]]
+# repo = 'fishbullet/deoplete-ruby'
+# lazy = 1
+# on_ft = ['ruby']
+# on_i = 1
+#
+# [[plugins]]
+# repo = 'uplus/deoplete-solargraph'
+# if = '''executable('solargraph')'''
+# lazy = 1
+# on_ft = ['ruby']
+# on_i = 1
+#
+# [[plugins]]
+# repo = 'Shougo/neocomplete'
+# if = '''!has('python3') && has('lua') && (v:version >= 704 || (v:version == 703 && has('patch885')))'''
+# hook_source = '''call MyDeinHookNeoComplete()'''
+# lazy = 1
+# on_i = 1
+#
+# [[plugins]]
+# repo = 'Shougo/neocomplcache'
+# if = '''!has('lua') || !(v:version >= 704 || (v:version == 703 && has('patch885')))'''
+# hook_source = '''call MyDeinHookNeoComplcache()'''
+# lazy = 1
+# on_i = 1
 
 # 入力補助 {{{1
 
@@ -913,19 +932,6 @@ on_ft = ['ruby']
 depends = ['vim-operator-user']
 
 [[plugins]]
-repo = 'fishbullet/deoplete-ruby'
-lazy = 1
-on_ft = ['ruby']
-on_i = 1
-
-[[plugins]]
-repo = 'uplus/deoplete-solargraph'
-if = '''executable('solargraph')'''
-lazy = 1
-on_ft = ['ruby']
-on_i = 1
-
-[[plugins]]
 repo = 'rlue/vim-fold-rspec'
 lazy = 1
 on_ft = ['ruby']
@@ -935,7 +941,7 @@ on_i = 1
 # Swift {{{1
 
 [[plugins]]
-repo = 'Keithbsmiley/swift.vim'
+repo = 'keith/swift.vim'
 lazy = 1
 on_ft = ['swift']
 

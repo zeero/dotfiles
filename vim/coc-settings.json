@@ -1,0 +1,4 @@
+{
+  "suggest.enablePreselect": true,
+  "coc.source.emoji.filetypes": ["markdown", "workflowish"]
+}
