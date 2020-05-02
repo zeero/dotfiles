@@ -14,8 +14,6 @@ ln -sf ${DOTFILES}/vim ~/.config/nvim
 ln -sf ${DOTFILES}/vim/vimrc ~/.config/nvim/init.vim
 mkdir -p ${DOTFILES}/vim/after/autoload
 ln -sf ${DOTFILES}/vim/plugged/vim-plug/plug.vim ~/.config/nvim/after/autoload/plug.vim
-mkdir -p ~/.config/coc
-ln -sf ${DOTFILES}/home/.config/coc/extensions ~/.config/coc/extensions
 
 mkdir ~/.bundle
 find ${DOTFILES}/home/.bundle -type f -depth 1 -exec ln -sf {} ~/.bundle \;

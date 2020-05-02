@@ -79,6 +79,10 @@ read -p "Press Enter to resume..."
 ./${SUBS}/node.001.nodebrew.sh
 ./${SUBS}/node.002.npm_install.sh
 
+# vim
+## coc.nvim (require npm)
+./${SUBS}/vim.001.coc.sh
+
 # python
 ./${SUBS}/pip_install.sh
 
