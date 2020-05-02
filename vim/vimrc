@@ -3246,11 +3246,6 @@ let g:markdown_fold_style = 'nested'
 nnoremap T :<C-u>CtrlP $MY_MEMOS_DIR<CR>
 command! -nargs=* GithubMemosUpload call s:my_github_memos_upload(<f-args>)
 command! -nargs=* GMu call s:my_github_memos_upload(<f-args>)
-function! s:my_github_memos_git(filename) abort "{{{
-  call vimproc#system('git add ' . a:filename)
-  call vimproc#system('git commit --allow-empty-message -m "" ' . a:filename)
-  call s:my_vimproc_async({'cmd': 'git push'})
-endfunction "}}}
 function! s:my_github_memos_upload(...) abort "{{{
   " ディレクトリ指定
   let path = '/'
@@ -3272,6 +3267,15 @@ function! s:my_github_memos_upload(...) abort "{{{
   " call s:my_github_memos_git(filename)
 endfunction "}}}
 au myvimrc BufWritePost $MY_MEMOS_DIR/* silent call s:my_github_memos_git(expand('%'))
+function! s:my_github_memos_git(filename) abort "{{{
+  call vimproc#system('git add ' . a:filename)
+  call vimproc#system('git commit --allow-empty-message -m "" ' . a:filename)
+  call s:my_vimproc_async({'cmd': 'git push'})
+endfunction "}}}
+au myvimrc BufRead $MY_MEMOS_DIR/* silent call s:my_github_memos_git_pull()
+function! s:my_github_memos_git_pull() abort "{{{
+  call s:my_vimproc_async({'cmd': 'git pull'})
+endfunction "}}}
 
 " vim-slack_files {{{1
 " nnoremap T :<C-u>CtrlPSlackFiles<CR>
