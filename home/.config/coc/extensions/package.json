@@ -1,12 +1,12 @@
 {
   "dependencies": {
-    "tslib": ">=1.11.1",
     "coc-emoji": ">=1.2.3",
     "coc-json": ">=1.2.5",
     "coc-neosnippet": ">=1.2.2",
     "coc-solargraph": ">=1.1.6",
     "coc-sourcekit": ">=0.0.2",
     "coc-tag": ">=1.2.4",
-    "coc-vimlsp": ">=0.5.2"
+    "coc-vimlsp": ">=0.5.4",
+    "tslib": ">=1.11.1"
   }
 }
