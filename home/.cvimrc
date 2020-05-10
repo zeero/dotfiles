@@ -157,10 +157,16 @@ map W :new @%
 
 " ヤンク {{{1
 map y yankDocumentUrl
+" plain: Title + URL
 map gy :call copy_title_and_url(0)<CR>
+" markdown: Title + URL
 map gY :call copy_title_and_url(1)<CR>
-map ,y :call copy_title_and_url(2)<CR>
-map ,Y :call copy_title_and_url(3)<CR>
+" github
+map ,gY :call copy_title_and_url(2)<CR>
+" href
+map ,gy :call copy_title_and_url(3)<CR>
+" plain: title
+map ,y :call copy_title_and_url(4)<CR>
 " copy_title_and_url(isMarkdown) {{{
 copy_title_and_url(mode) -> {{
   let url = document.URL;
@@ -171,8 +177,10 @@ copy_title_and_url(mode) -> {{
     var fmt = '[' + title + '](' + url + ')';
   } else if (mode === 2) {
     var fmt = url.replace(/https:\/\/github.com\//, '')
-  } else {
+  } else if (mode === 3) {
     var fmt = '<a href="' + url + '">' + title + '</a>';
+  } else {
+    var fmt = title
   }
   Status.setMessage(fmt, 2);
   Clipboard.copy(fmt);
