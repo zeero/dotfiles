@@ -206,10 +206,13 @@ ios_init() {
   git add .
   git commit -m "chore: extract xcconfig"
 
-  # xcodegen
+  # bundle install
+  bundle install
+
+  # xcodegen & pod install
   xcodegen
   git add .
-  git commit -m "chore: xcodegen"
+  git commit -m "chore: bundle install, xcodegen, pod install"
 
   # merge pod xcconfig
   echo "#include \"Pods/Target Support Files/Pods-$1/Pods-$1.debug.xcconfig\"" >> xcconfigs/$1-Debug.xcconfig
@@ -219,21 +222,22 @@ ios_init() {
   git add .
   git commit -m "chore: merge pod xcconfig"
 
-  # bundle install & pod install & carthage update
-  bundle install
-  bundle exec pod install
+  # carthage update
   if [ ! -z $carthage ]
   then
     carthage update --platform ios
     git add .
-    git commit -m "chore: bundle install & pod install & carthage update"
-  else
-    git add .
-    git commit -m "chore: bundle install & pod install"
+    git commit -m "chore: carthage update"
   fi
 
   # open
   open $1.xcworkspace
+}
+
+## ios_update {{{2
+ios_update() {
+  carthage update --platform ios
+  xcodegen
 }
 
 # 外部ファイルの読み込み {{{1

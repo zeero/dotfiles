@@ -106,9 +106,19 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-# My Configuration
+
+### My Configuration
+
 # XcodeGen
 project.pbxproj
+
 # Bundler
 vendor/bundle
+Gemfile.lock
+
+# R.swift
+R.generated.swift
+
+# Firebase
+# GoogleService-Info.plist
 

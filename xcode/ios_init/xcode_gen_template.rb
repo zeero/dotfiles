@@ -21,11 +21,12 @@ fileGroups:
 configFiles:
   Debug: xcconfigs/Debug.xcconfig
   Release: xcconfigs/Release.xcconfig
-# options:
+options:
+  postGenCommand: bundle exec pod install
   # bundleIdPrefix: FIXME
 settings:
   base:
-    IPHONEOS_DEPLOYMENT_TARGET: 11.2
+    IPHONEOS_DEPLOYMENT_TARGET: 13.4
 targets:
   <%= project_name %>:
     type: application
@@ -50,15 +51,24 @@ targets:
     <%- end -%>
       # - carthage: RxSwift
       # - carthage: RxCocoa
-      # - carthage: RxAtomic
+      # - carthage: RxRelay
       # - carthage: ReSwift
       # - carthage: Alamofire
-      # - carthage: Result
       # - carthage: Moya
       # - carthage: RxMoya
       # - carthage: Realm
       # - carthage: RealmSwift
       # - carthage: SnapKit
+    preBuildScripts:
+      - name: "[XcodeGen-User] R.swift"
+        script: ${PODS_ROOT}/R.swift/rswift generate ${SRCROOT}/<%= project_name %>/R.generated.swift
+        inputFiles:
+          - $(TEMP_DIR)/rswift-lastrun
+        outputFiles:
+          - $(SRCROOT)/<%= project_name %>/R.generated.swift
+    postCompileScripts:
+      - name: "[XcodeGen-User] SwiftLint"
+        script: ${PODS_ROOT}/SwiftLint/swiftlint
   <%= project_name %>Tests:
     type: bundle.unit-test
     platform: iOS

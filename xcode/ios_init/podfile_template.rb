@@ -16,7 +16,7 @@ end
 
 __END__
 # Uncomment the next line to define a global platform for your project
-platform :ios, '11.0'
+platform :ios, '13.4'
 
 # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
 use_frameworks!
@@ -27,9 +27,8 @@ inhibit_all_warnings!
 target '<%= project_name %>' do
   # Pods for <%= project_name %>
   pod 'Then'
-  # pod 'RxViewController'
-  # pod 'R.swift'
-  # pod 'Firebase/Core'
+  pod 'R.swift'
+  # pod 'Firebase/Analytics'
   # pod 'Fabric'
   # pod 'Crashlytics'
   pod 'SwiftLint'
@@ -41,6 +40,8 @@ target '<%= project_name %>' do
     pod 'Quick'
     pod 'Nimble'
   end
+
+  # script_phase name: 'Crashlytics', script: '"${PODS_ROOT}/Fabric/run"'
 end
 
 post_install do |installer|
