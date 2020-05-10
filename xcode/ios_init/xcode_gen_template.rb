@@ -39,7 +39,11 @@ targets:
       testTargets:
         - <%= project_name %>Tests
     settings:
-      ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: $(inherited)
+      base:
+        ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: $(inherited)
+      configs:
+        Debug:
+          OTHER_SWIFT_FLAGS: "$(inherited) -D DEBUG"
     <%- if options[:carthage] -%>
     dependencies:
       - carthage: SwifterSwift
