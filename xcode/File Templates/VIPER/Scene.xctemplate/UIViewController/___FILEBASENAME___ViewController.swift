@@ -24,4 +24,3 @@ class ___VARIABLE_sceneName___ViewController: UIViewController {
 }
 
 extension ___VARIABLE_sceneName___ViewController: ___VARIABLE_sceneName___View {}
-

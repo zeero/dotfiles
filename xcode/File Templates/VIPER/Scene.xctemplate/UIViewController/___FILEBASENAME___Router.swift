@@ -31,4 +31,3 @@ class ___VARIABLE_sceneName___Router {
 }
 
 extension ___VARIABLE_sceneName___Router: ___VARIABLE_sceneName___Wireframe {}
-

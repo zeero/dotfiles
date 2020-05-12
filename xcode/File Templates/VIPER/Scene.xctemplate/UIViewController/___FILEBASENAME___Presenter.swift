@@ -23,4 +23,3 @@ class ___VARIABLE_sceneName___Presenter: BasePresenter {
 }
 
 extension ___VARIABLE_sceneName___Presenter: ___VARIABLE_sceneName___Presentation {}
-
