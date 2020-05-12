@@ -64,15 +64,14 @@ targets:
       # - carthage: RealmSwift
       # - carthage: SnapKit
     preBuildScripts:
+      - name: "[XcodeGen-User] SwiftLint"
+        script: ${PODS_ROOT}/SwiftLint/swiftlint
       - name: "[XcodeGen-User] R.swift"
         script: ${PODS_ROOT}/R.swift/rswift generate ${SRCROOT}/<%= project_name %>/R.generated.swift
         inputFiles:
           - $(TEMP_DIR)/rswift-lastrun
         outputFiles:
           - $(SRCROOT)/<%= project_name %>/R.generated.swift
-    postCompileScripts:
-      - name: "[XcodeGen-User] SwiftLint"
-        script: ${PODS_ROOT}/SwiftLint/swiftlint
   <%= project_name %>Tests:
     type: bundle.unit-test
     platform: iOS
