@@ -11,7 +11,7 @@ import RxRelay
 
 protocol ___VARIABLE_sceneName___Presentation {}
 
-class ___VARIABLE_sceneName___Presenter: BasePresenter {
+class ___VARIABLE_sceneName___Presenter {
     
     private let _wireFrame: ___VARIABLE_sceneName___Wireframe
     private weak var _view: ___VARIABLE_sceneName___View?

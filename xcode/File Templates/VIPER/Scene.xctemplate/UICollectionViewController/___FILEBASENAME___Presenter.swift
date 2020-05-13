@@ -5,22 +5,21 @@
 //  Created by ___FULLUSERNAME___ on ___DATE___.
 //
 
-import UIKit
+import Foundation
+import RxSwift
+import RxRelay
 
-protocol ___VARIABLE_sceneName___PresentationLogic
-{
-  func presentSomething(response: ___VARIABLE_sceneName___.Something.Response)
+protocol ___VARIABLE_sceneName___Presentation {}
+
+class ___VARIABLE_sceneName___Presenter {
+    
+    private let _wireFrame: ___VARIABLE_sceneName___Wireframe
+    private weak var _view: ___VARIABLE_sceneName___View?
+    
+    init(wireFrame: ___VARIABLE_sceneName___Wireframe, view: ___VARIABLE_sceneName___View) {
+        _wireFrame = wireFrame
+        _view = view
+    }
 }
 
-class ___VARIABLE_sceneName___Presenter: ___VARIABLE_sceneName___PresentationLogic
-{
-  weak var viewController: ___VARIABLE_sceneName___DisplayLogic?
-  
-  // MARK: Do something
-  
-  func presentSomething(response: ___VARIABLE_sceneName___.Something.Response)
-  {
-    let viewModel = ___VARIABLE_sceneName___.Something.ViewModel()
-    viewController?.displaySomething(viewModel: viewModel)
-  }
-}
+extension ___VARIABLE_sceneName___Presenter: ___VARIABLE_sceneName___Presentation {}

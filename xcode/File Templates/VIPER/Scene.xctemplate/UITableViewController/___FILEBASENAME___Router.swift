@@ -6,50 +6,28 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
-@objc protocol ___VARIABLE_sceneName___RoutingLogic
-{
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
+protocol ___VARIABLE_sceneName___Wireframe {}
+
+class ___VARIABLE_sceneName___Router {
+
+    private unowned let _viewController: UIViewController
+    
+    private init(viewController: UIViewController) {
+        _viewController = viewController
+    }
+
+    
+    static func buildUp() -> UIViewController {
+        let view = ___VARIABLE_sceneName___ViewController()
+        let router = ___VARIABLE_sceneName___Router(viewController: view)
+        let presenter = ___VARIABLE_sceneName___Presenter(wireFrame: router, view: view)
+        
+        view.inject(presentation: presenter)
+        return view
+    }
 }
 
-protocol ___VARIABLE_sceneName___DataPassing
-{
-  var dataStore: ___VARIABLE_sceneName___DataStore? { get }
-}
-
-class ___VARIABLE_sceneName___Router: NSObject, ___VARIABLE_sceneName___RoutingLogic, ___VARIABLE_sceneName___DataPassing
-{
-  weak var viewController: ___VARIABLE_sceneName___ViewController?
-  var dataStore: ___VARIABLE_sceneName___DataStore?
-  
-  // MARK: Routing
-  
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
-  //{
-  //  if let segue = segue {
-  //    let destinationVC = segue.destination as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //  } else {
-  //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-  //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-  //  }
-  //}
-
-  // MARK: Navigation
-  
-  //func navigateToSomewhere(source: ___VARIABLE_sceneName___ViewController, destination: SomewhereViewController)
-  //{
-  //  source.show(destination, sender: nil)
-  //}
-  
-  // MARK: Passing data
-  
-  //func passDataToSomewhere(source: ___VARIABLE_sceneName___DataStore, destination: inout SomewhereDataStore)
-  //{
-  //  destination.name = source.name
-  //}
-}
+extension ___VARIABLE_sceneName___Router: ___VARIABLE_sceneName___Wireframe {}
