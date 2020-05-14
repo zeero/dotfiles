@@ -2605,6 +2605,7 @@ let g:quickrun_config['ruby.rspec'] = {
 if executable('swift')
   let g:quickrun_config['swift'] = {
   \ 'command': 'swift',
+  \ 'cmdopt': '-F Carthage/Build/Mac',
   \ 'exec': '%c %o %s',
   \}
 endif
