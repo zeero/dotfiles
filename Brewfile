@@ -79,6 +79,9 @@ brew 'mint'
 cask 'google-cloud-sdk'
 cask 'github'
 
+# MiddleWare
+brew 'nginx'
+
 # Utility {{{1
 cask 'alfred'
 cask 'clipy'
