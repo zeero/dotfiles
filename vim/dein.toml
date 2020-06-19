@@ -1062,6 +1062,10 @@ on_ft = ['markdown', 'workflowish']
 repo = 'kamichidu/vim-edit-properties'
 on_ft = ['jproperties']
 
+[[plugins]]
+repo = 'udalov/kotlin-vim'
+on_ft = ['kotlin']
+
 
 # VimScript {{{1
 
