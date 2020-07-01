@@ -240,6 +240,11 @@ ios_update() {
   xcodegen
 }
 
+## simple_http_server {{{2
+simple_http_server() {
+  python -m http.server 8000
+}
+
 # 外部ファイルの読み込み {{{1
 ## .local.bashrc
 [ -f ~/.local.bashrc ] && source ~/.local.bashrc
