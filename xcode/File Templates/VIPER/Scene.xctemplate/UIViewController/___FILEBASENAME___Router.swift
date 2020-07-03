@@ -30,4 +30,5 @@ class ___VARIABLE_sceneName___Router {
     }
 }
 
+// MARK: - ___VARIABLE_sceneName___Wireframe
 extension ___VARIABLE_sceneName___Router: ___VARIABLE_sceneName___Wireframe {}
