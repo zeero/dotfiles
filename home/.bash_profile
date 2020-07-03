@@ -51,7 +51,7 @@ PATH=~/.rbenv/shims:$PATH
 PATH=/usr/local/opt/openssl/bin:$PATH
 PATH=/usr/local/opt/qt/bin:$PATH
 PATH=/usr/local/opt/python/libexec/bin:$PATH
-PATH=$HOME/lib/flutter/bin:$PATH
+PATH=$HOME/lib/dotfiles/lib/flutter/bin:$PATH
 PATH=$JAVA_HOME/bin:$PATH
 export PATH
 
