@@ -1,0 +1,175 @@
+# Grammer {{{1
+# return {{{2
+snippet return
+	return ${0};
+
+# import {{{2
+snippet import
+	import '${0}';
+
+# print {{{2
+snippet print
+	print('${0}');
+
+# Widget Template {{{1
+# template:material_app {{{2
+snippet template:material_app
+abbr    Flutter MaterialApp Template
+alias   material
+	import 'package:flutter/material.dart';
+
+	void main() => runApp(${1:App}());
+
+	class $1 extends StatelessWidget {
+		@override
+		Widget build(BuildContext context) {
+			return MaterialApp(
+				title: '${2:App Title}',
+				theme: ThemeData(
+					primarySwatch: Colors.${3:blue},
+				),
+				home: ${4:HomePage()},
+				routes: {
+					'/${5:route}': (BuildContext context) => ${6:Page}(),
+				},
+			);
+		}
+	}
+
+# template:stateless_widget {{{2
+snippet template:stateless_widget
+abbr    Flutter StatelessWidget Template
+alias   stateless stless
+	import 'package:flutter/material.dart';
+
+	class ${1:ClassName}Page extends StatelessWidget {
+		@override
+		Widget build(BuildContext context) {
+			return Scaffold(
+				appBar: AppBar(title: Text('${2:title}')),
+				body: Center(child: ${0:Text('')}),
+			);
+		}
+	}
+
+# template:stateful_widget {{{2
+snippet template:stateful_widget
+abbr    Flutter StatefulWidget Template
+alias   stateful stful
+	import 'package:flutter/material.dart';
+
+	class ${1:ClassName}Page extends StatefulWidget {
+		$1Page({Key key${2:, this.title}}) : super(key: key);
+
+		${3:final String title;}
+
+		@override
+		_$1PageState createState() => _$1PageState();
+	}
+
+	class _$1PageState extends State<$1Page> {
+		@override
+		Widget build(BuildContext context) {
+			return Scaffold(
+				appBar: AppBar(title: Text(${4:widget.title}),),
+				body: Center(child: ${0:Text('')},),
+			);
+		}
+	}
+
+# template:custom_widget {{{2
+snippet template:custom_widget
+abbr    Flutter Custom Widget Template
+alias   custom
+	class ${1:ClassName} extends StatelessWidget {
+		@override
+		Widget build(BuildContext context) => ${0:SomeWidget()};
+	}
+
+# template:bloc_provider {{{2
+snippet template:bloc_provider
+abbr    Flutter BLoC Provider Template
+alias   bloc_provider
+	import 'package:flutter/material.dart';
+	import '${1:name}_bloc.dart';
+
+	export '$1_bloc.dart';
+
+	class ${2:Name}BlocProvider extends InheritedWidget {
+		const $2BlocProvider({Key key, Widget child})
+				: super(key: key, child: child);
+
+		$2Bloc get bloc => $2Bloc();
+
+		@override
+		bool updateShouldNotify(_) => true;
+
+		static $2BlocProvider of(BuildContext context) {
+			return context.dependOnInheritedWidgetOfExactType<$2BlocProvider>();
+		}
+	}
+
+# template:bloc {{{2
+snippet template:bloc
+abbr    Flutter BLoC Template
+alias   bloc
+	import 'dart:async';
+	import 'package:rxdart/rxdart.dart';
+
+	class ${1:Name}Bloc {
+		StreamSink<${2:void}> get ${3:inputStream} => _$3.sink;
+		final _$3 = PublishSubject<$2>();
+
+		Stream<${4:String}> get ${5:outputStream} => _$5.stream;
+		final _$5 = BehaviorSubject<$4>.seeded(${6:''});
+
+		$1Bloc() {
+			_$3.listen((_) {
+			});
+		}
+
+		void dispose() {
+			_$3.close();
+			_$5.close();
+		}
+	}
+
+# Navigation {{{1
+# push {{{2
+snippet push
+abbr    Flutter Push Navigation
+	() => Navigator.of(context).pushNamed('/${0:route}'),
+
+# modal {{{2
+snippet modal
+abbr    Flutter Modal Navigation
+	() {
+	Navigator.push(
+		context,
+		MaterialPageRoute(
+			builder: (context) => ${0:SomePage()},
+			fullscreenDialog: true,
+		),
+	);
+
+# UI Widget {{{1
+# RoundedButton {{{2
+snippet RoundedButton
+alias   rounded
+	RaisedButton(
+		child: Text('${1:label}'),
+		shape: RoundedRectangleBorder(
+			borderRadius: BorderRadius.circular(10.0),
+		),
+		onPressed: ${0:() {}},
+	),
+
+# CircleButton {{{2
+snippet CircleButton
+alias   circle
+	RaisedButton(
+		child: Icon(Icons.${1:arrow_forward}),
+		shape: CircleBorder(),
+		onPressed: ${0:() {}},
+	),
+

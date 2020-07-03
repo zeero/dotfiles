@@ -1507,7 +1507,7 @@ nmap ,- <Plug>(ale_toggle_buffer)
 nmap ,/ <Plug>(caw:hatpos:toggle)
 vmap ,/ <Plug>(caw:hatpos:toggle)
 " VimFiler
-nnoremap ,f :<C-u>VimFilerBufferDir<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-force-quit<Space>-toggle<CR>
+nnoremap <silent> ,f :<C-u>VimFilerBufferDir<Space>-buffer-name=vimfiler<Space>-split<Space>-simple<Space>-winwidth=30<Space>-force-quit<Space>-toggle<CR>
 " VimShell
 " nnoremap ,s :<C-u>VimShellPop<Space>-create<Space>-buffer-name=vimshell<CR>
 " nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<Space>$HOME<CR>
@@ -3518,9 +3518,11 @@ let g:ale_javascript_eslint_options = "--no-eslintrc --config 'eslint' --rule " 
 \ "\"linebreak-style\": [\"error\", \"unix\"]," .
 \ "\"semi\":            [\"error\", \"always\"]," .
 \ "}'"
-" fixer
+
+" Fixer {{{2
 let g:ale_fixers = {
 \ 'ruby': ['rubocop'],
+\ 'dart': ['dartfmt'],
 \}
 
 " Restart {{{1

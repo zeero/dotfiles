@@ -12,18 +12,12 @@ export EDITOR=vim
 ## 端末
 export TERM=xterm-256color
 
-# PATH
-PATH=/usr/local/bin:/usr/local/sbin:$PATH
-PATH=$HOME/bin:$PATH
-PATH=~/.rbenv/shims:$PATH
-PATH=/usr/local/opt/openssl/bin:$PATH
-PATH=/usr/local/opt/qt/bin:$PATH
-PATH=/usr/local/opt/python/libexec/bin:$PATH
-export PATH
+# Ruby
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 
 # Java
 export _JAVA_OPTIONS='-Dfile.encoding=UTF-8'
-export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 
 # Node.js
 export NODE_PATH=$NODE_PATH:`npm root -g`
@@ -49,4 +43,15 @@ export XDG_CONFIG_HOME=~/.config
 
 # read .bashrc
 [ -f ~/.bashrc ] && source ~/.bashrc
+
+# PATH
+PATH=/usr/local/bin:/usr/local/sbin:$PATH
+PATH=$HOME/bin:$PATH
+PATH=~/.rbenv/shims:$PATH
+PATH=/usr/local/opt/openssl/bin:$PATH
+PATH=/usr/local/opt/qt/bin:$PATH
+PATH=/usr/local/opt/python/libexec/bin:$PATH
+PATH=$HOME/lib/flutter/bin:$PATH
+PATH=$JAVA_HOME/bin:$PATH
+export PATH
 
