@@ -3,26 +3,24 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>@IBAction</string>
+	<string>@swiftlint</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>@IBAction private func &lt;#T##name#&gt;(_ sender: AnyObject) {
-}
-</string>
+	<string>// swiftlint:disable &amp;lt;#T##rule_name#&amp;gt;</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>2758341B-018D-4290-9BCD-B7B8FF38B331</string>
+	<string>8D793074-2AD1-4ABC-8B91-57A79EC24EFA</string>
 	<key>IDECodeSnippetLanguage</key>
-	<string>Xcode.SourceCodeLanguage.Generic</string>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>@IBAction</string>
+	<string>// swiftlint:disable</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
-	<integer>2</integer>
+	<integer>0</integer>
 </dict>
 </plist>
