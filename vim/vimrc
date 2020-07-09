@@ -773,6 +773,8 @@ function! s:my_tw_to_md(line1, line2) "{{{
   execute a:line1 . ',' . a:line2 . 's/^!!/## /e'
   execute a:line1 . ',' . a:line2 . 's/^!/# /e'
 endfunction "}}}
+" Rename
+command! -nargs=1 -complete=file Rename file expand('%:p:h') . '/' . <args> | call delete(expand('#'))
 
 " TortoiseSVN {{{2
 " /endrev:-1 は HEAD（-2：ベースリビジョン、-3：ワーキングコピー）
@@ -1638,647 +1640,6 @@ cnoremap <F2><C-p> <C-p>
 "-----------------------------------------------------------------------------
 " Plugin設定
 "-----------------------------------------------------------------------------
-" Unite {{{1
-" 説明 {{{2
-" COMMAND:
-"  :Unite ${source} [${option}]
-"  :Unite output:{コマンド名}
-" KEYMAP:
-"  <Tab> : Actionを開く
-"  <Space> : 候補を選択する
-"  * : 候補を全選択する
-"  a : 候補でActionを開く
-"  ? : Uniteのキーマップを表示
-
-" Uniteコマンド定義 {{{2
-" 汎用
-command! -nargs=+ -complete=customlist,unite#complete#source U Unite <args>
-\ -no-empty -silent -buffer-name=<args>
-
-" 現在のバッファ内をグレップ
-command! Ug Unite grep:%
-\ -no-empty -silent -buffer-name=grep
-" カーソル下の単語で現在のバッファをグレップ
-command! Ugw exe 'Unite grep:%::' .
-\ escape(expand("<cword>"), '- \\') .
-\ ' -no-empty -silent -buffer-name=grep-word'
-" ディレクトリをグレップ
-command! Ugd exe 'Unite grep' .
-\ ' -silent -buffer-name=grep-dir' .
-\ ' -tab -no-split -no-quit'
-\ | setlocal splitbelow | exe 'normal <Plug>(unite_toggle_auto_preview)'
-" すべてのバッファをグレップ
-command! Ugb exe 'Unite grep:$buffers' .
-\ ' -silent -buffer-name=grep-all-bufs' .
-\ ' -tab -no-split -no-quit
-\ | setlocal splitbelow | exe 'normal <Plug>(unite_toggle_auto_preview)'
-
-" ブックマーク（追加はUniteBookmarkAdd）
-command! Ub Unite bookmark
-\ -no-empty -silent -buffer-name=bookmark
-" ブックマーク追加
-command! Uba UniteBookmarkAdd
-" ブックマーク手動編集
-command! Ube edit $HOME/.unite/bookmark/default
-" メニュー
-command! Um Unite menu:shortcuts
-\ -no-empty -silent -buffer-name=menushortcuts
-
-" リファレンス参照
-" ref
-command! UR Unite ref
-\ -no-empty -silent -buffer-name=ref
-" refe
-command! URr Unite ref/refe
-\ -no-empty -silent -buffer-name=ref/refe
-" カーソル下の単語でrefe
-command! URrw exe 'Unite ref/refe ' .
-\ '-no-empty -silent -buffer-name=ref/refe -input=' .
-\ escape(expand("<cword>"), '- \\')
-" ri
-command! URri Unite ref/ri
-\ -no-empty -silent -buffer-name=ref/ri
-
-" ファイル
-" file_rec
-command! Uf Unite file_rec
-\ -no-empty -silent -buffer-name=files
-
-" 直前のUniteコマンドの結果に戻る
-command! Ur UniteResume
-\ -no-empty -silent
-" スニペット候補の表示
-command! Usnip Unite neosnippet
-\ -no-empty -silent -buffer-name=neosnippet
-" マッピング表示
-command! Umap :Unite output:map|map!|lmap
-\ -no-empty -silent -buffer-name=output:map
-
-" 基本設定（以降はon_source） {{{2
-function! MyDeinHookUnite() abort
-" 入力モードで開始しない
-let g:unite_enable_start_insert = 0
-" 最近使ったファイルの履歴数
-let g:unite_source_file_mru_file = 200
-" 大文字小文字を区別しない
-let g:unite_enable_ignore_case = 1
-let g:unite_enable_smart_case = 1
-" ステータスラインを上書きしない（lightline向け）
-let g:unite_force_overwrite_statusline = 0
-" ウィンドウの高さ
-let g:unite_winheight = 10
-" プロンプト文字
-let g:unite_prompt = 'Unite>>> '
-" カーソルラインのハイライト
-let g:unite_cursor_line_highlight = 'MatchParen'
-" unite grep に ag(The Silver Searcher) を使う
-if executable('ag')
- let g:unite_source_grep_command = 'ag'
- let g:unite_source_grep_default_opts =
- \ '--line-numbers --nocolor --nogroup --smart-case --hidden ' .
- \ '--ignore ''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
- let g:unite_source_grep_recursive_opt = ''
-endif
-
-" キーマップ定義 {{{2
-au myvimrc FileType unite call MyUniteKeymaps()
-function! MyUniteKeymaps() "{{{
-  " <C-j>/<C-k>で選択カーソル移動
-  nmap <silent> <buffer> <C-j> <Plug>(unite_loop_cursor_down)
-  imap <silent> <buffer> <C-j> <Plug>(unite_select_next_line)
-  nmap <silent> <buffer> <C-k> <Plug>(unite_loop_cursor_up)
-  imap <silent> <buffer> <C-k> <Plug>(unite_select_previous_line)
-  " <C-h>/<C-l>で入力カーソル移動、<C-d>で削除
-  inoremap <buffer> <C-h> <Left>
-  inoremap <buffer> <C-l> <Right>
-  imap <expr> <buffer> <C-d> virtcol(".") == virtcol("$") ? "\<BS>" : "\<Del>"
-  " ESCキーを2回押すと終了する
-  nmap <silent> <buffer> <Esc><Esc> <Plug>(unite_all_exit)
-  " 入力文字が無い時に<BS>で前の画面に戻る
-  imap <expr> <silent> <buffer> <BS> unite#helper#get_input() == '' ? "\<Plug>(unite_exit)" : "\<BS>"
-  nmap <silent> <buffer> <BS> <Plug>(unite_exit)
-  " キャッシュ更新
-  nmap <silent> <buffer> <F5> <Plug>(unite_redraw)
-  " pでオートプレビューのトグル
-  nmap <silent> <buffer> p <Plug>(unite_toggle_auto_preview))
-endfunction "}}}
-
-" Unite menu {{{2
-let g:unite_source_menu_menus = {
-\ 'shortcuts': {
-\   'description': 'command shortcuts.',
-\   'command_candidates': [
-\     ['[help] themis-quickref', 'H themis-quickref'],
-\     ['[help] vim-regexp', 'H pattern-overview'],
-\     ['[help] functions', 'H function-list'],
-\     ['[help] registers', 'H registers'],
-\     ['[help] map-overview', 'H map-overview'],
-\     ['[help] vim-script', 'H usr_41.txt'],
-\     ['[help] quickref-alpha', 'H index.txt'],
-\     ['[help] quickref', 'H quickref.txt'],
-\     ['[help] vim-goal', 'H design-goal'],
-\     ['[unite] colorscheme', 'Unite colorscheme -auto-preview'],
-\     ['[unite] output:message', 'Unite output:message'],
-\     ['[unite] mapping(all)', 'Unite output:map|map!|lmap'],
-\     ['[dein] clean plugins', 'for s:dein_clean_plugin in dein#check_clean() | call delete(s:dein_clean_plugin, "rf") | endfor'],
-\   ],
-\ },
-\}
-
-" デフォルトアクションの変更 {{{2
-" openable
-call unite#custom_default_action('file', 'tabopen')
-" directory
-call unite#custom_default_action('directory', 'vimfiler')
-" ref
-call unite#custom_default_action(
-\ 'source/ref/refe/*,source/ref/ri/*,source/ref/javascript/*,source/ref/jquery/*,source/ref/man/*',
-\ 'vsplit')
-" help
-call unite#custom_default_action('source/help/*', 'vsplit')
-
-" アクションの追加 {{{2
-" source:mappingにaction:verboseを追加する
-let s:action = {
-\ 'description': 'verbose',
-\ 'is_selectable': 1,
-\}
-function! s:action.func(candidates)
-  for candidate in a:candidates
-    execute 'verbose map' substitute(candidate.action__mapping, '\\\(<.*>\)', '\1', 'g')
-  endfor
-endfunction
-" kind ではなくて source の mapping に対して action を設定する
-call unite#custom#action('source/mapping/*', 'verbose', s:action)
-" preview（pキー）で action を実行したい場合は
-" call unite#custom#action('source/mapping/*', 'preview', s:action)
-unlet s:action
-
-" Uniteソース {{{2
-" ref {{{3
-let s:unite_source = {
-\   'name': 'ref',
-\ }
-function! s:unite_source.gather_candidates(args, context)
-  return map(ref#available_source_names(), "{
-  \   'word': v:val,
-  \   'source': 'ref',
-  \   'kind': 'source',
-  \   'action__source_name': 'ref/' . v:val,
-  \ }")
-endfunction
-call unite#define_source(s:unite_source)
-unlet s:unite_source
-" サンプル {{{3
-let s:unite_source = {
-\   'name': 'lines',
-\ }
-function! s:unite_source.gather_candidates(args, context)
-  let path = expand('%:p')
-  let lines = getbufline('%', 1, '$')
-  let format = '%' . strlen(len(lines)) . 'd: %s'
-  return map(lines, "{
-  \   'word': printf(format, v:key + 1, v:val),
-  \   'source': 'lines',
-  \   'kind': 'jump_list',
-  \   'action__path': path,
-  \   'action__line': v:key + 1,
-  \ }")
-endfunction
-call unite#define_source(s:unite_source)
-unlet s:unite_source
-
-" （on_source終わり） {{{2
-endfunction
-
-" VimFiler {{{1
-"
-" KEYMAP:
-"  h : up dir, l : down dir, t : tree view (1 dir), T : tree view all
-"  e : edit, <Space> : mark, c : copy, m : move, d : delete, yy : yank path
-"  N : new file, K : new dir, * : mark all, U : mark off all, ? : keymap
-"  a : action, H : VimShell, ge : system filer, x : system app
-"
-" vimデフォルトのエクスプローラをvimfilerで置き換える
-let g:vimfiler_as_default_explorer = 1
-" セーフモードを無効にした状態で起動する
-let g:vimfiler_safe_mode_by_default = 0
-" ディレクトリ移動
-let g:vimfiler_enable_auto_cd = 1
-" タブで開く
-let g:vimfiler_edit_action = 'tabopen'
-" デフォルトでIDE風のFilerを開く
-" au myvimrc VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
-" ステータスラインを上書きしない（lightline向け）
-"let g:vimfiler_force_overwrite_statusline = 0
-"let g:netrw_liststyle=3
-" キーマップ定義
-au myvimrc FileType vimfiler call MyVimfilerKeymaps()
-function! MyVimfilerKeymaps() "{{{
-  " Enterでツリー開閉、ファイル編集を可能に
-  nmap <buffer> <expr> <CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
-  " ESCキーを2回押すと終了する
-  nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
-  " キーマップヘルプを表示
-  nnoremap <buffer> ,h :MyVimFilerHelp<CR>
-  " システムハンドラで開く
-  nmap <buffer> gx <Plug>(vimfiler_execute_system_associated)
-endfunction "}}}
-command! MyVimFilerHelp :call MyVimfilerHelp()
-function! MyVimfilerHelp() "{{{
-  silent! wincmd P
-  if &previewwindow
-    pclose
-    return
-  endif
-
-  hi link MyVimFilerHelp Comment
-  hi link MyVimFilerHelpTitle PreProc
-  hi link MyVimFilerHelpKey Identifier
-  belowright pedit $MYVIMDIR/doc/vimfiler_help.txt
-  silent! wincmd P
-  if &previewwindow
-    match none
-    setlocal nonumber
-    resize 20
-    exe 'normal! gg'
-    nnoremap <buffer> ,, :MyVimFilerHelp<CR>
-    call matchadd('MyVimFilerHelp', '.', 0)
-    call matchadd('MyVimFilerHelpTitle', '--.*')
-    call matchadd('MyVimFilerHelpKey', '\(.\+\):')
-    wincmd p
-  endif
-endfunction "}}}
-
-" VimShell {{{1
-" VimShellPopの開き方
-let g:vimshell_popup_command = 'botright 10split'
-" vimコマンドで開いた時の開き方
-let g:vimshell_split_command = 'tabe'
-" 動的プロンプト
-let g:vimshell_prompt_expr = 'getcwd()." > "'
-let g:vimshell_prompt_pattern = '^\f\+ > '
-" エディタコマンド指定
-let g:vimshell_editor_command = 'mvim'
-" VimShell独自のキーマッピングを使用する
-let g:vimshell_no_default_keymappings = 0
-" vimshell-inline-historyでコマンド履歴表示
-let g:vimshell_inline_history#default_mappings = 0
-" キーマップ定義
-au myvimrc FileType vimshell call s:my_vimshell_keymapping()
-function! s:my_vimshell_keymapping() "{{{
-  nmap <buffer> <C-k> <Plug>(vimshell_previous_prompt)
-  nmap <buffer> <C-j> <Plug>(vimshell_next_prompt)
-  imap <buffer> <Up> <Plug>(vimshell_inline_history#prev)
-  imap <buffer> <Down> <Plug>(vimshell_inline_history#next)
-  inoremap <buffer> <C-h> <Left>
-  inoremap <buffer> <C-l> <Right>
-endfunction "}}}
-
-" コマンド履歴の保存
-let g:vimshell_data_directory = expand('~/.cache/vimshell')
-" cdもコマンド履歴に残すようにする
-let g:vimshell_no_save_history_commands = {}
-
-" irbを非同期で起動
-command! Irb VimShellInteractive irb
-" 非同期で開いたインタプリタに現在の行を評価させる
-command! VSSend VimShellSendString
-command! VSAll %VimShellSendString
-
-" coc.nvim {{{1
-command! -nargs=1 Ci CocInstall <args>
-command! -nargs=1 Cui CocUninstall <args>
-command! -nargs=0 Cl CocList extensions
-" tabが効いてくれない..
-command! -nargs=0 Cc tab CocConfig
-
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <Tab>
-\ pumvisible() ? "\<C-n>" :
-\ <SID>check_back_space() ? "\<Tab>" :
-\ coc#refresh()
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-o><<"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" inoremap <silent><expr> <S-Tab> '<C-o><<'
-" inoremap <silent><expr> <S-Tab>
-"\ pumvisible() ? '<Esc>' : '<C-o><<'
-
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gr <Plug>(coc-references)
-
-" Deoplete {{{1
-" 基本設定（以降はon_source）{{{2
-function! MyDeinHookDeoplete() abort
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_yarp = 1
-" Use ignorecase.
-let g:deoplete#enable_ignore_case = 1
-" Use smartcase.
-let g:deoplete#enable_smart_case = 1
-" sourceの優先順位
-call deoplete#custom#source('neosnippet', 'rank', 9999)
-" Set minimum syntax keyword length.
-call deoplete#custom#source('_', 'min_pattern_length', 3)
-
-" Define dictionary. {{{2
-au myvimrc FileType html exe 'setlocal dictionary+=' . $MYVIMDIR . '/dict/bootstrap.dict'
-au myvimrc FileType ruby exe 'setlocal dictionary+=' . $MYVIMDIR . '/dict/pocke_dicts/ruby.dict'
-
-" " Define keyword. {{{2
-" if !exists('g:deoplete#keyword_patterns')
-"   let g:deoplete#keyword_patterns = {}
-" endif
-" let g:deoplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings. {{{2
-inoremap <expr> <C-p> pumvisible() ? '<C-p>' : ""
-inoremap <expr> <C-d> pumvisible() ? deoplete#undo_completion() : virtcol(".") == virtcol("$") ? '<BS>' : '<Del>'
-
-" <Tab>: completion.
-inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<C-t>'
-inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<C-d>'
-
-" <BS>: close popup and delete backword char.
-"   Note: <Plug>を経由して、smartinputの<BS>が呼び出されるようにimapを使う→動作不安定のため戻した
-"call smartinput#map_to_trigger('i', '<Plug>(smartinput_BS)', '<BS>', '<BS>')
-"imap <expr> <BS> deoplete#smart_close_popup() . '<Plug>(smartinput_BS)'
-inoremap <expr> <BS> deoplete#smart_close_popup() . '<BS>'
-
-" Enable omni completion. {{{2
-au myvimrc FileType css         setlocal omnifunc=csscomplete#CompleteCSS
-au myvimrc FileType html        setlocal omnifunc=htmlcomplete#CompleteTags
-au myvimrc FileType javascript  setlocal omnifunc=javascriptcomplete#CompleteJS
-au myvimrc FileType python      setlocal omnifunc=pythoncomplete#Complete
-au myvimrc FileType xml         setlocal omnifunc=xmlcomplete#CompleteTags
-au myvimrc FileType workflowish setlocal omnifunc=github_complete#complete
-
-" " Enable heavy omni completion. {{{2
-" if !exists('g:deoplete#omni_patterns')
-"   let g:deoplete#omni_patterns = {}
-" endif
-" let g:deoplete#omni_patterns.workflowish = ':'
-" let g:deoplete#omni_patterns.markdown = ':'
-" let g:deoplete#omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-" let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
-
-" （on_source終わり）{{{2
-endfunction
-
-" NeoComplete {{{1
-" 基本設定（以降はon_source）{{{2
-function! MyDeinHookNeoComplete() abort
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use ignorecase.
-let g:neocomplete#enable_ignore_case = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-" Use fuzzy completion.
-let g:neocomplete#enable_fuzzy_completion = 1
-
-" Define dictionary. {{{2
-let g:neocomplete#sources#dictionary#dictionaries = {
-\ 'default' : '',
-\ 'vimshell' : $HOME.'/.cache/vimshell/command-history',
-\ 'scheme' : $HOME.'/.gosh_completions',
-\ 'html': $MYVIMDIR.'/dict/bootstrap.dict',
-\ 'ruby': $MYVIMDIR.'/dict/pocke_dicts/ruby.dict',
-\}
-
-" Define keyword. {{{2
-if !exists('g:neocomplete#keyword_patterns')
-  let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings. {{{2
-inoremap <expr> <C-p> pumvisible() ? '<C-p>' : ""
-inoremap <expr> <C-d> pumvisible() ? neocomplete#undo_completion() : virtcol(".") == virtcol("$") ? '<BS>' : '<Del>'
-" inoremap <expr> <C-l> neocomplete#complete_common_string()
-
-" <CR>: close popup and save indent.
-" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-" function! s:my_cr_function()
-" "   return neocomplete#smart_close_popup() . '<CR>'
-"   " For no inserting <CR> key.
-"   return pumvisible() ? neocomplete#close_popup() : '<CR>'
-" endfunction
-
-" <Tab>: completion.
-inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<C-t>'
-inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<C-d>'
-
-" <BS>: close popup and delete backword char.
-inoremap <expr> <BS> neocomplete#smart_close_popup() . '<BS>'
-" inoremap <expr> <BS> pumvisible() ? neocomplete#smart_close_popup() : '<BS>'
-" inoremap <expr> <BS> match(getline("."), '\S') == col(".") - 1 ? neocomplete#smart_close_popup() . "\<C-o>:left\<CR>" : match(getline("."), '^\s*$') >= 0 ? neocomplete#smart_close_popup() . "\<C-o>:left\<CR>" : neocomplete#smart_close_popup() . "\<BS>"
-" <BS>: close popup.
-" inoremap <expr> <BS> pumvisible() ? neocomplete#smart_close_popup() : '<BS>'
-" inoremap <expr> <C-y> neocomplete#close_popup()
-" inoremap <expr> <C-e> neocomplete#cancel_popup()
-
-" Close popup by <Space>.
-"inoremap <expr> <Space> pumvisible() ? neocomplete#close_popup() : '<Space>'
-
-" For cursor moving in insert mode(Not recommended)
-"inoremap <expr> <Left>  neocomplete#close_popup() . '<Left>'
-"inoremap <expr> <Right> neocomplete#close_popup() . '<Right>'
-"inoremap <expr> <Up>    neocomplete#close_popup() . '<Up>'
-"inoremap <expr> <Down>  neocomplete#close_popup() . '<Down>'
-" Or set this.
-"let g:neocomplete#enable_cursor_hold_i = 1
-" Or set this.
-"let g:neocomplete#enable_insert_char_pre = 1
-
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#disable_auto_complete = 1
-"inoremap <expr> <TAB> pumvisible() ? '<Down>' : '<C-x>\<C-u>'
-
-" Enable omni completion. {{{2
-au myvimrc FileType css         setlocal omnifunc=csscomplete#CompleteCSS
-au myvimrc FileType html        setlocal omnifunc=htmlcomplete#CompleteTags
-au myvimrc FileType javascript  setlocal omnifunc=javascriptcomplete#CompleteJS
-au myvimrc FileType python      setlocal omnifunc=pythoncomplete#Complete
-au myvimrc FileType xml         setlocal omnifunc=xmlcomplete#CompleteTags
-au myvimrc FileType workflowish setlocal omnifunc=github_complete#complete
-
-" Enable heavy omni completion. {{{2
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#sources#omni#input_patterns.workflowish = ':'
-let g:neocomplete#sources#omni#input_patterns.markdown = ':'
-let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-let g:neocomplete#force_omni_input_patterns.vim = '\%(\w\|[:\.]\)\{3,}'
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-" let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-" （on_source終わり）{{{2
-endfunction
-
-" NeoComplCache {{{1
-" 基本設定（以降はon_source）
-function! MyDeinHookNeoComplcache() abort
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1
-" Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-"
-" Enable heavy features.
-" Use camel case completion.
-"let g:neocomplcache_enable_camel_case_completion = 1
-" Use underbar completion.
-"let g:neocomplcache_enable_underbar_completion = 1
-"
-" Define dictionary.
-let g:neocomplcache_dictionary_filetype_lists = {
-\  'default': '',
-\  'vimshell': $HOME.'/.cache/vimshell/command-history',
-\  'scheme': $HOME.'/.gosh_completions',
-\  'html': $MYVIMDIR.'/dict/bootstrap.dict',
-\}
-"
-" Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-  let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-"
-" Plugin key-mappings.
-inoremap <expr> <C-d> pumvisible() ? neocomplcache#undo_completion() : virtcol(".") == virtcol("$") ? "\<BS>" : "\<Del>"
-" inoremap <expr><C-l>     neocomplcache#complete_common_string()
-"
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplcache#smart_close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-endfunction
-" <Tab>: completion.
-inoremap <expr> <Tab>  pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab>  pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" <C-h>, <BS>: close popup and delete backword char.
-" inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-"inoremap <expr><C-e>  neocomplcache#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
-"
-" For cursor moving in insert mode(Not recommended)
-"inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
-"inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
-"inoremap <expr><Up>    neocomplcache#close_popup() . "\<Up>"
-"inoremap <expr><Down>  neocomplcache#close_popup() . "\<Down>"
-" Or set this.
-"let g:neocomplcache_enable_cursor_hold_i = 1
-" Or set this.
-"let g:neocomplcache_enable_insert_char_pre = 1
-"
-" AutoComplPop like behavior.
-"let g:neocomplcache_enable_auto_select = 1
-"
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplcache_enable_auto_select = 1
-"let g:neocomplcache_disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-"
-" Enable omni completion.
-au myvimrc FileType css setlocal omnifunc=csscomplete#CompleteCSS
-au myvimrc FileType html,mkd setlocal omnifunc=htmlcomplete#CompleteTags
-au myvimrc FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-au myvimrc FileType python setlocal omnifunc=pythoncomplete#Complete
-au myvimrc FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-"
-" Enable heavy omni completion.
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
-endif
-if !exists('g:neocomplcache_force_omni_patterns')
-  let g:neocomplcache_force_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.php =
-\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-let g:neocomplcache_omni_patterns.c =
-\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
-let g:neocomplcache_omni_patterns.cpp =
-\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-"
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplcache_omni_patterns.perl =
-\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-" （on_source終わり）
-endfunction
-
-" NeoSnippet {{{1
-" KEYMAP:
-imap <expr> <C-e> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<End>"
-smap <C-e> <Plug>(neosnippet_expand_or_jump)
-xmap <C-e> <Plug>(neosnippet_expand_target)
-" imap <expr> <Tab> neosnippet#expandable_or_jumpable() ?
-" \ "\<Plug>(neosnippet_expand_or_jump)"
-" \ : pumvisible() ? "\<C-n>" : "\<Tab>"
-smap <expr> <Tab> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\ : "\<Tab>"
-" スニペットの保存場所を変更
-let g:neosnippet#snippets_directory = $MYVIMDIR . '/neosnippets'
-" スニペットファイルの保存時に再読み込み
-au myvimrc BufWritePost *.snip NeoSnippetSource %:p
-
 " CtrlP {{{1
 " 説明 {{{2
 " KEYMAP:
@@ -2419,74 +1780,21 @@ function! MyExternalOpenFunc(action, line) "{{{
   endif
 endfunction "}}}
 
-" EasyMotion {{{1
-" 大文字小文字を無視しない
-let g:EasyMotion_smartcase = 1
-" migemo検索
-let g:EasyMotion_use_migemo = 1
-" 使用する文字
-let g:EasyMotion_keys = 'FDSAJKLGHREWQUIOPVCXZMTYBN/.;'
-" 大文字で表示する
-let g:EasyMotion_use_upper = 1
-" JKモーションでカラム位置キープ
-let g:EasyMotion_startofline = 0
-" フォールディングを飛ばさない
-let g:EasyMotion_skipfoldedline = 0
-" Enterで直近に飛ぶ
-let g:EasyMotion_enter_jump_first = 1
-
-" Ref {{{1
-"
-" COMMAND:
-"  :Ref refe Array
-let g:ref_no_default_key_mappings = 1
-let g:ref_use_vimproc = 1 " 0:disable / 1:enable
-let g:ref_open = 'vsplit'
-let g:ref_detect_filetype = {
-\ 'ruby': 'refe',
-\ 'ruby.rspec': 'refe',
-\}
-au myvimrc FileType ref* call MyRefMappings()
-function! MyRefMappings() "{{{
-  nmap <buffer> <C-]> <Plug>(ref-keyword)
-  nmap <buffer> ,] <Plug>(ref-keyword)
-  nmap <buffer> <C-j> <Plug>(ref-keyword)
-  nmap <buffer> ,[ <Plug>(ref-back)
-  nmap <buffer> <C-h> <Plug>(ref-back)
-  nmap <buffer> <C-l> <Plug>(ref-forward)
-endfunction "}}}
-" ref/refe
-let g:ref_refe_version = 2
-command! -nargs=* Refe :Ref refe <args>
-" ref/webdict
-" 要：lynx or w3m or elinks or links
-let g:ref_source_webdict_sites = {
-\ 'default': 'ej',
-\ 'ej': {
-\   'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',
-\ },
-\ 'je': {
-\   'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',
-\ },
-\ 'wp': {
-\   'url': 'http://ja.wikipedia.org/wiki/%s',
-\ },
-\}
-" 出力に対するフィルタ。最初の数行を削除。
-function! g:ref_source_webdict_sites.ej.filter(output)
-  return join(split(a:output, "\n")[9 :], "\n")
-endfunction
-function! g:ref_source_webdict_sites.je.filter(output)
-  return join(split(a:output, "\n")[9 :], "\n")
-endfunction
-function! g:ref_source_webdict_sites.wp.filter(output)
-  return join(split(a:output, "\n")[2 :], "\n")
-endfunction
-" ローカルファイルを参照するため、.local.vimrcに以下を宣言
-" ref/javascript
-" let g:ref_javascript_doc_path = 'jsref/htdocs'
-" ref/jquery
-" let g:ref_jquery_doc_path = 'jqapi'
+" NeoSnippet {{{1
+" KEYMAP:
+imap <expr> <C-e> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<End>"
+smap <C-e> <Plug>(neosnippet_expand_or_jump)
+xmap <C-e> <Plug>(neosnippet_expand_target)
+" imap <expr> <Tab> neosnippet#expandable_or_jumpable() ?
+" \ "\<Plug>(neosnippet_expand_or_jump)"
+" \ : pumvisible() ? "\<C-n>" : "\<Tab>"
+smap <expr> <Tab> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\ : "\<Tab>"
+" スニペットの保存場所を変更
+let g:neosnippet#snippets_directory = $MYVIMDIR . '/neosnippets'
+" スニペットファイルの保存時に再読み込み
+au myvimrc BufWritePost *.snip NeoSnippetSource %:p
 
 " QuickRun {{{1
 " 説明 {{{2
@@ -2708,6 +2016,585 @@ au myvimrc BufRead,BufNewFile Brewfile* let b:quickrun_config = {'type': 'brewfi
 let g:quickrun_config['brewfile'] = {
 \ 'exec': 'brew bundle --file="%s"',
 \}
+
+" Ref {{{1
+"
+" COMMAND:
+"  :Ref refe Array
+let g:ref_no_default_key_mappings = 1
+let g:ref_use_vimproc = 1 " 0:disable / 1:enable
+let g:ref_open = 'vsplit'
+let g:ref_detect_filetype = {
+\ 'ruby': 'refe',
+\ 'ruby.rspec': 'refe',
+\}
+au myvimrc FileType ref* call MyRefMappings()
+function! MyRefMappings() "{{{
+  nmap <buffer> <C-]> <Plug>(ref-keyword)
+  nmap <buffer> ,] <Plug>(ref-keyword)
+  nmap <buffer> <C-j> <Plug>(ref-keyword)
+  nmap <buffer> ,[ <Plug>(ref-back)
+  nmap <buffer> <C-h> <Plug>(ref-back)
+  nmap <buffer> <C-l> <Plug>(ref-forward)
+endfunction "}}}
+" ref/refe
+let g:ref_refe_version = 2
+command! -nargs=* Refe :Ref refe <args>
+" ref/webdict
+" 要：lynx or w3m or elinks or links
+let g:ref_source_webdict_sites = {
+\ 'default': 'ej',
+\ 'ej': {
+\   'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',
+\ },
+\ 'je': {
+\   'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',
+\ },
+\ 'wp': {
+\   'url': 'http://ja.wikipedia.org/wiki/%s',
+\ },
+\}
+" 出力に対するフィルタ。最初の数行を削除。
+function! g:ref_source_webdict_sites.ej.filter(output)
+  return join(split(a:output, "\n")[9 :], "\n")
+endfunction
+function! g:ref_source_webdict_sites.je.filter(output)
+  return join(split(a:output, "\n")[9 :], "\n")
+endfunction
+function! g:ref_source_webdict_sites.wp.filter(output)
+  return join(split(a:output, "\n")[2 :], "\n")
+endfunction
+" ローカルファイルを参照するため、.local.vimrcに以下を宣言
+" ref/javascript
+" let g:ref_javascript_doc_path = 'jsref/htdocs'
+" ref/jquery
+" let g:ref_jquery_doc_path = 'jqapi'
+
+" coc.nvim {{{1
+" Settings {{{2
+command! -nargs=1 Ci CocInstall <args>
+command! -nargs=1 Cui CocUninstall <args>
+command! -nargs=0 Cl CocList extensions
+" :tabが効いてくれない..
+command! -nargs=0 Cc tab CocConfig
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Close the preview window when completion is done.
+au! myvimrc CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" Highlight the symbol and its references when holding the cursor.
+au! myvimrc CursorHold * silent call CocActionAsync('highlight')
+
+" Keymaps {{{2
+" Use tab for trigger completion with characters ahead and navigate.
+inoremap <silent><expr> <Tab>
+\ pumvisible() ? '<C-n>' : '<C-t>'
+inoremap <expr> <S-Tab>
+\ pumvisible() ? '<C-p>' : '<C-d>'
+inoremap <expr> <C-n>
+\ pumvisible() ? '<C-n>' : coc#refresh()
+imap <expr> <C-e>
+\ neosnippet#expandable_or_jumpable() ? '<Plug>(neosnippet_expand_or_jump)' :
+\ complete_info()['selected'] != '-1' ? '<C-y>' :
+\ pumvisible() ? coc#_select_confirm() : '<End>'
+" <C-u>で補完をキャンセルしたいが設定方法が見つからない..
+" inoremap <expr> <C-u>
+"\ pumvisible() ? coc#_cancel() : '<C-g>u<C-u>'
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use ,h to show documentation in preview window.
+nnoremap <silent> ,h :call <SID>show_documentation()<CR>
+function! s:show_documentation() "{{{
+  if (index(['vim', 'help'], &filetype) >= 0)
+    execute 'H ' . expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction "{{{
+
+" " asyncomplete {{{1
+" " 基本設定 {{{2
+" " priorityによるソート
+" function! s:sort_by_priority_preprocessor(options, matches) abort "{{{3
+"   let l:items = []
+"   for [l:source_name, l:matches] in items(a:matches)
+"     for l:item in l:matches['items']
+"       if stridx(l:item['word'], a:options['base']) == 0
+"         let l:item['priority'] =
+"            \ get(asyncomplete#get_source_info(l:source_name), 'priority', 0)
+"         call add(l:items, l:item)
+"       endif
+"     endfor
+"   endfor
+"   let l:items = sort(l:items, {a, b -> b['priority'] - a['priority']})
+"   call asyncomplete#preprocess_complete(a:options, l:items)
+" endfunction "}}}3
+" let g:asyncomplete_preprocessor = [function('s:sort_by_priority_preprocessor')]
+"
+" " Keymap {{{2
+" inoremap <silent><expr> <Tab>
+"\ pumvisible() ? '<C-n>' : '<C-t>'
+" inoremap <expr> <S-Tab>
+"\ pumvisible() ? '<C-p>' : '<C-d>'
+" inoremap <expr> <C-n>
+"\ pumvisible() ? '<C-n>' : asyncomplete#force_refresh()
+" imap <expr> <C-e>
+"\ neosnippet#expandable_or_jumpable() ? '<Plug>(neosnippet_expand_or_jump)' :
+"\ pumvisible() ? asyncomplete#close_popup() : '<End>'
+" inoremap <expr> <C-u>
+"\ pumvisible() ? asyncomplete#cancel_popup() : '<C-g>u<C-u>'
+"
+" " Sources {{{2
+" call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
+"\ 'name': 'neosnippet',
+"\ 'whitelist': ['*'],
+"\ 'priority': 99,
+"\ 'completor': function('asyncomplete#sources#neosnippet#completor'),
+"\}))
+" call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+"\ 'name': 'buffer',
+"\ 'allowlist': ['*'],
+"\ 'blocklist': ['go'],
+"\ 'priority': 90,
+"\ 'completor': function('asyncomplete#sources#buffer#completor'),
+"\ 'config': {
+"\   'max_buffer_size': 5000000,
+"\ },
+"\}))
+" call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+"\ 'name': 'file',
+"\ 'whitelist': ['*'],
+"\ 'priority': 50,
+"\ 'completor': function('asyncomplete#sources#file#completor')
+"\}))
+" call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
+"\ 'name': 'tags',
+"\ 'whitelist': ['c', 'ruby', 'swift'],
+"\ 'priority': 80,
+"\ 'completor': function('asyncomplete#sources#tags#completor'),
+"\ 'config': {
+"\   'max_file_size': 50000000,
+"\ },
+"\}))
+" call asyncomplete#register_source(asyncomplete#sources#emoji#get_source_options({
+"\ 'name': 'emoji',
+"\ 'whitelist': ['*'],
+"\ 'priority': 50,
+"\ 'completor': function('asyncomplete#sources#emoji#completor'),
+"\}))
+" call asyncomplete#register_source(asyncomplete#sources#necovim#get_source_options({
+"\ 'name': 'necovim',
+"\ 'whitelist': ['vim'],
+"\ 'priority': 75,
+"\ 'completor': function('asyncomplete#sources#necovim#completor'),
+"\}))
+" call asyncomplete#register_source(asyncomplete#sources#necosyntax#get_source_options({
+"\ 'name': 'necosyntax',
+"\ 'whitelist': ['vim'],
+"\ 'priority': 70,
+"\ 'completor': function('asyncomplete#sources#necosyntax#completor'),
+"\}))
+"
+" " vim-lsp-settings {{{2
+" " let g:lsp_settings = {
+" "\ 'analysis-server-dart-snapshot': {
+" "\   'cmd': [
+" "\     '/usr/local/Cellar/dart/2.8.4/bin/dart',
+" "\     '/usr/local/Cellar/dart/2.8.4/libexec/bin/snapshots/analysis_server.dart.snapshot',
+" "\     '--lsp'
+" "\   ],
+" "\ },
+" "\}
+
+" Deoplete {{{1
+" 基本設定（以降はon_source）{{{2
+function! MyDeinHookDeoplete() abort
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_yarp = 1
+" Use ignorecase.
+let g:deoplete#enable_ignore_case = 1
+" Use smartcase.
+let g:deoplete#enable_smart_case = 1
+" sourceの優先順位
+call deoplete#custom#source('neosnippet', 'rank', 9999)
+" Set minimum syntax keyword length.
+call deoplete#custom#source('_', 'min_pattern_length', 3)
+
+" Define dictionary. {{{2
+au myvimrc FileType html exe 'setlocal dictionary+=' . $MYVIMDIR . '/dict/bootstrap.dict'
+au myvimrc FileType ruby exe 'setlocal dictionary+=' . $MYVIMDIR . '/dict/pocke_dicts/ruby.dict'
+
+" " Define keyword. {{{2
+" if !exists('g:deoplete#keyword_patterns')
+"   let g:deoplete#keyword_patterns = {}
+" endif
+" let g:deoplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings. {{{2
+inoremap <expr> <C-p> pumvisible() ? '<C-p>' : ""
+inoremap <expr> <C-d> pumvisible() ? deoplete#undo_completion() : virtcol(".") == virtcol("$") ? '<BS>' : '<Del>'
+
+" <Tab>: completion.
+inoremap <expr> <Tab> pumvisible() ? '<C-n>' : '<C-t>'
+inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<C-d>'
+
+" <BS>: close popup and delete backword char.
+"   Note: <Plug>を経由して、smartinputの<BS>が呼び出されるようにimapを使う→動作不安定のため戻した
+"call smartinput#map_to_trigger('i', '<Plug>(smartinput_BS)', '<BS>', '<BS>')
+"imap <expr> <BS> deoplete#smart_close_popup() . '<Plug>(smartinput_BS)'
+inoremap <expr> <BS> deoplete#smart_close_popup() . '<BS>'
+
+" Enable omni completion. {{{2
+au myvimrc FileType css         setlocal omnifunc=csscomplete#CompleteCSS
+au myvimrc FileType html        setlocal omnifunc=htmlcomplete#CompleteTags
+au myvimrc FileType javascript  setlocal omnifunc=javascriptcomplete#CompleteJS
+au myvimrc FileType python      setlocal omnifunc=pythoncomplete#Complete
+au myvimrc FileType xml         setlocal omnifunc=xmlcomplete#CompleteTags
+au myvimrc FileType workflowish setlocal omnifunc=github_complete#complete
+
+" " Enable heavy omni completion. {{{2
+" if !exists('g:deoplete#omni_patterns')
+"   let g:deoplete#omni_patterns = {}
+" endif
+" let g:deoplete#omni_patterns.workflowish = ':'
+" let g:deoplete#omni_patterns.markdown = ':'
+" let g:deoplete#omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+" let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
+
+" （on_source終わり）{{{2
+endfunction
+
+" VimFiler {{{1
+"
+" KEYMAP:
+"  h : up dir, l : down dir, t : tree view (1 dir), T : tree view all
+"  e : edit, <Space> : mark, c : copy, m : move, d : delete, yy : yank path
+"  N : new file, K : new dir, * : mark all, U : mark off all, ? : keymap
+"  a : action, H : VimShell, ge : system filer, x : system app
+"
+" vimデフォルトのエクスプローラをvimfilerで置き換える
+let g:vimfiler_as_default_explorer = 1
+" セーフモードを無効にした状態で起動する
+let g:vimfiler_safe_mode_by_default = 0
+" ディレクトリ移動
+let g:vimfiler_enable_auto_cd = 1
+" タブで開く
+let g:vimfiler_edit_action = 'tabopen'
+" デフォルトでIDE風のFilerを開く
+" au myvimrc VimEnter * VimFiler -split -simple -winwidth=30 -no-quit
+" ステータスラインを上書きしない（lightline向け）
+"let g:vimfiler_force_overwrite_statusline = 0
+"let g:netrw_liststyle=3
+" キーマップ定義
+au myvimrc FileType vimfiler call MyVimfilerKeymaps()
+function! MyVimfilerKeymaps() "{{{
+  " Enterでツリー開閉、ファイル編集を可能に
+  nmap <buffer> <expr> <CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
+  " ESCキーを2回押すと終了する
+  nnoremap <silent> <buffer> <Esc><Esc> :q<CR>
+  " キーマップヘルプを表示
+  nnoremap <buffer> ,h :MyVimFilerHelp<CR>
+  " システムハンドラで開く
+  nmap <buffer> gx <Plug>(vimfiler_execute_system_associated)
+endfunction "}}}
+command! MyVimFilerHelp :call MyVimfilerHelp()
+function! MyVimfilerHelp() "{{{
+  silent! wincmd P
+  if &previewwindow
+    pclose
+    return
+  endif
+
+  hi link MyVimFilerHelp Comment
+  hi link MyVimFilerHelpTitle PreProc
+  hi link MyVimFilerHelpKey Identifier
+  belowright pedit $MYVIMDIR/doc/vimfiler_help.txt
+  silent! wincmd P
+  if &previewwindow
+    match none
+    setlocal nonumber
+    resize 20
+    exe 'normal! gg'
+    nnoremap <buffer> ,, :MyVimFilerHelp<CR>
+    call matchadd('MyVimFilerHelp', '.', 0)
+    call matchadd('MyVimFilerHelpTitle', '--.*')
+    call matchadd('MyVimFilerHelpKey', '\(.\+\):')
+    wincmd p
+  endif
+endfunction "}}}
+
+" VimShell {{{1
+" VimShellPopの開き方
+let g:vimshell_popup_command = 'botright 10split'
+" vimコマンドで開いた時の開き方
+let g:vimshell_split_command = 'tabe'
+" 動的プロンプト
+let g:vimshell_prompt_expr = 'getcwd()." > "'
+let g:vimshell_prompt_pattern = '^\f\+ > '
+" エディタコマンド指定
+let g:vimshell_editor_command = 'mvim'
+" VimShell独自のキーマッピングを使用する
+let g:vimshell_no_default_keymappings = 0
+" vimshell-inline-historyでコマンド履歴表示
+let g:vimshell_inline_history#default_mappings = 0
+" キーマップ定義
+au myvimrc FileType vimshell call s:my_vimshell_keymapping()
+function! s:my_vimshell_keymapping() "{{{
+  nmap <buffer> <C-k> <Plug>(vimshell_previous_prompt)
+  nmap <buffer> <C-j> <Plug>(vimshell_next_prompt)
+  imap <buffer> <Up> <Plug>(vimshell_inline_history#prev)
+  imap <buffer> <Down> <Plug>(vimshell_inline_history#next)
+  inoremap <buffer> <C-h> <Left>
+  inoremap <buffer> <C-l> <Right>
+endfunction "}}}
+
+" コマンド履歴の保存
+let g:vimshell_data_directory = expand('~/.cache/vimshell')
+" cdもコマンド履歴に残すようにする
+let g:vimshell_no_save_history_commands = {}
+
+" irbを非同期で起動
+command! Irb VimShellInteractive irb
+" 非同期で開いたインタプリタに現在の行を評価させる
+command! VSSend VimShellSendString
+command! VSAll %VimShellSendString
+
+" Unite {{{1
+" 説明 {{{2
+" COMMAND:
+"  :Unite ${source} [${option}]
+"  :Unite output:{コマンド名}
+" KEYMAP:
+"  <Tab> : Actionを開く
+"  <Space> : 候補を選択する
+"  * : 候補を全選択する
+"  a : 候補でActionを開く
+"  ? : Uniteのキーマップを表示
+
+" Uniteコマンド定義 {{{2
+" 汎用
+command! -nargs=+ -complete=customlist,unite#complete#source U Unite <args>
+\ -no-empty -silent -buffer-name=<args>
+
+" 現在のバッファ内をグレップ
+command! Ug Unite grep:%
+\ -no-empty -silent -buffer-name=grep
+" カーソル下の単語で現在のバッファをグレップ
+command! Ugw exe 'Unite grep:%::' .
+\ escape(expand("<cword>"), '- \\') .
+\ ' -no-empty -silent -buffer-name=grep-word'
+" ディレクトリをグレップ
+command! Ugd exe 'Unite grep' .
+\ ' -silent -buffer-name=grep-dir' .
+\ ' -tab -no-split -no-quit'
+\ | setlocal splitbelow | exe 'normal <Plug>(unite_toggle_auto_preview)'
+" すべてのバッファをグレップ
+command! Ugb exe 'Unite grep:$buffers' .
+\ ' -silent -buffer-name=grep-all-bufs' .
+\ ' -tab -no-split -no-quit
+\ | setlocal splitbelow | exe 'normal <Plug>(unite_toggle_auto_preview)'
+
+" ブックマーク（追加はUniteBookmarkAdd）
+command! Ub Unite bookmark
+\ -no-empty -silent -buffer-name=bookmark
+" ブックマーク追加
+command! Uba UniteBookmarkAdd
+" ブックマーク手動編集
+command! Ube edit $HOME/.unite/bookmark/default
+" メニュー
+command! Um Unite menu:shortcuts
+\ -no-empty -silent -buffer-name=menushortcuts
+
+" リファレンス参照
+" ref
+command! UR Unite ref
+\ -no-empty -silent -buffer-name=ref
+" refe
+command! URr Unite ref/refe
+\ -no-empty -silent -buffer-name=ref/refe
+" カーソル下の単語でrefe
+command! URrw exe 'Unite ref/refe ' .
+\ '-no-empty -silent -buffer-name=ref/refe -input=' .
+\ escape(expand("<cword>"), '- \\')
+" ri
+command! URri Unite ref/ri
+\ -no-empty -silent -buffer-name=ref/ri
+
+" ファイル
+" file_rec
+command! Uf Unite file_rec
+\ -no-empty -silent -buffer-name=files
+
+" 直前のUniteコマンドの結果に戻る
+command! Ur UniteResume
+\ -no-empty -silent
+" スニペット候補の表示
+command! Usnip Unite neosnippet
+\ -no-empty -silent -buffer-name=neosnippet
+" マッピング表示
+command! Umap :Unite output:map|map!|lmap
+\ -no-empty -silent -buffer-name=output:map
+
+" 基本設定（以降はon_source） {{{2
+function! MyDeinHookUnite() abort
+" 入力モードで開始しない
+let g:unite_enable_start_insert = 0
+" 最近使ったファイルの履歴数
+let g:unite_source_file_mru_file = 200
+" 大文字小文字を区別しない
+let g:unite_enable_ignore_case = 1
+let g:unite_enable_smart_case = 1
+" ステータスラインを上書きしない（lightline向け）
+let g:unite_force_overwrite_statusline = 0
+" ウィンドウの高さ
+let g:unite_winheight = 10
+" プロンプト文字
+let g:unite_prompt = 'Unite>>> '
+" カーソルラインのハイライト
+let g:unite_cursor_line_highlight = 'MatchParen'
+" unite grep に ag(The Silver Searcher) を使う
+if executable('ag')
+ let g:unite_source_grep_command = 'ag'
+ let g:unite_source_grep_default_opts =
+ \ '--line-numbers --nocolor --nogroup --smart-case --hidden ' .
+ \ '--ignore ''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+ let g:unite_source_grep_recursive_opt = ''
+endif
+
+" キーマップ定義 {{{2
+au myvimrc FileType unite call MyUniteKeymaps()
+function! MyUniteKeymaps() "{{{
+  " <C-j>/<C-k>で選択カーソル移動
+  nmap <silent> <buffer> <C-j> <Plug>(unite_loop_cursor_down)
+  imap <silent> <buffer> <C-j> <Plug>(unite_select_next_line)
+  nmap <silent> <buffer> <C-k> <Plug>(unite_loop_cursor_up)
+  imap <silent> <buffer> <C-k> <Plug>(unite_select_previous_line)
+  " <C-h>/<C-l>で入力カーソル移動、<C-d>で削除
+  inoremap <buffer> <C-h> <Left>
+  inoremap <buffer> <C-l> <Right>
+  imap <expr> <buffer> <C-d> virtcol(".") == virtcol("$") ? "\<BS>" : "\<Del>"
+  " ESCキーを2回押すと終了する
+  nmap <silent> <buffer> <Esc><Esc> <Plug>(unite_all_exit)
+  " 入力文字が無い時に<BS>で前の画面に戻る
+  imap <expr> <silent> <buffer> <BS> unite#helper#get_input() == '' ? "\<Plug>(unite_exit)" : "\<BS>"
+  nmap <silent> <buffer> <BS> <Plug>(unite_exit)
+  " キャッシュ更新
+  nmap <silent> <buffer> <F5> <Plug>(unite_redraw)
+  " pでオートプレビューのトグル
+  nmap <silent> <buffer> p <Plug>(unite_toggle_auto_preview))
+endfunction "}}}
+
+" Unite menu {{{2
+let g:unite_source_menu_menus = {
+\ 'shortcuts': {
+\   'description': 'command shortcuts.',
+\   'command_candidates': [
+\     ['[help] themis-quickref', 'H themis-quickref'],
+\     ['[help] vim-regexp', 'H pattern-overview'],
+\     ['[help] functions', 'H function-list'],
+\     ['[help] registers', 'H registers'],
+\     ['[help] map-overview', 'H map-overview'],
+\     ['[help] vim-script', 'H usr_41.txt'],
+\     ['[help] quickref-alpha', 'H index.txt'],
+\     ['[help] quickref', 'H quickref.txt'],
+\     ['[help] vim-goal', 'H design-goal'],
+\     ['[unite] colorscheme', 'Unite colorscheme -auto-preview'],
+\     ['[unite] output:message', 'Unite output:message'],
+\     ['[unite] mapping(all)', 'Unite output:map|map!|lmap'],
+\     ['[dein] clean plugins', 'for s:dein_clean_plugin in dein#check_clean() | call delete(s:dein_clean_plugin, "rf") | endfor'],
+\   ],
+\ },
+\}
+
+" デフォルトアクションの変更 {{{2
+" openable
+call unite#custom_default_action('file', 'tabopen')
+" directory
+call unite#custom_default_action('directory', 'vimfiler')
+" ref
+call unite#custom_default_action(
+\ 'source/ref/refe/*,source/ref/ri/*,source/ref/javascript/*,source/ref/jquery/*,source/ref/man/*',
+\ 'vsplit')
+" help
+call unite#custom_default_action('source/help/*', 'vsplit')
+
+" アクションの追加 {{{2
+" source:mappingにaction:verboseを追加する
+let s:action = {
+\ 'description': 'verbose',
+\ 'is_selectable': 1,
+\}
+function! s:action.func(candidates)
+  for candidate in a:candidates
+    execute 'verbose map' substitute(candidate.action__mapping, '\\\(<.*>\)', '\1', 'g')
+  endfor
+endfunction
+" kind ではなくて source の mapping に対して action を設定する
+call unite#custom#action('source/mapping/*', 'verbose', s:action)
+" preview（pキー）で action を実行したい場合は
+" call unite#custom#action('source/mapping/*', 'preview', s:action)
+unlet s:action
+
+" Uniteソース {{{2
+" ref {{{3
+let s:unite_source = {
+\   'name': 'ref',
+\ }
+function! s:unite_source.gather_candidates(args, context)
+  return map(ref#available_source_names(), "{
+  \   'word': v:val,
+  \   'source': 'ref',
+  \   'kind': 'source',
+  \   'action__source_name': 'ref/' . v:val,
+  \ }")
+endfunction
+call unite#define_source(s:unite_source)
+unlet s:unite_source
+" サンプル {{{3
+let s:unite_source = {
+\   'name': 'lines',
+\ }
+function! s:unite_source.gather_candidates(args, context)
+  let path = expand('%:p')
+  let lines = getbufline('%', 1, '$')
+  let format = '%' . strlen(len(lines)) . 'd: %s'
+  return map(lines, "{
+  \   'word': printf(format, v:key + 1, v:val),
+  \   'source': 'lines',
+  \   'kind': 'jump_list',
+  \   'action__path': path,
+  \   'action__line': v:key + 1,
+  \ }")
+endfunction
+call unite#define_source(s:unite_source)
+unlet s:unite_source
+
+" （on_source終わり） {{{2
+endfunction
+
+" EasyMotion {{{1
+" 大文字小文字を無視しない
+let g:EasyMotion_smartcase = 1
+" migemo検索
+let g:EasyMotion_use_migemo = 1
+" 使用する文字
+let g:EasyMotion_keys = 'FDSAJKLGHREWQUIOPVCXZMTYBN/.;'
+" 大文字で表示する
+let g:EasyMotion_use_upper = 1
+" JKモーションでカラム位置キープ
+let g:EasyMotion_startofline = 0
+" フォールディングを飛ばさない
+let g:EasyMotion_skipfoldedline = 0
+" Enterで直近に飛ぶ
+let g:EasyMotion_enter_jump_first = 1
 
 " lightline {{{1
 let g:lightline = {}
@@ -3146,6 +3033,7 @@ let g:surround_125 = "{ \r }"
 " smartchr {{{1
 " inoremap <expr> < smartchr#loop('<', '<<', '<=')
 " inoremap <expr> > smartchr#loop('>', '>>', '>=')
+inoremap <expr> { smartchr#loop('{}', '{{{1', '{{{2', '{{{3')
 
 " Switch {{{1
 nnoremap <expr> <C-a> strpart(getline("."), col(".") - 1, 1) =~ '\d' ? "\<C-a>" : ":\<C-u>Switch\<CR>"

@@ -1,4 +1,6 @@
 {
-  "suggest.enablePreselect": true,
-  "coc.source.emoji.filetypes": ["markdown", "workflowish"]
+  "diagnostic.enable": false,
+  "coc.source.neosnippet.priority": 1000,
+  "coc.source.emoji.filetypes": ["markdown", "workflowish"],
+  "suggest.enablePreselect": true
 }
