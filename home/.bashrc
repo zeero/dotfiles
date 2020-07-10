@@ -105,8 +105,9 @@ pdfmerge() {
 ## _fzf-git_branch {{{2
 _fzf-git_branch() {
   local selected fzf
-  [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%}" || fzf="fzf"
-  selected=$(git branch -a | sed -e "s/remotes\/[^\/]\{1,\}\/\(HEAD -> [^\/]\{1,\}\/\)\{0,1\}//" | sort -r | uniq | $fzf | cut -b 3- | tr '\n' ' ')
+  # [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%}" || fzf="fzf"
+  # selected=$(git branch -a | sed -e "s/remotes\/[^\/]\{1,\}\/\(HEAD -> [^\/]\{1,\}\/\)\{0,1\}//" | sort -r | uniq | $fzf | cut -b 3- | tr '\n' ' ')
+  selected=$(git branch -a | sed -e "s/remotes\/[^\/]\{1,\}\/\(HEAD -> [^\/]\{1,\}\/\)\{0,1\}//" | sort -r | uniq | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%} --preview 'echo {} | cut -b 3- | xargs git log --color --graph --decorate --name-status -n 10 --parents' | cut -b 3- | tr '\n' ' ')
   if [ -n "$selected" ]; then
     echo -n "$selected"
     return 0
