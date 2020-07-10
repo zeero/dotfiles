@@ -9,7 +9,7 @@
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>// swiftlint:enable &amp;lt;#T##rule_name#&amp;gt;</string>
+	<string>// swiftlint:enable &lt;#T##rule_name#&gt;</string>
 	<key>IDECodeSnippetIdentifier</key>
 	<string>A746C745-A805-4207-A938-E1009EB503C8</string>
 	<key>IDECodeSnippetLanguage</key>
@@ -21,6 +21,6 @@
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
-	<integer>0</integer>
+	<integer>2</integer>
 </dict>
 </plist>
