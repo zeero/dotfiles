@@ -774,7 +774,15 @@ function! s:my_tw_to_md(line1, line2) "{{{
   execute a:line1 . ',' . a:line2 . 's/^!/# /e'
 endfunction "}}}
 " Rename
-command! -nargs=1 -complete=file Rename file expand('%:p:h') . '/' . <args> | call delete(expand('#'))
+command! -nargs=1 -complete=file Rename call s:my_rename('<args>')
+function! s:my_rename(new_name) abort "{{{
+  let old_name = expand('%')
+  execute 'file ' . expand('%:p:h') . '/' . a:new_name
+  w!
+  if old_name == expand('#')
+    call delete(expand('#'))
+  endif
+endfunction "}}}
 
 " TortoiseSVN {{{2
 " /endrev:-1 は HEAD（-2：ベースリビジョン、-3：ワーキングコピー）
