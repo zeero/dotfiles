@@ -31,6 +31,7 @@ target '<%= project_name %>' do
   # pod 'Firebase/Analytics'
   # pod 'Fabric'
   # pod 'Crashlytics'
+
   pod 'SwiftLint'
   # pod 'LicensePlist'
 

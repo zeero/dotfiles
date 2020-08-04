@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "coc-emoji": ">=1.2.3",
+    "coc-flutter": ">=1.4.1",
     "coc-json": ">=1.2.6",
     "coc-neosnippet": ">=1.2.2",
     "coc-solargraph": ">=1.1.6",
     "coc-sourcekit": ">=0.0.2",
-    "coc-vimlsp": ">=0.8.0",
-    "tslib": ">=1.11.1"
+    "coc-tsserver": ">=1.5.2"
   }
 }

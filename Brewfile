@@ -14,6 +14,8 @@ brew 'nodebrew'
 brew 'zsh'
 cask 'java'
 brew 'go'
+tap 'dart-lang/dart'
+brew 'dart'
 
 # Command {{{1
 # gitははじめに手動でいれる
@@ -79,6 +81,8 @@ brew 'gibo'
 brew 'mint'
 cask 'google-cloud-sdk'
 cask 'github'
+cask 'android-studio'
+cask 'adoptopenjdk8'
 
 # MiddleWare
 brew 'nginx'

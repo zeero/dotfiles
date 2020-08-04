@@ -37,11 +37,12 @@ on_i = 1
 on_cmd = ['NeoSnippetEdit']
 on_source = ['unite.vim']
 on_ft = ['neosnippet']
+# depends = 'neosnippet-snippets'
 
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
-lazy = 1
-on_i = 1
+# [[plugins]]
+# repo = 'Shougo/neosnippet-snippets'
+# lazy = 1
+# on_i = 1
 
 [[plugins]]
 repo = 'Lokaltog/vim-easymotion'
@@ -207,11 +208,44 @@ on_source = ['unite.vim']
 
 # 補完 {{{1
 
+# Coc {{{2
+
 [[plugins]]
 repo = 'neoclide/coc.nvim'
 rev = 'release'
 merged = 0
 
+# # asnycomplete {{{2
+#
+# [[plugins]]
+# repo = 'prabirshrestha/async.vim'
+# [[plugins]]
+# repo = 'prabirshrestha/asyncomplete.vim'
+# [[plugins]]
+# repo = 'prabirshrestha/asyncomplete-neosnippet.vim'
+# depends = 'neosnippet'
+# merged = 0
+# [[plugins]]
+# repo = 'prabirshrestha/asyncomplete-emoji.vim'
+# [[plugins]]
+# repo = 'prabirshrestha/asyncomplete-buffer.vim'
+# [[plugins]]
+# repo = 'prabirshrestha/asyncomplete-file.vim'
+# [[plugins]]
+# repo = 'prabirshrestha/asyncomplete-necosyntax.vim'
+# [[plugins]]
+# repo = 'prabirshrestha/asyncomplete-tags.vim'
+# [[plugins]]
+# repo = 'prabirshrestha/asyncomplete-necovim.vim'
+# [[plugins]]
+# repo = 'prabirshrestha/vim-lsp'
+# [[plugins]]
+# repo = 'prabirshrestha/asyncomplete-lsp.vim'
+# [[plugins]]
+# repo = 'mattn/vim-lsp-settings'
+
+# # Deoplete {{{2
+#
 # [[plugins]]
 # repo = 'Shougo/deoplete.nvim'
 # if = '''has('python3') && v:version >= 800'''
@@ -219,34 +253,17 @@ merged = 0
 # lazy = 1
 # on_i = 1
 #
-[[plugins]]
-repo = 'roxma/nvim-yarp'
-if = '''has('python3') && v:version >= 800'''
-lazy = 1
-on_i = 1
-
-[[plugins]]
-repo = 'roxma/vim-hug-neovim-rpc'
-if = '''has('python3') && v:version >= 800'''
-lazy = 1
-on_i = 1
+# [[plugins]]
+# repo = 'roxma/nvim-yarp'
+# if = '''has('python3') && v:version >= 800'''
+# lazy = 1
+# on_i = 1
 #
 # [[plugins]]
-# repo = 'Shougo/neco-vim'
+# repo = 'roxma/vim-hug-neovim-rpc'
+# if = '''has('python3') && v:version >= 800'''
 # lazy = 1
-# on_ft = ['vim']
-# on_i  = 1
-#
-# [[plugins]]
-# repo = 'Shougo/neco-syntax'
-# lazy = 1
-# on_i  = 1
-#
-# [[plugins]]
-# repo = 'ujihisa/neco-look'
-# if = '''executable('look')'''
-# lazy = 1
-# on_i  = 1
+# on_i = 1
 #
 # [[plugins]]
 # repo = 'fishbullet/deoplete-ruby'
@@ -259,20 +276,6 @@ on_i = 1
 # if = '''executable('solargraph')'''
 # lazy = 1
 # on_ft = ['ruby']
-# on_i = 1
-#
-# [[plugins]]
-# repo = 'Shougo/neocomplete'
-# if = '''!has('python3') && has('lua') && (v:version >= 704 || (v:version == 703 && has('patch885')))'''
-# hook_source = '''call MyDeinHookNeoComplete()'''
-# lazy = 1
-# on_i = 1
-#
-# [[plugins]]
-# repo = 'Shougo/neocomplcache'
-# if = '''!has('lua') || !(v:version >= 704 || (v:version == 703 && has('patch885')))'''
-# hook_source = '''call MyDeinHookNeoComplcache()'''
-# lazy = 1
 # on_i = 1
 
 # 入力補助 {{{1
@@ -1070,6 +1073,23 @@ on_ft = ['kotlin']
 # VimScript {{{1
 
 [[plugins]]
+repo = 'Shougo/neco-vim'
+lazy = 1
+on_ft = ['vim']
+on_i  = 1
+
+[[plugins]]
+repo = 'Shougo/neco-syntax'
+lazy = 1
+on_i  = 1
+
+[[plugins]]
+repo = 'ujihisa/neco-look'
+if = '''executable('look')'''
+lazy = 1
+on_i  = 1
+
+[[plugins]]
 repo = 'vim-jp/vital.vim'
 lazy = 1
 on_cmd = ['Vitalize']
@@ -1112,6 +1132,14 @@ on_ft = ['ansible']
 # [[plugins]]
 # repo = 'sheerun/vim-polyglot'
 # コンフリクトが多そうなので無効化
+
+[[plugins]]
+repo = 'dart-lang/dart-vim-plugin'
+on_ft = ['dart']
+
+[[plugins]]
+repo = 'thosakwe/vim-flutter'
+on_ft = ['dart']
 
 # 1}}}
 

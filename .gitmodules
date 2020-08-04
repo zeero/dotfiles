@@ -17,3 +17,6 @@
 [submodule "lib/XVim2"]
 	path = lib/XVim2
 	url = https://github.com/XVimProject/XVim2.git
+[submodule "lib/flutter"]
+	path = lib/flutter
+	url = https://github.com/flutter/flutter.git
