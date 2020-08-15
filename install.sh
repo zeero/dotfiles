@@ -49,6 +49,7 @@ git config --global diff.tool vimdiff
 git config --global diff.algorithm histogram
 git config --global commit.template "~/.git-commit-template"
 git config --global merge.tool vimdiff
+git config --global fetch.prune true
 git config --global alias.co "checkout"
 git config --global alias.st "status"
 # ログをグラフ表示
