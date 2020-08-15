@@ -33,7 +33,7 @@ alias   minitest:spec spec
 		describe '${2:function_name}' do
 			it '${3:spec}' do
 				${0}
-				${1:actual}.must_equal ${2:expected}
+				_(${4:actual}).must_equal ${5:expected}
 			end
 		end
 	end
@@ -68,7 +68,7 @@ alias   subject
 
 # template:minitest:unit {{{1
 snippet template:minitest:unit
-alias   minitest:unit unit
+# alias   minitest:unit unit
 	require 'test_helper'
 
 	class ${1:ClassName}Test < ActiveSupport::TestCase
