@@ -321,11 +321,9 @@ lazy = 1
 on_i = 1
 
 [[plugins]]
-repo = 'cohama/vim-smartinput-endwise'
+repo = 'cohama/lexima.vim'
 lazy = 1
 on_i = 1
-hook_post_source = 'call smartinput_endwise#define_default_rules()'
-depends = 'vim-smartinput'
 
 [[plugins]]
 repo = 'rhysd/github-complete.vim'

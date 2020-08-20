@@ -3038,10 +3038,19 @@ let g:surround_93 = "[ \r ]"
 let g:surround_123 = "{\r}"
 let g:surround_125 = "{ \r }"
 
+" lexima {{{1
+" vimrc reloadable
+let g:lexima_no_default_rules = 1
+call lexima#set_default_rules()
+" for input vim folding marker
+call lexima#add_rule({'char': '{', 'at': '\%#\}', 'delete': 1})
+call lexima#add_rule({'char': '{', 'at': '{{\%#', 'leave': 1})
+
 " smartchr {{{1
 " inoremap <expr> < smartchr#loop('<', '<<', '<=')
 " inoremap <expr> > smartchr#loop('>', '>>', '>=')
-inoremap <expr> { smartchr#loop('{}', '{{{1', '{{{2', '{{{3')
+" Note: endwise(lexima)と競合するので無効化
+" inoremap <expr> { smartchr#loop('{  }', '{{{1', '{{{2', '{{{3')
 
 " Switch {{{1
 nnoremap <expr> <C-a> strpart(getline("."), col(".") - 1, 1) =~ '\d' ? "\<C-a>" : ":\<C-u>Switch\<CR>"
@@ -3077,17 +3086,17 @@ let g:easy_align_delimiters = {
 command! -range -bang -nargs=* AL <line1>,<line2>EasyAlign<bang> <args>
 
 " submode {{{1
-" xで連続で消した履歴を一つにまとめる {{{2
+" xで連続で消した履歴を一つにまとめる
 nnoremap <silent> <Plug>(my-submode-x) :<C-u>call <SID>my_submode_x()<CR>
 function! s:my_submode_x() "{{{
   undojoin
   normal! "_x
 endfunction "}}}
-" サブモード抜け時の挙動が気になるので無効化
+" Note: サブモード抜け時の挙動が気になるので無効化
 " call submode#enter_with('submode-x', 'n', '', 'x', '"_x')
 " call submode#map('submode-x', 'n', 'r', 'x', '<Plug>(my-submode-x)')
 
-" zl/zhで連続横移動 {{{2
+" zl/zhで連続横移動
 call submode#enter_with('submode-zl/zh', 'n', '', 'zl', '4zl4zl4zl4zl4zl4zl')
 call submode#enter_with('submode-zl/zh', 'n', '', 'zh', '4zh4zh4zh4zh4zh4zh')
 call submode#map('submode-zl/zh', 'n', '', 'l', '4zl4zl4zl4zl4zl4zl')
