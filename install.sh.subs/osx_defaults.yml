@@ -45,4 +45,5 @@ NSGlobalDomain:
 # Xcode
 "com.apple.dt.Xcode":
   "ShowBuildOperationDuration": true
+  "IDEBuildOperationMaxNumberOfConcurrentCompileTasks": 4
 
