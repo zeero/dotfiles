@@ -322,8 +322,6 @@ on_i = 1
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
-lazy = 1
-on_i = 1
 
 [[plugins]]
 repo = 'rhysd/github-complete.vim'
