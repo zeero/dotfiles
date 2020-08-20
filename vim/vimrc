@@ -1147,8 +1147,8 @@ function! s:my_get_counterpart() abort "{{{
   let path = expand('%:h')
   let fname = expand('%:t:r')
   let ext = expand('%:e')
-  if fname =~? '_test$'
-    let counterpart = substitute(path, '^test', '', '') . '/' . substitute(fname, '_test$', '', '') . '.' . ext
+  if fname =~? '^test_'
+    let counterpart = substitute(path, '^test', '', '') . '/' . substitute(fname, '^test_', '', '') . '.' . ext
     if filereadable('src' . counterpart)
       exe 'tab drop src' . counterpart
     elseif filereadable('lib' . counterpart)
@@ -1161,7 +1161,7 @@ function! s:my_get_counterpart() abort "{{{
     if ! isdirectory(test_path)
       call mkdir(test_path, 'p')
     endif
-    exe 'tab drop ' . test_path . '/' . fname . '_test.' . ext
+    exe 'tab drop ' . test_path . '/test_' . fname . '.' . ext
   endif
 endfunction "}}}
 " ウィンドウサイズ変更

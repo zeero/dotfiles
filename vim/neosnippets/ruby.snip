@@ -41,12 +41,12 @@ alias   minitest:spec spec
 # spec:must_equal {{{1
 snippet spec:must_equal
 alias   must_equal
-	${1:actual}.must_equal ${2:expected}
+	_(${1:actual}).must_equal ${2:expected}
 
 # spec:must_be_nil {{{1
 snippet spec:must_be_nil
 alias   must_be_nil
-	${1:actual}.must_be_nil
+	_(${1:actual}).must_be_nil
 
 # spec:let {{{1
 snippet spec:let
@@ -96,7 +96,7 @@ abbr    not nil
 
 # template:Ruboty:Handler {{{1
 snippet template:Ruboty:Handler
-alias   ruboty
+alias   ruboty:handler
 	class ${1:class_name} < Base
 		on(
 			/${2:regexp}/i,
@@ -107,6 +107,25 @@ alias   ruboty
 		def $3(msg)
 			${0}
 			msg.reply('')
+		end
+	end
+
+
+# template:Ruboty:Action {{{2
+snippet template:Ruboty:Action
+alias   ruboty:action
+	require 'ruboty/${1:module_name}'
+
+	module Ruboty
+		module ${2:ModuleName}
+			module Actions
+				class ${3:ClassName} < Ruboty::Actions::Base
+					def call
+						${0}
+						message.reply()
+					end
+				end
+			end
 		end
 	end
 
@@ -131,6 +150,7 @@ alias   test_helper
 
 	Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 	${0}
+
 
 # mock:Mocha:expect {{{1
 snippet mock:Mocha:expects:class_method
