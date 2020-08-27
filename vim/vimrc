@@ -1902,7 +1902,7 @@ let g:quickrun_config['ruby.gemfile'] = {
 \}
 
 " ruby.test
-au myvimrc BufRead,BufNewFile *_test.rb let b:quickrun_config = {'type': 'ruby.test'}
+au myvimrc BufRead,BufNewFile test_*.rb let b:quickrun_config = {'type': 'ruby.test'}
 let g:quickrun_config['ruby.test'] = {
 \ 'command': 'bundle',
 \ 'cmdopt': 'exec rake test TEST=',
