@@ -59,7 +59,7 @@ git config --global alias.ignore "update-index --skip-worktree"
 # ローカルで変更を無視を解除
 git config --global alias.noignore "update-index --no-skip-worktree"
 git config --global alias.stashdiff "diff HEAD..stash@{0}"
-git config --global alias.amend "commit --amend"
+git config --global alias.amend "commit --amend --no-edit"
 git config --global ghq.root "~/dev"
 
 echo gitのuser.name/user.email/github.userを設定してください
