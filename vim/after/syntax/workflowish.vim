@@ -30,6 +30,6 @@ hi def link WFBlockCode             Special
 hi def link WFBlockCodeDelimiter    Special
 
 " コメント
-syn match WFCommentHTMLStyle "<!\-\-.*\-\->"
+syn region WFCommentHTMLStyle start=/<!--/ end=/-->/
 hi def link WFCommentHTMLStyle      Comment
 

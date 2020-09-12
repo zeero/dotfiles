@@ -23,6 +23,9 @@ endfunction "}}}
 " コメントアウト
 nmap <buffer> ,/ <Plug>(caw:wrap:toggle)
 vmap <buffer> ,/ <Plug>(caw:wrap:toggle)
+let b:caw_oneline_comment = "<!--"
+let b:caw_wrap_oneline_comment = ["<!--", "-->"]
+let b:caw_wrap_multiline_comment = {"right": "-->", "bottom": " ", "left": "<!--", "top": " "}
 
 " ヘッダ見出しにする（下線スタイル）
 nnoremap <buffer> ,= :<C-u>MyMarkdownHeader =<CR>
