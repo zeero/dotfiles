@@ -428,3 +428,26 @@ snippet erb
 	<%= $2 %>
 	${0}
 
+# end_data {{{2
+snippet end_data
+alias   END
+	${1:p} DATA.read
+
+	__END__
+	${0}
+
+# here_document {{{2
+snippet here_document
+alias   eos EOS
+	lines = ~<<-EOS.chomp
+	${0}
+	EOS
+
+	class String
+		# ignore indent in here document body
+		def ~
+			margin = scan(/^ +/).map(&:size).min
+			gsub(/^ {#{margin}}/, '')
+		end
+	end
+
