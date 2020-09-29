@@ -4,4 +4,5 @@ tags
 *.tags
 .local.*
 .ruby-version
+vendor/bundle
 
