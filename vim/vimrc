@@ -241,6 +241,10 @@ syn match MyTodo /\v\c \[?(TODO|FIXME)\]?:? /hs=s+1,he=e-1 containedin=ALL
 hi MyTodo term=standout ctermfg=12 gui=bold guifg=#666666 guibg=yellow
 hi! link Todo MyTodo
 au myvimrc Syntax * syn match MyTodo /\v\c \[?(TODO|FIXME)\]?:? /hs=s+1,he=e-1 containedin=ALL
+" NOTEを常にハイライト
+syn match MyNote /\v\c \[?NOTE\]?:? /hs=s+1,he=e-1 containedin=ALL
+hi MyNote term=standout ctermfg=12 gui=bold guifg=#333333 guibg=green
+au myvimrc Syntax * syn match MyNote /\v\c \[?NOTE\]?:? /hs=s+1,he=e-1 containedin=ALL
 " 遅延描画
 " set lazyredraw
 " 行を強調表示
