@@ -88,6 +88,16 @@ site '*://mail.google.com/*' {
   unmap gc
 }
 
+site '*://calendar.google.com/*' {
+  unmap t
+  unmap d
+  unmap w
+  unmap m
+  unmap y
+  unmap /
+  unmap ?
+}
+
 site '*://drive.google.com/*' {
   unmap s
   unmap n
@@ -157,6 +167,7 @@ map W :new @%
 
 " ヤンク {{{1
 map y yankDocumentUrl
+map Y :call copy_title_and_url()<CR>
 " plain: Title + URL
 map gy :call copy_title_and_url(0)<CR>
 " markdown: Title + URL
@@ -186,8 +197,6 @@ copy_title_and_url(mode) -> {{
   Clipboard.copy(fmt);
 }}
 "}}}
-" ヒントURLをヤンク
-map Y yankUrl
 
 " マーク {{{1
 map m* setMark
