@@ -37,6 +37,7 @@ export PKG_CONFIG_PATH="$PKG_CONFIG_PATH /usr/local/opt/qt/lib/pkgconfig"
 export DOTFILES=~/lib/dotfiles
 export FZF_TMUX=1
 export XDG_CONFIG_HOME=~/.config
+export EXA_COLORS='da=34:uu=32:sn=1;36:sb=36'
 
 # local
 [ -f ~/.local.zprofile ] && source ~/.local.zprofile
