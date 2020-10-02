@@ -9,10 +9,6 @@ HISTFILE=~/.histfile
 HISTSIZE=3000
 SAVEHIST=3000
 
-## Keybind {{{1
-bindkey -d
-bindkey -e
-
 ## Alias {{{1
 alias ls='exa --time-style=long-iso --time=modified'
 alias ll='ls -lh'
@@ -252,6 +248,29 @@ ios_update() {
 simple_http_server() {
   python -m http.server 8000
 }
+
+## Keybind {{{1
+### emacs mode
+bindkey -d
+bindkey -e
+### カーソル移動
+bindkey '^H' backward-char
+bindkey '^L' forward-char
+bindkey '^B' backward-word
+bindkey '^W' forward-word
+# bindkey '^D' forward-backward-delete-char #zshにない
+### Custom
+zle -N _fzf-git_branch
+bindkey '^G' _fzf-git_branch
+# zle -N _fzf-t
+# bindkey '^T' _fzf-t
+bindkey '^T' fzf-file-widget
+zle -N ghqcd
+bindkey '^Q' ghqcd
+
+### キーバインド解除
+tty -s && stty stop  undef # C-s
+tty -s && stty start undef # C-q
 
 
 ## Zinit {{{1
