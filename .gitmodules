@@ -20,3 +20,6 @@
 [submodule "lib/flutter"]
 	path = lib/flutter
 	url = https://github.com/flutter/flutter.git
+[submodule "lib/Smyck-Color-Scheme"]
+	path = lib/Smyck-Color-Scheme
+	url = https://github.com/hukl/Smyck-Color-Scheme.git
