@@ -1,6 +1,6 @@
 ## Completion {{{1
 zstyle ':completion:*' completer _complete _ignored
-zstyle :compinstall filename '/Users/jiro/.zshrc'
+zstyle :compinstall filename '~/.zshrc'
 autoload -Uz compinit
 compinit
 
@@ -106,7 +106,9 @@ _fzf-git_branch() {
   # selected=$(git branch -a | sed -e "s/remotes\/[^\/]\{1,\}\/\(HEAD -> [^\/]\{1,\}\/\)\{0,1\}//" | sort -r | uniq | $fzf | cut -b 3- | tr '\n' ' ')
   selected=$(git branch -a | sed -e "s/remotes\/[^\/]\{1,\}\/\(HEAD -> [^\/]\{1,\}\/\)\{0,1\}//" | sort -r | uniq | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%} --preview 'echo {} | cut -b 3- | xargs git log --color --graph --decorate --name-status -n 10 --parents' | cut -b 3- | tr '\n' ' ')
   if [ -n "$selected" ]; then
-    echo -n "$selected"
+    BUFFER+="$selected"
+    CURSOR=${#BUFFER}
+    zle redisplay
     return 0
   fi
 }
@@ -118,7 +120,9 @@ _fzf-t() {
   # selected=$(rg --files --hidden --follow --glob '!.git/*' | $fzf)
   selected=$(rg --files --hidden --follow --glob '!.git/*' | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%} --preview 'bat --color=always --style=header,grid --line-range :100 {}')
   if [ -n "$selected" ]; then
-    echo -n "$selected"
+    BUFFER+="$selected"
+    CURSOR=${#BUFFER}
+    zle redisplay
     return 0
   fi
 }
@@ -127,7 +131,9 @@ _fzf-t() {
 ghqcd() {
   local dir fzf
   [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux -d ${FZF_TMUX_HEIGHT:-40%}" || fzf="fzf"
-  dir=$(ghq list | fzf-tmux --reverse) && cd $(ghq root)/$dir
+  dir=$(ghq list | fzf-tmux --reverse)
+  BUFFER="cd $(ghq root)/$dir"
+  zle accept-line
 }
 
 ### rm derived data {{{2
