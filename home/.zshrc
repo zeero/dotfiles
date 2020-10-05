@@ -6,8 +6,8 @@ compinit
 
 ## History {{{1
 HISTFILE=~/.histfile
-HISTSIZE=3000
-SAVEHIST=3000
+HISTSIZE=10000
+SAVEHIST=10000
 
 ## Alias {{{1
 alias ls='exa --time-style=long-iso --time=modified'
@@ -267,10 +267,32 @@ bindkey '^G' _fzf-git_branch
 bindkey '^T' fzf-file-widget
 zle -N ghqcd
 bindkey '^Q' ghqcd
-
 ### キーバインド解除
 tty -s && stty stop  undef # C-s
 tty -s && stty start undef # C-q
+
+## setopt {{{1
+# 日本語ファイル名を表示可能にする
+setopt print_eight_bit
+# beep を無効にする
+setopt no_beep
+# '#' 以降をコメントとして扱う
+setopt interactive_comments
+# cd したら自動的にpushdする
+setopt auto_pushd
+DIRSTACKSIZE=10
+# 同時に起動したzshの間でヒストリを共有する
+setopt share_history
+# 同じコマンドをヒストリに残さない
+setopt hist_ignore_all_dups
+# 高機能なワイルドカード展開を使用する
+setopt extended_glob
+
+## zstyle {{{1
+# 補完で小文字でも大文字にマッチさせる
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+# sudo の後ろでコマンド名を補完する
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
 
 
 ## Zinit {{{1
