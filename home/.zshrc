@@ -329,6 +329,7 @@ zinit light marzocchi/zsh-notify
 
 # A fast, customizable, pure-shell, asynchronous Git prompt for Zsh.
 zinit light woefe/git-prompt.zsh
+which mawk > /dev/null 2>&1 && ZSH_GIT_PROMPT_AWK_CMD=mawk
 ZSH_GIT_PROMPT_SHOW_STASH=1
 ZSH_GIT_PROMPT_SHOW_UPSTREAM="symbol"
 ZSH_THEME_GIT_PROMPT_PREFIX="[ "
