@@ -330,13 +330,13 @@ zinit light marzocchi/zsh-notify
 # A fast, customizable, pure-shell, asynchronous Git prompt for Zsh.
 zinit light woefe/git-prompt.zsh
 ZSH_GIT_PROMPT_SHOW_STASH=1
-ZSH_GIT_PROMPT_SHOW_UPSTREAM="no"
+ZSH_GIT_PROMPT_SHOW_UPSTREAM="symbol"
 ZSH_THEME_GIT_PROMPT_PREFIX="[ "
 ZSH_THEME_GIT_PROMPT_SUFFIX=" ] "
 ZSH_THEME_GIT_PROMPT_SEPARATOR=" |"
 ZSH_THEME_GIT_PROMPT_DETACHED="%{$fg_bold[cyan]%}:"
 ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
-ZSH_THEME_GIT_PROMPT_UPSTREAM_SYMBOL="%{$fg_bold[yellow]%}⟳ "
+ZSH_THEME_GIT_PROMPT_UPSTREAM_SYMBOL="%{$fg_bold[yellow]%} ↯"
 ZSH_THEME_GIT_PROMPT_UPSTREAM_PREFIX="%{$fg[red]%}(%{$fg[yellow]%}"
 ZSH_THEME_GIT_PROMPT_UPSTREAM_SUFFIX="%{$fg[red]%})"
 ZSH_THEME_GIT_PROMPT_BEHIND=" ↓ "
