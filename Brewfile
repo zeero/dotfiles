@@ -47,6 +47,7 @@ brew 'ripgrep'
 brew 'bat'
 brew 'exa'
 brew 'fd'
+brew 'mawk'
 
 # Vim {{{1
 brew 'macvim'
