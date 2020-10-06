@@ -349,6 +349,9 @@ zinit load junegunn/fzf-bin
 # Desktop notifications for long-running commands in ZSH.
 zinit light marzocchi/zsh-notify
 
+# Zsh completion for docker and docker-compose.
+zinit light greymd/docker-zsh-completion
+
 # A fast, customizable, pure-shell, asynchronous Git prompt for Zsh.
 zinit light woefe/git-prompt.zsh
 which mawk > /dev/null 2>&1 && ZSH_GIT_PROMPT_AWK_CMD=mawk
