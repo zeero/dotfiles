@@ -296,7 +296,7 @@ setopt extended_glob
 
 ## zstyle {{{1
 # 補完で小文字でも大文字にマッチさせる
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+# zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 # sudo の後ろでコマンド名を補完する
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
 
