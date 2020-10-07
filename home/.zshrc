@@ -132,8 +132,10 @@ ghqcd() {
   local dir fzf
   [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux -d ${FZF_TMUX_HEIGHT:-40%}" || fzf="fzf"
   dir=$(ghq list | fzf-tmux --reverse)
-  BUFFER="cd $(ghq root)/$dir"
-  zle accept-line
+  if [ -n "$dir" ]; then
+    BUFFER="cd $(ghq root)/$dir"
+    zle accept-line
+  fi
 }
 
 ### rm derived data {{{2
@@ -272,7 +274,7 @@ bindkey '^G' _fzf-git_branch
 # bindkey '^T' _fzf-t
 bindkey '^T' fzf-file-widget
 zle -N ghqcd
-bindkey '^Q' ghqcd
+bindkey '^@^@' ghqcd
 ### キーバインド解除
 tty -s && stty stop  undef # C-s
 tty -s && stty start undef # C-q
@@ -375,5 +377,12 @@ ZSH_THEME_GIT_PROMPT_STASHED=" %{$fg[blue]%}⚑ %f"
 ZSH_THEME_GIT_PROMPT_CLEAN=" %{$fg_bold[green]%}✔ %f"
 PROMPT='%T %B%~ %b$(gitprompt)'
 PROMPT+='%(?.%(!.%F{white}❯%F{yellow}❯%F{red}.%F{blue}❯%F{cyan}❯%F{green})❯%f.%F{red}❯❯❯%f) '
-RPROMPT=''
+# RPROMPT=''
+
+# zsh-show-buffer-stack makes the command line stack visible at the prompt.
+zinit light zeero/zsh-show-buffer-stack
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd check-buffer-stack
+RPROMPT='${COMMAND_BUFFER_STACK}'
+bindkey '^q' show-buffer-stack
 
