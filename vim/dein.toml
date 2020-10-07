@@ -79,6 +79,9 @@ depends = ['open-browser.vim']
 repo = 'ctrlpvim/ctrlp.vim'
 
 [[plugins]]
+repo = 'mattn/ctrlp-matchfuzzy'
+
+[[plugins]]
 repo = 'sgur/ctrlp-extensions.vim'
 depends = 'ctrlp.vim'
 
