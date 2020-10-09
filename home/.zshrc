@@ -1,5 +1,9 @@
 ## Completion {{{1
 zstyle ':completion:*' completer _complete _ignored
+### 補完侯補をメニューから選択する。
+### select=2: 補完候補を一覧から選択する。補完候補が2つ以上なければすぐに補完する。
+# zstyle ':completion:*:default' menu select=2
+zstyle ':completion:*:default' menu select interactive
 zstyle :compinstall filename '~/.zshrc'
 autoload -Uz compinit
 compinit
@@ -278,6 +282,16 @@ bindkey '^@^@' ghqcd
 ### キーバインド解除
 tty -s && stty stop  undef # C-s
 tty -s && stty start undef # C-q
+### menu-select
+# "bindkey -M menuselect"設定できるようにするためのモジュールロード
+zmodload zsh/complist
+bindkey -M menuselect '^[' send-break
+bindkey -M menuselect '^i' down-line-or-history
+bindkey -M menuselect '^e' accept-and-infer-next-history
+bindkey -M menuselect '^h' vi-backward-char
+bindkey -M menuselect '^k' vi-up-line-or-history
+bindkey -M menuselect '^l' vi-forward-char
+bindkey -M menuselect '^j' vi-down-line-or-history
 
 ## setopt {{{1
 # 日本語ファイル名を表示可能にする
@@ -294,7 +308,18 @@ setopt share_history
 # 同じコマンドをヒストリに残さない
 setopt hist_ignore_all_dups
 # 高機能なワイルドカード展開を使用する
-setopt extended_glob
+# Note: HEAD^ や url?param=value でエスケープが必要になるので、いったんオフ。**は優秀なので使いたいけど、、
+# setopt extended_glob
+# ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
+setopt auto_param_slash
+# ファイル名の展開でディレクトリにマッチした場合 末尾に / を付加
+setopt mark_dirs
+# カッコの対応などを自動的に補完
+setopt auto_param_keys
+# コマンドラインの引数で --prefix=/usr などの = 以降でも補完できる
+setopt magic_equal_subst
+# 語の途中でもカーソル位置で補完
+setopt complete_in_word
 
 ## zstyle {{{1
 # 補完で小文字でも大文字にマッチさせる
