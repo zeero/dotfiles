@@ -46,4 +46,5 @@ NSGlobalDomain:
 "com.apple.dt.Xcode":
   "ShowBuildOperationDuration": true
   "IDEBuildOperationMaxNumberOfConcurrentCompileTasks": 4
+  "IDEEditorNavigationStyle_DefaultsKey": "IDEEditorNavigationStyle_OpenInPlace"
 
