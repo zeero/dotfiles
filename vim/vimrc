@@ -1794,7 +1794,7 @@ function! MyExternalOpenFunc(action, line) "{{{
     call call('ctrlp#acceptfile', [a:action, a:line])
   endif
 endfunction "}}}
-let g:ctrlp_match_func = {'match': 'ctrlp_matchfuzzy#matcher'}
+" let g:ctrlp_match_func = {'match': 'ctrlp_matchfuzzy#matcher'}
 
 " NeoSnippet {{{1
 " KEYMAP:

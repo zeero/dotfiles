@@ -4,7 +4,7 @@
 ## man
 export MANPATH=/usr/share/man/:/usr/local/share/man/:/usr/local/man:/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
 ## man とかを見るときはいつも bat を使う。
-export PAGER=bat
+export PAGER='bat --plain'
 ## less のステータス行にファイル名と行数、いま何%かを表示するようにする。
 export LESS='-R -X -i -P ?f%f:(stdin).  ?lb%lb?L/%L..  [?eEOF:?pb%pb\%..]'
 ## デフォルトのエディタ
