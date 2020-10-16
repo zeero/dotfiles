@@ -1452,6 +1452,7 @@ cnoremap <C-@>: <C-r>=strftime('%H%M%S')<CR>
 " YankRound
 inoremap <C-@>y <C-o>:CtrlPYankRound<CR>
 nnoremap <C-@>y :CtrlPYankRound<CR>
+inoremap <expr> <C-d> col('.') == col('$') ? '<BS>' : '<Del>'
 
 " コマンドモード {{{2
 " 移動
