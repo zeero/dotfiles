@@ -16,10 +16,28 @@ brew 'go'
 tap 'dart-lang/dart'
 brew 'dart'
 
+# Utility {{{1
+brew 'cask'
+cask 'alfred'
+cask 'spectacle'
+cask 'witch'
+cask 'karabiner-elements'
+
+# Application {{{1
+cask 'coteditor'
+cask 'google-japanese-ime'
+cask 'google-chrome'
+cask 'slack'
+cask 'iterm2'
+cask 'appcleaner'
+cask 'ios-console'
+cask 'skitch'
+cask 'imageoptim'
+cask 'image2icon'
+
 # Command {{{1
 # gitははじめに手動でいれる
 # brew 'git'
-brew 'cask'
 brew 'curl'
 brew 'wget'
 brew 'openssl'
@@ -86,27 +104,7 @@ cask 'adoptopenjdk8'
 # MiddleWare
 brew 'nginx'
 
-# Utility {{{1
-cask 'alfred'
-cask 'spectacle'
-cask 'witch'
-cask 'karabiner-elements'
-
-# Application {{{1
-cask 'iterm2'
-cask 'google-chrome'
-cask 'google-japanese-ime'
-cask 'appcleaner'
-cask 'skitch'
-cask 'imageoptim'
-cask 'coteditor'
-cask 'slack'
-cask 'ios-console'
-cask 'image2icon'
-cask 'drawio'
-
 # AppStore {{{1
 brew 'mas'
 mas 'Apple Configurator 2', id: 1037126344
 mas 'Pocket', id: 568494494
-
