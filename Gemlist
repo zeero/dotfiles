@@ -8,6 +8,7 @@ rdoc-generator-fivefish
 refe2
 rest-client
 ruboty-megen
+solargraph
 specific_install
 sqlint
 synx
@@ -19,7 +20,6 @@ pry-doc
 pry-theme
 activesupport
 cocoapods
-solargraph:0.18.0
 
 __EOF__
 xargsのオプション（-E）で__EOF__以降は無視する
