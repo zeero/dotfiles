@@ -103,9 +103,6 @@ cask 'github'
 cask 'android-studio'
 cask 'adoptopenjdk8'
 
-# MiddleWare
-brew 'nginx'
-
 # AppStore {{{1
 brew 'mas'
 mas 'Apple Configurator 2', id: 1037126344
