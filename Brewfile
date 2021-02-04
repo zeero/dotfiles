@@ -71,7 +71,6 @@ brew 'py-markdown2ctags'
 cask 'font-ricty_diminished-devicon'
 
 # Development Tool {{{1
-cask 'realm-studio'
 cask 'sourcetree'
 brew 'jsonlint'
 brew 'terminal-notifier'
@@ -108,6 +107,8 @@ cask 'slack'
 cask 'ios-console'
 cask 'image2icon'
 cask 'drawio'
+cask 'deepl'
+cask 'miro'
 
 # AppStore {{{1
 brew 'mas'
