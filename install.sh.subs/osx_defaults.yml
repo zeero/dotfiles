@@ -3,17 +3,10 @@ NSGlobalDomain:
   AppleShowAllExtensions: true
   # フルスクリーンを維持するため、アプリケーション終了時のウィンドウの復元をする
   NSQuitAlwaysKeepsWindows: true
-
-"com.apple.AppleMultitouchTrackpad":
-  "TrackpadCornerSecondaryClick": 2
-  "TrackpadRightClick": false
-
-"com.apple.driver.AppleBluetoothMultitouch.trackpad":
-  "TrackpadCornerSecondaryClick": 2
-  "TrackpadRightClick": false
-
-"com.apple.dock":
-  "showAppExposeGestureEnabled": true
+  ContextMenuGesture: 1
+  InitialKeyRepeat: 15
+  KeyRepeat: 2
+  "com.apple.swipescrolldirection": 0
 
 "com.apple.preference.general":
   "version": 1
@@ -22,17 +15,27 @@ NSGlobalDomain:
   "DragLock": true
   "Clicking": true
   "Dragging": true
+  "TrackpadCornerSecondaryClick": 2
+  "TrackpadRightClick": false
 
 "com.apple.driver.AppleBluetoothMultitouch.trackpad":
   "DragLock": true
   "Clicking": true
   "Dragging": true
+  "TrackpadCornerSecondaryClick": 2
+  "TrackpadRightClick": false
 
 # Dock
 "com.apple.dock":
   "tilesize": 32
+  "largesize": 128
   "magnification": true
   "autohide": true
+  "showAppExposeGestureEnabled": true
+
+# Finder
+"com.apple.finder":
+  "ShowStatusBar": true
 
 # iTerm2
 "com.googlecode.iterm2":
