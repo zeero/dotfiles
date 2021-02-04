@@ -12,22 +12,39 @@ brew 'nodebrew'
 # brew 'node', args: ['with-full-icu']
 # brew 'npm'
 brew 'zsh'
-cask 'java'
 brew 'go'
 tap 'dart-lang/dart'
 brew 'dart'
 
+# Utility {{{1
+brew 'cask'
+cask 'alfred'
+cask 'spectacle'
+cask 'witch'
+cask 'karabiner-elements'
+
+# Application {{{1
+cask 'coteditor'
+cask 'google-japanese-ime'
+cask 'google-chrome'
+cask 'slack'
+cask 'iterm2'
+cask 'appcleaner'
+cask 'ios-console'
+cask 'skitch'
+cask 'imageoptim'
+cask 'image2icon'
+cask 'deepl'
+cask 'miro'
+
 # Command {{{1
 # gitははじめに手動でいれる
 # brew 'git'
-brew 'cask'
 brew 'curl'
 brew 'wget'
 brew 'openssl'
 brew 'coreutils'
 brew 'findutils'
-brew 'bash-completion'
-brew 'bash-git-prompt'
 brew 'tmux'
 brew 'reattach-to-user-namespace'
 brew 'git-now'
@@ -48,6 +65,7 @@ brew 'bat'
 brew 'exa'
 brew 'fd'
 brew 'mawk'
+brew 'itchyny/tap/mmv'
 
 # Vim {{{1
 brew 'macvim'
@@ -76,6 +94,7 @@ brew 'jsonlint'
 brew 'terminal-notifier'
 brew 'docker'
 cask 'docker'
+brew 'docker-compose'
 brew 'ghq'
 brew 'gibo'
 brew 'mint'
@@ -87,31 +106,7 @@ cask 'adoptopenjdk8'
 # MiddleWare
 brew 'nginx'
 
-# Utility {{{1
-cask 'alfred'
-cask 'clipy'
-cask 'spectacle'
-cask 'witch'
-cask 'cmd-eikana'
-cask 'karabiner-elements'
-
-# Application {{{1
-cask 'iterm2'
-cask 'google-chrome'
-cask 'google-japanese-ime'
-cask 'appcleaner'
-cask 'skitch'
-cask 'imageoptim'
-cask 'coteditor'
-cask 'slack'
-cask 'ios-console'
-cask 'image2icon'
-cask 'drawio'
-cask 'deepl'
-cask 'miro'
-
 # AppStore {{{1
 brew 'mas'
 mas 'Apple Configurator 2', id: 1037126344
 mas 'Pocket', id: 568494494
-
