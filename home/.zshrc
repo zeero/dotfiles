@@ -131,6 +131,18 @@ _fzf-t() {
   fi
 }
 
+### _fzf-r {{{2
+_fzf-r() {
+  local selected fzf
+  selected=$(history -n -r 1 | fzf-tmux -d ${FZF_TMUX_HEIGHT:-40%})
+  if [ -n "$selected" ]; then
+    BUFFER="$selected"
+    CURSOR=${#BUFFER}
+    zle redisplay
+    return 0
+  fi
+}
+
 ### ghqcd {{{2
 ghqcd() {
   local dir fzf
@@ -277,6 +289,9 @@ bindkey '^G' _fzf-git_branch
 # zle -N _fzf-t
 # bindkey '^T' _fzf-t
 bindkey '^T' fzf-file-widget
+# zle -N _fzf-r
+# bindkey '^R' _fzf-r
+bindkey '^R' fzf-history-widget
 zle -N ghqcd
 bindkey '^@^@' ghqcd
 ### キーバインド解除
@@ -358,7 +373,7 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma/fast-syntax-highlighting
 
 # Plugin history-search-multi-word loaded with investigating.
-zinit load zdharma/history-search-multi-word
+# zinit load zdharma/history-search-multi-word
 
 # # Load the pure theme, with zsh-async library that's bundled with it.
 # zinit ice compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
