@@ -394,6 +394,9 @@ zinit light marzocchi/zsh-notify
 # Zsh completion for docker and docker-compose.
 zinit light greymd/docker-zsh-completion
 
+# zle tweak for git command line arguments
+zinit snippet https://raw.githubusercontent.com/knu/zsh-git-escape-magic/master/git-escape-magic
+
 # A fast, customizable, pure-shell, asynchronous Git prompt for Zsh.
 zinit light woefe/git-prompt.zsh
 which mawk > /dev/null 2>&1 && ZSH_GIT_PROMPT_AWK_CMD=mawk
