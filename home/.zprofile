@@ -16,7 +16,7 @@ HOMEBREW_PREFIX=$(brew --prefix)
 ## man
 export MANPATH=/usr/share/man/:$HOMEBREW_PREFIX/share/man/:$HOMEBREW_PREFIX/man:$(brew --prefix coreutils)/libexec/gnuman:$MANPATH
 ## man とかを見るときはいつも bat を使う。
-export BAT_PAGER='bat --plain'
+export BAT_PAGER='bat'
 ## less のステータス行にファイル名と行数、いま何%かを表示するようにする。
 export LESS='-R -X -i -P ?f%f:(stdin).  ?lb%lb?L/%L..  [?eEOF:?pb%pb\%..]'
 ## デフォルトのエディタ

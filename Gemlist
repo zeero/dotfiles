@@ -20,6 +20,7 @@ pry-doc
 pry-theme
 activesupport
 cocoapods
+xcode-install
 
 __EOF__
 xargsのオプション（-E）で__EOF__以降は無視する
