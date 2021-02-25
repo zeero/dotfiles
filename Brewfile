@@ -66,6 +66,7 @@ brew 'exa'
 brew 'fd'
 brew 'mawk'
 brew 'itchyny/tap/mmv'
+brew 'translate-shell'
 
 # Vim {{{1
 brew 'macvim'
