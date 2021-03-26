@@ -26,6 +26,8 @@ alias bi='bundle install'
 alias rails='bundle exec rails'
 alias rake='bundle exec rake'
 alias dc='docker-compose'
+alias publish='ngrok http'
+alias publish8080='ngrok http 8080'
 
 ## External Load {{{1
 ### .local.zshrc
