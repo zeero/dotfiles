@@ -50,4 +50,8 @@ NSGlobalDomain:
   "ShowBuildOperationDuration": true
   "IDEBuildOperationMaxNumberOfConcurrentCompileTasks": 4
   "IDEEditorNavigationStyle_DefaultsKey": "IDEEditorNavigationStyle_OpenInPlace"
+  "IDECommandClickOnCodeAction": 1
+  "IDEEditorCoordinatorTarget_Alternate": "SeparateTab"
+  "IDEEditorCoordinatorTarget_DoubleClick": "SeparateTab"
+  "IDEEditorCoordinatorTarget_ShiftPlusAlternate": "Ask"
 
