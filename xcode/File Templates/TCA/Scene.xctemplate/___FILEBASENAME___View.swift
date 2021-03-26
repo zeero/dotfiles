@@ -23,14 +23,6 @@ struct ___VARIABLE_sceneName___View: View {
 
 struct ___VARIABLE_sceneName___View_Previews: PreviewProvider {
     static var previews: some View {
-        ___VARIABLE_sceneName___View(
-            store: Store(
-                initialState: ___VARIABLE_sceneName___State(),
-                reducer: ___VARIABLE_sceneName___State.reducer,
-                environment: ___VARIABLE_sceneName___State.Environment(
-                    mainQueue: DispatchQueue.main.eraseToAnyScheduler()
-                )
-            )
-        )
+        ___VARIABLE_sceneName___SceneBuilder.mock.build()
     }
 }
