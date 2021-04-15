@@ -78,7 +78,7 @@ nmap ,b :xccmd toggleBreakpointAtCurrentLine<CR>
 nmap ,= :xcmenucmd Fix All Issues<CR>
 
 " テスト実行
-nmap ,r :xccmd editAndTestActiveRunContext<CR>
+nmap ,r :xccmd testActiveRunContext<CR>
 nmap ,R :xcmenucmd Test Again<CR>
 
 " リファクタ
