@@ -52,6 +52,7 @@ git config --global commit.template "~/.git-commit-template"
 git config --global merge.tool vimdiff
 git config --global mergetool.keepBackup false
 git config --global fetch.prune true
+git config --global ghq.root "~/dev"
 git config --global alias.co "checkout"
 git config --global alias.st "status"
 # ログをグラフ表示
@@ -63,7 +64,7 @@ git config --global alias.noignore "update-index --no-skip-worktree"
 git config --global alias.stashdiff "diff HEAD..stash@{0}"
 git config --global alias.amend "commit --amend --no-edit"
 git config --global alias.wdiff "diff --word-diff"
-git config --global ghq.root "~/dev"
+git config --global alias.head "rev-parse HEAD"
 
 echo gitのuser.name/user.email/github.userを設定してください
 echo git config --global user.name zeero
