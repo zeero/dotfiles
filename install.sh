@@ -4,6 +4,7 @@
 # - Xcode install
 #   - sudo xcode-select -s /Applications/Xcode.app
 #   - インストールが終わってから次へ進むこと
+# - chsh -s /bin/zsh
 # - Homebrew install
 # - brew install git
 # - git clone https://github.com/zeero/dotfiles.git
@@ -63,6 +64,7 @@ git config --global alias.noignore "update-index --no-skip-worktree"
 git config --global alias.stashdiff "diff HEAD..stash@{0}"
 git config --global alias.amend "commit --amend --no-edit"
 git config --global alias.wdiff "diff --word-diff"
+git config --global alias.pick "cherry-pick"
 git config --global ghq.root "~/dev"
 
 echo gitのuser.name/user.email/github.userを設定してください
@@ -106,4 +108,8 @@ open $DOTFILES/lib/Smyck-Color-Scheme/Smyck.itermcolors
 echo "・ダブルタップでドラッグするために「システム環境設定」の「アクセシビリティ」→「マウスとトラックパッド」→「トラックパッドオプション」→「ドラッグロック」を有効にする"
 echo "・キー移動を速くするために「システム環境設定」の「キーボード」からキーリピート、リピート認識を最大にする"
 echo "・シフトスペースをVimに送るためにGoogleIMEの英語キーボードを導入すること"
+echo "・システム環境設定＞Mission Control＞最新の使用状況に基づいて操作スペースを自動的に並び替える、をオフにする"
+echo "・AlfredでMacVimを検索できるようにする"
+echo "　・MacVimのエイリアスをApplicationsに配置"
+echo "　・Alfred設定＞Default Result＞Extras＞com.apple.alias-fileを追加"
 

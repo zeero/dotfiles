@@ -16,7 +16,7 @@ HOMEBREW_PREFIX=$(brew --prefix)
 ## man
 export MANPATH=/usr/share/man/:$HOMEBREW_PREFIX/share/man/:$HOMEBREW_PREFIX/man:$(brew --prefix coreutils)/libexec/gnuman:$MANPATH
 ## man とかを見るときはいつも bat を使う。
-export BAT_PAGER='bat'
+export BAT_PAGER='less -FRX'
 ## less のステータス行にファイル名と行数、いま何%かを表示するようにする。
 export LESS='-R -X -i -P ?f%f:(stdin).  ?lb%lb?L/%L..  [?eEOF:?pb%pb\%..]'
 ## デフォルトのエディタ
@@ -51,10 +51,10 @@ RUBY_CONFIGURE_OPTS="--with-openssl-dir=$OPENSSL_PREFIX"
 RUBY_CONFIGURE_OPTS="$RUBY_CONFIGURE_OPTS --with-readline-dir=$READLINE_PREFIX"
 export RUBY_CONFIGURE_OPTS
 
-# Java
-export _JAVA_OPTIONS='-Dfile.encoding=UTF-8'
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-export PATH=$JAVA_HOME/bin:$PATH
+# # Java
+# export _JAVA_OPTIONS='-Dfile.encoding=UTF-8'
+# export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+# export PATH=$JAVA_HOME/bin:$PATH
 
 # Node.js
 export NODE_PATH=$NODE_PATH:`npm root -g`
