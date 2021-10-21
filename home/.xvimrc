@@ -84,7 +84,9 @@ nmap ,R :xcmenucmd Test Again<CR>
 " リファクタ
 nmap ,c :xcmenucmd Rename...<CR>
 
+" アウトライン表示
 nmap ,; :xcmenucmd Show Document Items<CR>
+nmap <C-9> :xcmenucmd Show Document Items<CR>
 
 " gy
 nmap gy :!echo %:t | pbcopy<CR>
