@@ -1880,7 +1880,7 @@ let g:quickrun_config = {
 \    'outputter': 'error',
 \    'outputter/error': 'quickfix',
 \    'outputter/error/success': 'buffer',
-\    'outputter/buffer/split': ':belowright 5',
+\    'outputter/buffer/opener': '5new',
 \    'outputter/buffer/close_on_empty': 1,
 \    'hook/animation/enable': 1,
 \    'hook/animation/wait': 10,
