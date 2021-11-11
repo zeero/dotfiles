@@ -58,7 +58,7 @@ export RUBY_CONFIGURE_OPTS
 
 # Node.js
 export NODE_PATH=$NODE_PATH:`npm root -g`
-export PATH=~/.nodebrew/current/bin:$PATH
+export PATH=~/.nodebrew/current/bin:~/.config/npm/bin:$PATH
 
 # others
 export DOTFILES=~/lib/dotfiles
