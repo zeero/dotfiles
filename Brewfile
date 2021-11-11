@@ -109,3 +109,4 @@ cask 'adoptopenjdk8'
 brew 'mas'
 mas 'Apple Configurator 2', id: 1037126344
 mas 'Pocket', id: 568494494
+mas 'Gapplin', id: 768053424 # SVG Viewer
