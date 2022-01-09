@@ -36,6 +36,7 @@ cask 'imageoptim'
 cask 'image2icon'
 cask 'deepl'
 cask 'miro'
+cask 'vnc-viewer'
 
 # Command {{{1
 # gitははじめに手動でいれる
