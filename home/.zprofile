@@ -1,8 +1,9 @@
 # .bash_profileにはexportする設定値を記載する
 
 # PATH
-PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
 PATH=/usr/local/bin:/usr/local/sbin:$PATH
+PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
+PATH=/opt/homebrew/opt/make/libexec/gnubin:$PATH
 PATH=/opt/mint/bin:$PATH
 PATH=$(brew --prefix python)/libexec/bin:$PATH
 PATH=$HOME/lib/dotfiles/lib/flutter/bin:$PATH
