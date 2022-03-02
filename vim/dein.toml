@@ -1034,6 +1034,12 @@ repo = 'zeero/previm'
 lazy = 1
 on_ft = ['markdown', 'workflowish']
 
+[[plugins]]
+repo = 'iamcco/markdown-preview.nvim'
+lazy = 1
+on_ft = ['markdown', 'workflowish']
+build = 'sh -c "cd app && yarn install"'
+
 # [[plugins]]
 # repo = 'plasticboy/vim-markdown'
 # lazy = 1
