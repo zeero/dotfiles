@@ -1933,6 +1933,13 @@ if executable('swift')
   \ 'exec': '%c %o %s',
   \}
 endif
+if executable('sourcery')
+  au myvimrc BufRead,BufNewFile *.stencil let b:quickrun_config = {'type': 'stencil'}
+  let g:quickrun_config['stencil'] = {
+  \ 'command': 'sourcery',
+  \ 'exec': '%c',
+  \}
+endif
 
 " vim {{{2
 " themis
