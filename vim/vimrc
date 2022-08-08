@@ -1933,6 +1933,14 @@ if executable('swift')
   \ 'exec': '%c %o %s',
   \}
 endif
+au myvimrc BufRead,BufNewFile project.yml let b:quickrun_config = {'type': 'xcodegen'}
+if executable('xcodegen')
+  let g:quickrun_config['xcodegen'] = {
+  \ 'command': 'mint',
+  \ 'cmdopt': 'run xcodegen',
+  \ 'exec': '%c %o',
+  \}
+endif
 
 " vim {{{2
 " themis
