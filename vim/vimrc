@@ -1933,12 +1933,20 @@ if executable('swift')
   \ 'exec': '%c %o %s',
   \}
 endif
+<<<<<<< HEAD
 au myvimrc BufRead,BufNewFile project.yml let b:quickrun_config = {'type': 'xcodegen'}
 if executable('xcodegen')
   let g:quickrun_config['xcodegen'] = {
   \ 'command': 'mint',
   \ 'cmdopt': 'run xcodegen',
   \ 'exec': '%c %o',
+=======
+if executable('sourcery')
+  au myvimrc BufRead,BufNewFile *.stencil let b:quickrun_config = {'type': 'stencil'}
+  let g:quickrun_config['stencil'] = {
+  \ 'command': 'sourcery',
+  \ 'exec': '%c',
+>>>>>>> e384d693324aa956b179b112b5da80cec0076696
   \}
 endif
 

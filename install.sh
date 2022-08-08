@@ -66,6 +66,7 @@ git config --global alias.noignore "update-index --no-skip-worktree"
 git config --global alias.stashdiff "diff HEAD..stash@{0}"
 git config --global alias.amend "commit --amend --no-edit"
 git config --global alias.wdiff "diff --word-diff -w"
+git config --global alias.vdiff "difftool --tool=vimdiff --no-prompt"
 git config --global alias.pick "cherry-pick"
 git config --global alias.head "rev-parse HEAD"
 
