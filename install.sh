@@ -1,14 +1,5 @@
 #!/bin/bash
 
-# Requirements
-# - Xcode install
-#   - sudo xcode-select -s /Applications/Xcode.app
-#   - インストールが終わってから次へ進むこと
-# - chsh -s /bin/zsh
-# - Homebrew install
-# - brew install git
-# - git clone https://github.com/zeero/dotfiles.git
-
 cd `dirname $0`
 DOTFILES=`pwd`
 SUBS=install.sh.subs
@@ -25,11 +16,6 @@ mkdir ~/log
 
 # HomeBrew
 brew bundle
-
-# XVim2
-cd `dirname $0`/lib/XVim2
-make
-cd `dirname $0`
 
 # symlink
 ./${SUBS}/symlink.sh
