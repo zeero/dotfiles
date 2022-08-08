@@ -30,7 +30,7 @@ export LDFLAGS=
 export CPPFLAGS=
 export PKG_CONFIG_PATH=
 ## OpenSSL
-OPENSSL_PREFIX=$(brew --prefix openssl)
+OPENSSL_PREFIX=$(brew --prefix openssl@1.1)
 export LDFLAGS="$LDFLAGS -L$OPENSSL_PREFIX/lib"
 export CPPFLAGS="$CPPFLAGS -I$OPENSSL_PREFIX/include"
 export PKG_CONFIG_PATH="$PKG_CONFIG_PATH $OPENSSL_PREFIX/lib/pkgconfig"
