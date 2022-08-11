@@ -4,7 +4,7 @@
 PATH=/usr/local/bin:/usr/local/sbin:$PATH
 PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
 PATH=/opt/homebrew/opt/make/libexec/gnubin:$PATH
-PATH=/opt/mint/bin:$PATH
+PATH=~/.mint/bin:$PATH
 PATH=$(brew --prefix python)/libexec/bin:$PATH
 PATH=$HOME/lib/dotfiles/lib/flutter/bin:$PATH
 PATH=$HOME/bin:$PATH
@@ -66,8 +66,6 @@ export DOTFILES=~/lib/dotfiles
 export FZF_TMUX=1
 export XDG_CONFIG_HOME=~/.config
 export EXA_COLORS='da=34:uu=32:sn=1;36:sb=36'
-export MINT_PATH=/opt/mint/lib
-export MINT_LINK_PATH=/opt/mint/bin
 
 # local
 [ -f ~/.local.zprofile ] && source ~/.local.zprofile
