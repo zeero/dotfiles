@@ -32,6 +32,7 @@ My configuration files.
     * Theme
       * `Default (Dark)` を調整
     * Navigation
+      * Command-click on Code: `Jumps to Definition`
       * Navigation Style: `Open in Place`
       * Navigation: `Used Focused Editor` (this is Default)
       * Optional Navigation: `Uses Separated Window Tab`
