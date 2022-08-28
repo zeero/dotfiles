@@ -52,6 +52,24 @@ RUBY_CONFIGURE_OPTS="--with-openssl-dir=$OPENSSL_PREFIX"
 RUBY_CONFIGURE_OPTS="$RUBY_CONFIGURE_OPTS --with-readline-dir=$READLINE_PREFIX"
 export RUBY_CONFIGURE_OPTS
 
+# Python
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
+        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
 # # Java
 # export _JAVA_OPTIONS='-Dfile.encoding=UTF-8'
 # export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
@@ -71,4 +89,3 @@ export MINT_LINK_PATH=/opt/mint/bin
 
 # local
 [ -f ~/.local.zprofile ] && source ~/.local.zprofile
-
