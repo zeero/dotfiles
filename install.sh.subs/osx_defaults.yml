@@ -6,7 +6,8 @@ NSGlobalDomain:
   ContextMenuGesture: 1
   InitialKeyRepeat: 15
   KeyRepeat: 2
-  "com.apple.swipescrolldirection": 0
+  # 誤作動するのでコメントアウト（スクロールの方向ネイティブ外す）
+  # "com.apple.swipescrolldirection": 0
 
 "com.apple.preference.general":
   "version": 1
