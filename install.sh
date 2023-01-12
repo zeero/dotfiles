@@ -1,14 +1,5 @@
 #!/bin/bash
 
-# Requirements
-# - Xcode install
-#   - sudo xcode-select -s /Applications/Xcode.app
-#   - インストールが終わってから次へ進むこと
-# - chsh -s /bin/zsh
-# - Homebrew install
-# - brew install git
-# - git clone https://github.com/zeero/dotfiles.git
-
 cd `dirname $0`
 DOTFILES=`pwd`
 SUBS=install.sh.subs
@@ -25,11 +16,6 @@ mkdir ~/log
 
 # HomeBrew
 brew bundle
-
-# XVim2
-cd `dirname $0`/lib/XVim2
-make
-cd `dirname $0`
 
 # symlink
 ./${SUBS}/symlink.sh
@@ -90,12 +76,12 @@ read -p "Press Enter to resume..."
 ./${SUBS}/node.001.nodebrew.sh
 ./${SUBS}/node.002.npm_install.sh
 
+# python
+./${SUBS}/pip_install.sh
+
 # vim
 ## coc.nvim (require npm)
 ./${SUBS}/vim.001.coc.sh
-
-# python
-./${SUBS}/pip_install.sh
 
 # plist
 ./${SUBS}/osx_defaults.sh
@@ -107,13 +93,4 @@ open alfred://customsearch/Github/hub/utf8/nospace/https%3A%2F%2Fgithub.com%2Fse
 
 # iTerm2 Color
 open $DOTFILES/lib/Smyck-Color-Scheme/Smyck.itermcolors
-
-# その他設定
-echo "・ダブルタップでドラッグするために「システム環境設定」の「アクセシビリティ」→「マウスとトラックパッド」→「トラックパッドオプション」→「ドラッグロック」を有効にする"
-echo "・キー移動を速くするために「システム環境設定」の「キーボード」からキーリピート、リピート認識を最大にする"
-echo "・シフトスペースをVimに送るためにGoogleIMEの英語キーボードを導入すること"
-echo "・システム環境設定＞Mission Control＞最新の使用状況に基づいて操作スペースを自動的に並び替える、をオフにする"
-echo "・AlfredでMacVimを検索できるようにする"
-echo "　・MacVimのエイリアスをApplicationsに配置"
-echo "　・Alfred設定＞Default Result＞Extras＞com.apple.alias-fileを追加"
 

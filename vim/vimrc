@@ -1437,10 +1437,8 @@ inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <S-CR> <C-o>O
 inoremap <C-@><CR> <C-o>:SplitjoinSplit<CR><Down><Home>
-" 文字削除（NeoCompleteで設定するためコメントアウト）
-" inoremap <C-d> <Del>
-" CTRL-Uのundo対策（from exaple.vim）
-inoremap <C-u> <C-g>u<C-u>
+" CTRL-Uのundo対策（from exaple.vim）（Cocで設定するためコメントアウト）
+" inoremap <C-u> <C-g>u<C-u>
 " 日時の挿入
 inoremap <expr> <C-@>; strftime('%Y/%m/%d')
 inoremap <expr> <C-@>: strftime('%H:%M:%S')
@@ -1933,6 +1931,14 @@ if executable('swift')
   \ 'exec': '%c %o %s',
   \}
 endif
+au myvimrc BufRead,BufNewFile project.yml let b:quickrun_config = {'type': 'xcodegen'}
+if executable('xcodegen')
+  let g:quickrun_config['xcodegen'] = {
+  \ 'command': 'mint',
+  \ 'cmdopt': 'run xcodegen',
+  \ 'exec': '%c %o',
+  \}
+endif
 if executable('sourcery')
   au myvimrc BufRead,BufNewFile *.stencil let b:quickrun_config = {'type': 'stencil'}
   let g:quickrun_config['stencil'] = {
@@ -2112,19 +2118,22 @@ au! myvimrc CursorHold * silent call CocActionAsync('highlight')
 
 " Keymaps {{{2
 " Use tab for trigger completion with characters ahead and navigate.
-inoremap <silent><expr> <Tab>
-\ pumvisible() ? '<C-n>' : '<C-t>'
-inoremap <expr> <S-Tab>
-\ pumvisible() ? '<C-p>' : '<C-d>'
-inoremap <expr> <C-n>
-\ pumvisible() ? '<C-n>' : coc#refresh()
-imap <expr> <C-e>
+inoremap <silent><expr> <TAB>
+\ coc#pum#visible() ? coc#pum#next(1) :
+\ <SID>check_backspace() ? "\<Tab>" :
+\ coc#refresh()
+function! s:check_backspace() abort "{{{
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction "}}}
+inoremap <silent><expr> <S-TAB>
+\ coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <C-e>
 \ neosnippet#expandable_or_jumpable() ? '<Plug>(neosnippet_expand_or_jump)' :
 \ complete_info()['selected'] != '-1' ? '<C-y>' :
-\ pumvisible() ? coc#_select_confirm() : '<End>'
-" <C-u>で補完をキャンセルしたいが設定方法が見つからない..
-" inoremap <expr> <C-u>
-"\ pumvisible() ? coc#_cancel() : '<C-g>u<C-u>'
+\ coc#pum#visible() ? coc#pum#confirm() : '<End>'
+inoremap <expr> <C-u>
+\ coc#pum#visible() ? coc#pum#cancel() : '<C-g>u<C-u>'
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -2136,9 +2145,9 @@ function! s:show_documentation() "{{{
   if (index(['vim', 'help'], &filetype) >= 0)
     execute 'H ' . expand('<cword>')
   else
-    call CocAction('doHover')
+    call CocActionAsync('doHover')
   endif
-endfunction "{{{
+endfunction "}}}
 
 " " asyncomplete {{{1
 " " 基本設定 {{{2

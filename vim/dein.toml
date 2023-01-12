@@ -948,6 +948,14 @@ lazy = 1
 on_ft = ['swift']
 
 
+# Python {{{1
+
+[[plugins]]
+repo = 'cjrh/vim-conda'
+lazy = 1
+on_ft = ['python']
+
+
 # HTML/JavaScript/Markdown {{{1
 
 [[plugins]]

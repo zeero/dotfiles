@@ -1,22 +1,12 @@
 [submodule "vim/dict/pocke_dicts"]
 	path = vim/dict/pocke_dicts
 	url = https://github.com/pocke/dicts
-[submodule "vimperator/vimppm"]
-	path = vimperator/vimppm
-	url = https://github.com/cd01/vimppm.git
-	ignore = dirty
 [submodule "vim/dein/repos/github.com/Shougo/dein.vim"]
 	path = vim/dein/repos/github.com/Shougo/dein.vim
 	url = https://github.com/Shougo/dein.vim.git
 [submodule "home/.tmux/plugins/tpm"]
 	path = home/.tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
-[submodule "vim/plugged/vim-plug"]
-	path = vim/plugged/vim-plug
-	url = https://github.com/junegunn/vim-plug.git
-[submodule "lib/XVim2"]
-	path = lib/XVim2
-	url = https://github.com/XVimProject/XVim2.git
 [submodule "lib/Smyck-Color-Scheme"]
 	path = lib/Smyck-Color-Scheme
 	url = https://github.com/hukl/Smyck-Color-Scheme.git
