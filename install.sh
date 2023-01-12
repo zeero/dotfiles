@@ -43,6 +43,7 @@ git config --global core.editor vim
 git config --global core.quotepath false
 git config --global core.safecrlf true
 git config --global core.autocrlf false
+git config --global core.ignorecase false
 git config --global color.ui true
 git config --global color.diff auto
 git config --global color.status auto
