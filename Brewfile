@@ -72,7 +72,7 @@ brew 'translate-shell'
 cask 'ngrok'
 
 # Vim {{{1
-brew 'macvim'
+brew 'homebrew/cask/macvim'
 tap 'universal-ctags/universal-ctags'
 brew 'universal-ctags', args: ['HEAD']
 brew 'cmigemo'
