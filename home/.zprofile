@@ -10,10 +10,10 @@ PATH=$HOME/lib/dotfiles/lib/flutter/bin:$PATH
 PATH=$HOME/bin:$PATH
 export PATH
 
+eval "$(brew shellenv)"
 eval "$(rbenv init -)"
 
 # OS
-HOMEBREW_PREFIX=$(brew --prefix)
 ## man
 export MANPATH=/usr/share/man/:$HOMEBREW_PREFIX/share/man/:$HOMEBREW_PREFIX/man:$(brew --prefix coreutils)/libexec/gnuman:$MANPATH
 ## man とかを見るときはいつも bat を使う。
