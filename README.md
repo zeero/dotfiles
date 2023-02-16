@@ -4,16 +4,25 @@ My configuration files.
 
 ## Usage
 
-1. Xcode install
-   * `sudo xcode-select -s /Applications/Xcode.app`
-   * `xcode-select --install`
+1. Xcodeをインストール
    * インストールが終わってから次へ進むこと
-1. [Homebrew](https://brew.sh/index_ja) install
-1. brew install git
-1. git clone git@github.com:zeero/dotfiles.git
-1. source ./dotfiles/home/.zprofile
-1. source ./dotfiles/home/.zshrc
-1. ./dotfiles/install.sh
+```
+sudo xcode-select -s /Applications/Xcode.app
+xcode-select --install
+```
+1. [Homebrew](https://brew.sh/index_ja)をインストール
+1. Dotfiles
+```
+brew install git
+```
+```
+git clone git@github.com:zeero/dotfiles.git
+```
+```
+source ./dotfiles/home/.zprofile
+source ./dotfiles/home/.zshrc
+./dotfiles/install.sh
+```
 
 ## Manual Configurations
 * ダブルタップでドラッグするために「システム環境設定」の「アクセシビリティ」→「マウスとトラックパッド」→「トラックパッドオプション」→「ドラッグロック」を有効にする
