@@ -15,10 +15,10 @@ xcode-select --install
 ```
 brew install git
 ```
-ssh設定はあとでやるのでいったんHTTPで落とす
 ```
 mkdir ~/lib
 cd ~/lib
+# ssh設定はあとでやるのでいったんHTTPで落とす
 git clone https://github.com/zeero/dotfiles.git
 ```
 ```
