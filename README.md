@@ -4,14 +4,14 @@ My configuration files.
 
 ## Usage
 
-1. Xcodeをインストール
-   * インストールが終わってから次へ進むこと
+### 1. Xcodeをインストール
+インストールが終わってから次へ進むこと
 ```
 sudo xcode-select -s /Applications/Xcode.app
 xcode-select --install
 ```
-1. [Homebrew](https://brew.sh/index_ja)をインストール
-1. Dotfiles
+### 2. [Homebrew](https://brew.sh/index_ja)をインストール
+### 3. dotfilesを設定
 ```
 brew install git
 ```
