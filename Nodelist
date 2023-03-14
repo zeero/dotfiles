@@ -5,4 +5,5 @@ generator-hubot
 yo
 firebase-tools
 yarn
+prettier
 
