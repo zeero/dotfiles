@@ -104,6 +104,8 @@ cask 'google-cloud-sdk'
 cask 'github'
 cask 'android-studio'
 cask 'adoptopenjdk8'
+brew 'robotsandpencils/made/xcodes'
+brew 'aria2'
 
 # AppStore {{{1
 brew 'mas'
