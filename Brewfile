@@ -1,4 +1,3 @@
-tap 'homebrew/cask'
 tap 'homebrew/cask-versions'
 cask_args appdir: '/Applications'
 
@@ -18,7 +17,6 @@ tap 'dart-lang/dart'
 brew 'dart'
 
 # Utility {{{1
-brew 'cask'
 cask 'alfred'
 cask 'spectacle'
 cask 'witch'
@@ -72,7 +70,7 @@ brew 'translate-shell'
 cask 'ngrok'
 
 # Vim {{{1
-brew 'homebrew/cask/macvim'
+brew 'macvim'
 tap 'universal-ctags/universal-ctags'
 brew 'universal-ctags', args: ['HEAD']
 brew 'cmigemo'
@@ -106,6 +104,8 @@ cask 'google-cloud-sdk'
 cask 'github'
 cask 'android-studio'
 cask 'adoptopenjdk8'
+brew 'robotsandpencils/made/xcodes'
+brew 'aria2'
 
 # AppStore {{{1
 brew 'mas'
