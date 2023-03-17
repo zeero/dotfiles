@@ -1033,6 +1033,12 @@ on_i = 1
 depends = ['ale']
 
 [[plugins]]
+repo = 'prettier/vim-prettier'
+build = 'npm install'
+lazy = 1
+on_cmd = ['Prettier']
+
+[[plugins]]
 repo = 'lukaszkorecki/workflowish'
 lazy = 1
 on_ft = ['workflowish']
