@@ -58,3 +58,20 @@ alias   package
 			.testTarget(name: "$1Tests", dependencies: ["$1"])
 		]
 	)
+
+# UIKit Playground {{{2
+snippet UIKitPlayground
+alias   uiplay
+	import UIKit
+	import PlaygroundSupport
+
+	// レイアウト準備
+	let frame = CGRect(x: 0, y: 0, width: 320, height: 568)
+	let liveView = UIView(frame: frame)
+	liveView.backgroundColor = .white
+
+	${0}
+
+	PlaygroundPage.current.needsIndefiniteExecution = true
+	PlaygroundPage.current.liveView = liveView
+
