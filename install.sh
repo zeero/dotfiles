@@ -56,6 +56,7 @@ git config --global alias.wdiff "diff --word-diff -w"
 git config --global alias.vdiff "difftool --tool=vimdiff --no-prompt"
 git config --global alias.pick "cherry-pick"
 git config --global alias.head "rev-parse HEAD"
+git config --global alias.swap "\!GIT_SEQUENCE_EDITOR=\"gsed -i -n 'h;1n;2p;g;p'\" git rebase -i HEAD~2"
 
 echo gitのuser.name/user.email/github.userを設定してください
 echo git config --global user.name zeero
