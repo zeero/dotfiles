@@ -787,6 +787,8 @@ function! s:my_rename(new_name) abort "{{{
     call delete(expand('#'))
   endif
 endfunction "}}}
+" Reverse
+command! -nargs=0 Reverse g/^/m0
 
 " TortoiseSVN {{{2
 " /endrev:-1 は HEAD（-2：ベースリビジョン、-3：ワーキングコピー）
