@@ -46,6 +46,11 @@ export LDFLAGS="$LDFLAGS -L$QT_PREFIX/lib"
 export CPPFLAGS="$CPPFLAGS -I$QT_PREFIX/include"
 export PKG_CONFIG_PATH="$PKG_CONFIG_PATH $QT_PREFIX/lib/pkgconfig"
 export PATH=$QT_PREFIX/bin:$PATH
+## iconv
+ICONV_PREFIX=$(brew --prefix libiconv)
+export LDFLAGS="$LDFLAGS -L$ICONV_PREFIX/lib"
+export CPPFLAGS="$CPPFLAGS -I$ICONV_PREFIX/include"
+export PATH=$ICONV_PREFIX/bin:$PATH
 
 # Ruby
 RUBY_CONFIGURE_OPTS="--with-openssl-dir=$OPENSSL_PREFIX"
