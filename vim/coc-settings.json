@@ -1,5 +1,7 @@
 {
   "diagnostic.enable": false,
+  "coc.source.neosnippet.enable": true,
+  "coc.source.neosnippet.maxItemCount": 20,
   "coc.source.neosnippet.priority": 1000,
   "coc.source.emoji.filetypes": ["markdown", "workflowish"],
   "suggest.enablePreselect": true
