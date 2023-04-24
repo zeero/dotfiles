@@ -55,4 +55,6 @@ NSGlobalDomain:
   "IDEEditorCoordinatorTarget_Alternate": "SeparateTab"
   "IDEEditorCoordinatorTarget_DoubleClick": "SeparateTab"
   "IDEEditorCoordinatorTarget_ShiftPlusAlternate": "Ask"
+"com.apple.dt.XCBuild":
+  "EnableSwiftBuildSystemIntegration": 1
 
