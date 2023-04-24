@@ -1,4 +1,5 @@
 {
+  "suggest.noselect": true,
   "diagnostic.enable": false,
   "coc.source.neosnippet.enable": true,
   "coc.source.neosnippet.maxItemCount": 20,
