@@ -107,6 +107,7 @@ cask 'android-studio'
 cask 'adoptopenjdk8'
 brew 'robotsandpencils/made/xcodes'
 brew 'aria2'
+cask 'proxyman'
 
 # AppStore {{{1
 brew 'mas'
