@@ -2131,7 +2131,7 @@ endfunction "}}}
 inoremap <silent><expr> <S-TAB>
 \ coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 inoremap <silent><expr> <C-e>
-\ neosnippet#expandable_or_jumpable() ? '<Plug>(neosnippet_expand_or_jump)' :
+\ neosnippet#expandable_or_jumpable() ? coc#pum#stop() . '<Plug>(neosnippet_expand_or_jump)' :
 \ coc#pum#visible() ? coc#pum#confirm() :
 \ complete_info()['selected'] != '-1' ? '<C-y>' :
 \ '<End>'
