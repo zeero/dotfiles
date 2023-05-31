@@ -35,3 +35,50 @@ alias   console
 	\`\`\`console
 	$ ${0}
 	\`\`\`
+
+# mermaid:flowchart {{{2
+snippet mermaid:flowchart
+abbr    Flowchart by Mermaid
+alias   flowchart
+	\`\`\`mermaid
+	flowchart ${1:LR|TB}
+		${2} --> ${3}
+		${0}
+
+		%% A ---|Open Link| B
+		%% A -.->|Dotted Link| B
+		%% A ==>|Thick Link| B
+		%% A <-->|Bi-Directional| B
+	\`\`\`
+
+# mermaid:class_diagram {{{2
+snippet mermaid:class_diagram
+abbr    Class Diagram by Mermaid
+alias   classDiagram
+	\`\`\`mermaid
+	classDiagram
+		class ${1} {
+			${2:Type} ${3:variable}
+
+			${4:method}(${5:argument}) ${6:returnType}
+		}
+		${0}
+
+		%% Abstract <|.. Concrete : realization
+		%% Parent <|-- Child : inheritance
+		%% Compositer *-- Compositee : composition
+		%% Aggregater o-- Agregatee : aggregation
+	\`\`\`
+
+# mermaid:sequence_diagram {{{2
+snippet mermaid:sequence_diagram
+abbr    Sequence Diagram by Mermaid
+alias   sequenceDiagram
+	\`\`\`mermaid
+	sequenceDiagram
+		A ->> +C: B()
+		C ->> +C: instance of C
+		C ->> +C: C.D()
+		C -->> -A: return value of D()
+	\`\`\`
+
