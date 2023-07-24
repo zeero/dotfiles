@@ -94,4 +94,18 @@ open alfred://customsearch/Github/hub/utf8/nospace/https%3A%2F%2Fgithub.com%2Fse
 
 # iTerm2 Color
 open $DOTFILES/lib/Smyck-Color-Scheme/Smyck.itermcolors
+echo 'iTermを開いてProfiles > Colors から Smyck を選んでください'
+read -p "Press Enter to resume..."
+
+# CVim
+echo 'CVimをインストールします'
+echo 'Enterを押すと、Chromeが開くので、デベロッパーモードを有効にして、cvimを読み込んでください'
+echo 'cvimrcのgistは以下のURLです'
+echo 'https://gist.github.com/zeero/f48b6201a10189b8a6defedf2dc99949'
+read -p "Press Enter to resume..."
+open "chrome://extensions/" -a "Google Chrome"
+open "$DOTFILES/lib"
+
+# All have done
+echo '🎉'
 

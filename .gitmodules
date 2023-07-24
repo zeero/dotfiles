@@ -10,3 +10,6 @@
 [submodule "lib/Smyck-Color-Scheme"]
 	path = lib/Smyck-Color-Scheme
 	url = https://github.com/hukl/Smyck-Color-Scheme.git
+[submodule "lib/cvim"]
+	path = lib/cvim
+	url = https://github.com/1995eaton/chromium-vim.git
