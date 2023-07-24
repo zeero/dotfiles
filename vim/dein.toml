@@ -218,6 +218,11 @@ repo = 'neoclide/coc.nvim'
 rev = 'release'
 merged = 0
 
+# copilot {{{2
+
+[[plugins]]
+repo = 'github/copilot.vim'
+
 # # asnycomplete {{{2
 #
 # [[plugins]]
