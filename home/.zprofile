@@ -30,7 +30,7 @@ export LDFLAGS=
 export CPPFLAGS=
 export PKG_CONFIG_PATH=
 ## OpenSSL
-OPENSSL_PREFIX=$(brew --prefix openssl@1.1)
+OPENSSL_PREFIX=$(brew --prefix openssl@3)
 export LDFLAGS="$LDFLAGS -L$OPENSSL_PREFIX/lib"
 export CPPFLAGS="$CPPFLAGS -I$OPENSSL_PREFIX/include"
 export PKG_CONFIG_PATH="$PKG_CONFIG_PATH $OPENSSL_PREFIX/lib/pkgconfig"
@@ -53,9 +53,9 @@ export CPPFLAGS="$CPPFLAGS -I$ICONV_PREFIX/include"
 export PATH=$ICONV_PREFIX/bin:$PATH
 
 # Ruby
-RUBY_CONFIGURE_OPTS="--with-openssl-dir=$OPENSSL_PREFIX"
-RUBY_CONFIGURE_OPTS="$RUBY_CONFIGURE_OPTS --with-readline-dir=$READLINE_PREFIX"
-export RUBY_CONFIGURE_OPTS
+# RUBY_CONFIGURE_OPTS="--with-openssl-dir=$OPENSSL_PREFIX"
+# RUBY_CONFIGURE_OPTS="$RUBY_CONFIGURE_OPTS --with-readline-dir=$READLINE_PREFIX"
+# export RUBY_CONFIGURE_OPTS
 
 # Python
 
