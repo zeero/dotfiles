@@ -55,7 +55,7 @@ git config --global alias.amend "commit --amend --no-edit"
 git config --global alias.wdiff "diff --word-diff -w"
 git config --global alias.vdiff "difftool --tool=vimdiff --no-prompt"
 git config --global alias.pick "cherry-pick"
-git config --global alias.head "rev-parse HEAD"
+git config --global alias.head "rev-parse --short=7 HEAD"
 git config --global alias.swap "\!GIT_SEQUENCE_EDITOR='gsed -i \"1{h;d};2G\"' git rebase -i HEAD~2"
 
 echo gitのuser.name/user.email/github.userを設定してください
