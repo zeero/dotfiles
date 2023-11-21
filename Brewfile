@@ -15,6 +15,8 @@ brew 'zsh'
 brew 'go'
 tap 'dart-lang/dart'
 brew 'dart'
+brew 'kotlin'
+brew 'kdoctor'
 
 # Utility {{{1
 cask 'alfred'

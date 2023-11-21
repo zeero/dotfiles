@@ -2048,6 +2048,11 @@ let g:quickrun_config['brewfile'] = {
 \ 'exec': 'brew bundle --file="%s"',
 \}
 
+" Kotlin Script (.kts)
+let g:quickrun_config['kotlin'] = {
+\ 'exec': 'kotlin %s',
+\}
+
 " Ref {{{1
 "
 " COMMAND:
