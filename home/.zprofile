@@ -77,8 +77,22 @@ unset __conda_setup
 
 # # Java
 # export _JAVA_OPTIONS='-Dfile.encoding=UTF-8'
-# export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-# export PATH=$JAVA_HOME/bin:$PATH
+JAVA_HOME='/Applications/Android Studio.app/Contents/jbr/Contents/Home'
+if [[ -d $JAVA_HOME ]]; then
+  export JAVA_HOME
+  export PATH=$JAVA_HOME/bin:$PATH
+fi
+
+# Android
+ANDROID_HOME="$HOME/Library/Android/sdk/"
+if [[ -d $ANDROID_HOME ]]; then
+  export ANDROID_HOME
+  export PATH=$ANDROID_HOME/platform-tools:${PATH}
+  export PATH=$ANDROID_HOME/tools:${PATH}
+  export PATH=$ANDROID_HOME/tools/bin:${PATH}
+  # 最新を指定
+  export PATH=$ANDROID_HOME/build-tools/34.0.0:${PATH}
+fi
 
 # Node.js
 export NODE_PATH=$NODE_PATH:`npm root -g`
