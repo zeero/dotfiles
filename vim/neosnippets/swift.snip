@@ -1,3 +1,4 @@
+# ViewController {{{2
 snippet ViewController
 abbr    UIViewController class template
 	//
@@ -25,6 +26,7 @@ abbr    UIViewController class template
 			${0}
 	}
 
+# TableViewDataSource {{{2
 snippet TableViewDataSource
 abbr    UITableViewDataSource required methods
 	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -36,7 +38,7 @@ abbr    UITableViewDataSource required methods
 			return cell
 	}
 
-# Package.swift {{{1
+# Package.swift {{{2
 snippet Package.swift
 alias   package
 	// swift-tools-version:5.3${0}
@@ -59,7 +61,7 @@ alias   package
 		]
 	)
 
-# UIKit Playground {{{1
+# UIKit Playground {{{2
 snippet UIKitPlayground
 alias   uiplay
 	import UIKit
@@ -75,3 +77,19 @@ alias   uiplay
 	PlaygroundPage.current.needsIndefiniteExecution = true
 	PlaygroundPage.current.liveView = liveView
 
+# Stencil Cheetsheet {{{2
+snippet Stencil Cheetsheet
+alias   stencil
+	{#
+	### Grammer
+	- output
+		- `{{ expression }}`
+		- `{{ expression | filter }}`
+	- control
+		- `{% tag %}`
+
+	### Refs
+	- [Stencil Built-in template tags and filters](https://stencil.fuller.li/en/latest/builtins.html#built-in-filters)
+	- [StencilSwiftKit Filters](https://github.com/SwiftGen/StencilSwiftKit?tab=readme-ov-file#filters)
+	#}
+	${0}

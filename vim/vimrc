@@ -512,6 +512,8 @@ au myvimrc BufNewFile,BufRead *.md,*.mkd,*.markdown setlocal filetype=workflowis
 au myvimrc FileType workflowish let b:caw_wrap_oneline_comment = ["<!--", "-->"]
 " yaml（vim-ansible-yamlで使う）
 au myvimrc BufNewFile,BufRead *.yaml,*.yml setlocal filetype=ansible
+" swift
+au myvimrc BufNewFile,BufRead *.stencil setlocal filetype=swift
 
 " コマンド定義 {{{1
 " 拡張 {{{2
