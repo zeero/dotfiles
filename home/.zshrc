@@ -280,6 +280,11 @@ reload() {
   exec $SHELL -l
 }
 
+### droed {{{2
+droed() {
+  open $* -a "Android Studio"
+}
+
 ## Keybind {{{1
 ### emacs mode
 bindkey -d
