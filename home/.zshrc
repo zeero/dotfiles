@@ -285,6 +285,11 @@ droed() {
   open $* -a "Android Studio"
 }
 
+### cd - {{{2
+\-() {
+  cd -
+}
+
 ## Keybind {{{1
 ### emacs mode
 bindkey -d
