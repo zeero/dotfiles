@@ -1,0 +1,9 @@
+# kts Template {{{2
+snippet kts Template
+abbr    Kotlin Script Template
+	@file:Repository("https://repo1.maven.org/maven2/")
+	@file:DependsOn("${1:org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.5.0}")
+
+	import ${2:kotlinx.datetime}.*
+
+	${0}

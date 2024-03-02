@@ -275,6 +275,21 @@ simple_http_server() {
   python -m http.server 8000
 }
 
+### reload {{{2
+reload() {
+  exec $SHELL -l
+}
+
+### droed {{{2
+droed() {
+  open $* -a "Android Studio"
+}
+
+### cd - {{{2
+\-() {
+  cd -
+}
+
 ## Keybind {{{1
 ### emacs mode
 bindkey -d

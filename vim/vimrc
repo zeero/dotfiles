@@ -512,6 +512,8 @@ au myvimrc BufNewFile,BufRead *.md,*.mkd,*.markdown setlocal filetype=workflowis
 au myvimrc FileType workflowish let b:caw_wrap_oneline_comment = ["<!--", "-->"]
 " yaml（vim-ansible-yamlで使う）
 au myvimrc BufNewFile,BufRead *.yaml,*.yml setlocal filetype=ansible
+" swift
+au myvimrc BufNewFile,BufRead *.stencil setlocal filetype=swift
 
 " コマンド定義 {{{1
 " 拡張 {{{2
@@ -2046,6 +2048,11 @@ let g:quickrun_config['sql.oracle'] = {
 au myvimrc BufRead,BufNewFile Brewfile* let b:quickrun_config = {'type': 'brewfile'}
 let g:quickrun_config['brewfile'] = {
 \ 'exec': 'brew bundle --file="%s"',
+\}
+
+" Kotlin Script (.kts)
+let g:quickrun_config['kotlin'] = {
+\ 'exec': 'kotlin %s',
 \}
 
 " Ref {{{1
