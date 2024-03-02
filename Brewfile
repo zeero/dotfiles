@@ -92,7 +92,6 @@ brew 'py-markdown2ctags'
 cask 'font-ricty_diminished-devicon'
 
 # Development Tool {{{1
-cask 'sourcetree'
 brew 'jsonlint'
 brew 'terminal-notifier'
 brew 'homebrew/cask/docker'
