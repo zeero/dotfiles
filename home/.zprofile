@@ -1,6 +1,8 @@
 # .bash_profileにはexportする設定値を記載する
 
 # PATH
+export GOPATH=~/lib/go
+PATH=$GOPATH:$PATH
 PATH=/usr/local/bin:/usr/local/sbin:$PATH
 PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
 PATH=/opt/homebrew/opt/make/libexec/gnubin:$PATH
