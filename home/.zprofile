@@ -2,7 +2,7 @@
 
 # PATH
 export GOPATH=~/lib/go
-PATH=$GOPATH:$PATH
+PATH=$GOPATH/bin:$PATH
 PATH=/usr/local/bin:/usr/local/sbin:$PATH
 PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
 PATH=/opt/homebrew/opt/make/libexec/gnubin:$PATH
