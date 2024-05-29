@@ -82,8 +82,8 @@ brew 'the_platinum_searcher'
 brew 'jq'  # json parser
 brew 'jvgrep'
 brew 'neovim'
-tap 'lambdalisue/neovim-qt'
-brew 'neovim-qt'
+brew 'vimr'
+brew 'gray' # vimr のみカラーテーマをダークにするためのアプリ
 brew 'w3m'
 
 # My Formulas {{{1

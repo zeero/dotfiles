@@ -338,6 +338,7 @@ if has('gui_running')
     set guifont=Ricty_Diminished_devicon:h16:cSHIFTJIS
   else
     set guifont=Ricty\ Diminished\ devicon\ Regular:h20
+    " set guifont=Moralerspace\ Neon\ HWJPDOC:h20
 "     let g:vimshell_editor_command = '/usr/local/opt/macvim/MacVim.app/Contents/MacOS/MacVim'
   endif
   " ウィンドウサイズを最大化する
@@ -345,7 +346,7 @@ if has('gui_running')
     au myvimrc GUIEnter * simalt ~x
   endif
   " 透明度
-  if has('mac')
+  if has('mac') && !has('nvim')
     set transparency=12
   endif
   " ヤンクでクリップボードを共有する
@@ -373,8 +374,10 @@ if has('gui_running')
   " タブのラベル
   set guitablabel=%{tabpagenr()}:%h%t%m
   " 印刷オプション
-  set printoptions=wrap:y,number:y
-  set printheader=%<%f%h%m%=Page-%N
+  if has('mac') && !has('nvim')
+    set printoptions=wrap:y,number:y
+    set printheader=%<%f%h%m%=Page-%N
+  endif
 endif
 
 " ファイル操作に関する設定 {{{1
