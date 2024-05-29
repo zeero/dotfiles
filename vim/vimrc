@@ -514,6 +514,8 @@ au myvimrc FileType workflowish let b:caw_wrap_oneline_comment = ["<!--", "-->"]
 au myvimrc BufNewFile,BufRead *.yaml,*.yml setlocal filetype=ansible
 " swift
 au myvimrc BufNewFile,BufRead *.stencil setlocal filetype=swift
+" ruby
+au myvimrc BufNewFile,BufRead Podfile,*.podspec setlocal filetype=ruby
 
 " コマンド定義 {{{1
 " 拡張 {{{2
