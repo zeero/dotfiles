@@ -13,6 +13,7 @@ mkdir ~/bin
 mkdir ~/dev
 mkdir ~/tmp
 mkdir ~/log
+mkdir -p ~/lib/go/bin
 
 # HomeBrew
 brew bundle
