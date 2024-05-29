@@ -223,6 +223,21 @@ merged = 0
 [[plugins]]
 repo = 'github/copilot.vim'
 
+[[plugins]]
+repo = 'zbirenbaum/copilot.lua'
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+[[plugins]]
+repo = 'CopilotC-Nvim/CopilotChat.nvim'
+rev = 'canary'
+depends = ['copilot.lua', 'plenary.nvim']
+on_cmd = 'CopilotChat' # post_source を動かすために必要そう
+lua_post_source = '''
+require("CopilotChat").setup {
+  debug = true,
+}
+'''
+
 # # asnycomplete {{{2
 #
 # [[plugins]]
