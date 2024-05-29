@@ -34,6 +34,8 @@ alias publish8080='ngrok http 8080'
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
 ### fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+### mise
+[ -f ~/.local/bin/mise ] && eval "$(~/.local/bin/mise activate zsh)"
 
 ## Functions {{{1
 ### calc {{{2
@@ -445,3 +447,4 @@ autoload -Uz add-zsh-hook
 add-zsh-hook precmd check-buffer-stack
 RPROMPT='${COMMAND_BUFFER_STACK}'
 bindkey '^q' show-buffer-stack
+
