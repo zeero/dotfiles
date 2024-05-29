@@ -49,7 +49,7 @@ elseif has('win32') || has('win64')
 endif
 
 " Dein {{{1
-if has('vim_starting') && !has('nvim')
+if has('vim_starting')
   let s:dein_dir = expand($MYVIMDIR . '/dein')
   let s:dein_toml = expand($MYVIMDIR . '/dein.toml')
   let s:dein_local = expand($MYVIMDIR . '/dein.local')
@@ -67,20 +67,14 @@ if has('vim_starting') && !has('nvim')
   filetype plugin indent on
 endif
 
-if !has('nvim') && dein#check_install()
+if dein#check_install()
   call dein#install()
 endif
+
 call map(dein#check_clean(), "delete(v:val, 'rf')")
 
-" Plug {{{1
-if has('nvim')
-  set rtp& rtp+=$MYVIMDIR/after
-  source $MYVIMDIR/my-plug.vim
-  let g:plug_window = 'vertical botright new'
-endif
-
 " singleton.vim {{{1
-if has('gui_running')
+if has('gui_running') && !has('nvim')
   let g:singleton#opener = 'tab drop'
   call singleton#enable()
 endif
