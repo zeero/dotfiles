@@ -7,7 +7,8 @@
     "coc-solargraph": ">=1.2.4",
     "coc-sourcekit": ">=0.0.3",
     "coc-tsserver": ">=2.1.3",
-    "coc-kotlin": ">=0.1.0"
+    "coc-kotlin": ">=0.1.0",
+    "coc-explorer": ">=0.26.7"
   },
   "disabled": [],
   "locked": [],

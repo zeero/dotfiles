@@ -2,3 +2,4 @@ memos.json
 extensions/coc-json-data
 extensions/package-lock.json
 extensions/yarn.lock
+commands
