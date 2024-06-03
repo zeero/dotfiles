@@ -216,7 +216,8 @@ syntax enable
 set t_Co=256
 if has('gui_running') || has('nvim')
   set background=dark
-  colorscheme ir_black
+  " colorscheme ir_black
+  colorscheme base16-tomorrow-night
 else
 "   let g:molokai_original = 1
   let g:rehash256 = 1

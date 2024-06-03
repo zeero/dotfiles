@@ -235,6 +235,7 @@ on_cmd = 'CopilotChat' # post_source を動かすために必要そう
 lua_post_source = '''
 require("CopilotChat").setup {
   debug = true,
+  context = 'buffers',
 }
 '''
 
@@ -690,6 +691,13 @@ gui = 0
 [[plugins]]
 repo = 'twerth/ir_black'
 gui = 1
+
+[[plugins]]
+repo = 'chriskempson/base16-vim'
+
+[[plugins]]
+repo = 'arzg/vim-colors-xcode'
+lazy = 1
 
 [[plugins]]
 repo = 'vim-scripts/wombat256.vim'
