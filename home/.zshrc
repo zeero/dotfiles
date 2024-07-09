@@ -14,7 +14,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 
 ## Alias {{{1
-alias ls='exa --time-style=long-iso --time=modified'
+alias ls='eza --time-style=long-iso --time=modified'
 alias ll='ls -lh'
 alias la='ls -lha'
 alias ltra='ls -lha --sort=modified'
