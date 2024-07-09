@@ -696,10 +696,6 @@ gui = 1
 repo = 'chriskempson/base16-vim'
 
 [[plugins]]
-repo = 'arzg/vim-colors-xcode'
-lazy = 1
-
-[[plugins]]
 repo = 'vim-scripts/wombat256.vim'
 lazy = 1
 
