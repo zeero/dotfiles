@@ -1188,5 +1188,9 @@ on_ft = ['dart']
 repo = 'thosakwe/vim-flutter'
 on_ft = ['dart']
 
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+hook_post_update = '''TSUpdate'''
+
 # 1}}}
 
