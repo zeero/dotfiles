@@ -1894,7 +1894,8 @@ let g:quickrun_config = {
 " \    'outputter/buffer/split': ':vert 20',
 
 " AnsiEscでカラーリング
-au myvimrc FileType quickrun AnsiEsc
+" au myvimrc FileType quickrun AnsiEsc
+"Neovimでエラーになるためコメントアウト
 
 " ruby {{{2
 let g:quickrun_config['ruby.alt'] = {'type': 'ruby.bundle'}
