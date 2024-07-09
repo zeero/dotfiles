@@ -287,6 +287,11 @@ droed() {
   open $* -a "Android Studio"
 }
 
+### coded {{{2
+coded() {
+  open $* -a "Visual Studio Code"
+}
+
 ### cd - {{{2
 \-() {
   cd -
