@@ -1187,6 +1187,21 @@ on_ft = ['dart']
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 hook_post_update = '''TSUpdate'''
+lua_post_source = '''
+require("nvim-treesitter.configs").setup {
+  highlight = {
+    enable = true,
+  },
+  ensure_installed = {
+    'swift',
+    'kotlin',
+    'ruby',
+    'vim',
+    'vimdoc',
+    'markdown',
+  },
+}
+'''
 
 # 1}}}
 
