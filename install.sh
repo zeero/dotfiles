@@ -35,11 +35,15 @@ git config --global color.ui true
 git config --global color.diff auto
 git config --global color.status auto
 git config --global color.branch auto
-git config --global diff.tool vimdiff
-git config --global diff.algorithm histogram
 git config --global commit.template "~/.git-commit-template"
-git config --global merge.tool vimdiff
+git config --global diff.algorithm histogram
+git config --global diff.tool nvimdiff
+git config --global difftool.prompt false
+git config --global difftool.nvimdiff.cmd 'nvim -d "$LOCAL" "$REMOTE"'
+git config --global merge.tool nvimdiff
+git config --global mergetool.prompt true
 git config --global mergetool.keepBackup false
+git config --global mergetool.nvimdiff.cmd 'nvim -d "$LOCAL" "$REMOTE" "$MERGED" -c "wincmd 3w" -c "wincmd J"'
 git config --global fetch.prune true
 git config --global init.defaultBranch main
 git config --global ghq.root "~/dev"
@@ -93,7 +97,9 @@ read -p "Press Enter to resume..."
 # Alfred Custom Search
 open alfred://customsearch/%E8%8B%B1%E5%92%8C/eiwa/utf8/nospace/https%3A%2F%2Ftranslate.google.com%2F%23en%2Fja%2F%7Bquery%7D
 open alfred://customsearch/%E5%92%8C%E8%8B%B1/waei/utf8/nospace/https%3A%2F%2Ftranslate.google.com%2F%23ja%2Fen%2F%7Bquery%7D
-open alfred://customsearch/Github/hub/utf8/nospace/https%3A%2F%2Fgithub.com%2Fsearch%3Futf8%3D%25E2%259C%2593%26o%3Ddesc%26s%3Dstars%26q%3D%7Bquery%7D
+open alfred://customsearch/GitHub/hub/utf8/nospace/https%3A%2F%2Fgithub.com%2Fsearch%3Futf8%3D%25E2%259C%2593%26o%3Ddesc%26s%3Dstars%26q%3D%7Bquery%7D
+open alfred://customsearch/ChatGPT/gpt/utf8/nospace/https%3A%2F%2Fchatgpt.com%2F%3Fq%3D%7Bquery%7D%0D%0A
+open alfred://customsearch/Perplexity/perp/utf8/nospace/https%3A%2F%2Fwww.perplexity.ai%2F%3Fq%3D%7Bquery%7D%0D%0A
 
 # iTerm2 Color
 open $DOTFILES/lib/Smyck-Color-Scheme/Smyck.itermcolors
