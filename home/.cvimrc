@@ -160,6 +160,9 @@ map ,l 100moveTabRight
 map ,L 100moveTabLeft
 map ,t :bookmarks!<Space>
 map ,p :togglepin<CR>
+" Kagi Translate で開く
+map <C-t> :script window.open('https://translate.kagi.com/English/Japanese/' + window.location.href, '_blank');<CR>
+
 
 " ウィンドウ {{{1
 map w :new<Space>
