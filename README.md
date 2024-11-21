@@ -32,9 +32,13 @@ source ./dotfiles/home/.zshrc
 * キー移動を速くするために「システム環境設定」の「キーボード」からキーリピート、リピート認識を最大にする
 * シフトスペースをVimに送るためにGoogleIMEの英語キーボードを導入すること
 * システム環境設定＞Mission Control＞最新の使用状況に基づいて操作スペースを自動的に並び替える、をオフにする
-* AlfredでMacVimを検索できるようにする
-  * MacVimのエイリアスをApplicationsに配置
-  * Alfred設定＞Default Result＞Extras＞com.apple.alias-fileを追加
+* Alfred
+  * デフォルト検索をChatGPTにする
+    * General > Default Results > Setup fallback results
+    * +ボタンからCustom Search の中のChatGPTを選択して、一番上にもってくる
+  * MacVimを検索できるようにする
+    * MacVimのエイリアスをApplicationsに配置
+    * Alfred設定＞Default Results＞Extras＞com.apple.alias-fileを追加
 * Xcode
   * Editor
     * check `Vim Mode`
