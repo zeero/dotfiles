@@ -21,6 +21,7 @@ pry-theme
 activesupport
 cocoapods
 xcode-install
+xcode-build-times
 
 __EOF__
 xargsのオプション（-E）で__EOF__以降は無視する
