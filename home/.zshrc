@@ -163,6 +163,31 @@ rmderiveddata() {
   rm -rf ~/Library/Developer/Xcode/DerivedData/
 }
 
+### adb uninstall for all devices {{{2
+adb_uninstall_for_all_devices() {
+    # 引数チェック
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: adb_uninstall_for_all_devices <package_name>"
+        return 1
+    fi
+
+    local package_name=$1
+
+    # 接続されているデバイス一覧を取得
+    local devices=($(adb devices | grep -w 'device' | awk '{print $1}'))
+
+    if [[ ${#devices[@]} -eq 0 ]]; then
+        echo "No devices found."
+        return 1
+    fi
+
+    # 各デバイスに対してアンインストールを実行
+    for device in $devices; do
+        echo "Uninstalling from device: $device"
+        adb -s "$device" uninstall "$package_name"
+    done
+}
+
 ### rm unused simulator {{{2
 rmsimulator() {
   xcrun simctl delete unavailable
@@ -453,3 +478,6 @@ add-zsh-hook precmd check-buffer-stack
 RPROMPT='${COMMAND_BUFFER_STACK}'
 bindkey '^q' show-buffer-stack
 
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
