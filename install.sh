@@ -26,7 +26,7 @@ git config --global push.default simple
 git config --global pull.rebase false
 git config --global http.sslVerify false
 git config --global core.excludesfile ~/.gitignore
-git config --global core.editor vim
+git config --global core.editor nvim
 git config --global core.quotepath false
 git config --global core.safecrlf true
 git config --global core.autocrlf false
@@ -38,12 +38,14 @@ git config --global color.branch auto
 git config --global commit.template "~/.git-commit-template"
 git config --global diff.algorithm histogram
 git config --global diff.tool nvimdiff
+git config --global diff.tool vimrdiff
 git config --global difftool.prompt false
 git config --global difftool.nvimdiff.cmd 'nvim -d "$LOCAL" "$REMOTE"'
 git config --global merge.tool nvimdiff
 git config --global mergetool.prompt true
 git config --global mergetool.keepBackup false
 git config --global mergetool.nvimdiff.cmd 'nvim -d "$LOCAL" "$REMOTE" "$MERGED" -c "wincmd 3w" -c "wincmd J"'
+git config --global mergetool.vimrdiff.cmd 'vimr --wait --nvim -d $LOCAL $REMOTE'
 git config --global fetch.prune true
 git config --global init.defaultBranch main
 git config --global ghq.root "~/dev"
