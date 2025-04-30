@@ -6,4 +6,5 @@ tags
 .ruby-version
 vendor/bundle
 .fleet
+.mcp.json
 
