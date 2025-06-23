@@ -1,0 +1,5 @@
+reviewerモードのcustomInstructions:
+  - Swiftコードに対してはSwift API Design Guidelinesに準拠してコメントすること
+  - PRの目的を理解し、過剰な最適化や不要な指摘は避けること
+  - `TODO:` や `FIXME:` コメントを見つけたら明示的に指摘すること
+  - テストコードの有無と内容にも注意を払うこと
