@@ -67,7 +67,6 @@ brew 'translate-shell'
 cask 'ngrok'
 
 # Vim {{{1
-brew 'macvim'
 tap 'universal-ctags/universal-ctags'
 brew 'universal-ctags', args: ['HEAD']
 brew 'cmigemo'
@@ -103,6 +102,7 @@ cask 'android-studio'
 brew 'xcodesorg/made/xcodes'
 brew 'aria2'
 cask 'proxyman'
+brew 'xcode-build-server'
 
 # AppStore {{{1
 brew 'mas'
