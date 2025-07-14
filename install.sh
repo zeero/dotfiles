@@ -62,6 +62,8 @@ git config --global alias.stashdiff "diff HEAD..stash@{0}"
 git config --global alias.amend "commit --amend --no-edit"
 git config --global alias.wdiff "diff --word-diff -w"
 git config --global alias.vdiff "difftool --tool=vimdiff --no-prompt"
+git config --global alias.nvimdiff "difftool --tool=nvimdiff --no-prompt"
+git config --global alias.vimrdiff "difftool --tool=vimrdiff --no-prompt"
 git config --global alias.head "rev-parse --short=7 HEAD"
 git config --global alias.swap '!GIT_SEQUENCE_EDITOR="gsed -i \"1{h;d};2G\"" git rebase -i HEAD~2'
 git config --global alias.slog "log --pretty=format:'%C(yellow)%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'"
