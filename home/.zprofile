@@ -23,7 +23,7 @@ export BAT_PAGER='less -FRX'
 ## less のステータス行にファイル名と行数、いま何%かを表示するようにする。
 export LESS='-R -X -i -P ?f%f:(stdin).  ?lb%lb?L/%L..  [?eEOF:?pb%pb\%..]'
 ## デフォルトのエディタ
-export EDITOR=vim
+export EDITOR=nvim
 ## 端末
 export TERM=xterm-256color
 
