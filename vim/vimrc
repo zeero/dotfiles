@@ -506,7 +506,7 @@ au myvimrc BufRead,BufNewFile *.tags setlocal filetype=tags
 " log
 au myvimrc BufRead,BufNewFile *.log* setlocal filetype=log
 " markdown（workflowishで扱う）
-au myvimrc BufNewFile,BufRead *.md,*.mkd,*.markdown setlocal filetype=workflowish
+au myvimrc BufNewFile,BufRead *.md,*.mkd,*.markdown,*.mdc setlocal filetype=workflowish
 au myvimrc FileType workflowish let b:caw_wrap_oneline_comment = ["<!--", "-->"]
 " yaml（vim-ansible-yamlで使う）
 au myvimrc BufNewFile,BufRead *.yaml,*.yml setlocal filetype=ansible
@@ -2056,6 +2056,11 @@ let g:quickrun_config['kotlin'] = {
 \ 'exec': 'kotlin %s',
 \}
 
+" AppleScript
+let g:quickrun_config['applescript'] = {
+\ 'exec': 'osascript %s',
+\}
+
 " Ref {{{1
 "
 " COMMAND:
@@ -3535,6 +3540,9 @@ let g:context_filetype#filetypes = {
 \   },
 \ ],
 \}
+
+" MarkdownPreview {{{1
+let g:mkdp_filetypes = ['markdown', 'workflowish']
 
 "}}}1-------------------------------------------------------------------------
 
