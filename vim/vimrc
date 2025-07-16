@@ -1531,11 +1531,10 @@ nnoremap <silent> ,f :<C-u>CocCommand explorer --open-action-strategy=tab --quit
 " nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<Space>$HOME<CR>
 " nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<CR>
 " :terminal
-nnoremap ,s :<C-u>botright<Space>terminal<Space>++close<Space>++rows=7<CR>
-nnoremap ,S :<C-u>tab<Space>terminal<Space>++close<CR>
-if has('terminal')
-  tnoremap <Esc> <C-w>N
-endif
+nnoremap ,s :<C-u>sp<Space>\|<Space>terminal<CR>
+nnoremap ,S :<C-u>sp<Space>\|<Space>terminal claude<CR>
+au myvimrc TermOpen * startinsert
+tnoremap <Esc> <C-\><C-n>
 " MBEToggle
 nnoremap ,b :<C-u>MBEToggle<CR>
 " TagbarToggle
