@@ -506,7 +506,8 @@ au myvimrc BufRead,BufNewFile *.tags setlocal filetype=tags
 " log
 au myvimrc BufRead,BufNewFile *.log* setlocal filetype=log
 " markdown（workflowishで扱う）
-au myvimrc BufNewFile,BufRead *.md,*.mkd,*.markdown,*.mdc setlocal filetype=workflowish
+" ftpluginが正しく反映されないので、filetype.vimで定義
+" au myvimrc BufNewFile,BufRead *.md,*.mkd,*.markdown,*.mdc setlocal filetype=workflowish
 au myvimrc FileType workflowish let b:caw_wrap_oneline_comment = ["<!--", "-->"]
 " yaml（vim-ansible-yamlで使う）
 au myvimrc BufNewFile,BufRead *.yaml,*.yml setlocal filetype=ansible
