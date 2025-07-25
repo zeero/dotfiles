@@ -891,6 +891,20 @@ on_map = ['<Plug>(smartword-']
 depends = ['CamelCaseMotion']
 
 
+# AI {{{1
+[[plugins]]
+repo = 'greggh/claude-code.nvim'
+depends = ['plenary.nvim']
+on_cmd = ['ClaudeCode']
+lua_post_source = '''
+require("claude-code").setup({
+  window = {
+    split_ratio = 0.5
+  }
+})
+'''
+
+
 # Git {{{1
 
 [[plugins]]

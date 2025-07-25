@@ -1532,8 +1532,9 @@ nnoremap <silent> ,f :<C-u>CocCommand explorer --open-action-strategy=tab --quit
 " nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<CR>
 " :terminal
 nnoremap ,s :<C-u>sp<Space>\|<Space>terminal<CR>
-nnoremap ,S :<C-u>sp<Space>\|<Space>terminal claude<CR>
+nnoremap ,S :<C-u>ClaudeCode<CR>
 au myvimrc TermOpen * startinsert
+au myvimrc TermClose * execute 'bddelete!'
 tnoremap <Esc> <C-\><C-n>
 " MBEToggle
 nnoremap ,b :<C-u>MBEToggle<CR>
