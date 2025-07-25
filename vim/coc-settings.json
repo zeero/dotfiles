@@ -1,6 +1,7 @@
 {
   "suggest.noselect": true,
   "diagnostic.enable": false,
+  "explorer.file.showHiddenFiles": true,
   "coc.source.neosnippet.enable": true,
   "coc.source.neosnippet.maxItemCount": 20,
   "coc.source.neosnippet.priority": 1000,
