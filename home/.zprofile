@@ -100,6 +100,9 @@ fi
 export NODE_PATH=$NODE_PATH:`npm root -g`
 export PATH=~/.nodebrew/current/bin:~/.config/npm/bin:$PATH
 
+# Claude Code
+export BASH_DEFAULT_TIMEOUT_MS=600000
+
 # others
 export DOTFILES=~/lib/dotfiles
 export FZF_TMUX=1
