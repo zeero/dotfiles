@@ -1,12 +1,22 @@
+# My Rule
+.local.*
+local
+
+# Mac
 .DS_Store
+
+# Vim
 *.swp
 tags
 *.tags
-.local.*
+
+# Ruby
 .ruby-version
 vendor/bundle
-.fleet
+
+# AI
 .mcp.json
 .claude/settings.local.json
 CLAUDE.local.md
+.serena
 
