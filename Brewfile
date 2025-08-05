@@ -10,7 +10,7 @@ brew 'ruby'
 brew 'rbenv'
 brew 'ruby-build'
 brew 'python'
-cask 'miniforge'
+brew 'uv'
 brew 'lua'
 brew 'nodebrew'
 # brew 'node', args: ['with-full-icu']
