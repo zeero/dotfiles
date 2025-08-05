@@ -78,6 +78,10 @@ brew 'neovim'
 cask 'vimr'
 brew 'w3m'
 
+# AI {{{1
+cask 'claude-code'
+brew 'github-mcp-server'
+
 # My Formulas {{{1
 tap 'zeero/my-formulas'
 brew 'go-gtran'
@@ -109,3 +113,4 @@ brew 'mas'
 mas 'Apple Configurator 2', id: 1037126344
 mas 'Pocket', id: 568494494
 mas 'Gapplin', id: 768053424 # SVG Viewer
+
