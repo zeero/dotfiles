@@ -89,20 +89,20 @@ cask 'font-ricty_diminished-devicon'
 # Development Tool {{{1
 brew 'jsonlint'
 brew 'terminal-notifier'
-cask 'docker'
 brew 'docker'
 brew 'docker-compose'
+brew 'colima' # docker daemon
 brew 'ghq'
 brew 'gibo'
 brew 'mint'
 cask 'google-cloud-sdk'
 cask 'github'
 cask 'android-studio'
-# cask 'adoptopenjdk8'
 brew 'xcodesorg/made/xcodes'
 brew 'aria2'
 cask 'proxyman'
 brew 'xcode-build-server'
+brew 'yamllint'
 
 # AppStore {{{1
 brew 'mas'

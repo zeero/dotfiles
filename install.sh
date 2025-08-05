@@ -17,6 +17,7 @@ mkdir -p ~/lib/go/bin
 
 # HomeBrew
 brew bundle
+brew services start colima
 
 # symlink
 ./${SUBS}/symlink.sh
