@@ -13,17 +13,24 @@ This is a comprehensive dotfiles repository for macOS development environment se
 - `./install.sh.subs/symlink.sh` - Creates symbolic links to home directory
 - `brew bundle` - Install all Homebrew packages from Brewfile
 
+### Development and Testing
+- `./install.sh.subs/ruby.001.rbenv.sh` - Setup Ruby environment with rbenv
+- `./install.sh.subs/node.001.nodebrew.sh` - Install Node.js via nodebrew
+- `./install.sh.subs/vim.001.coc.sh` - Configure Vim with CoC language servers
+- `./install.sh.subs/osx_defaults.sh` - Apply macOS system defaults
+- `colima start` - Start Colima Docker runtime (auto-started by install.sh)
+
 ### Package Management
 - **Homebrew**: `brew bundle` (uses Brewfile)
 - **Ruby gems**: Managed via Gemlist file and rbenv
 - **Node packages**: Managed via Nodelist file and nodebrew
-- **Python packages**: Managed via pip
-- **Swift packages**: Managed via Mint
+- **Python packages**: Managed via Piplist file and pip
+- **Swift packages**: Managed via Mintlist file and Mint
 
 ### Development Environment
-- **Ruby**: Uses rbenv for version management
-- **Node.js**: Uses nodebrew for version management  
-- **Vim plugins**: Uses dein.vim plugin manager
+- **Ruby**: Uses rbenv for version management (`rbenv versions`, `rbenv global`)
+- **Node.js**: Uses nodebrew for version management (`nodebrew ls`, `nodebrew use`)
+- **Vim plugins**: Uses dein.vim plugin manager with plugins defined in `vim/dein.toml`
 - **Git configuration**: Automated via install.sh git config commands
 
 ## Architecture and Structure
@@ -51,9 +58,11 @@ The installation follows this sequence:
 ### Key Configuration Files
 - `home/.zshrc` - Main shell configuration (14k+ lines with advanced features)
 - `vim/vimrc` - Vim configuration with dein.vim plugin management
-- `vim/dein.toml` - Plugin definitions
-- `vim/coc-settings.json` - Language server configuration
+- `vim/dein.toml` - Plugin definitions and configurations
+- `vim/coc-settings.json` - Language server configuration for CoC
 - `home/.gitignore` - Global git ignore patterns
+- `Brewfile` - Homebrew package definitions (includes casks and formulas)
+- `Gemlist`/`Nodelist`/`Piplist`/`Mintlist` - Language-specific package lists
 
 ### Development Environment Features
 - **Languages**: Ruby, Node.js, Python, Go, Swift, Kotlin, Dart
@@ -80,10 +89,26 @@ After installation, manual setup is required for:
 ## File Modification Guidelines
 
 When modifying configurations:
-- **zshrc changes**: Edit `home/.zshrc`
-- **Vim configuration**: Modify files in `vim/`
-- **Package additions**: Update Brewfile, Gemlist, or Nodelist as appropriate
-- **Installation scripts**: Add new scripts in `install.sh.subs/`
-- **Git configuration**: Modify git config commands in `install.sh`
+- **zshrc changes**: Edit `home/.zshrc` (will be symlinked to `~/.zshrc`)
+- **Vim configuration**: Modify files in `vim/` directory (vimrc, dein.toml, coc-settings.json)
+- **Package additions**: Update appropriate package list files:
+  - `Brewfile` for Homebrew packages and casks
+  - `Gemlist` for Ruby gems
+  - `Nodelist` for Node.js packages
+  - `Piplist` for Python packages
+  - `Mintlist` for Swift packages
+- **Installation scripts**: Add new scripts in `install.sh.subs/` following naming convention
+- **Git configuration**: Modify git config commands in main `install.sh`
+- **Xcode templates**: Add templates in `xcode/File Templates/` for Clean Swift, VIPER, TCA architectures
 
-After making changes, test with a fresh installation or run specific installation sub-scripts to verify functionality.
+### Testing Changes
+- Run specific sub-scripts from `install.sh.subs/` to test individual components
+- Use `./install.sh.subs/symlink.sh` to re-link dotfiles after modifications
+- Test full installation with `./install.sh` in clean environment when possible
+
+### Prerequisites for Development
+Before modifying this repository:
+1. Install Xcode and command line tools: `sudo xcode-select -s /Applications/Xcode.app && xcode-select --install`
+2. Install Homebrew: Follow instructions at https://brew.sh/
+3. Install Git: `brew install git`
+4. Clone repository: `git clone https://github.com/zeero/dotfiles.git ~/lib/dotfiles`
