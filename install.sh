@@ -70,6 +70,7 @@ git config --global alias.swap '!GIT_SEQUENCE_EDITOR="gsed -i \"1{h;d};2G\"" git
 git config --global alias.slog "log --pretty=format:'%C(yellow)%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'"
 git config --global alias.wlog "log -p --word-diff -w"
 git config --global alias.fixup '!f(){ git commit --fixup $1 && GIT_SEQUENCE_EDITOR="gsed -i \"\"" git rebase -i --autosquash $1^;};f'
+git config --global alias.show-base-branch '!f(){ git show-branch 2>/dev/null | grep "*" | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -1 | awk -F"[]~^[]" '\''{print $2}'\''; };f'
 
 echo gitのuser.name/user.email/github.userを設定してください
 echo git config --global user.name zeero
