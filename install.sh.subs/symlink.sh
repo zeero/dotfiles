@@ -18,6 +18,10 @@ ln -sf ${DOTFILES}/vim/vimrc ~/.config/nvim/init.vim
 mkdir -p ${DOTFILES}/vim/after/autoload
 ln -sf ${DOTFILES}/vim/plugged/vim-plug/plug.vim ~/.config/nvim/after/autoload/plug.vim
 
+# Claude Code
+mkdir -p ~/.claude
+find ${DOTFILES}/home/.claude -depth 1 -exec ln -sf {} ~/.claude \;
+
 # Ruby
 mkdir ~/.bundle
 find ${DOTFILES}/home/.bundle -type f -depth 1 -exec ln -sf {} ~/.bundle \;
