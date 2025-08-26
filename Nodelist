@@ -6,4 +6,6 @@ yo
 firebase-tools
 yarn
 prettier
+ccundo
+@google/gemini-cli
 
