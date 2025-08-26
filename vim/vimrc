@@ -509,6 +509,7 @@ au myvimrc BufRead,BufNewFile *.log* setlocal filetype=log
 " ftpluginが正しく反映されないので、filetype.vimで定義
 " au myvimrc BufNewFile,BufRead *.md,*.mkd,*.markdown,*.mdc setlocal filetype=workflowish
 au myvimrc FileType workflowish let b:caw_wrap_oneline_comment = ["<!--", "-->"]
+" au myvimrc FileType workflowish,markdown setl nofoldenable
 " yaml（vim-ansible-yamlで使う）
 au myvimrc BufNewFile,BufRead *.yaml,*.yml setlocal filetype=ansible
 " swift
