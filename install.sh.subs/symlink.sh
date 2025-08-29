@@ -22,6 +22,10 @@ ln -sf ${DOTFILES}/vim/plugged/vim-plug/plug.vim ~/.config/nvim/after/autoload/p
 mkdir -p ~/.claude
 find ${DOTFILES}/home/.claude -depth 1 -exec ln -sf {} ~/.claude \;
 
+# Gemini
+mkdir -p ~/.gemini
+find ${DOTFILES}/home/.gemini -depth 1 -exec ln -sf {} ~/.gemini \;
+
 # Serena
 mkdir -p ~/.serena
 find ${DOTFILES}/home/.serena -depth 1 -exec ln -sf {} ~/.serena \;
