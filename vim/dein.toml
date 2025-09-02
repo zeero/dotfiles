@@ -895,6 +895,7 @@ depends = ['CamelCaseMotion']
 [[plugins]]
 repo = 'greggh/claude-code.nvim'
 depends = ['plenary.nvim']
+lazy = 1
 on_cmd = ['ClaudeCode']
 lua_post_source = '''
 require("claude-code").setup({
@@ -975,7 +976,11 @@ depends = ['vim-operator-user']
 repo = 'rlue/vim-fold-rspec'
 lazy = 1
 on_ft = ['ruby']
-on_i = 1
+
+[[plugins]]
+repo = 'vim-utils/vim-ruby-fold'
+lazy = 1
+on_ft = ['ruby']
 
 
 # Swift {{{1

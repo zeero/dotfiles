@@ -490,6 +490,12 @@ let java_highlight_all = 1
 let java_highlight_functions = 'style'
 let java_highlight_debug = 1
 
+" Ruby {{{2
+" foldtextはrspecの方がいいのですべてに適用
+au myvimrc FileType ruby setlocal foldtext=fold_rspec#foldtext()
+" vim-ruby-foldの上書き回避
+au myvimrc BufRead,BufNewFile *_spec.rb setlocal foldexpr=fold_rspec#foldexpr(v:lnum)
+
 " DOS {{{2
 au myvimrc BufRead,BufNewFile *.bat setlocal fenc=sjis ff=dos
 
@@ -3196,6 +3202,9 @@ let g:previm_enable_realtime = 0
 " markdown-folding {{{1
 " フォールディングをネストする
 let g:markdown_fold_style = 'nested'
+
+" vim-fold-rspec {{{1
+let g:fold_rspec_foldlevel = 1
 
 " GithubMemos {{{1
 nnoremap T :<C-u>CtrlP $MY_MEMOS_DIR<CR>
