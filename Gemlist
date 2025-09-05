@@ -8,7 +8,6 @@ rdoc-generator-fivefish
 refe2
 rest-client
 ruboty-megen
-solargraph
 specific_install
 sqlint
 synx
@@ -22,6 +21,10 @@ activesupport
 cocoapods
 xcode-install
 xcode-build-times
+solargraph
+ruby-lsp
+ruby-lsp-rspec
+ruby-lsp-rails
 
 __EOF__
 xargsのオプション（-E）で__EOF__以降は無視する
