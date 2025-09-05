@@ -2902,7 +2902,7 @@ command! Gd Gvdiff
 command! Gc Gcommit --verbose
 command! Gca Gcommit --verbose -a
 command! Gcamend Gcommit --verbose --amend
-command! Gb Gblame
+command! Gb Git blame
 command! Gl Glog
 " HEADに戻す
 command! Grevert Gread! show HEAD:%
