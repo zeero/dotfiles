@@ -25,6 +25,7 @@ find ${DOTFILES}/home/.claude -depth 1 -exec ln -sf {} ~/.claude \;
 # Gemini
 mkdir -p ~/.gemini
 find ${DOTFILES}/home/.gemini -depth 1 -exec ln -sf {} ~/.gemini \;
+ln -sf ${DOTFILES}/home/.claude/CLAUDE.md ~/.gemini/GEMINI.md
 
 # Serena
 mkdir -p ~/.serena

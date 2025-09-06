@@ -16,7 +16,8 @@ vendor/bundle
 
 # AI
 .mcp.json
-.claude
-CLAUDE.local.md
 .serena
+CLAUDE.local.md
+.claude
+.gemini
 
