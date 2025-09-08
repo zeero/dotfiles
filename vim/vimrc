@@ -1209,6 +1209,24 @@ nnoremap ,[ <C-t>
 nnoremap <C-k> <C-t>
 nnoremap <C-h> <C-o>
 nnoremap <C-l> <C-i>
+" TeleJump
+let g:telescope_fts = ['ruby', 'swift']
+fun! TeleJump(fallback_cmd) "{{{
+  if index(g:telescope_fts, &ft) >= 0 && exists(':Telescope')
+    try
+      lua << EOF
+        require('telescope')
+        require('telescope.builtin').lsp_definitions({jump_type='tab drop'})
+EOF
+    catch
+      exe a:fallback_cmd
+    endtry
+  else
+    exe a:fallback_cmd
+  endif
+endfun "}}}
+exe 'au FileType ' . join(g:telescope_fts, ',') . ' nnoremap <buffer> <C-j> :<C-u>call TeleJump("CtrlPtjump")<CR>'
+exe 'au FileType ' . join(g:telescope_fts, ',') . ' vnoremap <buffer> <C-j> :<C-u>call TeleJump("CtrlPtjumpVisual")<CR>'
 
 " ノーマルモード {{{2
 " ;を:にマップする

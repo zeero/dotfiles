@@ -118,6 +118,43 @@ repo = 'ivalkeen/vim-ctrlp-tjump'
 lazy = 1
 on_cmd = ['CtrlPtjump', 'CtrlPtjumpVisual']
 
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+hook_add = '''
+lua << EOF
+local lspconfig = require('lspconfig')
+lspconfig.ruby_lsp.setup({})
+lspconfig.sourcekit.setup({})
+EOF
+'''
+
+[[plugins]]
+repo = 'nvim-telescope/telescope.nvim'
+depends = ['plenary.nvim']
+lazy = 1
+on_cmd = ['Telescope']
+on_ft = ['ruby', 'swift']
+lua_post_source = '''
+require('telescope').setup({
+  defaults = {
+    borderchars = { "-", "|", "-", "|", "+", "+", "+", "+" }
+  },
+  pickers = {
+    lsp_definitions = require('telescope.themes').get_ivy({
+      layout_config = {
+        height = 0.5,
+        width = 0.9,
+      },
+      borderchars = {
+        prompt = { "-", " ", " ", " ", "-", "-", " ", " " },
+        results = { " " },
+        preview = { "-", "|", "-", "|", "+", "+", "+", "+" },
+      },
+    }),
+  }
+})
+'''
+
 
 # Unite {{{1
 
