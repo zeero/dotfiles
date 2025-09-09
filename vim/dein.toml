@@ -970,6 +970,9 @@ on_cmd = ['Agit']
 [[plugins]]
 repo = 'jreybert/vimagit'
 
+[[plugins]]
+repo = 'lewis6991/gitsigns.nvim'
+
 
 # Ruby {{{1
 
