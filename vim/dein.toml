@@ -133,7 +133,7 @@ repo = 'nvim-telescope/telescope.nvim'
 depends = ['plenary.nvim']
 lazy = 1
 on_cmd = ['Telescope']
-on_ft = ['ruby', 'swift']
+on_ft = ['ruby', 'ruby.rspec', 'swift']
 lua_post_source = '''
 require('telescope').setup({
   defaults = {

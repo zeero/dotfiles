@@ -1210,7 +1210,7 @@ nnoremap <C-k> <C-t>
 nnoremap <C-h> <C-o>
 nnoremap <C-l> <C-i>
 " TeleJump
-let g:telescope_fts = ['ruby', 'swift']
+let g:telescope_fts = ['ruby', 'ruby.rspec', 'swift']
 fun! TeleJump(fallback_cmd) "{{{
   if index(g:telescope_fts, &ft) >= 0 && exists(':Telescope')
     try
