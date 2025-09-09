@@ -35,7 +35,6 @@ repo = 'Shougo/neosnippet'
 lazy = 1
 on_i = 1
 on_cmd = ['NeoSnippetEdit']
-on_source = ['unite.vim']
 on_ft = ['neosnippet']
 # depends = 'neosnippet-snippets'
 
@@ -254,6 +253,7 @@ on_source = ['unite.vim']
 repo = 'neoclide/coc.nvim'
 rev = 'release'
 merged = 0
+depends = ['neosnippet']
 
 # copilot {{{2
 
@@ -275,69 +275,6 @@ require("CopilotChat").setup {
   context = 'buffers',
 }
 '''
-
-# # asnycomplete {{{2
-#
-# [[plugins]]
-# repo = 'prabirshrestha/async.vim'
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete.vim'
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete-neosnippet.vim'
-# depends = 'neosnippet'
-# merged = 0
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete-emoji.vim'
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete-buffer.vim'
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete-file.vim'
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete-necosyntax.vim'
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete-tags.vim'
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete-necovim.vim'
-# [[plugins]]
-# repo = 'prabirshrestha/vim-lsp'
-# [[plugins]]
-# repo = 'prabirshrestha/asyncomplete-lsp.vim'
-# [[plugins]]
-# repo = 'mattn/vim-lsp-settings'
-
-# # Deoplete {{{2
-#
-# [[plugins]]
-# repo = 'Shougo/deoplete.nvim'
-# if = '''has('python3') && v:version >= 800'''
-# hook_source = '''call MyDeinHookDeoplete()'''
-# lazy = 1
-# on_i = 1
-#
-# [[plugins]]
-# repo = 'roxma/nvim-yarp'
-# if = '''has('python3') && v:version >= 800'''
-# lazy = 1
-# on_i = 1
-#
-# [[plugins]]
-# repo = 'roxma/vim-hug-neovim-rpc'
-# if = '''has('python3') && v:version >= 800'''
-# lazy = 1
-# on_i = 1
-#
-# [[plugins]]
-# repo = 'fishbullet/deoplete-ruby'
-# lazy = 1
-# on_ft = ['ruby']
-# on_i = 1
-#
-# [[plugins]]
-# repo = 'uplus/deoplete-solargraph'
-# if = '''executable('solargraph')'''
-# lazy = 1
-# on_ft = ['ruby']
-# on_i = 1
 
 # 入力補助 {{{1
 
