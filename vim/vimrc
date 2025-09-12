@@ -3250,8 +3250,8 @@ function! s:my_github_memos_upload(...) abort "{{{
 endfunction "}}}
 au myvimrc BufWritePost $MY_MEMOS_DIR/* silent call s:my_github_memos_git(expand('%'))
 function! s:my_github_memos_git(filename) abort "{{{
-  call vimproc#system('git add ' . a:filename)
-  call vimproc#system('git commit --allow-empty-message -m "" ' . a:filename)
+  call vimproc#system('git add "' . a:filename . '"')
+  call vimproc#system('git commit --allow-empty-message -m "" "' . a:filename . '"')
   call s:my_vimproc_async({'cmd': 'git push'})
 endfunction "}}}
 au myvimrc BufRead $MY_MEMOS_DIR/* silent call s:my_github_memos_git_pull()
