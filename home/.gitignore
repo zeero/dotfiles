@@ -13,11 +13,20 @@ tags
 # Ruby
 .ruby-version
 vendor/bundle
+# Python
+__pycache__
 
-# AI
+# AI Agents
 .mcp.json
 .serena
 CLAUDE.local.md
 .claude
 .gemini
+### SpecKit
+.specify
+memory
+scripts
+templates
+### spec-workflow
+.spec-workflow
 
