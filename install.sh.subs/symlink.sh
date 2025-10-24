@@ -21,6 +21,7 @@ ln -sf ${DOTFILES}/vim/plugged/vim-plug/plug.vim ~/.config/nvim/after/autoload/p
 # Claude Code
 mkdir -p ~/.claude
 find ${DOTFILES}/home/.claude -depth 1 -exec ln -sf {} ~/.claude \;
+ln -s ~/.claude/CLAUDE.md ~/AGENTS.md
 
 # Gemini
 mkdir -p ~/.gemini
