@@ -6,7 +6,17 @@ vim/plugged
 home/bin/git-*
 home/.config/coc/extensions/coc-kotlin-data/
 
-# SpecKit
+local
+__pycache__
+
+# AI Agents
+### Serena
+.serena
+### SpecKit
+.specify
 memory
 scripts
 templates
+### spec-workflow
+.spec-workflow
+
