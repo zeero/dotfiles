@@ -107,6 +107,9 @@ brew 'aria2'
 cask 'proxyman'
 brew 'xcode-build-server'
 brew 'yamllint'
+brew 'mermaid-cli'
+brew 'graphviz'
+brew 'plantuml'
 
 # AppStore {{{1
 brew 'mas'
