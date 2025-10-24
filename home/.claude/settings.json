@@ -1,11 +1,6 @@
 {
-  "model": "sonnet",
   "env": {
     "FASTLANE_SKIP_UPDATE_CHECK": "true"
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "npx -y @owloops/claude-powerline --theme=tokyo-night --style=powerline"
   },
   "hooks": {
     "PostToolUse": [
@@ -29,6 +24,21 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/session-start.sh"
+          }
+        ]
+      }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y @owloops/claude-powerline --theme=tokyo-night --style=powerline"
   }
 }
