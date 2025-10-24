@@ -1,12 +1,11 @@
 typescript
 eslint
-hubot
-generator-hubot
-yo
 firebase-tools
 yarn
 prettier
 ccundo
-@google/gemini-cli
+@anthropic-ai/claude-code
 @pimzino/claude-code-spec-workflow
 @owloops/claude-powerline
+@google/gemini-cli
+@openai/codex
