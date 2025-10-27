@@ -108,6 +108,7 @@ export DOTFILES=~/lib/dotfiles
 export FZF_TMUX=1
 export XDG_CONFIG_HOME=~/.config
 export EXA_COLORS='da=34:uu=32:sn=1;36:sb=36'
+export N8N_USER_FOLDER=~/dev/github.com/zeero/n8n
 
 # local
 [ -f ~/.local.zprofile ] && source ~/.local.zprofile
