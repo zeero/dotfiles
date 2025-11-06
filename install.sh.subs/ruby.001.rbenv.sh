@@ -2,6 +2,6 @@
 
 DOTFILES=$(dirname $(realpath $0))/..
 
-rbenv install 2.7.2
-rbenv global 2.7.2
+rbenv install 3.4.4
+rbenv global 3.4.4
 
