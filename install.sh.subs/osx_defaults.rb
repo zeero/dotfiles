@@ -16,7 +16,7 @@ yaml.each do | defaults_key, items |
     else
       next
     end
-    system "defaults write #{defaults_key} #{key} -#{type} #{value}"
+    system "defaults write #{defaults_key} #{key} -#{type} '#{value}'"
   end
 end
 
