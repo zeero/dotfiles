@@ -39,7 +39,6 @@ git config --global color.branch auto
 git config --global commit.template "~/.git-commit-template"
 git config --global diff.algorithm histogram
 git config --global diff.tool nvimdiff
-git config --global diff.tool vimrdiff
 git config --global difftool.prompt false
 git config --global difftool.nvimdiff.cmd 'nvim -d "$LOCAL" "$REMOTE"'
 git config --global merge.tool nvimdiff
