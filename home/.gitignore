@@ -17,13 +17,13 @@ vendor/bundle
 __pycache__
 
 # AI Agents
-.mcp.json
+/.claude
+/.gemini
+/.mcp.json
 .serena
 CLAUDE.local.md
-.claude
-.gemini
 ### SpecKit
-.specify
+/.specify
 ### spec-workflow
-.spec-workflow
+/.spec-workflow
 
