@@ -21,11 +21,11 @@
       },
       "skills": [
         "./dot_claude/skills/deep-research/"
-      ]
+      ],
+      "strict": false
     },
     {
       "name": "multi-research",
-      "strict": false,
       "author": {
         "name": "TerraCo89"
       },
@@ -36,7 +36,8 @@
       },
       "skills": [
         "./.claude/skills/deep-researcher/"
-      ]
+      ],
+      "strict": false
     }
   ]
 }
