@@ -126,7 +126,8 @@ claude plugin marketplace add anthropics/skills
 claude plugin install example-skills@anthropic-agent-skills
 cd $DOTFILES
 claude plugin marketplace add ./
-claude plugin install simple-search@zeero-dotfiles
+claude plugin install simple-research@zeero-dotfiles
+claude plugin install multi-research@zeero-dotfiles
 
 # All have done
 echo '🎉'
