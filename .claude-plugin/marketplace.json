@@ -22,6 +22,21 @@
       "skills": [
         "./dot_claude/skills/deep-research/"
       ]
+    },
+    {
+      "name": "multi-research",
+      "strict": false,
+      "author": {
+        "name": "TerraCo89"
+      },
+      "description": "A plugin for multi-angle deep research on programming topics.",
+      "source": {
+        "source": "github",
+        "repo": "TerraCo89/Cernji-Agents"
+      },
+      "skills": [
+        "./.claude/skills/deep-researcher/"
+      ]
     }
   ]
 }
