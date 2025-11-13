@@ -24,9 +24,6 @@ CLAUDE.local.md
 .gemini
 ### SpecKit
 .specify
-memory
-scripts
-templates
 ### spec-workflow
 .spec-workflow
 
