@@ -40,5 +40,9 @@
   "statusLine": {
     "type": "command",
     "command": "npx -y @owloops/claude-powerline --theme=tokyo-night --style=powerline"
+  },
+  "enabledPlugins": {
+    "example-skills@anthropic-agent-skills": true,
+    "simple-research@zeero-dotfiles": true
   }
 }

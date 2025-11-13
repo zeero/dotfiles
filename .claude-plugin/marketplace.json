@@ -1,0 +1,27 @@
+{
+  "name": "zeero-dotfiles",
+  "owner": {
+    "name": "zeero",
+    "email": "zeero26@gmail.com"
+  },
+  "metadata": {
+    "description": "A custom plugin marketplace for zeero's dotfiles.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "simple-research",
+      "author": {
+        "name": "lv416e"
+      },
+      "description": "A plugin for deep research capabilities.",
+      "source": {
+        "source": "github",
+        "repo": "lv416e/dotfiles"
+      },
+      "skills": [
+        "./dot_claude/skills/deep-research/"
+      ]
+    }
+  ]
+}

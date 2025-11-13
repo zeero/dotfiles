@@ -121,6 +121,13 @@ read -p "Press Enter to resume..."
 open "chrome://extensions/" -a "Google Chrome"
 open "$DOTFILES/lib"
 
+# AI Agents
+claude plugin marketplace add anthropics/skills
+claude plugin install example-skills@anthropic-agent-skills
+cd $DOTFILES
+claude plugin marketplace add ./
+claude plugin install simple-search@zeero-dotfiles
+
 # All have done
 echo '🎉'
 
