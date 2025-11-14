@@ -43,7 +43,7 @@
   },
   "enabledPlugins": {
     "example-skills@anthropic-agent-skills": true,
-    "simple-research@zeero-dotfiles": true,
-    "multi-research@zeero-dotfiles": true
+    "simple-research@zeero-dotfiles": false,
+    "multi-research@zeero-dotfiles": false
   }
 }
