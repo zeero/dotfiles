@@ -3,9 +3,10 @@ eslint
 firebase-tools
 yarn
 prettier
-ccundo
 @anthropic-ai/claude-code
 @pimzino/claude-code-spec-workflow
 @owloops/claude-powerline
+ccundo
+cc-sdd
 @google/gemini-cli
 @openai/codex
