@@ -29,7 +29,7 @@ alias dc='docker-compose'
 alias publish='ngrok http'
 alias publish8080='ngrok http 8080'
 alias mkdir='mkdir -p'
-alias preview='nvim --headless +"MarkdownPreview" +"sleep 1" +qall'
+alias preview='nvim --headless +"MarkdownPreview" +"sleep 3" +qall'
 
 ## External Load {{{1
 ### .local.zshrc
@@ -479,7 +479,3 @@ autoload -Uz add-zsh-hook
 add-zsh-hook precmd check-buffer-stack
 RPROMPT='${COMMAND_BUFFER_STACK}'
 bindkey '^q' show-buffer-stack
-
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"

@@ -62,6 +62,9 @@ export PATH=$ICONV_PREFIX/bin:$PATH
 # export RUBY_CONFIGURE_OPTS
 
 # Python
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -79,7 +82,7 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 
-# # Java
+# Java
 # export _JAVA_OPTIONS='-Dfile.encoding=UTF-8'
 JAVA_HOME='/Applications/Android Studio.app/Contents/jbr/Contents/Home'
 if [[ -d $JAVA_HOME ]]; then
@@ -111,6 +114,8 @@ export FZF_TMUX=1
 export XDG_CONFIG_HOME=~/.config
 export EXA_COLORS='da=34:uu=32:sn=1;36:sb=36'
 export N8N_USER_FOLDER=~/dev/github.com/zeero/n8n
+# Puppeteerが使用するChrome実行パス（mmdc, md-mermaid-lint などで必要）
+export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
 # local
 [ -f ~/.local.zprofile ] && source ~/.local.zprofile
