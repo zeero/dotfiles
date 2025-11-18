@@ -1,3 +1,6 @@
+---
+argument-hint: [記憶させたい内容]
+---
 $ARGUMENTS
 これらをCLAUDE.mdに記載してください
 
