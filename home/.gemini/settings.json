@@ -1,4 +1,18 @@
 {
-  "selectedAuthType": "oauth-personal",
-  "contextFileName": ["GEMINI.md", "CLAUDE.md"]
+  "context": {
+    "fileName": [
+      "GEMINI.md",
+      "CLAUDE.md"
+    ]
+  },
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
+  },
+  "mcpServers": {
+    "context7": {
+      "httpUrl": "https://mcp.context7.com/mcp"
+    }
+  }
 }
