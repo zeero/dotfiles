@@ -29,7 +29,7 @@ alias dc='docker-compose'
 alias publish='ngrok http'
 alias publish8080='ngrok http 8080'
 alias mkdir='mkdir -p'
-alias preview='nvim --headless +"MarkdownPreview" +"sleep 3" +qall'
+alias preview='nvim --headless +"MarkdownPreview"
 
 ## External Load {{{1
 ### .local.zshrc
