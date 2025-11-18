@@ -1,1 +1,3 @@
 git+https://github.com/oraios/serena
+claude-code-log@latest
+yamllint
