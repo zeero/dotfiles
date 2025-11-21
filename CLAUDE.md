@@ -1,114 +1,114 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+このファイルは、このリポジトリのコードを扱う際にClaude Code (claude.ai/code) にガイダンスを提供します。
 
-## Repository Overview
+## 📂 リポジトリ概要
 
-This is a comprehensive dotfiles repository for macOS development environment setup. It manages configurations for shell (zsh), editor (Vim/Neovim), development tools, and system preferences through automated installation and symbolic linking.
+これは、macOS開発環境設定のための包括的なdotfilesリポジトリです。シェル (zsh)、エディタ (Vim/Neovim)、開発ツール、システム環境設定を、自動インストールとシンボリックリンクによって管理します。
 
-## Key Commands
+## 🛠️ 主要コマンド
 
-### Installation and Setup
-- `./install.sh` - Main installation script that orchestrates the entire setup
-- `./install.sh.subs/symlink.sh` - Creates symbolic links to home directory
-- `brew bundle` - Install all Homebrew packages from Brewfile
+### 🚀 インストールとセットアップ
+- `./install.sh` - 全体的なセットアップを調整するメインのインストールスクリプトです。
+- `./install.sh.subs/symlink.sh` - ホームディレクトリへのシンボリックリンクを作成します。
+- `brew bundle` - BrewfileからすべてのHomebrewパッケージをインストールします。
 
-### Development and Testing
-- `./install.sh.subs/ruby.001.rbenv.sh` - Setup Ruby environment with rbenv
-- `./install.sh.subs/node.001.nodebrew.sh` - Install Node.js via nodebrew
-- `./install.sh.subs/vim.001.coc.sh` - Configure Vim with CoC language servers
-- `./install.sh.subs/osx_defaults.sh` - Apply macOS system defaults
-- `colima start` - Start Colima Docker runtime (auto-started by install.sh)
+### 🧪 開発とテスト
+- `./install.sh.subs/ruby.001.rbenv.sh` - rbenvでRuby環境をセットアップします。
+- `./install.sh.subs/node.001.nodebrew.sh` - nodebrewを介してNode.jsをインストールします。
+- `./install.sh.subs/vim.001.coc.sh` - CoC言語サーバーでVimを設定します。
+- `./install.sh.subs/osx_defaults.sh` - macOSシステムデフォルトを適用します。
+- `colima start` - Colima Dockerランタイムを開始します（install.shによって自動開始されます）。
 
-### Package Management
-- **Homebrew**: `brew bundle` (uses Brewfile)
-- **Ruby gems**: Managed via Gemlist file and rbenv
-- **Node packages**: Managed via Nodelist file and nodebrew
-- **Python packages**: Managed via Piplist file and pip
-- **Swift packages**: Managed via Mintlist file and Mint
+### 📦 パッケージ管理
+- **Homebrew**: `brew bundle` (Brewfileを使用します)
+- **Ruby gems**: Gemlistファイルとrbenvを介して管理されます。
+- **Node packages**: Nodelistファイルとnodebrewを介して管理されます。
+- **Python packages**: Piplistファイルとpipを介して管理されます。
+- Swift packages**: MintlistファイルとMintを介して管理されます。
 
-### Development Environment
-- **Ruby**: Uses rbenv for version management (`rbenv versions`, `rbenv global`)
-- **Node.js**: Uses nodebrew for version management (`nodebrew ls`, `nodebrew use`)
-- **Vim plugins**: Uses dein.vim plugin manager with plugins defined in `vim/dein.toml`
-- **Git configuration**: Automated via install.sh git config commands
+### 💻 開発環境
+- **Ruby**: rbenvをバージョン管理に使用します (`rbenv versions`, `rbenv global`)
+- **Node.js**: nodebrewをバージョン管理に使用します (`nodebrew ls`, `nodebrew use`)
+- **Vimプラグイン**: dein.vimプラグインマネージャーを使用し、`vim/dein.toml`でプラグインが定義されています。
+- **Git設定**: install.shのgit configコマンドによって自動化されます。
 
-## Architecture and Structure
+## 🏗️ アーキテクチャと構造
 
-### Configuration Organization
-- `/home/` - Dotfiles that get symlinked to `~/` (zshrc, vimrc, gitignore, etc.)
-- `/vim/` - Complete Vim/Neovim configuration with plugins and language settings
-- `/xcode/` - Xcode templates, code snippets, and project setup tools
-- `/install.sh.subs/` - Modular installation scripts for different components
-- `/lib/` - External dependencies and color schemes
-- `Brewfile` - Homebrew package definitions
-- `Gemlist`/`Nodelist` - Language-specific package lists
+### 🗂️ 設定の整理
+- `/home/` - `~/`にシンボリックリンクされるdotfiles (zshrc, vimrc, gitignoreなど)
+- `/vim/` - プラグインと言語設定を含む完全なVim/Neovim設定です。
+- `/xcode/` - Xcodeテンプレート、コードスニペット、プロジェクトセットアップツールです。
+- `/install.sh.subs/` - 異なるコンポーネント用のモジュラーインストールスクリプトです。
+- `/lib/` - 外部依存関係とカラースキームです。
+- `Brewfile` - Homebrewパッケージ定義です。
+- `Gemlist`/`Nodelist` - 言語固有のパッケージリストです。
 
-### Installation Flow
-The installation follows this sequence:
-1. Git submodules and directory creation
-2. Homebrew bundle installation
-3. Symbolic link creation
-4. Git global configuration
-5. Git aliases setup
-6. Language environment setup (Ruby → Node → Python)
-7. Vim/CoC configuration
-8. macOS system defaults
+### ⬇️ インストールフロー
+インストールは次の順序で実行されます。
+1. Gitサブモジュールとディレクトリの作成
+2. Homebrewバンドルのインストール
+3. シンボリックリンクの作成
+4. Gitグローバル設定
+5. Gitエイリアスの設定
+6. 言語環境のセットアップ (Ruby → Node → Python)
+7. Vim/CoC設定
+8. macOSシステムデフォルト
 
-### Key Configuration Files
-- `home/.zshrc` - Main shell configuration (14k+ lines with advanced features)
-- `vim/vimrc` - Vim configuration with dein.vim plugin management
-- `vim/dein.toml` - Plugin definitions and configurations
-- `vim/coc-settings.json` - Language server configuration for CoC
-- `home/.gitignore` - Global git ignore patterns
-- `Brewfile` - Homebrew package definitions (includes casks and formulas)
-- `Gemlist`/`Nodelist`/`Piplist`/`Mintlist` - Language-specific package lists
+### 📝 主要設定ファイル
+- `home/.zshrc` - 高度な機能を備えたメインのシェル設定 (14k+行)
+- `vim/vimrc` - dein.vimプラグイン管理を備えたVim設定です。
+- `vim/dein.toml` - プラグイン定義と設定です。
+- `vim/coc-settings.json` - CoCの言語サーバー設定です。
+- `home/.gitignore` - グローバルなgit ignoreパターンです。
+- `Brewfile` - Homebrewパッケージ定義 (casksとformulasを含む)
+- `Gemlist`/`Nodelist`/`Piplist`/`Mintlist` - 言語固有のパッケージリストです。
 
-### Development Environment Features
-- **Languages**: Ruby, Node.js, Python, Go, Swift, Kotlin, Dart
-- **Editors**: Vim/Neovim with 100+ plugins, language servers via CoC
-- **iOS Development**: Xcode templates for Clean Swift, VIPER, TCA architectures
-- **Git workflow**: Advanced aliases and custom configurations
-- **Terminal**: iTerm2 with Smyck color scheme
-- **Browser**: CVim extension for Vim-like browsing
+### ✨ 開発環境の機能
+- **言語**: Ruby, Node.js, Python, Go, Swift, Kotlin, Dart
+- **エディタ**: Vim/Neovim (100以上のプラグイン、CoC経由の言語サーバー付き)
+- **iOS開発**: Clean Swift, VIPER, TCAアーキテクチャ用のXcodeテンプレートです。
+- **Gitワークフロー**: 高度なエイリアスとカスタム設定です。
+- **ターミナル**: Smyckカラースキームを備えたiTerm2です。
+- **ブラウザ**: VimのようなブラウジングのためのCVim拡張機能です。
 
-### Platform Specifics
-- **Primary target**: macOS development environment
-- **Trilingual support**: English/Japanese with Google Japanese IME
-- **iOS/macOS focus**: Extensive Xcode integration and Swift development tools
-- **Cross-platform notes**: Some Windows/MSYS2 configurations available
+### 🍎 プラットフォーム固有の事項
+- **主要ターゲット**: macOS開発環境です。
+- **多言語サポート**: 英語/日本語 (Google日本語入力付き)
+- **iOS/macOS重視**: 豊富なXcode統合とSwift開発ツールです。
+- **クロスプラットフォームノート**: 一部のWindows/MSYS2設定が利用可能です。
 
-### Manual Configuration Requirements
-After installation, manual setup is required for:
-- macOS system preferences (trackpad, keyboard settings)
-- Google IME configuration
-- Alfred workflow setup
-- Xcode preferences and behaviors
-- Mission Control settings
+### ✋ 手動設定の要件
+インストール後、以下の手動設定が必要です。
+- macOSシステム環境設定 (トラックパッド、キーボード設定)
+- Google IME設定
+- Alfredワークフロー設定
+- Xcode環境設定と動作
+- Mission Control設定
 
-## File Modification Guidelines
+## ✍️ ファイル変更ガイドライン
 
-When modifying configurations:
-- **zshrc changes**: Edit `home/.zshrc` (will be symlinked to `~/.zshrc`)
-- **Vim configuration**: Modify files in `vim/` directory (vimrc, dein.toml, coc-settings.json)
-- **Package additions**: Update appropriate package list files:
-  - `Brewfile` for Homebrew packages and casks
-  - `Gemlist` for Ruby gems
-  - `Nodelist` for Node.js packages
-  - `Piplist` for Python packages
-  - `Mintlist` for Swift packages
-- **Installation scripts**: Add new scripts in `install.sh.subs/` following naming convention
-- **Git configuration**: Modify git config commands in main `install.sh`
-- **Xcode templates**: Add templates in `xcode/File Templates/` for Clean Swift, VIPER, TCA architectures
+設定を変更する際。
+- **zshrcの変更**: `home/.zshrc`を編集します (`~/.zshrc`にシンボリックリンクされます)
+- **Vim設定**: `vim/`ディレクトリ内のファイル (vimrc, dein.toml, coc-settings.json) を変更します。
+- **パッケージの追加**: 適切なパッケージリストファイルを更新します。
+  - Homebrewパッケージとcaskは`Brewfile`
+  - Ruby gemは`Gemlist`
+  - Node.jsパッケージは`Nodelist`
+  - Pythonパッケージは`Piplist`
+  - Swiftパッケージは`Mintlist`
+- **インストールスクリプト**: 命名規則に従って`install.sh.subs/`に新しいスクリプトを追加します。
+- **Git設定**: メインの`install.sh`内のgit configコマンドを変更します。
+- **Xcodeテンプレート**: Clean Swift, VIPER, TCAアーキテクチャ用に`xcode/File Templates/`にテンプレートを追加します。
 
-### Testing Changes
-- Run specific sub-scripts from `install.sh.subs/` to test individual components
-- Use `./install.sh.subs/symlink.sh` to re-link dotfiles after modifications
-- Test full installation with `./install.sh` in clean environment when possible
+### ✅ 変更のテスト
+- 個々のコンポーネントをテストするには、`install.sh.subs/`から特定のサブスクリプトを実行します。
+- 変更後にdotfilesを再リンクするには、`./install.sh.subs/symlink.sh`を使用します。
+- 可能であれば、クリーンな環境で`./install.sh`を使用して完全なインストールをテストします。
 
-### Prerequisites for Development
-Before modifying this repository:
-1. Install Xcode and command line tools: `sudo xcode-select -s /Applications/Xcode.app && xcode-select --install`
-2. Install Homebrew: Follow instructions at https://brew.sh/
-3. Install Git: `brew install git`
-4. Clone repository: `git clone https://github.com/zeero/dotfiles.git ~/lib/dotfiles`
+### 📝 開発の前提条件
+このリポジトリを変更する前に。
+1. Xcodeとコマンドラインツールをインストールします。`sudo xcode-select -s /Applications/Xcode.app && xcode-select --install`
+2. Homebrewをインストールします。https://brew.sh/ の指示に従います。
+3. Gitをインストールします。`brew install git`
+4. リポジトリをクローンします。`git clone https://github.com/zeero/dotfiles.git ~/lib/dotfiles`
