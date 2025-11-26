@@ -77,17 +77,18 @@ echo git config --global user.email zeero26@gmail.com
 echo git config --global github.user zeero
 read -p "Press Enter to resume..."
 
+# Mise
+./${SUBS}/mise_install.sh
+
 # Mint
 ./${SUBS}/mint_install.sh
 
 # ruby
-./${SUBS}/ruby.001.rbenv.sh
 ./${SUBS}/ruby.002.gem_install_pre.sh
 ./${SUBS}/ruby.003.gem_install.sh
 ./${SUBS}/ruby.004.gem_install_post.sh
 
 # node.js
-./${SUBS}/node.001.nodebrew.sh
 ./${SUBS}/node.002.npm_install.sh
 
 # python

@@ -7,7 +7,6 @@ PATH=/usr/local/bin:/usr/local/sbin:$PATH
 PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
 PATH=/opt/homebrew/opt/make/libexec/gnubin:$PATH
 PATH=~/.mint/bin:$PATH
-PATH=$(brew --prefix python)/libexec/bin:$PATH
 PATH=$HOME/lib/dotfiles/lib/flutter/bin:$PATH
 # uv tool install
 PATH=$HOME/.local/bin:$PATH
@@ -15,7 +14,7 @@ PATH=$HOME/bin:$PATH
 export PATH
 
 eval "$(brew shellenv)"
-eval "$(rbenv init -)"
+command -v mise > /dev/null && eval "$(mise activate zsh)"
 
 # OS
 ## man
@@ -61,27 +60,6 @@ export PATH=$ICONV_PREFIX/bin:$PATH
 # RUBY_CONFIGURE_OPTS="$RUBY_CONFIGURE_OPTS --with-readline-dir=$READLINE_PREFIX"
 # export RUBY_CONFIGURE_OPTS
 
-# Python
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-
 # Java
 # export _JAVA_OPTIONS='-Dfile.encoding=UTF-8'
 JAVA_HOME='/Applications/Android Studio.app/Contents/jbr/Contents/Home'
@@ -103,7 +81,7 @@ fi
 
 # Node.js
 export NODE_PATH=$NODE_PATH:`npm root -g`
-export PATH=~/.nodebrew/current/bin:~/.config/npm/bin:$PATH
+export PATH=~/.config/npm/bin:$PATH
 
 # Claude Code
 export BASH_DEFAULT_TIMEOUT_MS=600000

@@ -6,16 +6,9 @@ cask 'spectacle'
 cask 'karabiner-elements'
 
 # Language {{{1
-brew 'ruby'
-brew 'rbenv'
-brew 'ruby-build'
-brew 'python'
+brew 'mise'
 brew 'uv'
 brew 'lua'
-brew 'nodebrew'
-# brew 'node', args: ['with-full-icu']
-# brew 'npm'
-brew 'zsh'
 brew 'go'
 brew 'dart-sdk'
 brew 'kotlin'
