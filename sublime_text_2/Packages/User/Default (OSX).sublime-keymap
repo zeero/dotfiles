@@ -1,4 +1,0 @@
-[
-	{ "keys": ["super+@"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} },
-	{ "keys": ["super+r"], "command": "show_panel", "args": {"panel": "replace"} }
-]

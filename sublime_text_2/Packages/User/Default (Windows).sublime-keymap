@@ -1,7 +1,0 @@
-[
-	//  ctrl+r
-	// { "keys": ["ctrl+h"], "command": "show_panel", "args": {"panel": "replace"} },
-	// { "keys": ["ctrl+r"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} },
-	{ "keys": ["ctrl+r"], "command": "show_panel", "args": {"panel": "replace"} },
-	{ "keys": ["ctrl+@"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} }
-]
