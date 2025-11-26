@@ -2,5 +2,5 @@
 
 DOTFILES=$(dirname $(realpath $0))/..
 
-cat ${DOTFILES}/Uvlist | gxargs -E'__EOF__' uv tool install
+cat ${DOTFILES}/Uvlist | xargs -n1 uv tool install
 
