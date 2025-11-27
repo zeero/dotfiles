@@ -121,9 +121,16 @@ on_cmd = ['CtrlPtjump', 'CtrlPtjumpVisual']
 repo = 'neovim/nvim-lspconfig'
 hook_add = '''
 lua << EOF
-local lspconfig = require('lspconfig')
-lspconfig.ruby_lsp.setup({})
-lspconfig.sourcekit.setup({})
+vim.lsp.config('ruby_lsp', {
+  cmd = { 'ruby-lsp' },
+  filetypes = { 'ruby', 'eruby', 'ruby.rspec' },
+  root_markers = { 'Gemfile', '.git' }
+})
+vim.lsp.config('sourcekit', {
+  cmd = { 'sourcekit-lsp' },
+  filetypes = { 'swift', 'objective-c' },
+  root_markers = { 'Package.swift', '.git' }
+})
 EOF
 '''
 
@@ -266,7 +273,6 @@ repo = 'zbirenbaum/copilot.lua'
 repo = 'nvim-lua/plenary.nvim'
 [[plugins]]
 repo = 'CopilotC-Nvim/CopilotChat.nvim'
-rev = 'canary'
 depends = ['copilot.lua', 'plenary.nvim']
 on_cmd = 'CopilotChat' # post_source を動かすために必要そう
 lua_post_source = '''

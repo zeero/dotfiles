@@ -372,8 +372,6 @@ if has('gui_running')
   " バッファがローカルバッファに表示されなくなった場合は削除する
   " （[No Name]バッファへの対策）
   set bufhidden=wipe
-  " タブのラベル
-  set guitablabel=%{tabpagenr()}:%h%t%m
   " 印刷オプション
   if has('mac') && !has('nvim')
     set printoptions=wrap:y,number:y
