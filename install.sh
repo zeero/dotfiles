@@ -126,6 +126,8 @@ open "$DOTFILES/lib"
 # AI Agents
 claude plugin marketplace add anthropics/skills
 claude plugin install example-skills@anthropic-agent-skills
+claude plugin marketplace add anthropics/claude-code
+claude plugin install frontend-design@claude-code-plugins
 cd $DOTFILES
 claude plugin marketplace add ./
 claude plugin install simple-research@zeero-dotfiles

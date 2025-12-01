@@ -55,6 +55,7 @@
   "enabledPlugins": {
     "example-skills@anthropic-agent-skills": true,
     "simple-research@zeero-dotfiles": false,
-    "multi-research@zeero-dotfiles": false
+    "multi-research@zeero-dotfiles": false,
+    "frontend-design@claude-code-plugins": true
   }
 }
