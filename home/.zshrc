@@ -435,11 +435,6 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 # prompt_newline='%666v'
 # PROMPT=" $PROMPT"
 
-# Binary release in archive, from GitHub-releases page.
-# After automatic unpacking it provides program "fzf".
-zinit ice from"gh-r" as"program"
-zinit load junegunn/fzf-bin
-
 # Desktop notifications for long-running commands in ZSH.
 zinit light marzocchi/zsh-notify
 
