@@ -31,6 +31,10 @@ alias publish8080='ngrok http 8080'
 alias mkdir='mkdir -p'
 alias preview='nvim --headless +"MarkdownPreview"'
 alias cc-commit='claude -p --allow-dangerously-skip-permissions "/commit"'
+alias adb-light='adb shell cmd uimode night no'
+alias adb-dark='adb shell cmd uimode night yes'
+alias adb-ja='adb root && adb shell "settings put system system_locales ja-JP; sleep 5 && am restart"'
+alias adb-en='adb root && adb shell "settings put system system_locales en-US; sleep 5 && am restart"'
 
 ## External Load {{{1
 ### .local.zshrc
