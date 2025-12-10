@@ -103,6 +103,7 @@ brew 'yamllint'
 brew 'mermaid-cli'
 brew 'graphviz'
 brew 'plantuml'
+brew 'direnv'
 
 # AppStore {{{1
 brew 'mas'

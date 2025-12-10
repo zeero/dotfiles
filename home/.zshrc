@@ -43,6 +43,8 @@ alias adb-en='adb root && adb shell "settings put system system_locales en-US; s
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ### mise
 [ -f ~/.local/bin/mise ] && eval "$(~/.local/bin/mise activate zsh)"
+### direnv
+command -v direnv > /dev/null && eval "$(direnv hook zsh)"
 
 ## Functions {{{1
 ### calc {{{2
