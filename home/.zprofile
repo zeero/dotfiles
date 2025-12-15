@@ -26,7 +26,9 @@ export LESS='-R -X -i -P ?f%f:(stdin).  ?lb%lb?L/%L..  [?eEOF:?pb%pb\%..]'
 ## デフォルトのエディタ
 export EDITOR=nvim
 ## 端末
-export TERM=xterm-256color
+if [[ -z "$TMUX" ]]; then
+  export TERM=xterm-256color
+fi
 
 # lib
 export LDFLAGS=

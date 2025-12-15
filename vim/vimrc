@@ -39,8 +39,8 @@ if !has('gui_running') && has('xterm_clipboard')
 endif "}}}
 " NeoVim
 if has('mac')
-  let g:python_host_prog='/usr/local/bin/python'
-  let g:python3_host_prog='/usr/local/bin/python3'
+  let g:python_host_prog=exepath('python')
+  let g:python3_host_prog=exepath('python3')
   set pyxversion=3
 elseif has('win32') || has('win64')
   let g:python_host_prog='~/lib/git-sdk-32/mingw32/bin/python2.exe'
@@ -514,8 +514,6 @@ au myvimrc BufRead,BufNewFile *.log* setlocal filetype=log
 " au myvimrc BufNewFile,BufRead *.md,*.mkd,*.markdown,*.mdc setlocal filetype=workflowish
 au myvimrc FileType workflowish let b:caw_wrap_oneline_comment = ["<!--", "-->"]
 " au myvimrc FileType workflowish,markdown setl nofoldenable
-" yaml（vim-ansible-yamlで使う）
-au myvimrc BufNewFile,BufRead *.yaml,*.yml setlocal filetype=ansible
 " swift
 au myvimrc BufNewFile,BufRead *.stencil setlocal filetype=swift
 " ruby

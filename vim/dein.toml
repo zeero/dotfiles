@@ -262,26 +262,6 @@ rev = 'release'
 merged = 0
 depends = ['neosnippet']
 
-# copilot {{{2
-
-[[plugins]]
-repo = 'github/copilot.vim'
-
-[[plugins]]
-repo = 'zbirenbaum/copilot.lua'
-[[plugins]]
-repo = 'nvim-lua/plenary.nvim'
-[[plugins]]
-repo = 'CopilotC-Nvim/CopilotChat.nvim'
-depends = ['copilot.lua', 'plenary.nvim']
-on_cmd = 'CopilotChat' # post_source を動かすために必要そう
-lua_post_source = '''
-require("CopilotChat").setup {
-  debug = true,
-  context = 'buffers',
-}
-'''
-
 # 入力補助 {{{1
 
 [[plugins]]
@@ -872,6 +852,17 @@ depends = ['CamelCaseMotion']
 
 
 # AI {{{1
+
+# Copilot {{{2
+
+[[plugins]]
+repo = 'github/copilot.vim'
+
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+# ClaudeCode {{{2
+
 [[plugins]]
 repo = 'coder/claudecode.nvim'
 lazy = 1
@@ -1172,14 +1163,6 @@ on_ft = ['vim']
 # その他のファイルタイプ {{{1
 
 [[plugins]]
-repo = 'chase/vim-ansible-yaml'
-on_ft = ['ansible']
-
-# [[plugins]]
-# repo = 'sheerun/vim-polyglot'
-# コンフリクトが多そうなので無効化
-
-[[plugins]]
 repo = 'dart-lang/dart-vim-plugin'
 on_ft = ['dart']
 
@@ -1189,7 +1172,6 @@ on_ft = ['dart']
 
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
-rev = 'main'
 hook_post_update = '''TSUpdate'''
 lua_post_source = '''
 require("nvim-treesitter").setup {
@@ -1202,9 +1184,26 @@ require("nvim-treesitter").setup {
     'kotlin',
     'ruby',
     'vim',
-    'vimdoc',
     'markdown',
+    'yaml',
   },
+}
+'''
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter-context'
+depends = ['nvim-treesitter']
+lua_post_source = '''
+require("treesitter-context").setup {
+  enable = true,
+  max_lines = 0,
+  min_window_height = 0,
+  line_numbers = true,
+  multiline_threshold = 20,
+  trim_scope = 'outer',
+  mode = 'cursor',
+  separator = nil,
+  zindex = 20,
 }
 '''
 
