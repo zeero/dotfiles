@@ -104,6 +104,7 @@ brew 'mermaid-cli'
 brew 'graphviz'
 brew 'plantuml'
 brew 'direnv'
+brew 'luacheck'
 
 # AppStore {{{1
 brew 'mas'
