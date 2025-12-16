@@ -1554,8 +1554,23 @@ nnoremap <silent> ,f :<C-u>CocCommand explorer --open-action-strategy=tab --quit
 " :terminal
 nnoremap ,s :<C-u>sp<Space>\|<Space>terminal<CR>
 nnoremap ,S :<C-u>ClaudeCodeAdd %<CR>
-au myvimrc TermOpen * startinsert
-au myvimrc TermClose * execute 'bddelete!'
+vnoremap ,S :<C-u>call <SID>ClaudeCodeAddSelection()<CR>
+function! s:ClaudeCodeAddSelection() range "{{{
+  let l:start_line = line("'<")
+  let l:end_line = line("'>")
+  let l:file_path = expand("%:p")
+
+  if empty(l:file_path)
+    echohl ErrorMsg
+    echo "ClaudeCodeAddSelection: No file in current buffer"
+    echohl None
+    return
+  endif
+
+  execute printf('ClaudeCodeAdd %s %d %d', l:file_path, l:start_line, l:end_line)
+endfunction "}}}
+au myvimrc TermOpen * setl scrolloff=0 sidescrolloff=0 ambiwidth=single | startinsert
+au myvimrc TermClose * execute 'bdelete!'
 tnoremap <Esc> <C-\><C-n>
 " MBEToggle
 nnoremap ,b :<C-u>MBEToggle<CR>
