@@ -2839,7 +2839,7 @@ let g:indent_guides_color_change_percent = 30
 " ファイルでないバッファでは無効にする
 let g:indent_guides_exclude_buftype = 1
 " 無視するファイルタイプ
-let g:indent_guides_exclude_filetypes = ['help', 'unite', 'vimfiler', 'vimshell', 'splash', 'tagbar']
+let g:indent_guides_exclude_filetypes = ['help', 'unite', 'vimfiler', 'vimshell', 'splash', 'tagbar', '']
 
 " ShowMarks {{{1
 let g:showmarks_ignore_type = 'hqmp'
