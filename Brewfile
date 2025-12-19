@@ -105,6 +105,7 @@ brew 'graphviz'
 brew 'plantuml'
 brew 'direnv'
 brew 'luacheck'
+brew 'pngpaste'
 
 # AppStore {{{1
 brew 'mas'
