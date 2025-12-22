@@ -2791,10 +2791,10 @@ let g:tagbar_auto_focus = 1
 if executable('jsctags')
   let g:tagbar_type_javascript = {'ctagsbin': '/opt/local/bin/jsctags'}
 endif
-if executable('markdown2ctags.py')
+if executable('markdown2ctags')
   let g:tagbar_type_workflowish = {
     \ 'ctagstype': 'markdown',
-    \ 'ctagsbin' : 'markdown2ctags.py',
+    \ 'ctagsbin' : 'markdown2ctags',
     \ 'ctagsargs' : '-f - --sort=yes',
     \ 'kinds' : [
       \ 's:sections',

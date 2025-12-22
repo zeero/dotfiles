@@ -80,7 +80,6 @@ tap 'zeero/my-formulas'
 brew 'go-gtran'
 brew 'git-info'
 brew 'git-jump'
-brew 'py-markdown2ctags'
 cask 'font-ricty_diminished-devicon'
 
 # Development Tool {{{1
