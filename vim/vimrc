@@ -432,14 +432,12 @@ endfunction "}}}
 " cvimrcのGista自動保管（vimrcのautocmdより先に定義する）
 au myvimrc BufWritePost .cvimrc Gista patch --stay f48b6201a10189b8a6defedf2dc99949
 " vimrcの保存時に再読み込み
-if !has('gui_running')
-  au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
-  \ call localrc#load(g:localrc_filename)
-else
-  au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
-  \ if filereadable($MYGVIMRC) | source $MYGVIMRC | endif |
-  \ call localrc#load(g:localrc_filename)
-endif
+au myvimrc BufWritePost *vimrc nested source $MYVIMRC |
+\ if !has('gui_running') && filereadable($MYGVIMRC) | source $MYGVIMRC | endif |
+\ call localrc#load(g:localrc_filename) |
+\ let cur_buf = bufnr('%') |
+\ noautocmd keepalt bufdo if &filetype !=# '' | execute 'doautocmd FileType ' . &filetype | endif |
+\ noautocmd silent! execute 'buffer ' . cur_buf
 " バックスラッシュのインデントを無くす
 let g:vim_indent_cont = 0
 " vimrc、helpでは:もiskに入れる
