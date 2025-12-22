@@ -1060,6 +1060,10 @@ on_cmd = ['Prettier']
 repo = 'lukaszkorecki/workflowish'
 lazy = 1
 on_ft = ['workflowish']
+hook_source = '''
+  runtime! after/ftplugin/workflowish.vim
+  runtime! after/syntax/workflowish.vim
+'''
 
 [[plugins]]
 repo = 'zeero/previm'
