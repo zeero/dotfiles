@@ -1,0 +1,6 @@
+--recurse=yes
+--sort=yes
+#--input-encoding=utf-8
+#--input-encoding-java=sjis
+#--input-encoding-vim=utf-8
+

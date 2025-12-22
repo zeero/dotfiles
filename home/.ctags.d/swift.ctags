@@ -1,0 +1,9 @@
+--langdef=Swift
+--langmap=Swift:+.swift
+--regex-Swift=/(var|let)[ \t]+([^:=]+).*$/\2/v,variable/
+--regex-Swift=/func[ \t]+([^\(\)]+)\([^\(\)]*\)/\1/f,function/
+--regex-Swift=/class[ \t]+([^:\{]+).*$/\1/c,class/
+--regex-Swift=/protocol[ \t]+([^:\{]+).*$/\1/p,protocol/
+--regex-Swift=/struct[ \t]+([^:\{]+).*$/\1/s,struct/
+--regex-Swift=/enum[ \t]+([^:\{]+).*$/\1/e,enum/
+
