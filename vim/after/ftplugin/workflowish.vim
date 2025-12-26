@@ -40,8 +40,22 @@ function! s:my_markdown_header(char) "{{{
   exe 'normal! ' . len . 'i' . a:char
 endfunction "}}}
 
-" コンシール
 setl conceallevel=2
+setl tabstop=2
+
+" WikiLinkJump
+nnoremap <silent> <buffer> <C-j> :call <SID>my_wiki_link_jump()<CR>
+function! s:my_wiki_link_jump() abort "{{{
+  try
+    let default_input_backup = get(g:, 'ctrlp_default_input', '')
+    let g:ctrlp_default_input = expand('<cword>')
+    CtrlP
+  finally
+    if exists('default_input_backup')
+      let g:ctrlp_default_input = default_input_backup
+    endif
+  endtry
+endfunction "}}}
 
 " WorkflowishFocus
 nnoremap <buffer> gj :call WorkflowishFocusToggle(line("."))<CR>
