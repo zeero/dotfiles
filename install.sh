@@ -14,6 +14,7 @@ mkdir -p ~/lib/go/bin
 # HomeBrew
 sudo softwareupdate --install-rosetta
 brew bundle --verbose
+read -p "Press Enter to resume..."
 brew services start colima
 
 # symlink
@@ -80,6 +81,7 @@ read -p "Press Enter to resume..."
 
 # Mise
 ./${SUBS}/mise_install.sh
+read -p "Press Enter to resume..."
 
 # Mint
 ./${SUBS}/mint_install.sh
