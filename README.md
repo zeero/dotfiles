@@ -10,7 +10,7 @@ My configuration files.
 sudo xcode-select -s /Applications/Xcode.app
 xcode-select --install
 ```
-### 2. [Homebrew](https://brew.sh/index_ja)をインストール
+### 2. [Homebrew](https://brew.sh/ja)をインストール
 ### 3. dotfilesを設定
 ```
 brew install git
