@@ -143,7 +143,3 @@ claude plugin marketplace add ./
 # All have done
 echo '🎉'
 
-# Manual tasks
-echo 'memosのクローンは鍵登録が必要なので、手動でクローンしてください'
-echo 'git clone git@github.com:zeero/memos.git ~/Documents/memos'
-read -p "Press Enter to resume..."
