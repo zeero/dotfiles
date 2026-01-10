@@ -22,7 +22,6 @@ brew services start colima
 
 # git submodules
 git submodule update --init
-git clone https://github.com/zeero/memos ~/Documents/memos
 
 # git config
 git config --global push.default simple
