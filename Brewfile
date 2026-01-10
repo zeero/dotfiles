@@ -91,7 +91,7 @@ brew 'colima' # docker daemon
 brew 'ghq'
 brew 'gibo'
 brew 'mint'
-cask 'google-cloud-sdk'
+cask 'gcloud-cli'
 cask 'github'
 cask 'android-studio'
 brew 'xcodesorg/made/xcodes'
