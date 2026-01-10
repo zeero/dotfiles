@@ -61,7 +61,7 @@ cask 'ngrok'
 
 # Vim {{{1
 tap 'universal-ctags/universal-ctags'
-brew 'universal-ctags', args: ['HEAD']
+brew 'universal-ctags'
 brew 'cmigemo'
 brew 'the_silver_searcher'
 brew 'the_platinum_searcher'
