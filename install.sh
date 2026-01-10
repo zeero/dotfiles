@@ -22,7 +22,10 @@ brew services start colima
 
 # git submodules
 git submodule update --init
-git clone https://github.com/zeero/memos ~/Documents/memos
+# git clone https://github.com/zeero/memos ~/Documents/memos
+echo 'memosのクローンは鍵登録が必要なので、手動でクローンしてください'
+echo 'git clone https://github.com/zeero/memos ~/Documents/memos'
+read -p "Press Enter to resume..."
 
 # git config
 git config --global push.default simple
