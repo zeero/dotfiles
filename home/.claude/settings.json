@@ -56,6 +56,8 @@
     "example-skills@anthropic-agent-skills": true,
     "simple-research@zeero-dotfiles": false,
     "multi-research@zeero-dotfiles": false,
-    "frontend-design@claude-code-plugins": false
+    "frontend-design@claude-code-plugins": false,
+    "plugin-dev@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true
   }
 }
