@@ -83,6 +83,7 @@ brew 'git-jump'
 cask 'font-ricty_diminished-devicon'
 
 # Development Tool {{{1
+brew 'qt'  # C++ framework (required for Ruby build)
 brew 'jsonlint'
 brew 'terminal-notifier'
 brew 'docker'
