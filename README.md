@@ -42,6 +42,18 @@ source ./dotfiles/home/.zshrc
 * memos
   * memosのクローンは鍵登録が必要なので、手動でクローンしてください
   * 鍵登録手順: [新しいSSHキーを生成してssh-agentに追加する](https://docs.github.com/ja/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+    * `ssh-keygen -t ed25519 -C "zeero26@gmail.com"`
+    * `gh auth login`
+      * 通信方式にSSHを選択する
+    * `eval "$(ssh-agent -s)"`
+    * `nvim ~/.ssh/config`
+      ```
+      Host github.com
+        AddKeysToAgent yes
+        UseKeychain yes
+        IdentityFile ~/.ssh/id_ed25519
+      ```
+    * `ssh-add --apple-use-keychain ~/.ssh/id_ed25519`
   * `git clone git@github.com:zeero/memos.git ~/Documents/memos`
 * Xcode
   * Editor
