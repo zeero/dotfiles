@@ -93,6 +93,8 @@ export DOTFILES=~/lib/dotfiles
 export FZF_TMUX=1
 export XDG_CONFIG_HOME=~/.config
 export EXA_COLORS='da=34:uu=32:sn=1;36:sb=36'
+export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
+alias fd='fd --hidden --ignore-case'
 export N8N_USER_FOLDER=~/dev/n8n
 # Puppeteerが使用するChrome実行パス（mmdc, md-mermaid-lint などで必要）
 export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"

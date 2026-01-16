@@ -1,0 +1,10 @@
+--hidden
+--smart-case
+#--no-ignore
+--line-number
+--glob=!.git/*
+--glob=!Pods/*
+--glob=!vendor/bundle/*
+--glob=!node_modules/*
+--glob=!*.lock
+
