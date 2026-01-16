@@ -4,10 +4,6 @@ cd `dirname $0`
 DOTFILES=`pwd`
 SUBS=install.sh.subs
 
-# git submodules
-git submodule update --init
-git clone https://github.com/zeero/memos ~/Documents/memos
-
 # mkdir
 mkdir ~/bin
 mkdir ~/dev
@@ -16,11 +12,16 @@ mkdir ~/log
 mkdir -p ~/lib/go/bin
 
 # HomeBrew
-brew bundle
+sudo softwareupdate --install-rosetta
+brew bundle --verbose
+read -p "Press Enter to resume..."
 brew services start colima
 
 # symlink
 ./${SUBS}/symlink.sh
+
+# git submodules
+git submodule update --init
 
 # git config
 git config --global push.default simple
@@ -79,6 +80,7 @@ read -p "Press Enter to resume..."
 
 # Mise
 ./${SUBS}/mise_install.sh
+read -p "Press Enter to resume..."
 
 # Mint
 ./${SUBS}/mint_install.sh

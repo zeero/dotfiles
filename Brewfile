@@ -61,7 +61,7 @@ cask 'ngrok'
 
 # Vim {{{1
 tap 'universal-ctags/universal-ctags'
-brew 'universal-ctags', args: ['HEAD']
+brew 'universal-ctags'
 brew 'cmigemo'
 brew 'the_silver_searcher'
 brew 'the_platinum_searcher'
@@ -91,7 +91,7 @@ brew 'colima' # docker daemon
 brew 'ghq'
 brew 'gibo'
 brew 'mint'
-cask 'google-cloud-sdk'
+cask 'gcloud-cli'
 cask 'github'
 cask 'android-studio'
 brew 'xcodesorg/made/xcodes'

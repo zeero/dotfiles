@@ -10,7 +10,7 @@ My configuration files.
 sudo xcode-select -s /Applications/Xcode.app
 xcode-select --install
 ```
-### 2. [Homebrew](https://brew.sh/index_ja)をインストール
+### 2. [Homebrew](https://brew.sh/ja)をインストール
 ### 3. dotfilesを設定
 ```
 brew install git
@@ -39,6 +39,10 @@ source ./dotfiles/home/.zshrc
   * MacVimを検索できるようにする
     * MacVimのエイリアスをApplicationsに配置
     * Alfred設定＞Default Results＞Extras＞com.apple.alias-fileを追加
+* memos
+  * memosのクローンは鍵登録が必要なので、手動でクローンしてください
+  * 鍵登録手順: [新しいSSHキーを生成してssh-agentに追加する](https://docs.github.com/ja/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+  * `git clone git@github.com:zeero/memos.git ~/Documents/memos`
 * Xcode
   * Editor
     * check `Vim Mode`
