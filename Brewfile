@@ -2,8 +2,9 @@ cask_args appdir: '/Applications'
 
 # Utility {{{1
 cask 'alfred'
-cask 'spectacle'
+cask 'raycast'
 cask 'karabiner-elements'
+cask 'bitwarden'
 
 # Language {{{1
 brew 'mise'
@@ -110,6 +111,5 @@ brew 'pngpaste'
 # AppStore {{{1
 brew 'mas'
 mas 'Apple Configurator 2', id: 1037126344
-mas 'Pocket', id: 568494494
 mas 'Gapplin', id: 768053424 # SVG Viewer
 
