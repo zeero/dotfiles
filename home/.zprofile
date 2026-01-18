@@ -7,7 +7,7 @@ PATH=/usr/local/bin:/usr/local/sbin:$PATH
 PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
 PATH=/opt/homebrew/opt/make/libexec/gnubin:$PATH
 PATH=~/.mint/bin:$PATH
-PATH=$HOME/lib/dotfiles/lib/flutter/bin:$PATH
+PATH="/Users/zeero/.antigravity/antigravity/bin:$PATH"
 # uv tool install
 PATH=$HOME/.local/bin:$PATH
 PATH=$HOME/bin:$PATH

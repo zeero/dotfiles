@@ -75,6 +75,7 @@ brew 'w3m'
 # AI {{{1
 cask 'claude-code'
 brew 'github-mcp-server'
+cask 'antigravity'
 
 # My Formulas {{{1
 tap 'zeero/my-formulas'
