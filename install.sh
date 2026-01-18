@@ -15,7 +15,8 @@ mkdir -p ~/lib/go/bin
 sudo softwareupdate --install-rosetta
 brew bundle --verbose
 read -p "Press Enter to resume..."
-brew services start colima
+#brew services start colima
+read -p "Dockerを常時立ち上げるなら `brew services start colima` を実行..."
 
 # symlink
 ./${SUBS}/symlink.sh
