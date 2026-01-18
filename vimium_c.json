@@ -1,35 +1,110 @@
 {
 	"name": "Vimium C",
-	"@time": "2026/1/17 19:28:09",
-	"time": 1768645689287,
+	"@time": "2026/1/18 22:35:33",
+	"time": 1768743333458,
 	"environment": {
 		"extension": "2.12.2",
 		"platform": "mac",
 		"chromium": 143
 	},
-	"keyLayout": 2,
-	"vimSync": true,
-	"linkHintCharacters": "fdsavcxzrewqg",
-	"scrollStepSize": 70,
-	"smoothScroll": true,
-	"searchEngines": "map: https://www.google.co.jp/maps/?hl=ja&q=$s Google Maps\nimage: https://www.google.co.jp/search?tbm=isch&q=$s Google Images\nicon: https://www.google.co.jp/search?as_st=y&tbm=isch&hl=ja&as_q=$s&safe=images&tbs=isz:i Google Icons\ntrend: https://www.google.co.jp/trends/explore?q=$s Google Trends\neiwa: https://translate.google.com/#en/ja/$s 英和翻訳\nwaei: https://translate.google.com/#ja/en/$s 和英翻訳\nhub: https://github.com/search?utf8=%E2%9C%93&o=desc&s=stars&q=$s GitHub\ngem: https://rubygems.org/search?utf8=%E2%9C%93&query=$s RubyGems\nnpmjs: https://www.npmjs.com/search?q=$s npm\nphoto: https://pixabay.com/ja/photos/?q=$s Pixabay\ntw: https://twitter.com/search?q=$s&src=typd&lang=ja Twitter\namzn: https://www.amazon.co.jp/s/?field-keywords=$s Amazon",
+	"allBrowserUrls": true,
 	"exclusionRules": [
 		{
-			"pattern": "*://webrd8.remoteworks.jp/*",
-			"passKeys": ""
+			"passKeys": "",
+			"pattern": "*://webrd8.remoteworks.jp/*"
 		},
 		{
-			"pattern": "*://mail.google.com/*",
-			"passKeys": "j k c / l n p o u e x s r a I ? gi gs gt gd ga gc"
+			"passKeys": "j k c / l n p o u e x s r a I ? gi gs gt gd ga gc",
+			"pattern": "*://mail.google.com/*"
 		},
 		{
-			"pattern": "*://calendar.google.com/*",
-			"passKeys": "t d w m y / ?"
+			"passKeys": "t d w m y / ?",
+			"pattern": "*://calendar.google.com/*"
 		},
 		{
-			"pattern": "*://drive.google.com/*",
-			"passKeys": "s n . / F # Z"
+			"passKeys": "s n . / F # Z",
+			"pattern": "*://drive.google.com/*"
 		}
 	],
-	"keyMappings": "# ナビゲーション\nmap h goBack\nmap l goForward\nmap zh scrollLeft\nmap zl scrollRight\n\n# 表示\nmap R reload hard\nmap + zoomIn\nmap - zoomOut\nmap = zoomReset\n\n# タブ\nmap H previousTab\nmap L nextTab\nmap d removeTab\nmap q removeTab\nmap u restoreTab\nmap ,p togglePinTab\n\n# ウィンドウ\nmap w createTab\nmap W duplicateTab\n\n# マーク\nmap m Marks.activateCreate\nmap gm Marks.activate\n\n# クイックアクセス\nmap gb openUrl url=\"chrome://bookmarks\"\nmap gd openUrl url=\"chrome://downloads\"\nmap ge openUrl url=\"chrome://extensions\"\n\n# ヤンク（copyWindowInfo）\nmap y copyCurrentUrl\nmap Y copyWindowInfo format=\"${title}\\n${url}\"\nmap gy copyWindowInfo format=\"${title}\\n${url}\"\nmap gY copyWindowInfo format=\"[${title}](${url})\"\nmap ,gy copyWindowInfo format=\"<a href=\\\"${url}\\\">${title}</a>\"\nmap ,y copyWindowInfo format=\"${title}\"\n\n# タブ応用\nmap D removeTab goto=\"left\"\nmap U restoreTab\nmap ,l moveTabRight count=99\nmap ,L moveTabLeft count=99\nmap ,t Vomnibar.activate bookmark\n\n# インサートモード (cVim互換)\nmap <c-a:i> editText run=\"auto,begin\"\nmap <c-e:i> editText run=\"auto,end\"\nmap <c-h:i> editText run=\"auto,backward,char\"\nmap <c-l:i> editText run=\"auto,forward,char\"\nmap <c-d:i> editText run=\"delete,forward,char\"\nmap <c-w:i> editText run=\"auto,forward,word\"\nmap <c-b:i> editText run=\"auto,backward,word\"\nmap <c-k:i> editText run=\"delete,forward,lineboundary\""
+	"keyLayout": 2,
+	"keyMappings": [
+		"#!no-check",
+		"# ナビゲーション",
+		"map h goBack",
+		"map l goForward",
+		"map zh scrollLeft",
+		"map zl scrollRight",
+		"",
+		"# 表示",
+		"map R reload hard",
+		"map + zoomIn",
+		"unmap -",
+		"map - zoomOut",
+		"map = zoomReset",
+		"",
+		"# タブ",
+		"map H previousTab",
+		"map L nextTab",
+		"map d removeTab",
+		"map q removeTab",
+		"map u restoreTab",
+		"map ,p togglePinTab",
+		"",
+		"# ウィンドウ",
+		"map ,t createTab",
+		"map T duplicateTab",
+		"",
+		"# マーク",
+		"map mm Marks.activateCreate",
+		"map gm Marks.activate",
+		"",
+		"# クイックアクセス",
+		"map gb openUrl url=\"chrome://bookmarks\"",
+		"map gd openUrl url=\"chrome://downloads\"",
+		"map ge openUrl url=\"chrome://extensions\"",
+		"",
+		"# ヤンク（copyWindowInfo）",
+		"map y copyCurrentUrl",
+		"map Y copyWindowInfo format=\"${title}\\n${url}\"",
+		"map gy copyWindowInfo format=\"${title}\\n${url}\"",
+		"map gY copyWindowInfo format=\"[${title}](${url})\"",
+		"map ,gy copyWindowInfo format=\"<a\\u0020href=\\\"${url}\\\">${title}</a>\"",
+		"map ,y copyWindowInfo format=\"${title}\"",
+		"",
+		"# タブ応用",
+		"map D removeTab goto=\"left\"",
+		"map U restoreTab",
+		"map ,l moveTabRight count=99",
+		"map ,L moveTabLeft count=99",
+		"map ,b Vomnibar.activate bookmark",
+		"",
+		"# インサートモード (cVim互換)",
+		"map <c-a:i> editText run=\"auto,begin\"",
+		"map <c-e:i> editText run=\"auto,end\"",
+		"map <c-h:i> editText run=\"auto,backward,char\"",
+		"map <c-l:i> editText run=\"auto,forward,char\"",
+		"map <c-d:i> editText run=\"delete,forward,char\"",
+		"map <c-w:i> editText run=\"auto,forward,word\"",
+		"map <c-b:i> editText run=\"auto,backward,word\"",
+		"map <c-k:i> editText run=\"delete,forward,lineboundary\"",
+		""
+	],
+	"linkHintCharacters": "fdsavcxzrewqg",
+	"scrollStepSize": 70,
+	"searchEngines": [
+		"map: https://www.google.co.jp/maps/?hl=ja&q=$s Google Maps",
+		"image: https://www.google.co.jp/search?tbm=isch&q=$s Google Images",
+		"icon: https://www.google.co.jp/search?as_st=y&tbm=isch&hl=ja&as_q=$s&safe=images&tbs=isz:i Google Icons",
+		"trend: https://www.google.co.jp/trends/explore?q=$s Google Trends",
+		"eiwa: https://translate.google.com/#en/ja/$s 英和翻訳",
+		"waei: https://translate.google.com/#ja/en/$s 和英翻訳",
+		"hub: https://github.com/search?utf8=%E2%9C%93&o=desc&s=stars&q=$s GitHub",
+		"gem: https://rubygems.org/search?utf8=%E2%9C%93&query=$s RubyGems",
+		"npmjs: https://www.npmjs.com/search?q=$s npm",
+		"photo: https://pixabay.com/ja/photos/?q=$s Pixabay",
+		"tw: https://twitter.com/search?q=$s&src=typd&lang=ja Twitter",
+		"amzn: https://www.amazon.co.jp/s/?field-keywords=$s Amazon",
+		""
+	],
+	"vimSync": true
 }
