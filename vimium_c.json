@@ -1,7 +1,7 @@
 {
 	"name": "Vimium C",
-	"@time": "2026/1/18 22:35:33",
-	"time": 1768743333458,
+	"@time": "2026/1/18 22:52:23",
+	"time": 1768744343649,
 	"environment": {
 		"extension": "2.12.2",
 		"platform": "mac",
@@ -73,10 +73,11 @@
 		"",
 		"# タブ応用",
 		"map D removeTab goto=\"left\"",
-		"map U restoreTab",
+		"map U Vomnibar.activateInNewTab history",
 		"map ,l moveTabRight count=99",
 		"map ,L moveTabLeft count=99",
 		"map ,b Vomnibar.activate bookmark",
+		"map t Vomnibar.activateInNewTab",
 		"",
 		"# インサートモード (cVim互換)",
 		"map <c-a:i> editText run=\"auto,begin\"",
