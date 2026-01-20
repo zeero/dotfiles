@@ -64,6 +64,9 @@ if has('vim_starting')
     call dein#end()
     call dein#save_state()
   endif
+  if has('nvim')
+    lua require('filetype')
+  endif
   filetype plugin indent on
 endif
 
