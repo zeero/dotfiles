@@ -1,4 +1,4 @@
-" 見出しマーク
+" タスクトグル: -/* → [ ] → [x] （プレフィックスを維持）
 nnoremap <silent> <buffer> <C-t> :MyWorkflowishToggle<CR>
 vnoremap <silent> <buffer> <C-t> :MyWorkflowishToggle<CR>
 command! -nargs=0 -range MyWorkflowishToggle call s:my_workflowish_toggle(<line1>, <line2>)
@@ -6,14 +6,21 @@ function! s:my_workflowish_toggle(line1, line2) "{{{
   let index = a:line1
   let col = virtcol('.')
   while index <= a:line2
-    let first_char = matchstr(getline(index), '\S')
-    if first_char == '*'
-      exe ':'.index.','.index.'s/\*/-/'
-    elseif first_char == '-'
-      exe ':'.index.','.index.'s/\-/*/'
-    elseif first_char == ''
+    let line = getline(index)
+    if line =~ '^\s*[-*] \[x\]'
+      " [x] → チェックボックス削除（プレフィックス維持）
+      exe ':'.index.','.index.'s/\([-*]\) \[x\] /\1 /'
+    elseif line =~ '^\s*[-*] \[ \]'
+      " [ ] → [x] （プレフィックス維持）
+      exe ':'.index.','.index.'s/\([-*]\) \[ \]/\1 [x]/'
+    elseif line =~ '^\s*[-*] '
+      " - / * のみ → [ ] 追加（プレフィックス維持）
+      exe ':'.index.','.index.'s/\([-*]\) /\1 [ ] /'
+    elseif line =~ '^\s*$'
+      " 空行はスキップ
     else
-      exe ':'.index.','.index.'s/\(\S\)/* \1/'
+      " テキストのみ → - を追加
+      exe ':'.index.','.index.'s/\(\s*\)\(\S\)/\1- \2/'
     endif
     let index += 1
   endwhile

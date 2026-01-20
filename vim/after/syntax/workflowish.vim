@@ -38,3 +38,11 @@ hi def link WFBlockCodeDelimiter    Special
 syn region WFCommentHTMLStyle start=/<!--/ end=/-->/
 hi def link WFCommentHTMLStyle      Comment
 
+" - を * と同じ扱いにする（オリジナルのWFDoneLIneを上書き）
+syn match WFToDoDot /^\s*[-*]/
+syn match WFToDo /^\s*[-*](.*)/
+
+" [x] の行をコメント色に（完了タスク）
+syn match WFDoneLine /^\s*[-*] \[x\].*$/
+hi def link WFDoneLine              Comment
+
