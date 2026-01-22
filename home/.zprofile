@@ -8,6 +8,7 @@ PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
 PATH=/opt/homebrew/opt/make/libexec/gnubin:$PATH
 PATH=$HOME/.mint/bin:$PATH
 PATH=$HOME/.antigravity/antigravity/bin:$PATH
+PATH=$HOME/.cargo/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 PATH=$HOME/bin:$PATH
 export PATH

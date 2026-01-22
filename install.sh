@@ -98,6 +98,9 @@ read -p "Press Enter to resume..."
 ./${SUBS}/python.001.uv_install.sh
 ./${SUBS}/python.002.pip_install.sh
 
+# rust
+./${SUBS}/rust.001.cargo_install.sh
+
 # vim
 ## coc.nvim (require npm)
 ./${SUBS}/vim.001.coc.sh
