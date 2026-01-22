@@ -42,8 +42,6 @@ alias xc-spm='xcodebuild -resolvePackageDependencies -project $(basename *.xcode
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
 ### fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-### mise
-[ -f ~/.local/bin/mise ] && eval "$(~/.local/bin/mise activate zsh)"
 ### direnv
 command -v direnv > /dev/null && eval "$(direnv hook zsh)"
 

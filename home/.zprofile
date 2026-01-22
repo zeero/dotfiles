@@ -6,15 +6,26 @@ PATH=$GOPATH/bin:$PATH
 PATH=/usr/local/bin:/usr/local/sbin:$PATH
 PATH=/opt/homebrew/bin:/opt/homebrew/sbin:$PATH
 PATH=/opt/homebrew/opt/make/libexec/gnubin:$PATH
-PATH=~/.mint/bin:$PATH
-PATH="/Users/zeero/.antigravity/antigravity/bin:$PATH"
-# uv tool install
+PATH=$HOME/.mint/bin:$PATH
+PATH=$HOME/.antigravity/antigravity/bin:$PATH
 PATH=$HOME/.local/bin:$PATH
 PATH=$HOME/bin:$PATH
 export PATH
 
 eval "$(brew shellenv)"
 command -v mise > /dev/null && eval "$(mise activate zsh)"
+
+# mise の precmd hook の後に実行されるようにフック追加
+_ensured_paths() {
+  PATH=$HOME/.local/bin:$PATH
+  PATH=$HOME/bin:$PATH
+  export PATH
+}
+if (( ${+precmd_functions} )); then
+  precmd_functions+=(_ensured_paths)
+else
+  precmd_functions=(_ensured_paths)
+fi
 
 # OS
 ## man
