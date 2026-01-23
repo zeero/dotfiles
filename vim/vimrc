@@ -3503,6 +3503,7 @@ highlight link ALEErrorSign ErrorMsg
 let g:ale_linters = {
 \ 'ruby': ['rubocop'],
 \ 'javascript': ['eslint'],
+\ 'json': ['jsonlint'],
 \}
 let g:ale_vim_vint_show_style_issues = 0
 let g:ale_ruby_rubocop_options = '--except Layout/TrailingBlankLines,Metrics/LineLength'
