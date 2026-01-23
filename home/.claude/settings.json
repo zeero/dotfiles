@@ -5,9 +5,13 @@
   "permissions": {
     "allow": [
       "Skill(skill-creator)",
+      "Skill(kiro:*)",
       "mcp__github"
     ],
-    "deny": [],
+    "deny": [
+      "Read(.env)",
+      "Read(.envrc)"
+    ],
     "ask": [
       "Bash(rm:*)"
     ],
