@@ -1795,7 +1795,7 @@ let g:ctrlp_user_command = {
 " 除外設定
 " - git ls-files でリスティングしてるので、gitignore設定で事足りるならその方が確実
 let g:ctrlp_custom_ignore = {
-\ 'dir': '\v[\/]\.metadata$',
+\ 'dir': '\v[\/]\.(metadata|obsidian)$',
 \}
 let g:ctrlp_mruf_exclude = '.*\.svn[0-9]\{3\}\.tmp\..*'
 " migemoを使って日本語正規表現検索 {{{
