@@ -6,7 +6,8 @@ syn region WFUrlTitle      matchgroup=WFUrlTitleDelimiter start=+"+ end=+"+ keep
 syn region WFUrlTitle      matchgroup=WFUrlTitleDelimiter start=+'+ end=+'+ keepend contained
 syn region WFUrlTitle      matchgroup=WFUrlTitleDelimiter start=+(+ end=+)+ keepend contained
 
-syn region WFWikiLink      matchgroup=WFWikiLinkDelimiter start="\[\[" end="\]\]" concealends
+syn region WFWikiLink      matchgroup=WFWikiLinkDelimiter start="\[\[" end="\]\]" contains=WFWikiLinkTarget concealends
+syn match WFWikiLinkTarget "[^|\]]\+|" contained conceal
 
 syn region WFLinkText      matchgroup=WFLinkTextDelimiter start="!\=\[" skip="\[[^\]]*\]" end="\]\ze[[(]" oneline nextgroup=WFLink,WFId skipwhite concealends
 syn region WFLink          matchgroup=WFLinkDelimiter start="(" end=")" contains=WFUrl keepend contained conceal
