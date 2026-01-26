@@ -58,15 +58,15 @@
   },
   "enabledPlugins": {
     "example-skills@anthropic-agent-skills": true,
-    "simple-research@zeero-dotfiles": false,
-    "multi-research@zeero-dotfiles": false,
-    "frontend-design@claude-code-plugins": false,
     "plugin-dev@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
     "huggingface-skills@claude-plugins-official": true,
     "commit-commands@claude-plugins-official": true,
     "n8n@skillsforge-marketplace": true,
     "ollama@skillsforge-marketplace": true,
-    "document-skills@anthropic-agent-skills": true
+    "document-skills@anthropic-agent-skills": true,
+    "ralph-loop@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
   }
 }

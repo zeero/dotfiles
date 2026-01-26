@@ -130,17 +130,17 @@ open "chrome://extensions/" -a "Google Chrome"
 open "$DOTFILES/lib"
 
 # AI Agents
+## claude-plugins-official
+claude plugin install context7@claude-plugins-official
+claude plugin install ralph-loop@claude-plugins-official
 claude plugin install plugin-dev@claude-plugins-official
-claude plugin install frontend-design@claude-plugins-official
-claude plugin install cicd-automation@claude-code-workflows
-claude plugin install frontend-mobile-development@claude-code-workflows
-claude plugin install frontend-mobile-security@claude-code-workflows
 ## anthropic-agent-skills
 claude plugin marketplace add anthropics/skills
 claude plugin install example-skills@anthropic-agent-skills
+claude plugin install document-skills@anthropic-agent-skills
 ## zeero-dotfiles
-cd $DOTFILES
-claude plugin marketplace add ./
+# cd $DOTFILES
+# claude plugin marketplace add ./
 # claude plugin install simple-research@zeero-dotfiles
 # claude plugin install multi-research@zeero-dotfiles
 
