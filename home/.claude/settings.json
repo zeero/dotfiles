@@ -61,7 +61,6 @@
     "plugin-dev@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
     "huggingface-skills@claude-plugins-official": true,
-    "commit-commands@claude-plugins-official": true,
     "n8n@skillsforge-marketplace": true,
     "ollama@skillsforge-marketplace": true,
     "document-skills@anthropic-agent-skills": true,
