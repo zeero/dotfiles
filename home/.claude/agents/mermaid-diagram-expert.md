@@ -1,6 +1,6 @@
 ---
 name: mermaid-diagram-expert
-description: Use this agent when you need to create, modify, or troubleshoot Mermaid diagrams. Examples include: creating flowcharts for system architecture, generating sequence diagrams for API interactions, building entity relationship diagrams for database design, creating Gantt charts for project timelines, or converting textual descriptions into visual Mermaid diagrams. Also use when you need to validate Mermaid syntax or optimize diagram readability.
+description: "Use this agent when you need to create, modify, or troubleshoot Mermaid diagrams. Examples include: creating flowcharts for system architecture, generating sequence diagrams for API interactions, building entity relationship diagrams for database design, creating Gantt charts for project timelines, or converting textual descriptions into visual Mermaid diagrams. Also use when you need to validate Mermaid syntax or optimize diagram readability."
 model: sonnet
 color: pink
 ---
