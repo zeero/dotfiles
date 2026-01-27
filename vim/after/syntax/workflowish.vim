@@ -17,6 +17,7 @@ syn region WFAutomaticLink matchgroup=WFUrlDelimiter start="<\%(\w\+:\|[[:alnum:
 hi          WFLinkText              term=underline ctermfg=9 guifg=#96CBFE gui=underline
 hi def link WFWikiLink              SpecialChar
 hi def link WFWikiLinkDelimiter     WFWikiLink
+hi def link WFWikiLinkTarget        Underlined
 hi def link WFIdDeclaration         Typedef
 hi def link WFId                    Type
 hi def link WFAutomaticLink         WFUrl
