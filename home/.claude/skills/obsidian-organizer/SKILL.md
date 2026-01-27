@@ -33,7 +33,7 @@ cd ~/Documents/memos && git pull
 
 ### 3. Dashboard整理
 
-`📋 Dashboard.md` の `# Ideas` セクションにある未処理アイテムをファイル化する。
+`📋 Dashboard.md` の全セクション（H1/H2見出し以下）にある未処理アイテムをファイル化する。
 
 **対象**:
 - チェックボックス: `[ ]` または `[/]`
@@ -43,25 +43,32 @@ cd ~/Documents/memos && git pull
 **処理**:
 1. チェックボックス行の内容 → 新規ファイルの H1 ヘッダー
 2. ファイル名 → AI翻訳で英語ケバブケース生成
-3. 配置先 → `Ideas/`
+3. 配置先 → セクションに応じて決定
+   - `# Ideas` セクション → `Ideas/`
+   - その他のセクション → `InBox/`
 4. 子アイテム（インデント行） → ファイル本文
 5. 元の行 → `[[filename|元テキスト]]` に置換
 
 **例**:
 ```markdown
 # Before (Dashboard)
+## Ideas
 * [ ] nvimモダナイズ
     * [ ] パッケージマネージャ
-    * [ ] 補完
+
+## Work
+* [ ] 週次レポート作成
 
 # After (Dashboard)
+## Ideas
 * [ ] [[nvim-modernize|nvimモダナイズ]]
 
-# Generated (Ideas/nvim-modernize.md)
-# nvimモダナイズ
+## Work
+* [ ] [[weekly-report-creation|週次レポート作成]]
 
-* [ ] パッケージマネージャ
-* [ ] 補完
+# Generated
+Ideas/nvim-modernize.md  ← Ideasセクションから
+InBox/weekly-report-creation.md  ← Workセクションから
 ```
 
 ### 4. Git Commit & Push
@@ -76,6 +83,9 @@ cd ~/Documents/memos && git pull
 - ファイル名2
 
 📋 Dashboard → Ideas (N件)
+- 元タイトル → ファイル名.md
+
+📋 Dashboard → InBox (N件)
 - 元タイトル → ファイル名.md
 ```
 
