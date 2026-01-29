@@ -128,7 +128,8 @@ read -p "Press Enter to resume..."
 open "chrome://extensions/" -a "Google Chrome"
 open "$DOTFILES/lib"
 
-# AI Agents
+# Claude Code
+curl -fsSL https://claude.ai/install.sh | bash
 ## claude-plugins-official
 claude plugin install context7@claude-plugins-official
 claude plugin install ralph-loop@claude-plugins-official
