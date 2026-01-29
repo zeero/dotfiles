@@ -28,7 +28,6 @@ git submodule update --init
 git config --global push.default simple
 git config --global pull.rebase false
 git config --global http.sslVerify false
-git config --global core.excludesfile ~/.gitignore
 git config --global core.editor nvim
 git config --global core.quotepath false
 git config --global core.safecrlf true
