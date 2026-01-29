@@ -119,14 +119,11 @@ open $DOTFILES/lib/Smyck-Color-Scheme/Smyck.itermcolors
 echo 'iTermを開いてProfiles > Colors から Smyck を選んでください'
 read -p "Press Enter to resume..."
 
-# CVim
-echo 'CVimをインストールします'
-echo 'Enterを押すと、Chromeが開くので、デベロッパーモードを有効にして、cvimを読み込んでください'
-echo 'cvimrcのgistは以下のURLです'
-echo 'https://gist.github.com/zeero/f48b6201a10189b8a6defedf2dc99949'
+# Vimium C
+echo 'Vimium C の設定をインポートしてください'
+echo "$DOTFILES/vimium_c.json"
 read -p "Press Enter to resume..."
-open "chrome://extensions/" -a "Google Chrome"
-open "$DOTFILES/lib"
+open "$DOTFILES"
 
 # Claude Code
 curl -fsSL https://claude.ai/install.sh | bash
