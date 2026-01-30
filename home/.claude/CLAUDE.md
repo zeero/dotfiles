@@ -65,7 +65,14 @@
   * Less is More の原則に則り、簡潔な表現を心がけてください
   * コミットメッセージ内にAuthorを記載することは禁止です
 
-## CLI
-* 以下のコマンドがインストール済みなので使用を推奨します
-  * `gh`: GitHub CLI
+## ツール
+* 以下のツールの使用を推奨します
+  * CLI
+    * `gh`: GitHub CLI
+    * `jsonlint`: Json Linter
+    * `yamllint`: YAML Linter
+    * `rg`: 高速grep
+    * `fd`: 高速find
+  * MCP
+    * `context7`: 公式ドキュメント検索サービス
 
