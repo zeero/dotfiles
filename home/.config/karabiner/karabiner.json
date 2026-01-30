@@ -71,6 +71,18 @@
                     }
                 ]
             },
+            "devices": [
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 61166,
+                        "vendor_id": 6421
+                    },
+                    "ignore": false,
+                    "manipulate_caps_lock_led": false
+                }
+            ],
             "name": "Default profile",
             "selected": true,
             "simple_modifications": [
