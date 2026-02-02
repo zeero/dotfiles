@@ -141,6 +141,11 @@ claude plugin install document-skills@anthropic-agent-skills
 # claude plugin install simple-research@zeero-dotfiles
 # claude plugin install multi-research@zeero-dotfiles
 
+# skills.sh logs
+# npx skills add https://github.com/vercel-labs/skills --skill find-skills
+# npx skills add https://github.com/avdlee/swiftui-agent-skill --skill swiftui-expert-skill
+# npx skills add https://github.com/wshobson/agents --skill prompt-engineering-patterns
+
 # All have done
 echo '🎉'
 
