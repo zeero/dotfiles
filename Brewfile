@@ -28,6 +28,7 @@ cask 'image2icon'
 cask 'deepl'
 cask 'miro'
 cask 'vnc-viewer'
+cask 'obisidian'
 
 # Command {{{1
 # gitははじめに手動でいれる
