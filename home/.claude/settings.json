@@ -4,8 +4,14 @@
   },
   "permissions": {
     "allow": [
+      "Bash(ls:*)",
+      "Bash(grep:*)",
+      "Bash(wc:*)",
+      "Bash(rg:*)",
+      "Bash(fd:*)",
       "Skill(skill-creator)",
       "Skill(kiro:*)",
+      "WebFetch(domain:github.com)",
       "mcp__plugin_context7_context7",
       "mcp__github"
     ],
