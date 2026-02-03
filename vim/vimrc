@@ -966,10 +966,11 @@ function! s:my_vimproc_async(args) "{{{
   let callback = get(a:args, 'callback', 's:my_vimproc_finish')
 
   let vimproc = vimproc#pgroup_open(cmd)
-  echom '[INFO] my vimproc async started. pid: ' . vimproc.pid . ', cmd: ' . cmd
+  echom '[INFO] vimproc started: ' . cmd . ' (pid: ' . vimproc.pid . ')'
   call vimproc.stdin.close()
 
   let s:vimproc = vimproc
+  let s:cmd = cmd
   let s:result = ''
 
   augroup my-vimproc-async
@@ -1000,7 +1001,7 @@ function! s:my_vimproc_receive_result(callback) "{{{
     echom v:throwpoint
   endtry
 
-  echom '[INFO] my vimproc async finished. pid: ' . vimproc.pid . ', callback: ' . a:callback
+  echom '[INFO] vimproc finished: ' . s:cmd . ' (pid: ' . vimproc.pid . ')'
   let MyVimprocAsyncCallback = function(a:callback)
   call MyVimprocAsyncCallback(s:result)
 
@@ -1012,6 +1013,7 @@ function! s:my_vimproc_receive_result(callback) "{{{
   call vimproc.stderr.close()
   call vimproc.waitpid()
   unlet s:vimproc
+  unlet s:cmd
   unlet s:result
 endfunction "}}}
 function! s:my_vimproc_finish(result) "{{{
