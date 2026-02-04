@@ -162,7 +162,7 @@ ghqcd() {
   [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux -d ${FZF_TMUX_HEIGHT:-40%}" || fzf="fzf"
   dir=$(ghq list | fzf-tmux --reverse)
   if [ -n "$dir" ]; then
-    BUFFER="cd $(ghq root)/$dir"
+    BUFFER="z $(ghq root)/$dir"
     zle accept-line
   fi
 }

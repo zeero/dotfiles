@@ -15,6 +15,7 @@ export PATH
 
 eval "$(brew shellenv)"
 command -v mise > /dev/null && eval "$(mise activate zsh)"
+command -v zoxide > /dev/null && eval "$(zoxide init zsh)"
 
 # mise の precmd hook の後に実行されるようにフック追加
 _ensured_paths() {
