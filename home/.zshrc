@@ -36,7 +36,7 @@ alias adb-dark='adb shell cmd uimode night yes'
 alias adb-ja='adb root && adb shell "settings put system system_locales ja-JP; sleep 5 && am restart"'
 alias adb-en='adb root && adb shell "settings put system system_locales en-US; sleep 5 && am restart"'
 alias xc-spm='xcodebuild -resolvePackageDependencies -project $(basename *.xcodeproj) -quiet'
-alias oclaude='ollama launch claude --model qwen3-coder:480b-cloud'
+alias oclaude='ollama launch claude'
 
 ## External Load {{{1
 ### .local.zshrc
