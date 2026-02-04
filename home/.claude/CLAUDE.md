@@ -70,6 +70,7 @@
 * 以下のツールの使用を推奨します
   * CLI
     * `gh`: GitHub CLI
+    * `jq`: JSON Parser
     * `jsonlint`: Json Linter
     * `yamllint`: YAML Linter
     * `rg`: 高速grep
