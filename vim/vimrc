@@ -1555,7 +1555,8 @@ nnoremap <silent> ,f :<C-u>CocCommand explorer --open-action-strategy=tab --quit
 " nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<Space>$HOME<CR>
 " nnoremap ,S :<C-u>VimShellTab<Space>-create<Space>-buffer-name=vimshell_tab<CR>
 " :terminal
-nnoremap ,s :<C-u>sp<Space>\|<Space>terminal<CR>
+" ++noclose: ターミナル終了時にバッファを保持する
+nnoremap ,s :<C-u>sp<Space>\|<Space>terminal<Space>++noclose<CR>
 nnoremap ,S :<C-u>ClaudeCodeAdd %<CR>
 vnoremap ,S :<C-u>call <SID>ClaudeCodeAddSelection()<CR>
 function! s:ClaudeCodeAddSelection() range "{{{
