@@ -75,5 +75,6 @@
     "pyright-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true
   },
-  "promptSuggestionEnabled": false
+  "promptSuggestionEnabled": false,
+  "model": "sonnet"
 }
