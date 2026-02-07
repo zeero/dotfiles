@@ -6,5 +6,6 @@ yarn
 prettier
 ccundo
 cc-sdd
+@sasazame/ccresume
 @google/gemini-cli
 @openai/codex
