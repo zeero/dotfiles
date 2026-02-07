@@ -1,6 +1,7 @@
 {
   "env": {
-    "FASTLANE_SKIP_UPDATE_CHECK": "true"
+    "FASTLANE_SKIP_UPDATE_CHECK": "true",
+    "ENABLE_TOOL_SEARCH": "true"
   },
   "permissions": {
     "allow": [
