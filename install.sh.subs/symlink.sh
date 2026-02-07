@@ -42,6 +42,10 @@ find ${DOTFILES}/home/.bundle -type f -depth 1 -exec ln -sf {} ~/.bundle \;
 # Node
 mkdir ~/.nvm
 
+# Docker
+mkdir -p ~/.docker
+find ${DOTFILES}/home/.docker -depth 1 -exec ln -sf {} ~/.docker \;
+
 # Xcode
 # ln -sf ${DOTFILES}/xcode/CodeSnippets ~/Library/Developer/Xcode/UserData/CodeSnippets
 mkdir -p ~/Library/Developer/Xcode/UserData/CodeSnippets
