@@ -148,6 +148,7 @@ claude plugin install document-skills@anthropic-agent-skills
 # npx skills add https://github.com/softaworks/agent-toolkit --skill naming-analyzer
 # npx skills add https://github.com/softaworks/agent-toolkit --skill draw-io
 # npx skills add https://github.com/sickn33/antigravity-awesome-skills --skill docker-expert
+# npx skills add https://github.com/softaworks/agent-toolkit --skill command-creator
 ## 要否要確認
 # npx skills add https://github.com/adisinghstudent/easyclaw --skill openclaw-config
 
