@@ -1,0 +1,15 @@
+---
+extends: default
+
+rules:
+  # GitHub Actions では長いコマンドやURLが一般的なため、行長制限を緩和
+  line-length:
+    max: 200
+    level: warning
+
+  # ドキュメント開始マーカーは省略可能
+  document-start: disable
+
+  # truthy 値の形式チェックを緩和（on/off も許可）
+  truthy:
+    allowed-values: ['true', 'false', 'on', 'off']
