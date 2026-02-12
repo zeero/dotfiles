@@ -40,6 +40,10 @@ hi def link WFBlockCodeDelimiter    Special
 syn region WFCommentHTMLStyle start=/<!--/ end=/-->/
 hi def link WFCommentHTMLStyle      Comment
 
+" Headline
+syn match WFHeadline /^#\+ .*$/ contains=WFLinkText,WFLink,WFWikiLink,WFInlineCode,WFToDo,WFTag
+hi WFHeadline ctermbg=236 guibg=#303030
+
 " - を * と同じ扱いにする（オリジナルのWFDoneLIneを上書き）
 syn match WFToDoDot /^\s*[-*]/
 syn match WFToDo /^\s*[-*](.*)/
