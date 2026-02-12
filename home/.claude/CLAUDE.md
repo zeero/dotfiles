@@ -83,6 +83,7 @@
     * `yamllint`: YAML Linter
     * `rg`: 高速grep
     * `fd`: 高速find
+    * `uuidgen`: UUID生成
   * MCP
     * `context7`: 公式ドキュメント検索サービス
 
