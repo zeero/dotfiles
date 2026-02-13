@@ -111,6 +111,7 @@ brew 'plantuml'
 brew 'direnv'
 brew 'luacheck'
 brew 'pngpaste'
+brew 'bats'
 
 # AppStore {{{1
 brew 'mas'
