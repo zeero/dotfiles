@@ -332,6 +332,34 @@ coded() {
   cd -
 }
 
+### ccmerge-kiro-steering {{{2
+ccmerge-kiro-steering() {
+    # カレントディレクトリのフルパスを変換
+    local current_dir=$(pwd | sed 's/[\/._]/-/g')
+
+    # メモリディレクトリを作成
+    mkdir -p ~/.claude/projects/${current_dir}/memory
+
+    # .kiro/steeringの存在確認
+    if [ ! -e ./.kiro/steering ]; then
+        # なければシンボリックリンクを作成して終了
+        ln -s ~/.claude/projects/${current_dir}/memory ./.kiro/steering
+        echo "🔗 Created symlink: ./.kiro/steering -> ~/.claude/projects/${current_dir}/memory"
+        return
+    fi
+
+    # ファイルが存在する場合のみ移動（エラー回避）
+    if [ "$(ls -A ./.kiro/steering 2>/dev/null)" ]; then
+        mv -f ./.kiro/steering/* ~/.claude/projects/${current_dir}/memory
+        echo "📦 Moved files from ./.kiro/steering to ~/.claude/projects/${current_dir}/memory"
+    fi
+
+    # ディレクトリを削除してシンボリックリンクを作成
+    rmdir ./.kiro/steering
+    ln -s ~/.claude/projects/${current_dir}/memory ./.kiro/steering
+    echo "✨ Migrated to symlink: ./.kiro/steering -> ~/.claude/projects/${current_dir}/memory"
+}
+
 ## Keybind {{{1
 ### emacs mode
 bindkey -d
