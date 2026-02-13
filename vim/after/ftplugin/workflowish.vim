@@ -74,3 +74,34 @@ nnoremap <buffer> O OX<C-h>
 inoremap <buffer> <CR> <CR>X<C-h>
 inoremap <buffer> <S-CR> <C-o>OX<C-h>
 
+" WFHeadline 行の背景色をウィンドウ終わりまで拡張
+hi WFHeadlineExtend ctermbg=58 guibg=#363428
+
+sign define WFHeadlineSign linehl=WFHeadlineExtend
+
+function! s:highlight_headlines() abort
+  call sign_unplace('workflowish_headlines', {'buffer': bufnr('%')})
+
+  silent! call matchdelete(w:workflowish_mytodo_match)
+
+  let l:lnum = 1
+  while l:lnum <= line('$')
+    let l:line = getline(l:lnum)
+    if l:line =~# '^#\+ '
+      call sign_place(0, 'workflowish_headlines', 'WFHeadlineSign', bufnr('%'), {'lnum': l:lnum})
+    endif
+    let l:lnum += 1
+  endwhile
+
+  let w:workflowish_mytodo_match = matchadd('MyTodo', '\v\c \zs\[?(TODO|FIXME)\]?:?\ze ', 11)
+endfunction
+
+" 初回実行
+call s:highlight_headlines()
+
+" バッファローカルな autocmd
+augroup WorkflowishHeadlineExtend
+  autocmd! * <buffer>
+  autocmd TextChanged,TextChangedI,BufEnter <buffer> call s:highlight_headlines()
+augroup END
+
