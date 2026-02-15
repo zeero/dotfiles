@@ -15,7 +15,6 @@
       "Bash(npm run:*)",
       "Skill(skill-creator)",
       "Skill(kiro:*)",
-      "WebSearch(domain:*)",
       "mcp__*"
     ],
     "deny": [
