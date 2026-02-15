@@ -11,22 +11,32 @@
       "Bash(wc:*)",
       "Bash(rg:*)",
       "Bash(fd:*)",
+      "Bash(npm run:*)",
       "Skill(skill-creator)",
       "Skill(kiro:*)",
-      "WebFetch(domain:github.com)",
-      "mcp__plugin_context7_context7",
-      "mcp__github"
+      "WebSearch(domain:*)",
+      "mcp__*"
     ],
     "deny": [
-      "Read(.env)",
-      "Read(.envrc)"
+      "Bash(sudo:*)",
+      "Bash(curl -fsSL:*)",
+      "Bash(wget:*)",
+      "Bash(nc:*)",
+      "Bash(bash -c:*)",
+      "Bash(sh -c:*)",
+      "Bash(terraform apply -auto-approve:*)",
+      "Read(*credential*)",
+      "Read(.env*)",
+      "Read(./secrets/**)"
     ],
     "ask": [
       "Bash(rm:*)",
       "Bash(sed -i:*)",
       "Bash(gsed -i:*)"
     ],
-    "additionalDirectories": []
+    "additionalDirectories": [
+      "~/Documents/memos"
+    ]
   },
   "model": "sonnet",
   "hooks": {
