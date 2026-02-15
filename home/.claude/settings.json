@@ -1,6 +1,7 @@
 {
   "env": {
     "FASTLANE_SKIP_UPDATE_CHECK": "true",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "true",
     "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "false",
     "ENABLE_TOOL_SEARCH": "true"
   },
