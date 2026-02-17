@@ -112,6 +112,7 @@ brew 'direnv'
 brew 'luacheck'
 brew 'pngpaste'
 brew 'bats'
+brew 'k1LoW/tap/tcmux'
 
 # AppStore {{{1
 brew 'mas'
