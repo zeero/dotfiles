@@ -15,6 +15,7 @@
       "Bash(npm run:*)",
       "Skill(skill-creator)",
       "Skill(kiro:*)",
+      "mcp__plugin_context7_context7_*",
       "mcp__*"
     ],
     "deny": [
