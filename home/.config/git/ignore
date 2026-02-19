@@ -30,5 +30,7 @@ CLAUDE.local.md
 /.spec-workflow
 
 # Others
+.env
+.envrc
 docker-compose.override.yml
 
