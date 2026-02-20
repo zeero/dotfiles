@@ -4,6 +4,7 @@ eslint
 firebase-tools
 yarn
 prettier
+firecrawl-cli
 ccundo
 cc-sdd
 @sasazame/ccresume
