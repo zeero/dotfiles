@@ -39,7 +39,6 @@
       "~/Documents/memos"
     ]
   },
-  "model": "sonnet",
   "hooks": {
     "PostToolUse": [
       {
