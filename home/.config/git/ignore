@@ -12,25 +12,29 @@ tags
 
 # Ruby
 .ruby-version
-vendor/bundle
+vendor/bundle/
 # Python
 __pycache__
 
 # AI Agents
-/.claude
-/.gemini
-/.mcp.json
-.serena
 CLAUDE.local.md
-### SpecKit
-/.specify
+/.claude/
+/.gemini/
+/.mcp.json
+.serena/
+.agent/
+.agents/
+skills-lock.json
 ### cc-sdd
-/.kiro
+/.kiro/
+### SpecKit
+/.specify/
 ### spec-workflow
-/.spec-workflow
+/.spec-workflow/
 
 # Others
 .env
 .envrc
 docker-compose.override.yml
+.firecrawl/
 
