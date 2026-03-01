@@ -18,19 +18,21 @@ __pycache__
 
 # AI Agents
 CLAUDE.local.md
-/.claude/
-/.gemini/
-/.mcp.json
+.claude/
+.gemini/
+.mcp.json
 .serena/
 .agent/
 .agents/
+.cursor/
+.entire/
 skills-lock.json
 ### cc-sdd
-/.kiro/
+.kiro/
 ### SpecKit
-/.specify/
+.specify/
 ### spec-workflow
-/.spec-workflow/
+.spec-workflow/
 
 # Others
 .env
