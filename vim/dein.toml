@@ -1190,6 +1190,7 @@ require("nvim-treesitter").setup {
     'vim',
     'markdown',
     'yaml',
+    'json',
   },
 }
 '''
