@@ -55,3 +55,8 @@ PATH=$HOME/lib/dotfiles/lib/flutter/bin:$PATH
 PATH=$JAVA_HOME/bin:$PATH
 export PATH
 
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/zeero/.lmstudio/bin"
+# End of LM Studio CLI section
+

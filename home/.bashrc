@@ -290,3 +290,8 @@ bind '"\C-d": forward-backward-delete-char'
 
 # 1}}}
 
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/zeero/.lmstudio/bin"
+# End of LM Studio CLI section
+
