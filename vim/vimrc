@@ -2180,7 +2180,9 @@ au! myvimrc CursorHold * silent call CocActionAsync('highlight')
 
 " Keymaps {{{2
 " Use tab for trigger completion with characters ahead and navigate.
+let g:copilot_no_tab_map = 1
 inoremap <silent><expr> <TAB>
+\ copilot#GetDisplayedSuggestion().text != '' ? copilot#Accept() :
 \ coc#pum#visible() ? coc#pum#next(1) :
 \ <SID>check_backspace() ? "\<Tab>" :
 \ coc#refresh()
