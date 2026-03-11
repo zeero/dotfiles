@@ -215,6 +215,7 @@ ghqcd() {
 ### rm derived data {{{2
 rmderiveddata() {
   rm -rf ~/Library/Developer/Xcode/DerivedData/
+  # xcodebuild -resolvePackageDependencies -project "$(basename *.xcodeproj)"
 }
 
 ### adb uninstall for all devices {{{2
