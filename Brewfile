@@ -62,6 +62,8 @@ tap 'itchyny/tap'
 brew 'mmv'
 brew 'translate-shell'
 cask 'ngrok'
+brew 'duf' # dfを見やすく
+brew 'btop' # topを見やすく
 
 # Vim {{{1
 tap 'universal-ctags/universal-ctags'
