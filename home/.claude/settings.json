@@ -25,6 +25,7 @@
       "Bash(nc:*)",
       "Bash(bash -c:*)",
       "Bash(sh -c:*)",
+      "Bash(git -C:*)",
       "Bash(terraform apply -auto-approve:*)",
       "Read(*credential*)",
       "Read(.env*)",

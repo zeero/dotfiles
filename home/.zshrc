@@ -117,6 +117,50 @@ pdfmerge() {
   gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$outfile $infile
 }
 
+### giwt {{{2
+giwt() {
+  if [[ $# -eq 0 ]]; then
+    echo 'Usage: giwt <branch-name>'
+    return 1
+  fi
+
+  local branch="$1"
+  local dirname="$(basename "$PWD")"
+  local worktree_path="../worktree/${dirname}/${branch}"
+
+  # ワークツリーが既に存在する場合はcdのみ
+  if [[ -d "$worktree_path" ]]; then
+    cd "$worktree_path"
+    return
+  fi
+
+  # ブランチが存在しない場合のみ作成
+  if ! git show-ref --verify --quiet "refs/heads/${branch}"; then
+    git branch "$branch" || return 1
+  fi
+
+  git worktree add "$worktree_path" "$branch" && \
+  cd "$worktree_path"
+}
+
+### _fzf-git_worktree {{{2
+_fzf-git_worktree() {
+  local selected branch
+  # "basename|fullpath|branch" 形式で渡し、表示はbasename、プレビューはfullpath、giwtにはbranchを渡す
+  selected=$(git worktree list | awk '{
+    n=split($1, a, "/"); gsub(/[\[\]]/, "", $3)
+    print a[n] "|" $1 "|" $3
+  }' | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%} \
+    --delimiter '|' --with-nth '1' \
+    --preview 'git -C {2} log --oneline -20')
+  if [ -n "$selected" ]; then
+    branch=$(echo "$selected" | awk -F'|' '{print $3}')
+    BUFFER="giwt $branch"
+    zle accept-line
+    return 0
+  fi
+}
+
 ### _fzf-git_branch {{{2
 _fzf-git_branch() {
   local selected fzf
@@ -361,6 +405,7 @@ ccmerge-kiro-steering() {
 }
 
 ## Keybind {{{1
+KEYTIMEOUT=50
 ### emacs mode
 bindkey -d
 bindkey -e
@@ -368,9 +413,11 @@ bindkey -e
 bindkey '^H' backward-char
 bindkey '^L' forward-char
 bindkey '^B' backward-word
-bindkey '^W' forward-word
+# bindkey '^W' forward-word
 # bindkey '^D' forward-backward-delete-char #zshにない
 ### Custom
+zle -N _fzf-git_worktree
+bindkey '^@w' _fzf-git_worktree
 zle -N _fzf-git_branch
 bindkey '^G' _fzf-git_branch
 # zle -N _fzf-t
