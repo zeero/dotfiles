@@ -98,7 +98,17 @@
     "swift-lsp@claude-plugins-official": true,
     "kotlin-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
-    "ruby-lsp@claude-plugins-official": true
+    "ruby-lsp@claude-plugins-official": true,
+    "pm-market-research@pm-skills": true
+  },
+  "extraKnownMarketplaces": {
+    "pm-skills": {
+      "source": {
+        "source": "github",
+        "repo": "phuryn/pm-skills"
+      },
+      "autoUpdate": true
+    }
   },
   "language": "Japanese",
   "promptSuggestionEnabled": false
