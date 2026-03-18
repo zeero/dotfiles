@@ -1,0 +1,17 @@
+[delta]
+  navigate = true
+  dark = true
+  features = mellow-barbet
+  side-by-side = true
+  wrap-right-prefix-symbol = " "
+
+  # ファイルの区切りをハッキリさせる
+  file-style = blue
+  file-decoration-style = blue ol
+
+  # ハンクの境界は目立たせない
+  hunk-header-style = syntax
+  hunk-header-decoration-style = blue box
+
+[include]
+  path = /opt/homebrew/opt/git-delta/share/git-delta/themes.gitconfig

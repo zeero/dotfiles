@@ -66,6 +66,7 @@ brew 'duf' # dfを見やすく
 brew 'dust' # duを見やすく
 brew 'broot' # treeを見やすく、`-s` でdu代わりにも
 brew 'btop' # topを見やすく
+brew 'git-delta'
 
 # Vim {{{1
 tap 'universal-ctags/universal-ctags'
