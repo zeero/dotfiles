@@ -46,6 +46,8 @@ alias oclaude='ollama launch claude'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ### direnv
 command -v direnv > /dev/null && eval "$(direnv hook zsh)"
+### broot
+[ -f ~/.config/broot/launcher/bash/br ] && source ~/.config/broot/launcher/bash/br
 
 ## Functions {{{1
 ### calc {{{2

@@ -63,6 +63,8 @@ brew 'mmv'
 brew 'translate-shell'
 cask 'ngrok'
 brew 'duf' # dfを見やすく
+brew 'dust' # duを見やすく
+brew 'broot' # treeを見やすく、`-s` でdu代わりにも
 brew 'btop' # topを見やすく
 
 # Vim {{{1

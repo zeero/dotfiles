@@ -60,3 +60,5 @@ export PATH
 export PATH="$PATH:/Users/zeero/.lmstudio/bin"
 # End of LM Studio CLI section
 
+
+source /Users/zeero/.config/broot/launcher/bash/br
