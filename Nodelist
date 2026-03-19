@@ -7,6 +7,6 @@ prettier
 firecrawl-cli
 ccundo
 cc-sdd
-@sasazame/ccresume
+~/dev/github.com/zeero/ccresume
 @google/gemini-cli
 @openai/codex

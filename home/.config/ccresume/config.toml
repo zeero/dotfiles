@@ -1,0 +1,2 @@
+command = "~/.tmux/plugins/tmux-portal/scripts/tmux-portal.sh -s claude --status-style 'fg=black,bg=orange' -- claude"
+
