@@ -112,6 +112,10 @@ alias fd='fd --hidden --ignore-case --no-ignore'
 export N8N_USER_FOLDER=~/dev/n8n
 # Puppeteerが使用するChrome実行パス（mmdc, md-mermaid-lint などで必要）
 export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+OBSIDIAN_BIN="/Applications/Obsidian.app/Contents/MacOS"
+if [[ -d $OBSIDIAN_BIN ]]; then
+  export PATH=$PATH:$OBSIDIAN_BIN
+fi
 
 # local
 [ -f ~/.local.zprofile ] && source ~/.local.zprofile
