@@ -1,11 +1,11 @@
 ---
 name: retrospective
-argument-hint: "[補足情報があれば]"
+argument-hint: "[Additional Notes]"
 description: >
-  セッション振り返りスキル。以下のタイミングで必ず使用すること:
-  (1) ユーザーが「振り返り」「retrospective」「/retrospective」「セッションまとめ」などと明示的に呼び出したとき
-  (2) 実装・調査・設計などの作業が一段落し、セッションを締めくくるタイミング（「おわり」「終わり」「ありがとう」「bye」「今日はここまで」など）で自動提案
-  補足情報があれば引数として受け取る（例: 特定のトピックにフォーカスしたい場合など）
+  Session retrospective skill. Use in the following situations:
+  (1) When the user explicitly invokes it with words like "retrospective", "session summary", "wrap up", "look back"
+  (2) Proactively suggest at the end of a session — when major work (implementation, research, design) wraps up, or when the user says "done", "thanks", "bye", "that's all for today", "all done"
+  Accepts optional supplementary info as arguments (e.g., to focus on a specific topic).
 ---
 
 # セッション振り返り
