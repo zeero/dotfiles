@@ -69,26 +69,15 @@ $ARGUMENTS
 
 ## 出力フォーマット
 
-振り返りレポートは、このセッションのシステムコンテキストで Claude Code が提示している
-auto-memory ディレクトリ（"You have a persistent, file-based memory system at ..." として示されるパス）
-配下の `retrospectives/` サブディレクトリに保存します。
+振り返りレポートはカレントプロジェクトの `.claude/retrospectives/` ディレクトリに保存します。
 
-**注意**: カレントプロジェクトのディレクトリ内ではなく、Claude Code が管理する
-`~/.claude/projects/[current-project-hash]/memory/retrospectives/` です。
+**位置づけ**: アーカイブ・監査ログであり、auto-memory としてセッションにロードされるものではありません。
+知見の蒸留結果（`feedback_*.md` 等）が本体です。
 
-保存後は同ディレクトリの `MEMORY.md` にエントリを追記してください：
-```
-- [セッション振り返り YYYY-MM-DD](retrospectives/YYYY-MM-DD.md) — [一行サマリー]
-```
-
-振り返りレポートのファイル形式（auto-memory 準拠）：
+振り返りレポートのファイル形式：
 
 ```markdown
----
-name: セッション振り返り YYYY-MM-DD
-description: [一行サマリー — MEMORY.md での関連性判断に使われるため具体的に]
-type: project
----
+# セッション振り返り - YYYY-MM-DD
 
 ## セッションサマリー
 
