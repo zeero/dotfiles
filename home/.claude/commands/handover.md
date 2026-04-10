@@ -20,7 +20,15 @@ argument-hint: [特に重点的に残して欲しいこと]
 - `.claude/` ディレクトリが存在するか確認し、存在しない場合は作成: `mkdir -p .claude`
 - `.claude/HANDOVER.md` が既に存在するか **Bash で `test -f` を使って確認**する
   - **⚠️ 重要: 既存の HANDOVER.md を Read ツールで読み込んではならない**（前回の記述に引きずられ、今回のセッション固有の情報が薄まるため）
-  - 存在する場合は、Bash で `rm` して削除する
+  - 存在する場合は、以下の手順で `.claude/HANDOVER.zip` にバックアップしてから削除する:
+    1. フロントマターから `date` を取得:
+       `DATE=$(grep -m1 '^date:' .claude/HANDOVER.md | sed 's/date:[[:space:]]*//')`
+    2. フロントマターがなければファイルの mtime をフォールバックで使用:
+       `[ -z "$DATE" ] && DATE=$(stat -f %Sm -t %Y-%m-%dT%H-%M-%S .claude/HANDOVER.md)`
+    3. 日付付きファイル名にリネーム:
+       `mv .claude/HANDOVER.md .claude/HANDOVER-${DATE}.md`
+    4. zip に追加（`-rm` で追加後にファイルを自動削除、なければ新規作成）:
+       `zip -jrm .claude/HANDOVER.zip .claude/HANDOVER-${DATE}.md`
 
 ### 2. セッション内容の分析
 
@@ -89,6 +97,12 @@ $ARGUMENTS
 
 ### 3. ドキュメント生成
 
+- ドキュメントの冒頭に以下のフロントマターを追加する（セッション日時を `YYYY-MM-DDTHH-MM-SS` 形式で記録）:
+  ```markdown
+  ---
+  date: 2026-04-10T14-30-00
+  ---
+  ```
 - 上記の内容を構造化されたMarkdown形式で整理
 - 見出しに絵文字を使用して視認性を向上
 - コードブロックやリストを適切に使用
@@ -109,7 +123,8 @@ $ARGUMENTS
 
 ## 重要な注意事項
 
-- **既存の HANDOVER.md は絶対に読み込まない**（存在確認のみ許可）
+- **既存の HANDOVER.md は絶対に読み込まない**（存在確認と `grep` による date 取得のみ許可）
+- **HANDOVER.zip も Read ツールで開かない**
 - セッション全体を包括的に振り返る
 - 技術的な詳細と文脈の両方を含める
 - 次の Claude が引き継ぎやすいよう、明確で具体的に記述
