@@ -96,6 +96,7 @@ cask 'font-ricty_diminished-devicon'
 brew 'qt'  # C++ framework (required for Ruby build)
 brew 'jsonlint'
 brew 'terminal-notifier'
+brew 'vjeantet/tap/alerter'
 brew 'docker'
 brew 'docker-compose'
 brew 'colima' # docker daemon
