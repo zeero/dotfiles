@@ -100,7 +100,8 @@
     "kotlin-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
     "ruby-lsp@claude-plugins-official": true,
-    "pm-market-research@pm-skills": true
+    "pm-market-research@pm-skills": true,
+    "superpowers@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "pm-skills": {
