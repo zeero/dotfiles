@@ -121,13 +121,74 @@ pdfmerge() {
 
 ### giwt {{{2
 giwt() {
+  local force=0
+  local delete=0
+
+  # オプション解析
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -d) delete=1; shift ;;
+      -D) delete=1; force=1; shift ;;
+      --) shift; break ;;
+      -*) echo "Unknown option: $1"; return 1 ;;
+      *) break ;;
+    esac
+  done
+
+  local dirname="$(basename "$PWD")"
+
+  # --- 削除モード ---
+  if [[ $delete -eq 1 ]]; then
+    local branch
+
+    if [[ $# -eq 0 ]]; then
+      # fzfでworktreeを選択（mainは除外）
+      local selected
+      selected=$(git worktree list | awk 'NR>1 {
+        n=split($1, a, "/"); gsub(/[\[\]]/, "", $3)
+        print a[n] "|" $1 "|" $3
+      }' | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%} \
+        --delimiter '|' --with-nth '1' \
+        --preview 'git -C {2} log --oneline -20')
+      [[ -z "$selected" ]] && return 0
+      branch=$(echo "$selected" | awk -F'|' '{print $3}')
+    else
+      branch="$1"
+    fi
+
+    local worktree_path="../worktree/${dirname}/${branch}"
+
+    # マージ済み確認（-D なら警告のみ）
+    if [[ $force -eq 0 ]]; then
+      local base_branch
+      base_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/origin/||' || echo "main")
+      if ! git branch --merged "$base_branch" | grep -q "^\s*${branch}$"; then
+        echo "Branch '${branch}' is not merged into '${base_branch}'. Use -D to force."
+        return 1
+      fi
+    fi
+
+    # worktree remove
+    if [[ -d "$worktree_path" ]]; then
+      git worktree remove "$worktree_path" || return 1
+    fi
+
+    # branch delete
+    if [[ $force -eq 1 ]]; then
+      git branch -D "$branch"
+    else
+      git branch -d "$branch"
+    fi
+    return
+  fi
+
+  # --- 作成 / 移動モード ---
   if [[ $# -eq 0 ]]; then
-    echo 'Usage: giwt <branch-name>'
+    echo 'Usage: giwt [-d|-D] <branch-name>'
     return 1
   fi
 
   local branch="$1"
-  local dirname="$(basename "$PWD")"
   local worktree_path="../worktree/${dirname}/${branch}"
 
   # ワークツリーが既に存在する場合はcdのみ
