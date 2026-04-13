@@ -5,3 +5,5 @@ vim/after/autoload/plug.vim
 vim/plugged
 home/bin/git-*
 home/.config/coc/extensions/coc-kotlin-data/
+!home/.claude
+home/.claude/skills/agent-team-organizer-workspace/
