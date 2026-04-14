@@ -5,6 +5,7 @@ firebase-tools
 yarn
 prettier
 firecrawl-cli
+agent-browser
 ccundo
 cc-sdd
 ~/dev/github.com/zeero/ccresume
