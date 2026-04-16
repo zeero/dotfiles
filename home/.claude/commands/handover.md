@@ -100,7 +100,7 @@ $ARGUMENTS
 - ドキュメントの冒頭に以下のフロントマターを追加する（セッション日時を `YYYY-MM-DDTHH-MM-SS` 形式で記録）:
   ```markdown
   ---
-  date: 2026-04-10T14-30-00
+  date: !`date '+%Y-%m-%dT%H-%M-%S'`
   ---
   ```
 - 上記の内容を構造化されたMarkdown形式で整理
