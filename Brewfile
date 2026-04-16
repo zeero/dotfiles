@@ -121,6 +121,7 @@ brew 'bats'
 brew 'k1LoW/tap/tcmux'
 brew 'tree-sitter-cli'
 brew 'pyright'
+brew 'sqlite'
 
 # AppStore {{{1
 brew 'mas'
