@@ -102,6 +102,7 @@ $ARGUMENTS
   ---
   date: !`date '+%Y-%m-%dT%H-%M-%S'`
   session-id: ${CLAUDE_SESSION_ID}
+  commit: !`git rev-parse --short=7 HEAD`
   ---
   ```
 - 上記の内容を構造化されたMarkdown形式で整理
