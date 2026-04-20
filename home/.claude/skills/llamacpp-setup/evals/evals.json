@@ -1,0 +1,84 @@
+{
+  "skill_name": "llamacpp-setup",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "MacBook Pro M3 Max を持っています。llama.cpp を使ってローカルで LLM を動かしたいのですが、Apple MLX を有効化するにはどうすれば良いですか？ビルド方法から教えてください。",
+      "expected_output": "llama.cpp には MLX バックエンドは存在しないことを明示し、Mac では Metal（デフォルト有効）を使うことを説明。通常のビルドコマンドと Metal での GPU 加速確認方法を提示。必要に応じて mlx-lm を代替として紹介する。",
+      "files": [],
+      "assertions": [
+        {
+          "text": "llama.cpp に MLX バックエンドが存在しないことを明示している",
+          "passed": null,
+          "evidence": null
+        },
+        {
+          "text": "Metal が Mac GPU 加速の手段であることを説明している",
+          "passed": null,
+          "evidence": null
+        },
+        {
+          "text": "ビルドコマンド（cmake）を提示している",
+          "passed": null,
+          "evidence": null
+        },
+        {
+          "text": "MLX を使いたい場合の代替手段（mlx-lm）に言及している",
+          "passed": null,
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "M2 Mac（RAM 16GB）で llama-server を使って 13B クラスのモデルを動かしたいのですが、メモリが不足気味です。メモリ使用量を減らすための設定を教えてください。",
+      "expected_output": "KV キャッシュ量子化（-ctk q8_0 -ctv q8_0）、Flash Attention（--flash-attn on）、GPU レイヤー数調整（-ngl）、コンテキストサイズ削減（-c）などの具体的なオプションと起動コマンド例を提示する。",
+      "files": [],
+      "assertions": [
+        {
+          "text": "KV キャッシュ量子化オプション（-ctk / -ctv）を紹介している",
+          "passed": null,
+          "evidence": null
+        },
+        {
+          "text": "Flash Attention オプションに言及している",
+          "passed": null,
+          "evidence": null
+        },
+        {
+          "text": "具体的なコマンド例を提示している",
+          "passed": null,
+          "evidence": null
+        },
+        {
+          "text": "GPU レイヤー数調整（-ngl）についても言及している",
+          "passed": null,
+          "evidence": null
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "llama.cpp の llama-server で Gemma 3 を使って画像を入力できるマルチモーダルの API サーバを立てたいです。起動コマンドと、curl で画像を送るリクエスト例を教えてください。",
+      "expected_output": "llama-server -hf ggml-org/gemma-3-4b-it-GGUF などの起動コマンドと、OpenAI 互換 API で画像を base64 か URL で送る curl コマンド例を提示する。",
+      "files": [],
+      "assertions": [
+        {
+          "text": "Gemma 3 のマルチモーダルサーバ起動コマンドを提示している",
+          "passed": null,
+          "evidence": null
+        },
+        {
+          "text": "OpenAI 互換 API で画像を送る curl 例を提示している",
+          "passed": null,
+          "evidence": null
+        },
+        {
+          "text": "--mmproj オプションまたは -hf オプション（自動取得）について説明している",
+          "passed": null,
+          "evidence": null
+        }
+      ]
+    }
+  ]
+}
