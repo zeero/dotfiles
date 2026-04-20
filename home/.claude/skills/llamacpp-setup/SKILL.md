@@ -1,15 +1,6 @@
 ---
 name: llamacpp-setup
-description: >
-  llama.cpp のビルド・サーバ起動・設定を支援するスキル。Mac（Apple Silicon / Intel）での
-  Metal GPU 有効化、メモリ軽量化設定、マルチモーダルモデルのセットアップを含む。
-  以下のシナリオで必ず使用すること:
-  (1) llama.cpp を新規セットアップする
-  (2) llama-server を起動・設定する
-  (3) Mac で Metal（GPU）加速したい
-  (4) メモリ使用量を削減したい（KV キャッシュ量子化・Flash Attention など）
-  (5) マルチモーダルモデル（LLaVA / Gemma3 / Qwen-VL など）を使いたい
-  (6) MLX で動かしたいと思っている（→ MLX は llama.cpp とは別フレームワーク）
+description: llama.cpp setup expert — Mac (Apple Silicon/Intel) Metal GPU acceleration, memory optimization (KV quantization, Flash Attention), multimodal models (LLaVA/Gemma3/Qwen-VL), and server configuration.
 ---
 
 # llama.cpp セットアップガイド

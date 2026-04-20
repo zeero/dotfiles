@@ -1,6 +1,6 @@
 ---
 name: moomoo-api-reference
-description: Moomoo API（旧Futu API）のPython SDKリファレンス。株価データ取得・注文・ポジション管理などmoomoo証券のAPIを使ったコードを書くときは必ずこのスキルを参照すること。「moomoo」「futu」「moomoo api」「futu api」「OpenQuoteContext」「OpenTradeContext」「株価取得」「注文」などのキーワードが出たら即座に使う。
+description: Moomoo API (ex-Futu) Python SDK reference. Use for stock prices, orders, positions, or OpenQuoteContext/OpenTradeContext usage.
 ---
 
 # Moomoo API Python SDK リファレンス

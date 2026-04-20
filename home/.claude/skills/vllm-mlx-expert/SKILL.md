@@ -1,6 +1,6 @@
 ---
 name: vllm-mlx-expert
-description: "Expert guidance for vllm-mlx — Apple Silicon ネイティブの LLM 推論サーバー。OpenAI / Anthropic 互換 API を提供し、MLX バックエンドで動作する。以下のシナリオで使用する: (1) vllm-mlx サーバーの起動・設定, (2) モデル選択（LLM / VLM / Audio / Embeddings）, (3) OpenAI SDK / Anthropic SDK / Claude Code との連携, (4) MCP Tool Calling の設定, (5) Continuous Batching / KV Cache のパフォーマンスチューニング, (6) Reasoning モデル（Qwen3 / DeepSeek-R1）の設定, (7) vllm-mlx のソースコード変更・デバッグ・開発"
+description: vllm-mlx expert guidance — Apple Silicon native LLM inference server with MLX backend, OpenAI/Anthropic API, continuous batching, and model setup (LLM/VLM/Audio/Embeddings/Reasoning).
 ---
 
 # vllm-mlx Expert

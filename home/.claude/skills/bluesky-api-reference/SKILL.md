@@ -1,6 +1,6 @@
 ---
 name: bluesky-api-reference
-description: Bluesky (AT Protocol) API reference lookup and answering. Use this skill whenever the user asks about Bluesky API endpoints, AT Protocol XRPC methods, app.bsky.* APIs, chat.bsky.* APIs, or needs to understand how to call specific Bluesky API methods — even if they don't explicitly say "Bluesky API" and instead mention AT Proto, Bsky, Blue Sky, or XRPC endpoints. Also trigger when the user is building a Bluesky bot, client, or integration and needs API details.
+description: Bluesky (AT Protocol) API reference. Use for endpoints, XRPC methods, app.bsky*/chat.bsky* APIs, or building Bluesky bots/clients/integrations.
 ---
 
 Bluesky API reference for looking up endpoint specifications, request/response schemas, and authentication requirements.

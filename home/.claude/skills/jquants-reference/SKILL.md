@@ -1,6 +1,6 @@
 ---
 name: jquants-reference
-description: J-Quants API（JPX日本取引所グループ）のリファレンススキル。n8n ワークフローで HTTP Request ノードを設定する際や、J-Quants のエンドポイント・パラメータ・レスポンスを調べる際は必ずこのスキルを参照すること。「J-Quants」「株価取得」「財務情報」「上場銘柄」「指数データ」「先物データ」「取引カレンダー」「信用取引」「空売り」などのキーワードが出たら即座に使う。
+description: J-Quants API (JPX) reference. Use for endpoints, params, responses, n8n HTTP Request setup, or stock prices, financials, indices, futures, calendar.
 ---
 
 # J-Quants API リファレンス

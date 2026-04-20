@@ -1,13 +1,6 @@
 ---
 name: mlx-lm
-description: >
-  MLX LM (mlx-lm) を使ったテキスト生成・チャット・HTTP サーバ起動を支援するスキル。
-  Apple Silicon 上で LLM を動かす際に使用する。以下のシナリオで利用すること:
-  (1) mlx_lm.generate / mlx_lm.chat でテキストを生成・会話する
-  (2) Python API で load/generate/stream_generate を使う
-  (3) mlx_lm.server で OpenAI 互換 HTTP API サーバを立ち上げる
-  (4) mlx_lm.convert でモデルを MLX 形式に変換・量子化する
-  (5) mlx-community の HuggingFace モデルを使いたい
+description: MLX LM (mlx-lm) expert — Apple Silicon LLM inference with generate/chat/server commands, Python API, OpenAI-compatible HTTP server, and model conversion/quantization via mlx-community.
 ---
 
 # MLX LM

@@ -1,6 +1,6 @@
 ---
 name: kabusapi-reference
-description: kabuステーション® API（三菱UFJ eスマート証券）のリファレンススキル。n8n ワークフローで HTTP Request ノードを設定する際や、kabusapi のエンドポイント・パラメータ・エラーコードを調べる際は必ずこのスキルを参照すること。「kabu」「kabusapi」「kabuステーション」「株注文」「日経先物」「現物発注」「板情報」「残高照会」などのキーワードが出たら即座に使う。
+description: kabuステーション API (MUFJ eSmart Securities) reference. Use for endpoints, params, errors, or n8n HTTP Request setup.
 ---
 
 # kabuステーション® API リファレンス

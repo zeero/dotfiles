@@ -1,6 +1,6 @@
 ---
 name: pine-script-v5
-description: TradingViewのPine Script v5でインジケーター・ストラテジー・ライブラリを書く・デバッグする・改善するときに使うスキル。「Pine Scriptで〜を作りたい」「ta.smaの使い方」「EMAのクロスを検知したい」「ストラテジーのバックテストを書きたい」「TradingViewのスクリプトが動かない」「アラートを設定したい」など、Pine Script/TradingView関連の質問や実装依頼には必ずこのスキルを使うこと。Pine Scriptのバージョンが不明な場合もv5として扱う。
+description: TradingView Pine Script v5 reference. Use for indicators, strategies, libraries, debugging, TA functions (ta.sma, ta.rsi), alerts, and script implementation.
 ---
 
 # Pine Script v5 スキル

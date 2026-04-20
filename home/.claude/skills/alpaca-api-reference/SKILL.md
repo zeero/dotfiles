@@ -1,6 +1,6 @@
 ---
 name: alpaca-api-reference
-description: Alpaca Markets API reference lookup and answering. Use this skill whenever the user asks about Alpaca trading API, market data API, broker API, order types, positions, account management, or needs to understand how to call specific Alpaca API endpoints — even if they don't explicitly say "Alpaca API" and instead mention algorithmic trading, stock trading API, crypto trading, or brokerage API. Also trigger when the user is building a trading bot, algo trader, or financial app using Alpaca.
+description: Alpaca Markets API reference. Use for trading/market data/broker API, orders, positions, account management, or building Alpaca-based bots/apps.
 ---
 
 Alpaca API reference for looking up endpoint specifications, request/response schemas, authentication, order types, and market data access.

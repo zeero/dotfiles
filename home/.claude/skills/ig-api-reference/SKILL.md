@@ -1,6 +1,6 @@
 ---
 name: ig-api-reference
-description: IG REST Trading API および Streaming API のリファレンススキル。IG APIのエンドポイント・パラメータ・認証・レスポンスを調べる際は必ずこのスキルを参照すること。「IG API」「IG REST API」「CFD取引自動化」「ポジション取得」「注文管理」「マーケットデータ」「IG Streaming」「Lightstreamer」「IG デモ口座」などのキーワードが出たら即座に使う。
+description: IG REST Trading & Streaming API reference. Use for endpoints, params, auth, responses, or CFD automation, positions, orders, market data.
 ---
 
 # IG REST Trading API リファレンス
