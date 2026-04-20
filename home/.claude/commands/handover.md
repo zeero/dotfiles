@@ -21,14 +21,12 @@ argument-hint: [特に重点的に残して欲しいこと]
 - `.claude/HANDOVER.md` が既に存在するか **Bash で `test -f` を使って確認**する
   - **⚠️ 重要: 既存の HANDOVER.md を Read ツールで読み込んではならない**（前回の記述に引きずられ、今回のセッション固有の情報が薄まるため）
   - 存在する場合は、以下の手順で `.claude/HANDOVER.zip` にバックアップしてから削除する:
-    1. フロントマターから `date` を取得:
-       `DATE=$(grep -m1 '^date:' .claude/HANDOVER.md | sed 's/date:[[:space:]]*//')`
-    2. フロントマターがなければファイルの mtime をフォールバックで使用:
-       `[ -z "$DATE" ] && DATE=$(stat -f %Sm -t %Y-%m-%dT%H-%M-%S .claude/HANDOVER.md)`
-    3. 日付付きファイル名にリネーム:
-       `mv .claude/HANDOVER.md .claude/HANDOVER-${DATE}.md`
-    4. zip に追加（`-rm` で追加後にファイルを自動削除、なければ新規作成）:
-       `zip -jrm .claude/HANDOVER.zip .claude/HANDOVER-${DATE}.md`
+    1. 前回日付は !`grep -m1 '^date:' .claude/HANDOVER.md | sed 's/date:[[:space:]]*//' || stat -f %Sm -t %Y-%m-%dT%H-%M-%S .claude/HANDOVER.md` とする
+       （フロントマターに `date:` があればその値、なければファイルの mtime を使用）
+    2. 日付付きファイル名にリネーム:
+       `mv .claude/HANDOVER.md .claude/HANDOVER-{前回日付}.md`
+    3. zip に追加（`-rm` で追加後にファイルを自動削除、なければ新規作成）:
+       `zip -jrm .claude/HANDOVER.zip .claude/HANDOVER-{前回日付}.md`
 
 ### 2. セッション内容の分析
 
