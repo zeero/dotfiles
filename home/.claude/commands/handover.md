@@ -97,10 +97,11 @@ $ARGUMENTS
 
 ### 3. ドキュメント生成
 
-- ドキュメントの冒頭に以下のフロントマターを追加する（セッション日時を `YYYY-MM-DDTHH-MM-SS` 形式で記録）:
+- ドキュメントの冒頭に以下のフロントマターを追加する:
   ```markdown
   ---
   date: !`date '+%Y-%m-%dT%H-%M-%S'`
+  session-id: ${CLAUDE_SESSION_ID}
   ---
   ```
 - 上記の内容を構造化されたMarkdown形式で整理
