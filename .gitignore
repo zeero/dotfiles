@@ -6,4 +6,5 @@ vim/plugged
 home/bin/git-*
 home/.config/coc/extensions/coc-kotlin-data/
 !home/.claude
+!home/.gemini
 home/.claude/skills/agent-team-organizer-workspace/
