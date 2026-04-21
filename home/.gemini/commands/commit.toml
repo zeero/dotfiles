@@ -1,0 +1,13 @@
+description = "Analyze changes and create a conventional commit message."
+prompt = """
+以下の手順で、現在の変更を分析し、適切なコミットメッセージを作成・実行してください。
+
+1. **品質チェック**: プロジェクトの標準的なコマンド（build, test, lintなど）を実行し、問題がないか確認してください。
+2. **変更の分析**: `git status` と `git diff` を使用して、変更されたファイルと内容を把握してください。
+3. **ステージング**: ステージされているファイルがない場合は、変更されたファイル（Untrackedを除く）をステージしてください。
+4. **メッセージ生成**: Conventional Commits 形式（feat, fix, docs, style, refactor, test, chore）で、簡潔かつ意味のあるメッセージを生成してください。
+   - ⚠️ AI生成であることの署名や絵文字は含めないでください。
+5. **コミット**: 生成したメッセージでコミットを実行してください。
+
+追加の指示: {{args}}
+"""
