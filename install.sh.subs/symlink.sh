@@ -30,6 +30,8 @@ ln -s ~/.claude/CLAUDE.md ~/AGENTS.md
 mkdir -p ~/.gemini
 find ${DOTFILES}/home/.gemini -depth 1 -exec ln -sf {} ~/.gemini \;
 ln -sf ${DOTFILES}/home/.claude/CLAUDE.md ~/.gemini/GEMINI.md
+mkdir -p ~/.agents
+find ${DOTFILES}/home/.agents -depth 1 -exec ln -sf {} ~/.agents \;
 
 # Serena
 mkdir -p ~/.serena
