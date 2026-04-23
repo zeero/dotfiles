@@ -123,6 +123,7 @@ brew 'tree-sitter-cli'
 brew 'pyright'
 brew 'sqlite'
 brew 'tako8ki/tap/gobang' # DB Browser TUI
+brew 'go-task/tap/go-task'
 
 # AppStore {{{1
 brew 'mas'
