@@ -122,7 +122,7 @@ brew 'k1LoW/tap/tcmux'
 brew 'tree-sitter-cli'
 brew 'pyright'
 brew 'sqlite'
-brew 'go-task/tap/go-task'
+brew 'go-task'
 
 # AppStore {{{1
 brew 'mas'
