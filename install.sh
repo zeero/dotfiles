@@ -152,11 +152,10 @@ claude plugin install document-skills@anthropic-agent-skills
 # npx skills add https://github.com/wshobson/agents --skill prompt-engineering-patterns
 # npx skills add https://github.com/softaworks/agent-toolkit --skill naming-analyzer
 # npx skills add https://github.com/softaworks/agent-toolkit --skill draw-io
-# npx skills add https://github.com/sickn33/antigravity-awesome-skills --skill docker-expert
 # npx skills add https://github.com/softaworks/agent-toolkit --skill command-creator
 # npx skills add https://github.com/softaworks/agent-toolkit --skill crafting-effective-readmes
-## 要否要確認
-# npx skills add https://github.com/adisinghstudent/easyclaw --skill openclaw-config
+# npx skills add https://github.com/sickn33/antigravity-awesome-skills --skill docker-expert
+# npx skills add https://github.com/czlonkowski/n8n-skills
 
 # All have done
 echo '🎉'
