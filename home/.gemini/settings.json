@@ -16,6 +16,13 @@
       "httpUrl": "https://mcp.context7.com/mcp"
     }
   },
+  "policies": {
+    "allowed_directories": [
+      "/Users/zeero/Documents/memos/Ideas",
+      "/Users/zeero/Documents/memos/Reports",
+      "/Users/zeero/lib/dotfiles/home/.gemini"
+    ]
+  },
   "general": {
     "preferredEditor": "neovim"
   }
