@@ -136,6 +136,7 @@ claude plugin install context7@claude-plugins-official
 claude plugin install ralph-loop@claude-plugins-official
 claude plugin install plugin-dev@claude-plugins-official
 claude plugin install superpowers@claude-plugins-official
+gemini extensions install https://github.com/obra/superpowers --consent
 ## anthropic-agent-skills
 claude plugin marketplace add anthropics/skills
 claude plugin install example-skills@anthropic-agent-skills
