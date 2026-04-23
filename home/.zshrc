@@ -156,7 +156,7 @@ giwt() {
       branch="$1"
     fi
 
-    local worktree_path="../worktree/${dirname}/${branch}"
+    local worktree_path="../worktrees/${dirname}/${branch}"
 
     # マージ済み確認（-D なら警告のみ）
     if [[ $force -eq 0 ]]; then
@@ -189,7 +189,7 @@ giwt() {
   fi
 
   local branch="$1"
-  local worktree_path="../worktree/${dirname}/${branch}"
+  local worktree_path="../worktrees/${dirname}/${branch}"
 
   # ワークツリーが既に存在する場合はcdのみ
   if [[ -d "$worktree_path" ]]; then
@@ -266,12 +266,16 @@ _fzf-r() {
 
 ### ghqcd {{{2
 ghqcd() {
-  local dir fzf
-  [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux -d ${FZF_TMUX_HEIGHT:-40%}" || fzf="fzf"
-  dir=$(ghq list | fzf-tmux --reverse)
+  local dir
+  dir=$(ghq list | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%})
   if [ -n "$dir" ]; then
-    BUFFER="z $(ghq root)/$dir"
-    zle accept-line
+    local target="$(ghq root)/$dir"
+    if [ -n "$WIDGET" ]; then
+      BUFFER="z $target"
+      zle accept-line
+    else
+      z "$target"
+    fi
   fi
 }
 
