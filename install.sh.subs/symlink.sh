@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOTFILES=$(dirname $(realpath $0))/..
+DOTFILES=$(realpath "$(dirname "$(realpath "$0")")/..")
 
 find ${DOTFILES}/home -type f -depth 1 -exec ln -sf {} ~ \;
 
@@ -24,7 +24,7 @@ ln -sf ${DOTFILES}/home/.ctags.d ~/.ctags.d
 # Claude Code
 mkdir -p ~/.claude
 find ${DOTFILES}/home/.claude -depth 1 -exec ln -sf {} ~/.claude \;
-ln -s ~/.claude/CLAUDE.md ~/AGENTS.md
+ln -sf ~/.claude/CLAUDE.md ~/AGENTS.md
 
 # Gemini
 mkdir -p ~/.gemini

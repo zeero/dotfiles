@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOTFILES=$(dirname $(realpath $0))/..
+DOTFILES=$(realpath "$(dirname "$(realpath "$0")")/..")
 
 cat ${DOTFILES}/Gemlist | gxargs -E'__EOF__' gem install
 

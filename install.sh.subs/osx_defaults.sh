@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOTFILES=$(dirname $(realpath $0))/..
+DOTFILES=$(realpath "$(dirname "$(realpath "$0")")/..")
 TIMESTAMP=`date "+%Y%m%d%H%M%S"`
 PRE_LOG=~/log/install.sh.logs/`basename $0 .sh`.${TIMESTAMP}.pre.log
 POST_LOG=~/log/install.sh.logs/`basename $0 .sh`.${TIMESTAMP}.post.log
