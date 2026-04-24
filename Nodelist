@@ -8,6 +8,6 @@ firecrawl-cli
 agent-browser
 ccundo
 cc-sdd
-~/dev/github.com/zeero/ccresume
+git+ssh://git@github.com:zeero/ccresume.git
 @google/gemini-cli
 @openai/codex
