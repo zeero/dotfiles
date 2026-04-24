@@ -2,58 +2,54 @@
 
 DOTFILES=$(realpath "$(dirname "$(realpath "$0")")/..")
 
-find ${DOTFILES}/home -type f -depth 1 -exec ln -sf {} ~ \;
+find ${DOTFILES}/home -type f -depth 1 -exec ln -sfh {} ~ \;
 
 # tmux
 mkdir -p ~/.tmux/plugins
-ln -sf ${DOTFILES}/home/.tmux/plugins/tpm ~/.tmux/plugins/tpm
+ln -sfh ${DOTFILES}/home/.tmux/plugins/tpm ~/.tmux/plugins/tpm
 
 # Vim
-ln -sf ${DOTFILES}/vim ~/.vim
-ln -sf ${DOTFILES}/vim/vimrc ~/.vimrc
+ln -sfh ${DOTFILES}/vim ~/.vim
+ln -sfh ${DOTFILES}/vim/vimrc ~/.vimrc
 mkdir -p ~/.config
-find ${DOTFILES}/home/.config -type d -depth 1 -exec ln -sf {} ~/.config \;
-ln -sf ${DOTFILES}/vim ~/.config/nvim
-ln -sf ${DOTFILES}/vim/vimrc ~/.config/nvim/init.vim
+find ${DOTFILES}/home/.config -type d -depth 1 -exec ln -sfh {} ~/.config \;
+ln -sfh ${DOTFILES}/vim ~/.config/nvim
+ln -sfh ${DOTFILES}/vim/vimrc ~/.config/nvim/init.vim
 mkdir -p ${DOTFILES}/vim/after/autoload
-ln -sf ${DOTFILES}/vim/plugged/vim-plug/plug.vim ~/.config/nvim/after/autoload/plug.vim
 
 # ctags
-ln -sf ${DOTFILES}/home/.ctags.d ~/.ctags.d
+ln -sfh ${DOTFILES}/home/.ctags.d ~/.ctags.d
 
 # Claude Code
 mkdir -p ~/.claude
-find ${DOTFILES}/home/.claude -depth 1 -exec ln -sf {} ~/.claude \;
-ln -sf ~/.claude/CLAUDE.md ~/AGENTS.md
+find ${DOTFILES}/home/.claude -depth 1 -exec ln -sfh {} ~/.claude \;
+ln -sfh ~/.claude/CLAUDE.md ~/AGENTS.md
 
 # Gemini
 mkdir -p ~/.gemini
-find ${DOTFILES}/home/.gemini -depth 1 -exec ln -sf {} ~/.gemini \;
-ln -sf ${DOTFILES}/home/.claude/CLAUDE.md ~/.gemini/GEMINI.md
+find ${DOTFILES}/home/.gemini -depth 1 -exec ln -sfh {} ~/.gemini \;
+ln -sfh ${DOTFILES}/home/.claude/CLAUDE.md ~/.gemini/GEMINI.md
 mkdir -p ~/.agents
-find ${DOTFILES}/home/.agents -depth 1 -exec ln -sf {} ~/.agents \;
+find ${DOTFILES}/home/.agents -depth 1 -exec ln -sfh {} ~/.agents \;
 
 # Serena
 mkdir -p ~/.serena
-find ${DOTFILES}/home/.serena -depth 1 -exec ln -sf {} ~/.serena \;
+find ${DOTFILES}/home/.serena -depth 1 -exec ln -sfh {} ~/.serena \;
 
 # Ruby
-mkdir ~/.bundle
-find ${DOTFILES}/home/.bundle -type f -depth 1 -exec ln -sf {} ~/.bundle \;
-
-# Node
-mkdir ~/.nvm
+mkdir -p ~/.bundle
+find ${DOTFILES}/home/.bundle -type f -depth 1 -exec ln -sfh {} ~/.bundle \;
 
 # Docker
 mkdir -p ~/.docker
-find ${DOTFILES}/home/.docker -depth 1 -exec ln -sf {} ~/.docker \;
+find ${DOTFILES}/home/.docker -depth 1 -exec ln -sfh {} ~/.docker \;
 
 # Xcode
-# ln -sf ${DOTFILES}/xcode/CodeSnippets ~/Library/Developer/Xcode/UserData/CodeSnippets
+# ln -sfh ${DOTFILES}/xcode/CodeSnippets ~/Library/Developer/Xcode/UserData/CodeSnippets
 mkdir -p ~/Library/Developer/Xcode/UserData/CodeSnippets
-cp -fp ${DOTFILES}/xcode/CodeSnippets/* ~/Library/Developer/Xcode/UserData/CodeSnippets
+cp -Rfp ${DOTFILES}/xcode/CodeSnippets/* ~/Library/Developer/Xcode/UserData/CodeSnippets
 # mkdir -p ~/Library/Developer/Xcode/Templates
-# ln -sf ${DOTFILES}/xcode/File\ Templates ~/Library/Developer/Xcode/Templates/File\ Templates
+# ln -sfh ${DOTFILES}/xcode/File\ Templates ~/Library/Developer/Xcode/Templates/File\ Templates
 mkdir -p ~/Library/Developer/Xcode/Templates/File\ Templates
-cp -fp ${DOTFILES}/xcode/File\ Templates/* ~/Library/Developer/Xcode/Templates/File\ Templates
+cp -Rfp ${DOTFILES}/xcode/File\ Templates/* ~/Library/Developer/Xcode/Templates/File\ Templates
 
