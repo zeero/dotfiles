@@ -158,6 +158,11 @@ claude plugin install document-skills@anthropic-agent-skills
 # npx skills add https://github.com/sickn33/antigravity-awesome-skills --skill docker-expert
 # npx skills add https://github.com/czlonkowski/n8n-skills
 
+# mcp
+# playwright installed by "notebooklm-py[browser]"
+playwright install chromium
+notebooklm skill install
+
 # All have done
 echo '🎉'
 
