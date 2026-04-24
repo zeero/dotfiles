@@ -4,11 +4,18 @@
       "AGENTS.md",
       "GEMINI.md",
       "CLAUDE.md"
-    ]
+    ],
+    "loadMemoryFromIncludeDirectories": true
   },
   "security": {
     "auth": {
       "selectedType": "oauth-personal"
+    },
+    "disableAlwaysAllow": false,
+    "enablePermanentToolApproval": true,
+    "autoAddToPolicyByDefault": true,
+    "environmentVariableRedaction": {
+      "enabled": true
     }
   },
   "mcpServers": {
@@ -18,12 +25,35 @@
   },
   "policies": {
     "allowed_directories": [
-      "/Users/zeero/Documents/memos/Ideas",
-      "/Users/zeero/Documents/memos/Reports",
+      "/Users/zeero/Documents/memos",
       "/Users/zeero/lib/dotfiles/home/.gemini"
     ]
   },
   "general": {
-    "preferredEditor": "neovim"
+    "preferredEditor": "neovim",
+    "vimMode": false,
+    "enableNotifications": true
+  },
+  "ui": {
+    "escapePastedAtSymbols": true,
+    "compactToolOutput": false,
+    "footer": {
+      "hideContextPercentage": false
+    },
+    "showMemoryUsage": true,
+    "showCitations": true,
+    "loadingPhrases": "tips"
+  },
+  "model": {
+    "disableLoopDetection": true,
+    "name": "gemini-3.1-flash-lite-preview"
+  },
+  "experimental": {
+    "worktrees": true,
+    "modelSteering": true,
+    "memoryManager": true,
+    "generalistProfile": true,
+    "contextManagement": true,
+    "topicUpdateNarration": true
   }
 }
