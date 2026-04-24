@@ -2,7 +2,7 @@
 
 cd `dirname $0`
 DOTFILES=`pwd`
-SCRIPTS_DIR=scripts
+SUBS=install.sh.subs
 
 # mkdir
 mkdir ~/bin
@@ -19,7 +19,7 @@ read -p "Press Enter to resume..."
 read -p "Dockerを常時立ち上げるなら `brew services start colima` を実行..."
 
 # symlink
-./${SCRIPTS_DIR}/symlink.sh
+./${SUBS}/symlink.sh
 
 # git submodules
 git submodule update --init
@@ -83,33 +83,33 @@ echo git config --global github.user zeero
 read -p "Press Enter to resume..."
 
 # Mise
-./${SCRIPTS_DIR}/mise_install.sh
+./${SUBS}/mise_install.sh
 read -p "Press Enter to resume..."
 
 # Mint
-./${SCRIPTS_DIR}/mint_install.sh
+./${SUBS}/mint_install.sh
 
 # ruby
-./${SCRIPTS_DIR}/ruby.002.gem_install_pre.sh
-./${SCRIPTS_DIR}/ruby.003.gem_install.sh
-./${SCRIPTS_DIR}/ruby.004.gem_install_post.sh
+./${SUBS}/ruby.002.gem_install_pre.sh
+./${SUBS}/ruby.003.gem_install.sh
+./${SUBS}/ruby.004.gem_install_post.sh
 
 # node.js
-./${SCRIPTS_DIR}/node.002.npm_install.sh
+./${SUBS}/node.002.npm_install.sh
 
 # python
-./${SCRIPTS_DIR}/python.001.uv_install.sh
-./${SCRIPTS_DIR}/python.002.pip_install.sh
+./${SUBS}/python.001.uv_install.sh
+./${SUBS}/python.002.pip_install.sh
 
 # rust
-./${SCRIPTS_DIR}/rust.001.cargo_install.sh
+./${SUBS}/rust.001.cargo_install.sh
 
 # vim
 ## coc.nvim (require npm)
-./${SCRIPTS_DIR}/vim.001.coc.sh
+./${SUBS}/vim.001.coc.sh
 
 # plist
-./${SCRIPTS_DIR}/osx_defaults.sh
+./${SUBS}/osx_defaults.sh
 
 # Alfred Custom Search
 open alfred://customsearch/%E8%8B%B1%E5%92%8C/eiwa/utf8/nospace/https%3A%2F%2Ftranslate.google.com%2F%23en%2Fja%2F%7Bquery%7D

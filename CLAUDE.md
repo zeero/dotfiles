@@ -10,14 +10,14 @@
 
 ### 🚀 インストールとセットアップ
 - `./install.sh` - 全体的なセットアップを調整するメインのインストールスクリプトです。
-- `./scripts/symlink.sh` - ホームディレクトリへのシンボリックリンクを作成します。
+- `./install.sh.subs/symlink.sh` - ホームディレクトリへのシンボリックリンクを作成します。
 - `brew bundle` - BrewfileからすべてのHomebrewパッケージをインストールします。
 
 ### 🧪 開発とテスト
-- `./scripts/ruby.001.rbenv.sh` - rbenvでRuby環境をセットアップします。
-- `./scripts/node.001.nodebrew.sh` - nodebrewを介してNode.jsをインストールします。
-- `./scripts/vim.001.coc.sh` - CoC言語サーバーでVimを設定します。
-- `./scripts/osx_defaults.sh` - macOSシステムデフォルトを適用します。
+- `./install.sh.subs/ruby.001.rbenv.sh` - rbenvでRuby環境をセットアップします。
+- `./install.sh.subs/node.001.nodebrew.sh` - nodebrewを介してNode.jsをインストールします。
+- `./install.sh.subs/vim.001.coc.sh` - CoC言語サーバーでVimを設定します。
+- `./install.sh.subs/osx_defaults.sh` - macOSシステムデフォルトを適用します。
 - `colima start` - Colima Dockerランタイムを開始します（install.shによって自動開始されます）。
 
 ### 📦 パッケージ管理
@@ -39,7 +39,7 @@
 - `/home/` - `~/`にシンボリックリンクされるdotfiles (zshrc, vimrc, gitignoreなど)
 - `/vim/` - プラグインと言語設定を含む完全なVim/Neovim設定です。
 - `/xcode/` - Xcodeテンプレート、コードスニペット、プロジェクトセットアップツールです。
-- `/scripts/` - 異なるコンポーネント用のモジュラーインストールスクリプトです。
+- `/install.sh.subs/` - 異なるコンポーネント用のモジュラーインストールスクリプトです。
 - `/lib/` - 外部依存関係とカラースキームです。
 - `Brewfile` - Homebrewパッケージ定義です。
 - `Gemlist`/`Nodelist` - 言語固有のパッケージリストです。
@@ -65,7 +65,7 @@
 
 5.  **Modularity and Extensibility (モジュール性と拡張性)**
     機能を疎結合なモジュールに分割し、将来の変更や拡張に対応しやすくします。
-    - **実践例**: `scripts/` 以下に、言語ごとのセットアップスクリプトを個別に配置します。
+    - **実践例**: `install.sh.subs/` 以下に、言語ごとのセットアップスクリプトを個別に配置します。
 
 6.  **Convention over Configuration (設定より規約)**
     標準的なツールや規約を採用することで、設定の複雑さを軽減し、シンプルさを保ちます。
@@ -124,13 +124,13 @@
   - Node.jsパッケージは`Nodelist`
   - Pythonパッケージは`Piplist`
   - Swiftパッケージは`Mintlist`
-- **インストールスクリプト**: 命名規則に従って`scripts/`に新しいスクリプトを追加します。
+- **インストールスクリプト**: 命名規則に従って`install.sh.subs/`に新しいスクリプトを追加します。
 - **Git設定**: メインの`install.sh`内のgit configコマンドを変更します。
 - **Xcodeテンプレート**: Clean Swift, VIPER, TCAアーキテクチャ用に`xcode/File Templates/`にテンプレートを追加します。
 
 ### ✅ 変更のテスト
-- 個々のコンポーネントをテストするには、`scripts/`から特定のサブスクリプトを実行します。
-- 変更後にdotfilesを再リンクするには、`./scripts/symlink.sh`を使用します。
+- 個々のコンポーネントをテストするには、`install.sh.subs/`から特定のサブスクリプトを実行します。
+- 変更後にdotfilesを再リンクするには、`./install.sh.subs/symlink.sh`を使用します。
 - 可能であれば、クリーンな環境で`./install.sh`を使用して完全なインストールをテストします。
 
 ### 📝 開発の前提条件
