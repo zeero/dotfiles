@@ -86,6 +86,7 @@ brew 'github-mcp-server'
 cask 'antigravity'
 
 # My Formulas {{{1
+brew 'zeero/tap/tcmux'
 brew 'zeero/tap/go-gtran'
 brew 'zeero/tap/git-info'
 brew 'zeero/tap/git-jump'
