@@ -86,11 +86,10 @@ brew 'github-mcp-server'
 cask 'antigravity'
 
 # My Formulas {{{1
-tap 'zeero/my-formulas'
-brew 'go-gtran'
-brew 'git-info'
-brew 'git-jump'
-cask 'font-ricty_diminished-devicon'
+brew 'zeero/tap/go-gtran'
+brew 'zeero/tap/git-info'
+brew 'zeero/tap/git-jump'
+cask 'zeero/tap/font-ricty_diminished-devicon'
 
 # Development Tool {{{1
 brew 'qt'  # C++ framework (required for Ruby build)
