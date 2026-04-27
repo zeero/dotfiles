@@ -1,0 +1,101 @@
+{
+  "theme": "tokyo-night",
+  "display": {
+    "style": "minimal",
+    "charset": "unicode",
+    "colorCompatibility": "auto",
+    "autoWrap": true,
+    "padding": 1,
+    "lines": [
+      {
+        "segments": {
+          "directory": {
+            "enabled": true,
+            "style": "basename"
+          },
+          "git": {
+            "enabled": true,
+            "showSha": false,
+            "showWorkingTree": false,
+            "showOperation": false,
+            "showTag": false,
+            "showTimeSinceCommit": false,
+            "showStashCount": false,
+            "showUpstream": false,
+            "showRepoName": false
+          },
+          "model": {
+            "enabled": true
+          },
+          "weekly": {
+            "enabled": true,
+            "displayStyle": "squares"
+          },
+          "context": {
+            "enabled": true,
+            "showPercentageOnly": true,
+            "displayStyle": "text",
+            "autocompactBuffer": 33000,
+            "percentageMode": "remaining"
+          },
+          "session": {
+            "enabled": false,
+            "type": "tokens",
+            "costSource": "calculated"
+          },
+          "today": {
+            "enabled": false,
+            "type": "cost"
+          },
+          "block": {
+            "enabled": false,
+            "type": "cost",
+            "burnType": "cost",
+            "displayStyle": "text"
+          },
+          "version": {
+            "enabled": false
+          },
+          "tmux": {
+            "enabled": false
+          },
+          "sessionId": {
+            "enabled": false,
+            "showIdLabel": true
+          },
+          "metrics": {
+            "enabled": false,
+            "showResponseTime": true,
+            "showLastResponseTime": true,
+            "showDuration": true,
+            "showMessageCount": true,
+            "showLinesAdded": true,
+            "showLinesRemoved": true
+          },
+          "env": {
+            "enabled": false,
+            "variable": ""
+          }
+        }
+      }
+    ]
+  },
+  "budget": {
+    "session": {
+      "warningThreshold": 80
+    },
+    "today": {
+      "warningThreshold": 80,
+      "amount": 50
+    },
+    "block": {
+      "warningThreshold": 80,
+      "amount": 15
+    }
+  },
+  "modelContextLimits": {
+    "default": 200000,
+    "sonnet": 200000,
+    "opus": 200000
+  }
+}
