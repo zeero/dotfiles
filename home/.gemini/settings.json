@@ -46,7 +46,7 @@
   },
   "model": {
     "disableLoopDetection": true,
-    "name": "gemini-3.1-flash-lite-preview"
+    "name": "gemini-3-flash-preview"
   },
   "experimental": {
     "worktrees": true,
