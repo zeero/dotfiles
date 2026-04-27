@@ -98,7 +98,8 @@
     "lua-lsp@claude-plugins-official": true,
     "ruby-lsp@claude-plugins-official": true,
     "pm-market-research@pm-skills": true,
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "pm-skills": {
@@ -110,9 +111,9 @@
     }
   },
   "language": "Japanese",
+  "effortLevel": "medium",
   "promptSuggestionEnabled": false,
   "theme": "dark-ansi",
   "remoteControlAtStartup": true,
-  "agentPushNotifEnabled": true,
-  "effortLevel": "medium"
+  "agentPushNotifEnabled": true
 }

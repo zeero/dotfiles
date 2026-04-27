@@ -135,6 +135,7 @@ curl -fsSL https://claude.ai/install.sh | bash
 claude plugin install context7@claude-plugins-official
 claude plugin install ralph-loop@claude-plugins-official
 claude plugin install plugin-dev@claude-plugins-official
+claude plugin install claude-code-setup@claude-plugins-official
 claude plugin install superpowers@claude-plugins-official
 gemini extensions install https://github.com/obra/superpowers --consent
 ## anthropic-agent-skills
