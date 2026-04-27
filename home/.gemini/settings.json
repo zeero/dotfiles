@@ -23,8 +23,8 @@
       "httpUrl": "https://mcp.context7.com/mcp"
     }
   },
-  "policies": {
-    "allowed_directories": [
+  "tools": {
+    "sandboxAllowedPaths": [
       "/Users/zeero/Documents/memos",
       "/Users/zeero/lib/dotfiles/home/.gemini"
     ]
