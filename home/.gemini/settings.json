@@ -5,6 +5,10 @@
       "GEMINI.md",
       "CLAUDE.md"
     ],
+    "includeDirectories": [
+      "/Users/zeero/Documents/memos",
+      "/Users/zeero/lib/dotfiles/home/.gemini"
+    ],
     "loadMemoryFromIncludeDirectories": true
   },
   "security": {
@@ -23,12 +27,6 @@
       "httpUrl": "https://mcp.context7.com/mcp"
     }
   },
-  "tools": {
-    "sandboxAllowedPaths": [
-      "/Users/zeero/Documents/memos",
-      "/Users/zeero/lib/dotfiles/home/.gemini"
-    ]
-  },
   "general": {
     "preferredEditor": "neovim",
     "vimMode": false,
@@ -46,7 +44,7 @@
   },
   "model": {
     "disableLoopDetection": true,
-    "name": "gemini-3-flash-preview"
+    "name": "auto-gemini-3"
   },
   "experimental": {
     "worktrees": true,
