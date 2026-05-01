@@ -1,0 +1,17 @@
+# home/.gemini/policies/tools-exclusion.toml
+
+[[rule]]
+name = "Confirm rm command"
+toolName = "run_shell_command"
+commandPrefix = "rm"
+decision = "ask_user"
+priority = 100
+denyMessage = "rm コマンドの実行にはユーザーの承認が必要です。"
+
+[[rule]]
+name = "Deny access to .env and .envrc files"
+toolName = "read_file"
+argsPattern = '\"file_path\":\".*\\.env(rc)?\"'
+decision = "deny"
+priority = 100
+denyMessage = ".env または .envrc ファイルの読み取りはセキュリティ上の理由で禁止されています。"

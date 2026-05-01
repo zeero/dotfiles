@@ -11,6 +11,11 @@
     ],
     "loadMemoryFromIncludeDirectories": true
   },
+  "mcpServers": {
+    "context7": {
+      "httpUrl": "https://mcp.context7.com/mcp"
+    }
+  },
   "security": {
     "auth": {
       "selectedType": "oauth-personal"
@@ -20,11 +25,6 @@
     "autoAddToPolicyByDefault": true,
     "environmentVariableRedaction": {
       "enabled": true
-    }
-  },
-  "mcpServers": {
-    "context7": {
-      "httpUrl": "https://mcp.context7.com/mcp"
     }
   },
   "general": {
