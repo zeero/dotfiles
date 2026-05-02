@@ -1,10 +1,11 @@
 {
   "env": {
-    "FASTLANE_SKIP_UPDATE_CHECK": "true",
+    "CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD": "1",
     "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "false",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "true",
     "CLAUDE_CODE_NO_FLICKER": "false",
-    "ENABLE_TOOL_SEARCH": "true"
+    "ENABLE_TOOL_SEARCH": "true",
+    "FASTLANE_SKIP_UPDATE_CHECK": "true"
   },
   "permissions": {
     "allow": [
@@ -13,6 +14,7 @@
       "Bash(wc:*)",
       "Bash(rg:*)",
       "Bash(fd:*)",
+      "Bash(task:*)",
       "Bash(npm run:*)",
       "Skill(skill-creator)",
       "Skill(kiro:*)",

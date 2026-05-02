@@ -27,6 +27,7 @@ git submodule update --init
 # git config
 git config --global push.default simple
 git config --global pull.rebase false
+git config --global merge.ff false # マージコミット必須
 git config --global http.sslVerify false
 git config --global core.editor nvim
 git config --global core.pager delta
@@ -142,6 +143,10 @@ gemini extensions install https://github.com/obra/superpowers --consent
 claude plugin marketplace add anthropics/skills
 claude plugin install example-skills@anthropic-agent-skills
 claude plugin install document-skills@anthropic-agent-skills
+## Codex使える環境のみ
+# claude plugin marketplace add openai/codex-plugin-cc
+# claude plugin install codex@openai-codex
+# claude "/codex:setup"
 ## zeero-dotfiles
 # cd $DOTFILES
 # claude plugin marketplace add ./
