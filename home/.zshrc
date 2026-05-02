@@ -161,8 +161,9 @@ giwt() {
     # マージ済み確認（-D なら警告のみ）
     if [[ $force -eq 0 ]]; then
       local base_branch
-      base_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/origin/||' || echo "main")
-      if ! git branch --merged "$base_branch" | grep -q "^\s*${branch}$"; then
+      base_branch=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's|^origin/||')
+      : ${base_branch:=main}
+      if ! git branch --merged "$base_branch" --format="%(refname:short)" | grep -qxF -- "$branch"; then
         echo "Branch '${branch}' is not merged into '${base_branch}'. Use -D to force."
         return 1
       fi
