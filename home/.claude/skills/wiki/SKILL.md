@@ -184,16 +184,31 @@ Wiki の健全性をチェックしてレポートを出す。
 3. **orphan pages チェック**: `Wiki/pages/` の各ページが、どの `Wiki/refs/` の `contributed_to` にも含まれていないものを検出
 4. **missing pages チェック**: `index.md` に列挙されているのに `pages/` に存在しないファイル、またはその逆
 5. **index.md 健全性**: `pages/` ディレクトリと `index.md` の Sources/Pages セクションの差分を検出
-6. **レポート出力**:
+6. **矛盾・stale claims チェック**: `Wiki/pages/` のページ群を横断的に読み、以下を検出する:
+   - 異なるページ間で矛盾する記述（例: 同一トピックについて正反対の主張）
+   - より新しい refs（`ingested_at` が新しいもの）によって上書きされるべき古い主張（stale claims）
+   - 矛盾/stale が多い場合は代表例のみ列挙し、全件は省略可
+7. **未作成概念ページチェック**: `Wiki/pages/` の全 WikiLink を収集し、対応するページファイルが存在しないものを「concept gap」として検出する:
+   ```bash
+   rg -oh '\[\[[^\]]+\]\]' ~/Documents/memos/Wiki/pages/ | sort -u
+   ```
+   - 存在しない WikiLink ターゲット一覧を報告
+   - 重要度が高いと判断したものはページ新規作成を提案する
+8. **レポート出力**:
    - 更新候補の RawSource 一覧（stale refs）
    - 孤立ページ一覧（orphan pages）
    - index.md と pages/ の不整合
+   - 矛盾・stale claims 一覧（contradiction）
+   - WikiLink 未作成概念一覧（concept gap）
    - 問題が無ければ「✅ Wiki は健全です」と報告
-7. **log.md に追記**:
+9. **log.md に追記**:
    ```
-   ## [YYYY-MM-DD] lint | stale=N, orphan=M, mismatch=K
+   ## [YYYY-MM-DD] lint | stale=N, orphan=M, mismatch=K, contradiction=P, concept_gap=Q
    ```
-8. **修復提案**: 問題が見つかった場合、ユーザーに修復オプション（一括再 ingest、index 再生成、orphan 削除）を提示
+10. **修復提案**: 問題が見つかった場合、ユーザーに修復オプション（一括再 ingest、index 再生成、orphan 削除、concept gap のページ新規作成）を提示
+11. **新規調査提案**: lint 結果全体を踏まえ、以下を提案する（任意）:
+    - 掘り下げるべき新しい質問・テーマ
+    - 収集すると wiki を強化できる新ソース候補
 
 ---
 
