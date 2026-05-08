@@ -100,3 +100,4 @@ OLLAMA_TIMEOUT: '600'
 GOOSE_PROVIDER: lmstudio
 GOOSE_MODEL: gemma-4-26b-a4b-it-mlx
 GOOSE_TELEMETRY_ENABLED: true
+GOOSE_MODE: smart_approve

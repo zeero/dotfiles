@@ -39,4 +39,5 @@ skills-lock.json
 .envrc
 docker-compose.override.yml
 .firecrawl/
+*.bak
 
