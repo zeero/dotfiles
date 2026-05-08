@@ -195,6 +195,7 @@ giwt() {
   # ワークツリーが既に存在する場合はcdのみ
   if [[ -d "$worktree_path" ]]; then
     cd "$worktree_path"
+    [[ -n "$TMUX" ]] && tmux rename-window "$branch"
     return
   fi
 
@@ -204,7 +205,8 @@ giwt() {
   fi
 
   git worktree add "$worktree_path" "$branch" && \
-  cd "$worktree_path"
+  cd "$worktree_path" && \
+  { [[ -n "$TMUX" ]] && tmux rename-window "$branch"; true; }
 }
 
 ### _fzf-git_worktree {{{2
