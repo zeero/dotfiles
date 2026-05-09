@@ -32,6 +32,9 @@ ln -sfh ${DOTFILES}/home/.claude/CLAUDE.md ~/.gemini/GEMINI.md
 mkdir -p ~/.agents
 find ${DOTFILES}/home/.agents -depth 1 -exec ln -sfh {} ~/.agents \;
 
+# Pi
+ln -sfh ${DOTFILES}/home/.claude/commands ~/.pi/agent/prompts
+
 # Serena
 mkdir -p ~/.serena
 find ${DOTFILES}/home/.serena -depth 1 -exec ln -sfh {} ~/.serena \;
