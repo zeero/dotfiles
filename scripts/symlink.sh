@@ -25,6 +25,9 @@ mkdir -p ~/.claude
 find ${DOTFILES}/home/.claude -depth 1 -exec ln -sfh {} ~/.claude \;
 ln -sfh ~/.claude/CLAUDE.md ~/AGENTS.md
 
+# Codex
+ln -sfh ${DOTFILES}/home/.claude/commands ~/.codex/prompts
+
 # Gemini
 mkdir -p ~/.gemini
 find ${DOTFILES}/home/.gemini -depth 1 -exec ln -sfh {} ~/.gemini \;
