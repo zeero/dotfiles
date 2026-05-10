@@ -26,6 +26,8 @@ find ${DOTFILES}/home/.claude -depth 1 -exec ln -sfh {} ~/.claude \;
 ln -sfh ~/.claude/CLAUDE.md ~/AGENTS.md
 
 # Codex
+mkdir -p ~/.codex
+find ${DOTFILES}/home/.codex -depth 1 -exec ln -sfh {} ~/.codex \;
 ln -sfh ${DOTFILES}/home/.claude/commands ~/.codex/prompts
 
 # Gemini
@@ -36,6 +38,7 @@ mkdir -p ~/.agents
 find ${DOTFILES}/home/.agents -depth 1 -exec ln -sfh {} ~/.agents \;
 
 # Pi
+mkdir -p ~/.pi/agent
 ln -sfh ${DOTFILES}/home/.claude/commands ~/.pi/agent/prompts
 
 # Serena

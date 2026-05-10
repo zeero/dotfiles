@@ -1,0 +1,29 @@
+project_doc_fallback_filenames = ["CLAUDE.md"]
+
+[projects."/Users/zeero/lib/dotfiles"]
+trust_level = "trusted"
+
+[projects."/Users/zeero/dev/daytrade"]
+trust_level = "trusted"
+
+[projects."/Users/zeero/Documents/memos"]
+trust_level = "trusted"
+
+[tui]
+status_line = ["model-with-reasoning", "current-dir", "git-branch", "branch-changes", "run-state", "context-remaining", "five-hour-limit", "weekly-limit", "task-progress"]
+status_line_use_colors = true
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
+
+[plugins."canva@openai-curated"]
+enabled = true
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[plugins."superpowers@openai-curated"]
+enabled = true
+
+[features]
+terminal_resize_reflow = true
