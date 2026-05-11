@@ -1,4 +1,6 @@
 project_doc_fallback_filenames = ["CLAUDE.md"]
+model = "gpt-5.5"
+model_reasoning_effort = "medium"
 
 [projects."/Users/zeero/lib/dotfiles"]
 trust_level = "trusted"
