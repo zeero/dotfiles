@@ -38,8 +38,9 @@ mkdir -p ~/.agents
 find ${DOTFILES}/home/.agents -depth 1 -exec ln -sfh {} ~/.agents \;
 
 # Pi
-mkdir -p ~/.pi/agent
+mkdir -p ~/.pi/agent/extensions
 ln -sfh ${DOTFILES}/home/.claude/commands ~/.pi/agent/prompts
+find ${DOTFILES}/home/.pi/agent/extensions -depth 1 -type f -exec ln -sfh {} ~/.pi/agent/extensions \;
 
 # Serena
 mkdir -p ~/.serena
