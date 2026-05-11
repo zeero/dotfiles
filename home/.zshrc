@@ -123,12 +123,14 @@ pdfmerge() {
 giwt() {
   local force=0
   local delete=0
+  local inline=0
 
   # オプション解析
   while [[ $# -gt 0 ]]; do
     case "$1" in
       -d) delete=1; shift ;;
       -D) delete=1; force=1; shift ;;
+      -i) inline=1; shift ;;
       --) shift; break ;;
       -*) echo "Unknown option: $1"; return 1 ;;
       *) break ;;
@@ -185,28 +187,33 @@ giwt() {
 
   # --- 作成 / 移動モード ---
   if [[ $# -eq 0 ]]; then
-    echo 'Usage: giwt [-d|-D] <branch-name>'
+    echo 'Usage: giwt [-d|-D|-i] <branch-name>'
     return 1
   fi
 
   local branch="$1"
   local worktree_path="../worktrees/${dirname}/${branch}"
 
-  # ワークツリーが既に存在する場合はcdのみ
-  if [[ -d "$worktree_path" ]]; then
+  # ワークツリーが存在しない場合は作成
+  if [[ ! -d "$worktree_path" ]]; then
+    # ブランチが存在しない場合のみ作成
+    if ! git show-ref --verify --quiet "refs/heads/${branch}"; then
+      git branch "$branch" || return 1
+    fi
+    git worktree add "$worktree_path" "$branch" || return 1
+  fi
+
+  # tmux環境下ならデフォルトは新ウィンドウ作成（-i 指定時はcdのみ）
+  if [[ -n "$TMUX" ]]; then
+    if [[ $inline -eq 1 ]]; then
+      cd "$worktree_path"
+      tmux rename-window "$branch"
+    else
+      tmux new-window -n "$branch" -c "$worktree_path"
+    fi
+  else
     cd "$worktree_path"
-    [[ -n "$TMUX" ]] && tmux rename-window "$branch"
-    return
   fi
-
-  # ブランチが存在しない場合のみ作成
-  if ! git show-ref --verify --quiet "refs/heads/${branch}"; then
-    git branch "$branch" || return 1
-  fi
-
-  git worktree add "$worktree_path" "$branch" && \
-  cd "$worktree_path" && \
-  { [[ -n "$TMUX" ]] && tmux rename-window "$branch"; true; }
 }
 
 ### _fzf-git_worktree {{{2
