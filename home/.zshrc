@@ -227,6 +227,17 @@ _fzf-git_worktree() {
   fi
 }
 
+### _fzf-zoxide {{{2
+_fzf-zoxide() {
+  local selected
+  selected=$(zoxide query -ls | sed 's/^[[:space:]]*[0-9.]*[[:space:]]*//' | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%})
+  if [ -n "$selected" ]; then
+    zoxide add "$selected"
+    BUFFER="cd \"$selected\""
+    zle accept-line
+  fi
+}
+
 ### _fzf-git_branch {{{2
 _fzf-git_branch() {
   local selected fzf
@@ -487,8 +498,6 @@ bindkey '^B' backward-word
 # bindkey '^W' forward-word
 # bindkey '^D' forward-backward-delete-char #zshにない
 ### Custom
-zle -N _fzf-git_worktree
-bindkey '^@w' _fzf-git_worktree
 zle -N _fzf-git_branch
 bindkey '^G' _fzf-git_branch
 # zle -N _fzf-t
@@ -499,6 +508,10 @@ bindkey '^T' fzf-file-widget
 bindkey '^R' fzf-history-widget
 zle -N ghqcd
 bindkey '^@^@' ghqcd
+zle -N _fzf-git_worktree
+bindkey '^@w' _fzf-git_worktree
+zle -N _fzf-zoxide
+bindkey '^@z' _fzf-zoxide
 ### キーバインド解除
 tty -s && stty stop  undef # C-s
 tty -s && stty start undef # C-q
