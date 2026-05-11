@@ -243,7 +243,18 @@ _fzf-git_branch() {
   local selected fzf
   # [ "${FZF_TMUX:-1}" != 0 ] && fzf="fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%}" || fzf="fzf"
   # selected=$(git branch -a | sed -e "s/remotes\/[^\/]\{1,\}\/\(HEAD -> [^\/]\{1,\}\/\)\{0,1\}//" | sort -r | uniq | $fzf | cut -b 3- | tr '\n' ' ')
-  selected=$(git branch -a | sed -e "s/remotes\/[^\/]\{1,\}\/\(HEAD -> [^\/]\{1,\}\/\)\{0,1\}//" | sort -r | uniq | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%} --preview 'echo {} | cut -b 3- | xargs git log --color --graph --decorate --name-status -n 10 --parents' | cut -b 3- | tr '\n' ' ')
+  selected=$(git branch -a \
+    | sed -e "s/remotes\/[^\/]\{1,\}\/\(HEAD -> [^\/]\{1,\}\/\)\{0,1\}//" \
+    | awk '
+        /^\* / { current  = current  $0 ORS; next }
+        /^\+ / { worktree = worktree $0 ORS; next }
+        { other = other $0 ORS }
+        END { printf "%s%s%s", current, worktree, other }
+      ' \
+    | awk '!seen[$0]++' \
+    | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%} --preview 'echo {} | cut -b 3- | xargs git log --color --graph --decorate --name-status -n 10 --parents' \
+    | cut -b 3- \
+    | tr '\n' ' ')
   if [ -n "$selected" ]; then
     BUFFER+="$selected"
     CURSOR=${#BUFFER}
