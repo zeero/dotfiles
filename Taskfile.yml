@@ -1,0 +1,10 @@
+version: '3'
+
+includes:
+  tests: Taskfile.tests.yml
+
+tasks:
+  default:
+    cmds:
+      - task --list
+    silent: true

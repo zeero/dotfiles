@@ -1,0 +1,14 @@
+version: '3'
+
+tasks:
+  ts:
+    desc: Run TypeScript tests
+    dir: tests/typescript
+    cmds:
+      - npx vitest run {{.CLI_ARGS}}
+
+  ts-watch:
+    desc: Run TypeScript tests in watch mode
+    dir: tests/typescript
+    cmds:
+      - npx vitest {{.CLI_ARGS}}

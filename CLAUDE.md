@@ -40,9 +40,20 @@
 - `/vim/` - プラグインと言語設定を含む完全なVim/Neovim設定です。
 - `/xcode/` - Xcodeテンプレート、コードスニペット、プロジェクトセットアップツールです。
 - `/scripts/` - 異なるコンポーネント用のモジュラーインストールスクリプトです。
+- `/tests/` - テストコードを配置します。
 - `/lib/` - 外部依存関係とカラースキームです。
 - `Brewfile` - Homebrewパッケージ定義です。
 - `Gemlist`/`Nodelist` - 言語固有のパッケージリストです。
+
+### 🧪 テスト構成ルール
+テストコードは `/home/` 配下のシンボリックリンク先を汚さないよう、ルートの `/tests/` ディレクトリに分離して配置します。
+
+1. **ディレクトリ構成**: `tests/{language}/`
+   - 言語ごとにディレクトリを分け、テストランナーや設定を独立させます。
+2. **ファイル命名規則**: `{path-to-flat}/{filename}.test.{ext}`
+   - テスト対象ファイルのパスをハイフン繋ぎでフラットに表現します。
+   - 例: `home/.pi/agent/extensions/slack-notify.ts` のテスト
+     -> `tests/typescript/home-pi-agent-extensions/slack-notify.test.ts`
 
 ### 💎 設計ポリシー
 このリポジトリは、以下の明確な設計ポリシーに基づいて構築されています。
