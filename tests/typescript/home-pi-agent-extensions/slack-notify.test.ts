@@ -70,7 +70,7 @@ describe('slack-notify extension', () => {
     await handlers['agent_end'](eventMock, ctxMock);
 
     expect(execSync).toHaveBeenCalledWith(
-      expect.stringContaining('slack-cli send -c "dev" -m "*♓ Pi タスク完了* (11分)\\nThis is a summary of the long task."')
+      expect.stringContaining('slack-cli send -c "general" -m "*♓ Pi タスク完了* (11分)\\nThis is a summary of the long task."')
     );
   });
 
@@ -84,7 +84,7 @@ describe('slack-notify extension', () => {
     await handlers['agent_end'](eventMock, ctxMock);
 
     expect(execSync).toHaveBeenCalledWith(
-      expect.stringContaining('（サマリなし）')
+      expect.stringContaining('slack-cli send -c "general" -m "*♓ Pi タスク完了* (11分)\\n（サマリなし）"')
     );
   });
 

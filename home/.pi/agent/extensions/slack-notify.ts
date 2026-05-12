@@ -36,7 +36,7 @@ export default function (pi: ExtensionAPI) {
     const msg = `*♓ Pi タスク完了* (${mins}分)\n${summary}`;
 
     try {
-      execSync(`slack-cli send -c "dev" -m ${JSON.stringify(msg)}`);
+      execSync(`slack-cli send -c "general" -m ${JSON.stringify(msg)}`);
     } catch (e) {
       ctx.ui.notify("Slack通知に失敗しました", "error");
     }
