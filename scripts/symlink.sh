@@ -20,6 +20,11 @@ mkdir -p ${DOTFILES}/vim/after/autoload
 # ctags
 ln -sfh ${DOTFILES}/home/.ctags.d ~/.ctags.d
 
+# Agents
+mkdir -p ~/.agents
+find ${DOTFILES}/home/.agents -depth 1 -exec ln -sfh {} ~/.agents \;
+ln -sfh ${DOTFILES}/home/.claude/skills ~/.agents/skills
+
 # Claude Code
 mkdir -p ~/.claude
 find ${DOTFILES}/home/.claude -depth 1 -exec ln -sfh {} ~/.claude \;
@@ -29,13 +34,12 @@ ln -sfh ~/.claude/CLAUDE.md ~/AGENTS.md
 mkdir -p ~/.codex
 find ${DOTFILES}/home/.codex -depth 1 -exec ln -sfh {} ~/.codex \;
 ln -sfh ${DOTFILES}/home/.claude/commands ~/.codex/prompts
+ln -sfh ${DOTFILES}/home/.claude/skills ~/.codex/skills
 
 # Gemini
 mkdir -p ~/.gemini
 find ${DOTFILES}/home/.gemini -depth 1 -exec ln -sfh {} ~/.gemini \;
 ln -sfh ${DOTFILES}/home/.claude/CLAUDE.md ~/.gemini/GEMINI.md
-mkdir -p ~/.agents
-find ${DOTFILES}/home/.agents -depth 1 -exec ln -sfh {} ~/.agents \;
 
 # Pi
 mkdir -p ~/.pi/agent/extensions

@@ -9,3 +9,4 @@ home/.config/coc/extensions/coc-kotlin-data/
 !home/.gemini
 !home/.agents
 home/.claude/skills/agent-team-organizer-workspace/
+home/.claude/skills/.system
