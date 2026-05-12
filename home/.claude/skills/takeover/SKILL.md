@@ -1,5 +1,6 @@
 ---
-description: .claude/HANDOVER.md から前セッションの情報を復元する
+name: takeover
+description: .claude/HANDOVER.md から前セッションの情報を復元する。ユーザが明示的に呼び出す。
 ---
 
 # Takeover - セッション情報の復元

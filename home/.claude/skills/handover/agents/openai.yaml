@@ -1,0 +1,4 @@
+interface:
+  display_name: "Handover"
+  short_description: "Create session handover documents"
+  default_prompt: "Use $handover to write the current session handover document."

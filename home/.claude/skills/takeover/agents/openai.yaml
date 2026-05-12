@@ -1,0 +1,4 @@
+interface:
+  display_name: "Takeover"
+  short_description: "Restore context from handover files"
+  default_prompt: "Use $takeover to restore context from the previous session handover."
