@@ -155,6 +155,8 @@ claude plugin install document-skills@anthropic-agent-skills
 
 # skills.sh logs
 # npx skills add https://github.com/vercel-labs/skills --skill find-skills
+# npx skills add https://github.com/anthropics/skills --skill skill-creator
+# npx skills add https://github.com/anthropics/skills --skill template-skill
 # npx skills add https://github.com/avdlee/swiftui-agent-skill --skill swiftui-expert-skill
 # npx skills add https://github.com/wshobson/agents --skill prompt-engineering-patterns
 # npx skills add https://github.com/softaworks/agent-toolkit --skill naming-analyzer
