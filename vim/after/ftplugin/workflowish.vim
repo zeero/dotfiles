@@ -50,6 +50,11 @@ endfunction "}}}
 setl conceallevel=2
 setl tabstop=2
 
+" Markdown系拡張子では折りたたみを無効化（.woflでは折りたたむ）
+if expand('%:e') =~? '^\%(md\|mk\|markdown\|mdc)$'
+  setl nofoldenable
+endif
+
 " WikiLinkJump
 nnoremap <silent> <buffer> <C-j> :call <SID>my_wiki_link_jump()<CR>
 function! s:my_wiki_link_jump() abort "{{{
