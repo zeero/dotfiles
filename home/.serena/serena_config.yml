@@ -63,7 +63,8 @@ record_tool_usage_stats: false
 token_count_estimator: TIKTOKEN_GPT4O
 
 # the list of registered project paths (updated automatically).
-projects: []
+projects:
+- /Users/zeero/dev/daytrade
 default_modes:
 
 # list of mode names to that are always to be included in the set of active modes.

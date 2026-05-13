@@ -18,6 +18,17 @@ status_line_use_colors = true
 [tui.model_availability_nux]
 "gpt-5.5" = 4
 
+[mcp_servers.serena]
+command = "serena"
+args = ["start-mcp-server", "--project-from-cwd", "--context=codex"]
+startup_timeout_sec = 15.0
+
+[mcp_servers.serena.tools.write_memory]
+approval_mode = "approve"
+
+[mcp_servers.context7]
+command = "https://mcp.context7.com/mcp"
+
 [plugins."canva@openai-curated"]
 enabled = true
 
@@ -29,3 +40,16 @@ enabled = true
 
 [features]
 terminal_resize_reflow = true
+hooks = true
+
+[hooks.state]
+
+[hooks.state."/Users/zeero/.codex/hooks.json:pre_tool_use:0:0"]
+enabled = true
+trusted_hash = "sha256:94c9b8e6da2b93341e76bbf67b99b10bfa28a3cc4da97e3c7754132b22226aa2"
+
+[hooks.state."/Users/zeero/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:7044f6543375ba4dbdba64ec790d4323148e479ee77d550e85909070191cebfa"
+
+[hooks.state."/Users/zeero/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:f1b26fc4f5e7255a0b276c5cb2f44f01985d1f28488f3e16bb75de0a4a7af356"
