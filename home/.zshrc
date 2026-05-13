@@ -240,6 +240,7 @@ _fzf-zoxide() {
   selected=$(zoxide query -ls | sed 's/^[[:space:]]*[0-9.]*[[:space:]]*//' | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%})
   if [ -n "$selected" ]; then
     zoxide add "$selected"
+    [ -n "$TMUX" ] && tmux rename-window "$(basename "$selected")"
     BUFFER="cd \"$selected\""
     zle accept-line
   fi
@@ -302,6 +303,7 @@ ghqcd() {
   dir=$(ghq list | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%})
   if [ -n "$dir" ]; then
     local target="$(ghq root)/$dir"
+    [ -n "$TMUX" ] && tmux rename-window "$(basename "$target")"
     if [ -n "$WIDGET" ]; then
       BUFFER="z $target"
       zle accept-line
