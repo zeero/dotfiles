@@ -10,7 +10,7 @@
   file-decoration-style = blue ol
 
   # ハンクの境界は目立たせない
-  hunk-header-style = syntax
+  hunk-header-style = line-number syntax
   hunk-header-decoration-style = blue box
 
 [include]
