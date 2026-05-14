@@ -30,6 +30,10 @@
   "hooks": {
     "BeforeTool": [
       {
+        "matcher": "run_shell_command",
+        "hooks": [{ "type": "command", "command": "serena-hooks remind" }]
+      },
+      {
         "matcher": "run_shell_command|read_file|read_many_files|grep_search|search_file_content|web_fetch|activate_skill|mcp__plugin_context-mode|mcp__context-mode|mcp__(?!.*context-mode)",
         "hooks": [{ "type": "command", "command": "context-mode hook gemini-cli beforetool" }]
       }
@@ -48,8 +52,18 @@
     ],
     "SessionStart": [
       {
+        "matcher": "startup|resume",
+        "hooks": [{ "type": "command", "command": "serena-hooks activate" }]
+      },
+      {
         "matcher": "",
         "hooks": [{ "type": "command", "command": "context-mode hook gemini-cli sessionstart" }]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "exit",
+        "hooks": [{ "type": "command", "command": "serena-hooks cleanup" }]
       }
     ]
   },
