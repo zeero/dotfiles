@@ -143,7 +143,10 @@ gemini extensions install https://github.com/obra/superpowers --consent
 claude plugin marketplace add anthropics/skills
 claude plugin install example-skills@anthropic-agent-skills
 claude plugin install document-skills@anthropic-agent-skills
-## Codex使える環境のみ
+## context-mode
+claude plugin marketplace add mksglu/context-mode
+claude plugin install context-mode@context-mode
+## codex-plugin-cc （Codex使える環境のみ）
 # claude plugin marketplace add openai/codex-plugin-cc
 # claude plugin install codex@openai-codex
 # claude "/codex:setup"

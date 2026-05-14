@@ -12,3 +12,4 @@ git+ssh://git@github.com:zeero/ccresume.git
 @google/gemini-cli
 @openai/codex
 @urugus/slack-cli
+context-mode

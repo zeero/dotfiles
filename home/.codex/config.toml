@@ -37,7 +37,19 @@ startup_timeout_sec = 15.0
 approval_mode = "approve"
 
 [mcp_servers.context7]
-command = "https://mcp.context7.com/mcp"
+url = "https://mcp.context7.com/mcp"
+
+[mcp_servers.context-mode]
+command = "context-mode"
+
+[mcp_servers.context-mode.tools.ctx_batch_execute]
+approval_mode = "approve"
+
+[mcp_servers.context-mode.tools.ctx_search]
+approval_mode = "approve"
+
+[mcp_servers.context-mode.tools.ctx_execute_file]
+approval_mode = "approve"
 
 [plugins."canva@openai-curated"]
 enabled = true
@@ -57,12 +69,31 @@ hooks = true
 
 [hooks.state]
 
+[hooks.state."/Users/zeero/.codex/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:92828bbbeb97fe79f0d3acd01c5c37c807636a4e480b24b762c120826bfde0ce"
+
+[hooks.state."/Users/zeero/.codex/hooks.json:pre_compact:0:0"]
+trusted_hash = "sha256:c7c604795a9951c8fc8c2e1fea1283c8180d6208cb9c5e86d71fca4fde350c49"
+
 [hooks.state."/Users/zeero/.codex/hooks.json:pre_tool_use:0:0"]
 enabled = true
 trusted_hash = "sha256:94c9b8e6da2b93341e76bbf67b99b10bfa28a3cc4da97e3c7754132b22226aa2"
 
+[hooks.state."/Users/zeero/.codex/hooks.json:pre_tool_use:1:0"]
+enabled = true
+trusted_hash = "sha256:69b4ecce0665d5cf169b85191c0756b43510c358f9e8219b93a52f111f0445fc"
+
 [hooks.state."/Users/zeero/.codex/hooks.json:session_start:0:0"]
 trusted_hash = "sha256:7044f6543375ba4dbdba64ec790d4323148e479ee77d550e85909070191cebfa"
 
+[hooks.state."/Users/zeero/.codex/hooks.json:session_start:1:0"]
+trusted_hash = "sha256:4fa787da05be4bc67401f229fc8443d3b14a71641cd36e7607ea07dc4c9a36c7"
+
 [hooks.state."/Users/zeero/.codex/hooks.json:stop:0:0"]
 trusted_hash = "sha256:f1b26fc4f5e7255a0b276c5cb2f44f01985d1f28488f3e16bb75de0a4a7af356"
+
+[hooks.state."/Users/zeero/.codex/hooks.json:stop:1:0"]
+trusted_hash = "sha256:9fc7312a4a274d40081f6734c6f6553d494e9cfde20fd01339995232aea2d74a"
+
+[hooks.state."/Users/zeero/.codex/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:9f9b46244739e7f6f787757a083d0d65c07db3aa2daaaecb6fe9e65b08f362b2"
