@@ -21,6 +21,9 @@ trust_level = "trusted"
 [projects."/Users/zeero/Documents/memos"]
 trust_level = "trusted"
 
+[projects."/Users/zeero/dev/n8n"]
+trust_level = "trusted"
+
 [tui]
 status_line = ["model-with-reasoning", "current-dir", "git-branch", "branch-changes", "run-state", "context-remaining", "five-hour-limit", "weekly-limit", "task-progress"]
 status_line_use_colors = true
@@ -51,6 +54,9 @@ approval_mode = "approve"
 [mcp_servers.context-mode.tools.ctx_execute_file]
 approval_mode = "approve"
 
+[mcp_servers.context-mode.tools.ctx_index]
+approval_mode = "approve"
+
 [plugins."canva@openai-curated"]
 enabled = true
 
@@ -66,6 +72,7 @@ web_search = true
 [features]
 terminal_resize_reflow = true
 hooks = true
+memories = true
 
 [hooks.state]
 
