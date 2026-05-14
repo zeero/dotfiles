@@ -51,7 +51,7 @@ setl conceallevel=2
 setl tabstop=2
 
 " Markdown系拡張子では折りたたみを無効化（.woflでは折りたたむ）
-if expand('%:e') =~? '^\%(md\|mk\|markdown\|mdc)$'
+if expand('%:e') =~? '^\%(md\|mkd\|markdown\|mdc\)$'
   setl nofoldenable
 endif
 
