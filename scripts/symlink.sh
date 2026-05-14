@@ -33,6 +33,7 @@ ln -sfh ~/.claude/CLAUDE.md ~/AGENTS.md
 # Codex
 mkdir -p ~/.codex
 find ${DOTFILES}/home/.codex -depth 1 -exec ln -sfh {} ~/.codex \;
+ln -sfh ~/.claude/CLAUDE.md ~/.codex/AGENTS.md
 ln -sfh ${DOTFILES}/home/.claude/commands ~/.codex/prompts
 ln -sfh ${DOTFILES}/home/.claude/skills ~/.codex/skills
 
