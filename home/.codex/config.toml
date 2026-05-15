@@ -66,6 +66,18 @@ enabled = true
 [plugins."superpowers@openai-curated"]
 enabled = true
 
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
 [tools]
 web_search = true
 
@@ -104,3 +116,13 @@ trusted_hash = "sha256:9fc7312a4a274d40081f6734c6f6553d494e9cfde20fd01339995232a
 
 [hooks.state."/Users/zeero/.codex/hooks.json:user_prompt_submit:0:0"]
 trusted_hash = "sha256:9f9b46244739e7f6f787757a083d0d65c07db3aa2daaaecb6fe9e65b08f362b2"
+
+[marketplaces.openai-bundled]
+last_updated = "2026-05-15T08:07:56Z"
+source_type = "local"
+source = "/Users/zeero/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-05-15T08:03:28Z"
+source_type = "local"
+source = "/Users/zeero/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
