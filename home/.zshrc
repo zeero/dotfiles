@@ -137,8 +137,6 @@ giwt() {
     esac
   done
 
-  local dirname="$(basename "$PWD")"
-
   # --- 削除モード ---
   if [[ $delete -eq 1 ]]; then
     local branch
@@ -158,7 +156,7 @@ giwt() {
       branch="$1"
     fi
 
-    local worktree_path="../worktrees/${dirname}/${branch}"
+    local worktree_path=".worktrees/${branch}"
 
     # マージ済み確認（-D なら警告のみ）
     if [[ $force -eq 0 ]]; then
@@ -192,7 +190,7 @@ giwt() {
   fi
 
   local branch="$1"
-  local worktree_path="../worktrees/${dirname}/${branch}"
+  local worktree_path=".worktrees/${branch}"
 
   # ワークツリーが存在しない場合は作成
   if [[ ! -d "$worktree_path" ]]; then
