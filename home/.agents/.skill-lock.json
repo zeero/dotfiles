@@ -190,6 +190,15 @@
       "skillFolderHash": "7188018e6710998fbc3227fdacd1b2b6e0508c38",
       "installedAt": "2026-05-14T03:13:56.721Z",
       "updatedAt": "2026-05-14T03:13:56.721Z"
+    },
+    "python-code-review": {
+      "source": "existential-birds/beagle",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/existential-birds/beagle.git",
+      "skillPath": "plugins/beagle-python/skills/python-code-review/SKILL.md",
+      "skillFolderHash": "507ed47e8c567b615ad36bb241d108bf91f78e40",
+      "installedAt": "2026-05-16T10:01:00.450Z",
+      "updatedAt": "2026-05-16T10:01:00.450Z"
     }
   },
   "dismissed": {
