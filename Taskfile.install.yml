@@ -5,7 +5,12 @@ tasks:
     desc: "Install all dotfiles dependencies and configurations"
     cmds:
       - task: mkdir
+      - task: brew
+      - task: symlink
+      - git submodule update --init
       - task: git-config
+      - task: tools
+      - task: plist
 
   mkdir:
     desc: "Create required directories"
@@ -63,3 +68,33 @@ tasks:
       - git config --global alias.wlog "log -p --word-diff -w"
       - git config --global alias.fixup '!f(){ git commit --fixup $1 && GIT_SEQUENCE_EDITOR="gsed -i \"\"" git rebase -i --autosquash $1^;};f'
       - git config --global alias.show-base-branch '!f(){ git log --first-parent --pretty=format:"%D" | grep -v "^$" | grep -v "HEAD" | head -1 | awk -F, "{print \$1}"; };f'
+
+  brew:
+    desc: "Install Homebrew packages"
+    cmds:
+      - sudo softwareupdate --install-rosetta || true
+      - brew bundle --verbose
+
+  symlink:
+    desc: "Create symlinks"
+    cmds:
+      - ./scripts/symlink.sh
+
+  tools:
+    desc: "Install toolchains and languages"
+    cmds:
+      - ./scripts/mise_install.sh
+      - ./scripts/mint_install.sh
+      - ./scripts/ruby.002.gem_install_pre.sh
+      - ./scripts/ruby.003.gem_install.sh
+      - ./scripts/ruby.004.gem_install_post.sh
+      - ./scripts/node.002.npm_install.sh
+      - ./scripts/python.001.uv_install.sh
+      - ./scripts/python.002.pip_install.sh
+      - ./scripts/rust.001.cargo_install.sh
+      - ./scripts/vim.001.coc.sh
+
+  plist:
+    desc: "Apply macOS defaults"
+    cmds:
+      - ./scripts/osx_defaults.sh
