@@ -57,6 +57,9 @@ approval_mode = "approve"
 [mcp_servers.context-mode.tools.ctx_index]
 approval_mode = "approve"
 
+[mcp_servers.context-mode.tools.ctx_execute]
+approval_mode = "approve"
+
 [plugins."canva@openai-curated"]
 enabled = true
 
