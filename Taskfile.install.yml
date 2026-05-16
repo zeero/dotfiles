@@ -1,0 +1,7 @@
+version: '3'
+
+tasks:
+  setup:
+    desc: "Install all dotfiles dependencies and configurations"
+    cmds:
+      - echo "Setup started..."
