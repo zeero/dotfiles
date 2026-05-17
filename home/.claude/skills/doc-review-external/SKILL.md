@@ -1,7 +1,10 @@
-description = "外部プロセス(codex または claude)を使用してドキュメントをレビューし、タスクを作成します"
-argument-hint = "[--claude|--codex] <file_path>"
-prompt = """
-指定されたファイルを外部プロセス（codex または claude）を使ってレビューし、結果をタスク化してください。
+---
+name: doc-review-external
+argument-hint: [--claude|--codex] <file_path>
+description: <user invoke only> ユーザが明示的に呼び出します。外部プロセス(codex または claude)を使用してドキュメントをレビューし、タスクを作成します。
+---
+
+指定されたファイルを外部プロセス（codex または claude）を使ってレビューし、レビュー結果を評価してください。修正の必要があれば、タスク化してください。
 
 【重要】
 引数 `{{args}}` を解析し、使用するツール（デフォルトは codex）と対象ファイルを特定してください。
@@ -44,4 +47,3 @@ prompt = """
 【注意】
 - パスにスペースが含まれる可能性があるため、適切にクォートしてください。
 - 実行前に、なぜそのコマンドを実行するか簡潔に説明してください。
-"""

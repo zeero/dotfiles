@@ -1,0 +1,17 @@
+{
+  "skill_name": "doc-review-external",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "doc-review-external --claude evals/test_doc.md を実行して、結果を報告してください。",
+      "expected_output": "Claudeを使用してレビューが実行され、総合評価と修正ポイントが表示されること。また、修正ポイントがタスク化（またはリストアップ）されること。",
+      "files": ["evals/test_doc.md"]
+    },
+    {
+      "id": 1,
+      "prompt": "evals/test_doc.md をレビューしてください。デフォルトのツールを使用してください。",
+      "expected_output": "Codex（デフォルト）を使用してレビューが実行され、結果が報告されること。",
+      "files": ["evals/test_doc.md"]
+    }
+  ]
+}
