@@ -16,9 +16,6 @@ read -p "Dockerを常時立ち上げるなら \`brew services start colima\` を
 # symlink
 task install:symlink
 
-# git submodules
-git submodule update --init
-
 # git config
 task install:git-config
 

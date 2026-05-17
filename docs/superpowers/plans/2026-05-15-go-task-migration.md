@@ -141,6 +141,7 @@ tasks:
     desc: "Create required directories"
     cmds:
       - mkdir -p ~/bin ~/dev ~/tmp ~/log ~/lib/go/bin
+      - git submodule update --init
 
   git-config:
     desc: "Setup global git configurations"
@@ -216,10 +217,9 @@ git commit -m "build: migrate mkdir and git-config to go-task via script"
       - task: mkdir
       - task: brew
       - task: symlink
-      - git submodule update --init
       - task: git-config
       - task: tools
-      - task: plist
+      - task: osx-defaults
 ```
 
 - [ ] **Step 2: `install.sh` の該当箇所を置き換える**

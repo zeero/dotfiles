@@ -7,7 +7,6 @@ tasks:
       - task: mkdir
       - task: brew
       - task: symlink
-      - git submodule update --init
       - task: git-config
       - task: tools
       - task: osx-defaults
@@ -16,6 +15,7 @@ tasks:
     desc: "Create required directories"
     cmds:
       - mkdir -p ~/bin ~/dev ~/tmp ~/log ~/lib/go/bin
+      - git submodule update --init
 
   git-config:
     desc: "Setup global git configurations"
