@@ -3,7 +3,7 @@
 # git config
 git config --global push.default simple
 git config --global pull.rebase false
-git config --global merge.ff false
+git config --global merge.ff false # マージコミット必須
 git config --global http.sslVerify false
 git config --global core.editor nvim
 git config --global core.pager delta
@@ -34,8 +34,11 @@ git config --global ghq.root "~/dev"
 git config --global alias.co "checkout"
 git config --global alias.st "status"
 git config --global alias.pick "cherry-pick"
+# ログをグラフ表示
 git config --global alias.graph "log --graph --decorate --name-status"
+# ローカルで変更を無視
 git config --global alias.ignore "update-index --skip-worktree"
+# ローカルで変更を無視を解除
 git config --global alias.noignore "update-index --no-skip-worktree"
 git config --global alias.stashdiff "diff HEAD..stash@{0}"
 git config --global alias.amend "commit --amend --no-edit"

@@ -32,7 +32,7 @@ read -p "Press Enter to resume..."
 task install:tools
 
 # plist
-task install:plist
+task install:osx-defaults
 
 # Alfred Custom Search
 open alfred://customsearch/%E8%8B%B1%E5%92%8C/eiwa/utf8/nospace/https%3A%2F%2Ftranslate.google.com%2F%23en%2Fja%2F%7Bquery%7D
