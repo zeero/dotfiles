@@ -1,6 +1,6 @@
 ---
 name: doc-review-external
-argument-hint: "[--claude|--codex|--gemini] <file_path>"
+argument-hint: "[--claude|--codex|--gemini] [-a|--adversarial] <file_path>"
 description: <user invoke only> ユーザが明示的に呼び出します。外部プロセスを使用してドキュメントをレビューし、タスクを作成します。
 ---
 
@@ -15,15 +15,17 @@ description: <user invoke only> ユーザが明示的に呼び出します。外
      - `{{args}}` に `--claude` が含まれる場合は `claude` を使用します。
      - `{{args}}` に `--gemini` が含まれる場合は `gemini` を使用します。
      - `{{args}}` に `--codex` が含まれる場合、またはどちらも指定されていない場合は `codex` を使用します。
+   - **モードの判定**:
+     - `{{args}}` に `-a` または `--adversarial` が含まれる場合は `Adversarial Review` モードとします。
    - **対象ファイルの特定**:
-     - `{{args}}` から `--claude` または `--codex` または `--gemini` を除いた部分をファイルパスとします。
+     - `{{args}}` からオプションフラグ（`--claude`, `--codex`, `--gemini`, `-a`, `--adversarial`）を除いた部分をファイルパスとします。
      - 指定されたファイルが存在することを確認してください。
 2. **外部レビューの実行**:
    - 特定したツール（codex または claude または gemini）を使用して、以下の指示でレビューを実行してください。
    
    - **指示内容**:
      ```
-     以下のドキュメントを Adversarial Review してください。
+     以下のドキュメントを [判定したモードに応じて "Adversarial Review" または "レビュー"] してください。
 
      【重点確認項目】
      1. 技術的レビュー（Technical accuracy）: 技術的な内容が正確か、論理展開が適切か。
