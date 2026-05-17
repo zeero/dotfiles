@@ -1,10 +1,10 @@
 ---
 name: doc-review-external
-argument-hint: [--claude|--codex] <file_path>
-description: <user invoke only> ユーザが明示的に呼び出します。外部プロセス(codex または claude)を使用してドキュメントをレビューし、タスクを作成します。
+argument-hint: "[--claude|--codex|--gemini] <file_path>"
+description: <user invoke only> ユーザが明示的に呼び出します。外部プロセスを使用してドキュメントをレビューし、タスクを作成します。
 ---
 
-指定されたファイルを外部プロセス（codex または claude）を使ってレビューし、レビュー結果を評価してください。修正の必要があれば、タスク化してください。
+指定されたファイルを外部プロセス（codex または claude または gemini）を使ってレビューし、レビュー結果を評価してください。修正の必要があれば、タスク化してください。
 
 【重要】
 引数 `{{args}}` を解析し、使用するツール（デフォルトは codex）と対象ファイルを特定してください。
@@ -13,16 +13,17 @@ description: <user invoke only> ユーザが明示的に呼び出します。外
 1. **引数の解析とファイルの確認**:
    - **ツールの特定**:
      - `{{args}}` に `--claude` が含まれる場合は `claude` を使用します。
+     - `{{args}}` に `--gemini` が含まれる場合は `gemini` を使用します。
      - `{{args}}` に `--codex` が含まれる場合、またはどちらも指定されていない場合は `codex` を使用します。
    - **対象ファイルの特定**:
-     - `{{args}}` から `--claude` または `--codex` を除いた部分をファイルパスとします。
+     - `{{args}}` から `--claude` または `--codex` または `--gemini` を除いた部分をファイルパスとします。
      - 指定されたファイルが存在することを確認してください。
 2. **外部レビューの実行**:
-   - 特定したツール（codex または claude）を使用して、以下の指示でレビューを実行してください。
+   - 特定したツール（codex または claude または gemini）を使用して、以下の指示でレビューを実行してください。
    
    - **指示内容**:
      ```
-     以下のドキュメントをレビューしてください。
+     以下のドキュメントを Adversarial Review してください。
 
      【重点確認項目】
      1. 技術的レビュー（Technical accuracy）: 技術的な内容が正確か、論理展開が適切か。
@@ -37,6 +38,7 @@ description: <user invoke only> ユーザが明示的に呼び出します。外
    - **実行コマンド例**:
      - **Codex の場合**: `codex exec "[指示内容]" < "[FILE_PATH]"`
      - **Claude の場合**: `claude -p "[指示内容]" < "[FILE_PATH]"`
+     - **Gemini の場合**: `gemini -p "[指示内容]" < "[FILE_PATH]"`
 
 3. **結果の処理**:
    - 外部プロセスの出力を分析し、総合的な評価をユーザーに報告してください。
