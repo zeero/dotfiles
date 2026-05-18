@@ -1,26 +1,21 @@
 version: '3'
 
 tasks:
-  setup:
+  all:
     desc: "Install all dotfiles dependencies and configurations"
     cmds:
       - task: mkdir
       - task: brew
       - task: symlink
       - task: git-config
-      - task: tools
+      - task: toolchains
       - task: osx-defaults
 
   mkdir:
-    desc: "Create required directories"
+    desc: "Create required directories and submodules"
     cmds:
       - mkdir -p ~/bin ~/dev ~/tmp ~/log ~/lib/go/bin
       - git submodule update --init
-
-  git-config:
-    desc: "Setup global git configurations"
-    cmds:
-      - bash ./scripts/git_config.sh
 
   brew:
     desc: "Install Homebrew packages"
@@ -33,7 +28,12 @@ tasks:
     cmds:
       - ./scripts/symlink.sh
 
-  tools:
+  git-config:
+    desc: "Setup global git configurations"
+    cmds:
+      - bash ./scripts/git_config.sh
+
+  toolchains:
     desc: "Install toolchains and languages"
     cmds:
       # Mise

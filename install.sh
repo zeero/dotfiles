@@ -26,7 +26,7 @@ echo git config --global github.user zeero
 read -p "Press Enter to resume..."
 
 # Mise
-task install:tools
+task install:toolchains
 
 # plist
 task install:osx-defaults
