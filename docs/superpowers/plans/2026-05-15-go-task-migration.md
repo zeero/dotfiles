@@ -17,7 +17,7 @@
 - Modify: `Taskfile.yml`
 - Modify: `install.sh`
 
-- [ ] **Step 1: `Taskfile.install.yml` を作成する**
+- [x] **Step 1: `Taskfile.install.yml` を作成する**
 
 ```yaml
 version: '3'
@@ -29,7 +29,7 @@ tasks:
       - echo "Setup started..."
 ```
 
-- [ ] **Step 2: メインの `Taskfile.yml` にインクルードする**
+- [x] **Step 2: メインの `Taskfile.yml` にインクルードする**
 
 `Taskfile.yml` の `includes:` に `install:` ネームスペースを追加する。
 
@@ -47,12 +47,12 @@ tasks:
     silent: true
 ```
 
-- [ ] **Step 3: `task --list` でインクルードされたことを確認する**
+- [x] **Step 3: `task --list` でインクルードされたことを確認する**
 
 Run: `task --list`
 Expected: `install:setup` がリストに表示されること。
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add Taskfile.yml Taskfile.install.yml
@@ -68,7 +68,7 @@ git commit -m "build: setup Taskfile.install.yml infrastructure"
 - Modify: `Taskfile.install.yml`
 - Modify: `install.sh`
 
-- [ ] **Step 1: `scripts/git_config.sh` を作成する**
+- [x] **Step 1: `scripts/git_config.sh` を作成する**
 
 `install.sh` にあった `git config` の設定をすべてこのスクリプトに移動します。
 
@@ -126,7 +126,7 @@ git config --global alias.fixup '!f(){ git commit --fixup $1 && GIT_SEQUENCE_EDI
 git config --global alias.show-base-branch '!f(){ git log --first-parent --pretty=format:"%D" | grep -v "^$" | grep -v "HEAD" | head -1 | awk -F, "{print \$1}"; };f'
 ```
 
-- [ ] **Step 2: `Taskfile.install.yml` に `mkdir` と `git-config` タスクを追加する**
+- [x] **Step 2: `Taskfile.install.yml` に `mkdir` と `git-config` タスクを追加する**
 
 ```yaml
 # ... (既存の記述) ...
@@ -141,6 +141,7 @@ tasks:
     desc: "Create required directories"
     cmds:
       - mkdir -p ~/bin ~/dev ~/tmp ~/log ~/lib/go/bin
+      - git submodule update --init
 
   git-config:
     desc: "Setup global git configurations"
@@ -148,22 +149,21 @@ tasks:
       - bash ./scripts/git_config.sh
 ```
 
-- [ ] **Step 3: `install.sh` の処理を `task` 呼び出しに置き換える**
+- [x] **Step 3: `install.sh` の処理を `task` 呼び出しに置き換える**
 
 `install.sh` の `# mkdir` 以下の複数行を `task install:mkdir` に変更。
 `# git config` 以下の複数行（ユーザー情報のecho部分の手前まで）を `task install:git-config` に変更。
 
-- [ ] **Step 4: 動作確認**
+- [x] **Step 4: 動作確認**
 
 Run: `./install.sh`
 Expected: mkdirとgit-configのエラーが出ずにスクリプトが進行すること。
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add scripts/git_config.sh Taskfile.install.yml install.sh
 git commit -m "build: migrate mkdir and git-config to go-task via script"
-```
 ```
 
 ---
@@ -174,7 +174,7 @@ git commit -m "build: migrate mkdir and git-config to go-task via script"
 - Modify: `Taskfile.install.yml`
 - Modify: `install.sh`
 
-- [ ] **Step 1: `Taskfile.install.yml` に `brew` と各種 `scripts` タスクを追加する**
+- [x] **Step 1: `Taskfile.install.yml` に `brew` と各種 `scripts` タスクを追加する**
 
 ```yaml
   brew:
@@ -217,13 +217,12 @@ git commit -m "build: migrate mkdir and git-config to go-task via script"
       - task: mkdir
       - task: brew
       - task: symlink
-      - git submodule update --init
       - task: git-config
       - task: tools
-      - task: plist
+      - task: osx-defaults
 ```
 
-- [ ] **Step 2: `install.sh` の該当箇所を置き換える**
+- [x] **Step 2: `install.sh` の該当箇所を置き換える**
 
 ```bash
 # HomeBrew
@@ -247,11 +246,11 @@ task install:plist
 ```
 *(Mint, ruby, node.js, python, rust, vim のスクリプト実行部分はすべて削除し、上記 `task install:tools` の1行にまとめる)*
 
-- [ ] **Step 3: 動作確認**
+- [x] **Step 3: 動作確認**
 
 Run: `task --list` で新しいタスクが表示されるか確認。
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add Taskfile.install.yml install.sh
@@ -315,7 +314,7 @@ git commit -m "build: migrate homebrew and external scripts to go-task"
 
 - [ ] **Step 2: `install.sh` を Task 実行のみに簡略化**
 
-ついに `install.sh` を、単なる `task install:setup` のラッパーにします。
+ついに `install.sh` を, 単なる `task install:setup` のラッパーにします。
 
 ```bash
 #!/bin/bash

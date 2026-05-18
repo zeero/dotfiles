@@ -1,0 +1,60 @@
+version: '3'
+
+tasks:
+  setup:
+    desc: "Install all dotfiles dependencies and configurations"
+    cmds:
+      - task: mkdir
+      - task: brew
+      - task: symlink
+      - task: git-config
+      - task: tools
+      - task: osx-defaults
+
+  mkdir:
+    desc: "Create required directories"
+    cmds:
+      - mkdir -p ~/bin ~/dev ~/tmp ~/log ~/lib/go/bin
+      - git submodule update --init
+
+  git-config:
+    desc: "Setup global git configurations"
+    cmds:
+      - bash ./scripts/git_config.sh
+
+  brew:
+    desc: "Install Homebrew packages"
+    cmds:
+      - sudo softwareupdate --install-rosetta || true
+      - brew bundle --verbose
+
+  symlink:
+    desc: "Create symlinks"
+    cmds:
+      - ./scripts/symlink.sh
+
+  tools:
+    desc: "Install toolchains and languages"
+    cmds:
+      # Mise
+      - ./scripts/mise_install.sh
+      # Mint
+      - ./scripts/mint_install.sh
+      # ruby
+      - ./scripts/ruby.002.gem_install_pre.sh
+      - ./scripts/ruby.003.gem_install.sh
+      - ./scripts/ruby.004.gem_install_post.sh
+      # node.js
+      - ./scripts/node.002.npm_install.sh
+      # python
+      - ./scripts/python.001.uv_install.sh
+      - ./scripts/python.002.pip_install.sh
+      # rust
+      - ./scripts/rust.001.cargo_install.sh
+      # vim (coc.nvim require npm)
+      - ./scripts/vim.001.coc.sh
+
+  osx-defaults:
+    desc: "Apply macOS defaults"
+    cmds:
+      - ./scripts/osx_defaults.sh
