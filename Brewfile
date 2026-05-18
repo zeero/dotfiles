@@ -41,7 +41,6 @@ brew 'findutils'
 brew 'tmux'
 brew 'reattach-to-user-namespace'
 brew 'git-now'
-brew 'git-flow'
 brew 'fzf'
 brew 'tree'
 brew 'gh'
@@ -121,6 +120,7 @@ brew 'tree-sitter-cli'
 brew 'pyright'
 brew 'sqlite'
 brew 'go-task'
+brew 'ruff' # python formatter
 
 # AppStore {{{1
 brew 'mas'
