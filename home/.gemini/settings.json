@@ -50,6 +50,16 @@
     ],
     "AfterTool": [
       {
+        "matcher": "replace|write_file|mcp_serena_(replace|insert)_.*",
+        "hooks": [
+          {
+            "name": "pyright-check",
+            "type": "command",
+            "command": "~/.gemini/hooks/check-pyright.sh"
+          }
+        ]
+      },
+      {
         "matcher": "",
         "hooks": [
           {
