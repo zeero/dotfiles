@@ -64,6 +64,7 @@ token_count_estimator: TIKTOKEN_GPT4O
 
 # the list of registered project paths (updated automatically).
 projects:
+- /Users/zeero/Documents/memos
 - /Users/zeero/dev/daytrade
 - /Users/zeero/dev/github.com/zeero/tcmux
 - /Users/zeero/dev/github.com/zeero/tmux-portal
