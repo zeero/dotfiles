@@ -24,6 +24,16 @@
 
     "PostToolUse": [
       {
+        "matcher": "Edit|Write|apply_patch",
+        "hooks": [
+          {
+            "name": "pyright-check",
+            "type": "command",
+            "command": "~/.codex/hooks/check-pyright.sh"
+          }
+        ]
+      },
+      {
         "hooks": [
           {
             "type": "command",
