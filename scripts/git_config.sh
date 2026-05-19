@@ -3,6 +3,7 @@
 # git config
 git config --global push.default simple
 git config --global pull.rebase false
+git config --global pull.ff only
 git config --global merge.ff false # マージコミット必須
 git config --global http.sslVerify false
 git config --global core.editor nvim
