@@ -5,6 +5,7 @@ model_reasoning_effort = "high"
 plan_mode_reasoning_effort = "high"
 
 default_permissions = "my-workspace"
+approvals_reviewer = "guardian_subagent"
 [permissions.my-workspace.filesystem]
 ":project_roots" = {
   "." = "write",
@@ -92,6 +93,9 @@ memories = true
 [hooks.state]
 
 [hooks.state."/Users/zeero/.codex/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:b63684e3e08d802662f960e4c9281a85631c4f4cb611cf53513fda6909a4588a"
+
+[hooks.state."/Users/zeero/.codex/hooks.json:post_tool_use:1:0"]
 trusted_hash = "sha256:92828bbbeb97fe79f0d3acd01c5c37c807636a4e480b24b762c120826bfde0ce"
 
 [hooks.state."/Users/zeero/.codex/hooks.json:pre_compact:0:0"]
