@@ -37,10 +37,11 @@ ln -sfh ~/.claude/CLAUDE.md ~/.codex/AGENTS.md
 ln -sfh ${DOTFILES}/home/.claude/commands ~/.codex/prompts
 ln -sfh ${DOTFILES}/home/.claude/skills ~/.codex/skills
 
-# Gemini
-mkdir -p ~/.gemini
-find ${DOTFILES}/home/.gemini -depth 1 -exec ln -sfh {} ~/.gemini \;
+# Antigravity
+mkdir -p ~/.gemini/antigravity-cli
+find ${DOTFILES}/home/.gemini/antigravity-cli -depth 1 -exec ln -sfh {} ~/.gemini/antigravity-cli \;
 ln -sfh ${DOTFILES}/home/.claude/CLAUDE.md ~/.gemini/GEMINI.md
+ln -sfh ${DOTFILES}/home/.claude/skills ~/.gemini/antigravity-cli/skills
 
 # Pi
 mkdir -p ~/.pi/agent/extensions

@@ -7,11 +7,12 @@ SCRIPTS_DIR=scripts
 # mkdir
 task install:mkdir
 
-# HomeBrew
+# Homebrew
 task install:brew
-read -p "Press Enter to resume..."
 #brew services start colima
 read -p "Dockerを常時立ち上げるなら \`brew services start colima\` を実行..."
+curl -fsSL https://antigravity.google/cli/install.sh | bash
+read -p "Press Enter to resume..."
 
 # symlink
 task install:symlink
