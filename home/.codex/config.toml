@@ -7,9 +7,10 @@ plan_mode_reasoning_effort = "high"
 default_permissions = "my-workspace"
 approvals_reviewer = "guardian_subagent"
 [permissions.my-workspace.filesystem]
-":project_roots" = {
+":workspace_roots" = {
   "." = "write",
-  "**/*.env" = "none"
+  "**/*.env" = "none",
+  "**/*.envrc" = "none"
 }
 "/Users/zeero/Documents/memos" = "write"
 
