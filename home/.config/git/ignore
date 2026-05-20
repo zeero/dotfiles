@@ -22,6 +22,7 @@ node_modules/
 CLAUDE.local.md
 .claude/
 .gemini/
+.antigravitycli/
 .mcp.json
 .serena/
 .agent/

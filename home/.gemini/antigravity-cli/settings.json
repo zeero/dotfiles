@@ -1,0 +1,29 @@
+{
+  "colorScheme": "tokyo night",
+  "notifications": true,
+  "permissions": {
+    "allow": [
+      "command(ls)",
+      "command(find)",
+      "command(head)",
+      "command(ruff)",
+      "command(task)",
+      "command(jq)",
+      "command(git status)",
+      "command(git diff)",
+      "command(which)",
+      "command(firecrawl)"
+    ]
+  },
+  "statusLine": {
+    "type": "",
+    "command": "",
+    "enabled": true
+  },
+  "trustedWorkspaces": [
+    "/Users/zeero/Documents/memos",
+    "/Users/zeero/lib/dotfiles",
+    "/Users/zeero/dev/daytrade",
+    "/Users/zeero/dev/n8n"
+  ]
+}
