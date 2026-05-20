@@ -94,7 +94,7 @@ memories = true
 [hooks.state]
 
 [hooks.state."/Users/zeero/.codex/hooks.json:post_tool_use:0:0"]
-trusted_hash = "sha256:b63684e3e08d802662f960e4c9281a85631c4f4cb611cf53513fda6909a4588a"
+trusted_hash = "sha256:93c313bcc6a38c5868b8b0e20f94c0340859a20faee125e1f322c48d4486bb66"
 
 [hooks.state."/Users/zeero/.codex/hooks.json:post_tool_use:1:0"]
 trusted_hash = "sha256:92828bbbeb97fe79f0d3acd01c5c37c807636a4e480b24b762c120826bfde0ce"

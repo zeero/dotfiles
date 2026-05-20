@@ -27,9 +27,9 @@
         "matcher": "Edit|Write|apply_patch",
         "hooks": [
           {
-            "name": "pyright-check",
+            "name": "python-check",
             "type": "command",
-            "command": "~/.codex/hooks/check-pyright.sh"
+            "command": "~/.agents/hooks/check-python.sh"
           }
         ]
       },
