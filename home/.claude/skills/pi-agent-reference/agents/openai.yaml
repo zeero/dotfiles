@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pi Agent Reference"
+  short_description: "Pi coding agent の公式リファレンスを参照する"
+  default_prompt: "Use $pi-agent-reference to answer Pi coding agent setup, configuration, provider, skill, extension, package, SDK, RPC, and session questions from the bundled official references."
