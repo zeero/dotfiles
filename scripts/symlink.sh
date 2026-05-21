@@ -24,16 +24,16 @@ ln -sfh ${DOTFILES}/home/.ctags.d ~/.ctags.d
 mkdir -p ~/.agents
 find ${DOTFILES}/home/.agents -depth 1 -exec ln -sfh {} ~/.agents \;
 ln -sfh ${DOTFILES}/home/.claude/skills ~/.agents/skills
+ln -sfh ${DOTFILES}/home/.claude/CLAUDE.md ~/AGENTS.md
 
 # Claude Code
 mkdir -p ~/.claude
 find ${DOTFILES}/home/.claude -depth 1 -exec ln -sfh {} ~/.claude \;
-ln -sfh ~/.claude/CLAUDE.md ~/AGENTS.md
 
 # Codex
 mkdir -p ~/.codex
 find ${DOTFILES}/home/.codex -depth 1 -exec ln -sfh {} ~/.codex \;
-ln -sfh ~/.claude/CLAUDE.md ~/.codex/AGENTS.md
+ln -sfh ${DOTFILES}/home/.claude/CLAUDE.md ~/.codex/AGENTS.md
 ln -sfh ${DOTFILES}/home/.claude/commands ~/.codex/prompts
 ln -sfh ${DOTFILES}/home/.claude/skills ~/.codex/skills
 
@@ -45,6 +45,8 @@ ln -sfh ${DOTFILES}/home/.claude/skills ~/.gemini/antigravity-cli/skills
 
 # Pi
 mkdir -p ~/.pi/agent/extensions
+# ~/AGENTS.md 読んでくれてそう
+# ln -sfh ${DOTFILES}/home/.claude/CLAUDE.md ~/.pi/agent/AGENTS.md
 ln -sfh ${DOTFILES}/home/.claude/commands ~/.pi/agent/prompts
 find ${DOTFILES}/home/.pi/agent/extensions -depth 1 -type f -exec ln -sfh {} ~/.pi/agent/extensions \;
 
