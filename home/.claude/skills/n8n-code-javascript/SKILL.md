@@ -33,7 +33,7 @@ return processed;
 2. **Access data**: `$input.all()`, `$input.first()`, or `$input.item`
 3. **CRITICAL**: Must return `[{json: {...}}]` format
 4. **CRITICAL**: Webhook data is under `$json.body` (not `$json` directly)
-5. **Built-ins available**: $helpers.httpRequest(), DateTime (Luxon), $jmespath()
+5. **Built-ins available**: $helpers.httpRequest() (no auth), DateTime (Luxon), $jmespath(). **Not available**: $helpers.httpRequestWithAuthentication, $env (when N8N_BLOCK_ENV_ACCESS_IN_NODE=true), require() (unless allowlisted)
 
 ---
 

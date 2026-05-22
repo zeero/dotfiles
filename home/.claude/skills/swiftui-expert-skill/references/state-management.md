@@ -1,5 +1,22 @@
 # SwiftUI State Management Reference
 
+## Table of Contents
+
+- [Property Wrapper Selection Guide](#property-wrapper-selection-guide)
+- [@State](#state)
+- [Property Wrappers Inside @Observable Classes](#property-wrappers-inside-observable-classes)
+- [@Binding](#binding)
+- [@FocusState](#focusstate)
+- [@StateObject vs @ObservedObject (Legacy - Pre-iOS 17)](#stateobject-vs-observedobject-legacy---pre-ios-17)
+- [Don't Pass Values as @State](#dont-pass-values-as-state)
+- [@Bindable (iOS 17+)](#bindable-ios-17)
+- [let vs var for Passed Values](#let-vs-var-for-passed-values)
+- [Environment and Preferences](#environment-and-preferences)
+- [Decision Flowchart](#decision-flowchart)
+- [State Privacy Rules](#state-privacy-rules)
+- [Avoid Nested ObservableObject](#avoid-nested-observableobject)
+- [Key Principles](#key-principles)
+
 ## Property Wrapper Selection Guide
 
 | Wrapper | Use When | Notes |
@@ -52,7 +69,40 @@ struct MyView: View {
 }
 ```
 
+**Critical**: When a view *owns* an `@Observable` object, always use `@State` -- not `let`. Without `@State`, SwiftUI may recreate the instance when a parent view redraws, losing accumulated state. `@State` tells SwiftUI to preserve the instance across view redraws. Using `@State` also provides bindings directly (no need for `@Bindable`).
+
 **Note**: You may want to mark `@Observable` classes with `@MainActor` to ensure thread safety with SwiftUI, unless your project or package uses Default Actor Isolation set to `MainActor`—in which case, the explicit attribute is redundant and can be omitted.
+
+## Property Wrappers Inside @Observable Classes
+
+**Critical**: The `@Observable` macro transforms stored properties to add observation tracking. Property wrappers (like `@AppStorage`, `@SceneStorage`, `@Query`) also transform properties with their own storage. These two transformations conflict, causing a compiler error.
+
+**Always annotate property-wrapper properties with `@ObservationIgnored` inside `@Observable` classes.**
+
+```swift
+@Observable
+@MainActor
+final class SettingsModel {
+    // WRONG - compiler error: property wrappers conflict with @Observable
+    // @AppStorage("username") var username = ""
+
+    // CORRECT - @ObservationIgnored prevents the conflict
+    @ObservationIgnored @AppStorage("username") var username = ""
+    @ObservationIgnored @AppStorage("isDarkMode") var isDarkMode = false
+
+    // Regular stored properties work fine with @Observable
+    var isLoading = false
+}
+```
+
+This applies to **any** property wrapper used inside an `@Observable` class, including but not limited to:
+- `@AppStorage`
+- `@SceneStorage`
+- `@Query` (SwiftData)
+
+**Note**: Since `@ObservationIgnored` disables observation tracking for that property, SwiftUI won't detect changes through the Observation framework. However, property wrappers like `@AppStorage` already notify SwiftUI of changes through their own mechanisms (e.g., UserDefaults KVO), so views still update correctly.
+
+**Never remove `@ObservationIgnored`** from property-wrapper properties in `@Observable` classes — doing so causes a compiler error.
 
 ## @Binding
 
@@ -82,150 +132,63 @@ struct ChildView: View {
 
 ### When NOT to use @Binding
 
-```swift
-// Bad - child only displays, doesn't modify
-struct DisplayView: View {
-    @Binding var title: String  // Unnecessary
-    var body: some View {
-        Text(title)
-    }
-}
+- **Don't use `@Binding` for read-only values.** If the child only displays the value and never modifies it, use `let` instead. `@Binding` adds unnecessary overhead and implies a write contract that doesn't exist.
 
-// Good - use let for read-only
-struct DisplayView: View {
-    let title: String
-    var body: some View {
-        Text(title)
-    }
-}
-```
+## @FocusState
+
+See `references/focus-patterns.md` for comprehensive focus management guidance including `@FocusState`, `@FocusedValue`, `.focusable()`, default focus, and common pitfalls.
+
+Always mark `@FocusState` as `private`.
 
 ## @StateObject vs @ObservedObject (Legacy - Pre-iOS 17)
 
-**Note**: These are legacy patterns. Always prefer `@Observable` with `@State` for iOS 17+.
+**Note**: Always prefer `@Observable` with `@State` for iOS 17+.
 
-The key distinction is **ownership**:
-
-- `@StateObject`: View **creates and owns** the object
-- `@ObservedObject`: View **receives** the object from outside
+The key distinction is **ownership**: `@StateObject` when the view **creates and owns** the object; `@ObservedObject` when the view **receives** it from outside.
 
 ```swift
-// Legacy pattern - use @Observable instead
-class MyViewModel: ObservableObject {
-    @Published var items: [String] = []
-}
-
 // View creates it → @StateObject
-struct OwnerView: View {
-    @StateObject private var viewModel = MyViewModel()
-
-    var body: some View {
-        ChildView(viewModel: viewModel)
-    }
-}
+@StateObject private var viewModel = MyViewModel()
 
 // View receives it → @ObservedObject
-struct ChildView: View {
-    @ObservedObject var viewModel: MyViewModel
-
-    var body: some View {
-        List(viewModel.items, id: \.self) { Text($0) }
-    }
-}
+@ObservedObject var viewModel: MyViewModel
 ```
 
-### Common Mistake
-
-Never create an `ObservableObject` inline with `@ObservedObject`:
-
-```swift
-// WRONG - creates new instance on every view update
-struct BadView: View {
-    @ObservedObject var viewModel = MyViewModel()  // BUG!
-}
-
-// CORRECT - owned objects use @StateObject
-struct GoodView: View {
-    @StateObject private var viewModel = MyViewModel()
-}
-```
+**Never** create an `ObservableObject` inline with `@ObservedObject` -- it recreates the instance on every view update.
 
 ### @StateObject instantiation in View's initializer
-If you need to create a @StateObject with initialization parameters in your view's custom initializer, be aware of redundant allocations and hidden side effects.
+
+Prefer storing the `@StateObject` in the parent view and passing it down. If you must create one in a custom initializer, pass the expression directly to `StateObject(wrappedValue:)` so the `@autoclosure` prevents redundant allocations:
 
 ```swift
-// WRONG - creates a new ViewModel instance each time the view's initializer is called
-// (which can happen multiple times during SwiftUI's structural identity evaluation)
-struct MovieDetailsView: View {
-    
-    @StateObject private var viewModel: MovieDetailsViewModel
-    
-    init(movie: Movie) {
-        let viewModel = MovieDetailsViewModel(movie: movie)
-        _viewModel = StateObject(wrappedValue: viewModel)      
-    }
-    
-    var body: some View {
-        // ...
-    }
-}
+// Inside a View's init(movie:):
+// WRONG — assigning to a local first defeats @autoclosure
+let vm = MovieDetailsViewModel(movie: movie)
+_viewModel = StateObject(wrappedValue: vm)
 
-// CORRECT - creation in @autoclosure prevents multiple instantiations
-struct MovieDetailsView: View {
-    
-    @StateObject private var viewModel: MovieDetailsViewModel
-    
-    init(movie: Movie) {
-        _viewModel = StateObject(
-            wrappedValue: MovieDetailsViewModel(movie: movie)
-        )      
-    }
-    
-    var body: some View {
-        // ...
-    }
-}
+// CORRECT — inline expression defers creation
+_viewModel = StateObject(wrappedValue: MovieDetailsViewModel(movie: movie))
 ```
 
-**Modern Alternative**: Use `@Observable` with `@State` instead of `ObservableObject` patterns.
+**Modern Alternative**: Use `@Observable` with `@State` instead.
 
 ## Don't Pass Values as @State
 
-**Critical**: Never declare passed values as `@State` or `@StateObject`. The value you provide is only an initial value and won't update.
+**Critical**: Never declare passed values as `@State` or `@StateObject`. They only accept an initial value and ignore subsequent updates from the parent.
 
 ```swift
-// Parent
-struct ParentView: View {
-    @State private var item = Item(name: "Original")
-    
-    var body: some View {
-        ChildView(item: item)
-        Button("Change") {
-            item.name = "Updated"  // Child won't see this!
-        }
-    }
-}
-
-// Wrong - child ignores updates from parent
+// WRONG - child ignores parent updates
 struct ChildView: View {
-    @State var item: Item  // Accepts initial value only!
-    
-    var body: some View {
-        Text(item.name)  // Shows "Original" forever
-    }
+    @State var item: Item  // Shows initial value forever!
+    var body: some View { Text(item.name) }
 }
 
-// Correct - child receives updates
+// CORRECT - child receives updates
 struct ChildView: View {
     let item: Item  // Or @Binding if child needs to modify
-    
-    var body: some View {
-        Text(item.name)  // Updates when parent changes
-    }
+    var body: some View { Text(item.name) }
 }
 ```
-
-**Why**: `@State` and `@StateObject` retain values between view updates. That's their purpose. When a parent passes a new value, the child reuses its existing state.
 
 **Prevention**: Always mark `@State` and `@StateObject` as `private`. This prevents them from appearing in the generated initializer.
 
@@ -312,6 +275,27 @@ struct MyView: View {
 }
 ```
 
+### Custom Environment Values with @Entry
+
+Use the `@Entry` macro (Xcode 16+, backward compatible to iOS 13) to define custom environment values without boilerplate:
+
+```swift
+extension EnvironmentValues {
+    @Entry var accentTheme: Theme = .default
+}
+
+// Inject
+ContentView()
+    .environment(\.accentTheme, customTheme)
+
+// Access
+struct ThemedView: View {
+    @Environment(\.accentTheme) private var theme
+}
+```
+
+The `@Entry` macro replaces the manual `EnvironmentKey` conformance pattern. It also works with `TransactionValues`, `ContainerValues`, and `FocusedValues`.
+
 ### @Environment with @Observable (iOS 17+ - Preferred)
 
 **Always prefer this pattern** for sharing state through the environment:
@@ -335,23 +319,7 @@ struct ChildView: View {
 
 ### @EnvironmentObject (Legacy - Pre-iOS 17)
 
-Legacy pattern for sharing observable objects through the environment:
-
-```swift
-// Legacy pattern - use @Observable with @Environment instead
-class AppState: ObservableObject {
-    @Published var isLoggedIn = false
-}
-
-// Inject at root
-ContentView()
-    .environmentObject(AppState())
-
-// Access in child
-struct ChildView: View {
-    @EnvironmentObject var appState: AppState
-}
-```
+Legacy pattern: inject with `.environmentObject(AppState())`, access with `@EnvironmentObject var appState: AppState`. Prefer `@Observable` with `@Environment` instead.
 
 ## Decision Flowchart
 
@@ -406,35 +374,7 @@ struct MyView: View {
 
 **Note**: This limitation only applies to `ObservableObject`. `@Observable` fully supports nested observed objects.
 
-```swift
-// Avoid - breaks animations and change tracking
-class Parent: ObservableObject {
-    @Published var child: Child  // Nested ObservableObject
-}
-
-class Child: ObservableObject {
-    @Published var value: Int
-}
-
-// Workaround - pass child directly to views
-struct ParentView: View {
-    @StateObject private var parent = Parent()
-    
-    var body: some View {
-        ChildView(child: parent.child)  // Pass nested object directly
-    }
-}
-
-struct ChildView: View {
-    @ObservedObject var child: Child
-    
-    var body: some View {
-        Text("\(child.value)")
-    }
-}
-```
-
-**Why**: SwiftUI can't track changes through nested `ObservableObject` properties. Manual workarounds break animations. With `@Observable`, this isn't an issue.
+SwiftUI can't track changes through nested `ObservableObject` properties. Workaround: pass the nested object directly to child views as `@ObservedObject`. With `@Observable`, nesting works automatically.
 
 ## Key Principles
 
@@ -445,3 +385,4 @@ struct ChildView: View {
 5. **Always mark `@State` and `@StateObject` as `private`**
 6. **Never declare passed values as `@State` or `@StateObject`**
 7. With `@Observable`, nested objects work fine; with `ObservableObject`, pass nested objects directly to child views
+8. **Always add `@ObservationIgnored` to property wrappers** (e.g., `@AppStorage`, `@SceneStorage`, `@Query`) inside `@Observable` classes — they conflict with the macro's property transformation

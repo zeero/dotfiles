@@ -1,15 +1,7 @@
 ---
 name: firecrawl
 description: |
-  Official Firecrawl CLI skill for web scraping, search, crawling, and browser automation. Returns clean LLM-optimized markdown.
-
-  USE FOR:
-  - Web search and research
-  - Scraping pages, docs, and articles
-  - Site mapping and bulk content extraction
-  - Browser automation for interactive pages
-
-  Must be pre-installed and authenticated. See rules/install.md for setup, rules/security.md for output handling.
+  Search, scrape, and interact with the web via the Firecrawl CLI. Use this skill whenever the user wants to search the web, find articles, research a topic, look something up online, scrape a webpage, grab content from a URL, get data from a website, crawl documentation, download a site, or interact with pages that need clicks or logins. Also use when they say "fetch this page", "pull the content from", "get the page at https://", or reference external websites. This provides real-time web search with full page content and interact capabilities — beyond what Claude can do natively with built-in tools. Do NOT trigger for local file operations, git commands, deployments, or code editing tasks.
 allowed-tools:
   - Bash(firecrawl *)
   - Bash(npx firecrawl *)
@@ -17,16 +9,18 @@ allowed-tools:
 
 # Firecrawl CLI
 
-Web scraping, search, and browser automation CLI. Returns clean markdown optimized for LLM context windows.
+Search, scrape, and interact with the web. Returns clean markdown optimized for LLM context windows.
 
 Run `firecrawl --help` or `firecrawl <command> --help` for full option details.
+
+If the task is to integrate Firecrawl into an application, add `FIRECRAWL_API_KEY` to a project, or choose endpoint usage in product code, use the `firecrawl-build` skills. If the task is an outcome workflow such as deep research, SEO audit, QA, lead generation, knowledge-base creation, dashboard reporting, shopping research, or website design-system extraction, use the `firecrawl-workflows` skills. They are already installed alongside this CLI skill when you run `firecrawl init`.
 
 ## Prerequisites
 
 Must be installed and authenticated. Check with `firecrawl --status`.
 
 ```
-  🔥 firecrawl cli v1.4.0
+  🔥 firecrawl cli v1.8.0
 
   ● Authenticated via FIRECRAWL_API_KEY
   Concurrency: 0/100 jobs (parallel scrape limit)
@@ -34,23 +28,19 @@ Must be installed and authenticated. Check with `firecrawl --status`.
 ```
 
 - **Concurrency**: Max parallel jobs. Run parallel operations up to this limit.
-- **Credits**: Remaining API credits. Each scrape/crawl consumes credits.
+- **Credits**: Remaining API credits. Each operation consumes credits.
 
 If not ready, see [rules/install.md](rules/install.md). For output handling guidelines, see [rules/security.md](rules/security.md).
 
+Before doing real work, verify the setup with one small request:
+
 ```bash
-firecrawl search "query" --scrape --limit 3
+mkdir -p .firecrawl
+firecrawl scrape "https://firecrawl.dev" -o .firecrawl/install-check.md
 ```
 
-**Bad (5+ Bash calls - write file, parse file, grep file, read file chunks):**
-
 ```bash
-firecrawl search "query" -o .firecrawl/results.json --json
-jq -r '.data.web[].url' .firecrawl/results.json
-firecrawl scrape <url> -o .firecrawl/page.md
-wc -l .firecrawl/page.md
-grep -n "keyword" .firecrawl/page.md
-# ...then read chunks with offset/limit
+firecrawl search "query" --scrape --limit 3
 ```
 
 ## Workflow
@@ -61,57 +51,136 @@ Follow this escalation pattern:
 2. **Scrape** - Have a URL. Extract its content directly.
 3. **Map + Scrape** - Large site or need a specific subpage. Use `map --search` to find the right URL, then scrape it.
 4. **Crawl** - Need bulk content from an entire site section (e.g., all /docs/).
-5. **Browser** - Scrape failed because content is behind interaction (pagination, modals, form submissions, multi-step navigation).
+5. **Interact** - Scrape first, then interact with the page (pagination, modals, form submissions, multi-step navigation).
 
-| Need                        | Command   | When                                                      |
-| --------------------------- | --------- | --------------------------------------------------------- |
-| Find pages on a topic       | `search`  | No specific URL yet                                       |
-| Get a page's content        | `scrape`  | Have a URL, page is static or JS-rendered                 |
-| Find URLs within a site     | `map`     | Need to locate a specific subpage                         |
-| Bulk extract a site section | `crawl`   | Need many pages (e.g., all /docs/)                        |
-| AI-powered data extraction  | `agent`   | Need structured data from complex sites                   |
-| Interact with a page        | `browser` | Content requires clicks, form fills, pagination, or login |
+| Need                        | Command               | When                                                      |
+| --------------------------- | --------------------- | --------------------------------------------------------- |
+| Find pages on a topic       | `search`              | No specific URL yet                                       |
+| Get a page's content        | `scrape`              | Have a URL, page is static or JS-rendered                 |
+| Find URLs within a site     | `map`                 | Need to locate a specific subpage                         |
+| Bulk extract a site section | `crawl`               | Need many pages (e.g., all /docs/)                        |
+| AI-powered data extraction  | `agent`               | Need structured data from complex sites                   |
+| Interact with a page        | `scrape` + `interact` | Content requires clicks, form fills, pagination, or login |
+| Download a site to files    | `download`            | Save an entire site as local files                        |
+| Parse a local file          | `parse`               | File on disk (PDF, DOCX, XLSX, etc.) — not a URL          |
+| Watch pages for changes     | `monitor`             | Schedule recurring scrapes/crawls, diff against snapshots |
 
-**Scrape vs browser:**
+For detailed command reference, run `firecrawl <command> --help`.
+
+**Scrape vs interact:**
 
 - Use `scrape` first. It handles static pages and JS-rendered SPAs.
-- Use `browser` only when scrape fails because content is behind interaction: pagination buttons, modals, dropdowns, multi-step navigation, or infinite scroll.
-- Never use browser for web searches - use `search` instead.
+- Use `scrape` + `interact` when you need to interact with a page, such as clicking buttons, filling out forms, navigating through a complex site, infinite scroll, or when scrape fails to grab all the content you need.
+- Never use interact for web searches - use `search` instead.
+
+**Monitor:** Schedule recurring scrapes or crawls and diff each result against the last retained snapshot. Use for product pages, docs, blogs, changelogs, competitor sites — any page where changes matter. Each check labels pages as `same`, `new`, `changed`, `removed`, or `error`, with webhook and email notification options.
+
+Subcommands: `create | list | get | update | delete | run | checks | check`.
+
+```bash
+# create from flags
+firecrawl monitor create --name "Blog" --schedule "every 30 minutes" \
+  --scrape-urls https://example.com/blog --email alerts@example.com
+
+# or from JSON (positional file, or piped stdin)
+firecrawl monitor create monitor.json
+cat monitor.json | firecrawl monitor create
+
+firecrawl monitor list --limit 20
+firecrawl monitor run <monitorId>             # trigger a check now
+firecrawl monitor checks <monitorId>          # list checks
+firecrawl monitor check <monitorId> <checkId> --page-status changed
+firecrawl monitor update <monitorId> --state paused
+firecrawl monitor delete <monitorId>
+```
+
+Schedules accept cron (`--cron "*/30 * * * *"`) or natural language (`--schedule "every 30 minutes"`). Minimum interval is 15 minutes. Targets are either `--scrape-urls a,b,c` (scrape) or `--crawl-url <url>` (crawl whole site each check). Note: `--state` (not `--status`) sets active/paused; `--page-status` (not `--status`) filters page results on `check` — avoids collision with the global `--status` flag. Monitoring is not available for zero-data-retention teams.
+
+**JSON-mode change tracking:** By default monitors diff each page's markdown and you get a unified text diff back. When you care about **specific structured fields** (price, headline, in-stock flag, items in a list) instead of the whole page, add a `changeTracking` format with `modes: ["json"]` and a JSON schema to the target's `scrapeOptions.formats`. The flag-based form doesn't cover this — pass a JSON body via file or stdin:
+
+```bash
+cat > pricing-monitor.json <<'EOF'
+{
+  "name": "Pricing watch",
+  "schedule": { "text": "hourly", "timezone": "UTC" },
+  "targets": [{
+    "type": "scrape",
+    "urls": ["https://example.com/pricing"],
+    "scrapeOptions": {
+      "formats": [{
+        "type": "changeTracking",
+        "modes": ["json"],
+        "prompt": "Extract pricing tiers and headline features for each plan.",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "plans": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name":     { "type": "string" },
+                  "price":    { "type": "string" },
+                  "features": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            }
+          }
+        }
+      }]
+    }
+  }]
+}
+EOF
+firecrawl monitor create pricing-monitor.json
+```
+
+The `check` response then carries a per-field diff (paths like `plans[0].price`) and the full extraction at this run, instead of (or in addition to) a markdown diff. Each changed page in `pages[]` looks like:
+
+```json
+{
+  "url": "https://example.com/pricing",
+  "status": "changed",
+  "diff": {
+    "json": {
+      "plans[0].price": { "previous": "$19/mo", "current": "$24/mo" },
+      "plans[1].features[2]": {
+        "previous": "10 GB storage",
+        "current": "25 GB storage"
+      }
+    }
+  },
+  "snapshot": {
+    "json": {
+      "plans": [
+        /* current full extraction */
+      ]
+    }
+  }
+}
+```
+
+Use `modes: ["json", "git-diff"]` for **mixed mode**: you get both `diff.json` (per-field) and `diff.text` (markdown sidecar), and the page is marked `changed` whenever either surface changed. For markdown-only monitors, `diff.text` holds the unified diff and `diff.json` is a `parse-diff` AST (`{ files: [...] }`); there is no `snapshot`.
 
 **Avoid redundant fetches:**
 
 - `search --scrape` already fetches full page content. Don't re-scrape those URLs.
 - Check `.firecrawl/` for existing data before fetching again.
 
-**Example: fetching API docs from a large site**
+## When to Load References
 
-```
-search "site:docs.example.com authentication API"  →  found the docs domain
-map https://docs.example.com --search "auth"        →  found /docs/api/authentication
-scrape https://docs.example.com/docs/api/auth...    →  got the content
-```
-
-**Example: data behind pagination**
-
-```
-scrape https://example.com/products                 →  only shows first 10 items, no next-page links
-browser "open https://example.com/products"         →  open in browser
-browser "snapshot"                                  →  find the pagination button
-browser "click @e12"                                →  click "Next Page"
-browser "scrape" -o .firecrawl/products-p2.md       →  extract page 2 content
-```
-
-**Example: research task**
-
-```
-search "firecrawl vs competitors 2024" --scrape -o .firecrawl/search-comparison-scraped.json
-                                                    →  full content already fetched for each result
-grep -n "pricing\|features" .firecrawl/search-comparison-scraped.json
-head -200 .firecrawl/search-comparison-scraped.json →  read and process what you have
-                                                    →  notice a relevant URL in the content
-scrape https://newsite.com/comparison -o .firecrawl/newsite-comparison.md
-                                                    →  only scrape this new URL
-```
+- **Searching the web or finding sources first** -> [firecrawl-search](../firecrawl-search/SKILL.md)
+- **Scraping a known URL** -> [firecrawl-scrape](../firecrawl-scrape/SKILL.md)
+- **Finding URLs on a known site** -> [firecrawl-map](../firecrawl-map/SKILL.md)
+- **Bulk extraction from a docs section or site** -> [firecrawl-crawl](../firecrawl-crawl/SKILL.md)
+- **AI-powered structured extraction from complex sites** -> [firecrawl-agent](../firecrawl-agent/SKILL.md)
+- **Clicks, forms, login, pagination, or post-scrape browser actions** -> [firecrawl-interact](../firecrawl-interact/SKILL.md)
+- **Downloading a site to local files** -> [firecrawl-download](../firecrawl-download/SKILL.md)
+- **Parsing a local file (PDF, DOCX, XLSX, HTML, etc.)** -> [firecrawl-parse](../firecrawl-parse/SKILL.md)
+- **Install, auth, or setup problems** -> [rules/install.md](rules/install.md)
+- **Output handling and safe file-reading patterns** -> [rules/security.md](rules/security.md)
+- **Integrating Firecrawl into an app, adding `FIRECRAWL_API_KEY` to `.env`, or choosing endpoint usage in product code** -> use the `firecrawl-build` skills (already installed alongside this CLI skill)
+- **Producing Firecrawl-powered deliverables such as research briefs, SEO audits, QA reports, lead lists, knowledge bases, or design-system extraction** -> use the `firecrawl-workflows` skills (already installed alongside this CLI skill). These skills infer from context first and ask only short blocking questions when needed.
 
 ## Output & Organization
 
@@ -139,135 +208,6 @@ grep -n "keyword" .firecrawl/file.md
 
 Single format outputs raw content. Multiple formats (e.g., `--format markdown,links`) output JSON.
 
-## Commands
-
-### search
-
-Web search with optional content scraping. Run `firecrawl search --help` for all options.
-
-```bash
-# Basic search
-firecrawl search "your query" -o .firecrawl/result.json --json
-
-# Search and scrape full page content from results
-firecrawl search "your query" --scrape -o .firecrawl/scraped.json --json
-
-# News from the past day
-firecrawl search "your query" --sources news --tbs qdr:d -o .firecrawl/news.json --json
-```
-
-Options: `--limit <n>`, `--sources <web,images,news>`, `--categories <github,research,pdf>`, `--tbs <qdr:h|d|w|m|y>`, `--location`, `--country <code>`, `--scrape`, `--scrape-formats`, `-o`
-
-### scrape
-
-Single page content extraction. Run `firecrawl scrape --help` for all options.
-
-```bash
-# Basic markdown extraction
-firecrawl scrape "<url>" -o .firecrawl/page.md
-
-# Main content only, no nav/footer
-firecrawl scrape "<url>" --only-main-content -o .firecrawl/page.md
-
-# Wait for JS to render, then scrape
-firecrawl scrape "<url>" --wait-for 3000 -o .firecrawl/page.md
-
-# Get markdown and links together
-firecrawl scrape "<url>" --format markdown,links -o .firecrawl/page.json
-```
-
-Options: `-f <markdown,html,rawHtml,links,screenshot,json>`, `-H`, `--only-main-content`, `--wait-for <ms>`, `--include-tags`, `--exclude-tags`, `-o`
-
-### map
-
-Discover URLs on a site. Run `firecrawl map --help` for all options.
-
-```bash
-# Find a specific page on a large site
-firecrawl map "<url>" --search "authentication" -o .firecrawl/filtered.txt
-
-# Get all URLs
-firecrawl map "<url>" --limit 500 --json -o .firecrawl/urls.json
-```
-
-Options: `--limit <n>`, `--search <query>`, `--sitemap <include|skip|only>`, `--include-subdomains`, `--json`, `-o`
-
-### crawl
-
-Bulk extract from a website. Run `firecrawl crawl --help` for all options.
-
-```bash
-# Crawl a docs section
-firecrawl crawl "<url>" --include-paths /docs --limit 50 --wait -o .firecrawl/crawl.json
-
-# Full crawl with depth limit
-firecrawl crawl "<url>" --max-depth 3 --wait --progress -o .firecrawl/crawl.json
-
-# Check status of a running crawl
-firecrawl crawl <job-id>
-```
-
-Options: `--wait`, `--progress`, `--limit <n>`, `--max-depth <n>`, `--include-paths`, `--exclude-paths`, `--delay <ms>`, `--max-concurrency <n>`, `--pretty`, `-o`
-
-### agent
-
-AI-powered autonomous extraction (2-5 minutes). Run `firecrawl agent --help` for all options.
-
-```bash
-# Extract structured data
-firecrawl agent "extract all pricing tiers" --wait -o .firecrawl/pricing.json
-
-# With a JSON schema for structured output
-firecrawl agent "extract products" --schema '{"type":"object","properties":{"name":{"type":"string"},"price":{"type":"number"}}}' --wait -o .firecrawl/products.json
-
-# Focus on specific pages
-firecrawl agent "get feature list" --urls "<url>" --wait -o .firecrawl/features.json
-```
-
-Options: `--urls`, `--model <spark-1-mini|spark-1-pro>`, `--schema <json>`, `--schema-file`, `--max-credits <n>`, `--wait`, `--pretty`, `-o`
-
-### browser
-
-Cloud Chromium sessions in Firecrawl's remote sandboxed environment. Run `firecrawl browser --help` and `firecrawl browser "agent-browser --help"` for all options.
-
-```bash
-# Typical browser workflow
-firecrawl browser "open <url>"
-firecrawl browser "snapshot"                          # see the page structure with @ref IDs
-firecrawl browser "click @e5"                         # interact with elements
-firecrawl browser "fill @e3 'search query'"           # fill form fields
-firecrawl browser "scrape" -o .firecrawl/page.md      # extract content
-firecrawl browser close
-```
-
-Shorthand auto-launches a session if none exists - no setup required.
-
-**Core agent-browser commands:**
-
-| Command              | Description                            |
-| -------------------- | -------------------------------------- |
-| `open <url>`         | Navigate to a URL                      |
-| `snapshot`           | Get accessibility tree with `@ref` IDs |
-| `screenshot`         | Capture a PNG screenshot               |
-| `click <@ref>`       | Click an element by ref                |
-| `type <@ref> <text>` | Type into an element                   |
-| `fill <@ref> <text>` | Fill a form field (clears first)       |
-| `scrape`             | Extract page content as markdown       |
-| `scroll <direction>` | Scroll up/down/left/right              |
-| `wait <seconds>`     | Wait for a duration                    |
-| `eval <js>`          | Evaluate JavaScript on the page        |
-
-Session management: `launch-session --ttl 600`, `list`, `close`
-
-Options: `--ttl <seconds>`, `--ttl-inactivity <seconds>`, `--stream`, `--session <id>`, `-o`
-
-### credit-usage
-
-```bash
-firecrawl credit-usage
-firecrawl credit-usage --json --pretty -o .firecrawl/credits.json
-```
-
 ## Working with Results
 
 These patterns are useful when working with file-based output (`-o` flag) for complex tasks:
@@ -280,6 +220,25 @@ jq -r '.data.web[].url' .firecrawl/search.json
 jq -r '.data.web[] | "\(.title): \(.url)"' .firecrawl/search.json
 ```
 
+## After search: send feedback (refunds 1 credit)
+
+Search costs 2 credits per call. **After you finish using a search result**, send structured feedback in the background. The first feedback per search id refunds 1 credit and feeds search-quality improvements.
+
+```bash
+SEARCH_ID=$(jq -r '.id' .firecrawl/search-react-hooks.json)
+
+firecrawl search-feedback "$SEARCH_ID" \
+  --rating good \
+  --valuable-sources '[{"url":"https://react.dev/reference/react/hooks","reason":"Authoritative"}]' \
+  --missing-content '[{"topic":"useDeferredValue example"},{"topic":"Server Components hooks"}]' \
+  --query-suggestions "Boost react.dev for react-hooks queries" \
+  --silent &
+```
+
+The most useful field is `--missing-content`: an _array_ of specific pieces of content you expected to find but didn't. Use one entry per missing topic. Bad/partial feedback with detailed `--missing-content` is just as valuable as good feedback.
+
+**Opt out:** `export FIRECRAWL_NO_SEARCH_FEEDBACK=1` makes the CLI skip every feedback call silently. Respect that flag — do not try to work around it. See [firecrawl-search](../firecrawl-search/SKILL.md) for the full pattern.
+
 ## Parallelization
 
 Run independent operations in parallel. Check `firecrawl --status` for concurrency limit:
@@ -291,4 +250,11 @@ firecrawl scrape "<url-3>" -o .firecrawl/3.md &
 wait
 ```
 
-For browser, launch separate sessions for independent tasks and operate them in parallel via `--session <id>`.
+For interact, scrape multiple pages and interact with each independently using their scrape IDs.
+
+## Credit Usage
+
+```bash
+firecrawl credit-usage
+firecrawl credit-usage --json --pretty -o .firecrawl/credits.json
+```

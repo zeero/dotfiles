@@ -6,27 +6,27 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/avdlee/swiftui-agent-skill.git",
       "skillPath": "swiftui-expert-skill/SKILL.md",
-      "skillFolderHash": "fcb978dbb1fc2331e758e8f571c032356b2fe341",
+      "skillFolderHash": "3ad8f8e585a3b5f1c2bd7ee20d73a4ace702d1f3",
       "installedAt": "2026-02-02T00:43:53.509Z",
-      "updatedAt": "2026-02-02T00:43:53.509Z"
+      "updatedAt": "2026-05-22T06:42:04.982Z"
     },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/skills.git",
       "skillPath": "skills/find-skills/SKILL.md",
-      "skillFolderHash": "c2f31172b6f256272305a5e6e7228b258446899f",
+      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
       "installedAt": "2026-02-02T00:43:57.099Z",
-      "updatedAt": "2026-02-02T00:45:06.655Z"
+      "updatedAt": "2026-05-22T06:42:05.530Z"
     },
     "prompt-engineering-patterns": {
       "source": "wshobson/agents",
       "sourceType": "github",
       "sourceUrl": "https://github.com/wshobson/agents.git",
       "skillPath": "plugins/llm-application-dev/skills/prompt-engineering-patterns/SKILL.md",
-      "skillFolderHash": "917219a41bf419588a14a4e9303ba93dcc41822b",
+      "skillFolderHash": "b2f3f11cc766503e83d73d5420098b925e3dcfe9",
       "installedAt": "2026-02-02T12:30:47.491Z",
-      "updatedAt": "2026-02-02T12:30:47.491Z"
+      "updatedAt": "2026-05-22T06:42:07.928Z"
     },
     "naming-analyzer": {
       "source": "softaworks/agent-toolkit",
@@ -51,9 +51,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/sickn33/antigravity-awesome-skills.git",
       "skillPath": "skills/docker-expert/SKILL.md",
-      "skillFolderHash": "45853e487ac0d45f8cded5d33ac97fa34d2f3c0a",
+      "skillFolderHash": "4de306f28c3b66e8bb0419b574930bbce43ae47d",
       "installedAt": "2026-02-04T01:40:15.448Z",
-      "updatedAt": "2026-02-04T01:40:15.448Z"
+      "updatedAt": "2026-05-22T06:42:25.067Z"
     },
     "command-creator": {
       "source": "softaworks/agent-toolkit",
@@ -78,36 +78,36 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/avdlee/swift-concurrency-agent-skill.git",
       "skillPath": "swift-concurrency/SKILL.md",
-      "skillFolderHash": "07fab06be382a072f6f85b9f1c3dd4349fee4983",
+      "skillFolderHash": "bf794e8e288a7865e713ccfe4f51f9efacf6dee5",
       "installedAt": "2026-02-17T23:32:14.972Z",
-      "updatedAt": "2026-02-17T23:32:14.972Z"
+      "updatedAt": "2026-05-22T06:42:27.574Z"
     },
     "swift-testing-expert": {
       "source": "avdlee/swift-testing-agent-skill",
       "sourceType": "github",
       "sourceUrl": "https://github.com/avdlee/swift-testing-agent-skill.git",
       "skillPath": "swift-testing-expert/SKILL.md",
-      "skillFolderHash": "db7ffa3e196d708784988c6b0ee4c11eb4bf07ff",
+      "skillFolderHash": "3e1acfbe7700872a2b2d4e4fe3441de8ea4e1ea1",
       "installedAt": "2026-02-17T23:32:43.540Z",
-      "updatedAt": "2026-02-17T23:32:43.540Z"
+      "updatedAt": "2026-05-22T06:42:29.159Z"
     },
     "firecrawl": {
       "source": "firecrawl/cli",
       "sourceType": "github",
       "sourceUrl": "https://github.com/firecrawl/cli.git",
       "skillPath": "skills/firecrawl-cli/SKILL.md",
-      "skillFolderHash": "030d70409eefc25e6b53be7c1053747463b5102d",
+      "skillFolderHash": "4d1d47eabb7d3b82bcd5e19108f81a130688a02c",
       "installedAt": "2026-02-20T06:14:51.539Z",
-      "updatedAt": "2026-02-20T06:14:51.539Z"
+      "updatedAt": "2026-05-22T06:42:30.867Z"
     },
     "n8n-code-javascript": {
       "source": "czlonkowski/n8n-skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
       "skillPath": "skills/n8n-code-javascript/SKILL.md",
-      "skillFolderHash": "9128861fcee88b0850f21b2d043b7b48af99f0af",
+      "skillFolderHash": "a38ca421449d436bb3f2275cb7983c26f3379642",
       "installedAt": "2026-04-21T23:37:20.135Z",
-      "updatedAt": "2026-04-21T23:37:20.135Z"
+      "updatedAt": "2026-05-22T06:42:33.384Z"
     },
     "n8n-code-python": {
       "source": "czlonkowski/n8n-skills",
@@ -132,9 +132,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
       "skillPath": "skills/n8n-mcp-tools-expert/SKILL.md",
-      "skillFolderHash": "ca96541368ede5aac5daa4b006ab7d46e0b747d2",
+      "skillFolderHash": "467440acd101af1c349bb699e80ad23efef6630f",
       "installedAt": "2026-04-21T23:37:21.261Z",
-      "updatedAt": "2026-04-21T23:37:21.261Z"
+      "updatedAt": "2026-05-22T06:42:36.249Z"
     },
     "n8n-node-configuration": {
       "source": "czlonkowski/n8n-skills",
