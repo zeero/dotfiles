@@ -232,16 +232,29 @@ _fzf-git_worktree() {
   fi
 }
 
+### _z_jump {{{2
+_z_jump() {
+  local target="$1"
+  [ -z "$target" ] && return
+
+  if [ -n "$TMUX" ]; then
+    zoxide add "$target"
+    tmux new-window -n "$(basename "$target")" -c "$target"
+  else
+    if [ -n "$WIDGET" ]; then
+      BUFFER="z \"$target\""
+      zle accept-line
+    else
+      z "$target"
+    fi
+  fi
+}
+
 ### _fzf-zoxide {{{2
 _fzf-zoxide() {
   local selected
   selected=$(zoxide query -ls | sed 's/^[[:space:]]*[0-9.]*[[:space:]]*//' | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%})
-  if [ -n "$selected" ]; then
-    zoxide add "$selected"
-    [ -n "$TMUX" ] && tmux rename-window "$(basename "$selected")"
-    BUFFER="cd \"$selected\""
-    zle accept-line
-  fi
+  [ -n "$selected" ] && _z_jump "$selected"
 }
 
 ### _fzf-git_branch {{{2
@@ -299,16 +312,7 @@ _fzf-r() {
 ghqcd() {
   local dir
   dir=$(ghq list | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%})
-  if [ -n "$dir" ]; then
-    local target="$(ghq root)/$dir"
-    [ -n "$TMUX" ] && tmux rename-window "$(basename "$target")"
-    if [ -n "$WIDGET" ]; then
-      BUFFER="z $target"
-      zle accept-line
-    else
-      z "$target"
-    fi
-  fi
+  [ -n "$dir" ] && _z_jump "$(ghq root)/$dir"
 }
 
 ### rm derived data {{{2
