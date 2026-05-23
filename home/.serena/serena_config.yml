@@ -69,6 +69,7 @@ projects:
 - /Users/zeero/dev/github.com/zeero/tcmux
 - /Users/zeero/dev/github.com/zeero/tmux-portal
 - /Users/zeero/dev/github.com/zeero/vim-gista
+- /Users/zeero/dev/github.com/zeero/zeero
 - /Users/zeero/dev/n8n
 - /Users/zeero/lib/dotfiles
 default_modes:
