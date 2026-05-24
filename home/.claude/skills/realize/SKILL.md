@@ -1,4 +1,6 @@
 ---
+name: realize
+description: user invoke only
 argument-hint: [対象ブランチ名（オプション）]
 ---
 

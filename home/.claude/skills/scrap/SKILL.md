@@ -1,4 +1,6 @@
 ---
+name: scrap
+description: user invoke only
 argument-hint: [スクラップ前に言っておきたいこと]
 ---
 

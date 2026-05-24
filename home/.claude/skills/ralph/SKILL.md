@@ -1,5 +1,7 @@
 ---
-description: Ralph Wiggum ループ実行
+name: ralph
+description: user invoke only
+summary: Ralph Wiggum ループ実行
 argument-hint: [実行内容]
 ---
 

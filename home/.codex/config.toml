@@ -129,7 +129,7 @@ trusted_hash = "sha256:9fc7312a4a274d40081f6734c6f6553d494e9cfde20fd01339995232a
 trusted_hash = "sha256:9f9b46244739e7f6f787757a083d0d65c07db3aa2daaaecb6fe9e65b08f362b2"
 
 [marketplaces.openai-bundled]
-last_updated = "2026-05-15T08:07:56Z"
+last_updated = "2026-05-23T16:05:00Z"
 source_type = "local"
 source = "/Users/zeero/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
