@@ -12,7 +12,7 @@ TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name')
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file // .tool_input.path // .tool_input.relative_path // .tool_input.file_path // empty')
 
 # 編集系ツールかつPythonファイルの場合のみ実行し、無駄なプロセス起動を避けます。
-if [[ "$TOOL_NAME" =~ ^(Edit|Write|apply_patch)$ ]] && [[ "$FILE_PATH" == *.py ]]; then
+if [[ "$TOOL_NAME" =~ ^(Edit|Write|apply_patch|replace|write_file|mcp_serena_.*)$ ]] && [[ "$FILE_PATH" == *.py ]]; then
     
     # 実行中のタスクを伝えるため、進捗を標準エラーに出力します。
     echo "[HOOK] Running python checks (Ruff & Pyright) for $FILE_PATH..." >&2
@@ -31,17 +31,23 @@ if [[ "$TOOL_NAME" =~ ^(Edit|Write|apply_patch)$ ]] && [[ "$FILE_PATH" == *.py ]
     PYRIGHT_OUTPUT=$(pyright 2>&1)
     PYRIGHT_EXIT_CODE=$?
 
-    # 3. 実行結果の集計とメッセージ構築
+    # 3. git diff --check による空白エラーのチェック
+    # 変更によって空白エラー（行末の空白など）が導入されていないかを確認します。
+    GIT_CHECK_OUTPUT=$(git diff --check 2>&1)
+    GIT_CHECK_EXIT_CODE=$?
+
+    # 4. 実行結果の集計とメッセージ構築
     # すべてのツールが成功（終了コードがすべて0）したかどうかを判定します。
-    if [ $FORMAT_EXIT_CODE -eq 0 ] && [ $CHECK_EXIT_CODE -eq 0 ] && [ $PYRIGHT_EXIT_CODE -eq 0 ]; then
-        STATUS_MSG="✅ Python checks passed (Ruff & Pyright)"
-        ADDITIONAL_CONTEXT="Ruff formatted $FILE_PATH and ran lint check successfully.\nPyright: No type errors found."
+    if [ $FORMAT_EXIT_CODE -eq 0 ] && [ $CHECK_EXIT_CODE -eq 0 ] && [ $PYRIGHT_EXIT_CODE -eq 0 ] && [ $GIT_CHECK_EXIT_CODE -eq 0 ]; then
+        STATUS_MSG="✅ Python checks passed (Ruff & Pyright & Git)"
+        ADDITIONAL_CONTEXT="Ruff formatted $FILE_PATH and ran lint check successfully.\nPyright: No type errors found.\nGit: No whitespace errors found (git diff --check)."
     else
         STATUS_MSG="⚠️ Python checks completed with warnings/errors"
         ADDITIONAL_CONTEXT="Issues found during Python checks.\n\n"
-        ADDITIONAL_CONTEXT+="[Ruff Format (Exit: $FORMAT_EXIT_CODE)]\n$FORMAT_OUTPUT\n\n"
-        ADDITIONAL_CONTEXT+="[Ruff Check (Exit: $CHECK_EXIT_CODE)]\n$CHECK_OUTPUT\n\n"
-        ADDITIONAL_CONTEXT+="[Pyright (Exit: $PYRIGHT_EXIT_CODE)]\n$PYRIGHT_OUTPUT"
+        ADDITIONAL_CONTEXT+="[ruff format (Exit: $FORMAT_EXIT_CODE)]\n$FORMAT_OUTPUT\n\n"
+        ADDITIONAL_CONTEXT+="[ruff check --fix (Exit: $CHECK_EXIT_CODE)]\n$CHECK_OUTPUT\n\n"
+        ADDITIONAL_CONTEXT+="[pyright (Exit: $PYRIGHT_EXIT_CODE)]\n$PYRIGHT_OUTPUT\n\n"
+        ADDITIONAL_CONTEXT+="[git diff --check (Exit: $GIT_CHECK_EXIT_CODE)]\n$GIT_CHECK_OUTPUT"
     fi
 
     # Codexに結果を返すためのJSONを出力します。
