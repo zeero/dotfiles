@@ -53,9 +53,9 @@
         "matcher": "replace|write_file|mcp_serena_(replace|insert)_.*",
         "hooks": [
           {
-            "name": "pyright-check",
+            "name": "check-python",
             "type": "command",
-            "command": "~/.gemini/hooks/check-pyright.sh"
+            "command": "~/.agents/hooks/check-python.sh"
           }
         ]
       },
