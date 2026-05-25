@@ -1,11 +1,12 @@
 project_doc_fallback_filenames = ["CLAUDE.md"]
-notify = ["alerter --title 'Codex' --message '🔔' --sound default --timeout 10 &"]
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 plan_mode_reasoning_effort = "high"
 
 default_permissions = "my-workspace"
 approvals_reviewer = "guardian_subagent"
+notify = ["/Users/zeero/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
+
 [permissions.my-workspace.filesystem]
 ":workspace_roots" = {
   "." = "write",
@@ -65,6 +66,23 @@ approval_mode = "approve"
 [mcp_servers.context-mode.tools.ctx_execute]
 approval_mode = "approve"
 
+[mcp_servers.node_repl]
+args = []
+command = "/Applications/Codex.app/Contents/Resources/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+BROWSER_USE_MARKETPLACE_NAME = "openai-bundled"
+CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
+CODEX_HOME = "/Users/zeero/.codex"
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = ""
+NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/node"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "167fdf579477181fba1773c1efb067b00c5a64fe85dafb50a2001bde198dc739"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/zeero/.codex"
+NODE_REPL_UNTRUSTED_ENV_ALLOWLIST = "BROWSER_USE_MARKETPLACE_NAME"
+
 [plugins."canva@openai-curated"]
 enabled = true
 
@@ -86,6 +104,9 @@ enabled = true
 [plugins."browser@openai-bundled"]
 enabled = true
 
+[plugins."chrome@openai-bundled"]
+enabled = true
+
 [tools]
 web_search = true
 
@@ -93,6 +114,7 @@ web_search = true
 terminal_resize_reflow = true
 hooks = true
 memories = true
+js_repl = false
 
 [hooks.state]
 
@@ -129,11 +151,20 @@ trusted_hash = "sha256:9fc7312a4a274d40081f6734c6f6553d494e9cfde20fd01339995232a
 trusted_hash = "sha256:9f9b46244739e7f6f787757a083d0d65c07db3aa2daaaecb6fe9e65b08f362b2"
 
 [marketplaces.openai-bundled]
-last_updated = "2026-05-23T16:05:00Z"
+last_updated = "2026-05-24T10:36:35Z"
 source_type = "local"
 source = "/Users/zeero/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-05-15T08:03:28Z"
+last_updated = "2026-05-24T11:11:59Z"
 source_type = "local"
 source = "/Users/zeero/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[desktop]
+ambient-suggestions-enabled = true
+preventSleepWhileRunning = true
+keepRemoteControlAwakeWhilePluggedIn = true
+conversationDetailMode = "STEPS_COMMANDS"
+
+[desktop.open-in-target-preferences]
+global = "systemDefault"
