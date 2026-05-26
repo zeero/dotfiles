@@ -1,6 +1,10 @@
-description = "外部プロセス(codex または claude)を使用してコミット済みのコードをレビュー・修正させ、結果を検証します"
-argument-hint = "[--claude|--codex] [target_revision] (default: codex, target: origin/main...HEAD)"
-prompt = """
+---
+name: code-review-external
+description: user invoke only
+summary: 外部プロセス(codex または claude)を使用してコミット済みのコードをレビュー・修正させ、結果を検証します
+argument-hint: "[--claude|--codex] [target_revision] (default: codex, target: origin/main...HEAD)"
+---
+
 以下の手順に従って、コミットされたコードの外部レビュー、修正、およびその検証を行ってください。
 
 【重要】
@@ -46,5 +50,4 @@ prompt = """
      - 新たなバグや構文エラーが混入していないか
      - プロジェクトの規約に反していないか
    - 検証結果（変更の妥当性、問題の有無）をユーザーに報告してください。問題があればどのように直すべきかも提案してください。
-"""
 
