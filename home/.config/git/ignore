@@ -41,7 +41,7 @@ skills-lock.json
 .env
 .envrc
 docker-compose.override.yml
-.firecrawl/
+.firecrawl
 *.bak
 .worktrees/
 
