@@ -1,8 +1,8 @@
 ---
 name: code-review-external
 description: user invoke only
-summary: 外部プロセス(codex または claude)を使用してコミット済みのコードをレビュー・修正させ、結果を検証します
-argument-hint: "[--claude|--codex] [target_revision] (default: codex, target: origin/main...HEAD)"
+summary: 外部プロセス(codex または claude または gemini)を使用してコミット済みのコードをレビュー・修正させ、結果を検証します
+argument-hint: "[--claude|--codex|--gemini] [-a|--adversarial] [target_revision] (default: codex, target: origin/main...HEAD)"
 ---
 
 以下の手順に従って、コミットされたコードの外部レビュー、修正、およびその検証を行ってください。
@@ -21,23 +21,29 @@ argument-hint: "[--claude|--codex] [target_revision] (default: codex, target: or
    - 引数 `{{args}}` を解析し、使用するツールと対象リビジョンを特定してください。
    - **ツールの特定**:
      - `{{args}}` に `--claude` が含まれる場合は `claude` を使用します。
-     - `{{args}}` に `--codex` が含まれる場合、またはどちらも指定されていない場合は `codex` を使用します。
+     - `{{args}}` に `--gemini` が含まれる場合は `gemini` を使用します。
+     - `{{args}}` に `--codex` が含まれる場合、またはどれも指定されていない場合は `codex` を使用します。
+   - **モードの判定**:
+     - `{{args}}` に `-a` または `--adversarial` が含まれる場合は `Adversarial Review` モードとします。
+     - どちらも含まれない場合は通常の `レビュー` モードとします。
    - **TARGET_REVISION の特定**:
-     - `{{args}}` から `--claude` または `--codex` を除いた部分を対象リビジョンとします。
+     - `{{args}}` からオプションフラグ（`--claude`, `--codex`, `--gemini`, `-a`, `--adversarial`）を除いた部分を対象リビジョンとします。
      - 除いた結果が空（指定なし）の場合は、デフォルトとして `origin/main...HEAD` を使用してください。
    - 単一のコミットハッシュだけでなく、`origin/main...feature` のようなコミット範囲や、`HEAD~3` のような相対指定も受け入れられるようにします。
 
 3. **外部レビューと修正の依頼**:
-   - 特定したツール（codex または claude）と `TARGET_REVISION` を使用して、外部レビューを実行してください。
+   - 特定したツール（codex または claude または gemini）、判定したモード、`TARGET_REVISION` を使用して、外部レビューを実行してください。
    - **Codex を使用する場合**:
-     - `run_shell_command` で `codex exec "対象 [TARGET_REVISION] の変更内容をレビューし..."` を実行してください。
+     - `run_shell_command` で `codex exec "対象 [TARGET_REVISION] の変更内容を [判定したモードに応じて \"Adversarial Review\" または \"レビュー\"] し..."` を実行してください。
    - **Claude を使用する場合**:
-     - `run_shell_command` で `claude --permission-mode \"acceptEdits\" -p \"対象 [TARGET_REVISION] の変更内容をレビューし...\"` を実行してください。
+     - `run_shell_command` で `claude --permission-mode \"acceptEdits\" -p \"対象 [TARGET_REVISION] の変更内容を [判定したモードに応じて \"Adversarial Review\" または \"レビュー\"] し...\"` を実行してください。
+   - **Gemini を使用する場合**:
+     - `run_shell_command` で `gemini -p "対象 [TARGET_REVISION] の変更内容を [判定したモードに応じて \"Adversarial Review\" または \"レビュー\"] し..."` を実行してください。
 
    - プロンプトに含める指示内容（共通）:
      ```
      指示:
-     1. `git log -p [TARGET_REVISION]` または `git show [TARGET_REVISION]` を実行して、含まれる全ての変更内容を分析してください。
+     1. `git log -p [TARGET_REVISION]` または `git show [TARGET_REVISION]` を実行して、含まれる全ての変更内容を [判定したモードに応じて "Adversarial Review" または "レビュー"] してください。
      2. セキュリティ、パフォーマンス、可読性、アーキテクチャの観点からレビューを行ってください。
      3. 改善点が見つかった場合、利用可能なツールを使って該当ファイルを直接編集し、修正を適用してください。
      4. どのような問題をどのように修正したか、実行結果として簡潔に出力してください。
@@ -50,4 +56,3 @@ argument-hint: "[--claude|--codex] [target_revision] (default: codex, target: or
      - 新たなバグや構文エラーが混入していないか
      - プロジェクトの規約に反していないか
    - 検証結果（変更の妥当性、問題の有無）をユーザーに報告してください。問題があればどのように直すべきかも提案してください。
-
