@@ -209,6 +209,15 @@
       "pluginName": "mattpocock-skills",
       "installedAt": "2026-05-22T06:29:17.823Z",
       "updatedAt": "2026-05-22T06:29:17.823Z"
+    },
+    "resolve-merge-conflicts": {
+      "source": "warpdotdev/common-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/warpdotdev/common-skills.git",
+      "skillPath": ".agents/skills/resolve-merge-conflicts/SKILL.md",
+      "skillFolderHash": "f62fff286d3ba22ae59e8c99c3ad0b5c96a5a8e8",
+      "installedAt": "2026-05-26T07:10:08.668Z",
+      "updatedAt": "2026-05-26T07:10:08.668Z"
     }
   },
   "dismissed": {
