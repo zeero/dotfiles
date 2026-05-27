@@ -73,7 +73,6 @@ brew 'universal-ctags'
 brew 'cmigemo'
 brew 'the_silver_searcher'
 brew 'the_platinum_searcher'
-brew 'jq'  # json parser
 brew 'jvgrep'
 brew 'neovim'
 cask 'vimr'
@@ -121,6 +120,14 @@ brew 'pyright'
 brew 'sqlite'
 brew 'go-task'
 brew 'ruff' # python formatter
+brew 'ast-grep'
+brew 'shellcheck'
+brew 'sd'  # sed alternative
+brew 'scc' # Source Counter
+brew 'jq'  # json parser
+brew 'yq'  # multi parser
+brew 'hyperfine'  # Command-line benchmarking tool
+brew 'watchexec'  # Execute commands when watched files change
 
 # AppStore {{{1
 brew 'mas'

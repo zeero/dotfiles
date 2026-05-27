@@ -98,6 +98,8 @@
   * CLI
     * `gh`: GitHub CLI
     * `jq`: JSON Parser
+    * `ast-grep`: 構造検索・置換
+    * `shellcheck`: Shell Checker
     * `jsonlint`: Json Linter
     * `yamllint`: YAML Linter
     * `rg`: 高速grep
