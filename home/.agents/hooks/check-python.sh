@@ -23,7 +23,7 @@ if [[ "$TOOL_NAME" =~ ^(Edit|Write|apply_patch|replace|write_file|mcp_serena_.*)
     CHECK_OUTPUT=$(ruff check --fix . 2>&1)
     CHECK_EXIT_CODE=$?
 
-    FORMAT_OUTPUT=$(ruff format "$FILE_PATH" 2>&1)
+    FORMAT_OUTPUT=$(ruff format . 2>&1)
     FORMAT_EXIT_CODE=$?
 
     # 2. Pyright による型チェック
