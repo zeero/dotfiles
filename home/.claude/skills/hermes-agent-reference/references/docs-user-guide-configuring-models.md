@@ -1,0 +1,259 @@
+[Skip to main content](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#__docusaurus_skipToContent_fallback)
+
+On this page
+
+Hermes uses two kinds of model slots:
+
+- **Main model** — what the agent thinks with. Every user message, every tool-call loop, every streamed response goes through this model.
+- **Auxiliary models** — smaller side-jobs the agent offloads. Context compression, vision (image analysis), web-page summarization, approval scoring, MCP tool routing, session-title generation, and skill search. Each has its own slot and can be overridden independently.
+
+This page covers configuring both from the dashboard. If you prefer config files or the CLI, jump to [Alternative methods](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#alternative-methods) at the bottom.
+
+Fastest path: Nous Portal
+
+[Nous Portal](https://hermes-agent.nousresearch.com/docs/user-guide/features/tool-gateway) provides 300+ models under one subscription. On a fresh install, run `hermes setup --portal` to log in and set Nous as your provider in one command. Inspect what's wired up with `hermes portal status`.
+
+## The Models page [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#the-models-page "Direct link to The Models page")
+
+Open the dashboard and click **Models** in the sidebar. You get two sections:
+
+1. **Model Settings** — the top panel, where you assign models to slots.
+2. **Usage analytics** — ranked cards showing every model that ran a session in the selected period, with token counts, cost, and capability badges.
+
+![Models page overview](https://hermes-agent.nousresearch.com/docs/assets/images/overview-7ea6bbb1b2b6a12e2ff92ae07084c434.png)
+
+The top card is the **Model Settings** panel. The main row always shows what the agent will spin up for new sessions. Click **Change** to open the picker.
+
+## Setting the main model [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#setting-the-main-model "Direct link to Setting the main model")
+
+Click **Change** on the Main model row:
+
+![Model picker dialog](https://hermes-agent.nousresearch.com/docs/assets/images/picker-dialog-6fa8d5ea35b1ebcbad9b1e862822bf91.png)
+
+The picker has two columns:
+
+- **Left** — authenticated providers. Only providers you've set up (API key set, OAuth'd, or defined as a custom endpoint) show up here. If a provider is missing, head to **Keys** and add its credential.
+- **Right** — the curated model list for the selected provider. These are the agentic models Hermes recommends for that provider, not the raw `/models` dump (which on OpenRouter includes 400+ models including TTS, image generators, and rerankers).
+
+Type in the filter box to narrow by provider name, slug, or model ID.
+
+Pick a model, hit **Switch**, and Hermes writes it to `~/.hermes/config.yaml` under the `model` section. **This applies to new sessions only** — any chat tab you already have open keeps running whatever model it started with. To hot-swap the current chat, use the `/model` slash command inside it.
+
+## Setting auxiliary models [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#setting-auxiliary-models "Direct link to Setting auxiliary models")
+
+Click **Show auxiliary** to reveal the eight task slots:
+
+![Auxiliary panel expanded](https://hermes-agent.nousresearch.com/docs/assets/images/auxiliary-expanded-bc717f35df24e9d19ca45d5086688b56.png)
+
+Every auxiliary task defaults to `auto` — meaning Hermes uses your main model for that job too. Override a specific task when you want a cheaper or faster model for a side-job.
+
+### Common override patterns [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#common-override-patterns "Direct link to Common override patterns")
+
+| Task | When to override |
+| --- | --- |
+| **Title Gen** | Almost always. A $0.10/M flash model writes session titles as well as Opus. Default config sets this to `google/gemini-3-flash-preview` on OpenRouter. |
+| **Vision** | When your main model is a coding model without vision (e.g. Kimi, DeepSeek). Point it at `google/gemini-2.5-flash` or `gpt-4o-mini`. |
+| **Compression** | When you're burning reasoning tokens on Opus/M2.7 just to summarize context. A fast chat model does the job at 1/50th the cost. |
+| **Approval** | For `approval_mode: smart` — a fast/cheap model (haiku, flash, gpt-5-mini) decides whether to auto-approve low-risk commands. Expensive models here are waste. |
+| **Web Extract** | When you use `web_extract` heavily. Same logic as compression — summarization doesn't need reasoning. |
+| **Skills Hub** | `hermes skills search` uses this. Usually fine at `auto`. |
+| **MCP** | MCP tool routing. Usually fine at `auto`. |
+
+### Per-task override [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#per-task-override "Direct link to Per-task override")
+
+Click **Change** on any auxiliary row. Same picker opens, same behavior — pick provider + model, hit Switch. The row updates to show `provider · model` instead of `auto (use main model)`.
+
+### Reset all to auto [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#reset-all-to-auto "Direct link to Reset all to auto")
+
+If you've over-tuned and want to start over, click **Reset all to auto** at the top of the auxiliary section. Every slot goes back to using your main model.
+
+## The "Use as" shortcut [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#the-use-as-shortcut "Direct link to The \"Use as\" shortcut")
+
+Every model card on the page has a **Use as** dropdown. This is the fast path — pick a model you see in your analytics, click **Use as**, and assign it to the main slot or any specific auxiliary task in one click:
+
+![Use as dropdown](https://hermes-agent.nousresearch.com/docs/assets/images/use-as-dropdown-6795915e52daf2b74eb099fe11fde7ac.png)
+
+The dropdown has:
+
+- **Main model** — same as clicking Change on the main row.
+- **All auxiliary tasks** — assigns this model to all 8 aux slots at once. Useful when you just want every side-job on a cheap flash model.
+- **Individual task options** — Vision, Web Extract, Compression, etc. The currently-assigned model for each task is marked `current`.
+
+Cards are badged with `main` or `aux · <task>` when they're currently assigned to something — so you can see at a glance which of your historical models are wired in where.
+
+## What gets written to `config.yaml` [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#what-gets-written-to-configyaml "Direct link to what-gets-written-to-configyaml")
+
+When you save via the dashboard, Hermes writes to `~/.hermes/config.yaml`:
+
+**Main model:**
+
+```yaml
+model:
+  provider: openrouter
+  default: anthropic/claude-opus-4.7
+  base_url: ''        # cleared on provider switch
+  api_mode: chat_completions
+```
+
+**Auxiliary override (example — vision on gemini-flash):**
+
+```yaml
+auxiliary:
+  vision:
+    provider: openrouter
+    model: google/gemini-2.5-flash
+    base_url: ''
+    api_key: ''
+    timeout: 120
+    extra_body: {}
+    download_timeout: 30
+```
+
+**Auxiliary on auto (default):**
+
+```yaml
+auxiliary:
+  compression:
+    provider: auto
+    model: ''
+    base_url: ''
+    # ... other fields unchanged
+```
+
+`provider: auto` with `model: ''` tells Hermes to use the main model for that task.
+
+## When does it take effect? [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#when-does-it-take-effect "Direct link to When does it take effect?")
+
+- **CLI** (`hermes chat`): next `hermes chat` invocation.
+- **Gateway** (Telegram, Discord, Slack, etc.): next _new_ session. Existing sessions keep their model. Restart the gateway (`hermes gateway restart`) if you want to force all sessions to pick up the change.
+- **Dashboard chat tab** (`/chat`): next new PTY. The currently-open chat keeps its model — use `/model` inside it to hot-swap.
+
+Changes never invalidate prompt caches on running sessions. That's deliberate: swapping the main model inside a session requires a cache reset (the system prompt contains model-specific content), and we reserve that for the explicit `/model` slash command inside chat.
+
+## Troubleshooting [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#troubleshooting "Direct link to Troubleshooting")
+
+### "No authenticated providers" in the picker [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#no-authenticated-providers-in-the-picker "Direct link to \"No authenticated providers\" in the picker")
+
+Hermes lists a provider only if it has a working credential. Check **Keys** in the sidebar — you should see one of: an API key, a successful OAuth, or a custom endpoint URL. If the provider you want isn't there, run `hermes setup` to wire it up, or go to **Keys** and add the env var.
+
+### Main model didn't change in my running chat [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#main-model-didnt-change-in-my-running-chat "Direct link to Main model didn't change in my running chat")
+
+Expected. The dashboard writes `config.yaml`, which new sessions read. The currently-open chat is a live agent process — it keeps whatever model it was spawned with. Use `/model <name>` inside the chat to hot-swap that specific session.
+
+### Auxiliary override "didn't take effect" [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#auxiliary-override-didnt-take-effect "Direct link to Auxiliary override \"didn't take effect\"")
+
+Three things to check:
+
+1. **Did you start a new session?** Existing chats don't re-read config.
+2. **Is `provider` set to something other than `auto`?** If the field shows `auto`, the task is still using your main model. Click **Change** and pick a real provider.
+3. **Is the provider authenticated?** If you assigned `minimax` to a task but don't have a MiniMax API key, that task falls back to the openrouter default and logs a warning in `agent.log`.
+
+### I picked a model but Hermes switched providers on me [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#i-picked-a-model-but-hermes-switched-providers-on-me "Direct link to I picked a model but Hermes switched providers on me")
+
+On OpenRouter (or any aggregator), bare model names resolve _within_ the aggregator first. So `claude-sonnet-4` on OpenRouter becomes `anthropic/claude-sonnet-4.6`, staying on your OpenRouter auth. But if you typed `claude-sonnet-4` on a native Anthropic auth, it would stay as `claude-sonnet-4-6`. If you see an unexpected provider switch, check that your current provider is what you expect — the picker always shows the current main at the top of the dialog.
+
+## Alternative methods [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#alternative-methods "Direct link to Alternative methods")
+
+### CLI slash command [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#cli-slash-command "Direct link to CLI slash command")
+
+Inside any `hermes chat` session:
+
+```text
+/model gpt-5.4 --provider openrouter             # session-only
+/model gpt-5.4 --provider openrouter --global    # also persists to config.yaml
+```
+
+`--global` does the same thing the dashboard's **Change** button does, plus it switches the running session in-place.
+
+### Custom aliases [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#custom-aliases "Direct link to Custom aliases")
+
+Define your own short names for models you reach for often, then use `/model <alias>` in the CLI or any messaging platform:
+
+```yaml
+# ~/.hermes/config.yaml
+model_aliases:
+  fav:
+    model: claude-sonnet-4.6
+    provider: anthropic
+  grok:
+    model: grok-4
+    provider: x-ai
+```
+
+Or from the shell (short form, `provider/model`):
+
+```bash
+hermes config set model.aliases.fav anthropic/claude-opus-4.6
+hermes config set model.aliases.grok x-ai/grok-4
+```
+
+Then `/model fav` or `/model grok` in chat. User aliases shadow built-in short names (`sonnet`, `kimi`, `opus`, etc.). See [Custom model aliases](https://hermes-agent.nousresearch.com/docs/reference/slash-commands#custom-model-aliases) for the full reference.
+
+### `hermes model` subcommand [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#hermes-model-subcommand "Direct link to hermes-model-subcommand")
+
+```bash
+hermes model            # Interactive provider + model picker (the canonical way to switch defaults)
+```
+
+`hermes model` walks you through picking a provider, authenticating (OAuth flows open a browser; API-key providers prompt for the key), and then choosing a specific model from that provider's curated catalog. The choice is written to `model.provider` and `model.model` in `~/.hermes/config.yaml`.
+
+To list providers/models without launching the picker, use the dashboard or the REST endpoints below. To inspect what the CLI will actually use right now: `hermes config get model` and `hermes status`.
+
+### Direct config edit [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#direct-config-edit "Direct link to Direct config edit")
+
+Edit `~/.hermes/config.yaml` and restart whatever reads it. See the [Configuration reference](https://hermes-agent.nousresearch.com/docs/user-guide/configuration) for the full schema.
+
+### REST API [​](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models\#rest-api "Direct link to REST API")
+
+The dashboard uses three endpoints. Useful for scripting:
+
+```bash
+# List authenticated providers + curated model lists
+curl -H "X-Hermes-Session-Token: $TOKEN" http://localhost:PORT/api/model/options
+
+# Read current main + auxiliary assignments
+curl -H "X-Hermes-Session-Token: $TOKEN" http://localhost:PORT/api/model/auxiliary
+
+# Set the main model
+curl -X POST -H "Content-Type: application/json" -H "X-Hermes-Session-Token: $TOKEN" \
+  -d '{"scope":"main","provider":"openrouter","model":"anthropic/claude-opus-4.7"}' \
+  http://localhost:PORT/api/model/set
+
+# Override a single auxiliary task
+curl -X POST -H "Content-Type: application/json" -H "X-Hermes-Session-Token: $TOKEN" \
+  -d '{"scope":"auxiliary","task":"vision","provider":"openrouter","model":"google/gemini-2.5-flash"}' \
+  http://localhost:PORT/api/model/set
+
+# Assign one model to every auxiliary task
+curl -X POST -H "Content-Type: application/json" -H "X-Hermes-Session-Token: $TOKEN" \
+  -d '{"scope":"auxiliary","task":"","provider":"openrouter","model":"google/gemini-2.5-flash"}' \
+  http://localhost:PORT/api/model/set
+
+# Reset all auxiliary tasks to auto
+curl -X POST -H "Content-Type: application/json" -H "X-Hermes-Session-Token: $TOKEN" \
+  -d '{"scope":"auxiliary","task":"__reset__","provider":"","model":""}' \
+  http://localhost:PORT/api/model/set
+```
+
+The session token is injected into the dashboard HTML at startup and rotates on every server restart. Grab it from the browser devtools (`window.__HERMES_SESSION_TOKEN__`) if you're scripting against a running dashboard.
+
+- [The Models page](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#the-models-page)
+- [Setting the main model](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#setting-the-main-model)
+- [Setting auxiliary models](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#setting-auxiliary-models)
+  - [Common override patterns](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#common-override-patterns)
+  - [Per-task override](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#per-task-override)
+  - [Reset all to auto](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#reset-all-to-auto)
+- [The "Use as" shortcut](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#the-use-as-shortcut)
+- [What gets written to `config.yaml`](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#what-gets-written-to-configyaml)
+- [When does it take effect?](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#when-does-it-take-effect)
+- [Troubleshooting](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#troubleshooting)
+  - ["No authenticated providers" in the picker](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#no-authenticated-providers-in-the-picker)
+  - [Main model didn't change in my running chat](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#main-model-didnt-change-in-my-running-chat)
+  - [Auxiliary override "didn't take effect"](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#auxiliary-override-didnt-take-effect)
+  - [I picked a model but Hermes switched providers on me](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#i-picked-a-model-but-hermes-switched-providers-on-me)
+- [Alternative methods](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#alternative-methods)
+  - [CLI slash command](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#cli-slash-command)
+  - [Custom aliases](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#custom-aliases)
+  - [`hermes model` subcommand](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#hermes-model-subcommand)
+  - [Direct config edit](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#direct-config-edit)
+  - [REST API](https://hermes-agent.nousresearch.com/docs/user-guide/configuring-models#rest-api)
