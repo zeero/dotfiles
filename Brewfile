@@ -128,6 +128,7 @@ brew 'jq'  # json parser
 brew 'yq'  # multi parser
 brew 'hyperfine'  # Command-line benchmarking tool
 brew 'watchexec'  # Execute commands when watched files change
+brew 'glow' # markdown viewer
 
 # AppStore {{{1
 brew 'mas'
