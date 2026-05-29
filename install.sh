@@ -18,7 +18,7 @@ read -p "Press Enter to resume..."
 task install:symlink
 
 # git config
-task install:git-config
+task install:git-setup
 
 echo gitのuser.name/user.email/github.userを設定してください
 echo git config --global user.name zeero

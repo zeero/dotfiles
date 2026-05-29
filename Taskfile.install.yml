@@ -7,7 +7,7 @@ tasks:
       - task: mkdir
       - task: brew
       - task: symlink
-      - task: git-config
+      - task: git-setup
       - task: toolchains
       - task: osx-defaults
 
@@ -28,10 +28,11 @@ tasks:
     cmds:
       - ./scripts/symlink.sh
 
-  git-config:
+  git-setup:
     desc: "Setup global git configurations"
     cmds:
       - bash ./scripts/git_config.sh
+      - gh extension install dlvhdr/gh-dash
 
   toolchains:
     desc: "Install toolchains and languages"
