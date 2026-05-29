@@ -218,6 +218,15 @@
       "skillFolderHash": "f62fff286d3ba22ae59e8c99c3ad0b5c96a5a8e8",
       "installedAt": "2026-05-26T07:10:08.668Z",
       "updatedAt": "2026-05-26T07:10:08.668Z"
+    },
+    "visual-explainer": {
+      "source": "nicobailon/visual-explainer",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/nicobailon/visual-explainer.git",
+      "skillPath": "plugins/visual-explainer/SKILL.md",
+      "skillFolderHash": "2e703a2798bb55fb6aef723fbf79cd804cb1750f",
+      "installedAt": "2026-05-29T03:41:34.262Z",
+      "updatedAt": "2026-05-29T03:41:34.262Z"
     }
   },
   "dismissed": {
@@ -236,6 +245,7 @@
     "github-copilot",
     "kimi-cli",
     "opencode",
-    "warp"
+    "warp",
+    "zed"
   ]
 }
