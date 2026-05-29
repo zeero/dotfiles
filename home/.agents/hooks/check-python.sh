@@ -12,7 +12,7 @@ TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name')
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file // .tool_input.path // .tool_input.relative_path // .tool_input.file_path // empty')
 
 # 編集系ツールかつPythonファイルの場合のみ実行し、無駄なプロセス起動を避けます。
-if [[ "$TOOL_NAME" =~ ^(Edit|Write|apply_patch|replace|write_file|mcp_serena_.*)$ ]] && [[ "$FILE_PATH" == *.py ]]; then
+if [[ "$TOOL_NAME" =~ ^(Edit|Write|edit|write|apply_patch|replace|write_file|mcp_serena_.*)$ ]] && [[ "$FILE_PATH" == *.py ]]; then
     
     # 実行中のタスクを伝えるため、進捗を標準エラーに出力します。
     echo "[HOOK] Running python checks (Ruff & Pyright) for $FILE_PATH..." >&2

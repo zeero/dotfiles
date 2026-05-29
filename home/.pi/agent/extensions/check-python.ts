@@ -14,8 +14,15 @@ export default function (pi: ExtensionAPI) {
     ctx.ui.setStatus("pyright", `Checking ${input.path}...`);
 
     try {
-      // pyrightを実行 (変更されたファイルのみを対象にする)
-      const result = await pi.exec("pyright", [input.path], { signal: ctx.signal });
+      // check-python.sh を実行 (JSON入力を渡して Ruff & Pyright & Git をチェック)
+      const payload = JSON.stringify({
+        tool_name: event.toolName,
+        tool_input: { path: input.path }
+      });
+
+      // sh -c を利用して標準入力に JSON を渡す
+      const hookScript = process.env.HOME + "/.agents/hooks/check-python.sh";
+      const result = await pi.exec("sh", ["-c", `echo '${payload}' | bash "${hookScript}"`], { signal: ctx.signal });
 
       // ステータスをクリア
       ctx.ui.setStatus("pyright", "");
@@ -23,16 +30,28 @@ export default function (pi: ExtensionAPI) {
       let statusMsg = "";
       let additionalText = "";
 
-      if (result.code === 0) {
-        statusMsg = "✅ Pyright: No type errors found.";
-        additionalText = `\n\n[Pyright] Check passed for ${input.path}.`;
-        ctx.ui.notify(statusMsg, "info");
-      } else {
-        statusMsg = "❌ Pyright: Type errors detected!";
-        // result.stdout/stderr を含める。
-        const output = result.stdout || result.stderr || "No output from pyright.";
-        additionalText = `\n\n[Pyright] Found errors in ${input.path}:\n\n${output}`;
-        ctx.ui.notify(statusMsg, "error");
+      try {
+        const json = JSON.parse(result.stdout || "{}");
+        statusMsg = json.systemMessage || "Python checks completed.";
+        additionalText = `\n\n${json.hookSpecificOutput?.additionalContext || "No additional context provided."}`;
+        
+        if (statusMsg.includes("✅")) {
+          ctx.ui.notify(statusMsg, "info");
+        } else if (statusMsg.includes("⚠️") || statusMsg.includes("❌")) {
+          ctx.ui.notify(statusMsg, "error");
+        }
+      } catch (e) {
+        // JSONパース失敗時は {code} に基づいて判断
+        if (result.code === 0) {
+          statusMsg = "✅ Python checks passed.";
+          additionalText = `\n\nPython checks completed for ${input.path}.`;
+          ctx.ui.notify(statusMsg, "info");
+        } else {
+          statusMsg = "❌ Python checks failed!";
+          const output = result.stdout || result.stderr || "No output from hook script.";
+          additionalText = `\n\n[Python Hooks] Found issues in ${input.path}:\n\n${output}`;
+          ctx.ui.notify(statusMsg, "error");
+        }
       }
 
       // 既存の content に追加する
