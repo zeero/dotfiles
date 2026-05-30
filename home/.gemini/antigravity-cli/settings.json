@@ -1,5 +1,7 @@
 {
+  "allowNonWorkspaceAccess": true,
   "colorScheme": "tokyo night",
+  "model": "Gemini 3.5 Flash (Low)",
   "notifications": true,
   "permissions": {
     "allow": [
@@ -12,7 +14,13 @@
       "command(git status)",
       "command(git diff)",
       "command(which)",
-      "command(firecrawl)"
+      "command(firecrawl)",
+      "command(wc)",
+      "command(grep)",
+      "command(sort)",
+      "command(cut)",
+      "command(uniq)",
+      "command(n8n)"
     ]
   },
   "statusLine": {
