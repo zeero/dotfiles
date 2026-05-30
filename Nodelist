@@ -10,6 +10,7 @@ ccundo
 cc-sdd
 git+ssh://git@github.com:zeero/ccresume.git
 @google/gemini-cli
+@google/jules
 @openai/codex
 @urugus/slack-cli
 context-mode
