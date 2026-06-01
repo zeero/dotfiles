@@ -42,7 +42,7 @@ defaults:
     prApproveComment: LGTM
     issuesLimit: 20
     notificationsLimit: 20
-    view: prs
+    view: issues
     layout:
         prs:
             updatedAt:
@@ -81,7 +81,11 @@ defaults:
                 width: 20
                 hidden: true
     refetchIntervalMinutes: 30
-keybindings: {}
+keybindings:
+  universal:
+    - key: "I"
+      name: new issue
+      command: gh issue create --repo {{.RepoName}} --editor
 repoPaths: {}
 theme:
     ui:
