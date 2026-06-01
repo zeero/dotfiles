@@ -5,6 +5,7 @@ plan_mode_reasoning_effort = "high"
 
 default_permissions = "my-workspace"
 approvals_reviewer = "guardian_subagent"
+
 notify = ["/Users/zeero/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 
 [permissions.my-workspace.filesystem]
@@ -72,16 +73,17 @@ command = "/Applications/Codex.app/Contents/Resources/node_repl"
 startup_timeout_sec = 120
 
 [mcp_servers.node_repl.env]
-BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-BROWSER_USE_MARKETPLACE_NAME = "openai-bundled"
-CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
-CODEX_HOME = "/Users/zeero/.codex"
 NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
 NODE_REPL_NODE_MODULE_DIRS = ""
 NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/node"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "167fdf579477181fba1773c1efb067b00c5a64fe85dafb50a2001bde198dc739"
 NODE_REPL_TRUSTED_CODE_PATHS = "/Users/zeero/.codex"
-NODE_REPL_UNTRUSTED_ENV_ALLOWLIST = "BROWSER_USE_MARKETPLACE_NAME"
+CODEX_HOME = "/Users/zeero/.codex"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "0b0d41e7a14a4903d2f95b0b3f427ed796b12c8edca2fa392a03df43997075ae"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
 
 [plugins."canva@openai-curated"]
 enabled = true
@@ -151,7 +153,7 @@ trusted_hash = "sha256:9fc7312a4a274d40081f6734c6f6553d494e9cfde20fd01339995232a
 trusted_hash = "sha256:9f9b46244739e7f6f787757a083d0d65c07db3aa2daaaecb6fe9e65b08f362b2"
 
 [marketplaces.openai-bundled]
-last_updated = "2026-05-24T10:36:35Z"
+last_updated = "2026-06-01T12:51:32Z"
 source_type = "local"
 source = "/Users/zeero/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
