@@ -1266,7 +1266,7 @@ nnoremap ,gx :<C-u>call vimproc#open(escape('<C-r>%', ' \'))<CR>
 map gX <Plug>(openbrowser-smart-search)
 nnoremap ,gX :<C-u>execute "OpenBrowser " . expand("%:p")<CR>
 " Esc+noh+ZoomReset
-if has('gui_running')
+if has('nvim') || has('gui_running')
   nnoremap <silent> <Esc> <Esc>:<C-u>Noh<CR>:<C-u>ZoomReset<CR>:<C-u>echo<CR>
 endif
 " CopyFileName
