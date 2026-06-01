@@ -66,6 +66,7 @@ token_count_estimator: TIKTOKEN_GPT4O
 projects:
 - /Users/zeero/Documents/memos
 - /Users/zeero/dev/daytrade
+- /Users/zeero/dev/github.com/gemini-cli-extensions/jules
 - /Users/zeero/dev/github.com/zeero/tcmux
 - /Users/zeero/dev/github.com/zeero/tmux-portal
 - /Users/zeero/dev/github.com/zeero/vim-gista
