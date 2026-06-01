@@ -82,6 +82,7 @@ brew 'w3m'
 cask 'claude-code'
 brew 'github-mcp-server'
 cask 'antigravity'
+cask 'copilot-cli'
 
 # My Formulas {{{1
 brew 'zeero/tap/go-gtran'

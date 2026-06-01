@@ -43,6 +43,11 @@ find ${DOTFILES}/home/.gemini/antigravity-cli -depth 1 -exec ln -sfh {} ~/.gemin
 ln -sfh ${DOTFILES}/home/.claude/CLAUDE.md ~/.gemini/GEMINI.md
 ln -sfh ${DOTFILES}/home/.claude/skills ~/.gemini/antigravity-cli/skills
 
+# GitHub Copilot
+mkdir -p ~/.copilot
+find ${DOTFILES}/home/.copilot -depth 1 -exec ln -sfh {} ~/.copilot \;
+ln -sfh ${DOTFILES}/home/.claude/CLAUDE.md ~/.copilot/copilot-instructions.md
+
 # Pi
 mkdir -p ~/.pi/agent/extensions
 # ~/AGENTS.md 読んでくれてそう
