@@ -1,7 +1,7 @@
 {
   "allowNonWorkspaceAccess": true,
   "colorScheme": "tokyo night",
-  "model": "Gemini 3.5 Flash (Low)",
+  "model": "GPT-OSS 120B (Medium)",
   "notifications": true,
   "permissions": {
     "allow": [
@@ -21,7 +21,8 @@
       "command(cut)",
       "command(uniq)",
       "command(n8n)",
-      "command(diff)"
+      "command(diff)",
+      "command(uv)"
     ]
   },
   "statusLine": {
