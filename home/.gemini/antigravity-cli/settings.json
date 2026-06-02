@@ -20,7 +20,8 @@
       "command(sort)",
       "command(cut)",
       "command(uniq)",
-      "command(n8n)"
+      "command(n8n)",
+      "command(diff)"
     ]
   },
   "statusLine": {
