@@ -1279,6 +1279,13 @@ function! s:my_copy_path()
     let path = substitute(path, '/', '\\', 'g')
   endif
   let @* = path
+  echo 'Copied file path: ' . expand('%:t')
+endfunction
+nnoremap g<C-y> :<C-u>MyCopyContent<CR>
+command! -nargs=0 MyCopyContent call s:my_copy_content()
+function! s:my_copy_content()
+  let @* = join(getline(1, '$'), "\n")
+  echo 'Copied file content: ' . expand('%:t')
 endfunction
 " 行の最後ならxで後方削除
 nnoremap <expr> x virtcol(".") == virtcol("$") ? 'X' : 'x'
