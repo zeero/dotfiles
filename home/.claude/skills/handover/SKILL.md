@@ -18,16 +18,11 @@ argument-hint: [特に重点的に残して欲しいこと]
 
 ### 1. 既存ファイルのクリーンアップ
 
-- `.claude/` ディレクトリが存在するか確認し、存在しない場合は作成: `mkdir -p .claude`
-- `.claude/HANDOVER.md` が既に存在するか **Bash で `test -f` を使って確認**する
-  - **⚠️ 重要: 既存の HANDOVER.md を Read ツールで読み込んではならない**（前回の記述に引きずられ、今回のセッション固有の情報が薄まるため）
-  - 存在する場合は、以下の手順で `.claude/HANDOVER.zip` にバックアップしてから削除する:
-    1. 前回日付は !`grep -m1 '^date:' .claude/HANDOVER.md | sed 's/date:[[:space:]]*//' || stat -f %Sm -t %Y-%m-%dT%H-%M-%S .claude/HANDOVER.md` とする
-       （フロントマターに `date:` があればその値、なければファイルの mtime を使用）
-    2. 日付付きファイル名にリネーム:
-       `mv .claude/HANDOVER.md .claude/HANDOVER-{前回日付}.md`
-    3. zip に追加（`-rm` で追加後にファイルを自動削除、なければ新規作成）:
-       `zip -jrm .claude/HANDOVER.zip .claude/HANDOVER-{前回日付}.md`
+- **⚠️ 重要: 既存の HANDOVER.md を Read ツールで読み込んではならない**（前回の記述に引きずられ、今回のセッション固有の情報が薄まるため）
+- この skill の `scripts/cleanup_handover.sh` を、対象プロジェクトのルートで Bash 実行する
+  - `.claude/` がなければ作成する
+  - `.claude/HANDOVER.md` が存在する場合のみ、`date:` または mtime から退避名を決める
+  - `.claude/HANDOVER-{前回日付}.md` として `.claude/HANDOVER.zip` に追加し、追加後の一時ファイルは削除する
 
 ### 2. セッション内容の分析
 
