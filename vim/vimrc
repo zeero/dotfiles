@@ -1023,7 +1023,7 @@ endfunction "}}}
 " 通知 {{{3
 function! s:my_notify(message) "{{{
   if has('mac') && executable('alerter')
-    call vimproc#system_bg('alerter --message "' . a:message . '" --timeout 60')
+    call vimproc#system_bg('alerter --message "' . a:message . '" --timeout 10')
   else
     echo a:message
   endif
