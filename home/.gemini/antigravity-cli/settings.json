@@ -22,7 +22,9 @@
       "command(uniq)",
       "command(n8n)",
       "command(diff)",
-      "command(uv)"
+      "command(uv)",
+      "command(gh)",
+      "command(jules)"
     ]
   },
   "statusLine": {
