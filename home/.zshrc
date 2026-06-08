@@ -243,13 +243,13 @@ giwt() {
   # tmux環境下ならデフォルトは新ウィンドウ作成（-i 指定時はcdのみ）
   if [[ -n "$TMUX" ]]; then
     if [[ $inline -eq 1 ]]; then
-      cd "$worktree_path"
+      cd "$worktree_path" || return 1
       tmux rename-window "$branch"
     else
       tmux new-window -n "$branch" -c "$worktree_path"
     fi
   else
-    cd "$worktree_path"
+    cd "$worktree_path" || return 1
   fi
 }
 
