@@ -119,6 +119,28 @@ pdfmerge() {
   gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=$outfile $infile
 }
 
+### _git_worktree_candidates {{{2
+_git_worktree_candidates() {
+  local exclude_path="$1"
+  local field worktree_path branch
+
+  while IFS= read -r -d '' field; do
+    if [[ -z "$field" ]]; then
+      if [[ -n "$worktree_path" && -n "$branch" && "$worktree_path" != "$exclude_path" ]]; then
+        print -r -- "${worktree_path:t}"$'\t'"$worktree_path"$'\t'"$branch"
+      fi
+      worktree_path=''
+      branch=''
+      continue
+    fi
+
+    case "$field" in
+      'worktree '*) worktree_path="${field#worktree }" ;;
+      'branch refs/heads/'*) branch="${field#branch refs/heads/}" ;;
+    esac
+  done < <(git worktree list --porcelain -z)
+}
+
 ### giwt {{{2
 giwt() {
   local force=0
@@ -151,14 +173,12 @@ giwt() {
     if [[ $# -eq 0 ]]; then
       # fzfでworktreeを選択（mainは除外）
       local selected
-      selected=$(git worktree list | awk 'NR>1 {
-        n=split($1, a, "/"); gsub(/[\[\]]/, "", $3)
-        print a[n] "|" $1 "|" $3
-      }' | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%} \
-        --delimiter '|' --with-nth '1' \
+      selected=$(_git_worktree_candidates "$repo_root" |
+        fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%} \
+        --delimiter=$'\t' --with-nth '1' \
         --preview 'git -C {2} log --oneline -20')
       [[ -z "$selected" ]] && return 0
-      branch=$(echo "$selected" | awk -F'|' '{print $3}')
+      branch="${selected##*$'\t'}"
     else
       branch="$1"
     fi
@@ -236,15 +256,13 @@ giwt() {
 ### _fzf-git_worktree {{{2
 _fzf-git_worktree() {
   local selected branch
-  # "basename|fullpath|branch" 形式で渡し、表示はbasename、プレビューはfullpath、giwtにはbranchを渡す
-  selected=$(git worktree list | awk '{
-    n=split($1, a, "/"); gsub(/[\[\]]/, "", $3)
-    print a[n] "|" $1 "|" $3
-  }' | fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%} \
-    --delimiter '|' --with-nth '1' \
+  # "basename<TAB>fullpath<TAB>branch" 形式で渡し、表示はbasename、プレビューはfullpath、giwtにはbranchを渡す
+  selected=$(_git_worktree_candidates '' |
+    fzf-tmux --reverse -d ${FZF_TMUX_HEIGHT:-40%} \
+    --delimiter=$'\t' --with-nth '1' \
     --preview 'git -C {2} log --oneline -20')
   if [ -n "$selected" ]; then
-    branch=$(echo "$selected" | awk -F'|' '{print $3}')
+    branch="${selected##*$'\t'}"
     BUFFER="giwt $branch"
     zle accept-line
     return 0
