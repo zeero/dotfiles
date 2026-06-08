@@ -3,3 +3,4 @@ git+https://github.com/jszakmeister/markdown2ctags
 claude-code-log
 yamllint
 pip-search
+sqlit-tui
