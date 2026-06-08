@@ -137,6 +137,13 @@ giwt() {
     esac
   done
 
+  local git_common_dir
+  git_common_dir=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || {
+    echo 'Not inside a Git repository.'
+    return 1
+  }
+  local repo_root="${git_common_dir:h}"
+
   # --- 削除モード ---
   if [[ $delete -eq 1 ]]; then
     local branch
@@ -156,7 +163,7 @@ giwt() {
       branch="$1"
     fi
 
-    local worktree_path=".worktrees/${branch}"
+    local worktree_path="${repo_root}/.worktrees/${branch}"
 
     # マージ済み確認（-D なら警告のみ）
     if [[ $force -eq 0 ]]; then
@@ -190,7 +197,7 @@ giwt() {
   fi
 
   local branch="$1"
-  local worktree_path=".worktrees/${branch}"
+  local worktree_path="${repo_root}/.worktrees/${branch}"
 
   # ワークツリーが存在しない場合は作成
   if [[ ! -d "$worktree_path" ]]; then
