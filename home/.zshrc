@@ -194,11 +194,23 @@ giwt() {
 
   # ワークツリーが存在しない場合は作成
   if [[ ! -d "$worktree_path" ]]; then
-    # ブランチが存在しない場合のみ作成
-    if ! git show-ref --verify --quiet "refs/heads/${branch}"; then
-      git branch "$branch" || return 1
+    if git show-ref --verify --quiet "refs/heads/${branch}"; then
+      git worktree add "$worktree_path" "$branch" || return 1
+    else
+      local remote_refs
+      local -a remote_branches
+      remote_refs=$(git for-each-ref --format='%(refname:short)' "refs/remotes/*/${branch}")
+      [[ -n "$remote_refs" ]] && remote_branches=("${(@f)remote_refs}")
+
+      if (( ${#remote_branches[@]} == 1 )); then
+        git worktree add --track -b "$branch" "$worktree_path" "$remote_branches[1]" || return 1
+      elif (( ${#remote_branches[@]} > 1 )); then
+        echo "Branch '${branch}' exists on multiple remotes. Create the local branch explicitly."
+        return 1
+      else
+        git worktree add -b "$branch" "$worktree_path" || return 1
+      fi
     fi
-    git worktree add "$worktree_path" "$branch" || return 1
   fi
 
   # tmux環境下ならデフォルトは新ウィンドウ作成（-i 指定時はcdのみ）
