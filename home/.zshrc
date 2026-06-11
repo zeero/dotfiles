@@ -663,7 +663,7 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 # Desktop notifications for long-running commands in ZSH.
 # SSH接続時はスキップ（リモート環境では通知バックエンドが利用できないため）
 if [[ -z "$SSH_CLIENT" && -z "$SSH_TTY" && -z "$SSH_CONNECTION" ]]; then
-    zinit light marzocchi/zsh-notify
+    zinit light zeero/zsh-notify
 fi
 
 # Zsh completion for docker and docker-compose.
