@@ -227,6 +227,16 @@
       "skillFolderHash": "2e703a2798bb55fb6aef723fbf79cd804cb1750f",
       "installedAt": "2026-05-29T03:41:34.262Z",
       "updatedAt": "2026-05-29T03:41:34.262Z"
+    },
+    "skillify": {
+      "source": "yeachan-heo/oh-my-claudecode",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/yeachan-heo/oh-my-claudecode.git",
+      "skillPath": "skills/skillify/SKILL.md",
+      "skillFolderHash": "ce1dc589dbcdfff271210699d420d4eedb7c07df",
+      "pluginName": "oh-my-claudecode",
+      "installedAt": "2026-06-12T01:02:46.719Z",
+      "updatedAt": "2026-06-12T01:02:46.719Z"
     }
   },
   "dismissed": {
@@ -235,15 +245,14 @@
   "lastSelectedAgents": [
     "amp",
     "antigravity",
+    "antigravity-cli",
     "cline",
     "codex",
     "cursor",
     "deepagents",
-    "dexto",
-    "firebender",
     "gemini-cli",
     "github-copilot",
-    "kimi-cli",
+    "kimi-code-cli",
     "opencode",
     "warp",
     "zed"
