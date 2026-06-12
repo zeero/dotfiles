@@ -6,9 +6,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/avdlee/swiftui-agent-skill.git",
       "skillPath": "swiftui-expert-skill/SKILL.md",
-      "skillFolderHash": "3ad8f8e585a3b5f1c2bd7ee20d73a4ace702d1f3",
+      "skillFolderHash": "063449e502a534af4f94ff9419a11dfce2478ed8",
       "installedAt": "2026-02-02T00:43:53.509Z",
-      "updatedAt": "2026-05-22T06:42:04.982Z"
+      "updatedAt": "2026-06-12T01:09:40.030Z"
     },
     "find-skills": {
       "source": "vercel-labs/skills",
@@ -24,9 +24,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/wshobson/agents.git",
       "skillPath": "plugins/llm-application-dev/skills/prompt-engineering-patterns/SKILL.md",
-      "skillFolderHash": "b2f3f11cc766503e83d73d5420098b925e3dcfe9",
+      "skillFolderHash": "2cdbdcefbd57501994d6a6438cfdea7a70ac49a3",
       "installedAt": "2026-02-02T12:30:47.491Z",
-      "updatedAt": "2026-05-22T06:42:07.928Z"
+      "updatedAt": "2026-06-12T01:10:06.804Z"
     },
     "naming-analyzer": {
       "source": "softaworks/agent-toolkit",
@@ -78,9 +78,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/avdlee/swift-concurrency-agent-skill.git",
       "skillPath": "swift-concurrency/SKILL.md",
-      "skillFolderHash": "bf794e8e288a7865e713ccfe4f51f9efacf6dee5",
+      "skillFolderHash": "1fb2509bd3df27809ff1f8ff0beed2f5b7c51ca6",
       "installedAt": "2026-02-17T23:32:14.972Z",
-      "updatedAt": "2026-05-22T06:42:27.574Z"
+      "updatedAt": "2026-06-12T01:10:17.454Z"
     },
     "swift-testing-expert": {
       "source": "avdlee/swift-testing-agent-skill",
@@ -96,9 +96,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/firecrawl/cli.git",
       "skillPath": "skills/firecrawl-cli/SKILL.md",
-      "skillFolderHash": "4d1d47eabb7d3b82bcd5e19108f81a130688a02c",
+      "skillFolderHash": "10aebcf74562a4ab31666df6d7d7654d183240f8",
       "installedAt": "2026-02-20T06:14:51.539Z",
-      "updatedAt": "2026-05-22T06:42:30.867Z"
+      "updatedAt": "2026-06-12T01:10:21.449Z"
     },
     "n8n-code-javascript": {
       "source": "czlonkowski/n8n-skills",
