@@ -15,6 +15,7 @@ brew 'dart-sdk'
 brew 'kotlin'
 brew 'kdoctor'
 brew 'rust'
+brew 'bun'
 
 # Application {{{1
 cask 'coteditor'
