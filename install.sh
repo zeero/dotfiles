@@ -66,15 +66,13 @@ claude plugin install document-skills@anthropic-agent-skills
 ## context-mode
 claude plugin marketplace add mksglu/context-mode
 claude plugin install context-mode@context-mode
+## compound-engineering
+claude plugin marketplace add EveryInc/compound-engineering-plugin
+claude plugin install compound-engineering
 ## codex-plugin-cc （Codex使える環境のみ）
 # claude plugin marketplace add openai/codex-plugin-cc
 # claude plugin install codex@openai-codex
 # claude "/codex:setup"
-## zeero-dotfiles
-# cd $DOTFILES
-# claude plugin marketplace add ./
-# claude plugin install simple-research@zeero-dotfiles
-# claude plugin install multi-research@zeero-dotfiles
 
 # skills.sh logs
 # npx skills add https://github.com/vercel-labs/skills --skill find-skills

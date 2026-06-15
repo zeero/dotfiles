@@ -41,6 +41,7 @@
       "~/Documents/memos"
     ]
   },
+  "model": "sonnet[1m]",
   "hooks": {
     "PostToolUse": [
       {
@@ -106,7 +107,8 @@
     "pm-market-research@pm-skills": true,
     "superpowers@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
-    "context-mode@context-mode": true
+    "context-mode@context-mode": true,
+    "compound-engineering@compound-engineering-plugin": true
   },
   "extraKnownMarketplaces": {
     "pm-skills": {
@@ -121,6 +123,12 @@
         "source": "github",
         "repo": "mksglu/context-mode"
       }
+    },
+    "compound-engineering-plugin": {
+      "source": {
+        "source": "github",
+        "repo": "EveryInc/compound-engineering-plugin"
+      }
     }
   },
   "language": "Japanese",
@@ -128,6 +136,5 @@
   "promptSuggestionEnabled": false,
   "theme": "dark-ansi",
   "remoteControlAtStartup": true,
-  "agentPushNotifEnabled": true,
-  "model": "sonnet[1m]"
+  "agentPushNotifEnabled": true
 }
