@@ -63,6 +63,10 @@ find ${DOTFILES}/home/.serena -depth 1 -exec ln -sfh {} ~/.serena \;
 mkdir -p ~/.bundle
 find ${DOTFILES}/home/.bundle -type f -depth 1 -exec ln -sfh {} ~/.bundle \;
 
+# Colima
+mkdir -p ~/.colima
+find ${DOTFILES}/home/.colima -depth 1 -exec ln -sfh {} ~/.colima \;
+
 # Docker
 mkdir -p ~/.docker
 find ${DOTFILES}/home/.docker -depth 1 -exec ln -sfh {} ~/.docker \;
