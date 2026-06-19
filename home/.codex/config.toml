@@ -41,7 +41,7 @@ status_line_use_colors = true
 [mcp_servers.serena]
 command = "serena"
 args = ["start-mcp-server", "--project-from-cwd", "--context=codex"]
-startup_timeout_sec = 15.0
+startup_timeout_sec = 30.0
 
 [mcp_servers.serena.tools.write_memory]
 approval_mode = "approve"
