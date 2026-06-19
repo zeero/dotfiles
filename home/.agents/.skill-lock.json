@@ -6,9 +6,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/avdlee/swiftui-agent-skill.git",
       "skillPath": "swiftui-expert-skill/SKILL.md",
-      "skillFolderHash": "063449e502a534af4f94ff9419a11dfce2478ed8",
+      "skillFolderHash": "813404b84a2b3de4f920be8671971bcb014d82ef",
       "installedAt": "2026-02-02T00:43:53.509Z",
-      "updatedAt": "2026-06-12T01:09:40.030Z"
+      "updatedAt": "2026-06-19T09:00:56.503Z"
     },
     "find-skills": {
       "source": "vercel-labs/skills",
@@ -96,72 +96,72 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/firecrawl/cli.git",
       "skillPath": "skills/firecrawl-cli/SKILL.md",
-      "skillFolderHash": "10aebcf74562a4ab31666df6d7d7654d183240f8",
+      "skillFolderHash": "2d9364c3a408c2c048e3880edb79eeb0b6cec7b8",
       "installedAt": "2026-02-20T06:14:51.539Z",
-      "updatedAt": "2026-06-12T01:10:21.449Z"
+      "updatedAt": "2026-06-19T09:00:57.992Z"
     },
     "n8n-code-javascript": {
       "source": "czlonkowski/n8n-skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
       "skillPath": "skills/n8n-code-javascript/SKILL.md",
-      "skillFolderHash": "a38ca421449d436bb3f2275cb7983c26f3379642",
+      "skillFolderHash": "d3e301186e35d122c7db01dcd3a49a90766d1ad9",
       "installedAt": "2026-04-21T23:37:20.135Z",
-      "updatedAt": "2026-05-22T06:42:33.384Z"
+      "updatedAt": "2026-06-19T09:01:00.657Z"
     },
     "n8n-code-python": {
       "source": "czlonkowski/n8n-skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
       "skillPath": "skills/n8n-code-python/SKILL.md",
-      "skillFolderHash": "c59bdfa16380b74e601d9b467c463b0cee472bcd",
+      "skillFolderHash": "0254c372b58816e3f68c3e9b4d69c64211e52be1",
       "installedAt": "2026-04-21T23:37:20.520Z",
-      "updatedAt": "2026-04-21T23:37:20.520Z"
+      "updatedAt": "2026-06-19T09:01:03.220Z"
     },
     "n8n-expression-syntax": {
       "source": "czlonkowski/n8n-skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
       "skillPath": "skills/n8n-expression-syntax/SKILL.md",
-      "skillFolderHash": "ac59d657c64f99b144fb14a055918e4a0820acb6",
+      "skillFolderHash": "3bc6f94245a3176d5669625e624cad4ba02c7d64",
       "installedAt": "2026-04-21T23:37:20.889Z",
-      "updatedAt": "2026-04-21T23:37:20.889Z"
+      "updatedAt": "2026-06-19T09:01:05.801Z"
     },
     "n8n-mcp-tools-expert": {
       "source": "czlonkowski/n8n-skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
       "skillPath": "skills/n8n-mcp-tools-expert/SKILL.md",
-      "skillFolderHash": "467440acd101af1c349bb699e80ad23efef6630f",
+      "skillFolderHash": "22a07ff725d581ad5f79443db7da08e31e76cf76",
       "installedAt": "2026-04-21T23:37:21.261Z",
-      "updatedAt": "2026-05-22T06:42:36.249Z"
+      "updatedAt": "2026-06-19T09:01:08.378Z"
     },
     "n8n-node-configuration": {
       "source": "czlonkowski/n8n-skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
       "skillPath": "skills/n8n-node-configuration/SKILL.md",
-      "skillFolderHash": "96430eadae906cc3971b1ab69d3df28ed4c7c6f3",
+      "skillFolderHash": "fcd356c7a37242de8c1e0130ff79f3ceace105e8",
       "installedAt": "2026-04-21T23:37:21.655Z",
-      "updatedAt": "2026-04-21T23:37:21.655Z"
+      "updatedAt": "2026-06-19T09:01:11.298Z"
     },
     "n8n-validation-expert": {
       "source": "czlonkowski/n8n-skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
       "skillPath": "skills/n8n-validation-expert/SKILL.md",
-      "skillFolderHash": "4e6951f003596046a724e4664740bd27b2ce6d74",
+      "skillFolderHash": "b7e1c964b7eb834d66d9f0158d21f117c1c2808d",
       "installedAt": "2026-04-21T23:37:22.014Z",
-      "updatedAt": "2026-04-21T23:37:22.014Z"
+      "updatedAt": "2026-06-19T09:01:13.815Z"
     },
     "n8n-workflow-patterns": {
       "source": "czlonkowski/n8n-skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
       "skillPath": "skills/n8n-workflow-patterns/SKILL.md",
-      "skillFolderHash": "f1eefde593be2ffb75cec677ca0920b30754b3f8",
+      "skillFolderHash": "8a0d91d74d47774f95acec885186e9506597263c",
       "installedAt": "2026-04-21T23:37:22.370Z",
-      "updatedAt": "2026-04-21T23:37:22.370Z"
+      "updatedAt": "2026-06-19T09:01:16.598Z"
     },
     "skill-creator": {
       "source": "anthropics/skills",
@@ -205,10 +205,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/mattpocock/skills.git",
       "skillPath": "skills/productivity/grill-me/SKILL.md",
-      "skillFolderHash": "2a1ad17028306ebe45f0e49703fa28b9b2e7f499",
-      "pluginName": "mattpocock-skills",
+      "skillFolderHash": "8320e7b87f7b208f50ce165b1dd43d1e93c8e801",
       "installedAt": "2026-05-22T06:29:17.823Z",
-      "updatedAt": "2026-05-22T06:29:17.823Z"
+      "updatedAt": "2026-06-19T09:01:17.647Z"
     },
     "resolve-merge-conflicts": {
       "source": "warpdotdev/common-skills",
