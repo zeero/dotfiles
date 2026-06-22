@@ -37,11 +37,11 @@
       "Bash(sed -i:*)",
       "Bash(gsed -i:*)"
     ],
+    "defaultMode": "auto",
     "additionalDirectories": [
       "~/Documents/memos"
     ]
   },
-  "model": "sonnet[1m]",
   "hooks": {
     "PostToolUse": [
       {
@@ -107,8 +107,7 @@
     "pm-market-research@pm-skills": true,
     "superpowers@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
-    "context-mode@context-mode": true,
-    "compound-engineering@compound-engineering-plugin": true
+    "context-mode@context-mode": true
   },
   "extraKnownMarketplaces": {
     "pm-skills": {
