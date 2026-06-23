@@ -1,6 +1,7 @@
 ---
 name: report
-description: レポート出力。ユーザが明示的に呼び出す。
+description: user invoke only
+summary: レポート出力。ユーザが明示的に呼び出す。
 argument-hint: [出力先パス / 補足があれば]
 ---
 

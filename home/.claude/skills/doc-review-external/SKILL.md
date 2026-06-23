@@ -1,7 +1,8 @@
 ---
 name: doc-review-external
 argument-hint: "[--claude|--codex|--gemini] [-a|--adversarial] <file_path>"
-description: <user invoke only> ユーザが明示的に呼び出します。外部プロセスを使用してドキュメントをレビューし、タスクを作成します。
+description: user invoke only
+summary: ユーザが明示的に呼び出します。外部プロセスを使用してドキュメントをレビューし、タスクを作成します。
 ---
 
 指定されたファイルを外部プロセス（codex または claude または gemini）を使ってレビューし、レビュー結果を評価してください。修正の必要があれば、タスク化してください。

@@ -2,17 +2,15 @@
 name: wiki
 description: >
   Obsidian Vault（memos）のWikiをLLMが管理するスキル。
-  Karpathy の LLM Wiki パターン (https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) を実装。
-  RawSource(Reports/Ideas/Knowledges等のmd) を取り込んで pages/ にページ群を構築し、
-  index.md（カタログ）・log.md（時系列）・refs/（ソース毎のメタ）を維持する。
   以下のような状況で必ずこのスキルを使うこと:
   - 「WikiにXXを取り込んで」「ingestして」「このメモをWikiに追加して」「Wikiを更新して」
-  - 「直近1日で更新があったmdを全部Wikiに取り込んで」「Reportsを一括ingestして」
-  - 「Wikiで調べて」「Wikiを検索」「WikiでXXについて教えて」「indexから探して」
+  - 「Wikiで調べて」「Wikiを検索」「WikiでXXについて教えて」
   - 「Wiki lint」「Wikiの健全チェック」「stale な refs を確認」「orphan pages を探して」
-  - 「/wiki ingest」「/wiki query」「/wiki lint」などのコマンド形式
   - 会話の流れでWikiへの参照・更新が適切と判断できる場合も積極的に起動すること
 argument-hint: (ingest|query|lint) [args...]
+summary: >
+  Karpathy の LLM Wiki パターン (https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) を実装。
+  RawSource(Reports/Ideas/Knowledges等のmd) を取り込んで pages/ にページ群を構築し、index.md（カタログ）・log.md（時系列）・refs/（ソース毎のメタ）を維持する。
 ---
 
 # Wiki スキル
