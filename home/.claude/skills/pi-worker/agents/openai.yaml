@@ -1,4 +1,0 @@
-interface:
-  display_name: "Pi Worker"
-  short_description: "Delegate small coding tasks to pi"
-  default_prompt: "Use $pi-worker to delegate pyright fixes or test coverage work to pi."

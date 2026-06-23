@@ -66,26 +66,10 @@ claude plugin install document-skills@anthropic-agent-skills
 ## context-mode
 claude plugin marketplace add mksglu/context-mode
 claude plugin install context-mode@context-mode
-## compound-engineering
-claude plugin marketplace add EveryInc/compound-engineering-plugin
-claude plugin install compound-engineering
 ## codex-plugin-cc （Codex使える環境のみ）
 # claude plugin marketplace add openai/codex-plugin-cc
 # claude plugin install codex@openai-codex
 # claude "/codex:setup"
-
-# skills.sh logs
-# npx skills add https://github.com/vercel-labs/skills --skill find-skills
-# npx skills add https://github.com/anthropics/skills --skill skill-creator
-# npx skills add https://github.com/anthropics/skills --skill template-skill
-# npx skills add https://github.com/avdlee/swiftui-agent-skill --skill swiftui-expert-skill
-# npx skills add https://github.com/wshobson/agents --skill prompt-engineering-patterns
-# npx skills add https://github.com/softaworks/agent-toolkit --skill naming-analyzer
-# npx skills add https://github.com/softaworks/agent-toolkit --skill draw-io
-# npx skills add https://github.com/softaworks/agent-toolkit --skill command-creator
-# npx skills add https://github.com/softaworks/agent-toolkit --skill crafting-effective-readmes
-# npx skills add https://github.com/sickn33/antigravity-awesome-skills --skill docker-expert
-# npx skills add https://github.com/czlonkowski/n8n-skills
 
 # mcp
 # playwright installed by "notebooklm-py[browser]"

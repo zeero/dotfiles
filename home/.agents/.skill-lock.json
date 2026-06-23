@@ -19,51 +19,6 @@
       "installedAt": "2026-02-02T00:43:57.099Z",
       "updatedAt": "2026-05-22T06:42:05.530Z"
     },
-    "prompt-engineering-patterns": {
-      "source": "wshobson/agents",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/wshobson/agents.git",
-      "skillPath": "plugins/llm-application-dev/skills/prompt-engineering-patterns/SKILL.md",
-      "skillFolderHash": "2cdbdcefbd57501994d6a6438cfdea7a70ac49a3",
-      "installedAt": "2026-02-02T12:30:47.491Z",
-      "updatedAt": "2026-06-12T01:10:06.804Z"
-    },
-    "naming-analyzer": {
-      "source": "softaworks/agent-toolkit",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/softaworks/agent-toolkit.git",
-      "skillPath": "skills/naming-analyzer/SKILL.md",
-      "skillFolderHash": "6717b98252ff6423dccbd77dc652dead434552bb",
-      "installedAt": "2026-02-03T04:05:40.056Z",
-      "updatedAt": "2026-02-03T04:05:40.056Z"
-    },
-    "draw-io": {
-      "source": "softaworks/agent-toolkit",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/softaworks/agent-toolkit.git",
-      "skillPath": "skills/draw-io/SKILL.md",
-      "skillFolderHash": "7f11a1fc99d76896cb5a9a6468e04e3a1ea7aab4",
-      "installedAt": "2026-02-03T04:06:19.642Z",
-      "updatedAt": "2026-02-03T04:06:19.642Z"
-    },
-    "docker-expert": {
-      "source": "sickn33/antigravity-awesome-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/sickn33/antigravity-awesome-skills.git",
-      "skillPath": "skills/docker-expert/SKILL.md",
-      "skillFolderHash": "4de306f28c3b66e8bb0419b574930bbce43ae47d",
-      "installedAt": "2026-02-04T01:40:15.448Z",
-      "updatedAt": "2026-05-22T06:42:25.067Z"
-    },
-    "command-creator": {
-      "source": "softaworks/agent-toolkit",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/softaworks/agent-toolkit.git",
-      "skillPath": "skills/command-creator/SKILL.md",
-      "skillFolderHash": "7d6bf8d3e9c8c87fca7f1636da1283dbe1e8c58e",
-      "installedAt": "2026-02-10T12:07:25.149Z",
-      "updatedAt": "2026-02-10T12:07:25.149Z"
-    },
     "crafting-effective-readmes": {
       "source": "softaworks/agent-toolkit",
       "sourceType": "github",

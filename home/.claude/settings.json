@@ -97,7 +97,6 @@
     "ralph-loop@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true,
@@ -121,12 +120,6 @@
       "source": {
         "source": "github",
         "repo": "mksglu/context-mode"
-      }
-    },
-    "compound-engineering-plugin": {
-      "source": {
-        "source": "github",
-        "repo": "EveryInc/compound-engineering-plugin"
       }
     }
   },
