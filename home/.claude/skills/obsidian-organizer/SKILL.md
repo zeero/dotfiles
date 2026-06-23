@@ -1,6 +1,6 @@
 ---
 name: obsidian-organizer
-description: Obsidian vault の自動整理を行う。"Obsidian整理", "vault整理", "ダッシュボード整理", "inbox整理", "メモ整理" などのリクエスト時に使用する。
+description: Automatically organizes an Obsidian vault. Use for requests such as "Obsidian整理", "vault整理", "ダッシュボード整理", "inbox整理", "メモ整理".
 ---
 
 # Obsidian Organizer

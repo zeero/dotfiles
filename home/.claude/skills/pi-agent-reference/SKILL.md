@@ -1,6 +1,6 @@
 ---
 name: pi-agent-reference
-description: Pi coding agent の公式リファレンスを参照して、Pi の導入、設定、providers/models、skills、extensions、packages、prompt templates、sessions、SDK、RPC、JSON event stream、terminal setup を調査・設計・実装するときに使う。
+description: Use this to consult the official Pi coding agent reference when investigating, designing, or implementing Pi — setup, configuration, providers/models, skills, extensions, packages, prompt templates, sessions, SDK, RPC, JSON event stream, and terminal setup.
 ---
 
 # Pi Agent Reference

@@ -1,6 +1,6 @@
 ---
 name: self-code-review
-description: サブエージェントにコードレビューと修正を委譲するスキル。「セルフコードレビューして」「サブエージェントにレビューさせて」と指示されたときに使ってください。
+description: A skill that delegates code review and fixes to a subagent. Use when instructed with 「セルフコードレビューして」「サブエージェントにレビューさせて」.
 summary: 言語に応じたレビュースキルと requesting-code-review のインプット構成を活用します。サブエージェントは修正を行いますが、コミットは行いません。
 ---
 

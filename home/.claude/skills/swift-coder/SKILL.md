@@ -1,6 +1,6 @@
 ---
 name: swift-coder
-description: Swiftコーディングにおいて、定義されたコーディングルールを適用するためのスキルです。Swiftコードを記述する場合や、.swidtファイルの修正を依頼された際は、必ずこのスキルを起動してルールを適用してください。
+description: A skill for applying the defined coding rules to Swift coding. Always activate this skill and apply the rules when writing Swift code or when asked to modify .swift files.
 ---
 
 # Swift Coding Rules

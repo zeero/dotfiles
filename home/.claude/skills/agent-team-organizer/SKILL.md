@@ -1,13 +1,13 @@
 ---
 name: agent-team-organizer
 description: |
-  Claude Code のエージェントチーム構成を設計するスキルです。
-  次のような場面で積極的に使ってください：
-  - エージェントチームやマルチエージェントの話題が出たとき
-  - アーキテクチャレビュー、ドメインエキスパートレビュー、テストなど多角的な検証をしたいとき
-  - 大規模・複雑なタスクを複数セッションで分担・協調したいとき
-  - TeamCreate / SendMessage / TaskCreate の使い方を聞かれたとき
-  「エージェントチーム」と明示されなくても、品質検証や役割分担の相談があれば使ってください。
+  A skill for designing Claude Code agent team configurations.
+  Use it proactively in situations such as:
+  - When agent teams or multi-agent setups come up
+  - When you want multi-angle verification such as architecture review, domain-expert review, or testing
+  - When splitting and coordinating a large or complex task across multiple sessions
+  - When asked how to use TeamCreate / SendMessage / TaskCreate
+  Use it even when "agent team" is not explicitly stated, whenever quality verification or role division is being discussed.
 ---
 
 # エージェントチーム構成スキル

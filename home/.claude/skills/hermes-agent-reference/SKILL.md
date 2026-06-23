@@ -1,6 +1,6 @@
 ---
 name: hermes-agent-reference
-description: Hermes Agent に関する包括的な公式リファレンスです。ユーザーが Hermes Agent のデプロイ、設定、Slack連携について尋ねたり、構築を指示したりした際には、必ずこのスキルを起動して references/ 内の適切なファイルを読み込んでください。
+description: Comprehensive official reference for Hermes Agent. Whenever the user asks about or requests building Hermes Agent deployment, configuration, or Slack integration, always activate this skill and read the appropriate file under references/.
 ---
 
 # 📚 Hermes Agent 構築・設定リファレンス

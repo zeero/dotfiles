@@ -1,12 +1,12 @@
 ---
 name: wiki
 description: >
-  Obsidian Vault（memos）のWikiをLLMが管理するスキル。
-  以下のような状況で必ずこのスキルを使うこと:
+  A skill where the LLM manages the Wiki of an Obsidian Vault (memos).
+  Always use this skill in situations such as:
   - 「WikiにXXを取り込んで」「ingestして」「このメモをWikiに追加して」「Wikiを更新して」
   - 「Wikiで調べて」「Wikiを検索」「WikiでXXについて教えて」
   - 「Wiki lint」「Wikiの健全チェック」「stale な refs を確認」「orphan pages を探して」
-  - 会話の流れでWikiへの参照・更新が適切と判断できる場合も積極的に起動すること
+  - Activate it proactively when referencing or updating the Wiki is appropriate in the flow of conversation
 argument-hint: (ingest|query|lint) [args...]
 summary: >
   Karpathy の LLM Wiki パターン (https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) を実装。

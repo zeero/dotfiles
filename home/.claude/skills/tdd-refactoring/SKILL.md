@@ -1,6 +1,6 @@
 ---
 name: tdd-refactoring
-description: リファクタリングを安全に進めるための TDD スタイル手順。コードのリファクタリング、構造改善、内部実装の整理、命名変更、重複除去などに着手するときは必ずこの手順を提案してから進める。外部挙動を変えずに内部を改善する変更全般に適用する。
+description: A TDD-style procedure for safely carrying out refactoring. Always propose this procedure before starting code refactoring, structural improvement, internal cleanup, renaming, or deduplication. Applies to any change that improves internals without altering external behavior.
 ---
 
 # リファクタリングの TDD 手順

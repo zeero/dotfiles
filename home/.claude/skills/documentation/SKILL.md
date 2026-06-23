@@ -1,6 +1,6 @@
 ---
 name: documentation
-description: ドキュメント（Markdown 等）のファイル形式・構造の規約。ドキュメント・README・設計書・調査メモ・手順書などの Markdown ファイルを新規作成・編集・整形するときは必ずこのスキルを使う。
+description: Conventions for the file format and structure of documents (Markdown, etc.). Always use this skill when creating, editing, or formatting Markdown files such as documents, READMEs, design docs, research notes, or procedure guides.
 ---
 
 # ドキュメント作成規約（形式・構造）
