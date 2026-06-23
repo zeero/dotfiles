@@ -165,7 +165,7 @@ source_type = "local"
 source = "/Users/zeero/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-06-15T01:12:24Z"
+last_updated = "2026-06-20T04:12:24Z"
 source_type = "local"
 source = "/Users/zeero/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
