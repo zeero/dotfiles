@@ -18,9 +18,16 @@ description: >
 
 ## プロセス
 
-### 0. 置き場を用意する（初回のみ）
+### 0. セットアップ（初回のみ）
 
-`~/.agents/learnings/` があるか確認する。無ければ、このスキルの `assets/templates/learnings/` を `~/.agents/learnings/` へコピーして作る。
+複利エンジニアリングの置き場を用意する。既にあるものは触らない（冪等）。
+
+**0-1. 横断ストア** — `~/.agents/learnings/` が無ければ、`assets/templates/global/` をコピーして作る。
+
+**0-2. repo-local scaffold** — 作業中の repo 直下に次が無ければ用意する。
+- `LEARNINGS.md` … `assets/templates/project/LEARNINGS.md` をコピー。
+- `STRATEGY_SPEC.md` … `assets/templates/project/STRATEGY_SPEC.md` をコピーし、**repo の README / CLAUDE.md / docs から自明に分かる範囲（目的・方針・指標）を埋める**。丸投げしない。人の判断が要る箇所だけ `TODO:` で残し、埋めた内容と残した TODO をユーザに報告する。
+- CLAUDE.md の「作業サイクル」節 … 無ければ `assets/templates/project/cycle-section.md` の内容を追記する。**既存 CLAUDE.md の編集はユーザに確認してから行う**（新規ファイル作成は確認不要）。
 
 ### 1. 学びを1つ取り出す
 
