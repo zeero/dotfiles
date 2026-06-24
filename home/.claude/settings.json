@@ -52,6 +52,15 @@
             "command": "alerter --title 'Claude Code' --message '✅ タスクが完了しました' --sound default --timeout 10 &"
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.agents/hooks/check-python.sh"
+          }
+        ]
       }
     ],
     "Notification": [
