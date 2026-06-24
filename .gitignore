@@ -8,5 +8,6 @@ home/.config/coc/extensions/coc-kotlin-data/
 !home/.claude
 !home/.gemini
 !home/.agents
+!home/.serena
 home/.claude/skills/agent-team-organizer-workspace/
 home/.claude/skills/.system
