@@ -4,4 +4,4 @@
 
 ## 学び一覧
 
-（学びを追加したら「タイトル — ファイル名 — 1行要約」を1行ずつ書く）
+- CLAUDE.md の @import は backtick 内では展開されない — claude-code-at-import-backticks.md — 自動 import させたいパスは backtick で囲まない
