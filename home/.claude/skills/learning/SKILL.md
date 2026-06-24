@@ -28,6 +28,7 @@ description: >
 - `LEARNINGS.md` … `assets/templates/project/LEARNINGS.md` をコピー。
 - `STRATEGY_SPEC.md` … `assets/templates/project/STRATEGY_SPEC.md` をコピーし、**repo の README / CLAUDE.md / docs から自明に分かる範囲（目的・方針・指標）を埋める**。丸投げしない。人の判断が要る箇所だけ `TODO:` で残し、埋めた内容と残した TODO をユーザに報告する。
 - CLAUDE.md の「作業サイクル」節 … 無ければ `assets/templates/project/cycle-section.md` の内容を追記する。**既存 CLAUDE.md の編集はユーザに確認してから行う**（新規ファイル作成は確認不要）。
+  - 追記時、その repo で使える review / refactor / test 系 skill（例: `self-code-review`, `tdd-refactoring`）を該当ステップに紐づけ、セッション締めの `retrospective`・判断の見返しの `reflect` を末尾に添える。該当 skill が無ければ汎用テンプレのまま残す。
 
 ### 1. 学びを1つ取り出す
 
