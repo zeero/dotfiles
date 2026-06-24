@@ -19,9 +19,9 @@ summary: >
 
 ## プロセス
 
-### 0. 置き場を用意する（初回のみ）
+### 0. 置き場の確認
 
-`~/.agents/reflection/` があるか確認する。無ければ、このスキルの `assets/templates/reflection/` を `~/.agents/reflection/` へコピーして作る。
+`~/.agents/reflection/` は `learning` skill の初回セットアップで用意される（複利運用を始めた時点で存在する）。`reflect` は decisions-log が溜まってから走るので、この時点では置き場は既にあるはず。万一無ければ、まだ複利サイクルを一度も回していない状態なので、先に `learning` を実行して置き場を用意する。
 
 ### 1. 未処理の判断を読む
 

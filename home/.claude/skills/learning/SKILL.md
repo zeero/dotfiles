@@ -22,7 +22,9 @@ description: >
 
 複利エンジニアリングの置き場を用意する。既にあるものは触らない（冪等）。
 
-**0-1. 横断ストア** — `~/.agents/learnings/` が無ければ、`assets/templates/global/` をコピーして作る。
+**0-1. 横断ストア** — `~/.agents/` に以下のディレクトリが無ければ、それぞれ用意する（複利と省察の両輪）。
+- `~/.agents/learnings/` … `assets/templates/global/learnings/` をコピー。
+- `~/.agents/reflection/` … `assets/templates/global/reflection/` をコピー。
 
 **0-2. repo-local scaffold** — 作業中の repo 直下に次が無ければ用意する。
 - `LEARNINGS.md` … `assets/templates/project/LEARNINGS.md` をコピー。
