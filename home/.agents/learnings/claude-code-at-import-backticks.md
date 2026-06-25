@@ -1,4 +1,4 @@
-## CLAUDE.md の @import は backtick 内では展開されない
+### CLAUDE.md の @import は backtick 内では展開されない
 
 **学び**: CLAUDE.md / AGENTS.md で `@path` を自動 import させたいときは backtick で囲まない。`` `@path` `` は説明用のリテラル表示になり import されない。
 

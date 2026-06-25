@@ -1,4 +1,4 @@
-# mise は非対話シェルでは activate が効かない — `mise exec` / shims を使う
+### mise は非対話シェルでは activate が効かない — `mise exec` / shims を使う
 
 **学び**: `eval "$(mise activate zsh)"` は precmd フック方式で、PATH へのツール追加は**対話シェルのプロンプト発火時にしか起きない**。`#!/bin/bash` スクリプト・go-task（内蔵 `mvdan/sh`）・CI などの非対話/非ログイン実行では発火せず、mise 管理の runtime（node/ruby/python の `npm`/`gem`/`python` 等）が PATH に乗らない。非対話で確実に通すには次のどちらか:
 - `mise exec -- <cmd>`（mise バイナリさえ PATH にあれば global `~/.tool-versions` を解決。activate/shims 非依存）
