@@ -1,0 +1,95 @@
+# symlink 対象の宣言的定義。ランナーは scripts/symlink.sh。
+# プリミティブ:
+#   mkdir     - ターゲット親の事前作成（スカラー1個）
+#   ln        - 単一 ln -sfh src dst
+#   ln_fanout - dir 直下を1つずつ target へ展開リンク（filter: all|file|dir、既定 all）
+#   cmd       - 生シェル（イレギュラー専用エスケープハッチ）
+# パスは ${DOTFILES} と ~/${HOME} をそのまま記述し、ランナーが展開する。
+# フローマッピング { } 内では ${...} の波括弧や裸の ~ が特殊扱いになるため、パス値はクオートする。
+sections:
+  - section: home (dotfiles root)
+    steps:
+      - ln_fanout: { dir: "${DOTFILES}/home", target: "~", filter: file }
+
+  - section: tmux
+    steps:
+      - mkdir: ~/.tmux/plugins
+      - ln: { src: "${DOTFILES}/home/.tmux/plugins/tpm", dst: "~/.tmux/plugins/tpm" }
+
+  - section: Vim
+    steps:
+      - ln:        { src: "${DOTFILES}/vim",      dst: "~/.vim" }
+      - ln:        { src: "${DOTFILES}/vim/vimrc", dst: "~/.vimrc" }
+      - mkdir: ~/.config
+      - ln_fanout: { dir: "${DOTFILES}/home/.config", target: "~/.config", filter: dir }
+      - ln:        { src: "${DOTFILES}/vim",      dst: "~/.config/nvim" }
+      - ln:        { src: "${DOTFILES}/vim/vimrc", dst: "~/.config/nvim/init.vim" }
+      - mkdir: ${DOTFILES}/vim/after/autoload  # リポジトリ内だが mkdir プリミティブで扱える
+
+  - section: ctags
+    steps:
+      - ln: { src: "${DOTFILES}/home/.ctags.d", dst: "~/.ctags.d" }
+
+  - section: Agents
+    steps:
+      - mkdir: ~/.agents
+      - ln_fanout: { dir: "${DOTFILES}/home/.agents", target: "~/.agents" }
+      - ln:        { src: "${DOTFILES}/home/.claude/skills",   dst: "~/.agents/skills" }
+      - ln:        { src: "${DOTFILES}/home/.claude/CLAUDE.md", dst: "~/AGENTS.md" }
+
+  - section: Claude Code
+    steps:
+      - mkdir: ~/.claude
+      - ln_fanout: { dir: "${DOTFILES}/home/.claude", target: "~/.claude" }
+
+  - section: Codex
+    steps:
+      - mkdir: ~/.codex
+      - ln_fanout: { dir: "${DOTFILES}/home/.codex", target: "~/.codex" }
+      - ln:        { src: "${DOTFILES}/home/.claude/CLAUDE.md", dst: "~/.codex/AGENTS.md" }
+      - ln:        { src: "${DOTFILES}/home/.claude/skills",    dst: "~/.codex/skills" }
+
+  - section: Antigravity
+    steps:
+      - mkdir: ~/.gemini/antigravity-cli
+      - ln_fanout: { dir: "${DOTFILES}/home/.gemini/antigravity-cli", target: "~/.gemini/antigravity-cli" }
+      - ln:        { src: "${DOTFILES}/home/.claude/CLAUDE.md", dst: "~/.gemini/GEMINI.md" }
+      - ln:        { src: "${DOTFILES}/home/.claude/skills",    dst: "~/.gemini/antigravity-cli/skills" }
+
+  - section: GitHub Copilot
+    steps:
+      - mkdir: ~/.copilot
+      - ln_fanout: { dir: "${DOTFILES}/home/.copilot", target: "~/.copilot" }
+      - ln:        { src: "${DOTFILES}/home/.claude/CLAUDE.md", dst: "~/.copilot/copilot-instructions.md" }
+
+  - section: Pi
+    steps:
+      - mkdir: ~/.pi/agent/extensions
+      - ln_fanout: { dir: "${DOTFILES}/home/.pi/agent/extensions", target: "~/.pi/agent/extensions", filter: file }
+
+  - section: Serena
+    steps:
+      - mkdir: ~/.serena
+      - ln_fanout: { dir: "${DOTFILES}/home/.serena", target: "~/.serena" }
+
+  - section: Ruby
+    steps:
+      - mkdir: ~/.bundle
+      - ln_fanout: { dir: "${DOTFILES}/home/.bundle", target: "~/.bundle", filter: file }
+
+  - section: Colima
+    steps:
+      - mkdir: ~/.colima
+      - ln_fanout: { dir: "${DOTFILES}/home/.colima", target: "~/.colima" }
+
+  - section: Docker
+    steps:
+      - mkdir: ~/.docker
+      - ln_fanout: { dir: "${DOTFILES}/home/.docker", target: "~/.docker" }
+
+  - section: Xcode
+    steps:
+      - mkdir: ~/Library/Developer/Xcode/UserData/CodeSnippets
+      - cmd: cp -Rfp "${DOTFILES}/xcode/CodeSnippets/"* "${HOME}/Library/Developer/Xcode/UserData/CodeSnippets"
+      - mkdir: ~/Library/Developer/Xcode/Templates/File Templates
+      - cmd: cp -Rfp "${DOTFILES}/xcode/File Templates/"* "${HOME}/Library/Developer/Xcode/Templates/File Templates"
