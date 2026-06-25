@@ -70,6 +70,8 @@ claude plugin install context-mode@context-mode
 # claude plugin marketplace add openai/codex-plugin-cc
 # claude plugin install codex@openai-codex
 # claude "/codex:setup"
+# レビューゲート有効化（プロジェクト単位）
+# claude "/codex:setup --enable-review-gate"
 
 # mcp
 # playwright installed by "notebooklm-py[browser]"

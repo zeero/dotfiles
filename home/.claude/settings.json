@@ -155,7 +155,8 @@
     "pm-market-research@pm-skills": true,
     "superpowers@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
-    "context-mode@context-mode": true
+    "context-mode@context-mode": true,
+    "codex@openai-codex": true
   },
   "extraKnownMarketplaces": {
     "pm-skills": {
@@ -169,6 +170,12 @@
       "source": {
         "source": "github",
         "repo": "mksglu/context-mode"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
       }
     }
   },
