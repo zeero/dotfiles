@@ -45,8 +45,9 @@ description: >
 
 迷ったら、まずリポジトリ固有として `LEARNINGS.md` に置く。
 
-### 3. 次の形式で書く
+### 3. <learning-entry-format> の書式で書く
 
+<learning-entry-format>
 ```markdown
 ### タイトル
 
@@ -58,6 +59,7 @@ description: >
 
 **例外・前提**: 使えない場面・前提条件
 ```
+</learning-entry-format>
 
 ### 4. よく使う学びは共有ストアへ移す
 
