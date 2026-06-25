@@ -36,24 +36,28 @@ tasks:
 
   toolchains:
     desc: "Install toolchains and languages"
+    # mise 管理の runtime（ruby/node/python）を使うスクリプトは `mise exec --` でラップする。
+    # 初回構築時は symlink 直後の同一プロセス内で .zprofile が未読込のため `mise activate` が
+    # 効かず gem/npm が PATH に乗らない。mise バイナリ自体は brew step で導入済み（PATH 上）なので、
+    # activate/shims に依存せず global ~/.tool-versions を解決できる `mise exec` で確実に通す。
     cmds:
       # Mise
       - ./scripts/mise_install.sh
       # Mint
       - ./scripts/mint_install.sh
       # ruby
-      - ./scripts/ruby.002.gem_install_pre.sh
-      - ./scripts/ruby.003.gem_install.sh
-      - ./scripts/ruby.004.gem_install_post.sh
+      - mise exec -- ./scripts/ruby.002.gem_install_pre.sh
+      - mise exec -- ./scripts/ruby.003.gem_install.sh
+      - mise exec -- ./scripts/ruby.004.gem_install_post.sh
       # node.js
-      - ./scripts/node.002.npm_install.sh
-      # python
-      - ./scripts/python.001.uv_install.sh
-      - ./scripts/python.002.pip_install.sh
+      - mise exec -- ./scripts/node.002.npm_install.sh
+      # python（uv は brew 製だが --system の対象を mise の python に固定するためラップ）
+      - mise exec -- ./scripts/python.001.uv_install.sh
+      - mise exec -- ./scripts/python.002.pip_install.sh
       # rust
       - ./scripts/rust.001.cargo_install.sh
       # vim (coc.nvim require npm)
-      - ./scripts/vim.001.coc.sh
+      - mise exec -- ./scripts/vim.001.coc.sh
 
   osx-defaults:
     desc: "Apply macOS defaults"
