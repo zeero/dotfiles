@@ -159,3 +159,13 @@
 3. Gitをインストールします。`brew install git`
 4. リポジトリをクローンします。`git clone https://github.com/zeero/dotfiles.git ~/lib/dotfiles`
 
+## 🔄 作業サイクル（plan → work → review → learning）
+
+非自明な作業は次を既定の流れとして回す。小さく自明な変更ではスキップしてよい（儀式化しない）。
+
+1. **plan**: 着手前に方針を立て、`STRATEGY_SPEC.md` の目的・指標から外れていないか確認する。
+2. **work**: 実装する。リファクタ・構造改善は `tdd-refactoring` skill の手順に沿う。
+3. **review**: テスト・lint に加え `self-code-review` skill で確かめ、重要な判断は確信度つきで `~/.agents/reflection/decisions-log.md` に記録する。
+4. **learning**: 再利用できる学びが出ていれば `learning` skill で `LEARNINGS.md` に追記する。
+5. 締め: セッションの振り返りは `retrospective`、判断の見返しは `reflect` skill を使う。
+
