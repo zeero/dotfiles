@@ -8,30 +8,33 @@
 
 ## 🛠️ 主要コマンド
 
+タスクは [go-task](https://taskfile.dev) で定義します（`Taskfile.yml` がルート、`Taskfile.install.yml`/`Taskfile.tests.yml` を include）。`task`（引数なし）で一覧を表示します。`install.sh` はこれらの `task install:*` を順に呼ぶ薄いラッパです。
+
 ### 🚀 インストールとセットアップ
-- `./install.sh` - 全体的なセットアップを調整するメインのインストールスクリプトです。
-- `./scripts/symlink.sh` - ホームディレクトリへのシンボリックリンクを作成します。
-- `brew bundle` - BrewfileからすべてのHomebrewパッケージをインストールします。
+- `./install.sh` - 対話プロンプトを含む全体セットアップ（各 `task install:*` を順次実行）。
+- `task install:all` - mkdir→brew→symlink→git-setup→toolchains→osx-defaults を一括実行。
+- `task install:brew` - `brew bundle` で Homebrew パッケージを導入。
+- `task install:symlink` - `scripts/symlink.sh`（宣言 `scripts/symlink.yml`）でシンボリックリンクを作成。`./scripts/symlink.sh -n` で dry-run。
+- `task install:toolchains` - mise/Mint で各言語ランタイムとパッケージを導入。
+- `brew services start colima` - Colima Docker ランタイムを起動（install.sh では手動プロンプト。常用する場合のみ）。
 
 ### 🧪 開発とテスト
-- `./scripts/ruby.001.rbenv.sh` - rbenvでRuby環境をセットアップします。
-- `./scripts/node.001.nodebrew.sh` - nodebrewを介してNode.jsをインストールします。
-- `./scripts/vim.001.coc.sh` - CoC言語サーバーでVimを設定します。
-- `./scripts/osx_defaults.sh` - macOSシステムデフォルトを適用します。
-- `colima start` - Colima Dockerランタイムを開始します（install.shによって自動開始されます）。
+- `task tests:ts` - TypeScript テストを vitest で実行（`tests/typescript/`）。`task tests:ts-watch` で watch。
+- 単一テスト: `task tests:ts -- <pattern>`（`--` 以降が vitest に渡る）。
 
 ### 📦 パッケージ管理
-- **Homebrew**: `brew bundle` (Brewfileを使用します)
-- **Ruby gems**: Gemlistファイルとrbenvを介して管理されます。
-- **Node packages**: Nodelistファイルとnodebrewを介して管理されます。
-- **Python packages**: Piplistファイルとpipを介して管理されます。
-- Swift packages**: MintlistファイルとMintを介して管理されます。
+宣言リストを編集し、対応する `scripts/*` 経由で反映します。
+- **Homebrew**: `Brewfile`（`brew bundle`）
+- **Ruby gems**: `Gemlist`（mise の ruby + `scripts/ruby.00*.sh`）
+- **Node packages**: `Nodelist`（mise の node + `scripts/node.002.npm_install.sh`）
+- **Python packages**: `Piplist`/`Uvlist`（mise の python + uv、`scripts/python.00*.sh`）
+- **Rust crates**: `Cargolist`（`scripts/rust.001.cargo_install.sh`）
+- **Swift packages**: `Mintlist`（Mint、`scripts/mint_install.sh`）
 
 ### 💻 開発環境
-- **Ruby**: rbenvをバージョン管理に使用します (`rbenv versions`, `rbenv global`)
-- **Node.js**: nodebrewをバージョン管理に使用します (`nodebrew ls`, `nodebrew use`)
+- **言語ランタイム**: [mise](https://mise.jdx.dev) で ruby/node/python を一元管理（global は `~/.tool-versions`）。`scripts/mise_install.sh` で `mise install`。非対話/CI では activate が効かないため `mise exec --` でラップする（`Taskfile.install.yml` の toolchains 参照）。
 - **Vimプラグイン**: dein.vimプラグインマネージャーを使用し、`vim/dein.toml`でプラグインが定義されています。
-- **Git設定**: install.shのgit configコマンドによって自動化されます。
+- **Git設定**: `scripts/git_config.sh`（`task install:git-setup`）によって自動化されます。
 
 ## 🏗️ アーキテクチャと構造
 
@@ -60,7 +63,7 @@
 
 1.  **Single Source of Truth (信頼できる唯一の情報源)**
     環境に関する全ての設定情報をこのGitリポジトリに集約し、一貫性と再現性を保証します。
-    - **実践例**: `symlink.sh` で設定ファイルをホームディレクトリにシンボリックリンクすることで、リポジトリを唯一の正とします。
+    - **実践例**: `symlink.yml` に対象を宣言し、`symlink.sh` がホームディレクトリにシンボリックリンクすることで、リポジトリを唯一の正とします。
 
 2.  **Declarative over Imperative (命令的より宣言的)**
     「どのように(How)」を記述するのではなく、「どうあるべきか(What)」を宣言的に記述することで、可読性とメンテナンス性を向上させます。
@@ -80,26 +83,26 @@
 
 6.  **Convention over Configuration (設定より規約)**
     標準的なツールや規約を採用することで、設定の複雑さを軽減し、シンプルさを保ちます。
-    - **実践例**: `rbenv` や `nodebrew` など、各言語で標準的なバージョン管理ツールを採用します。
+    - **実践例**: `mise` で複数言語のバージョンを一元管理し、タスクは `go-task`（Taskfile）の規約に寄せます。
 
 7.  **Cross-Agent Portability (AIエージェント設定の横断可搬性)**
     AIコーディングエージェント関連の設定については、複数のAIコーディングエージェント (Claude Code / Codex / Pi) で設定資産を共有するため、依存先をポータビリティで階層化します。可搬な層にロジックを寄せ、ツール固有の接着剤は最小化することで、特定ツールへのロックインを避けます。
     - **Tier 1 (完全可搬・第一選択)**: コンテキストファイル・Agent Skill・プレーンなMarkdown成果物。3エージェントが同一資産を読むため、ここに最大限寄せます。
-      - コンテキストファイルは `AGENTS.md` を信頼できる唯一の源とし、Claude Code 用 `CLAUDE.md` は `@AGENTS.md` import の1行に留めて二重管理を避けます（Codex は `AGENTS.md`、Pi は `AGENTS.md`/`CLAUDE.md` 双方を読む）。
+      - コンテキストファイルは symlink で内容を一元化します。本リポジトリでは `CLAUDE.md` を実体とし、`AGENTS.md` → `CLAUDE.md` の symlink で二重管理を避けます（Codex は `AGENTS.md`、Pi は `AGENTS.md`/`CLAUDE.md` 双方を読むため、3エージェントが同一内容を読む）。
       - Agent Skill は [Agent Skills 標準](https://agentskills.io/specification) に準拠した `SKILL.md` とし、横断共有のため「skill名＝親ディレクトリ名」を厳守します（Pi は名前ズレを許容するが標準は禁止）。1ディレクトリに集約し各ツールの探索パスへ symlink します。
     - **Tier 2 (ロジックは共有・接着剤のみ非可搬)**: フック機構はツールごとに別物（Claude Code: `settings.json` のフック / Pi: TypeScript Extension / Codex: 別機構）であり、横断不可です。ロジックは共有スクリプト1本に置き、各ツールのフック/Extension は「それを呼ぶだけの薄いアダプタ」に限定します。
     - **原則**: モデルに委ねられる判断は Tier 1（Skill＋context file）へ寄せ、決定論的な強制が本当に必要なものだけ Tier 2 を使います。フック設定の中に業務ロジックを直書きしない（ツールロックインを生むため）。
 
 ### ⬇️ インストールフロー
-インストールは次の順序で実行されます。
-1. Gitサブモジュールとディレクトリの作成
-2. Homebrewバンドルのインストール
-3. シンボリックリンクの作成
-4. Gitグローバル設定
-5. Gitエイリアスの設定
-6. 言語環境のセットアップ (Ruby → Node → Python)
-7. Vim/CoC設定
-8. macOSシステムデフォルト
+`task install:all`（= `install.sh` の中核）は次の順序で実行されます。
+1. `mkdir` - ディレクトリ作成と Git サブモジュール初期化
+2. `brew` - Homebrew バンドル（Rosetta 導入含む）
+3. `symlink` - シンボリックリンク作成（`symlink.yml` 駆動）
+4. `git-setup` - Git グローバル設定（`git_config.sh`）と gh 拡張
+5. `toolchains` - mise/Mint で各ランタイムとパッケージ（Ruby/Node/Python/Rust/Vim CoC）
+6. `osx-defaults` - macOS システムデフォルト
+
+`install.sh` はこれに加えて Antigravity/Claude Code/各プラグイン導入や iTerm2/Vimium 設定などの対話プロンプトを挟みます。
 
 ### 📝 主要設定ファイル
 - `home/.zshrc` - 高度な機能を備えたメインのシェル設定 (14k+行)
@@ -108,7 +111,8 @@
 - `vim/coc-settings.json` - CoCの言語サーバー設定です。
 - `home/.gitignore` - グローバルなgit ignoreパターンです。
 - `Brewfile` - Homebrewパッケージ定義 (casksとformulasを含む)
-- `Gemlist`/`Nodelist`/`Piplist`/`Mintlist` - 言語固有のパッケージリストです。
+- `Gemlist`/`Nodelist`/`Piplist`/`Uvlist`/`Cargolist`/`Mintlist` - 言語固有のパッケージリストです。
+- `Taskfile.yml`/`Taskfile.install.yml`/`Taskfile.tests.yml` - go-task のタスク定義です。
 
 ### ✨ 開発環境の機能
 - **言語**: Ruby, Node.js, Python, Go, Swift, Kotlin, Dart
@@ -141,15 +145,17 @@
   - Homebrewパッケージとcaskは`Brewfile`
   - Ruby gemは`Gemlist`
   - Node.jsパッケージは`Nodelist`
-  - Pythonパッケージは`Piplist`
+  - Pythonパッケージは`Piplist`/`Uvlist`
+  - Rust crateは`Cargolist`
   - Swiftパッケージは`Mintlist`
-- **インストールスクリプト**: 命名規則に従って`scripts/`に新しいスクリプトを追加します。
-- **Git設定**: メインの`install.sh`内のgit configコマンドを変更します。
+- **インストールスクリプト**: 命名規則に従って`scripts/`に新しいスクリプトを追加し、`Taskfile.install.yml`の`toolchains`等から呼び出します。mise 管理ランタイムに依存するものは `mise exec --` でラップします。
+- **Git設定**: `scripts/git_config.sh`を変更します。
 - **Xcodeテンプレート**: Clean Swift, VIPER, TCAアーキテクチャ用に`xcode/File Templates/`にテンプレートを追加します。
 
 ### ✅ 変更のテスト
+- TypeScript ロジックは `task tests:ts`（vitest）で検証します。
 - 個々のコンポーネントをテストするには、`scripts/`から特定のサブスクリプトを実行します。
-- 変更後にdotfilesを再リンクするには、`./scripts/symlink.sh`を使用します。
+- 変更後にdotfilesを再リンクするには、`task install:symlink`（差分確認は `./scripts/symlink.sh -n`）を使用します。
 - 可能であれば、クリーンな環境で`./install.sh`を使用して完全なインストールをテストします。
 
 ### 📝 開発の前提条件
