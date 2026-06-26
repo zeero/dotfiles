@@ -18,15 +18,16 @@ description: >
 
 ## プロセス
 
-### 0. セットアップ（プロジェクトごとに初回のみ）
+### 0. セットアップ
 
-複利エンジニアリングの置き場を用意する。既にあるものは触らない（冪等）。
+複利エンジニアリングの置き場を用意する。**毎回このステップを通り、チェックは「あるか無いか」だけで判断する**（中身は確認しない。軽量に保つ）。
 
-**0-1. 横断ストア** — `~/.agents/` に以下のディレクトリが無ければ、それぞれ用意する（複利と省察の両輪）。
+**0-1. マシン共通** — `~/.agents/learnings/` と `~/.agents/reflection/` の有無でマシンセットアップ済みかを判断する。**両方あればこの節はスキップ**。無ければ初回として次をまとめて行う（複利と省察の両輪＋それを使う方針）。
 - `~/.agents/learnings/` … `assets/templates/global/learnings/` をコピー。
 - `~/.agents/reflection/` … `assets/templates/global/reflection/` をコピー。
+- グローバル context file（`~/.claude/CLAUDE.md` 等）に `assets/templates/global/compound-rules.md` の方針節を追記する。**グローバル設定の編集なので必ずユーザに確認してから行う**。
 
-**0-2. repo-local scaffold** — 作業中の repo 直下に次が無ければ用意する。
+**0-2. repo-local scaffold** — repo 直下の `LEARNINGS.md` の有無で repo セットアップ済みかを判断する。**あればスキップ**。無ければ初回として次を用意する。
 - `LEARNINGS.md` … `assets/templates/project/LEARNINGS.md` をコピー。
 - `STRATEGY_SPEC.md` … `assets/templates/project/STRATEGY_SPEC.md` をコピーし、**repo の README / CLAUDE.md / docs から自明に分かる範囲（目的・方針・指標）を埋める**。丸投げしない。人の判断が要る箇所だけ `TODO:` で残し、埋めた内容と残した TODO をユーザに報告する。
 - CLAUDE.md の「作業サイクル」節 … 無ければ `assets/templates/project/cycle-section.md` の内容を追記する。**既存 CLAUDE.md の編集はユーザに確認してから行う**（新規ファイル作成は確認不要）。
