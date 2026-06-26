@@ -21,21 +21,35 @@
   - 省察：判断＋確信度を `decisions-log.md` に貯め、繰り返した共通点を `patterns.md` の思考パターンへ昇格。**判断の前に必ず patterns を参照**して、過去と同じ失敗を未然に避ける（自己監視＝monitoring、事前参照＝control の2層）。
 - **なぜ「複利」か**：一度昇格した型・知見が以後の全判断・全作業の入力になり、積むほど次が速く・確実になる。低確信の判断は、後で重点的に見返す（やがて検証ゲートを厚くする）目印になる。
 
-## 置き場
+## 構成要素
 
-**repo-local（プロジェクト単位）**
-- `LEARNINGS.md` — そのリポジトリ固有の学び
-- `STRATEGY_SPEC.md` — プロジェクトの目的・方針・指標（北極星）
-- CLAUDE.md の「作業サイクル」節 — そのリポジトリでのサイクルの回し方
+repo-local（プロジェクト単位）とマシン共通（グローバル / ツール横断）の2層。各ファイルの役割は次の通り。
 
-**マシン共通（`~/.agents/`、ツール横断）**
-- `~/.agents/learnings/` — 複数プロジェクトで使える学び（`index.md` ＋ `<topic>.md`）
-- `~/.agents/reflection/` — `decisions-log.md`（判断ログ）と `patterns.md`（抽出した判断パターン）
-- グローバル context file（`~/.claude/CLAUDE.md` / `AGENTS.md` 等）の方針節 — 上記を毎回「参照・記録」させる接着剤
+```
+repo-local（そのリポジトリに置く）
+<repo>/
+├── LEARNINGS.md                — そのリポジトリ固有の学び
+├── STRATEGY_SPEC.md            — プロジェクトの目的・方針・指標（北極星）
+└── CLAUDE.md ＞「作業サイクル」節 — そのリポジトリでのサイクルの回し方
+
+マシン共通（グローバル / ツール横断）
+~/.agents/
+├── learnings/                  — 複数プロジェクトで使える学び（object-level）
+│   ├── index.md                — 1行要約の索引。@import で常時ロードされる入口
+│   ├── <topic>.md              — 学び本体（1トピック1ファイル、index から辿る）
+│   └── README.md               — 書き方・移動（昇格）手順の説明書
+└── reflection/                 — 判断の振り返り（meta-level）
+    ├── patterns.md             — 抽出した判断パターン。判断の前に必ず読む
+    ├── decisions-log.md        — 判断ログ（選択・理由・代替案・確信度）
+    └── README.md               — フォルダの使い方の説明書
+
+~/.claude/CLAUDE.md（/ AGENTS.md）
+└── 方針節（compound-rules）     — 上の置き場を毎回「参照・記録」させる接着剤
+```
 
 ## コンテキストの繋がり方
 
-置き場は、グローバル context file を入口にしてエージェントの視界へ繋がる。
+グローバル context file を入口にしてエージェントの視界へ繋がる。
 
 ```
 毎セッション読み込み
@@ -56,15 +70,6 @@ repo で作業中はさらに読み込み
 - **常時ロードは軽く保つ** — グローバルに全文を載せず、`index.md`（1行要約だけ）を入口にして、本体 `<topic>.md` は必要なときだけ辿る。`patterns.md` / `decisions-log.md` は自動ロードせず、指示に従って都度読む。
 - **`@import` はツール依存** — `@~/.agents/learnings/index.md` は Claude Code でのみ自動ロードされる。Codex / Pi では素のポインタ（リンク）として扱われ、エージェントが必要時に開く。なお `@path` を backtick で囲むと展開されないので、自動ロードさせたいパスは囲まない。
 
-## サイクル
-
-`plan → work → review → learning` を既定の流れとして回す（小さく自明な変更ではスキップ可）。
-
-1. **plan** — `STRATEGY_SPEC.md` の目的・指標から外れていないか確認する。
-2. **work** — 実装する。
-3. **review** — 検証で確かめ、後戻りしにくい・影響範囲が広い・迷った判断を `decisions-log.md` に確信度つきで記録する。
-4. **learning** — 再利用できる学びを `LEARNINGS.md` に記録して締める。
-
 ## スキルの役割
 
 - **`learning`** — 各サイクルで学びを記録する（object-level）。あわせて、review での判断記録（decisions-log）の取りこぼしを拾う backstop と、置き場の bootstrap 入口も兼ねる。
@@ -77,3 +82,4 @@ repo で作業中はさらに読み込み
 
 - `LEARNINGS.md` → `~/.agents/learnings/` … リポジトリの外でも使え、「適用範囲」と「例外」が書けるようになったら移す。
 - `decisions-log.md` → `patterns.md` … 同種の判断が繰り返されたら、`reflect` がパターンとして抽出する。
+
