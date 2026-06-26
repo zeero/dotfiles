@@ -20,17 +20,21 @@ description: >
 
 ### 0. セットアップ
 
-複利エンジニアリングの置き場を用意する。**毎回このステップを通り、チェックは「あるか無いか」だけで判断する**（中身は確認しない。軽量に保つ）。
+複利エンジニアリングの置き場を用意する。**毎回このステップを通る**。
 
-**0-1. マシン共通** — `~/.agents/learnings/` と `~/.agents/reflection/` の有無でマシンセットアップ済みかを判断する。**両方あればこの節はスキップ**。無ければ初回として次をまとめて行う（複利と省察の両輪＋それを使う方針）。
-- `~/.agents/learnings/` … `assets/templates/global/learnings/` をコピー。
-- `~/.agents/reflection/` … `assets/templates/global/reflection/` をコピー。
-- グローバル context file（`~/.claude/CLAUDE.md` 等）に `assets/templates/global/compound-rules.md` の方針節を追記する。**グローバル設定の編集なので必ずユーザに確認してから行う**。
+まず存在ゲートと決定論的セットアップをスクリプトに任せる:
 
-**0-2. repo-local scaffold** — repo 直下の `LEARNINGS.md` の有無で repo セットアップ済みかを判断する。**あればスキップ**。無ければ初回として次を用意する。
-- `LEARNINGS.md` … `assets/templates/project/LEARNINGS.md` をコピー。
-- `STRATEGY_SPEC.md` … `assets/templates/project/STRATEGY_SPEC.md` をコピーし、**repo の README / CLAUDE.md / docs から自明に分かる範囲（目的・方針・指標）を埋める**。丸投げしない。人の判断が要る箇所だけ `TODO:` で残し、埋めた内容と残した TODO をユーザに報告する。
-- CLAUDE.md の「作業サイクル」節 … 無ければ `assets/templates/project/cycle-section.md` の内容を追記する。**既存 CLAUDE.md の編集はユーザに確認してから行う**（新規ファイル作成は確認不要）。
+```bash
+~/.claude/skills/learning/scripts/setup.sh
+```
+
+スクリプトはマシン共通（`~/.agents/{learnings,reflection}/`）と repo-local（`<repo>/LEARNINGS.md`・`STRATEGY_SPEC.md`）の有無を各々独立に判定し、不足分だけをテンプレからコピーする（既存は上書きしない・冪等）。CLAUDE.md には触れない。
+
+出力が `all set` なら、この節はここで終わり。`ACTION NEEDED (model)` が出たら、**その項目だけ**を次の要領で対応する（出るのは今回作成した分のみ）。
+
+- **`[global]` compound-rules 追記** — グローバル context file（`~/.claude/CLAUDE.md` 等）に `assets/templates/global/compound-rules.md` の方針節を追記する。**グローバル設定の編集なので必ずユーザに確認してから行う**。
+- **`[repo]` STRATEGY_SPEC.md の埋め込み** — スクリプトが置いた素の `STRATEGY_SPEC.md` を、**repo の README / CLAUDE.md / docs から自明に分かる範囲（目的・方針・指標）で埋める**。丸投げしない。人の判断が要る箇所だけ `TODO:` で残し、埋めた内容と残した TODO をユーザに報告する。
+- **`[repo]` 作業サイクル節の追記** — repo の CLAUDE.md に「作業サイクル」節が無ければ `assets/templates/project/cycle-section.md` の内容を追記する。**既存 CLAUDE.md の編集はユーザに確認してから行う**。
   - 追記時、その repo で使える review / refactor / test 系 skill（例: `self-code-review`, `tdd-refactoring`）を該当ステップに紐づけ、セッション締めの `retrospective`・判断の見返しの `reflect` を末尾に添える。該当 skill が無ければ汎用テンプレのまま残す。
   - review ステップの「後戻りしにくい・影響範囲が広い・迷った判断」という汎用トリガは、repo 固有の重要判断の例（戦略の設計選択、構成・可搬性に関わる選択など）に置き換えて具体化する。STRATEGY_SPEC と同じく自明な範囲まで埋め、判断材料が無ければ汎用のまま残す。
 
