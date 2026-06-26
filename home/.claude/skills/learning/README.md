@@ -67,7 +67,7 @@ repo で作業中はさらに読み込み
 
 ## スキルの役割
 
-- **`learning`** — 各サイクルで学びを1件記録する（object-level）。置き場の bootstrap 入口も兼ねる。
+- **`learning`** — 各サイクルで学びを記録する（object-level）。あわせて、review での判断記録（decisions-log）の取りこぼしを拾う backstop と、置き場の bootstrap 入口も兼ねる。
 - **`reflect`** — `decisions-log.md` に溜まった判断から繰り返しパターンを抽出し、`patterns.md` へ昇格する（meta-level の昇格判断）。
 - **`retrospective`** — セッション全体を振り返る独立スキル。
 
