@@ -85,14 +85,6 @@
     標準的なツールや規約を採用することで、設定の複雑さを軽減し、シンプルさを保ちます。
     - **実践例**: `mise` で複数言語のバージョンを一元管理し、タスクは `go-task`（Taskfile）の規約に寄せます。
 
-7.  **Cross-Agent Portability (AIエージェント設定の横断可搬性)**
-    AIコーディングエージェント関連の設定については、複数のAIコーディングエージェント (Claude Code / Codex / Pi) で設定資産を共有するため、依存先をポータビリティで階層化します。可搬な層にロジックを寄せ、ツール固有の接着剤は最小化することで、特定ツールへのロックインを避けます。
-    - **Tier 1 (完全可搬・第一選択)**: コンテキストファイル・Agent Skill・プレーンなMarkdown成果物。3エージェントが同一資産を読むため、ここに最大限寄せます。
-      - コンテキストファイルは symlink で内容を一元化します。本リポジトリでは `CLAUDE.md` を実体とし、`AGENTS.md` → `CLAUDE.md` の symlink で二重管理を避けます（Codex は `AGENTS.md`、Pi は `AGENTS.md`/`CLAUDE.md` 双方を読むため、3エージェントが同一内容を読む）。
-      - Agent Skill は [Agent Skills 標準](https://agentskills.io/specification) に準拠した `SKILL.md` とし、横断共有のため「skill名＝親ディレクトリ名」を厳守します（Pi は名前ズレを許容するが標準は禁止）。1ディレクトリに集約し各ツールの探索パスへ symlink します。
-    - **Tier 2 (ロジックは共有・接着剤のみ非可搬)**: フック機構はツールごとに別物（Claude Code: `settings.json` のフック / Pi: TypeScript Extension / Codex: 別機構）であり、横断不可です。ロジックは共有スクリプト1本に置き、各ツールのフック/Extension は「それを呼ぶだけの薄いアダプタ」に限定します。
-    - **原則**: モデルに委ねられる判断は Tier 1（Skill＋context file）へ寄せ、決定論的な強制が本当に必要なものだけ Tier 2 を使います。フック設定の中に業務ロジックを直書きしない（ツールロックインを生むため）。
-
 ### ⬇️ インストールフロー
 `task install:all`（= `install.sh` の中核）は次の順序で実行されます。
 1. `mkdir` - ディレクトリ作成と Git サブモジュール初期化
@@ -121,6 +113,38 @@
 - **Gitワークフロー**: 高度なエイリアスとカスタム設定です。
 - **ターミナル**: Smyckカラースキームを備えたiTerm2です。
 - **ブラウザ**: VimのようなブラウジングのためのCVim拡張機能です。
+
+### 🤖 AIエージェント横断構成（複数エージェント並行利用）
+Claude Code / Codex / Pi の3エージェントを並行利用する前提で、設定資産を一元管理 (SSoT) し、特定ツールへのロックインを避けるため、依存先をポータビリティで階層化します。可搬な層にロジックを寄せ、ツール固有の接着剤は最小化します。
+
+- **Tier 1 (完全可搬・第一選択)**: コンテキストファイル・Agent Skill・プレーンなMarkdown成果物。3エージェントが同一資産を読むため、ここに最大限寄せます。Agent Skill は [Agent Skills 標準](https://agentskills.io/specification) に準拠し、横断共有のため「skill名＝親ディレクトリ名」を厳守します（Pi は名前ズレを許容するが標準は禁止）。
+- **Tier 2 (ロジックは共有・接着剤のみ非可搬)**: フック機構はツールごとに別物（Claude Code: `settings.json` のフック / Codex: 別機構 / Pi: TypeScript Extension）で横断不可です。ロジックは共有スクリプト1本に置き、各ツールのフック/Extension は「それを呼ぶだけの薄いアダプタ」に限定します。
+- **原則**: モデルに委ねられる判断は Tier 1（Skill＋context file）へ寄せ、決定論的な強制が本当に必要なものだけ Tier 2 を使います。フック設定の中に業務ロジックを直書きしません（ツールロックインを生むため）。
+
+| Tier | 対象資産 | 一元化方式 | 代表例 |
+|------|---------|-----------|--------|
+| Tier 1 | コンテキストファイル / Agent Skill / Markdown | 実体1つ + symlink fan-out | `CLAUDE.md`, `skills/` |
+| Tier 2 | フック / Extension | 共有スクリプト1本 + 薄いアダプタ | `check-python.sh` + 各ツールアダプタ |
+
+コンテキストファイルは `home/.claude/CLAUDE.md` を実体 (SSoT) とし、symlink で各エージェントの読み込みパスへ配布します（二重管理を回避）。
+
+```
+home/.claude/CLAUDE.md  （実体・SSoT）
+  ├─ ~/.claude/CLAUDE.md     # Claude Code
+  ├─ ~/.codex/AGENTS.md      # Codex
+  └─ ~/AGENTS.md             # 共通（Pi は AGENTS.md / CLAUDE.md 双方を読む）
+```
+
+Agent Skill は `home/.claude/skills/`（70+スキル）を実体とし、各エージェントの探索パスへ symlink 配布します。Pi はスキル専用の symlink を持たず、共通の `~/.agents/skills/` を参照します。
+
+```
+home/.claude/skills/  （実体・70+スキル）
+  ├─ ~/.claude/skills/    # Claude Code
+  ├─ ~/.codex/skills/     # Codex
+  └─ ~/.agents/skills/    # 共通
+```
+
+配布定義の実体は `scripts/symlink.yml`（Agents / Claude Code / Codex / Pi セクション）、Tier 2 の共有スクリプトは `home/.agents/hooks/` を参照してください。
 
 ### 🍎 プラットフォーム固有の事項
 - **主要ターゲット**: macOS開発環境です。
