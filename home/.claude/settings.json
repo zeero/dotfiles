@@ -180,7 +180,7 @@
     }
   },
   "language": "Japanese",
-  "effortLevel": "medium",
+  "effortLevel": "high",
   "promptSuggestionEnabled": false,
   "theme": "dark-ansi",
   "remoteControlAtStartup": true,
