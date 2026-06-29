@@ -34,7 +34,8 @@ argument-hint: "[--claude|--codex|--gemini] [-a|--adversarial] [target_revision]
 3. **外部レビューと修正の依頼**:
    - 特定したツール（codex または claude または gemini）、判定したモード、`TARGET_REVISION` を使用して、外部レビューを実行してください。
    - **Codex を使用する場合**:
-     - `run_shell_command` で `codex exec "対象 [TARGET_REVISION] の変更内容を [判定したモードに応じて \"Adversarial Review\" または \"レビュー\"] し..."` を実行してください。
+     - `run_shell_command` で `codex exec "対象 [TARGET_REVISION] の変更内容を [判定したモードに応じて \"Adversarial Review\" または \"レビュー\"] し..." < /dev/null` を実行してください。
+     - 末尾の `< /dev/null` は必須です。codex が stdin の入力待ちでハングするのを防ぎます。
    - **Claude を使用する場合**:
      - `run_shell_command` で `claude --permission-mode \"acceptEdits\" -p \"対象 [TARGET_REVISION] の変更内容を [判定したモードに応じて \"Adversarial Review\" または \"レビュー\"] し...\"` を実行してください。
    - **Gemini を使用する場合**:
