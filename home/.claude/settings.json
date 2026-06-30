@@ -68,7 +68,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "alerter --title 'Claude Code' --message '✅ タスクが完了しました' --sound default --timeout 10 &"
+            "command": "alerter --title 'Claude Code' --message '✅ タスクが完了しました' --sound default --timeout 5 &"
           }
         ]
       },
@@ -88,7 +88,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "alerter --title 'Claude Code' --message '🕐 入力を待っています' --sound default --timeout 10 &"
+            "command": "alerter --title 'Claude Code' --message '🕐 入力を待っています' --sound default --timeout 5 &"
           }
         ]
       }
