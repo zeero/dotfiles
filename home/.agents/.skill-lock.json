@@ -161,8 +161,9 @@
       "sourceUrl": "https://github.com/mattpocock/skills.git",
       "skillPath": "skills/productivity/grill-me/SKILL.md",
       "skillFolderHash": "8320e7b87f7b208f50ce165b1dd43d1e93c8e801",
+      "pluginName": "mattpocock-skills",
       "installedAt": "2026-05-22T06:29:17.823Z",
-      "updatedAt": "2026-06-19T09:01:17.647Z"
+      "updatedAt": "2026-06-30T03:28:18.085Z"
     },
     "resolve-merge-conflicts": {
       "source": "warpdotdev/common-skills",
@@ -191,6 +192,16 @@
       "pluginName": "oh-my-claudecode",
       "installedAt": "2026-06-12T01:02:46.719Z",
       "updatedAt": "2026-06-12T01:02:46.719Z"
+    },
+    "grilling": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/productivity/grilling/SKILL.md",
+      "skillFolderHash": "ab318c66a36253e872b5d0bd271b3df8f6ef816f",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-06-30T03:28:18.088Z",
+      "updatedAt": "2026-06-30T03:28:18.088Z"
     }
   },
   "dismissed": {
