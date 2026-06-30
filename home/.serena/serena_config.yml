@@ -75,6 +75,7 @@ projects:
 - /Users/zeero/dev/github.com/zeero/vim-gista
 - /Users/zeero/dev/github.com/zeero/zeero
 - /Users/zeero/dev/github.com/zeero/zsh-notify
+- /Users/zeero/dev/llm
 - /Users/zeero/dev/n8n
 - /Users/zeero/lib/dotfiles
 default_modes:

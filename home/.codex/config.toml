@@ -35,6 +35,9 @@ trust_level = "trusted"
 [projects."/private/tmp/claude-501/-Users-zeero-lib-dotfiles/86d4f411-a98c-4d41-8816-483f90575870/scratchpad"]
 trust_level = "trusted"
 
+[projects."/Users/zeero/dev/llm"]
+trust_level = "trusted"
+
 [tui]
 status_line = ["model-with-reasoning", "current-dir", "git-branch", "branch-changes", "run-state", "context-remaining", "five-hour-limit", "weekly-limit", "task-progress"]
 status_line_use_colors = true
