@@ -56,6 +56,11 @@
             "name": "check-python",
             "type": "command",
             "command": "~/.agents/hooks/check-python.sh"
+          },
+          {
+            "name": "check-shell",
+            "type": "command",
+            "command": "~/.agents/hooks/check-shell.sh"
           }
         ]
       },

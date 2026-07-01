@@ -16,5 +16,23 @@
         ]
       }
     ]
+  },
+  "check-shell": {
+    "PreInvocation": null,
+    "PostInvocation": null,
+    "Stop": null,
+    "PreToolUse": null,
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|replace_file_content|mcp_serena_(insert|replace)_.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.agents/hooks/check-shell.sh",
+            "timeout": 0
+          }
+        ]
+      }
+    ]
   }
 }

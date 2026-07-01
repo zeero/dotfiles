@@ -78,6 +78,10 @@
           {
             "type": "command",
             "command": "~/.agents/hooks/check-python.sh"
+          },
+          {
+            "type": "command",
+            "command": "~/.agents/hooks/check-shell.sh"
           }
         ]
       }
