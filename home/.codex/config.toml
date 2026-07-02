@@ -169,6 +169,9 @@ trusted_hash = "sha256:9fc7312a4a274d40081f6734c6f6553d494e9cfde20fd01339995232a
 [hooks.state."/Users/zeero/.codex/hooks.json:user_prompt_submit:0:0"]
 trusted_hash = "sha256:9f9b46244739e7f6f787757a083d0d65c07db3aa2daaaecb6fe9e65b08f362b2"
 
+[hooks.state."/Users/zeero/.codex/hooks.json:post_tool_use:0:1"]
+trusted_hash = "sha256:80f5fe0d2ec771a1f08afcc781107faf630ce67c454d14e1ba2c6b85ae9ff242"
+
 [marketplaces.openai-bundled]
 last_updated = "2026-06-29T04:42:19Z"
 source_type = "local"
