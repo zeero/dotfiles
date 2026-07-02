@@ -86,7 +86,7 @@ summary: >
 
 ユーザが選択した候補のみを反映する。**グローバル CLAUDE.md への追記と skill の新規作成・追記はグローバル資産の変更なので、必ずこの承認を経てから行う**。
 
-`.learnings/<slug>.md` に置く学びは <learning-entry-format> で書き、`.learnings/index.md` に `タイトル — <slug>.md — 1行要約` を1行だけ追記する（index は短く保つ）。グローバル CLAUDE.md / skill へ置く場合は、その保存先の慣習に従う。
+`.learnings/<slug>.md` に置く学びは <learning-entry-format> で書き、`.learnings/index.md` に `<slug>.md — タイトル — 1行要約` を1行だけ追記する（index は短く保つ）。グローバル CLAUDE.md / skill へ置く場合は、その保存先の慣習に従う。
 
 <learning-entry-format>
 ```markdown
