@@ -39,7 +39,7 @@
 ## 🏗️ アーキテクチャと構造
 
 ### 🗂️ 設定の整理
-- `/home/` - `~/`にシンボリックリンクされるdotfiles (zshrc, vimrc, gitignoreなど)
+- `/home/` - `~/`にシンボリックリンクされるdotfiles (zshrc, tmux.conf など)
 - `/vim/` - プラグインと言語設定を含む完全なVim/Neovim設定です。
 - `/xcode/` - Xcodeテンプレート、コードスニペット、プロジェクトセットアップツールです。
 - `/scripts/` - 異なるコンポーネント用のモジュラーインストールスクリプトです。
@@ -67,7 +67,7 @@
 
 2.  **Declarative over Imperative (命令的より宣言的)**
     「どのように(How)」を記述するのではなく、「どうあるべきか(What)」を宣言的に記述することで、可読性とメンテナンス性を向上させます。
-    - **実践例**: `osx_defaults.yml` にmacOSの「あるべき状態」を記述し、実際のコマンド実行はスクリプトに任せます。
+    - **実践例**: `scripts/osx_defaults.yml` にmacOSの「あるべき状態」を記述し、実際のコマンド実行はスクリプトに任せます。
 
 3.  **Maximize Automation, but Keep Human in the Loop (自動化の最大化と人的介入)**
     可能な限り自動化しつつ、セキュリティに関わる部分などでは意図的に人間の判断を介在させ、安全性と確実性を両立します。
@@ -75,7 +75,7 @@
 
 4.  **Optimize for Speed and Efficiency (速度と効率の最適化)**
     あらゆる操作の応答速度と効率性を追求し、開発者の生産性を最大化します。
-    - **実践例**: `osx_defaults.yml` でキーリピートを高速化したり、`git` エイリアスでキーストロークを削減します。
+    - **実践例**: `scripts/osx_defaults.yml` でキーリピートを高速化したり、`git` エイリアスでキーストロークを削減します。
 
 5.  **Modularity and Extensibility (モジュール性と拡張性)**
     機能を疎結合なモジュールに分割し、将来の変更や拡張に対応しやすくします。
@@ -97,11 +97,10 @@
 `install.sh` はこれに加えて Antigravity/Claude Code/各プラグイン導入や iTerm2/Vimium 設定などの対話プロンプトを挟みます。
 
 ### 📝 主要設定ファイル
-- `home/.zshrc` - 高度な機能を備えたメインのシェル設定 (14k+行)
+- `home/.zshrc` - 高度な機能を備えたメインのシェル設定
 - `vim/vimrc` - dein.vimプラグイン管理を備えたVim設定です。
 - `vim/dein.toml` - プラグイン定義と設定です。
 - `vim/coc-settings.json` - CoCの言語サーバー設定です。
-- `home/.gitignore` - グローバルなgit ignoreパターンです。
 - `Brewfile` - Homebrewパッケージ定義 (casksとformulasを含む)
 - `Gemlist`/`Nodelist`/`Piplist`/`Uvlist`/`Cargolist`/`Mintlist` - 言語固有のパッケージリストです。
 - `Taskfile.yml`/`Taskfile.install.yml`/`Taskfile.tests.yml` - go-task のタスク定義です。
@@ -112,7 +111,7 @@
 - **iOS開発**: Clean Swift, VIPER, TCAアーキテクチャ用のXcodeテンプレートです。
 - **Gitワークフロー**: 高度なエイリアスとカスタム設定です。
 - **ターミナル**: Smyckカラースキームを備えたiTerm2です。
-- **ブラウザ**: VimのようなブラウジングのためのCVim拡張機能です。
+- **ブラウザ**: VimのようなブラウジングのためのVimium C拡張機能です。
 
 ### 🤖 AIエージェント横断構成（複数エージェント並行利用）
 Claude Code / Codex / Pi の3エージェントを並行利用する前提で、設定資産を一元管理 (SSoT) し、特定ツールへのロックインを避けるため、依存先をポータビリティで階層化します。可搬な層にロジックを寄せ、ツール固有の接着剤は最小化します。
@@ -135,10 +134,10 @@ home/.claude/CLAUDE.md  （実体・SSoT）
   └─ ~/AGENTS.md             # 共通（Pi は AGENTS.md / CLAUDE.md 双方を読む）
 ```
 
-Agent Skill は `home/.claude/skills/`（70+スキル）を実体とし、各エージェントの探索パスへ symlink 配布します。Pi はスキル専用の symlink を持たず、共通の `~/.agents/skills/` を参照します。
+Agent Skill は `home/.claude/skills/` を実体とし、各エージェントの探索パスへ symlink 配布します。Pi はスキル専用の symlink を持たず、共通の `~/.agents/skills/` を参照します。
 
 ```
-home/.claude/skills/  （実体・70+スキル）
+home/.claude/skills/  （実体・SSoT）
   ├─ ~/.claude/skills/    # Claude Code
   ├─ ~/.codex/skills/     # Codex
   └─ ~/.agents/skills/    # 共通
