@@ -195,7 +195,6 @@ home/.claude/skills/  （実体・70+スキル）
 
 1. **plan**: 着手前に方針を立て、`STRATEGY_SPEC.md` の目的・指標から外れていないか確認する。
 2. **work**: 実装する。リファクタ・構造改善は `tdd-refactoring` skill の手順に沿う。
-3. **review**: テスト・lint に加え `self-code-review` skill で確かめる。後戻りしにくい判断——symlink/可搬性 tier の設計選択、ツール横断（Claude Code / Codex / Pi）に影響する構成変更、インストールフローの順序変更——は確信度つきで `~/.agents/reflection/decisions-log.md` に記録する。
-4. **learning**: 再利用できる学びが出ていれば `learning` skill で `LEARNINGS.md` に追記する。
-5. 締め: セッションの振り返りは `retrospective`、判断の見返しは `reflect` skill を使う。
+3. **review**: テスト・lint に加え `self-code-review` skill で確かめる。
+4. **learning**: 再利用できる学びが出ていれば `learning` skill で締める。learning が学びを蒸留し、どれだけ汎用的かに応じて——プロジェクト固有は `.learnings/`、特定領域で普遍なら skill、あらゆる作業で普遍ならグローバル CLAUDE.md——へ振り分ける。
 
