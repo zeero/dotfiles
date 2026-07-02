@@ -196,5 +196,8 @@ home/.claude/skills/  （実体・70+スキル）
 1. **plan**: 着手前に方針を立て、`STRATEGY_SPEC.md` の目的・指標から外れていないか確認する。
 2. **work**: 実装する。リファクタ・構造改善は `tdd-refactoring` skill の手順に沿う。
 3. **review**: テスト・lint に加え `self-code-review` skill で確かめる。
-4. **learning**: 再利用できる学びが出ていれば `learning` skill で締める。learning が学びを蒸留し、どれだけ汎用的かに応じて——プロジェクト固有は `.learnings/`、特定領域で普遍なら skill、あらゆる作業で普遍ならグローバル CLAUDE.md——へ振り分ける。
+4. **learning**: 再利用できる学びが出ていれば `learning` skill で締める。learning が学びを蒸留し、どれだけ汎用的かに応じて振り分ける。
+  - プロジェクト固有は @.learnings/index.md + `.learnings/<slug>.md`
+  - 特定領域で普遍なら skill
+  - あらゆる作業で普遍ならグローバル CLAUDE.md
 
