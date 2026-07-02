@@ -137,15 +137,21 @@ Full report: <STAGED_DIR>/report.md
 Staged store: <STAGED_DIR>/memory/
 Backup on apply: <"yes — non-git store" if GIT_TRACKED is false, else "no — git-tracked, use git to revert">
 
-If the user approves, apply with:
-    bash "${CLAUDE_SKILL_DIR}/scripts/dream_apply.sh" "<STAGED_DIR>"
+Ask the user for the apply decision with the AskUserQuestion tool — do not
+apply on an inferred yes. Offer two options:
+  - Apply — run: bash "${CLAUDE_SKILL_DIR}/scripts/dream_apply.sh" "<STAGED_DIR>"
+  - Discard — nothing changed; run: rm -rf "<STAGED_DIR>"
 
-If the user rejects, nothing changed; the staging dir can be deleted:
-    rm -rf "<STAGED_DIR>"
+Only run the matching command after the user picks. If the store is not
+git-tracked, note in the question that Apply takes a backup first.
 ```
 
 Resolve `${CLAUDE_SKILL_DIR}` and `<STAGED_DIR>` to their real absolute paths in
 what you output — the main context will not re-expand them.
+
+The approval gate is deliberately a structured AskUserQuestion prompt, not a
+free-text confirmation: applying overwrites the live store, so the choice must
+be explicit and unambiguous.
 
 ## Notes
 
