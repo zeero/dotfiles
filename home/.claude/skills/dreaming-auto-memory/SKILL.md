@@ -14,149 +14,89 @@ description: >
   it discovers the store's format at runtime rather than assuming one.
 user-invocable: true
 disable-model-invocation: true
-context: fork
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep
+allowed-tools: Bash
 ---
 
 # Dreaming for auto-memory
 
-You are running a **dream**: a non-destructive consolidation pass over a Claude
-Code auto-memory store. You read the existing memory alongside recent session
-transcripts and build a cleaner, reorganized store — merging duplicates,
-resolving contradictions toward the latest value, dropping what is confidently
-stale, and surfacing durable new insights. You never modify the live store
-yourself. You stage the result and hand a ready-to-run apply command back to the
-main context, where the user approves it.
+このスキルは **dream** — Claude Code の auto-memory ストアに対する非破壊の整理統合パス — を**オーケストレーションする**。あなた（メインコンテキスト）は安価で決定論的な工程 — 準備・承認ゲート・適用 — を担い、トークンを大量に消費する読み込みと推論だけを**サブエージェントに委譲する**。ライブストアは決して直接変更せず、結果はステージング領域に置き、ユーザーの承認を経て初めて反映される。
 
-`$ARGUMENTS` (if present) is free-form steering — the equivalent of the dreams
-API `instructions` field. It may instead be a path to the memory dir when
-auto-detection fails. Treat a leading filesystem path as the override and the
-rest as steering.
+`$ARGUMENTS`（あれば）は自由形式の操舵指示 — dreams API の `instructions` フィールドに相当する。自動検出が失敗する場合は、代わりにメモリディレクトリへのパスでもよい。先頭がファイルシステムパスならディレクトリ指定として扱い、残りを操舵指示として扱う。
 
-## Why this shape
+## なぜこの形か
 
-Auto-memory is written incrementally during sessions, so over time it
-accumulates duplicates, contradictions, and stale entries. A dream is the
-periodic cleanup. It runs in a forked context because reading many transcripts
-is token-heavy and should not pollute the main conversation. The expensive
-reasoning happens here; the cheap, deterministic apply happens back in main
-after the user says yes — that split is why fork and an interactive approval can
-coexist.
+auto-memory はセッション中に逐次書き込まれるため、時間とともに重複・矛盾・陳腐化が蓄積する。dream はその定期クリーンアップである。多数のトランスクリプトを読む処理はトークンを大量に消費するため、**その部分だけをサブエージェントに隔離する**。一方、承認ゲート（AskUserQuestion）と適用はメインで行う — こうすることで**制御がメインから離れず**、サブエージェントが返したレポートを受けてそのまま承認・適用へ進める。
 
-## Workflow
+以前は skill 全体を `context: fork` で丸ごとサブエージェント実行していたが、戻り値がテキスト塊としてメインに渡るだけで「結果を受けて動く」のが難しかった。この構成はメインを制御の主体に保つことでそれを解消する。サブエージェントは findings を最終メッセージのテキストとして返すため、harness の「subagent はレポートファイルを書けない」制約とも自然に噛み合う。
 
-### 1. Prepare (deterministic)
+## ワークフロー（メインコンテキストで実行）
 
-Run the prep script. Pass the memory-dir override as `$1` only if the user gave
-one; otherwise pass nothing and let it derive the store from the current
-project.
+### 1. 準備（決定論・スクリプト任せ）
+
+prep スクリプトを実行する。ユーザーがメモリディレクトリを指定した場合のみ `$1` に渡し、指定がなければ何も渡さずカレントプロジェクトから導出させる。
 
 ```bash
 bash "${CLAUDE_SKILL_DIR}/scripts/dream_prep.sh" [memory-dir-override]
 ```
 
-It prints `KEY=VALUE` lines (`MEMORY_DIR`, `STATE_FILE`, `GIT_TRACKED`,
-`STAGED_DIR`, `TIMESTAMP`, `MEMORY_FILE_COUNT`, ...) and, between
-`NEW_TRANSCRIPTS_BEGIN` / `NEW_TRANSCRIPTS_END`, tab-separated
-`session_id<TAB>path` lines for each transcript not yet processed and not still
-being written. Capture these values — you need `MEMORY_DIR`, `STATE_FILE`,
-`GIT_TRACKED`, `STAGED_DIR`, `TIMESTAMP`, and the transcript list.
+このスクリプトが以下を一括で行う:
 
-If it prints `ERROR:`, stop and relay the hint to the user (usually: pass the
-memory dir explicitly). Do not guess a path.
+- ストアの解決とステージング領域（`STAGED_DIR`）の作成
+- 7日を超えた古い staged ディレクトリ / バックアップ（zip）の掃除
+- 未処理トランスクリプトの digest 生成 — バイト予算内・古い順。予算超過分は次回の dream に持ち越される（予算は環境変数 `DREAM_DIGEST_BUDGET_BYTES` で調整可）
+- apply が読む `.dream-meta.json` の生成（処理対象セッションの watermark 情報を含む）
 
-### 2. Discover the format
+出力は `KEY=VALUE` 行（`MEMORY_DIR`, `STAGED_DIR`, `SKIPPED_TRANSCRIPT_COUNT`, ...）と、`DIGESTS_BEGIN` / `DIGESTS_END` の間の `session_id<TAB>digest_bytes<TAB>digest_path` 行。`MEMORY_DIR` / `STAGED_DIR` / `SKIPPED_TRANSCRIPT_COUNT` と digest パス一覧を控える — 次のステップでサブエージェントに渡す。
 
-Read `references/consolidation-policy.md` now — it holds the detailed rules for
-everything below. Then discover the store's conventions (index file, frontmatter
-fields, type taxonomy, body style, file naming) by sampling the existing memory,
-and plan to preserve them. If the store is empty, use the documented fallback
-format.
+`ERROR:` が出たら中断してヒントをユーザーへ伝える（大抵はメモリディレクトリの明示指定が必要）。パスを推測してはならない。
 
-### 3. Digest recent transcripts (only if there are new ones)
+### 2. サブエージェントで推論（重い処理を隔離）
 
-For each transcript path from step 1, produce a compact digest and read it:
+汎用サブエージェント（general-purpose 等、各エージェントのサブエージェント起動ツール）を1つ起動し、下記のプロンプトを渡す。`<...>` の各プレースホルダはステップ1で得た**実際の値**に置換する（`${CLAUDE_SKILL_DIR}` はこのファイル読み込み時に解決済み。メインが渡す時点で全て絶対値になっていること）。digest の読み込み・整理統合・ステージングへの書き込みはすべてサブエージェント側で完結し、その重いトークン消費はメインの会話に載らない。
+
+```text
+あなたは dream の推論パスを担うサブエージェントである。Claude Code の auto-memory ストアを非破壊で整理統合し、再構築後のストアをステージング領域に書き、変更レポートを最終メッセージのテキストとして返す。ライブストア（MEMORY_DIR）には決して書き込まない。
+
+まず判断基準として ${CLAUDE_SKILL_DIR}/references/consolidation-policy.md を読む。フォーマット発見・recency 判断・統合・矛盾解消・削除・要確認・レポート構造のルールはすべてそこに従う。
+
+入力:
+- MEMORY_DIR（ライブストア。読み取り専用でサンプリングのみ）: <MEMORY_DIR>
+- STAGED_DIR（成果物の書き込み先）: <STAGED_DIR>
+- 操舵指示（instructions）: <ARGUMENTS。無ければ「なし」>
+- 未処理の持ち越し件数: <SKIPPED_TRANSCRIPT_COUNT>
+- 読むべき digest（session_id / bytes / path。bytes=0 は飛ばす。一覧が空なら digest なし）:
+  <DIGESTS 一覧。無ければ「なし」>
+
+手順:
+1. フォーマット発見: policy に従い MEMORY_DIR の既存メモリとインデックスをサンプリングし、frontmatter・type・本文スタイル・命名規約を把握して維持する計画を立てる。空ストアなら policy のフォールバック形式を使う。
+2. digest を読む（あれば）: 各 digest を Read で読み、永続的で再利用可能な事実を採掘する。
+3. 整理統合（推論）: policy に従い、重複統合・矛盾の recency 解消・確信できる削除・新知見抽出を行う。確信できないもの／外部状態依存のものは手を付けず「要確認」としてレポートに記す（黙って消さない）。
+4. ステージングへ書く: 再構築した「あるべき最終状態そのもの」を <STAGED_DIR>/memory/ に発見済みフォーマットで書き、インデックスファイルも再生成する。生き残るエントリ（追加・統合・未変更/要確認）を全て含め、削除対象は含めない。report.md などのレポートファイルは書かない — findings は最終メッセージのテキストで返す。
+5. レポートを返す: policy の「報告（引き継ぎ）の構造」に従い、変更サマリ・追加・統合・削除（理由と recency シグナル）・要確認（理由）を最終メッセージのテキストとして返す。<SKIPPED_TRANSCRIPT_COUNT> が 0 より大きければ「未処理 N 件 — 再実行で続きが処理される」を必ず含める。
+```
+
+### 3. レポートを提示して承認を得る（報告と承認依頼は別ターンに分離する）
+
+**同一ターンでレポート提示と `AskUserQuestion` を行ってはならない。** ツール呼び出し前の途中テキストはユーザーに表示されないことがあり、説明のない「適用しますか？」だけが届く事故になる（実際に発生した）。必ず2段階に分ける:
+
+1. **報告ターン**: サブエージェントが返したレポートを、ツール呼び出しを伴わない**単独の最終メッセージ**として提示してターンを終える。レポートには「適用すると何が起こるか」（追加・統合・削除・更新されるファイルとその要旨）を含める。
+2. **承認ターン**: ユーザーの応答を受けた次のターンで、`AskUserQuestion` で「適用 / 破棄」の2択を問う。ユーザーがテキストで明示的に適用/破棄を指示した場合は、それを承認として扱ってよい（メニューの再提示は不要）。
+
+推測の yes で適用しない。承認ゲートを構造化された選択にしているのは意図的である: apply はライブストアを上書きするため、選択は明示的かつ曖昧さのないものでなければならない。
+
+### 4. 適用 or 破棄（承認後）
+
+ユーザーが選んだ方**だけ**を実行する。生の `rm` は決して発行せず、削除は必ずスクリプト経由で行う。
 
 ```bash
-python3 "${CLAUDE_SKILL_DIR}/scripts/digest_transcript.py" <transcript.jsonl>
+# 適用（実行前に .dream/backup-* へ自動バックアップ）
+bash "${CLAUDE_SKILL_DIR}/scripts/dream_apply.sh" "<STAGED_DIR>"
+
+# 破棄（ライブストアは無変更）
+bash "${CLAUDE_SKILL_DIR}/scripts/dream_discard.sh" "<STAGED_DIR>"
 ```
 
-The digest strips tool-call noise down to the user/assistant conversation so you
-can mine durable facts affordably. If there are no new transcripts, skip this
-step and do memory-only consolidation.
+## 注意
 
-### 4. Dream (the reasoning)
-
-Following `references/consolidation-policy.md`, build the reorganized store:
-merge duplicates, resolve clear contradictions by recency, drop only what is
-confidently stale, and surface durable new insights from the digests. Anything
-you cannot confidently decide — or whose validity depends on external state you
-should not probe — gets **left untouched and flagged for review**, never
-silently deleted. Honor any steering from `$ARGUMENTS` throughout.
-
-Write the complete rebuilt store into `<STAGED_DIR>/memory/`, in the discovered
-format, and regenerate the index file there. `<STAGED_DIR>/memory/` is the exact
-desired end state: include every entry that should survive (adds, merges, and
-untouched/flagged entries) and omit the ones you dropped.
-
-### 5. Write the report and the apply metadata
-
-Write `<STAGED_DIR>/report.md` in the structure defined by the policy file
-(summary counts + added/merged/dropped/needs-review sections).
-
-Write `<STAGED_DIR>/.dream-meta.json` — this is the contract the apply script
-reads, so use exactly these keys:
-
-```json
-{
-  "memory_dir": "<MEMORY_DIR>",
-  "state_file": "<STATE_FILE>",
-  "git_tracked": <true|false>,
-  "last_dream_iso": "<TIMESTAMP>",
-  "processed_session_ids": ["<session ids you actually folded in>"]
-}
-```
-
-`processed_session_ids` is the list of transcript session ids from step 1 that
-you incorporated (empty if there were no new transcripts). The watermark only
-advances for sessions actually processed.
-
-### 6. Hand off to the main context
-
-You cannot apply the result yourself — apply must happen in the main context
-after the user approves. End your turn by returning **exactly** this handoff, so
-the main context has everything it needs without loading this skill:
-
-```
-## Dream staged — review before applying
-
-<one-paragraph summary: counts of added / merged / dropped / needs-review, and
-whether new transcripts were processed>
-
-Full report: <STAGED_DIR>/report.md
-Staged store: <STAGED_DIR>/memory/
-Backup on apply: <"yes — non-git store" if GIT_TRACKED is false, else "no — git-tracked, use git to revert">
-
-Ask the user for the apply decision with the AskUserQuestion tool — do not
-apply on an inferred yes. Offer two options:
-  - Apply — run: bash "${CLAUDE_SKILL_DIR}/scripts/dream_apply.sh" "<STAGED_DIR>"
-  - Discard — nothing changed; run: rm -rf "<STAGED_DIR>"
-
-Only run the matching command after the user picks. If the store is not
-git-tracked, note in the question that Apply takes a backup first.
-```
-
-Resolve `${CLAUDE_SKILL_DIR}` and `<STAGED_DIR>` to their real absolute paths in
-what you output — the main context will not re-expand them.
-
-The approval gate is deliberately a structured AskUserQuestion prompt, not a
-free-text confirmation: applying overwrites the live store, so the choice must
-be explicit and unambiguous.
-
-## Notes
-
-- Never write into the live `MEMORY_DIR`; only ever into `STAGED_DIR`. The live
-  store changes solely through `dream_apply.sh`, and only on approval.
-- The apply script makes the live store exactly match the staged tree (adds,
-  merges, and drops), backing up first when the store is not git-tracked, and
-  advances the watermark only after a successful apply.
+- ライブの `MEMORY_DIR` には決して書き込まない。書き込み先は常に `STAGED_DIR` のみ。ライブストアは `dream_apply.sh` 経由・承認後にのみ変わる。
+- apply スクリプトはライブストアをステージ済みツリーと完全一致させる（追加・統合・削除を反映）。実行前に必ず `.dream/backup-*.zip` へバックアップを取り、prep 以降にライブストアが変化していれば安全のため中断する（その場合は破棄して dream をやり直す）。watermark は成功時のみ進み、その後ステージング領域を削除する。何を変えたかの監査証跡はこのバックアップ（unzip してストアと `diff` で比較可能）と、メインが提示したレポートが担う。

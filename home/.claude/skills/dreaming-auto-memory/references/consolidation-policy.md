@@ -1,121 +1,64 @@
-# Consolidation policy
+# Consolidation policy（整理統合ポリシー）
 
-The detailed rules for the reasoning half of a dream. The SKILL.md workflow
-tells you *when* to read this; this file tells you *how* to decide what to
-keep, merge, drop, or flag. The guiding principle mirrors the managed-agents
-"dreams" feature: **rebuild the store into a cleaner version without ever
-silently losing information the user still needs.** The staging + approval gate
-is the safety net, so bias toward a genuinely reorganized result rather than a
-timid copy — but never delete something you cannot justify.
+dream の推論パートの詳細ルール。SKILL.md のワークフローが「いつ読むか」を指示し、このファイルが「何を残し・統合し・削除し・フラグするか」の判断基準を定める。指針は managed-agents の "dreams" 機能と同じ: **ユーザーがまだ必要とする情報を黙って失うことなく、ストアをより整理された形に再構築する。** ステージング + 承認ゲートが安全網なので、臆病なコピーではなく本当に再編成された結果を目指してよい — ただし正当化できない削除は決してしない。
 
-## Format discovery (do this first)
+## フォーマット発見（最初に行う）
 
-Other environments do not necessarily use this machine's memory conventions, so
-never hard-code a schema. Learn it from what is already there:
+他の環境がこのマシンのメモリ規約を使っているとは限らないため、スキーマを決め打ちせず、既にあるものから学ぶ:
 
-1. Read the index file if one exists (commonly `MEMORY.md`). Note how it lists
-   entries — the exact bullet/line shape, whether it groups by section.
-2. Read a sample of the existing memory files (up to ~8, spread across the
-   store). Infer:
-   - the frontmatter fields in use (e.g. `name`, `description`, `metadata.type`)
-     and the set of `type` values that actually appear;
-   - body conventions (e.g. a `**Why:**` / `**How to apply:**` structure,
-     `[[wikilink]]` cross-references between entries);
-   - the file-naming convention (kebab-case slug vs `type_topic.md`, etc.).
-3. **Preserve whatever you find.** Every file you write into the staged store
-   must match the discovered format. Do not introduce new frontmatter fields,
-   rename types, or restyle bodies.
+1. インデックスファイル（一般的には `MEMORY.md`）があれば読む。エントリの列挙方法 — 行/箇条書きの正確な形、セクション分けの有無 — を記録する。
+2. 既存メモリファイルをサンプリングして読む（ストア全体に散らして最大8件程度）。以下を推定する:
+   - 使われている frontmatter フィールド（例: `name`, `description`, `metadata.type`）と、実際に出現する `type` 値の集合
+   - 本文の規約（例: `**Why:**` / `**How to apply:**` 構造、エントリ間の `[[wikilink]]` 相互参照）
+   - ファイル命名規約（kebab-case slug か `type_topic.md` か、など）
+3. **発見したものを維持する。** ステージ済みストアへ書くすべてのファイルは発見済みフォーマットに一致させる。新しい frontmatter フィールドの導入、type のリネーム、本文スタイルの変更はしない。
 
-If the store is empty (fresh environment, zero memory files), fall back to the
-Claude Code standard: one fact per file, frontmatter with `name` /
-`description` / `metadata.type` (types `user` / `feedback` / `project` /
-`reference`), and a `MEMORY.md` index with one line per memory.
+ストアが空（新しい環境でメモリファイルがゼロ）の場合は、Claude Code の標準形式にフォールバックする: 1ファイル1事実、frontmatter は `name` / `description` / `metadata.type`（type は `user` / `feedback` / `project` / `reference`）、インデックスは1メモリ1行の `MEMORY.md`。
 
-## Recency signals (how to decide which value wins)
+## recency シグナル（どちらの値を採るかの判断）
 
-Contradictions are resolved by recency, but "recent" has to be inferred from
-signals that actually exist for files:
+矛盾は recency（新しさ）で解消するが、ファイルにおける「新しい」は実在するシグナルから推定するしかない:
 
-- **Transcript-derived facts always beat older memory.** If a new session says
-  the user now prefers X where an old memory says Y, X wins — the later
-  utterance is the current truth.
-- **Between two memory files that contradict, the higher file mtime wins.**
-  Mtime is imperfect (a bulk rewrite can reset it), so treat it as a signal,
-  not proof: if the mtimes are close or the contradiction is substantive,
-  prefer to flag rather than pick.
-- **Explicit dates in the body override mtime** when present (e.g. a memory that
-  says "as of 2026-05"). Absolute dates are more trustworthy than filesystem
-  metadata.
+- **トランスクリプト由来の事実は常に古いメモリに勝つ。** 新しいセッションで「今は X を好む」と言っていて古いメモリが Y なら、X が勝つ — 後の発言が現在の真実である。
+- **矛盾する2つのメモリファイル間では、mtime が新しい方が勝つ。** ただし mtime は不完全（一括書き換えでリセットされる）なので、証明ではなくシグナルとして扱う: mtime が近い、または矛盾の内容が重大な場合は、どちらかを選ばずフラグする方を優先する。
+- **本文中の明示的な日付は mtime を上書きする**（例: 「2026-05 時点で」と書かれたメモリ）。絶対日付はファイルシステムのメタデータより信頼できる。
 
-## Operations
+## 操作
 
-### Merge duplicates
-Two or more entries expressing the same fact → combine into one, keeping the
-clearest phrasing and unioning any non-conflicting detail. Preserve
-cross-references so links do not dangle. This is the safest operation; do it
-confidently.
+### 重複の統合（Merge）
+同じ事実を表す複数のエントリ → 最も明瞭な表現を残して1つに統合し、矛盾しない詳細は合併する。相互参照はリンク切れしないよう維持する。これは最も安全な操作なので、自信を持って行ってよい。
 
-### Resolve clear contradictions
-When entries conflict and a recency signal clearly identifies the winner,
-keep the winning value and drop the losing one. Record the drop (with the
-reason) in the report so the user can veto it.
+### 明確な矛盾の解消（Resolve）
+エントリ同士が矛盾し、recency シグナルが勝者を明確に示す場合、勝った値を残して負けた方を削除する。削除は理由とともにレポートに記録し、ユーザーが拒否権を行使できるようにする。
 
-### Drop stale entries
-An entry is stale when it describes something no longer true. Only drop
-**confidently** — e.g. two memories where one explicitly supersedes the other.
-For staleness that depends on the outside world (a memory referencing a file,
-flag, or path that may no longer exist), do **not** verify by touching the
-filesystem and do **not** auto-drop: existence is environment-dependent and
-outside the store's scope. Flag it instead (see below).
+### 陳腐化エントリの削除（Drop）
+もはや真実でないことを記述しているエントリは陳腐化している。削除は**確信できる場合のみ** — 例: 一方が他方を明示的に上書きしている2つのメモリ。外部世界に依存する陳腐化（ファイル・フラグ・パスへの参照がもう存在しないかもしれないメモリ）は、ファイルシステムを触って検証**せず**、自動削除も**しない**: 存在は環境依存であり、ストアの管轄外である。代わりにフラグする（下記参照）。
 
-### Surface new insights (transcript mining)
-Read the transcript digests for durable, reusable facts the store does not yet
-capture — stable user preferences, project constraints, corrections the user
-made, hard-won setup/command knowledge. Write each as a new memory file in the
-discovered format. Be selective: skip one-off debugging chatter, ephemeral task
-state, and anything the `instructions` steering told you to ignore. A good new
-insight is one that would save time the *next* time a similar situation arises.
+### 解決済み・完了履歴の削除（Retire）
+「問題が解決した」「タスクがクローズした」ことを記録しているエントリ（本文や description の【解決済】・クローズ済み・完了などの明示、またはトランスクリプト/ユーザーによる解決確認）は、完了履歴としてストアに残さない — 履歴の真実は git・specs・issue tracker 側にあり、メモリに残すと陳腐化リスクだけを抱えるためである。削除の前に、そのエントリが含む**再利用可能な教訓**（再発防止の設計原則、判断基準、gotcha）を確認し、あれば既存メモリへの統合または新規メモリとして救い出してから本体を削除する。教訓の抽出有無と削除理由はレポートの「削除」に必ず記録する。解決が推定にとどまる場合（外部状態への依存で確信できない場合）は削除せずフラグする（下記参照）。
 
-### Flag, don't delete (要確認 / needs-review)
-When you cannot confidently pick a winner, or an entry's validity depends on
-external state you should not probe, **leave the entry untouched in the staged
-store** and list it in the report under a "needs review" heading with a short
-reason. Do not inject a foreign marker field into the memory file — that could
-confuse the host's memory recall. The report is where ambiguity surfaces; the
-human resolves it at the approval gate.
+### 新知見の抽出（トランスクリプト採掘）
+digest から、ストアがまだ捉えていない永続的で再利用可能な事実を読み取る — 安定したユーザーの好み、プロジェクトの制約、ユーザーが行った訂正、苦労して得たセットアップ/コマンドの知識、そして**仕様判断・設計判断の rationale**（採用理由、棄却した代替案、試して捨てたパラメータや閾値、明示的に受容したリスク）。仕様判断については「結論が既存ドキュメントに明文化済み」であることを「救済済み」と等値にしないこと — 文書に残るのは結論（what）だけで、判断理由（why）や棄却案がトランスクリプトにしかないなら、その理由部分が抽出対象である。逆に理由まで文書化されているものは重複記録しない。各知見を発見済みフォーマットの新しいメモリファイルとして書く。選択的であること: 一度きりのデバッグの雑談、一時的なタスク状態、操舵指示（`instructions`）が無視するよう指定したものはスキップする。良い新知見とは、*次に*同様の状況が来たとき時間を節約するものである。
 
-## Steering with instructions
+### 削除せずフラグ（要確認）
+勝者を確信を持って選べない場合、またはエントリの有効性が触るべきでない外部状態に依存する場合、**ステージ済みストアにそのエントリを未変更のまま残し**、レポートの「要確認」見出しの下に短い理由とともに列挙する。メモリファイル自体に異物のマーカーフィールドを注入しない — ホストのメモリ recall を混乱させ得る。曖昧さはレポートで表面化させ、承認ゲートで人間が解決する。
 
-If the invocation passed free-form `instructions` (the equivalent of the dreams
-API `instructions` field), apply them throughout: what to read closely, what to
-prioritize merging or dropping, and which kinds of insight to surface or ignore.
-Example: "focus on coding-style preferences; ignore one-off debugging notes."
+## instructions による操舵
 
-## report.md structure
+呼び出し時に自由形式の `instructions`（dreams API の `instructions` フィールド相当）が渡された場合、全体を通して適用する: 何を重点的に読むか、何の統合・削除を優先するか、どの種類の知見を抽出/無視するか。例: 「コーディングスタイルの好みに注力し、一度きりのデバッグメモは無視して」。
 
-Write `report.md` into the staging dir using this shape so the summary returned
-to the main context is easy to skim:
+## 報告（引き継ぎ）の構造
 
-```
-# Dream report — <timestamp>
+レポートは**ファイルに書かず**、推論パスを担うサブエージェントの最終メッセージ（テキスト）として返す — harness が subagent のファイル書き込み（findings）を拒否するためである。この文面はメインコンテキストがユーザーへそのまま提示し、承認ゲート（適用/破棄）の判断材料になるので、これ1つで判断できる自己完結した内容にする。次の情報を過不足なく含める:
 
-## Summary
-- added: N   merged: N   dropped: N   needs-review: N
-- transcripts processed: N (session ids: ...)   |   or: no new transcripts
+- **変更サマリ**: 追加 / 統合 / 削除 / 要確認 の各件数
+- **処理トランスクリプト**: N 件（session ids）。新規がなければ「新規セッションなし」と明記
+- **未処理の持ち越し**: `SKIPPED_TRANSCRIPT_COUNT > 0` の場合のみ N 件
+- **追加**: `<file>` ごとに一行の理由 / 出典セッション
+- **統合**: `<統合後ファイル> ← <統合元>` と、何を統合したか
+- **削除**: `<file>` ごとに、陳腐化/上書きと判断した理由と、使用した recency シグナル
+- **要確認**: `<file>` ごとに、判断できなかった理由（未変更のまま残置）
 
-## Added (new insights)
-- <file>: <one-line reason / source session>
+判断理由（特に削除と要確認）は必ず添える — ユーザーが承認ゲートで拒否権を行使できるようにするための情報である。0件のセクションは「なし」と1行で残し、省略しない。
 
-## Merged
-- <resulting file> ← <sources>: <what was combined>
-
-## Dropped
-- <file>: <why it is stale/superseded, and the recency signal used>
-
-## Needs review (要確認)
-- <file>: <why you could not decide — left untouched>
-```
-
-If there were no new transcripts, still run memory-only consolidation (merge /
-contradiction / staleness across existing files) and say "no new transcripts"
-in the summary.
+新規トランスクリプトがない場合も、メモリのみの整理統合（既存ファイル間の統合・矛盾解消・陳腐化判定）は実行し、サマリに「新規トランスクリプトなし」と明記する。
