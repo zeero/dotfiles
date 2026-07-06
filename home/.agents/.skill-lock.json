@@ -55,69 +55,6 @@
       "installedAt": "2026-02-20T06:14:51.539Z",
       "updatedAt": "2026-06-19T09:00:57.992Z"
     },
-    "n8n-code-javascript": {
-      "source": "czlonkowski/n8n-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
-      "skillPath": "skills/n8n-code-javascript/SKILL.md",
-      "skillFolderHash": "d3e301186e35d122c7db01dcd3a49a90766d1ad9",
-      "installedAt": "2026-04-21T23:37:20.135Z",
-      "updatedAt": "2026-06-19T09:01:00.657Z"
-    },
-    "n8n-code-python": {
-      "source": "czlonkowski/n8n-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
-      "skillPath": "skills/n8n-code-python/SKILL.md",
-      "skillFolderHash": "0254c372b58816e3f68c3e9b4d69c64211e52be1",
-      "installedAt": "2026-04-21T23:37:20.520Z",
-      "updatedAt": "2026-06-19T09:01:03.220Z"
-    },
-    "n8n-expression-syntax": {
-      "source": "czlonkowski/n8n-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
-      "skillPath": "skills/n8n-expression-syntax/SKILL.md",
-      "skillFolderHash": "3bc6f94245a3176d5669625e624cad4ba02c7d64",
-      "installedAt": "2026-04-21T23:37:20.889Z",
-      "updatedAt": "2026-06-19T09:01:05.801Z"
-    },
-    "n8n-mcp-tools-expert": {
-      "source": "czlonkowski/n8n-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
-      "skillPath": "skills/n8n-mcp-tools-expert/SKILL.md",
-      "skillFolderHash": "22a07ff725d581ad5f79443db7da08e31e76cf76",
-      "installedAt": "2026-04-21T23:37:21.261Z",
-      "updatedAt": "2026-06-19T09:01:08.378Z"
-    },
-    "n8n-node-configuration": {
-      "source": "czlonkowski/n8n-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
-      "skillPath": "skills/n8n-node-configuration/SKILL.md",
-      "skillFolderHash": "fcd356c7a37242de8c1e0130ff79f3ceace105e8",
-      "installedAt": "2026-04-21T23:37:21.655Z",
-      "updatedAt": "2026-06-19T09:01:11.298Z"
-    },
-    "n8n-validation-expert": {
-      "source": "czlonkowski/n8n-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
-      "skillPath": "skills/n8n-validation-expert/SKILL.md",
-      "skillFolderHash": "b7e1c964b7eb834d66d9f0158d21f117c1c2808d",
-      "installedAt": "2026-04-21T23:37:22.014Z",
-      "updatedAt": "2026-06-19T09:01:13.815Z"
-    },
-    "n8n-workflow-patterns": {
-      "source": "czlonkowski/n8n-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/czlonkowski/n8n-skills.git",
-      "skillPath": "skills/n8n-workflow-patterns/SKILL.md",
-      "skillFolderHash": "8a0d91d74d47774f95acec885186e9506597263c",
-      "installedAt": "2026-04-21T23:37:22.370Z",
-      "updatedAt": "2026-06-19T09:01:16.598Z"
-    },
     "skill-creator": {
       "source": "anthropics/skills",
       "sourceType": "github",
