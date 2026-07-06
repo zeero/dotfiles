@@ -27,9 +27,9 @@ if [[ -n "$memory_override" ]]; then
 else
   abs="$(pwd -P)"
   # Claude Code encodes the project cwd into the projects/ subdir name by
-  # replacing path separators and dots with '-'. Mirror that to locate the
+  # replacing path separators, dots and userscores with '-'. Mirror that to locate the
   # store for the current project.
-  slug="$(printf '%s' "$abs" | sed 's#[/.]#-#g')"
+  slug="$(printf '%s' "$abs" | sed 's#[/._]#-#g')"
   project_base="$HOME/.claude/projects/$slug"
   memory_dir="$project_base/memory"
 fi
@@ -59,7 +59,7 @@ ts="$(date -u +%Y%m%dT%H%M%SZ)"
 staged_dir="$project_base/.dream/staged-$ts"
 mkdir -p "$staged_dir/memory" "$staged_dir/digests"
 
-memory_file_count="$(find "$memory_dir" -maxdepth 1 -type f -name '*.md' | wc -l | tr -d ' ')"
+memory_file_count="$(find "$memory_dir/" -maxdepth 1 -type f -name '*.md' | wc -l | tr -d ' ')"
 
 # Digest-size budget per dream (bytes). Sessions beyond it are carried over
 # to the next run -- the watermark only records what was actually digested.
