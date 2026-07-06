@@ -86,6 +86,16 @@
         ]
       }
     ],
+    "TeammateIdle": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.agents/hooks/verify-before-idle.sh"
+          }
+        ]
+      }
+    ],
     "Notification": [
       {
         "matcher": "",
