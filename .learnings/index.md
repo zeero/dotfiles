@@ -5,3 +5,4 @@
 - `skill-deterministic-to-script.md` — スキル手順の決定論処理はスクリプトへ寄せられないか点検する — 存在チェック/コピー/scaffold は script、判断と要確認はモデルに残す
 - `skill-setup-existence-gate.md` — 冪等 setup は「初回のみ」と書かず毎回通る存在確認ゲートにする — 「初回のみ」は素通りされる。sentinel の有無だけで判定し中身は見ない
 - `claude-code-at-import-backticks.md` — CLAUDE.md の @import は backtick 内では展開されない — 自動 import させたいパスは backtick で囲まない（Claude Code 固有）
+- `skill-portability-constraints-upfront.md` — skill の可搬性は設計・実装の工程に観点として組み込む — project-agnostic/依存なし/パス非固定を設計時に要件化し提示前にチェックする
