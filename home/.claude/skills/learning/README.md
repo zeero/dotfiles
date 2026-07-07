@@ -30,7 +30,6 @@ repo-local（そのリポジトリに置く）
 ├── .learnings/
 │   ├── index.md                — 1行要約の索引。@import で常時ロードされる入口
 │   └── <slug>.md               — 学び本体（1トピック1ファイル、index から辿る）
-├── STRATEGY_SPEC.md            — プロジェクトの目的・方針・指標（北極星）
 └── CLAUDE.md ＞「作業サイクル」節 — サイクルの回し方＋ @.learnings/index.md で index を常時ロード
 
 横断（マシン共通）
@@ -51,8 +50,7 @@ skill（~/.claude/skills/）
 
 repo で作業中はさらに読み込み
   <repo>/CLAUDE.md ＞ 作業サイクル節
-    ├ @.learnings/index.md … index（1行要約）が毎回視界に入り、必要な <slug>.md だけ辿る
-    └ STRATEGY_SPEC.md / .learnings/ を指す
+    └ @.learnings/index.md … index（1行要約）が毎回視界に入り、必要な <slug>.md だけ辿る
 ```
 
 ポイントは2つ。

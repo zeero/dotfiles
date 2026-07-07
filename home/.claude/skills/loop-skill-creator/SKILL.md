@@ -41,6 +41,7 @@ argument-hint: [回したい作業の説明]
 作業を moves に対応づけ、部品/実装を選び、一括で提案してユーザに確認を取る:
 - 採用する既存スキル（**参照 invoke**。中身はコピーしない）
 - **evaluator 基準（必須）**: broken 前提・読むより動かす・fresh model で stop 判定。**基準は作業ドメインに適応させる**（コード以外なら CHECK を書き換え、不変条件だけ保つ）（→ reference 参照）
+- **北極星の切り出し（該当時）**: evaluator 基準が「このループ限りの受け入れゲート」でなく **repo 全体の目的・方針・指標** に及ぶなら、`assets/NORTH_STAR.md` を土台にヒアリングで練り上げ `<repo>/NORTH_STAR.md` に固定する。**採用スコープをユーザに確認する**——repo 全体の北極星とするなら、repo の CLAUDE.md に作業サイクル節があれば plan ステップに `NORTH_STAR.md` 参照を注入し通常プランでも効かせる。ループ限りの基準なら repo ルートに出さず evaluator 側に留める。
 - **Stop 境界（必須）**
 - persistence 先（state file / board など、発見した実装）
 - **1 ターン内の max-retries**（暴走の輪止め）

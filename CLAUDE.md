@@ -192,7 +192,7 @@ home/.claude/skills/  （実体・SSoT）
 
 非自明な作業は次を既定の流れとして回す。小さく自明な変更ではスキップしてよい（儀式化しない）。
 
-1. **plan**: 着手前に方針を立て、`STRATEGY_SPEC.md` の目的・指標から外れていないか確認する。
+1. **plan**: 着手前に方針を立て、`NORTH_STAR.md`（目的・方針・指標の北極星）から外れていないか確認する。
 2. **work**: 実装する。リファクタ・構造改善は `tdd-refactoring` skill の手順に沿う。
 3. **review**: テスト・lint に加え `self-code-review` skill で確かめる。
 4. **learning**: 再利用できる学びが出ていれば `learning` skill で締める。learning が学びを蒸留し、どれだけ汎用的かに応じて振り分ける。

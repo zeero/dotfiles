@@ -33,11 +33,10 @@ summary: >
 ~/.claude/skills/learning/scripts/setup.sh
 ```
 
-スクリプトは repo-local（`<repo>/.learnings/index.md`・`STRATEGY_SPEC.md`）の有無を判定し、不足分だけをテンプレからコピーする（既存は上書きしない・冪等）。CLAUDE.md には触れない。
+スクリプトは repo-local（`<repo>/.learnings/index.md`）の有無を判定し、不足分だけをテンプレからコピーする（既存は上書きしない・冪等）。CLAUDE.md には触れない。
 
 出力が `all set` なら、この節はここで終わり。`ACTION NEEDED (model)` が出たら、**その項目だけ**を次の要領で対応する（出るのは今回作成した分のみ）。
 
-- **`[repo]` STRATEGY_SPEC.md の埋め込み** — スクリプトが置いた素の `STRATEGY_SPEC.md` を、**repo の README / CLAUDE.md / docs から自明に分かる範囲（目的・方針・指標）で埋める**。丸投げしない。人の判断が要る箇所だけ `TODO:` で残し、埋めた内容と残した TODO をユーザに報告する。
 - **`[repo]` 作業サイクル節の追記** — repo の CLAUDE.md に「作業サイクル」節が無ければ `assets/templates/project/cycle-section.md` の内容をそのまま追記する。この節は `@.learnings/index.md`（backtick で囲まない）の常時ロード指定を含むので、これ1つで index の自動ロードも成立する。**既存 CLAUDE.md の編集はユーザに確認してから行う**。追記時、その repo で使える review / refactor / test 系 skill（例: `self-code-review`, `tdd-refactoring`）を該当ステップに紐づける。該当 skill が無ければ汎用テンプレのまま残す。
 
 ### 1. 対象を振り返る
