@@ -1,7 +1,8 @@
 ---
 name: dreaming-auto-memory
 argument-hint: "[steering instructions / path to memory dir]"
-description: >
+description: user invoke only
+summary: >
   Consolidate and reorganize Claude Code's auto-memory store the way the
   managed-agents "dreams" feature cleans a memory store: read the existing
   memory files plus the session transcripts recorded since the last run, then
@@ -12,8 +13,6 @@ description: >
   reorganize / "garbage-collect" their auto-memory, resolve contradictory or
   outdated memories, or fold recent sessions into long-term memory. Portable:
   it discovers the store's format at runtime rather than assuming one.
-user-invocable: true
-disable-model-invocation: true
 allowed-tools: Bash
 ---
 
@@ -70,9 +69,9 @@ bash "${CLAUDE_SKILL_DIR}/scripts/dream_prep.sh" [memory-dir-override]
 手順:
 1. フォーマット発見: policy に従い MEMORY_DIR の既存メモリとインデックスをサンプリングし、frontmatter・type・本文スタイル・命名規約を把握して維持する計画を立てる。空ストアなら policy のフォールバック形式を使う。
 2. digest を読む（あれば）: 各 digest を Read で読み、永続的で再利用可能な事実を採掘する。
-3. 整理統合（推論）: policy に従い、重複統合・矛盾の recency 解消・確信できる削除・新知見抽出を行う。確信できないもの／外部状態依存のものは手を付けず「要確認」としてレポートに記す（黙って消さない）。
+3. 整理統合（推論）: policy に従い、重複統合・矛盾の recency 解消・確信できる削除・新知見抽出を行う。確信できないもの／外部状態依存のものは手を付けず「要確認」としてレポートに記す（黙って消さない）。生き残ることが確定したエントリは policy の「recall 最適化（Sharpen）」に従い description / index フックの想起性を保守的に磨く（既に固有名詞が先頭にあるものは触らない）。
 4. ステージングへ書く: 再構築した「あるべき最終状態そのもの」を <STAGED_DIR>/memory/ に発見済みフォーマットで書き、インデックスファイルも再生成する。生き残るエントリ（追加・統合・未変更/要確認）を全て含め、削除対象は含めない。report.md などのレポートファイルは書かない — findings は最終メッセージのテキストで返す。
-5. レポートを返す: policy の「報告（引き継ぎ）の構造」に従い、変更サマリ・追加・統合・削除（理由と recency シグナル）・要確認（理由）を最終メッセージのテキストとして返す。<SKIPPED_TRANSCRIPT_COUNT> が 0 より大きければ「未処理 N 件 — 再実行で続きが処理される」を必ず含める。
+5. レポートを返す: policy の「報告（引き継ぎ）の構造」に従い、変更サマリ・追加・統合・削除（理由と recency シグナル）・要確認（理由）・recall 最適化（before → after）を最終メッセージのテキストとして返す。<SKIPPED_TRANSCRIPT_COUNT> が 0 より大きければ「未処理 N 件 — 再実行で続きが処理される」を必ず含める。
 ```
 
 ### 3. レポートを提示して承認を得る（報告と承認依頼は別ターンに分離する）
