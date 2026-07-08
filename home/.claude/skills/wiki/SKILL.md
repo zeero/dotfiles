@@ -188,7 +188,8 @@ Wiki の健全性をチェックしてレポートを出す。
    - 矛盾/stale が多い場合は代表例のみ列挙し、全件は省略可
 7. **未作成概念ページチェック**: `Wiki/pages/` の全 WikiLink を収集し、対応するページファイルが存在しないものを「concept gap」として検出する:
    ```bash
-   rg -oh '\[\[[^\]]+\]\]' $HOME/Documents/memos/Wiki/pages/ | sort -u
+   # -I/-N でファイル名・行番号を抑止（-h は ripgrep ではヘルプ表示になるため使わない）
+   rg -oIN '\[\[[^\]]+\]\]' $HOME/Documents/memos/Wiki/pages/ | sort -u
    ```
    - 存在しない WikiLink ターゲット一覧を報告
    - 重要度が高いと判断したものはページ新規作成を提案する
