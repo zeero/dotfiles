@@ -1,6 +1,6 @@
 ---
 name: agent-skill-reference
-description: Claude Code の Agent Skills 仕様の公式リファレンス。SKILL.md / skill を作成・設定・デバッグするとき、frontmatter フィールド（disable-model-invocation, user-invocable, allowed-tools, context: fork, paths, model, effort など）の意味や挙動を確認するとき、`/skill-name` のコマンド名がどこから決まるか、`$ARGUMENTS` や `${CLAUDE_SKILL_DIR}` などの文字列置換、`` !`command` `` による動的コンテキスト注入、subagent での skill 実行、skill の置き場所と探索ルール、skill が trigger しない／し過ぎる問題のトラブルシュートを調べるときに必ず参照する。仕様の事実を断定する前にこの skill を読むこと。skill を新規作成・評価する手順は skill-creator、既存 SKILL.md のレビュー・改善は skill-refiner を使う（本 skill は「仕様の参照知識」担当）。
+description: Official Claude Code reference for agent skills. Use this when configuring frontmatter or other settings for agent skills.
 ---
 
 # Agent Skill Reference
