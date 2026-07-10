@@ -18,9 +18,9 @@ afterEach(() => fs.rmSync(root, { recursive: true, force: true }));
 test('NFD/NFC、YAML escape、alias を正規化する', () => {
   const decomposed = 'cafe' + '\u0301';
   write('Clippings/' + decomposed + '.md', 'source'); write('Clippings/a "quote".md', 'source');
-  write('Wiki/pages/a.md', '[[pages/b|B]]'); write('Wiki/pages/b.md', '# b'); write('Wiki/index.md', '[[pages/a]]\n[[pages/b]]'); commit('content');
-  ref('a', 'Clippings/café', git('log', '-1', '--format=%H', '--', 'Clippings/' + decomposed + '.md'), ['pages/a']);
-  ref('b', 'Clippings/a "quote"', git('log', '-1', '--format=%H', '--', 'Clippings/a "quote".md'), ['pages/b']);
+  write('Wiki/pages/a.md', '[[pages/b|B]]'); write('Wiki/pages/b.md', '# b'); write('Wiki/pages/c.md', '# c'); write('Wiki/index.md', '[[pages/a]]\n[[pages/b]]\n[[pages/c]]'); commit('content');
+  ref('a', 'Clippings/café', git('log', '-1', '--format=%H', '--', 'Clippings/' + decomposed + '.md'), ['pages/a', 'pages/b']);
+  ref('b', 'Clippings/a "quote"', git('log', '-1', '--format=%H', '--', 'Clippings/a "quote".md'), ['pages/c']);
   assert.deepEqual(lintVault(root).counts, { stale: 0, missingSource: 0, orphan: 0, mismatch: 0, conceptGap: 0 });
 });
 test('各構造不整合を集計する', () => {

@@ -19,7 +19,7 @@ function parseRef(refPath) {
   const field = (name) => frontmatter.match(new RegExp('^' + name + ':\\s*(.+)$', 'm'))?.[1] ?? '';
   const sourcePath = links(scalar(field('source_path'), refPath))[0] ?? '';
   const sourceCommit = scalar(field('source_commit'), refPath);
-  const list = frontmatter.match(/^contributed_to:\s*([\s\S]*?)(?=^[A-Za-z_][A-Za-z0-9_]*:\s*|\s*$)/m)?.[1] ?? '';
+  const list = frontmatter.match(/^contributed_to:\s*\r?\n((?:^[ \t]+-\s+.+(?:\r?\n|$))+)/m)?.[1] ?? '';
   if (!sourcePath || !sourceCommit || !list) throw new Error(refPath + ': source_path, source_commit, and contributed_to are required');
   return { sourcePath, sourceCommit, contributedTo: links(list) };
 }
