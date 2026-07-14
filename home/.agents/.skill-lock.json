@@ -240,6 +240,16 @@
       "pluginName": "firecrawl",
       "installedAt": "2026-07-10T13:03:16.673Z",
       "updatedAt": "2026-07-10T13:03:16.673Z"
+    },
+    "to-spec": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/engineering/to-spec/SKILL.md",
+      "skillFolderHash": "bf698b96b5d8798d110d9872e32b9310728555b0",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-07-14T00:58:22.918Z",
+      "updatedAt": "2026-07-14T00:58:22.918Z"
     }
   },
   "dismissed": {
