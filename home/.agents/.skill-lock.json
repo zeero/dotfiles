@@ -270,6 +270,26 @@
       "pluginName": "mattpocock-skills",
       "installedAt": "2026-07-14T23:42:21.309Z",
       "updatedAt": "2026-07-14T23:42:47.299Z"
+    },
+    "improve-codebase-architecture": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/engineering/improve-codebase-architecture/SKILL.md",
+      "skillFolderHash": "bce229692e60dff3462e49bc5e774e83bef348e6",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-07-14T23:44:35.574Z",
+      "updatedAt": "2026-07-14T23:44:35.574Z"
+    },
+    "codebase-design": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/engineering/codebase-design/SKILL.md",
+      "skillFolderHash": "7347168e8de2de105e2e55f07ecb33d25fd56f44",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-07-14T23:45:46.948Z",
+      "updatedAt": "2026-07-14T23:45:46.948Z"
     }
   },
   "dismissed": {
