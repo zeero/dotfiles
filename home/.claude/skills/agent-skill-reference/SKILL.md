@@ -51,8 +51,3 @@ Claude Code の Agent Skills（`SKILL.md`）に関する公式 docs スナップ
 - **content lifecycle**: 起動した `SKILL.md` は1メッセージとして会話に入り、以降そのターンを通じて残る（再読込されない）。一度きりの手順ではなく恒常的な指示として書く。
 - **trigger しない時**: description にユーザーが自然に言う語を入れる／`What skills are available?` で表示確認／直接 `/skill-name`。`--debug` で frontmatter parse エラーを確認。
 - **trigger し過ぎる時**: description を具体化、または `disable-model-invocation: true`。
-
-## このリポジトリでの扱い
-
-- 実体は `dotfiles/home/.claude/skills/`。`~/.claude/skills` 等へ symlink され Claude Code / Codex / Antigravity から共有される（Tier 1 横断可搬）。skill 名＝親ディレクトリ名を厳守する。
-- 仕様を反映して既存 skill を編集する場合は、既存の配置規約と symlink 前提を確認し最小差分で行う。
