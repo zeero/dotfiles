@@ -6,6 +6,8 @@
 
 これは、macOS開発環境設定のための包括的なdotfilesリポジトリです。シェル (zsh)、エディタ (Vim/Neovim)、開発ツール、システム環境設定を、自動インストールとシンボリックリンクによって管理します。
 
+このリポジトリの設計を語るときの用語は @CONTEXT.md に従います。
+
 ## 🛠️ 主要コマンド
 
 タスクは [go-task](https://taskfile.dev) で定義します（`Taskfile.yml` がルート、`Taskfile.install.yml`/`Taskfile.tests.yml` を include）。`task`（引数なし）で一覧を表示します。`install.sh` はこれらの `task install:*` を順に呼ぶ薄いラッパです。
@@ -113,31 +115,31 @@
 - **ターミナル**: Smyckカラースキームを備えたiTerm2です。
 - **ブラウザ**: VimのようなブラウジングのためのVimium C拡張機能です。
 
-### 🤖 AIエージェント横断構成（複数エージェント並行利用）
-Claude Code / Codex / Pi の3エージェントを並行利用する前提で、設定資産を一元管理 (SSoT) し、特定ツールへのロックインを避けるため、依存先をポータビリティで階層化します。可搬な層にロジックを寄せ、ツール固有の接着剤は最小化します。
+### 🤖 エージェント横断構成（複数エージェント並行利用）
+Claude Code / Codex / Pi の3エージェントを並行利用する前提で、設定資産を一元管理 (SSoT) し、特定エージェントへのロックインを避けるため、依存先をポータビリティで階層化します。可搬な層にロジックを寄せ、エージェント固有の接着剤は最小化します。
 
-- **Tier 1 (完全可搬・第一選択)**: コンテキストファイル・Agent Skill・プレーンなMarkdown成果物。3エージェントが同一資産を読むため、ここに最大限寄せます。Agent Skill は [Agent Skills 標準](https://agentskills.io/specification) に準拠し、横断共有のため「skill名＝親ディレクトリ名」を厳守します（Pi は名前ズレを許容するが標準は禁止）。
-- **Tier 2 (ロジックは共有・接着剤のみ非可搬)**: フック機構はツールごとに別物（Claude Code: `settings.json` のフック / Codex: 別機構 / Pi: TypeScript Extension）で横断不可です。ロジックは共有スクリプト1本に置き、各ツールのフック/Extension は「それを呼ぶだけの薄いアダプタ」に限定します。
-- **原則**: モデルに委ねられる判断は Tier 1（Skill＋context file）へ寄せ、決定論的な強制が本当に必要なものだけ Tier 2 を使います。フック設定の中に業務ロジックを直書きしません（ツールロックインを生むため）。
+- **Tier 1 (完全可搬・第一選択)**: コンテキストファイル・スキル・プレーンなMarkdown成果物。3エージェントが同一資産を読むため、ここに最大限寄せます。スキルは [Agent Skills 標準](https://agentskills.io/specification) に準拠し、横断共有のため「skill名＝親ディレクトリ名」を厳守します（Pi は名前ズレを許容するが標準は禁止）。
+- **Tier 2 (ロジックは共有・接着剤のみ非可搬)**: フックはエージェントが提供する機能で、起動機構も設定形式もエージェントごとに異なります（Claude Code: `settings.json` / Codex: 別機構 / Pi: TypeScript Extension）。横断できないため、ロジックは共有スクリプト1本に置き、各エージェントのアダプタは「それを呼ぶだけの薄い定義」に限定します。
+- **原則**: モデルに委ねられる判断は Tier 1（スキル＋コンテキストファイル）へ寄せ、決定論的な強制が本当に必要なものだけ Tier 2 を使います。アダプタの中に業務ロジックを直書きしません（エージェントロックインを生むため）。
 
 | Tier | 対象資産 | 一元化方式 | 代表例 |
 |------|---------|-----------|--------|
-| Tier 1 | コンテキストファイル / Agent Skill / Markdown | 実体1つ + symlink fan-out | `CLAUDE.md`, `skills/` |
-| Tier 2 | フック / Extension | 共有スクリプト1本 + 薄いアダプタ | `check-python.sh` + 各ツールアダプタ |
+| Tier 1 | コンテキストファイル / スキル / Markdown | 実体1つ + シンボリックリンクで fan-out | `CLAUDE.md`, `skills/` |
+| Tier 2 | フック | 共有スクリプト1本 + 薄いアダプタ | `check-python.sh` + 各エージェントのアダプタ |
 
-コンテキストファイルは `home/.claude/CLAUDE.md` を実体 (SSoT) とし、symlink で各エージェントの読み込みパスへ配布します（二重管理を回避）。
+コンテキストファイルは `home/.claude/CLAUDE.md` を実体とし、シンボリックリンクで各エージェントの読み込みパスへ配布します（二重管理を回避）。
 
 ```
-home/.claude/CLAUDE.md  （実体・SSoT）
+home/.claude/CLAUDE.md  （実体）
   ├─ ~/.claude/CLAUDE.md     # Claude Code
   ├─ ~/.codex/AGENTS.md      # Codex
   └─ ~/AGENTS.md             # 共通（Pi は AGENTS.md / CLAUDE.md 双方を読む）
 ```
 
-Agent Skill は `home/.claude/skills/` を実体とし、各エージェントの探索パスへ symlink 配布します。Pi はスキル専用の symlink を持たず、共通の `~/.agents/skills/` を参照します。
+スキルは `home/.claude/skills/` を実体とし、各エージェントの探索パスへシンボリックリンクで配布します。Pi はスキル専用のシンボリックリンクを持たず、共通の `~/.agents/skills/` を参照します。
 
 ```
-home/.claude/skills/  （実体・SSoT）
+home/.claude/skills/  （実体）
   ├─ ~/.claude/skills/    # Claude Code
   ├─ ~/.codex/skills/     # Codex
   └─ ~/.agents/skills/    # 共通
