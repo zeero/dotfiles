@@ -591,7 +591,7 @@ Define as CSS variables for easy reference:
 | Sora | IBM Plex Mono | Technical, precise | ER diagrams, schemas |
 | Crimson Pro | Noto Sans Mono | Scholarly, serious | RFC reviews, specs |
 | Fraunces | Source Code Pro | Warm, distinctive | Project recaps |
-| Geist | Geist Mono | Vercel-inspired, sharp | Modern API docs |
+| Geist | Geist Mono | Sharp, modern | Modern API docs |
 | Red Hat Display | Red Hat Mono | Cohesive family | System overviews |
 | Libre Franklin | Inconsolata | Classic, reliable | Data-dense tables |
 | Playfair Display | Roboto Mono | Elegant contrast | Executive summaries |

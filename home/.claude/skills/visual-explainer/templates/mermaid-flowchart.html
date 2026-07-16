@@ -592,7 +592,13 @@
 
         const id = 'diagram-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
         const { svg } = await mermaid.render(id, code);
-        canvas.innerHTML = svg;
+        const parsed = new DOMParser().parseFromString(svg, 'text/html');
+        const parsedSvg = parsed.body.querySelector('svg');
+        if (!parsedSvg) {
+          label.textContent = 'Error: No SVG';
+          return;
+        }
+        canvas.replaceChildren(document.adoptNode(parsedSvg));
 
         const svgNode = canvas.querySelector('svg');
         if (!svgNode) {

@@ -15,9 +15,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/skills.git",
       "skillPath": "skills/find-skills/SKILL.md",
-      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
+      "skillFolderHash": "76a98a285cb0434f3d39e1a873823556330e398b",
       "installedAt": "2026-02-02T00:43:57.099Z",
-      "updatedAt": "2026-05-22T06:42:05.530Z"
+      "updatedAt": "2026-07-16T01:16:24.923Z"
     },
     "crafting-effective-readmes": {
       "source": "softaworks/agent-toolkit",
@@ -88,10 +88,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/mattpocock/skills.git",
       "skillPath": "skills/productivity/grill-me/SKILL.md",
-      "skillFolderHash": "8320e7b87f7b208f50ce165b1dd43d1e93c8e801",
-      "pluginName": "mattpocock-skills",
+      "skillFolderHash": "c817f6f36acd483294144694a935a76d3e3eb101",
       "installedAt": "2026-05-22T06:29:17.823Z",
-      "updatedAt": "2026-06-30T03:28:18.085Z"
+      "updatedAt": "2026-07-16T01:16:26.228Z"
     },
     "resolve-merge-conflicts": {
       "source": "warpdotdev/common-skills",
@@ -107,9 +106,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/nicobailon/visual-explainer.git",
       "skillPath": "plugins/visual-explainer/SKILL.md",
-      "skillFolderHash": "2e703a2798bb55fb6aef723fbf79cd804cb1750f",
+      "skillFolderHash": "e1778142a9e13d41c9f06d3ac1fafabed07ab160",
       "installedAt": "2026-05-29T03:41:34.262Z",
-      "updatedAt": "2026-05-29T03:41:34.262Z"
+      "updatedAt": "2026-07-16T01:16:30.823Z"
     },
     "skillify": {
       "source": "yeachan-heo/oh-my-claudecode",
@@ -126,20 +125,18 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/mattpocock/skills.git",
       "skillPath": "skills/productivity/grilling/SKILL.md",
-      "skillFolderHash": "ab318c66a36253e872b5d0bd271b3df8f6ef816f",
-      "pluginName": "mattpocock-skills",
+      "skillFolderHash": "10b0db61f9b3869243db8a1a0ee84f862139b94e",
       "installedAt": "2026-06-30T03:28:18.088Z",
-      "updatedAt": "2026-06-30T03:28:18.088Z"
+      "updatedAt": "2026-07-16T01:16:27.381Z"
     },
     "writing-great-skills": {
       "source": "mattpocock/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/mattpocock/skills.git",
       "skillPath": "skills/productivity/writing-great-skills/SKILL.md",
-      "skillFolderHash": "0875ef784dfdf0a3860f1cdc3937c2796b0314a5",
-      "pluginName": "mattpocock-skills",
+      "skillFolderHash": "81d36946d48842f90358d8af54e3cdcc141f8e01",
       "installedAt": "2026-07-02T05:54:46.585Z",
-      "updatedAt": "2026-07-02T05:54:46.585Z"
+      "updatedAt": "2026-07-16T01:16:28.485Z"
     },
     "firecrawl": {
       "source": "firecrawl/cli",
