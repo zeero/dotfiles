@@ -15,15 +15,19 @@
 set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
-memory_override="${1:-}"
+session_override="${1:-}"
 
 command -v python3 >/dev/null 2>&1 || {
   echo "ERROR: python3 required (transcript digesting and apply both need it)"; exit 1; }
 
-if [[ -n "$memory_override" ]]; then
-  memory_dir="$(cd "$memory_override" 2>/dev/null && pwd -P)" || {
-    echo "ERROR: memory path not found: $memory_override"; exit 1; }
-  project_base="$(dirname "$memory_dir")"
+# The session dir (project_base) is the anchor: it holds the transcripts,
+# state, and staging workspace, with memory/ sitting directly inside it.
+# Both branches resolve project_base first, then derive memory_dir from it --
+# so the override path uses the same direction as the default path instead of
+# reverse-deriving the parent from a memory-dir argument.
+if [[ -n "$session_override" ]]; then
+  project_base="$(cd "$session_override" 2>/dev/null && pwd -P)" || {
+    echo "ERROR: session dir not found: $session_override"; exit 1; }
 else
   abs="$(pwd -P)"
   # Claude Code encodes the project cwd into the projects/ subdir name by
@@ -31,12 +35,12 @@ else
   # store for the current project.
   slug="$(printf '%s' "$abs" | sed 's#[/._]#-#g')"
   project_base="$HOME/.claude/projects/$slug"
-  memory_dir="$project_base/memory"
 fi
+memory_dir="$project_base/memory"
 
 if [[ ! -d "$memory_dir" ]]; then
   echo "ERROR: auto-memory dir not found: $memory_dir"
-  echo "HINT: pass the memory dir explicitly, e.g. /dreaming-auto-memory <path-to-memory>"
+  echo "HINT: pass the session dir explicitly, e.g. /dreaming-auto-memory <path-to-session-dir>"
   exit 1
 fi
 
