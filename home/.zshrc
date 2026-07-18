@@ -213,7 +213,8 @@ giwt() {
 
   # --- 作成 / 移動モード ---
   if [[ $# -eq 0 ]]; then
-    echo 'Usage: giwt [-d|-D|-i] <branch-name>'
+    echo 'List worktrees:'
+    git worktree list
     return 1
   fi
 
