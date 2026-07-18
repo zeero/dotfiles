@@ -195,8 +195,9 @@
   "language": "Japanese",
   "effortLevel": "high",
   "promptSuggestionEnabled": false,
+  "skipWorkflowUsageWarning": true,
   "theme": "dark-ansi",
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
-  "skipWorkflowUsageWarning": true
+  "model": "sonnet"
 }
