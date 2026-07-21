@@ -53,10 +53,9 @@ argument-hint: "[--claude|--codex|--gemini] [-a|--adversarial] [target_revision]
 
 3.5. **worktree を対象にする場合の注意（codex exit code 134 回避）**:
    - codex は git worktree を workdir にすると exit code 134 で異常終了する既知問題がある。worktree 上のブランチをレビューさせる場合は以下の方式を使う（実績上最も安定）。
-     1. `git -C <worktree絶対パス> log -p <base>..<head>` の出力を一時ファイル（scratchpad 等）へ書き出す。
-     2. codex の workdir は main repo にし、プロンプトで「そのファイルを読んでレビューせよ」と指示する。diff をコマンド置換で埋め込まない（`$(...)` 禁止の原則どおり）。
+     1. codex の workdir は main repo にする。
+     2. worktree と main repo は同じ `.git`（オブジェクトストア）を共有しているため、main repo の workdir からでも worktree 側のコミットは**コミットハッシュ**で到達できる。ブランチ名や worktree の絶対パスではなく対象のコミットハッシュ範囲（`<base>..<head>`）を渡し、「`git log -p <base>..<head>` を実行してレビューせよ」と指示する（未コミット変更はレビュー前にコミットする手順1の原則と同じ理由で、ハッシュ範囲は確定済みのコミットを指す）。diff をコマンド置換で埋め込まない（`$(...)` 禁止の原則どおり）。
      3. 修正適用が必要な場合も、codex には対象ファイルの絶対パス（worktree 側）を明示して編集させる。
-   - worktree 対象のレビュー依頼では、索引やブランチ名でなく**コミットハッシュ**で対象を特定させる（未コミット変更はレビュー前にコミットする手順1の原則と同じ）。
 
 4. **修正内容の検証**:
    - 外部プロセスによる処理が完了した後、`run_shell_command` で `git diff` を実行し、ワークツリーにどのような変更が加えられたかを確認してください。
