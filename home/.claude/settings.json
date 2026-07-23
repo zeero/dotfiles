@@ -3,7 +3,7 @@
     "CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD": "1",
     "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "false",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_NO_FLICKER": "false",
+    "CLAUDE_CODE_NO_FLICKER": "true",
     "ENABLE_TOOL_SEARCH": "true",
     "FASTLANE_SKIP_UPDATE_CHECK": "true"
   },
@@ -195,6 +195,7 @@
   "language": "Japanese",
   "effortLevel": "high",
   "promptSuggestionEnabled": false,
+  "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "dark-ansi",
   "remoteControlAtStartup": true,
