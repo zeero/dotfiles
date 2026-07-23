@@ -64,5 +64,6 @@ if [[ "$FILE_PATH" == *.py ]]; then
         }'
 else
     # Pythonファイル以外、または編集以外のツールの場合は、そのまま処理を通します。
-    echo "{\"decision\": \"allow\"}"
+    # decision は "block" 専用の値のため、通す場合は何も出力しない。
+    :
 fi
