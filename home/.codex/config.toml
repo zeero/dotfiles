@@ -1,6 +1,6 @@
 project_doc_fallback_filenames = ["CLAUDE.md"]
-model = "gpt-5.6-terra"
-model_reasoning_effort = "high"
+model = "gpt-5.6-sol"
+model_reasoning_effort = "xhigh"
 plan_mode_reasoning_effort = "high"
 default_permissions = "my-workspace"
 approvals_reviewer = "guardian_subagent"
@@ -44,6 +44,7 @@ status_line_use_colors = true
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4
+"gpt-5.6-sol" = 1
 
 [mcp_servers.serena]
 command = "serena"
