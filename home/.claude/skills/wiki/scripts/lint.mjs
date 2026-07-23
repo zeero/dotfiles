@@ -13,6 +13,7 @@ const scalar = (value, ref) => {
   if (!text.startsWith('"')) return text;
   try { return JSON.parse(text); } catch (error) { throw new Error(ref + ': invalid YAML scalar: ' + error.message); }
 };
+// source_path はファイル名にリテラルな #・]・| を含みうるため、内部をスキャンする links() ではなく外側デリミタのみ剥がす
 const wikiLinkTarget = (text) => {
   const trimmed = String(text).trim();
   return trimmed.startsWith('[[') && trimmed.endsWith(']]') ? trimmed.slice(2, -2).trim() : '';
