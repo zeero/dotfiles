@@ -41,6 +41,7 @@
       "~/Documents/memos"
     ]
   },
+  "model": "sonnet",
   "hooks": {
     "PreToolUse": [
       {
@@ -199,6 +200,5 @@
   "skipWorkflowUsageWarning": true,
   "theme": "dark-ansi",
   "remoteControlAtStartup": true,
-  "agentPushNotifEnabled": true,
-  "model": "sonnet"
+  "agentPushNotifEnabled": true
 }
