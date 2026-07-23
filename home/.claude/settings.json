@@ -33,6 +33,7 @@
     ],
     "ask": [
       "Bash(rm:*)",
+      "Bash(git push:*)",
       "Bash(sed -i:*)",
       "Bash(gsed -i:*)"
     ],
