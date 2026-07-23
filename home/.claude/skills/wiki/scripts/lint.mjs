@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
 const links = (text) => [...String(text).matchAll(/\[\[([^\]]+)\]\]/g)].map((m) => m[1].split('|', 1)[0].split('#', 1)[0].trim()).filter(Boolean);
 const norm = (text) => String(text).normalize('NFC').replaceAll('\\', '/').replace(/^\.\//, '');
@@ -58,7 +59,8 @@ export function lintVault(vaultPath) {
   return result;
 }
 
-if (process.argv[1] === new URL(import.meta.url).pathname) {
+const isMain = process.argv[1] !== undefined && fs.realpathSync(process.argv[1]) === fs.realpathSync(fileURLToPath(import.meta.url));
+if (isMain) {
   try { process.stdout.write(JSON.stringify(lintVault(process.argv[2] ?? path.join(process.env.HOME ?? '', 'Documents/memos')), null, 2) + '\n'); }
   catch (error) { process.stderr.write(error.message + '\n'); process.exitCode = 1; }
 }

@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { afterEach, beforeEach, test } from 'node:test';
+import { fileURLToPath } from 'node:url';
 import { lintVault } from '../lint.mjs';
 
 let root;
@@ -29,4 +30,20 @@ test('各構造不整合を集計する', () => {
   ref('stale', 'Clippings/stale', old, ['pages/a']); ref('missing', 'Clippings/nope', 'deadbeef', ['pages/a']);
   const result = lintVault(root);
   assert.deepEqual(result.counts, { stale: 1, missingSource: 1, orphan: 1, mismatch: 2, conceptGap: 1 });
+});
+test('symlink 経由で実行しても CLI エントリポイントが起動する（不具合1の回帰）', () => {
+  write('Wiki/pages/.gitkeep', '');
+  write('Wiki/refs/.gitkeep', '');
+  commit('vault-scaffold');
+  const scriptPath = fileURLToPath(new URL('../lint.mjs', import.meta.url));
+  const linkDir = fs.mkdtempSync(path.join(os.tmpdir(), 'wiki-lint-link-'));
+  const linkPath = path.join(linkDir, 'lint.mjs');
+  fs.symlinkSync(scriptPath, linkPath);
+  let output;
+  try {
+    output = execFileSync('node', [linkPath, root], { encoding: 'utf8' });
+  } finally {
+    fs.rmSync(linkDir, { recursive: true, force: true });
+  }
+  assert.deepEqual(JSON.parse(output).counts, { stale: 0, missingSource: 0, orphan: 0, mismatch: 0, conceptGap: 0 });
 });
