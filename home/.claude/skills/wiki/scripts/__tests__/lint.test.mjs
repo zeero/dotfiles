@@ -31,6 +31,27 @@ test('各構造不整合を集計する', () => {
   const result = lintVault(root);
   assert.deepEqual(result.counts, { stale: 1, missingSource: 1, orphan: 1, mismatch: 2, conceptGap: 1 });
 });
+test('source_path 内の単独 ] を含むファイル名を正しく解析する（不具合2の回帰）', () => {
+  write('Clippings/grape [グレイプ] (site).md', 'about grape');
+  write('Wiki/pages/a.md', '# a');
+  write('Wiki/index.md', '[[pages/a]]'); commit('content');
+  ref('bracket', 'Clippings/grape [グレイプ] (site)', git('log', '-1', '--format=%H', '--', 'Clippings/grape [グレイプ] (site).md'), ['pages/a']);
+  assert.deepEqual(lintVault(root).counts, { stale: 0, missingSource: 0, orphan: 0, mismatch: 0, conceptGap: 0 });
+});
+test('source_path 内の # を含むファイル名を正しく解析する（不具合3の回帰）', () => {
+  write('Clippings/foo #TrendBuzz.md', 'about foo');
+  write('Wiki/pages/b.md', '# b');
+  write('Wiki/index.md', '[[pages/b]]'); commit('content');
+  ref('hash', 'Clippings/foo #TrendBuzz', git('log', '-1', '--format=%H', '--', 'Clippings/foo #TrendBuzz.md'), ['pages/b']);
+  assert.deepEqual(lintVault(root).counts, { stale: 0, missingSource: 0, orphan: 0, mismatch: 0, conceptGap: 0 });
+});
+test('source_path 内の | を含むファイル名を正しく解析する（エイリアス誤認防止の回帰）', () => {
+  write('Clippings/foo | bar.md', 'about foo bar');
+  write('Wiki/pages/c.md', '# c');
+  write('Wiki/index.md', '[[pages/c]]'); commit('content');
+  ref('pipe', 'Clippings/foo | bar', git('log', '-1', '--format=%H', '--', 'Clippings/foo | bar.md'), ['pages/c']);
+  assert.deepEqual(lintVault(root).counts, { stale: 0, missingSource: 0, orphan: 0, mismatch: 0, conceptGap: 0 });
+});
 test('symlink 経由で実行しても CLI エントリポイントが起動する（不具合1の回帰）', () => {
   write('Wiki/pages/.gitkeep', '');
   write('Wiki/refs/.gitkeep', '');

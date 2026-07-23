@@ -13,12 +13,16 @@ const scalar = (value, ref) => {
   if (!text.startsWith('"')) return text;
   try { return JSON.parse(text); } catch (error) { throw new Error(ref + ': invalid YAML scalar: ' + error.message); }
 };
+const wikiLinkTarget = (text) => {
+  const trimmed = String(text).trim();
+  return trimmed.startsWith('[[') && trimmed.endsWith(']]') ? trimmed.slice(2, -2).trim() : '';
+};
 
 function parseRef(refPath) {
   const frontmatter = fs.readFileSync(refPath, 'utf8').match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/)?.[1];
   if (!frontmatter) throw new Error(refPath + ': missing YAML frontmatter');
   const field = (name) => frontmatter.match(new RegExp('^' + name + ':\\s*(.+)$', 'm'))?.[1] ?? '';
-  const sourcePath = links(scalar(field('source_path'), refPath))[0] ?? '';
+  const sourcePath = wikiLinkTarget(scalar(field('source_path'), refPath));
   const sourceCommit = scalar(field('source_commit'), refPath);
   const list = frontmatter.match(/^contributed_to:\s*\r?\n((?:^[ \t]+-\s+.+(?:\r?\n|$))+)/m)?.[1] ?? '';
   if (!sourcePath || !sourceCommit || !list) throw new Error(refPath + ': source_path, source_commit, and contributed_to are required');
