@@ -176,3 +176,10 @@ import time
 time.sleep(60)
 quote_ctx.close()
 ```
+
+> **実運用メモ（Basic Quote の bid/ask と data_time、2026-07 検証）**
+> - `SubType.QUOTE`（`Qot_UpdateBasicQot` の real-time push / `get_stock_quote` / `StockQuoteHandlerBase`）が返す DataFrame には bid/ask 列が構造的に存在しない（`code, name, data_date, data_time, last_price, open_price, high_price, low_price, prev_close_price, volume, turnover, ...`）。買気配・売気配が必要なら `SubType.ORDER_BOOK`（`get_order_book` / `Qot_UpdateOrderBook`）を別途購読する。
+> - `data_time`（および `data_date`）は「最新価格（`last_price`）の更新時刻」であって push 自体のタイムスタンプではない（公式定義 "Time of latest price"、US 市場は US Eastern Time）。protobuf `BasicQot.updateTime` も「最新価格の更新時刻で他フィールドには適用外」と注記。
+> - `updateTime` が空文字の push では `data_time` が空になる（SDK の `parse_pb_BasicQot` が `updateTime.split()[1] if len(updateTime) > 0 else ''`）。空 `data_time` を「時間外」と解釈すると、レギュラーセッション中でも時刻付き push と空 push が交互に来て判定がフラッピングし得る点に注意。
+>
+> 出典: https://openapi.moomoo.com/moomoo-api-doc/en/quote/update-stock-quote.html ・ https://openapi.moomoo.com/moomoo-api-doc/en/quote/base.html
