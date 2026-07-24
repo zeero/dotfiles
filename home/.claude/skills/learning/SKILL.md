@@ -2,13 +2,16 @@
 name: learning
 argument-hint: "[記録したい学び / 補足]"
 description: >
-  Extract lessons that make next time easier. Fire proactively when:
+  Extract lessons that make next time easier. Firing means invoking this
+  skill now, mid-turn — naming it in the closing next-action list does not
+  count as firing it. Fire when:
   (1) a reusable insight emerges at a work boundary — a bug workaround found, a gotcha cleared, the right procedure/command/config figured out after trial and error, a tip for avoiding a repeated mistake.
   (2) a session wraps up — review the whole session and extract its lessons.
 summary: >
-  「次回から楽になる学び」を抽出するスキル。以下の状況で呼び出す:
-  (1) 再利用できる知見が出た区切りで proactive に提案する。具体的には、バグの回避策が分かった / ハマりどころを抜けた / 試行錯誤の末に正しい手順やコマンド・設定の使い方が判明した / 同じ失敗を繰り返さないコツに気づいた、といった場面。
-  (2) セッションの締めにも proactive に起動し、セッション全体を振り返って学びを抽出する。
+  「次回から楽になる学び」を抽出するスキル。呼び出すとは今すぐ実行することを指す——
+  会話末尾のネクストアクション欄に挙げるだけでは呼び出したことにならない。以下の状況で呼び出す:
+  (1) 再利用できる知見が出た区切りで実行する。具体的には、バグの回避策が分かった / ハマりどころを抜けた / 試行錯誤の末に正しい手順やコマンド・設定の使い方が判明した / 同じ失敗を繰り返さないコツに気づいた、といった場面。
+  (2) セッションの締めにも実行し、セッション全体を振り返って学びを抽出する。
 ---
 
 # Learning
