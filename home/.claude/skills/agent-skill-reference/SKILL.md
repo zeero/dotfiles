@@ -5,7 +5,8 @@ description: Official Claude Code reference for agent skills. Use this when conf
 
 # Agent Skill Reference
 
-Claude Code の Agent Skills（`SKILL.md`）に関する公式 docs スナップショットを `references/` に保持する。
+エージェントスキル構成のためのリファレンス。
+Claude Code の Agent Skills（`SKILL.md`）を設定・運用する際の一次情報として、公式docsの内容を `references/` に保持する。
 出典: https://code.claude.com/docs/en/skills （取得日 2026-06-26）。
 
 ## 基本ワークフロー
@@ -21,6 +22,7 @@ Claude Code の Agent Skills（`SKILL.md`）に関する公式 docs スナップ
 - supporting files・呼び出し制御・content lifecycle・tool 事前承認・引数渡し: `references/authoring-and-invocation.md`
 - 動的コンテキスト注入（`` !`cmd` ``）・subagent 実行（`context: fork`）・skill アクセス制限・`skillOverrides`: `references/advanced-patterns.md`
 - 評価/イテレーション・共有/配布・ビジュアル出力・トラブルシュート: `references/eval-share-troubleshooting.md`
+- （非公式）実運用で得た自前ノウハウ（発火信頼性 等）: `assets/notes.md`
 
 ## frontmatter 早見表
 
