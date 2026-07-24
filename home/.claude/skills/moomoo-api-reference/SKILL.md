@@ -183,3 +183,6 @@ quote_ctx.close()
 > - `updateTime` が空文字の push では `data_time` が空になる（SDK の `parse_pb_BasicQot` が `updateTime.split()[1] if len(updateTime) > 0 else ''`）。空 `data_time` を「時間外」と解釈すると、レギュラーセッション中でも時刻付き push と空 push が交互に来て判定がフラッピングし得る点に注意。
 >
 > 出典: https://openapi.moomoo.com/moomoo-api-doc/en/quote/update-stock-quote.html ・ https://openapi.moomoo.com/moomoo-api-doc/en/quote/base.html
+
+> **実運用メモ（market_state と米国レギュラーセッション、2026-06 公式 doc 確認）**
+> `get_market_state` は米国株のレギュラー取引時間（09:30–16:00 ET）**全体**を `AFTERNOON` で返す。`MORNING` は米国レギュラー時間帯では返らないため、「レギュラーセッションのみ」を判定する許可集合は `{"AFTERNOON"}` が正しい（名前に反して午後限定ではない）。

@@ -36,6 +36,8 @@ argument-hint: "[--claude|--codex|--gemini] [-a|--adversarial] [target_revision]
    - **Codex を使用する場合**:
      - `run_shell_command` で `codex exec "対象 [TARGET_REVISION] の変更内容を [判定したモードに応じて \"Adversarial Review\" または \"レビュー\"] し..." < /dev/null` を実行してください。
      - 末尾の `< /dev/null` は必須です。codex が stdin の入力待ちでハングするのを防ぎます。
+     - codex は trusted directory（リポジトリ内の cwd）から実行してください。scratchpad 等リポジトリ外の cwd では "Not inside a trusted directory" で即失敗します（exit 1。`; echo` 等のラッパーを挟むと exit 0 に見えるため、出力が数行ならこのエラーを疑う）。
+     - ハングを疑ったら `ps` でプロセス状態を確認してください。経過時間が長いのに CPU 時間がほぼゼロ（sleeping）なら stdin 待ちのシグナルです。`| tail` 等でパイプすると入力が閉じるまで出力が出ないため、「出力が無い」ことではなくプロセス状態で判定します。
    - **Claude を使用する場合**:
      - `run_shell_command` で `claude --permission-mode \"acceptEdits\" -p \"対象 [TARGET_REVISION] の変更内容を [判定したモードに応じて \"Adversarial Review\" または \"レビュー\"] し...\"` を実行してください。
    - **Gemini を使用する場合**:
