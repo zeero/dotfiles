@@ -16,6 +16,9 @@
       "Bash(fd:*)",
       "Bash(task:*)",
       "Bash(npm run:*)",
+      "Bash(bash /Users/zeero/.claude/skills/dreaming-auto-memory/scripts/dream_prep.sh:*)",
+      "Bash(bash /Users/zeero/.claude/skills/dreaming-auto-memory/scripts/dream_apply.sh:*)",
+      "Bash(bash /Users/zeero/.claude/skills/dreaming-auto-memory/scripts/dream_discard.sh:*)",
       "Skill(skill-creator)",
       "Skill(kiro:*)"
     ],
@@ -33,9 +36,7 @@
     ],
     "ask": [
       "Bash(rm:*)",
-      "Bash(git push:*)",
-      "Bash(sed -i:*)",
-      "Bash(gsed -i:*)"
+      "Bash(git push:*)"
     ],
     "defaultMode": "auto",
     "additionalDirectories": [
