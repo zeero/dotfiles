@@ -43,7 +43,7 @@
       "~/Documents/memos"
     ]
   },
-  "model": "sonnet",
+  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
