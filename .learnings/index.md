@@ -7,3 +7,4 @@
 - `claude-code-at-import-backticks.md` — CLAUDE.md の @import は backtick 内では展開されない — 自動 import させたいパスは backtick で囲まない（Claude Code 固有）
 - `skill-portability-constraints-upfront.md` — skill の可搬性は設計・実装の工程に観点として組み込む — project-agnostic/エージェント非依存/依存なし/パス非固定を設計時に要件化し提示前にチェックする
 - `git-worktree-object-sharing.md` — worktree の変更は commit hash 経由で他の workdir からも参照できる — `.git` 共有を使えば一時ファイル書き出し不要、直接 `git log -p <hash1>..<hash2>` で見える
+- `agent-hook-decision-block-only.md` — Claude Code / Codex 共用フックの decision は "block" 専用 — 通す場合は decision フィールド自体を出力しない（"allow" は両ツールで無効値。共用スクリプトに足すフィールドは都度両者のスキーマを疑う）
