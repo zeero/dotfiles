@@ -110,16 +110,6 @@
       "installedAt": "2026-05-29T03:41:34.262Z",
       "updatedAt": "2026-07-16T01:16:30.823Z"
     },
-    "skillify": {
-      "source": "yeachan-heo/oh-my-claudecode",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/yeachan-heo/oh-my-claudecode.git",
-      "skillPath": "skills/skillify/SKILL.md",
-      "skillFolderHash": "ce1dc589dbcdfff271210699d420d4eedb7c07df",
-      "pluginName": "oh-my-claudecode",
-      "installedAt": "2026-06-12T01:02:46.719Z",
-      "updatedAt": "2026-06-12T01:02:46.719Z"
-    },
     "grilling": {
       "source": "mattpocock/skills",
       "sourceType": "github",
