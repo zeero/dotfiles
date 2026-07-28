@@ -1,4 +1,23 @@
 
+## Practical Notes (not from official docs)
+
+- **Telnet console may not bind from `OpenD.xml` alone.** Setting `telnet_ip`/`telnet_port` only in the config file has been observed to leave the telnet listener unbound (only the API port opens). Passing them again as explicit startup args (`-telnet_ip=127.0.0.1 -telnet_port=22222`) alongside `-cfg_file` resolved it. Root cause not confirmed — treat the CLI-arg form as the reliable path when telnet doesn't come up, and verify with `lsof -nP -iTCP -sTCP:LISTEN | grep OpenD` before assuming it's live.
+- **`telnetlib` is removed in modern Python (3.13+).** The official telnet example imports `from telnetlib import Telnet`, which now raises `ModuleNotFoundError`. Use a raw `socket` connection instead, writing commands terminated with `\r\n` (matches the protocol the official example uses):
+  ```python
+  import socket, time
+  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  s.settimeout(5)
+  s.connect(('127.0.0.1', 22222))
+  time.sleep(0.3)
+  print(s.recv(4096))  # banner: "moomoo OpenD version info: ..."
+  s.sendall(b'input_pic_verify_code -code=1234\r\n')
+  time.sleep(1)
+  print(s.recv(4096))
+  s.close()
+  ```
+- **The graphic verification PNG (`PicVerifyCode.png`, under the OpenD work folder's `F3CNN/` dir) is tiny (~85x34px) and hard to read at native resolution.** Upscale it before viewing (e.g. PIL `resize(w*6, h*6, Image.LANCZOS)`) — this made previously illegible characters clear. A wrong code regenerates a fresh PNG at the same path; `input_pic_verify_code` allows up to 10 requests/60s, so a few retries are safe.
+- **Graphic verification is not a one-off incident** — it can recur on any fresh login (version upgrade, OpenD restart after being down, etc.), not just after repeated bad passwords. Any headless/relaunch procedure should assume the telnet console + verification step is a normal part of bringing OpenD back up, not a special-case failure path.
+
 ## Command Line OpenD
 
 > Source: https://openapi.moomoo.com/moomoo-api-doc/en/opend/opend-cmd.html
