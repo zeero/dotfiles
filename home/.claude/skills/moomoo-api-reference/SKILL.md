@@ -119,6 +119,7 @@ trd_ctx.close()
 | `references/base-api.md` | 基本設定API（接続設定・スレッド・ロギング） | ~4K行 |
 | `references/intro.md` | API概要・権限・料金 | ~700行 |
 | `references/opend.md` | OpenDゲートウェイ設定 | ~500行 |
+| `references/gotchas.md` | 実測で確定した挙動・制約（paper の注文タイプ制限、OCO/MOC 非対応、OrderStatus 分類、market_state 等） | 小 |
 
 ## よくある使用パターン
 
