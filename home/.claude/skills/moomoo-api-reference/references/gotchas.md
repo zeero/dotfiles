@@ -11,6 +11,13 @@
 - stop のトリガー条件（last price / BBO のどちら基準か）は公式ドキュメントに記載なし（未確認）。
 - **MOC（market on close）は米国市場 API 非対応**。引け成注文が必要な場合は、引けウィンドウ内の market 注文で代替するしかない。
 
+## 取消しとレート制限
+
+- **取消しは個別 `modify_order(ModifyOrderOp.CANCEL, order_id, ...)`**。paper でも公式サポートされ、CANCEL 時は `qty` / `price` は無視され `unlock_trade` も不要。一方 **`cancel_all_order` は paper 非対応が公式明記**なので、一括取消しを前提にした設計は paper で検証できない。
+- **CANCEL の同期応答は `trd_env` と `order_id` のみで status を返さない**。取消しの成否は強制 refresh の再照会（read-back）で確認する設計になる。
+- **レート制限はいずれも acc_id 単位**: cancel（`modify_order`）は 30秒あたり20リクエスト・呼び出し間隔 0.04 秒以上。`order_list_query` は 30秒あたり10リクエストだが、**`refresh_cache=True` のときに限り**適用される。read-back を伴う cancel ループでは、照会側を常に強制 refresh する実装だと **cancel 枠（20）より照会枠（10）が先に律速する**。
+- 枠は acc_id 単位で共有される。常駐 daemon・手動スクリプト・バッチ処理が並行して broker を照会する構成では、rate budget を全経路の合算で見積もる（SDK・API 側にスロットリングは無い）。
+
 ## OrderStatus の分類
 
 - 終端: `CANCELLED_ALL` / `CANCELLED_PART` / `FILLED_ALL`。非終端（working）: `FILLED_PART`。
@@ -27,4 +34,4 @@
 
 ---
 
-出典: daytrade auto-memory から昇格（2026-07-29）。
+出典: daytrade auto-memory から昇格（2026-07-29、取消し・レート制限の節は 2026-07-31 追加）。
