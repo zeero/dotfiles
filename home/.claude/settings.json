@@ -198,7 +198,6 @@
   "language": "Japanese",
   "effortLevel": "high",
   "promptSuggestionEnabled": false,
-  "tui": "default",
   "skipWorkflowUsageWarning": true,
   "theme": "dark-ansi",
   "remoteControlAtStartup": true,
