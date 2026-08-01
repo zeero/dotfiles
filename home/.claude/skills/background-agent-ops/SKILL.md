@@ -7,7 +7,8 @@ description: >
   (2) a background subagent's completion is overdue, seems stalled, or no completion notification arrives,
   (3) about to stop/kill or re-issue a background task — especially on suspicion of a wrong working directory,
   (4) /exit is blocked with "Background work is running",
-  (5) dispatching a subagent into a git worktree or any isolated working directory where it will commit.
+  (5) dispatching a subagent into a git worktree or any isolated working directory where it will commit,
+  (6) deciding where a subagent should write its report or intermediate artifacts (report paths, scratch files).
   Fire proactively at launch time, not only after trouble — most of these pitfalls are cheap to prevent and expensive to diagnose.
 ---
 
