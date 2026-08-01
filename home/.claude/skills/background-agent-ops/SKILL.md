@@ -57,6 +57,19 @@ description: >
   - dispatch プロンプトに「作業ディレクトリの絶対パス」と「コミット直前に `pwd` / `git branch --show-current` を再確認し、想定外なら即 BLOCKED 報告」を毎回明記する。
   - 事故後のリカバリ: 誤コミットのハッシュを確認 → 正しいブランチへ `git cherry-pick` で回収 → 誤って触れた側を安全な地点へ戻す。作業内容自体を失う必要はない。
 
+## 6. subagent に書かせる報告ファイルのパスは run 固有にスコープする（エージェント非依存）
+
+- **状況**: 実装 subagent に「作業報告をファイルへ書け」と指示する。多タスクを連続で委譲する開発フロー全般に当てはまる。
+- **症状**: `<scratch>/task-N-report.md` のような **run 非固有パス**は feature・セッションを跨いで同名になり、過去 run の無関係な報告を上書き破壊する。scratch 領域は git-ignored なことが多く復元できない。subagent が「既存ファイルを上書きした」と警告を上げ続けるため、報告が実態と乖離していないかの切り分けコストが毎タスク発生する。
+- **対処**: dispatch の brief で報告パスを run 固有にスコープする（feature slug や日付をパスに挟む）。テンプレートやスキルが固定パスを提示していても、そのまま渡さない。既存の同名ファイルを見つけた場合は、上書き前に無関係な残骸かを確認させる。
+
+## 7. worktree のブランチを `gh pr merge --delete-branch` で消さない（エージェント非依存 / 退出手順は Claude Code 固有）
+
+- **状況**: 隔離 worktree で作ったブランチの PR を、その worktree の中からマージする。
+- **症状**: worktree が勝手に base ブランチ（main 等）へ切り替わり、自分のコミットが worktree から消えたように見える（squash には取り込み済みなので実際のロスはない）。ローカル base が origin と分岐していれば、マージ後の fast-forward 追従も失敗する。
+- **なぜ起きるか**: `--delete-branch` は**リモートだけでなくローカルブランチも削除する**（`gh pr merge --help` に明記）。ローカル削除にはそのブランチから離れている必要があるため、`gh` は前処理として base を checkout しに行く。これは git の必然ではなく `gh` 側の挙動で、worktree の配置次第で「切り替わる」ことも「base が別 worktree で使用中のため部分的に失敗し、ローカル後始末が残る」こともある。**症状から git の仕様を推論しないこと** — 実際に効いているのはツール側の後始末手順である。
+- **対処**: 順序を「セッションを worktree から退出（Claude Code なら `ExitWorktree` の keep）→ `git worktree remove <path>`（ブランチは消えない）→ `gh pr merge`（`--delete-branch` なし）」にする。ローカルブランチの掃除はマージ結果を確認したあと別操作で行う。マージ結果は squash commit と `gh pr view <n> --json state,mergeCommit` で裏取りする。
+
 ---
 
-出典: daytrade auto-memory から昇格（2026-07-26）。
+出典: daytrade auto-memory から昇格（2026-07-26、2026-08-01）。
