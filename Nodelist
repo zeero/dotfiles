@@ -15,3 +15,4 @@ git+ssh://git@github.com:zeero/ccresume.git
 @urugus/slack-cli
 context-mode
 md-mermaid-lint
+openwiki
