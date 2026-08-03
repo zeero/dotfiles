@@ -1,9 +1,10 @@
 project_doc_fallback_filenames = ["CLAUDE.md"]
 model = "gpt-5.6-sol"
-model_reasoning_effort = "xhigh"
+model_reasoning_effort = "high"
 plan_mode_reasoning_effort = "high"
 default_permissions = "my-workspace"
 approvals_reviewer = "guardian_subagent"
+
 
 
 
@@ -44,7 +45,7 @@ status_line_use_colors = true
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4
-"gpt-5.6-sol" = 1
+"gpt-5.6-sol" = 2
 
 [mcp_servers.serena]
 command = "serena"
@@ -174,7 +175,7 @@ trusted_hash = "sha256:9f9b46244739e7f6f787757a083d0d65c07db3aa2daaaecb6fe9e65b0
 trusted_hash = "sha256:80f5fe0d2ec771a1f08afcc781107faf630ce67c454d14e1ba2c6b85ae9ff242"
 
 [marketplaces.openai-bundled]
-last_updated = "2026-06-29T04:42:19Z"
+last_updated = "2026-07-28T03:20:38Z"
 source_type = "local"
 source = "/Users/zeero/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
