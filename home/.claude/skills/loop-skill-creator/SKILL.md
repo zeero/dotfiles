@@ -2,7 +2,7 @@
 name: loop-skill-creator
 description: user invoke only
 summary: 「この作業をループで回したい」という入力から、ループエンジニアリングの1ターン分ワークフローを実行する loopスキルを1枚生成する。環境のcapabilityを発見して最適な部品を選び、独立evaluatorとStop境界を必須で埋め込む。
-argument-hint: [回したい作業の説明]
+argument-hint: "[回したい作業の説明]"
 ---
 
 # loop-skill-creator
