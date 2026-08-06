@@ -119,15 +119,6 @@
       "installedAt": "2026-06-30T03:28:18.088Z",
       "updatedAt": "2026-07-16T01:16:27.381Z"
     },
-    "writing-great-skills": {
-      "source": "mattpocock/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/mattpocock/skills.git",
-      "skillPath": "skills/productivity/writing-great-skills/SKILL.md",
-      "skillFolderHash": "81d36946d48842f90358d8af54e3cdcc141f8e01",
-      "installedAt": "2026-07-02T05:54:46.585Z",
-      "updatedAt": "2026-07-16T01:16:28.485Z"
-    },
     "firecrawl": {
       "source": "firecrawl/cli",
       "sourceType": "github",
@@ -347,6 +338,16 @@
       "pluginName": "example-skills",
       "installedAt": "2026-08-03T08:32:53.982Z",
       "updatedAt": "2026-08-03T08:32:53.982Z"
+    },
+    "writing-for-agents": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mattpocock/skills.git",
+      "skillPath": "skills/productivity/writing-for-agents/SKILL.md",
+      "skillFolderHash": "bd9c9c4762db0a9a094fd419316ebd4b0444d06e",
+      "pluginName": "mattpocock-skills",
+      "installedAt": "2026-08-06T02:18:13.630Z",
+      "updatedAt": "2026-08-06T02:18:13.630Z"
     }
   },
   "dismissed": {
