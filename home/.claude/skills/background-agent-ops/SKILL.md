@@ -5,6 +5,7 @@ description: >
   and background subagent operations. Use whenever:
   (1) launching a long-running command/CLI in the background (external review CLIs, builds, batch jobs) or deciding how to capture its output,
   (2) a background subagent's completion is overdue, seems stalled, or no completion notification arrives,
+  (2b) delegating work to a fork/subagent that will itself launch a long-running command, or interpreting such an agent's completion notification as "the delegated work finished",
   (3) about to stop/kill or re-issue a background task — especially on suspicion of a wrong working directory,
   (4) /exit is blocked with "Background work is running",
   (5) dispatching a subagent into a git worktree or any isolated working directory where it will commit,
@@ -34,6 +35,7 @@ description: >
 - **症状**: 「待っても何も来ない」には2通りある — (1) ツール呼び出し（特に MCP）がタイムアウトなしで永久ハングしサイレントに固まっている、(2) 実は完走済みなのに task notification が届いていない。
 - **診断**: transcript を直接見る。`~/.claude/projects/<proj>/<session>/subagents/agent-<id>.jsonl` の mtime と最終イベントを確認し、最終行が `stop_reason: tool_use` のまま更新停止ならハング、`end_turn` なら完走済み（結果は transcript の最終 assistant メッセージから回収できる）。
 - **対処**: ハング個体は TaskStop で停止し、再起動プロンプトにハング原因ツールの明示禁止（例: 「mcp__plugin_context-mode_* 系は使わない。Read/Grep/Glob/Bash のみ」）を書く。調査系サブエージェントは起動時から禁止を書いておくのが安全。
+- **通知が届いた場合の別パターン — サブエージェントの完了 ≠ 委譲先プロセスの完了**: サブエージェント（fork を含む）が長時間 CLI をバックグラウンド起動してそのままターンを終えると、CLI 本体はまだ走っているのに**サブエージェントの完了通知だけが先に届く**。これを成果の到着と読み違えると、未完の処理を「結果ゼロ」と誤読しうる（外部レビューを委譲して「ブロック指摘なし」と誤読する類）。委譲するときは**成果そのもの**（判定・出力・結論）を報告に含めるよう指示し、報告に成果が無ければ親が §1 の生ログとプロセス終了を直接監視して回収する。入れ子の完了条件は、外側が終わっても内側は終わっていない。
 
 ## 3. background task の停止・再発行 — cwd は実測してから（Claude Code 固有）
 

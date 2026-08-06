@@ -28,10 +28,16 @@
 
 - **simulate の成行 entry は submit 時に pending（`dealt_qty=0`）で返る**。同期的に FILLED が返ることはなく、約定の把握は注文/ポジション照会（reconciliation）で非同期に行う必要がある。「place_order の戻りで約定確認」を前提にしたロジックは構造的に不発になる。
 
+## ポジションの取得単価
+
+- **証券口座の `cost_price` は平均取得単価ではなく Diluted Cost**（実現損益を反映して希薄化する値）。先物口座では Average Cost を返すため、同じフィールド名で口座種別により意味が変わる。公式も `average_cost` / `diluted_cost` を使うことを推奨している。
+- **平均取得単価の `average_cost` は証券の paper 口座では無効**（公式に "Not valid for securities paper trading accounts"）。`diluted_cost` は逆に先物口座で無効。
+- 含意: 自前の entry price と broker 取得単価の乖離監査は、`cost_price` を基準にすると実現損益ぶん恒常的にずれる。かといって paper では `average_cost` が取れないため、**paper での不一致は「不合格」ではなく「観測不能」として扱い、real 口座で初めて検証可能**と設計する。
+
 ## 市場状態
 
 - **`market_state` は米国レギュラー取引時間（09:30–16:00 ET）全体を `AFTERNOON` で返す**（公式ドキュメントで確認済み）。`MORNING` は米国レギュラー時間帯では返らない。「AFTERNOON のみ許可＝午前を弾くバグ」という誤読が起きやすいが、レギュラーセッション全体の判定として正しい。
 
 ---
 
-出典: daytrade auto-memory から昇格（2026-07-29、取消し・レート制限の節は 2026-07-31 追加）。
+出典: daytrade auto-memory から昇格（2026-07-29、取消し・レート制限の節は 2026-07-31 追加、ポジションの取得単価の節は 2026-08-06 追加）。
