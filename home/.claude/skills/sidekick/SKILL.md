@@ -49,7 +49,7 @@ argument-hint: "[--claude|--codex|--gemini] [-a|--adversarial] <相談したい�
      - 質問文のみの場合: `codex exec "[指示内容]" < /dev/null` を実行してください。末尾の `< /dev/null` は必須です（stdin 入力待ちでハングするのを防ぐため）。
      - ファイル内容を渡す場合: `codex exec "[指示内容]" < "[FILE_PATH]"` のように stdin 経由で渡してください。
    - **Claude を使用する場合**:
-     - `claude -p "[指示内容]"`（ファイルを渡す場合は `< "[FILE_PATH]"` を付加）を実行してください。修正をさせないため `--permission-mode` は指定しない（デフォルトのまま）でください。
+     - `claude --model fable -p "[指示内容]"`（ファイルを渡す場合は `< "[FILE_PATH]"` を付加）を実行してください。修正をさせないため `--permission-mode` は指定しない（デフォルトのまま）でください。
    - **Gemini を使用する場合**:
      - `gemini -p "[指示内容]"`（ファイルを渡す場合は `< "[FILE_PATH]"` を付加）を実行してください。
 
