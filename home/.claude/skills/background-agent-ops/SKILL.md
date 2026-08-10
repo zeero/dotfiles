@@ -1,16 +1,17 @@
 ---
 name: background-agent-ops
 description: >
-  Pitfalls and diagnostics for background execution of long-running commands
-  and background subagent operations. Use whenever:
-  (1) launching a long-running command/CLI in the background (external review CLIs, builds, batch jobs) or deciding how to capture its output,
-  (2) a background subagent's completion is overdue, seems stalled, or no completion notification arrives,
-  (2b) delegating work to a fork/subagent that will itself launch a long-running command, or interpreting such an agent's completion notification as "the delegated work finished",
-  (3) about to stop/kill or re-issue a background task — especially on suspicion of a wrong working directory,
-  (4) /exit is blocked with "Background work is running",
-  (5) dispatching a subagent into a git worktree or any isolated working directory where it will commit,
-  (6) deciding where a subagent should write its report or intermediate artifacts (report paths, scratch files).
-  Fire proactively at launch time, not only after trouble — most of these pitfalls are cheap to prevent and expensive to diagnose.
+  Use when launching a long-running CLI in the background (external review CLIs,
+  builds, batch jobs) or deciding how to capture its output; when a subagent is
+  stalled, its completion is overdue, or its completion notification arrives while
+  the work it launched may still be running; before stopping or re-issuing a
+  background task, especially on suspicion of a wrong working directory; when
+  /exit is blocked with "Background work is running"; when dispatching a subagent
+  into a worktree or isolated directory where it will commit or write reports; and
+  when setting up a standing subagent you delegate to repeatedly, including how it
+  must report back.
+  Fire at launch time, not only after trouble.
+summary: バックグラウンド実行（長時間 CLI・バックグラウンドサブエージェント）の落とし穴と診断手順の集約。予防は安く診断は高いため、トラブル後ではなく起動時点で読む。外部エージェントの CLI をどう起動するかは external-agent-invocation が扱う。
 ---
 
 # Background Agent Ops
