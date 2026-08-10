@@ -1,17 +1,13 @@
 ---
 name: external-review-operations
 description: >
-  Use when about to ask an external agent or subagent to review something,
-  when applying review feedback, when deciding whether to accept a finding,
-  when about to call work "reviewed" and merge or report it complete, or when
-  running two reviews at once.
-  Triggers: 「外部レビューを依頼」「codex にレビューさせて」「レビュー指摘を反映」
-  「この指摘は採用すべきか」「レビュー済みか確認」「マージ前レビュー」
-  「セカンドオピニオンの採否」「レビューを並行で回す」, "external review",
-  "apply review feedback", "should I accept this finding", "is this reviewed
-  yet", "before merging", "second opinion".
+  Use when asking an external agent or subagent to review something or give a
+  second opinion, applying review feedback, deciding whether to accept a
+  finding, running two reviews at once, or before calling work "reviewed" and
+  merging it.
+  Triggers: 「外部レビューを依頼」「codex にレビューさせて」「レビュー指摘を反映」「この指摘は採用すべきか」「レビュー済みか確認」「マージ前レビュー」.
   Fire even when the work feels already reviewed — that false sense is the
-  failure this skill exists to prevent.
+  failure this skill prevents.
 summary: >
   外部レビューの運用。依頼する前の設計（何を対象にするか・編集権をどこまで渡すか・
   ラウンドの目的）、返ってきた指摘の採否検証、「どのゲートが何に対して通ったか」の
