@@ -67,7 +67,7 @@ memory_file_count="$(find "$memory_dir/" -maxdepth 1 -type f -name '*.md' | wc -
 
 # Digest-size budget per dream (bytes). Sessions beyond it are carried over
 # to the next run -- the watermark only records what was actually digested.
-budget="${DREAM_DIGEST_BUDGET_BYTES:-150000}"
+budget="${DREAM_DIGEST_BUDGET_BYTES:-300000}"
 
 echo "MEMORY_DIR=$memory_dir"
 echo "PROJECT_BASE=$project_base"
