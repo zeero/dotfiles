@@ -44,6 +44,7 @@ description: Reviews Python code for type safety, async patterns, error handling
 - [ ] No mutable default arguments
 - [ ] Using `logger` not `print()` for output
 - [ ] f-strings preferred over `.format()` or `%`
+- [ ] Equality against a numeric constant also admits `True`/`False` and floats (`True == 1`, `1.0 == 1`) — fail-closed checks must pin the type too (`type(x) is int`; `isinstance` admits `bool` as a subclass of `int`)
 
 ## Valid Patterns (Do NOT Flag)
 
