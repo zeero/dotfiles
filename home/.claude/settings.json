@@ -201,5 +201,46 @@
   "skipWorkflowUsageWarning": true,
   "theme": "dark-ansi",
   "remoteControlAtStartup": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "autoMode": {
+    "environment": [
+      "### Org-wide",
+      "**Organization**: None configured",
+      "**Cloud provider(s)**: None configured",
+      "**Repository visibility**: Private — zeero/daytrade (github.com:zeero/daytrade)",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: None configured — repo uses `.env`/`.envrc` (gitignored) for local secrets (e.g. ALPACA_API_KEY, ALPACA_SECRET_KEY, BRAVE_SEARCH_API_KEY, EXIT_DAEMON_NOTIFY_WEBHOOK_URL)",
+      "**Default / protected branches**: Default branch `main`; no classic branch protection listed and rulesets not queryable here — treat `main` as protected-by-convention (do not force-push or bypass review)",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: Outbound-only from a private network (per CLAUDE.md: live trading stack runs on a private network, outbound-only connectivity)",
+      "**Source control**: The trusted repo (zeero/daytrade) and its `origin` remote only — no additional orgs configured",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: OpenD (local moomoo API bridge, launchd-managed), n8n (live entry scheduling / Slack notification interface), LM Studio (local LLM at http://127.0.0.1:1234/v1, screening — planned), Brave Search (news retrieval — planned) — all local/private-network services scoped to this repo's live trading stack",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: `.env` / `.envrc` (gitignored, holds API keys: ALPACA_API_KEY, ALPACA_SECRET_KEY, BRAVE_SEARCH_API_KEY, EXIT_DAEMON_NOTIFY_WEBHOOK_URL, LM_STUDIO_*); live SQLite metadata projection and JSONL audit logs under `scripts/daytrade/__logs__/live/` (trading/position data — repo owner only, never publish externally); moomoo trade-unlock password must never be placed in app/config/env/logs per CLAUDE.md",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace/host/container carrying `prod` or `production` as a whole word/segment; additionally the `real` trade_env (live real-money order path, currently fail-fast/disabled per CLAUDE.md roadmap) is a sensitive target equivalent to production for this repo",
+      "**Protected deployment namespaces / environments**: `real` trade_env (live real-money order path) is a protected namespace — currently gated by a Safety Guard that force-terminates on `real`; do not attempt to enable or bypass this",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development (quantitative trading strategy backtesting/live trading platform)",
+      "**Trusted repo**: zeero/daytrade (this repo, private) and its `origin` remote (github.com:zeero/daytrade) — routine commits/pushes here are OK; content ported from other checkouts or first read outside this session's repo is not this repo's own work",
+      "**Org-specific CLIs**: `task` (Taskfile-based task runner), `uv` (Python package manager), `codex` (external sidekick review CLI used by dreaming/refinement skills), `gh` (GitHub Issues/Projects ops for zeero/daytrade project 1)",
+      "routine under zeero/daytrade/ prefix: backtest runs, lint/test/check tasks, GitHub Issue/Project read-write via `gh` scoped to zeero/daytrade and project 1 (owner zeero)"
+    ],
+    "allow": [
+      "$defaults",
+      "Bash(task lint:*)",
+      "Bash(task fix:*)",
+      "Bash(task test:*)",
+      "Bash(task check:*)",
+      "Bash(task backtest\\:run:*)"
+    ],
+    "soft_deny": [
+      "$defaults",
+      "Bash(task backtest\\:refresh-baseline:*) when not following an explicit user request to update baseline.md",
+      "Bash(*live:* real*) — any live task invocation referencing real/production trade_env"
+    ]
+  }
 }
