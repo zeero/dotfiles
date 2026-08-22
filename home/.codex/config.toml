@@ -1,6 +1,7 @@
 project_doc_fallback_filenames = ["CLAUDE.md"]
 model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
+model_verbosity = "low"
 plan_mode_reasoning_effort = "high"
 default_permissions = "my-workspace"
 approvals_reviewer = "guardian_subagent"
