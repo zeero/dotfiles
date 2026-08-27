@@ -43,7 +43,6 @@
       "~/Documents/memos"
     ]
   },
-  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -201,8 +200,22 @@
   "skipWorkflowUsageWarning": true,
   "theme": "dark-ansi",
   "remoteControlAtStartup": true,
+  "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "autoMode": {
+    "allow": [
+      "$defaults",
+      "Bash(task lint:*)",
+      "Bash(task fix:*)",
+      "Bash(task test:*)",
+      "Bash(task check:*)",
+      "Bash(task backtest\\:run:*)"
+    ],
+    "soft_deny": [
+      "$defaults",
+      "Bash(task backtest\\:refresh-baseline:*) when not following an explicit user request to update baseline.md",
+      "Bash(*live:* real*) — any live task invocation referencing real/production trade_env"
+    ],
     "environment": [
       "### Org-wide",
       "**Organization**: None configured",
@@ -228,19 +241,7 @@
       "**Trusted repo**: zeero/daytrade (this repo, private) and its `origin` remote (github.com:zeero/daytrade) — routine commits/pushes here are OK; content ported from other checkouts or first read outside this session's repo is not this repo's own work",
       "**Org-specific CLIs**: `task` (Taskfile-based task runner), `uv` (Python package manager), `codex` (external sidekick review CLI used by dreaming/refinement skills), `gh` (GitHub Issues/Projects ops for zeero/daytrade project 1)",
       "routine under zeero/daytrade/ prefix: backtest runs, lint/test/check tasks, GitHub Issue/Project read-write via `gh` scoped to zeero/daytrade and project 1 (owner zeero)"
-    ],
-    "allow": [
-      "$defaults",
-      "Bash(task lint:*)",
-      "Bash(task fix:*)",
-      "Bash(task test:*)",
-      "Bash(task check:*)",
-      "Bash(task backtest\\:run:*)"
-    ],
-    "soft_deny": [
-      "$defaults",
-      "Bash(task backtest\\:refresh-baseline:*) when not following an explicit user request to update baseline.md",
-      "Bash(*live:* real*) — any live task invocation referencing real/production trade_env"
     ]
-  }
+  },
+  "model": "opus[1m]"
 }
