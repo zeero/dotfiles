@@ -43,6 +43,7 @@
       "~/Documents/memos"
     ]
   },
+  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -158,7 +159,6 @@
     "context7@claude-plugins-official": true,
     "n8n@skillsforge-marketplace": true,
     "ollama@skillsforge-marketplace": true,
-    "ralph-loop@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
@@ -167,7 +167,6 @@
     "kotlin-lsp@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
     "ruby-lsp@claude-plugins-official": true,
-    "pm-market-research@pm-skills": true,
     "superpowers@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
     "context-mode@context-mode": true,
@@ -242,6 +241,5 @@
       "**Org-specific CLIs**: `task` (Taskfile-based task runner), `uv` (Python package manager), `codex` (external sidekick review CLI used by dreaming/refinement skills), `gh` (GitHub Issues/Projects ops for zeero/daytrade project 1)",
       "routine under zeero/daytrade/ prefix: backtest runs, lint/test/check tasks, GitHub Issue/Project read-write via `gh` scoped to zeero/daytrade and project 1 (owner zeero)"
     ]
-  },
-  "model": "opus[1m]"
+  }
 }
