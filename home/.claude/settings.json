@@ -35,7 +35,7 @@
       "Read(./secrets/**)"
     ],
     "ask": [
-      "Bash(rm:*)",
+      "Bash(rm -rf:*)",
       "Bash(git push:*)"
     ],
     "defaultMode": "auto",
