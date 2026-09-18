@@ -47,7 +47,7 @@ summary: 外部エージェントの CLI を子プロセスとして起動する
 
 - **stdin は必ず塞ぐか、ファイルを渡す**。ファイル内容を読ませる場合は `< /dev/null` の代わりに `< "[FILE_PATH]"` にする。開けたままにすると codex は入力待ちでハングする。
 - **指示文が長いときは codex の prompt 引数を省いてファイルから流す**（`codex exec < "[PROMPT_FILE]"`）。引数が無ければ codex は stdin を指示文として読む。クォート事故を避けられ、次節のコマンド置換禁止とも両立する。
-- **codex に編集させるなら `-s workspace-write`**（既定は編集させない）。書ける範囲は workspace 配下なので、編集対象がそこから外れる場合は `--add-dir` で足す。
+- **codex の sandbox は毎回明示する**。`codex exec` の既定は `workspace-write`（編集できる。2026-09-18 に v0.145 で実測。起動ヘッダの `sandbox:` 行で確認できる）なので、意見だけ聞くなら `-s read-only` を付ける。編集させるなら `-s workspace-write` で、書ける範囲は workspace 配下なので、編集対象がそこから外れる場合は `--add-dir` で足す。
 - **claude に修正させるかは `--permission-mode` で決まる**。編集まで任せるなら `--permission-mode "acceptEdits"`、意見だけ聞くなら指定しない（既定のまま）。
 - **claude を使う場合はモデルを `fable` に固定する**。呼び出し元が別のモデルを必要とする場合だけ上書きする。
 - パスにスペースが含まれうるので必ずクォートする。
