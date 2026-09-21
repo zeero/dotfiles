@@ -11,15 +11,17 @@ moomoo証券（旧Futu証券）が提供するローカルゲートウェイ経�
 
 | 項目 | 値 |
 |---|---|
-| Pythonパッケージ | `futu-api` |
-| インポート | `from futu import *` |
+| Pythonパッケージ | moomoo 口座: `moomoo-api` ／ Futu 口座: `futu-api` |
+| インポート | moomoo 口座: `from moomoo import *` ／ Futu 口座: `from moomoo import *` |
 | デフォルト接続先 | `host='127.0.0.1', port=11111` |
 | 公式ドキュメント | https://openapi.moomoo.com/moomoo-api-doc/en/intro/intro.html |
+
+**口座で SDK パッケージが分かれる**。moomoo 口座 / moomoo OpenD は `moomoo-api`、Futu 口座 / Futu OpenD は `futu-api` で、API の形はほぼ同じだが別エコシステム。以下の記述とコード例は moomoo 側を前提とするので、Futu 口座なら `moomoo` を `futu` に読み替える（→ `references/gotchas.md` の「SDK パッケージとローカルファイルの衝突」）。
 
 ## セットアップ
 
 ```bash
-pip install futu-api
+pip install moomoo-api
 ```
 
 OpenDゲートウェイを起動してからAPIを使用します（→ `references/opend.md`）。
@@ -27,7 +29,7 @@ OpenDゲートウェイを起動してからAPIを使用します（→ `referen
 ## 基本パターン
 
 ```python
-from futu import *
+from moomoo import *
 
 # --- Quote API（市場データ） ---
 quote_ctx = OpenQuoteContext(host='127.0.0.1', port=11111)
@@ -119,14 +121,14 @@ trd_ctx.close()
 | `references/base-api.md` | 基本設定API（接続設定・スレッド・ロギング） | ~4K行 |
 | `references/intro.md` | API概要・権限・料金 | ~700行 |
 | `references/opend.md` | OpenDゲートウェイ設定 | ~500行 |
-| `references/gotchas.md` | 実測で確定した挙動・制約（paper の注文タイプ制限、OCO/MOC 非対応、取消しとレート制限、OrderStatus 分類、market_state 等） | 小 |
+| `references/gotchas.md` | 実測で確定した挙動・制約（SDK パッケージの選び分け、paper の注文タイプ制限、OCO/MOC 非対応、取消しとレート制限、OrderStatus 分類、約定の観測、market_state 等） | 小 |
 
 ## よくある使用パターン
 
 ### 株価リアルタイム取得
 
 ```python
-from futu import *
+from moomoo import *
 
 quote_ctx = OpenQuoteContext(host='127.0.0.1', port=11111)
 ret, data = quote_ctx.get_stock_quote(['US.AAPL', 'US.TSLA'])
@@ -138,7 +140,7 @@ quote_ctx.close()
 ### 発注
 
 ```python
-from futu import *
+from moomoo import *
 
 trd_ctx = OpenSecTradeContext(filter_trdmarket=TrdMarket.US, host='127.0.0.1', port=11111)
 trd_ctx.unlock_trade(password='YOUR_PASSWORD')
@@ -159,7 +161,7 @@ trd_ctx.close()
 ### リアルタイム配信
 
 ```python
-from futu import *
+from moomoo import *
 
 class QuoteHandler(StockQuoteHandlerBase):
     def on_recv_rsp(self, rsp_str):

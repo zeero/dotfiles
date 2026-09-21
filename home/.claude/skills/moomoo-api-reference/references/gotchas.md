@@ -2,6 +2,12 @@
 
 実プロジェクトでの実測（SDK 10.07.6708 + 公式ドキュメント v10.9、2026-06〜07）で確定した、公式リファレンスだけでは気づきにくい挙動・制約集。
 
+## SDK パッケージとローカルファイルの衝突
+
+- **moomoo 口座と Futu 口座で SDK パッケージが別**。moomoo 口座 / moomoo OpenD は `moomoo-api`（`import moomoo`）、Futu 口座 / Futu OpenD は `futu-api`（`import futu`）。API の形はほぼ同じだが別エコシステムで、口座に合わない側を入れても import 自体は通るため、接続して初めて食い違いに気づく。
+- **`moomoo.py` / `futu.py` という名前のローカルモジュールを置くと、SDK の top-level パッケージを覆い隠す**。実行時は絶対 import が site-packages を解決するので動くが、型チェッカ（pyright 等）はローカルファイル自身へ解決し、`OpenQuoteContext` / `SubType` / `RET_OK` などを「未知の属性」と誤検知する。公式ドキュメントも "local file named moomoo shadows the library" と警告している。
+- **SDK は型スタブを持たない**。`import moomoo  # type: ignore` と、SDK オブジェクトを保持する属性の `Any` 宣言が要る（この `Any` を「冗長」と判断して外すと型エラーが復活する）。
+
 ## 注文タイプ・注文機能
 
 - **paper trading（`TrdEnv.SIMULATE`）は limit / market のみ**（公式 Q&A 明記）。STOP / STOP_LIMIT / MIT / LIT / TRAILING 系は発注不可。TIF も DAY のみ。modify（`ModifyOrderOp.NORMAL`）/ cancel は paper でも可、enable / disable / delete は不可。
@@ -10,6 +16,7 @@
 - **OCO / bracket（親子連動注文）は SDK・公式ドキュメントとも存在しない**。`place_combo_order` はオプションの複数レッグ戦略用であり別物。
 - stop のトリガー条件（last price / BBO のどちら基準か）は公式ドキュメントに記載なし（未確認）。
 - **MOC（market on close）は米国市場 API 非対応**。引け成注文が必要な場合は、引けウィンドウ内の market 注文で代替するしかない。
+- **`place_order` は建玉を指定できる**。`position_id=` 引数が実在し、protobuf の `positionID` へ詰められる。建玉照会（`position_list_query`）も `position_id` を返し、`get_max_trd_qtys`（`acctradinginfo_query`）も同じ引数を取る。「broker へ建玉を指定する経路が無い」は誤りなので、同一銘柄・同一方向で複数の建玉を持つ設計を検討するときにその前提を置かない。ただし**米国株口座で個別の建玉を決済する指定として実際に効くかは未実測**で、建玉の識別子が終了後に再利用されるかも未確認。
 
 ## 取引解錠（trade unlock）
 
@@ -34,6 +41,8 @@
 ## 約定の観測
 
 - **simulate の成行 entry は submit 時に pending（`dealt_qty=0`）で返る**。同期的に FILLED が返ることはなく、約定の把握は注文/ポジション照会（reconciliation）で非同期に行う必要がある。「place_order の戻りで約定確認」を前提にしたロジックは構造的に不発になる。
+- **pending で返っても broker 側では約定している**。その `order_id` を `order_list_query` で引き直すと `status=FILLED_ALL` / `filled_qty>0` / `dealt_avg_price>0` が返る。約定価格を要する機能は、submit 時点で自前に保存した status ではなくこの照会結果を真実源にする。
+- submit からほぼ丸一日経過した注文も `order_list_query` で引けた実測がある。ただし日をまたいでどこまで遡れるかは公式ドキュメントに明記を見つけられていないため、長期の追跡は `history_order_list_query` 側で設計する。
 
 ## ポジションの取得単価
 
@@ -58,4 +67,4 @@
 
 ---
 
-出典: daytrade auto-memory から昇格（2026-07-29、取消し・レート制限の節は 2026-07-31 追加、ポジションの取得単価の節は 2026-08-06 追加、取引解錠の節は 2026-08-07 追加、口座スコープの節は 2026-08-09 追加、購読とデータ配信の節は 2026-08-19 追加）。
+出典: daytrade auto-memory から昇格（2026-07-29、取消し・レート制限の節は 2026-07-31 追加、ポジションの取得単価の節は 2026-08-06 追加、取引解錠の節は 2026-08-07 追加、口座スコープの節は 2026-08-09 追加、購読とデータ配信の節は 2026-08-19 追加、SDK パッケージの節・`place_order` の建玉指定・約定価格の照会は 2026-09-21 追加）。
