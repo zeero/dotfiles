@@ -24,9 +24,9 @@ tasks:
       - brew bundle --verbose
 
   symlink:
-    desc: "Create symlinks"
+    desc: "Create symlinks (use -- -n or -- --dry-run to preview changes)"
     cmds:
-      - ./scripts/symlink.sh
+      - ./scripts/symlink.sh {{.CLI_ARGS}}
 
   git-setup:
     desc: "Setup global git configurations"
