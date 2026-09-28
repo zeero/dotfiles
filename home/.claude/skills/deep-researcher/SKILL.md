@@ -2,7 +2,7 @@
 name: deep-researcher
 description: user invoke only
 summary: 質問を複数の調査角度に分解して web を広く調べ、公式情報を優先して集めた主張を反証役エージェントの多数決で裏取りし、日本語のレポートを HTML に起こす。規模は「軽め」「標準」「徹底」で切り替える。
-argument-hint: [調べたいこと] [軽め|標準|徹底]
+argument-hint: '[調べたいこと] [軽め|標準|徹底]'
 disable-model-invocation: true
 ---
 
