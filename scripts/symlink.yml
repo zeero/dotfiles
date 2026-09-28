@@ -11,6 +11,10 @@ sections:
     steps:
       - ln_fanout: { dir: "${DOTFILES}/home", target: "~", filter: file }
 
+  - section: bin
+    steps:
+      - ln_fanout: { dir: "${DOTFILES}/home/bin", target: "~/bin", filter: file }
+
   - section: tmux
     steps:
       - mkdir: ~/.tmux/plugins

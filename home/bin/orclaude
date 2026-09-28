@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# OpenRouter経由でClaude Codeを起動するラッパー関数
+
+# 1. OpenRouterのAPIキーが設定されているか確認
+if [ -z "$OPENROUTER_API_KEY" ]; then
+  echo "Error: OPENROUTER_API_KEY environment variable is not set." >&2
+  echo "Please set it with: export OPENROUTER_API_KEY='your-key'" >&2
+  return 1
+fi
+
+# 2. 環境変数を一時的に上書きした状態で claude を実行
+#   - ANTHROPIC_BASE_URL: OpenRouterのエンドポイントに向ける
+#   - ANTHROPIC_AUTH_TOKEN: OpenRouterのキーを渡す
+#   - ANTHROPIC_API_KEY: 空文字にして競合（Anthropic直の認証フォールバック）をバイパスする
+#   - CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: モデルピッカーを有効化
+env \
+  ANTHROPIC_BASE_URL="https://openrouter.ai/api" \
+  ANTHROPIC_AUTH_TOKEN="$OPENROUTER_API_KEY" \
+  ANTHROPIC_API_KEY="" \
+  CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY="1" \
+  ANTHROPIC_DEFAULT_OPUS_MODEL="z-ai/glm-5.3" \
+  ANTHROPIC_DEFAULT_SONNET_MODEL="z-ai/glm-5.3-flash" \
+  CLAUDE_CODE_SUBAGENT_MODEL="z-ai/glm-5.3-flash" \
+  claude "$@"
