@@ -10,10 +10,7 @@ if [ -z "$OPENROUTER_API_KEY" ]; then
 fi
 
 # 2. 環境変数を一時的に上書きした状態で claude を実行
-#   - ANTHROPIC_BASE_URL: OpenRouterのエンドポイントに向ける
-#   - ANTHROPIC_AUTH_TOKEN: OpenRouterのキーを渡す
-#   - ANTHROPIC_API_KEY: 空文字にして競合（Anthropic直の認証フォールバック）をバイパスする
-#   - CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY: モデルピッカーを有効化
+#   - cf. https://openrouter.ai/docs/cookbook/coding-agents/claude-code-integration
 env \
   ANTHROPIC_BASE_URL="https://openrouter.ai/api" \
   ANTHROPIC_AUTH_TOKEN="$OPENROUTER_API_KEY" \
