@@ -366,6 +366,42 @@
       "skillFolderHash": "362200ac2fb3c17b765049444e88de73767e6d08",
       "installedAt": "2026-09-25T05:43:44.872Z",
       "updatedAt": "2026-09-25T05:43:44.872Z"
+    },
+    "genshijin": {
+      "source": "InterfaceX-co-jp/genshijin",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/InterfaceX-co-jp/genshijin.git",
+      "skillPath": "skills/genshijin/SKILL.md",
+      "skillFolderHash": "2d9bd7edf8a10fc093864b853a654ffe9d811837",
+      "installedAt": "2026-10-01T05:05:49.472Z",
+      "updatedAt": "2026-10-01T05:05:49.472Z"
+    },
+    "genshijin-compress": {
+      "source": "InterfaceX-co-jp/genshijin",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/InterfaceX-co-jp/genshijin.git",
+      "skillPath": "skills/genshijin-compress/SKILL.md",
+      "skillFolderHash": "7bf906e75fdb60b811815250619fb89d663f208e",
+      "installedAt": "2026-10-01T05:05:49.473Z",
+      "updatedAt": "2026-10-01T05:05:49.473Z"
+    },
+    "genshijin-help": {
+      "source": "InterfaceX-co-jp/genshijin",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/InterfaceX-co-jp/genshijin.git",
+      "skillPath": "skills/genshijin-help/SKILL.md",
+      "skillFolderHash": "04602c6fc8aac1f5e46f651810bea652961fb43c",
+      "installedAt": "2026-10-01T05:05:49.473Z",
+      "updatedAt": "2026-10-01T05:05:49.473Z"
+    },
+    "genshijin-crew": {
+      "source": "InterfaceX-co-jp/genshijin",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/InterfaceX-co-jp/genshijin.git",
+      "skillPath": "skills/genshijin-crew/SKILL.md",
+      "skillFolderHash": "89ca5a244584dec1c93b9324aa2e240128d907f8",
+      "installedAt": "2026-10-01T05:05:49.473Z",
+      "updatedAt": "2026-10-01T05:05:49.473Z"
     }
   },
   "dismissed": {
