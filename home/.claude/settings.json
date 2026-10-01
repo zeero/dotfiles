@@ -44,7 +44,6 @@
     ]
   },
   "model": "sonnet",
-  "advisorModel": "opus",
   "hooks": {
     "PreToolUse": [
       {
@@ -171,7 +170,8 @@
     "superpowers@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
     "context-mode@context-mode": true,
-    "codex@openai-codex": true
+    "codex@openai-codex": true,
+    "github@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "pm-skills": {
@@ -196,6 +196,7 @@
   },
   "language": "Japanese",
   "effortLevel": "high",
+  "advisorModel": "opus",
   "promptSuggestionEnabled": false,
   "skipWorkflowUsageWarning": true,
   "theme": "dark-ansi",
