@@ -402,6 +402,15 @@
       "skillFolderHash": "89ca5a244584dec1c93b9324aa2e240128d907f8",
       "installedAt": "2026-10-01T05:05:49.473Z",
       "updatedAt": "2026-10-01T05:05:49.473Z"
+    },
+    "yomiyasu": {
+      "source": "nanaism/yomiyasu",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/nanaism/yomiyasu.git",
+      "skillPath": "skills/yomiyasu/SKILL.md",
+      "skillFolderHash": "ad6d82a90fd9aa0a6f6f5a8058c44ce906d63766",
+      "installedAt": "2026-10-07T23:53:32.204Z",
+      "updatedAt": "2026-10-07T23:53:32.204Z"
     }
   },
   "dismissed": {
@@ -418,6 +427,7 @@
     "kilo",
     "kimi-code-cli",
     "opencode",
+    "pi",
     "warp",
     "zed"
   ]
