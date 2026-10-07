@@ -200,6 +200,33 @@ extension Fullfillment {
 }
 ```
 
+### struct間のモデル変換はイニシャライザで行う
+
+別のstructからモデルを作る変換は、変換先のイニシャライザとして実装する。
+
+```swift
+// preferred ✨
+struct User {
+    let id: String
+    let displayName: String
+
+    init(from response: UserResponse) {
+        id = response.id
+        displayName = response.name
+    }
+}
+
+// not preferred
+struct UserResponse {
+    let id: String
+    let name: String
+
+    func makeUser() -> User {
+        User(id: id, displayName: name)
+    }
+}
+```
+
 ### 命名は意図を表現する
 
 実装（何をチェックするか）ではなく、意図（なぜチェックするか）を名前にする。
@@ -214,4 +241,3 @@ var isEmpty: Bool // 「空かどうか」は実装の詳細
 
 ## 重要文献
 - [API Design Guidelines | Swift.org](https://www.swift.org/documentation/api-design-guidelines/)
-
