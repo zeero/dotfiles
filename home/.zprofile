@@ -116,6 +116,7 @@ OBSIDIAN_BIN="/Applications/Obsidian.app/Contents/MacOS"
 if [[ -d $OBSIDIAN_BIN ]]; then
   export PATH=$PATH:$OBSIDIAN_BIN
 fi
+export GH_TOKEN=$(gh auth token)
 
 # local
 [ -f ~/.local.zprofile ] && source ~/.local.zprofile
