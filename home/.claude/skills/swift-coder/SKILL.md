@@ -60,12 +60,11 @@ case .inactive: "Inactive"
 ### 三項演算子の括弧
 
 ```swift
-// シンプルな条件は括弧不要
-let message = isSuccess ? "OK" : "NG"
-
-
 // 条件式になる時は括弧で囲む ✨
 let color = (count > 0) ? .green : .red
+
+// シンプルな条件は括弧不要
+let message = isSuccess ? "OK" : "NG"
 ```
 
 ### KeyPathアクセスを好む
