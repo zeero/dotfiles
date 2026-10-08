@@ -1,0 +1,54 @@
+# ディスククリーニング対象の宣言
+#
+# 「削除しても自動で再生成されるキャッシュ」だけをここに置く。
+# VMイメージ・SDK・ツールの旧バージョン群などは再セットアップコストが高く、
+# 無人実行での事故につながるため意図的に対象外としている。
+#
+# name    : 表示名
+# desc    : 何が消えるかの説明
+# paths   : 削除見込みサイズの計測対象。あくまで概算であり、
+#           command がこれ以外の場所も掃除する場合がある（例: brew cleanup）
+# command : 実際の削除手段。ツール公式のクリーンコマンドがあれば rm より優先する
+
+- name: npm
+  desc: npm のパッケージキャッシュ
+  paths:
+    - ~/.npm/_cacache
+  command: npm cache clean --force
+
+- name: uv
+  desc: uv (Python) のビルド・ダウンロードキャッシュ
+  paths:
+    - ~/.cache/uv
+  command: uv cache clean
+
+- name: Homebrew
+  desc: 古いボトルとダウンロードキャッシュ
+  paths:
+    - ~/Library/Caches/Homebrew
+  command: brew cleanup --prune=all
+
+- name: pnpm
+  desc: pnpm ストアの未参照パッケージ
+  paths:
+    - ~/Library/pnpm/store
+  command: pnpm store prune
+
+- name: Gradle
+  desc: Gradle の依存キャッシュとラッパーディストリビューション
+  paths:
+    - ~/.gradle/caches
+    - ~/.gradle/wrapper/dists
+  command: rm -rf ~/.gradle/caches ~/.gradle/wrapper/dists
+
+- name: Xcode DerivedData
+  desc: Xcode のビルド中間生成物
+  paths:
+    - ~/Library/Developer/Xcode/DerivedData
+  command: rm -rf ~/Library/Developer/Xcode/DerivedData/*
+
+- name: Xcode Playground Devices
+  desc: Playground 実行用に生成されるシミュレータデバイス
+  paths:
+    - ~/Library/Developer/XCPGDevices
+  command: rm -rf ~/Library/Developer/XCPGDevices/*

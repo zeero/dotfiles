@@ -1,0 +1,8 @@
+version: '3'
+
+tasks:
+  disk-cleaning:
+    desc: "Clean safe caches interactively"
+    interactive: true
+    cmds:
+      - ruby ./scripts/disk_cleaning.rb

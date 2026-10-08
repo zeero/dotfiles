@@ -3,6 +3,7 @@ version: '3'
 includes:
   tests: Taskfile.tests.yml
   install: Taskfile.install.yml
+  maintenance: Taskfile.maintenance.yml
 
 tasks:
   default:
