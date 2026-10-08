@@ -6,6 +6,7 @@ My configuration files.
 
 ### 1. Xcodeをインストール
 インストールが終わってから次へ進むこと
+（ `xcode-select --install` だけでもいいかも？要検証）
 ```
 sudo xcode-select -s /Applications/Xcode.app
 xcode-select --install
