@@ -171,7 +171,8 @@
     "claude-code-setup@claude-plugins-official": true,
     "context-mode@context-mode": true,
     "codex@openai-codex": true,
-    "github@claude-plugins-official": true
+    "github@claude-plugins-official": true,
+    "genshijin@genshijin": true
   },
   "extraKnownMarketplaces": {
     "pm-skills": {
@@ -191,6 +192,12 @@
       "source": {
         "source": "github",
         "repo": "openai/codex-plugin-cc"
+      }
+    },
+    "genshijin": {
+      "source": {
+        "source": "github",
+        "repo": "InterfaceX-co-jp/genshijin"
       }
     }
   },

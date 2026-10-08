@@ -367,15 +367,6 @@
       "installedAt": "2026-09-25T05:43:44.872Z",
       "updatedAt": "2026-09-25T05:43:44.872Z"
     },
-    "genshijin": {
-      "source": "InterfaceX-co-jp/genshijin",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/InterfaceX-co-jp/genshijin.git",
-      "skillPath": "skills/genshijin/SKILL.md",
-      "skillFolderHash": "2d9bd7edf8a10fc093864b853a654ffe9d811837",
-      "installedAt": "2026-10-01T05:05:49.472Z",
-      "updatedAt": "2026-10-01T05:05:49.472Z"
-    },
     "genshijin-compress": {
       "source": "InterfaceX-co-jp/genshijin",
       "sourceType": "github",
