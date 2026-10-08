@@ -49,17 +49,21 @@ if [[ "$FILE_PATH" == *.py ]]; then
         ADDITIONAL_CONTEXT+="[git diff --check (Exit: $GIT_CHECK_EXIT_CODE)]\n$GIT_CHECK_OUTPUT"
     fi
 
-    # Codexに結果を返すためのJSONを出力します。
+    # Codex / Claude Code に結果を返すためのJSONを出力します。
+    # hookEventName は Claude Code が additionalContext をモデルへ注入する条件。
+    # Codex 側は未知フィールドとして無視するため、共用しても害はありません。
     jq -n \
         --arg msg "$STATUS_MSG" \
         --arg ctx "$ADDITIONAL_CONTEXT" \
         '{
             "systemMessage": $msg,
             "hookSpecificOutput": {
+                "hookEventName": "PostToolUse",
                 "additionalContext": $ctx
             }
         }'
 else
     # Pythonファイル以外、または編集以外のツールの場合は、そのまま処理を通します。
-    echo "{\"decision\": \"allow\"}"
+    # decision は "block" 専用の値のため、通す場合は何も出力しない。
+    :
 fi

@@ -35,6 +35,7 @@ git config --global ghq.root "~/dev"
 git config --global alias.co "checkout"
 git config --global alias.st "status"
 git config --global alias.pick "cherry-pick"
+git config --global alias.wt "worktree"
 # ログをグラフ表示
 git config --global alias.graph "log --graph --decorate --name-status"
 # ローカルで変更を無視

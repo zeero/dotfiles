@@ -1,6 +1,6 @@
 ---
 name: jules-orchestrator
-description: Jules (asynchronous AI agent) を使用して、大規模なコードベースの変更、テストの追加、リファクタリング、依存関係の更新などを自動化および管理します。ユーザーが「大規模な修正を依頼したい」「時間がかかる作業をバックグラウンドでやってほしい」「Julesを使って」と言及した場合や、手動で行うには範囲が広すぎるリファクタリング（例：プロジェクト全域でのシンボル名変更、全ファイルへのユニットテスト追加）が必要な場合に、必ずこのスキルを使用してください。
+description: Uses Jules (an asynchronous AI agent) to automate and manage large-scale codebase changes, test additions, refactoring, and dependency updates. Always use this skill when the user mentions 「大規模な修正を依頼したい」「時間がかかる作業をバックグラウンドでやってほしい」「Julesを使って」, or when a refactoring is too broad to do manually (e.g., project-wide symbol renaming, adding unit tests across all files).
 ---
 
 # 🎼 jules-orchestrator

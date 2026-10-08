@@ -18,6 +18,7 @@ alias ls='eza --time-style=long-iso --time=modified'
 alias ll='ls -lh'
 alias la='ls -lha'
 alias ltra='ls -lha --sort=modified'
+alias lsra='ls -lha --sort=size'
 alias ..='cd ..'
 alias resource='exec $SHELL -l'
 alias xargs='gxargs'
@@ -212,7 +213,8 @@ giwt() {
 
   # --- 作成 / 移動モード ---
   if [[ $# -eq 0 ]]; then
-    echo 'Usage: giwt [-d|-D|-i] <branch-name>'
+    echo 'List worktrees:'
+    git worktree list
     return 1
   fi
 

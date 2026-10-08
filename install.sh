@@ -70,24 +70,8 @@ claude plugin install context-mode@context-mode
 # claude plugin marketplace add openai/codex-plugin-cc
 # claude plugin install codex@openai-codex
 # claude "/codex:setup"
-## zeero-dotfiles
-# cd $DOTFILES
-# claude plugin marketplace add ./
-# claude plugin install simple-research@zeero-dotfiles
-# claude plugin install multi-research@zeero-dotfiles
-
-# skills.sh logs
-# npx skills add https://github.com/vercel-labs/skills --skill find-skills
-# npx skills add https://github.com/anthropics/skills --skill skill-creator
-# npx skills add https://github.com/anthropics/skills --skill template-skill
-# npx skills add https://github.com/avdlee/swiftui-agent-skill --skill swiftui-expert-skill
-# npx skills add https://github.com/wshobson/agents --skill prompt-engineering-patterns
-# npx skills add https://github.com/softaworks/agent-toolkit --skill naming-analyzer
-# npx skills add https://github.com/softaworks/agent-toolkit --skill draw-io
-# npx skills add https://github.com/softaworks/agent-toolkit --skill command-creator
-# npx skills add https://github.com/softaworks/agent-toolkit --skill crafting-effective-readmes
-# npx skills add https://github.com/sickn33/antigravity-awesome-skills --skill docker-expert
-# npx skills add https://github.com/czlonkowski/n8n-skills
+# レビューゲート有効化（プロジェクト単位）
+# claude "/codex:setup --enable-review-gate"
 
 # mcp
 # playwright installed by "notebooklm-py[browser]"

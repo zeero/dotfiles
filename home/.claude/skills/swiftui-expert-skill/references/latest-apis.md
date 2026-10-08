@@ -2,6 +2,8 @@
 
 > Based on a comparison of Apple's documentation using the Sosumi MCP, we found the latest recommended APIs to use.
 
+> This file lists *what* the modern replacements are. For *how to behave* when you find a soft-deprecated API — when to migrate, when to leave it alone, and the scoping rule for unrelated edits — see `references/soft-deprecation.md`. To refresh this list after a new SDK release, run the maintenance skill at `.agents/skills/update-swiftui-apis/SKILL.md`.
+
 ## Table of Contents
 - [Always Use (iOS 15+)](#always-use-ios-15)
 - [When Targeting iOS 16+](#when-targeting-ios-16)
@@ -29,6 +31,41 @@ These replacements have minimal API shape changes. Most are near-direct swaps; a
 - **`clipShape(.rect(cornerRadius:))`** instead of `cornerRadius()`
 - **`textInputAutocapitalization(_:)`** instead of `autocapitalization(_:)` (note: `.never` replaces `.none`)
 - **`animation(_:value:)`** instead of `animation(_:)` (adds required `value:` parameter; back-deploys to iOS 13+)
+
+### Lists and Forms
+
+**Use trailing-closure `Section` initializers instead of the positional header/footer View initializers.**
+
+The single-title form is still current and should not be treated as deprecated:
+
+```swift
+// Current - single-title LocalizedStringKey initializer
+Section("Settings") {
+    Toggle("Notifications", isOn: .constant(true))
+}
+
+// Replacement - content/header/footer trailing-closure initializer
+Section {
+    Toggle("Notifications", isOn: .constant(true))
+} header: {
+    Text("Settings")
+} footer: {
+    Text("Changes apply immediately.")
+}
+
+// Deprecated/renamed - positional header/footer View arguments
+Section(header: Text("Settings"), footer: Text("Changes apply immediately.")) {
+    Toggle("Notifications", isOn: .constant(true))
+}
+
+Section(header: Text("Settings")) {
+    Toggle("Notifications", isOn: .constant(true))
+}
+
+Section(footer: Text("Changes apply immediately.")) {
+    Toggle("Notifications", isOn: .constant(true))
+}
+```
 
 ### Presentation
 
@@ -471,6 +508,9 @@ PhotoGrid(photos: photos)
 | `accessibility(label:)` etc. | `accessibilityLabel()` etc. | iOS 15+ |
 | `TextField` `onCommit`/`onEditingChanged` | `onSubmit` + `focused` | iOS 15+ |
 | `animation(_:)` (no value) | `animation(_:value:)` | Back-deploys (iOS 13+) |
+| `Section(header:content:)` | `Section(content:header:)` | Future-deprecated |
+| `Section(footer:content:)` | `Section(content:footer:)` | Future-deprecated |
+| `Section(header:footer:content:)` | `Section(content:header:footer:)` | Future-deprecated |
 | Manual `EnvironmentKey` | `@Entry` macro | Back-deploys (Xcode 16+) |
 | `NavigationView` | `NavigationStack` / `NavigationSplitView` | iOS 16+ |
 | `accentColor(_:)` | `tint(_:)` | iOS 16+ |

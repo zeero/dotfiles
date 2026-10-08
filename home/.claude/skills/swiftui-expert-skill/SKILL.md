@@ -1,6 +1,6 @@
 ---
 name: swiftui-expert-skill
-description: Use when writing, reviewing, or refactoring SwiftUI code for iOS or macOS, including state management, view composition, performance, Liquid Glass adoption, or Instruments `.trace` capture/analysis for hangs, hitches, CPU hotspots, or
+description: Use when writing, reviewing, or refactoring SwiftUI code for iOS or macOS, including state management and `@Observable` data flow, view composition and invalidation/performance, lists and `ForEach` identity, environment usage, localization, animations, Liquid Glass adoption, migrating soft-deprecated APIs, or Instruments `.trace` capture/analysis for hangs, hitches, CPU hotspots, or
   excessive view updates.
 ---
 
@@ -114,7 +114,10 @@ Consult the reference file for each topic relevant to the current task:
 | macOS window styling | `references/macos-window-styling.md` |
 | macOS views | `references/macos-views.md` |
 | Text patterns | `references/text-patterns.md` |
+| Localization | `references/localization.md` |
 | Deprecated API lookup | `references/latest-apis.md` |
+| Handling soft-deprecated APIs | `references/soft-deprecation.md` |
+| Previews | `references/previews.md` |
 | Instruments trace analysis | `references/trace-analysis.md` |
 | Instruments trace recording | `references/trace-recording.md` |
 
@@ -127,13 +130,16 @@ These are hard rules -- violations are always bugs:
 - [ ] Passed values never declared as `@State` or `@StateObject` (they ignore updates)
 - [ ] `@StateObject` for view-owned objects; `@ObservedObject` for injected
 - [ ] iOS 17+: `@State` with `@Observable`; `@Bindable` for injected observables needing bindings
-- [ ] `ForEach` uses stable identity (never `.indices` for dynamic content)
-- [ ] Constant number of views per `ForEach` element
+- [ ] `ForEach` uses stable identity (never `.indices`/`\.offset`; id outlives the view and isn't derived from mutable content)
+- [ ] Constant number of views per `ForEach` element; `List` rows are unary
+- [ ] No closures stored in custom `@Environment`/`@FocusedValue` keys
+- [ ] Custom `@Entry` default values are stable (no `Model()`/`Date()`/`UUID()` expressions)
 - [ ] `.animation(_:value:)` always includes the `value` parameter
 - [ ] `@FocusState` properties are `private`
 - [ ] No redundant `@FocusState` writes inside tap gesture handlers on `.focusable()` views
 - [ ] iOS 26+ APIs gated with `#available` and fallback provided
 - [ ] `import Charts` present in files using chart types
+- [ ] Previews use self-contained mock data; no dependency on live services or network
 
 ## References
 
@@ -157,6 +163,9 @@ These are hard rules -- violations are always bugs:
 - `references/macos-scenes.md` -- Settings, MenuBarExtra, WindowGroup, multi-window
 - `references/macos-window-styling.md` -- Toolbar styles, window sizing, Commands
 - `references/macos-views.md` -- HSplitView, Table, PasteButton, AppKit interop
+- `references/previews.md` -- `#Preview` macro, `@Previewable` (iOS 18+), preview traits, mock data patterns for self-contained previews
 - `references/text-patterns.md` -- Text initializer selection, verbatim vs localized
+- `references/localization.md` -- String Catalogs, `#bundle` for packages, `LocalizedStringResource`, locale-aware formatting, RTL layout, translator comments
+- `references/soft-deprecation.md` -- How to behave with soft-deprecated APIs (when to migrate, scoping rule, don't migrate during unrelated edits)
 - `references/trace-analysis.md` -- Parse Instruments `.trace` files via `scripts/analyze_trace.py`; interpret main-thread coverage, high-severity SwiftUI updates, hitch narratives, and map findings back to source files
 - `references/trace-recording.md` -- Record a new trace via `scripts/record_trace.py`: attach to a running app, launch one fresh, or capture a manually-stopped session; supports stop-file for agent-driven flows

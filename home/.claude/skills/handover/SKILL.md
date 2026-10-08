@@ -1,6 +1,7 @@
 ---
 name: handover
-description: セッションの作業内容を .claude/HANDOVER.md に記録する。ユーザが明示的に呼び出す。
+description: user invoke only
+summary: セッションの作業内容を .claude/HANDOVER.md に記録する。
 argument-hint: [特に重点的に残して欲しいこと]
 ---
 

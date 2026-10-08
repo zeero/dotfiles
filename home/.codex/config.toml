@@ -1,9 +1,13 @@
 project_doc_fallback_filenames = ["CLAUDE.md"]
-model = "gpt-5.5"
+model = "gpt-5.6-terra"
 model_reasoning_effort = "high"
+model_verbosity = "low"
 plan_mode_reasoning_effort = "high"
 default_permissions = "my-workspace"
 approvals_reviewer = "guardian_subagent"
+
+
+
 
 notify = ["/Users/zeero/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 
@@ -30,17 +34,26 @@ trust_level = "trusted"
 [projects."/Users/zeero/dev/github.com/zeero/zeero"]
 trust_level = "trusted"
 
+[projects."/private/tmp/claude-501/-Users-zeero-lib-dotfiles/86d4f411-a98c-4d41-8816-483f90575870/scratchpad"]
+trust_level = "trusted"
+
+[projects."/Users/zeero/dev/llm"]
+trust_level = "trusted"
+
 [tui]
 status_line = ["model-with-reasoning", "current-dir", "git-branch", "branch-changes", "run-state", "context-remaining", "five-hour-limit", "weekly-limit", "task-progress"]
 status_line_use_colors = true
+screen_reader_detection_done = true
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4
+"gpt-5.6-sol" = 2
+"gpt-6.1-sol" = 4
 
 [mcp_servers.serena]
 command = "serena"
 args = ["start-mcp-server", "--project-from-cwd", "--context=codex"]
-startup_timeout_sec = 15.0
+startup_timeout_sec = 30.0
 
 [mcp_servers.serena.tools.write_memory]
 approval_mode = "approve"
@@ -67,25 +80,29 @@ approval_mode = "approve"
 approval_mode = "approve"
 
 [mcp_servers.node_repl]
-args = []
-command = "/Applications/Codex.app/Contents/Resources/node_repl"
-startup_timeout_sec = 120
+command = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node_repl"
+startup_timeout_sec = 120.0
 
 [mcp_servers.node_repl.env]
-NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
-NODE_REPL_NODE_MODULE_DIRS = ""
-NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/node"
-NODE_REPL_TRUSTED_CODE_PATHS = "/Users/zeero/.codex"
-CODEX_HOME = "/Users/zeero/.codex"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "0b0d41e7a14a4903d2f95b0b3f427ed796b12c8edca2fa392a03df43997075ae"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.616.81150"
+CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
+CODEX_HOME = "/Users/zeero/.codex"
 NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
-BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "5504c0782b5c86b7dd08314045b9843e973a230e1be8f7e2e0ba3716fc63c55e"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/zeero/.codex"
 
 [mcp_servers.jules]
 command = "jules-mcp"
+
+[mcp_servers.github]
+url = "https://api.githubcopilot.com/mcp/"
+bearer_token_env_var = "GITHUB_PERSONAL_ACCESS_TOKEN"
 
 [plugins."canva@openai-curated"]
 enabled = true
@@ -109,6 +126,12 @@ enabled = true
 enabled = true
 
 [plugins."chrome@openai-bundled"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
 enabled = true
 
 [tools]
@@ -154,13 +177,16 @@ trusted_hash = "sha256:9fc7312a4a274d40081f6734c6f6553d494e9cfde20fd01339995232a
 [hooks.state."/Users/zeero/.codex/hooks.json:user_prompt_submit:0:0"]
 trusted_hash = "sha256:9f9b46244739e7f6f787757a083d0d65c07db3aa2daaaecb6fe9e65b08f362b2"
 
+[hooks.state."/Users/zeero/.codex/hooks.json:post_tool_use:0:1"]
+trusted_hash = "sha256:80f5fe0d2ec771a1f08afcc781107faf630ce67c454d14e1ba2c6b85ae9ff242"
+
 [marketplaces.openai-bundled]
-last_updated = "2026-06-02T09:18:30Z"
+last_updated = "2026-07-28T03:20:38Z"
 source_type = "local"
 source = "/Users/zeero/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-06-01T18:12:20Z"
+last_updated = "2026-06-23T03:12:43Z"
 source_type = "local"
 source = "/Users/zeero/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 

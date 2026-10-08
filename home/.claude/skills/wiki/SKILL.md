@@ -1,18 +1,16 @@
 ---
 name: wiki
 description: >
-  Obsidian Vault（memos）のWikiをLLMが管理するスキル。
-  Karpathy の LLM Wiki パターン (https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) を実装。
-  RawSource(Reports/Ideas/Knowledges等のmd) を取り込んで pages/ にページ群を構築し、
-  index.md（カタログ）・log.md（時系列）・refs/（ソース毎のメタ）を維持する。
-  以下のような状況で必ずこのスキルを使うこと:
+  A skill where the LLM manages the Wiki of an Obsidian Vault (memos).
+  Always use this skill in situations such as:
   - 「WikiにXXを取り込んで」「ingestして」「このメモをWikiに追加して」「Wikiを更新して」
-  - 「直近1日で更新があったmdを全部Wikiに取り込んで」「Reportsを一括ingestして」
-  - 「Wikiで調べて」「Wikiを検索」「WikiでXXについて教えて」「indexから探して」
+  - 「Wikiで調べて」「Wikiを検索」「WikiでXXについて教えて」
   - 「Wiki lint」「Wikiの健全チェック」「stale な refs を確認」「orphan pages を探して」
-  - 「/wiki ingest」「/wiki query」「/wiki lint」などのコマンド形式
-  - 会話の流れでWikiへの参照・更新が適切と判断できる場合も積極的に起動すること
+  - Activate it proactively when referencing or updating the Wiki is appropriate in the flow of conversation
 argument-hint: (ingest|query|lint) [args...]
+summary: >
+  Karpathy の LLM Wiki パターン (https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) を実装。
+  RawSource(Reports/Ideas/Knowledges等のmd) を取り込んで pages/ にページ群を構築し、index.md（カタログ）・log.md（時系列）・refs/（ソース毎のメタ）を維持する。
 ---
 
 # Wiki スキル
@@ -22,7 +20,7 @@ Obsidian Vault `$HOME/Documents/memos` の `Wiki/` ディレクトリを LLM が
 ## ディレクトリ構造
 
 ```
-Wiki/
+$HOME/Documents/memos/Wiki/
 ├── CLAUDE.md   # schema（毎回必ず最初に読む）
 ├── index.md    # カタログ（pages 一覧 + ingest 済み sources）
 ├── log.md      # 時系列ログ（append-only）
@@ -41,7 +39,7 @@ Wiki/
 
 ## 最初にすること
 
-どのオペレーションでも、必ず最初に `Wiki/CLAUDE.md` を読む。raw_paths・カテゴリ・命名規則・WikiLink 形式がそこに集約されている。
+どのオペレーションでも、必ず最初に `$HOME/Documents/memos/Wiki/CLAUDE.md` を読む。raw_paths・カテゴリ・命名規則・WikiLink 形式がそこに集約されている。
 
 ## オペレーション判定
 
@@ -64,7 +62,7 @@ RawSource を読み取り、`pages/` を更新し、`refs/` に取り込み記�
 
 ### 単一ファイルの ingest 手順
 
-1. **Schema 読み込み**: `Wiki/CLAUDE.md` を読む
+1. **Schema 読み込み**: `$HOME/Documents/memos/Wiki/CLAUDE.md` を読む
 2. **対象ファイルのコミットハッシュ取得**:
    ```bash
    cd $HOME/Documents/memos && git log -1 --format="%H" -- <source_path>
@@ -104,7 +102,11 @@ RawSource を読み取り、`pages/` を更新し、`refs/` に取り込み記�
 
 「直近 N 日で更新のあった RawSource をすべて取り込む」シナリオ:
 
-1. **Schema 読み込み**
+1. **Schema 読み込みと構造検査**: 以下を実行し、JSON 出力を構造検査の唯一の根拠とする:
+   ```bash
+   node "$HOME/.claude/skills/wiki/scripts/lint.mjs" "$HOME/Documents/memos"
+   ```
+   `staleRefs`、`missingSources`、`orphanPages`、`indexMismatch`、`conceptGaps` を報告に使う。ファイル名は NFC、YAML の quoted scalar、WikiLink alias を正規化して照合済み。
 2. **対象ファイル列挙**: 以下のいずれか（`<raw_paths>` は schema の `raw_paths` を参照）
    ```bash
    # commit ベース（推奨。git 管理されているソースに使う）
@@ -152,7 +154,7 @@ RawSource を読み取り、`pages/` を更新し、`refs/` に取り込み記�
 
 ### 手順
 
-1. **Schema 読み込み**: `Wiki/CLAUDE.md` を読む
+1. **Schema 読み込み**: `$HOME/Documents/memos/Wiki/CLAUDE.md` を読む
 2. **index.md を読む**: query の入口。カテゴリ別 pages 一覧から関連候補を見つける
 3. **必要なら全文検索で補完**:
    ```bash
@@ -184,13 +186,13 @@ Wiki の健全性をチェックしてレポートを出す。
 3. **orphan pages チェック**: `Wiki/pages/` の各ページが、どの `Wiki/refs/` の `contributed_to` にも含まれていないものを検出
 4. **missing pages チェック**: `index.md` に列挙されているのに `pages/` に存在しないファイル、またはその逆
 5. **index.md 健全性**: `pages/` ディレクトリと `index.md` の Sources/Pages セクションの差分を検出
-6. **矛盾・stale claims チェック**: `Wiki/pages/` のページ群を横断的に読み、以下を検出する:
-   - 異なるページ間で矛盾する記述（例: 同一トピックについて正反対の主張）
-   - より新しい refs（`ingested_at` が新しいもの）によって上書きされるべき古い主張（stale claims）
-   - 矛盾/stale が多い場合は代表例のみ列挙し、全件は省略可
+6. **意味的な矛盾・stale claim チェック**: `Wiki/pages/` と refs の要約を横断して、同一トピックの矛盾、および新しい refs によって更新すべき古い主張を検出する
+   - 自動構造検査の JSON は根拠を絞るための入口であり、意味的な検証を省略する理由にはしない
+   - 該当箇所と、判断の根拠となる pages/refs を報告する
 7. **未作成概念ページチェック**: `Wiki/pages/` の全 WikiLink を収集し、対応するページファイルが存在しないものを「concept gap」として検出する:
    ```bash
-   rg -oh '\[\[[^\]]+\]\]' $HOME/Documents/memos/Wiki/pages/ | sort -u
+   # -I/-N でファイル名・行番号を抑止（-h は ripgrep ではヘルプ表示になるため使わない）
+   rg -oIN '\[\[[^\]]+\]\]' $HOME/Documents/memos/Wiki/pages/ | sort -u
    ```
    - 存在しない WikiLink ターゲット一覧を報告
    - 重要度が高いと判断したものはページ新規作成を提案する
@@ -198,12 +200,12 @@ Wiki の健全性をチェックしてレポートを出す。
    - 更新候補の RawSource 一覧（stale refs）
    - 孤立ページ一覧（orphan pages）
    - index.md と pages/ の不整合
-   - 矛盾・stale claims 一覧（contradiction）
+   - 矛盾・stale claim の代表例（該当時）
    - WikiLink 未作成概念一覧（concept gap）
    - 問題が無ければ「✅ Wiki は健全です」と報告
 9. **log.md に追記**:
    ```
-   ## [YYYY-MM-DD] lint | stale=N, orphan=M, mismatch=K, contradiction=P, concept_gap=Q
+   ## [YYYY-MM-DD] lint | stale=N, missing_source=M, orphan=O, mismatch=K, contradiction=P, concept_gap=Q
    ```
 10. **修復提案**: 問題が見つかった場合、ユーザーに修復オプション（一括再 ingest、index 再生成、orphan 削除、concept gap のページ新規作成）を提示
 11. **新規調査提案**: lint 結果全体を踏まえ、以下を提案する（任意）:
@@ -217,4 +219,4 @@ Wiki の健全性をチェックしてレポートを出す。
 - **WikiLink 形式**: ソース・ページ・refs への参照は `[[path/name]]` を使う（拡張子なし）
 - **日付**: ISO 8601 (`YYYY-MM-DD`、必要なら `HH:MM` まで)
 - **フルハッシュ**: `source_commit` は短縮しない（log.md の表示用は短縮可）
-- **schema 優先**: ディレクトリ構造・カテゴリ・命名規則は `Wiki/CLAUDE.md` に従う。SKILL.md と齟齬があれば schema を正とし、ユーザーに齟齬を報告する
+- **schema 優先**: ディレクトリ構造・カテゴリ・命名規則は `$HOME/Documents/memos/Wiki/CLAUDE.md` に従う。SKILL.md と齟齬があれば schema を正とし、ユーザーに齟齬を報告する

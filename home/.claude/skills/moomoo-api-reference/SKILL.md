@@ -11,15 +11,17 @@ moomoo証券（旧Futu証券）が提供するローカルゲートウェイ経�
 
 | 項目 | 値 |
 |---|---|
-| Pythonパッケージ | `futu-api` |
-| インポート | `from futu import *` |
+| Pythonパッケージ | moomoo 口座: `moomoo-api` ／ Futu 口座: `futu-api` |
+| インポート | moomoo 口座: `from moomoo import *` ／ Futu 口座: `from moomoo import *` |
 | デフォルト接続先 | `host='127.0.0.1', port=11111` |
 | 公式ドキュメント | https://openapi.moomoo.com/moomoo-api-doc/en/intro/intro.html |
+
+**口座で SDK パッケージが分かれる**。moomoo 口座 / moomoo OpenD は `moomoo-api`、Futu 口座 / Futu OpenD は `futu-api` で、API の形はほぼ同じだが別エコシステム。以下の記述とコード例は moomoo 側を前提とするので、Futu 口座なら `moomoo` を `futu` に読み替える（→ `references/gotchas.md` の「SDK パッケージとローカルファイルの衝突」）。
 
 ## セットアップ
 
 ```bash
-pip install futu-api
+pip install moomoo-api
 ```
 
 OpenDゲートウェイを起動してからAPIを使用します（→ `references/opend.md`）。
@@ -27,7 +29,7 @@ OpenDゲートウェイを起動してからAPIを使用します（→ `referen
 ## 基本パターン
 
 ```python
-from futu import *
+from moomoo import *
 
 # --- Quote API（市場データ） ---
 quote_ctx = OpenQuoteContext(host='127.0.0.1', port=11111)
@@ -119,13 +121,14 @@ trd_ctx.close()
 | `references/base-api.md` | 基本設定API（接続設定・スレッド・ロギング） | ~4K行 |
 | `references/intro.md` | API概要・権限・料金 | ~700行 |
 | `references/opend.md` | OpenDゲートウェイ設定 | ~500行 |
+| `references/gotchas.md` | 実測で確定した挙動・制約（SDK パッケージの選び分け、paper の注文タイプ制限、OCO/MOC 非対応、取消しとレート制限、OrderStatus 分類、約定の観測、market_state 等） | 小 |
 
 ## よくある使用パターン
 
 ### 株価リアルタイム取得
 
 ```python
-from futu import *
+from moomoo import *
 
 quote_ctx = OpenQuoteContext(host='127.0.0.1', port=11111)
 ret, data = quote_ctx.get_stock_quote(['US.AAPL', 'US.TSLA'])
@@ -137,7 +140,7 @@ quote_ctx.close()
 ### 発注
 
 ```python
-from futu import *
+from moomoo import *
 
 trd_ctx = OpenSecTradeContext(filter_trdmarket=TrdMarket.US, host='127.0.0.1', port=11111)
 trd_ctx.unlock_trade(password='YOUR_PASSWORD')
@@ -158,7 +161,7 @@ trd_ctx.close()
 ### リアルタイム配信
 
 ```python
-from futu import *
+from moomoo import *
 
 class QuoteHandler(StockQuoteHandlerBase):
     def on_recv_rsp(self, rsp_str):
@@ -176,3 +179,13 @@ import time
 time.sleep(60)
 quote_ctx.close()
 ```
+
+> **実運用メモ（Basic Quote の bid/ask と data_time、2026-07 検証）**
+> - `SubType.QUOTE`（`Qot_UpdateBasicQot` の real-time push / `get_stock_quote` / `StockQuoteHandlerBase`）が返す DataFrame には bid/ask 列が構造的に存在しない（`code, name, data_date, data_time, last_price, open_price, high_price, low_price, prev_close_price, volume, turnover, ...`）。買気配・売気配が必要なら `SubType.ORDER_BOOK`（`get_order_book` / `Qot_UpdateOrderBook`）を別途購読する。
+> - `data_time`（および `data_date`）は「最新価格（`last_price`）の更新時刻」であって push 自体のタイムスタンプではない（公式定義 "Time of latest price"、US 市場は US Eastern Time）。protobuf `BasicQot.updateTime` も「最新価格の更新時刻で他フィールドには適用外」と注記。
+> - `updateTime` が空文字の push では `data_time` が空になる（SDK の `parse_pb_BasicQot` が `updateTime.split()[1] if len(updateTime) > 0 else ''`）。空 `data_time` を「時間外」と解釈すると、レギュラーセッション中でも時刻付き push と空 push が交互に来て判定がフラッピングし得る点に注意。
+>
+> 出典: https://openapi.moomoo.com/moomoo-api-doc/en/quote/update-stock-quote.html ・ https://openapi.moomoo.com/moomoo-api-doc/en/quote/base.html
+
+> **実運用メモ（market_state と米国レギュラーセッション、2026-06 公式 doc 確認）**
+> `get_market_state` は米国株のレギュラー取引時間（09:30–16:00 ET）**全体**を `AFTERNOON` で返す。`MORNING` は米国レギュラー時間帯では返らないため、「レギュラーセッションのみ」を判定する許可集合は `{"AFTERNOON"}` が正しい（名前に反して午後限定ではない）。

@@ -1,4 +1,25 @@
 
+## Practical Notes (not from official docs)
+
+- **Telnet console may not bind from `OpenD.xml` alone.** Setting `telnet_ip`/`telnet_port` only in the config file has been observed to leave the telnet listener unbound (only the API port opens). Passing them again as explicit startup args (`-telnet_ip=127.0.0.1 -telnet_port=22222`) alongside `-cfg_file` resolved it. Root cause not confirmed — treat the CLI-arg form as the reliable path when telnet doesn't come up, and verify with `lsof -nP -iTCP -sTCP:LISTEN | grep OpenD` before assuming it's live.
+- **`telnetlib` is removed in modern Python (3.13+).** The official telnet example imports `from telnetlib import Telnet`, which now raises `ModuleNotFoundError`. Use a raw `socket` connection instead, writing commands terminated with `\r\n` (matches the protocol the official example uses):
+  ```python
+  import socket, time
+  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  s.settimeout(5)
+  s.connect(('127.0.0.1', 22222))
+  time.sleep(0.3)
+  print(s.recv(4096))  # banner: "moomoo OpenD version info: ..."
+  s.sendall(b'input_pic_verify_code -code=1234\r\n')
+  time.sleep(1)
+  print(s.recv(4096))
+  s.close()
+  ```
+- **The graphic verification PNG (`PicVerifyCode.png`, under the OpenD work folder's `F3CNN/` dir) is tiny (~85x34px) and hard to read at native resolution.** Upscale it before viewing (e.g. PIL `resize(w*6, h*6, Image.LANCZOS)`) — this made previously illegible characters clear. A wrong code regenerates a fresh PNG at the same path; `input_pic_verify_code` allows up to 10 requests/60s, so a few retries are safe.
+- **Graphic verification is not a one-off incident** — it can recur on any fresh login (version upgrade, OpenD restart after being down, etc.), not just after repeated bad passwords. Any headless/relaunch procedure should assume the telnet console + verification step is a normal part of bringing OpenD back up, not a special-case failure path.
+- **A "Graphic verification code required" state blocks *all* context creation, and the reconnect path retries it without any backoff.** Observed trigger: a `Network interruption` during market hours puts OpenD into a state where it demands graphic verification on reconnect, and every `OpenQuoteContext` / `OpenSecTradeContext` creation is then refused. The context-establishment retry has neither an attempt cap nor a wait, so it opens a fresh socket and retries immediately — ESTABLISHED connections to the API port pile up. Diagnose by counting them (`lsof -i :11111`): one normal broker-state call needs only a few, so an order-of-magnitude larger count means accumulation. Retry settings on a higher-level client (max attempts / backoff) usually guard the *data* call, not this reconnect path — check which layer they sit on before assuming you are protected.
+- **Restarting OpenD has cleared this without entering any code.** Presumed to be a security check tripped by the retry storm rather than a genuine verification demand. It does not always work — a fresh login can genuinely require the code, so keep the telnet + `input_pic_verify_code` path above as the fallback.
+
 ## Command Line OpenD
 
 > Source: https://openapi.moomoo.com/moomoo-api-doc/en/opend/opend-cmd.html

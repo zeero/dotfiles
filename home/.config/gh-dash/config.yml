@@ -86,6 +86,13 @@ keybindings:
     - key: "I"
       name: new issue
       command: gh issue create --repo {{.RepoName}} --editor
+  prs:
+    # 誤爆防止のため、デフォルトの m によるマージを無効化（opt+m に退避）
+    - key: "m"
+      name: noop
+      command: "true"
+    - key: alt+m
+      builtin: merge
 repoPaths: {}
 theme:
     ui:

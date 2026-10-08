@@ -42,6 +42,8 @@ The description is the **only** triggering mechanism — Claude decides whether 
 
 Use the framework: `[What it does] + [When to use it] + [Key capabilities]`
 
+Compressing an over-long description? Cut duplication before cutting coverage: a trigger-phrase list that restates the prose in the *same* language is duplication. Phrases in a language the prose isn't written in are not derivable from it — keep those verbatim.
+
 Read `references/description-examples.md` for good/bad examples and the triggering diagnosis guide.
 
 ### Step 4: Evaluate instruction quality
@@ -89,6 +91,11 @@ Skill doesn't load when it should. Users manually invoke it; support questions a
 - Include synonyms, alternative phrasings, and colloquial forms
 - Mention file extensions (`.fig`, `.csv`, `.docx`) if relevant
 - Be "pushy" — err toward triggering on edge cases
+- Route from a companion skill that already fires reliably: add a conditional line in *its* body pointing here. Body-level instructions are read while the model is already following a file, so they miss less than description matching.
+
+**Limit of body-level routing**: it only covers moments where both skills fire. List the moments this skill must cover and check each against the companion's trigger. A skill guarding a moment where *nothing is launched* — "confirm this was really reviewed before merging" — is unreachable from a skill that fires on launching something: no launch, no route. Those moments stay description-only.
+
+Keep the cross-reference conditional in both directions and pointing at disjoint content, or the two skills bounce the reader back and forth.
 
 ### Overtriggering
 

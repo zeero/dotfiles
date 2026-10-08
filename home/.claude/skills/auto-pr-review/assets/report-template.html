@@ -1,0 +1,527 @@
+<!doctype html>
+<!--TEMPLATE-ONLY
+  auto-pr-review のレポートテンプレート。
+  {{...}} は scripts/render-report.py が差し替える差し込み口。
+  ここを直接編集してレビュー結果を書き込まないこと (中間データ側を直す)。
+  外部への通信を持たないので、ネットワークの無い環境でもそのまま開ける。
+  見た目は visualize スキルの Atmospheric Glass (ガラス質の半透明カードを重ねる配色と
+  余白の取り方) を土台にしている。配色や角丸を変えるときはその定義と照らし合わせる。
+  このコメントは差し込み時に取り除かれるため、生成されたレポートには残らない。
+-->
+<!-- auto-pr-review が生成したレポート。内容は同名の .json から作られるため、直接編集しても作り直すと消える。 -->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{PAGE_TITLE}}</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --surface: #0b1326;
+    --on-surface: #f4f7ff;
+    --on-surface-variant: #b9c2da;
+    --on-surface-faint: #8f9ab8;
+    --glass: rgba(255, 255, 255, 0.08);
+    --glass-high: rgba(255, 255, 255, 0.14);
+    --edge: rgba(255, 255, 255, 0.18);
+    --critical: #ff9d94;
+    --warning: #fbbf24;
+    --info: #adc9eb;
+    --ok: #86efac;
+    --radius: 1rem;
+    --radius-lg: 1.5rem;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0 max(16px, env(safe-area-inset-left)) 64px max(16px, env(safe-area-inset-right));
+    background: var(--surface);
+    background-image:
+      radial-gradient(1100px 620px at 12% -8%, rgba(126, 34, 206, 0.55), transparent 62%),
+      radial-gradient(900px 560px at 88% 4%, rgba(30, 58, 138, 0.62), transparent 58%),
+      radial-gradient(760px 520px at 62% 100%, rgba(219, 39, 119, 0.32), transparent 62%);
+    background-attachment: fixed;
+    color: var(--on-surface);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1180px; margin: 0 auto; }
+
+  a { color: inherit; }
+  b, strong { font-weight: 700; color: #fff; }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.86em;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.35rem;
+    padding: 0.1em 0.4em;
+    word-break: break-word;
+  }
+
+  p { margin: 0 0 0.9em; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ---------- ヒーロー ---------- */
+  header.hero {
+    padding: 34px 32px 30px;
+    margin-bottom: 36px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
+    border: 1px solid var(--edge);
+    backdrop-filter: blur(26px);
+    -webkit-backdrop-filter: blur(26px);
+    box-shadow: 0 10px 38px rgba(0, 0, 0, 0.2);
+  }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--on-surface-faint);
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    margin: 0 0 26px;
+    font-size: clamp(29px, 5.2vw, 48px);
+    line-height: 1.18;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.28);
+  }
+
+  /* PR の素性は、行に流し込まず 1 件ずつ独立した面に置いて拾い読みできるようにする */
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .fact {
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    background: rgba(11, 19, 38, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .fact-label {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--on-surface-faint);
+    margin-bottom: 2px;
+  }
+  .fact-value {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    word-break: break-word;
+  }
+
+  /* 件数は最初に目に入るべき数字なので、本文より 2 段階大きく取る */
+  .tally {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 26px;
+  }
+  .tally-card {
+    display: block;
+    padding: 16px 20px 15px;
+    border-radius: var(--radius);
+    background: var(--glass-high);
+    border: 1px solid var(--edge);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+    text-decoration: none;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  a.tally-card:hover { transform: translateY(-2px); box-shadow: 0 14px 38px rgba(0, 0, 0, 0.3); }
+  .tally-critical { background: rgba(255, 157, 148, 0.17); border-color: rgba(255, 157, 148, 0.4); }
+  .tally-warning { background: rgba(251, 191, 36, 0.15); border-color: rgba(251, 191, 36, 0.4); }
+  .tally-info { background: rgba(173, 201, 235, 0.15); border-color: rgba(173, 201, 235, 0.4); }
+  /* 0 件は読み飛ばしてよい。色の付いた数字は残っている件数のためだけに使う。 */
+  .tally-card.is-empty { box-shadow: none; }
+  .tally-card.is-empty .tally-num { color: var(--on-surface-faint); }
+  .tally-head { display: flex; align-items: baseline; gap: 10px; }
+  .tally-num {
+    font-size: clamp(30px, 4.6vw, 44px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+  .tally-name { font-size: 14px; font-weight: 700; letter-spacing: 0.02em; }
+  .tally-note { display: block; font-size: 11.5px; line-height: 1.5; color: var(--on-surface-faint); margin-top: 4px; }
+  .tally-jump { display: block; font-size: 11px; font-weight: 600; color: var(--on-surface-variant); margin-top: 6px; }
+  .tally-critical .tally-num, .tally-critical .tally-name { color: var(--critical); }
+  .tally-warning .tally-num, .tally-warning .tally-name { color: var(--warning); }
+  .tally-info .tally-num, .tally-info .tally-name { color: var(--info); }
+
+  .hero-link {
+    display: inline-block;
+    padding: 13px 26px;
+    border-radius: var(--radius-lg);
+    background: #fff;
+    color: #21242e;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22);
+  }
+  .hero-link:hover { background: #dcdee5; }
+
+  /* ---------- 2 ペイン ---------- */
+  .layout {
+    display: grid;
+    grid-template-columns: 236px minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+    padding-top: 40px;
+  }
+  .rail { position: sticky; top: 20px; }
+
+  .toc {
+    padding: 20px 18px;
+    border-radius: var(--radius-lg);
+    background: var(--glass);
+    border: 1px solid var(--edge);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+  .toc-title {
+    margin: 0 0 12px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--on-surface-faint);
+  }
+  .toc ol, .toc ul { margin: 0; padding: 0; list-style: none; }
+  .toc a {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 0.6rem;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-decoration: none;
+    color: var(--on-surface-variant);
+  }
+  .toc a:hover { background: rgba(255, 255, 255, 0.08); color: var(--on-surface); }
+  .toc a.is-active { background: rgba(255, 255, 255, 0.14); color: #fff; }
+  .toc-sub { margin: 2px 0 6px 12px; padding-left: 10px; border-left: 1px solid rgba(255, 255, 255, 0.14); }
+  .toc-sub a { font-size: 13px; font-weight: 500; padding: 4px 8px; }
+  .toc-count {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--on-surface-faint);
+  }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; gap: 20px; }
+    .rail { position: static; }
+    .toc-sub { display: none; }
+    .toc ol { display: flex; flex-wrap: wrap; gap: 6px; }
+  }
+
+  /* ---------- セクション ---------- */
+  section {
+    margin-bottom: 36px;
+    padding: 28px;
+    border-radius: var(--radius-lg);
+    background: var(--glass);
+    border: 1px solid var(--edge);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.16);
+    scroll-margin-top: 20px;
+  }
+  section > h2 {
+    margin: 0 0 20px;
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+  .h2-emoji { font-size: 1.05em; line-height: 1; }
+  h4 {
+    margin: 22px 0 10px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--on-surface-variant);
+    text-transform: uppercase;
+  }
+  h5 {
+    margin: 0 0 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--on-surface-variant);
+  }
+
+  /* 節の書き出しだけ一段大きくして、拾い読みの入口にする */
+  #overview .overview-text > p:first-child { font-size: 18px; font-weight: 500; line-height: 1.7; color: #fff; }
+
+  /* ---------- レビュー範囲 ---------- */
+  .kv-list {
+    margin: 18px 0 0;
+    display: grid;
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .kv { display: grid; grid-template-columns: minmax(120px, 190px) 1fr; background: rgba(11, 19, 38, 0.32); }
+  .kv dt { padding: 11px 16px; font-size: 12.5px; font-weight: 600; color: var(--on-surface-faint); }
+  .kv dd { margin: 0; padding: 11px 16px; font-size: 14px; }
+  @media (max-width: 560px) {
+    .kv { grid-template-columns: 1fr; }
+    .kv dd { padding-top: 0; }
+  }
+
+  /* ---------- 変更の地図 ---------- */
+  .map { display: grid; gap: 14px; margin-top: 20px; }
+  .map-group {
+    padding: 16px 18px;
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 3px solid rgba(255, 255, 255, 0.35);
+  }
+  .map-added { border-left-color: var(--ok); }
+  .map-modified { border-left-color: var(--info); }
+  .map-removed { border-left-color: var(--critical); }
+  .map-group h4 { margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
+  .count {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 9px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--on-surface);
+  }
+  .map-group ul, .order ol { margin: 0; padding-left: 0; list-style: none; }
+  .order ol { counter-reset: step; }
+  .map-group li, .order li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 12px;
+    padding: 6px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 14px;
+  }
+  .map-group li:first-child, .order li:first-child { border-top: none; }
+  .order li { counter-increment: step; }
+  .order li::before {
+    content: counter(step);
+    flex: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.14);
+    font-size: 12px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+  .stat { font-size: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .stat .plus { color: var(--ok); margin-right: 6px; }
+  .stat .minus { color: var(--critical); }
+  .note, .why { font-size: 13px; color: var(--on-surface-faint); }
+  .order { margin-top: 22px; }
+
+  /* ---------- 総評 ---------- */
+  .verdict {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 20px;
+    padding: 22px 24px;
+    border-radius: var(--radius);
+    background: var(--glass-high);
+    border: 1px solid var(--edge);
+  }
+  .verdict-badge {
+    flex: none;
+    padding: 10px 22px;
+    border-radius: 9999px;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  .verdict-merge .verdict-badge { background: rgba(134, 239, 172, 0.2); color: var(--ok); border: 1px solid rgba(134, 239, 172, 0.42); }
+  .verdict-conditional .verdict-badge { background: rgba(251, 191, 36, 0.18); color: var(--warning); border: 1px solid rgba(251, 191, 36, 0.42); }
+  .verdict-block .verdict-badge { background: rgba(255, 157, 148, 0.18); color: var(--critical); border: 1px solid rgba(255, 157, 148, 0.45); }
+  .verdict-headline { margin: 0; font-size: 18px; font-weight: 600; line-height: 1.6; letter-spacing: -0.01em; }
+  .verdict-body { margin-top: 6px; }
+
+  /* ---------- 指摘 ---------- */
+  .sev-group { margin-bottom: 34px; scroll-margin-top: 20px; }
+  .sev-group:last-child { margin-bottom: 0; }
+  .sev-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 12px;
+    margin: 0 0 14px;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .sev-heading.sev-critical { color: var(--critical); }
+  .sev-heading.sev-warning { color: var(--warning); }
+  .sev-heading.sev-info { color: var(--info); }
+  .sev-note { font-size: 12.5px; font-weight: 500; color: var(--on-surface-faint); }
+
+  .finding {
+    padding: 20px 22px;
+    margin-bottom: 14px;
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 3px solid rgba(255, 255, 255, 0.3);
+  }
+  .finding-critical { border-left-color: var(--critical); }
+  .finding-warning { border-left-color: var(--warning); }
+  .finding-info { border-left-color: var(--info); }
+  .finding.is-resolved { opacity: 0.55; }
+  .finding header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 12px; }
+  .finding h3 { margin: 0; font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: -0.015em; }
+  .sev {
+    flex: none;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    padding: 3px 10px;
+    border-radius: 9999px;
+  }
+  .sev-critical { background: rgba(255, 157, 148, 0.16); color: var(--critical); }
+  .sev-warning { background: rgba(251, 191, 36, 0.16); color: var(--warning); }
+  .sev-info { background: rgba(173, 201, 235, 0.16); color: var(--info); }
+
+  .finding-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 14px; align-items: center; }
+  .loc { font-size: 12px; }
+  .tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--on-surface-faint);
+    text-decoration: none;
+  }
+  .tag-new { color: var(--on-surface); border-color: rgba(255, 255, 255, 0.3); }
+  .tag-resolved { color: var(--ok); border-color: rgba(134, 239, 172, 0.35); }
+  .tag-reported { color: var(--info); border-color: rgba(173, 201, 235, 0.35); }
+  .finding-body { font-size: 15px; }
+  .block {
+    margin-top: 14px;
+    padding: 13px 16px;
+    border-radius: 0.6rem;
+    background: rgba(11, 19, 38, 0.36);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+  .block-failure { border-color: rgba(255, 157, 148, 0.28); }
+  .block-rejected { border-color: rgba(255, 255, 255, 0.14); }
+  .block ul { margin: 0; padding-left: 18px; }
+  .block li { padding: 3px 0; }
+  .block li .why { display: block; }
+  .empty { color: var(--on-surface-faint); }
+
+  footer {
+    text-align: center;
+    color: var(--on-surface-faint);
+    font-size: 12px;
+    padding-top: 8px;
+  }
+
+  @media print {
+    body { background: #fff; color: #111; }
+    .layout { grid-template-columns: 1fr; }
+    .rail { display: none; }
+    section { background: #fff; border-color: #ccc; box-shadow: none; backdrop-filter: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="layout">
+    <aside class="rail">{{TOC}}</aside>
+
+    <main class="content">
+      <header class="hero">{{HERO}}</header>
+
+      <section id="overview">
+        <h2><span class="h2-emoji">📋</span>概要</h2>
+        {{OVERVIEW}}
+      </section>
+
+      <section id="verdict">
+        <h2><span class="h2-emoji">⚖️</span>総評</h2>
+        {{VERDICT}}
+      </section>
+
+      <section id="findings">
+        <h2><span class="h2-emoji">🔍</span>指摘</h2>
+        {{FINDINGS}}
+      </section>
+
+      {{EXTERNAL}}
+
+      {{OTHER}}
+
+      <footer>{{FOOTER}}</footer>
+    </main>
+  </div>
+
+</div>
+<script>
+  // 目次の現在地表示。読み込みに失敗しても目次はただのリンクとして働く。
+  (function () {
+    var links = document.querySelectorAll('.toc a[href^="#"]');
+    if (!links.length || !window.IntersectionObserver) return;
+    var byId = {};
+    var targets = [];
+    Array.prototype.forEach.call(links, function (a) {
+      var el = document.getElementById(a.getAttribute('href').slice(1));
+      if (!el) return;
+      byId[el.id] = a;
+      targets.push(el);
+    });
+    var visible = {};
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { visible[e.target.id] = e.isIntersecting; });
+      var current = null;
+      targets.forEach(function (el) { if (!current && visible[el.id]) current = el.id; });
+      Array.prototype.forEach.call(links, function (a) { a.classList.remove('is-active'); });
+      if (current && byId[current]) byId[current].classList.add('is-active');
+    }, { rootMargin: '-10% 0px -70% 0px' });
+    targets.forEach(function (el) { observer.observe(el); });
+  })();
+</script>
+</body>
+</html>

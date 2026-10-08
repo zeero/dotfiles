@@ -1,6 +1,6 @@
 ---
 name: crawl-to-skill
-description: Web上のドキュメントURLからリファレンスを収集し、自動的にスキル作成(skill-creator)へ繋げるオーケストレーションスキル。「URLからスキルを作って」「このドキュメントを元にスキル化したい」「firecrawlでリファレンスを集めてスキルを作って」といった要望に対して必ず起動してください。
+description: An orchestration skill that collects references from documentation URLs on the web and chains into skill creation (skill-creator). Always activate it for requests like 「URLからスキルを作って」「このドキュメントを元にスキル化したい」「firecrawlでリファレンスを集めてスキルを作って」.
 ---
 
 # Crawl-to-Skill Workflow

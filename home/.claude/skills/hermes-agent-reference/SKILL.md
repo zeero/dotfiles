@@ -1,11 +1,11 @@
 ---
 name: hermes-agent-reference
-description: Hermes Agent の導入、Docker構築、Slack接続、およびモデル設定や各種詳細設定（セキュリティ、セッション、MCP、プラグイン、Cron等）に関する包括的な公式リファレンスです。ユーザーが Hermes Agent のデプロイ、設定、Slack連携、Dockerバックエンドについて尋ねたり、構築を指示したりした際には、必ずこのスキルを起動して references/ 内の適切なファイルを読み込んでください。
+description: Comprehensive official reference for Hermes Agent. Whenever the user asks about or requests building Hermes Agent deployment, configuration, or Slack integration, always activate this skill and read the appropriate file under references/.
 ---
 
 # 📚 Hermes Agent 構築・設定リファレンス
 
-本スキルは、Nous Research によって開発された自律型AIエージェント「Hermes Agent」の構築、モデル設定、Slackなどのメッセージングプラットフォーム連携、および詳細な動作設定に関する包括的なガイドラインを提供します。
+本スキルは、Nous Research によって開発された自律型AIエージェント「Hermes Agent」の導入、モデル設定、Slackなどのメッセージングプラットフォーム連携、および詳細な動作設定（セキュリティ、セッション、MCP、プラグイン、Cron等）に関する包括的なガイドラインを提供します。
 
 ## 🔍 目次
 

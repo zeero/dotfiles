@@ -15,6 +15,7 @@ brew 'dart-sdk'
 brew 'kotlin'
 brew 'kdoctor'
 brew 'rust'
+brew 'bun'
 
 # Application {{{1
 cask 'coteditor'
@@ -118,7 +119,7 @@ brew 'pngpaste'
 brew 'bats'
 brew 'tree-sitter-cli'
 brew 'pyright'
-brew 'sqlite'
+brew 'sqlite' # viewer は sqlit (via uv)
 brew 'go-task'
 brew 'ruff' # python formatter
 brew 'ast-grep'
