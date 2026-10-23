@@ -57,6 +57,11 @@ source ./dotfiles/home/.zshrc
     * `ssh-add --apple-use-keychain ~/.ssh/id_ed25519`
   * `git clone git@github.com:zeero/memos.git ~/Documents/memos`
 * Xcode
+  * MCP Server
+    * Xcode MCP を使う場合、以下を `.envrc` に設定する
+      ```
+      export CLAUDE_CODE_PLUGIN_DIRS="$(xcrun agent plugin path --plugin-format claude)"
+      ```
   * Editor
     * check `Vim Mode`
   * Edit
