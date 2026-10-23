@@ -1,10 +1,11 @@
 project_doc_fallback_filenames = ["CLAUDE.md"]
-model = "gpt-5.6-terra"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "high"
 model_verbosity = "low"
 plan_mode_reasoning_effort = "high"
 default_permissions = "my-workspace"
 approvals_reviewer = "guardian_subagent"
+
 
 
 
@@ -38,6 +39,12 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/Users/zeero/dev/llm"]
+trust_level = "trusted"
+
+[projects."/Users/zeero/.tmux/plugins/tmux-portal"]
+trust_level = "trusted"
+
+[projects."/Users/zeero/.pi/agent"]
 trust_level = "trusted"
 
 [tui]
@@ -80,22 +87,24 @@ approval_mode = "approve"
 approval_mode = "approve"
 
 [mcp_servers.node_repl]
+args = []
 command = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node_repl"
-startup_timeout_sec = 120.0
+startup_timeout_sec = 120
 
 [mcp_servers.node_repl.env]
-BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.616.81150"
-CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
-CODEX_HOME = "/Users/zeero/.codex"
-NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
-NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
 NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
 NODE_REPL_NODE_MODULE_DIRS = "/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules"
 NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "5504c0782b5c86b7dd08314045b9843e973a230e1be8f7e2e0ba3716fc63c55e"
 NODE_REPL_TRUSTED_CODE_PATHS = "/Users/zeero/.codex"
+CODEX_HOME = "/Users/zeero/.codex"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,e13fd947e846d3d306e9249dd3c73d14931b6494803dbafb16cef85e6add9506"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = "Control desktop apps on macOS through Computer Use."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.721.41059"
+CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
 
 [mcp_servers.jules]
 command = "jules-mcp"
@@ -103,6 +112,12 @@ command = "jules-mcp"
 [mcp_servers.github]
 url = "https://api.githubcopilot.com/mcp/"
 bearer_token_env_var = "GITHUB_PERSONAL_ACCESS_TOKEN"
+
+[mcp_servers.computer-use]
+command = "./Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient"
+args = ["mcp"]
+cwd = "."
+enabled = false
 
 [plugins."canva@openai-curated"]
 enabled = true
@@ -132,6 +147,15 @@ enabled = true
 enabled = true
 
 [plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."sites@openai-bundled"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
 enabled = true
 
 [tools]
@@ -181,12 +205,12 @@ trusted_hash = "sha256:9f9b46244739e7f6f787757a083d0d65c07db3aa2daaaecb6fe9e65b0
 trusted_hash = "sha256:80f5fe0d2ec771a1f08afcc781107faf630ce67c454d14e1ba2c6b85ae9ff242"
 
 [marketplaces.openai-bundled]
-last_updated = "2026-07-28T03:20:38Z"
+last_updated = "2026-10-08T06:06:36Z"
 source_type = "local"
 source = "/Users/zeero/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-06-23T03:12:43Z"
+last_updated = "2026-10-23T00:12:29Z"
 source_type = "local"
 source = "/Users/zeero/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
@@ -194,7 +218,14 @@ source = "/Users/zeero/.cache/codex-runtimes/codex-primary-runtime/plugins/opena
 ambient-suggestions-enabled = true
 preventSleepWhileRunning = true
 keepRemoteControlAwakeWhilePluggedIn = true
-conversationDetailMode = "STEPS_COMMANDS"
+conversationDetailMode = "STEPS_PROSE"
+followUpQueueMode = "queue"
+dock-icon-preference = "codex-system"
 
 [desktop.open-in-target-preferences]
 global = "systemDefault"
+
+[shell_environment_policy.set]
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,e13fd947e846d3d306e9249dd3c73d14931b6494803dbafb16cef85e6add9506"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/zeero/.codex"
