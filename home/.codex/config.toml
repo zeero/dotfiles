@@ -1,5 +1,5 @@
 project_doc_fallback_filenames = ["CLAUDE.md"]
-model = "gpt-5.6-sol"
+model = "gpt-6.1-terra"
 model_reasoning_effort = "high"
 model_verbosity = "low"
 plan_mode_reasoning_effort = "high"
@@ -210,7 +210,7 @@ source_type = "local"
 source = "/Users/zeero/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-10-23T00:12:29Z"
+last_updated = "2026-10-26T01:12:45Z"
 source_type = "local"
 source = "/Users/zeero/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
